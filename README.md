@@ -120,9 +120,6 @@ Add the database credentials to that file as well.
 - Gulp
 - Browsersync
 - Sass
-- Browserify
-- PhantomJS (`sudo npm install -g phantomjs`)
-- CasperJS (`sudo npm install -g casperjs`)
 
 Project-level development dependences can be found in the theme's `package.json` file.
 

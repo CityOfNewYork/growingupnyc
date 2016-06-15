@@ -1,0 +1,22 @@
+<article class="post-list__entry media-object stack-for-small">
+  {% if post.get_thumbnail %}
+    <div class="media-object-section">
+      <img srcset="{{post.thumbnail.src|resize(150,150)}}, {{post.thumbnail.src|resize(300,300)|retina(2)}} 2x" alt="{{post.thumbnail.alt}}" class="media__img">
+    </div> <!-- /.media-object-section -->
+  {% endif %}
+    <div class="media-object-section">
+      <h2><a href="{{post.link}}">{{post.title}}</a></h2>
+      <p class="post-list__byline">
+        By <a href="{{post.author.link}}">{{post.author.name}}</a>
+        <time datetime="{{post.post_date|date('r')}}">{{post.post_date|date('l, F d, Y')}}</time>
+      </p>
+      <p class="post-list__summary">{{post.get_preview}}</p>
+      {% if post.terms %}
+      <ul class="menu simple">
+        {% for term in post.terms %}
+          <li class="entry-category"><a href="{{term.link}}">{{term.name}}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div> <!-- /.media-object-section -->
+</article> <!-- /.post-list__entry -->

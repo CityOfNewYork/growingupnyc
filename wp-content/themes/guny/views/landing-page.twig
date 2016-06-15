@@ -1,0 +1,63 @@
+{% extends "base.twig" %}
+
+{% block content %}
+  <picture>
+    <!--[if IE 9]><video style="display: none;"><![endif]-->
+    <source srcset="{{post.thumbnail.src|resize(1400,500)}}, {{post.thumbnail.src|resize(2800,1000)|retina(2)}} 2x" media="(min-width:64.063em)">
+    <source srcset="{{post.thumbnail.src|resize(1023,507)}}, {{post.thumbnail.src|resize(2046,1014)|retina(2)}} 2x" media="(min-width:40.063em)">
+    <!--[if IE 9]></video><![endif]-->
+    <img srcset="{{post.thumbnail.src|resize(500,297)}}, {{post.thumbnail.src|resize(1000,594)|retina(2)}} 2x" alt="{{post.thumbnail.alt}}">
+  </picture>
+
+  <section class="row">
+    <div class="small-12 columns">
+      {{post.content}}
+    </div> <!-- /.small-12.columns -->
+  </section> <!-- /.row -->
+
+  <!-- TODO: Replace with ACF Repeater field -->
+  <section class="row small-block-grid-1 medium-block-grid-2 large-block-grid-3">
+    <div class="column">
+      <div class="callout">
+        <h3><a href="#">Example Callout</a></h3>
+        <p>In hac habitasse platea dictumst.</p>
+        <p><a href="#" class="button small">Action</a></p>
+      </div> <!-- /.callout -->
+    </div> <!-- /.column -->
+    <div class="column">
+      <div class="callout">
+        <h3><a href="#">Example Callout</a></h3>
+        <p>In hac habitasse platea dictumst.</p>
+        <p><a href="#" class="button small">Action</a></p>
+      </div> <!-- /.callout -->
+    </div> <!-- /.column -->
+    <div class="column">
+      <div class="callout">
+        <h3><a href="#">Example Callout</a></h3>
+        <p>In hac habitasse platea dictumst.</p>
+        <p><a href="#" class="button small">Action</a></p>
+      </div> <!-- /.callout -->
+    </div> <!-- /.column -->
+    <div class="column">
+      <div class="callout">
+        <h3><a href="#">Example Callout</a></h3>
+        <p>In hac habitasse platea dictumst.</p>
+        <p><a href="#" class="button small">Action</a></p>
+      </div> <!-- /.callout -->
+    </div> <!-- /.column -->
+    <div class="column">
+      <div class="callout">
+        <h3><a href="#">Example Callout</a></h3>
+        <p>In hac habitasse platea dictumst.</p>
+        <p><a href="#" class="button small">Action</a></p>
+      </div> <!-- /.callout -->
+    </div> <!-- /.column -->
+    <div class="column">
+      <div class="callout">
+        <h3><a href="#">Example Callout</a></h3>
+        <p>In hac habitasse platea dictumst.</p>
+        <p><a href="#" class="button small">Action</a></p>
+      </div> <!-- /.callout -->
+    </div> <!-- /.column -->
+  </section> <!-- /.row -->
+{% endblock %}

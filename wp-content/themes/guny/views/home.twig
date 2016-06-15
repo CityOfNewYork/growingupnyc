@@ -1,0 +1,56 @@
+{% extends "base.twig" %}
+
+{% block content %}
+  <picture>
+    <!--[if IE 9]><video style="display: none;"><![endif]-->
+    <source srcset="{{post.thumbnail.src|resize(1400,500)}}, {{post.thumbnail.src|resize(2800,1000)|retina(2)}} 2x" media="(min-width:64.063em)">
+    <source srcset="{{post.thumbnail.src|resize(1023,507)}}, {{post.thumbnail.src|resize(2046,1014)|retina(2)}} 2x" media="(min-width:40.063em)">
+    <!--[if IE 9]></video><![endif]-->
+    <img srcset="{{post.thumbnail.src|resize(500,297)}}, {{post.thumbnail.src|resize(1000,594)|retina(2)}} 2x" alt="{{post.thumbnail.alt}}">
+  </picture>
+
+  <section class="row">
+    <div class="small-12 columns">
+      {{post.content}}
+    </div> <!-- /.small-12.columns -->
+  </section> <!-- /.row -->
+
+  <section class="row small-up-1 medium-up-2">
+    <div class="column">
+      <div class="js-carousel">
+        {% for quote in testimonials %}
+          <div class="quote">
+            <p class="quote__text">{{quote.quote}}</p>
+            {% if quote.attribution %}
+              <p class="quote__attribution">{{quote.attribution}}</p>
+            {% endif %}
+          </div> <!-- /.quote -->
+        {% endfor %}
+      </div> <!-- /.js-carousel -->
+    </div> <!-- /.column -->
+    <div class="column">
+      <div class="callout">
+        <h3>Stay Informed</h3>
+        <form class="bsd-signup" action="http://www.bluestatedigital.com/page/s/" role="form">
+          <label for="email" class="show-for-sr">Email Address</label>
+          <input type="email" name="email" id="email" placeholder="Email Address" required>
+          <label for="zip" class="show-for-sr">Zip/Postal Code</label>
+          <input type="tel" name="zip" id="zip" placeholder="Zip/Postal Code" required>
+          <button type="submit" class="button expand">Sign Up</button>
+        </form>
+        <p class="hide">Thank you!</p>
+      </div> <!-- /.callout -->
+    </div> <!-- /.column -->
+  </section> <!-- /.row -->
+
+  <hr>
+
+  <section class="row">
+    <div class="small-12 columns">
+      <h2>Latest News</h2>
+      {% for post in recent_posts %}
+        {% include ['teaser-'~item.post_type~'.twig', 'teaser.twig'] %}
+      {% endfor %}
+    </div> <!-- /.small-12.columns -->
+  </section> <!-- /.section -->
+{% endblock %}

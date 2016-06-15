@@ -1,0 +1,17 @@
+{% extends "single.twig" %}
+
+{% block article_header %}
+  <h1 class="entry-title single-title" itemprop="headline">{{post.title}}</h1>
+  <p class="byline">Posted on {{post.post_date|date('F j, Y')}} by <a href="{{post.author.link}}">{{post.author.name}}</a></p>
+  <p class="social-tools">
+    <a href="#" class="sharer-fb" data-picture="{{post.thumbnail.src}}" data-url="{{post.permalink}}"><i class="fa fa-facebook-square"></i></a>
+    <a href="#" class="sharer-tw" data-url="{{post.permalink}}" data-description="{{post.title}}"><i class="fa fa-twitter-square"></i></a>
+  </p>
+{% endblock %}
+
+{% block article_footer %}
+<footer class="article-footer">
+  <p class="tags"><span class="tags-title">Tags: {{post.terms|join(', ')}}</span>
+  </p>
+</footer> <!-- /.article-footer -->
+{% endblock %}

@@ -1,0 +1,48 @@
+{% block html_head_container %}
+  {% include 'html-header.twig' %}
+    {% block head %}{% endblock %}
+  </head>
+{% endblock %}
+
+<body class="{{body_class}}" data-template="base.twig">
+  <div class="off-canvas-wrapper">
+    <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+      {% block nav %}
+        {% include 'nav.twig' %}
+      {% endblock %}
+      
+      <div class="off-canvas-content" data-off-canvas-content>
+        {% block header %}
+          <div class="title-bar hide-for-large">
+            <div class="title-bar-left">
+              <h1 class="title-bar-title"><a href="{{site.url}}">{{site.name}}</a></h1>
+            </div> <!-- /.title-bar-left -->
+            <div class="title-bar-right">
+              <button class="menu-icon" type="button" data-toggle="primaryNav"></button>
+            </div> <!-- /.title-bar-right -->
+          </div> <!-- /.title-bar -->
+        {% endblock %}
+
+        {% block content %}
+          <main class="page-content row">
+            <section class="post-list small-12 columns">
+              <p>Sorry, no entries match your criteria</p>
+            </section> <!-- /.post-list.small-12.columns -->
+          </main> <!-- /.page-content.row -->
+        {% endblock %}
+
+        {% block footer %}
+          <hr>
+          <footer class="site-footer" role="contentinfo">
+            {% include 'footer.twig' %}
+          </footer> <!-- /.site-footer -->
+          <a class="exit-off-canvas"></a>
+        {% endblock %}
+
+        {{cta}}
+      </div> <!-- /.off-canvas-content -->
+    </div> <!-- /.off-canvas-wrapper-inner -->
+  </div> <!-- /.off-canvas-wrapper -->
+  {{ function('wp_footer') }}
+</body>

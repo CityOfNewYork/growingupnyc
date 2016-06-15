@@ -6,7 +6,7 @@
 
 [**Confluence Documentation**](https://confluence.bluestatedigital.com/display/WPD/Growing+Up+NYC)
 
-[**Style Guide**](http://dev-guny.pantheonsite.io/wp-content/themes/guny/assets/styleguide)
+[**Style Guide**](http://guny.wp.local/wp-content/themes/guny/assets/styleguide)
 
 ---
 ## Technical Details

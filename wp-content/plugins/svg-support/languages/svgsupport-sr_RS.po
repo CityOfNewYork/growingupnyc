@@ -1,62 +1,141 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: SVG Support v2.1.4\n"
+"Project-Id-Version: SVG Support 2.2.3.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2014-08-08 10:51+0100\n"
-"Last-Translator: jelena kovacevic <jecajeca260@gmail.com>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2016-05-16 20:19:06+00:00\n"
+"PO-Revision-Date: Mon May 16 2016 13:54:09 GMT-0700 (PDT)\n"
+"Last-Translator: root <benbodhi@gmail.com>\n"
+"Language-Team: Benbodhi <wp@benbodhi.com>\n"
+"Language: Serbian\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10 >= 2 && "
+"n%10<=4 &&(n%100<10||n%100 >= 20)? 1 : 2)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 1.5.5\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
-"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Generator: Loco - https://localise.biz/\n"
+"X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
+"__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
+"_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
+"esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
+"esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
 "X-Poedit-Basepath: ../\n"
 "X-Textdomain-Support: yes\n"
-"Language: en_AU\n"
 "X-Poedit-SearchPath-0: .\n"
+"X-Loco-Target-Locale: sr_RS"
 
-# @ svgsupport
-#: admin/admin-init.php:12
-msgid "SVG Support Options and Instructions"
-msgstr "SVG opcije podrške i uputstva"
+#. URI of the plugin
+msgid "http://wordpress.org/plugins/svg-support"
+msgstr ""
 
-# @ svgsupport
-#. translators: plugin header field 'Name'
-#: admin/admin-init.php:13 svg-support.php:0
+#: ../admin/plugin-action-meta-links.php:32
+msgid "$25 Free Credit from GoWebben"
+msgstr ""
+
+#: ../admin/svgs-settings-page.php:57
+msgid "Output JS in Footer?"
+msgstr ""
+
+#: ../admin/svgs-settings-page.php:62
+msgid ""
+" Normally, scripts are placed in <code>head</code> of the HTML document. If "
+"this parameter is true, the script is placed before the closing "
+"<code>body</code> tag. This requires the theme to have the "
+"<code>wp_footer()</code> template tag in the appropriate place."
+msgstr ""
+
+#: ../admin/svgs-settings-page.php:68
+msgid "Automatically insert class?"
+msgstr ""
+
+#: ../admin/svgs-settings-page.php:73
+msgid ""
+" Checking this will make sure that either the default class or the custom "
+"one you set below is inserted into the style attributes of <code>img</code> "
+"tags when you insert images. Additionally, it will remove all of the default "
+"WordPress classes."
+msgstr ""
+
+#: ../admin/svgs-settings-page.php:112
+msgid "Please Note:"
+msgstr ""
+
+#: ../admin/svgs-settings-page.php:113
+msgid ""
+"- You will need to set your own height and width in your CSS for SVG files "
+"to display correctly."
+msgstr ""
+
+#: ../admin/svgs-settings-page.php:114
+msgid ""
+"- Your uploaded image needs to be an SVG file for this plugin to replace the "
+"img tag with the inline SVG code. It will not create SVG files for you."
+msgstr ""
+
+#: ../admin/svgs-settings-page.php:131
+msgid "Plugin Features"
+msgstr ""
+
+#: ../admin/svgs-settings-page.php:145
+msgid "About The Plugin"
+msgstr ""
+
+#: ../admin/svgs-settings-page.php:157
+msgid "GoWebben Hosting"
+msgstr ""
+
+#: ../admin/svgs-settings-page.php:159
+msgid "Claim your FREE $25 credit from"
+msgstr ""
+
+#: ../admin/svgs-settings-page.php:159
+msgid ""
+"No catch, just free credit for using this plugin! It will be applied "
+"automatically using the link provided, but in any case you can simply use "
+"code: SVGSUPPORT during checkout."
+msgstr ""
+
 msgid "SVG Support"
 msgstr "SVG Podrška"
 
-# @ svgsupport
-#: admin/admin-init.php:26
+msgid ""
+"Allow SVG file uploads using the WordPress Media Library uploader plus "
+"direct styling of SVG elements using CSS."
+msgstr ""
+"Aktivirajte učitavanje SVG datoteka uz pomoć WordPress Media Library "
+"uploader-a i direktno stilizovanje SVG elemenata uz pomoć CSS-a."
+
+msgid "Benbodhi"
+msgstr "Benbodhi"
+
+msgid "http://benbodhi.com"
+msgstr "http://benbodhi.com"
+
+#: ../admin/admin-init.php:15
+msgid "SVG Support Options and Instructions"
+msgstr "SVG opcije podrške i uputstva"
+
+#: ../admin/admin-init.php:29
 msgid "You can't play with this."
 msgstr "Ne možete se igrati ovim."
 
-# @ svgsupport
-#: admin/plugin-action-meta-links.php:27
+#: ../admin/plugin-action-meta-links.php:30
 msgid "Get Support"
 msgstr "Obezbedite podršku"
 
-# @ svgsupport
-#: admin/plugin-action-meta-links.php:28
+#: ../admin/plugin-action-meta-links.php:31
 msgid "Donate to author"
 msgstr "Donirajte autoru"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:4
+#: ../admin/svgs-settings-page.php:4
 msgid "SVG Support Settings and Usage"
 msgstr "SVG postavke podrške i upotreba"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:12
+#: ../admin/svgs-settings-page.php:12
 msgid "Introduction"
 msgstr "Uvod"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:15
+#: ../admin/svgs-settings-page.php:15
 msgid ""
 "When using SVG images on your WordPress site, it can be hard to style "
 "elements within the SVG using CSS. <strong>Now you can, easily!</strong>"
@@ -65,8 +144,7 @@ msgstr ""
 "stilizujete elemente u SVG-u uz pomoć CSS-a. <strong>Sad to možete uraditi s "
 "lakoćom!</strong>"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:16
+#: ../admin/svgs-settings-page.php:16
 msgid ""
 "This plugin not only provides SVG Support like the name says, it also allows "
 "you to easily embed your full SVG file's code using a simple IMG tag. By "
@@ -80,44 +158,38 @@ msgstr ""
 "elementima, ovaj plugin dinamički zamenjuje bilo koje IMG elemente koji "
 "sadrže <code>style-svg</code klasu vašim kompletnim SVG-om."
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:17
+#: ../admin/svgs-settings-page.php:17
 msgid ""
 "The main purpose of this is to allow styling of SVG elements. Usually your "
-"styling options are restricted when using <code>embed</code>, <code>object</"
-"code> or <code>img</code> tags alone."
+"styling options are restricted when using <code>embed</code>, "
+"<code>object</code> or <code>img</code> tags alone."
 msgstr ""
 "Osnovna svrha ovoga je da omogući stilizovanje SVG elemenata. Obično su "
-"opcije stilizovanja ograničene ako koristite samo oznake: <code>embed</"
-"code>, <code>object</code> or <code>img</code>."
+"opcije stilizovanja ograničene ako koristite samo oznake: <code>embed</code>,"
+" <code>object</code> or <code>img</code>."
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:34
+#: ../admin/svgs-settings-page.php:34
 msgid "Settings"
 msgstr "Postavke"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:46
+#: ../admin/svgs-settings-page.php:46
 msgid "Restrict to Administrators"
 msgstr "Ograniči administratorima"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:51
+#: ../admin/svgs-settings-page.php:51 ../admin/svgs-settings-page.php:62 ..
+#: admin/svgs-settings-page.php:73
 msgid "Yes"
 msgstr "Da"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:51
+#: ../admin/svgs-settings-page.php:51
 msgid " Restricts SVG upload priveledges to Administrators."
 msgstr "Ograničava privilegije SVG učitavanja administratorima."
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:56
+#: ../admin/svgs-settings-page.php:78
 msgid "CSS Class to target"
 msgstr "CSS meta za ciljanje"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:59
+#: ../admin/svgs-settings-page.php:81
 msgid ""
 "The default target class is <code>style-svg</code>. You can change it to "
 "your own class such as <code>my-class</code> by typing it here.<br />Leave "
@@ -127,26 +199,21 @@ msgstr ""
 "svoju klasu, kao što je <code>my-class</code> tako što ćete je ukucati ovde."
 "<br /> Ostavite prazno polje da biste koristili podrazumevanu klasu."
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:65
+#: ../admin/svgs-settings-page.php:87
 msgid "Save Changes"
 msgstr "Sačuvaj izmene"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:76
+#: ../admin/svgs-settings-page.php:98
 msgid "Usage"
 msgstr "Upotreba"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:79
-msgid ""
-"You can simply upload SVG images to your media library like any other file."
+#: ../admin/svgs-settings-page.php:101
+msgid "You can simply upload SVG images to your media library like any other file."
 msgstr ""
 "Jednostavno, možete učitati SVG slike u svoju biblioteku medija kao i bilo "
 "koju drugu datoteku."
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:80
+#: ../admin/svgs-settings-page.php:102
 msgid ""
 "Now, embed your SVG image like a standard image with the addition of adding "
 "the class <code>style-svg</code> (or your custom class from above) to any "
@@ -156,18 +223,15 @@ msgstr ""
 "<code>style-svg</code> (ili svoje prilagođene navedene klase) u bilo koju od "
 "IMG oznaka koju želite da ovaj plugin zameni vašim pravim SVG kodom."
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:81
+#: ../admin/svgs-settings-page.php:103
 msgid "For example:"
 msgstr "Na primer:"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:84
+#: ../admin/svgs-settings-page.php:106
 msgid "or"
 msgstr "ili"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:87
+#: ../admin/svgs-settings-page.php:109
 msgid ""
 "The whole IMG tag element will now be dynamically replaced by the actual "
 "code of your SVG, making the inner content targetable."
@@ -175,111 +239,46 @@ msgstr ""
 "Sada će ceo IMG element oznake biti dinamički zamenjen pravim kodom ili "
 "vašim SVG-om, što znači da će unutrašnji sadržaj biti raspoloživ za ciljanje."
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:88
+#: ../admin/svgs-settings-page.php:110
 msgid "This allows you to target elements within your SVG using CSS."
 msgstr "Omogućava vam da ciljate elemente u svom SVG-u koristeći CSS."
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:90
-msgid ""
-"Note: Your uploaded image needs to be an SVG file for this plugin to replace "
-"the img tag with the inline SVG code. It will not create SVG files for you."
-msgstr ""
-"Napomena: Vaša učitana slika treba da bude SVG datoteka da bi ovaj plugin "
-"zamenio img oznaku ugrađenim SVG kodom. Neće kreirati SVG datoteke umesto "
-"vas."
-
-# @ svgsupport
-#: admin/svgs-settings-page.php:107
-msgid "Features"
-msgstr "Funkcije"
-
-# @ svgsupport
-#: admin/svgs-settings-page.php:110
+#: ../admin/svgs-settings-page.php:134
 msgid "SVG Support for your media library"
 msgstr "SVG podrška za vaše biblioteke medija"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:111
+#: ../admin/svgs-settings-page.php:135
 msgid "Style SVG elements directly using CSS"
 msgstr "Stilizuj SVG elemente direktno koristeći CSS"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:112
+#: ../admin/svgs-settings-page.php:136
 msgid "Restrict to Administrators only"
 msgstr "Ograniči samo za administratore"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:113
+#: ../admin/svgs-settings-page.php:137
 msgid "Extremely Simple To Use"
 msgstr "Izuzetno jednostavan za upotrebu"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:121
-msgid "About the plugin"
-msgstr "O plugin-u"
-
-# @ svgsupport
-#: admin/svgs-settings-page.php:123
+#: ../admin/svgs-settings-page.php:147
 msgid "You can read about this plugin in detail on"
 msgstr "O ovom plugin-u detaljnije možete pročitati na:"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:123
+#: ../admin/svgs-settings-page.php:147
 msgid "The WordPress Plugin Repository"
 msgstr "WordPress Plugin Repository"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:124
+#: ../admin/svgs-settings-page.php:148
 msgid "Need help?"
 msgstr "Potrebna vam je pomoć?"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:124
+#: ../admin/svgs-settings-page.php:148
 msgid "Visit Support"
 msgstr "Posetite podršku"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:125
+#: ../admin/svgs-settings-page.php:149
 msgid "Buy Benbodhi a Beer &rarr;"
 msgstr "Kupite Benbodhi-ju pivo &rarr;"
 
-# @ svgsupport
-#: admin/svgs-settings-page.php:126
+#: ../admin/svgs-settings-page.php:150
 msgid "from"
 msgstr "od"
-
-# @ svgsupport
-#. translators: plugin header field 'PluginURI'
-#: svg-support.php:0
-msgid "http://wordpress.org/plugins/svg-support/"
-msgstr "http://wordpress.org/plugins/svg-support/"
-
-# @ svgsupport
-#. translators: plugin header field 'Description'
-#: svg-support.php:0
-msgid ""
-"Allow SVG file uploads using the WordPress Media Library uploader plus "
-"direct styling of SVG elements using CSS."
-msgstr ""
-"Aktivirajte učitavanje SVG datoteka uz pomoć WordPress Media Library "
-"uploader-a i direktno stilizovanje SVG elemenata uz pomoć CSS-a."
-
-# @ svgsupport
-#. translators: plugin header field 'Author'
-#: svg-support.php:0
-msgid "Benbodhi"
-msgstr "Benbodhi"
-
-# @ svgsupport
-#. translators: plugin header field 'AuthorURI'
-#: svg-support.php:0
-msgid "http://benbodhi.com"
-msgstr "http://benbodhi.com"
-
-# @ svgsupport
-#. translators: plugin header field 'Version'
-#: svg-support.php:0
-msgid "2.1.4"
-msgstr "2.1.4"

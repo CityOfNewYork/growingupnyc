@@ -27,9 +27,9 @@ function bodhi_svgs_plugin_meta_links( $links, $file ) {
 		return array_merge(
 			$links,
 			array(
-				'<a target="_blank" href="http://wordpress.org/support/plugin/svg-support">' . __( 'Get Support', 'svgsupport') . '</a>',
-				'<a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F7W2NUFAVQGW2">' . __( 'Donate to author', 'svgsupport') . '</a>',
-				'<a target="_blank" href="https://secure.gowebben.com/cart.php?promocode=SVGSUPPORT">' . __( '$25 Free Credit from GoWebben', 'svgsupport') . '</a>'
+				'<a target="_blank" href="http://wordpress.org/support/plugin/svg-support">' . __( 'Get Support', 'svg-support') . '</a>',
+				'<a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=F7W2NUFAVQGW2">' . __( 'Donate to author', 'svg-support') . '</a>',
+				'<a target="_blank" href="https://secure.gowebben.com/cart.php?promocode=SVGSUPPORT">' . __( '$25 Free Credit from GoWebben', 'svg-support') . '</a>'
 			)
 		);
 	}

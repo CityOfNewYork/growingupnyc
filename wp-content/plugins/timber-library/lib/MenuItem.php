@@ -15,10 +15,9 @@ class MenuItem extends Core implements CoreInterface {
 	public $class = '';
 	public $level = 0;
 	public $post_name;
-	public $type;
 	public $url;
 
-	public $PostClass = 'TimberPost';
+	public $PostClass = 'Timber\Post';
 
 	protected $_name;
 	protected $_menu_item_object_id;
@@ -114,7 +113,7 @@ class MenuItem extends Core implements CoreInterface {
 	 * @deprecated 1.0
 	 * @return string an absolute URL http://example.org/my-page
 	 */
-	function get_link() {
+	public function get_link() {
 		return $this->link();
 	}
 
@@ -124,7 +123,7 @@ class MenuItem extends Core implements CoreInterface {
 	 * @deprecated 1.0
 	 * @return string a relative url /my-page
 	 */
-	function get_path() {
+	public function get_path() {
 		return $this->path();
 	}
 
@@ -133,7 +132,7 @@ class MenuItem extends Core implements CoreInterface {
 	 *
 	 * @param TimberMenuItem $item
 	 */
-	function add_child( $item ) {
+	public function add_child( $item ) {
 		if ( !$this->has_child_class ) {
 			$this->add_class('menu-item-has-children');
 			$this->has_child_class = true;
@@ -151,9 +150,9 @@ class MenuItem extends Core implements CoreInterface {
 	/**
 	 *
 	 * @internal
-	 * @return bool 
+	 * @return boolean|null  
 	 */
-	function update_child_levels() {
+	public function update_child_levels() {
 		if ( is_array($this->children) ) {
 			foreach ( $this->children as $child ) {
 				$child->level = $this->level + 1;
@@ -168,7 +167,7 @@ class MenuItem extends Core implements CoreInterface {
 	 * @internal
 	 * @param array|object  $data
 	 */
-	function import_classes( $data ) {
+	public function import_classes( $data ) {
 		if ( is_array($data) ) {
 			$data = (object) $data;
 		}
@@ -183,7 +182,7 @@ class MenuItem extends Core implements CoreInterface {
 	 * @internal
 	 * @return array|bool
 	 */
-	function get_children() {
+	public function get_children() {
 		if ( isset($this->children) ) {
 			return $this->children;
 		}
@@ -199,11 +198,20 @@ class MenuItem extends Core implements CoreInterface {
 	 * ```
 	 * @return bool
 	 */
-	function is_external() {
-		if ( $this->type != 'custom' ) {
+	public function is_external() {
+		if ( $this->type() != 'custom' ) {
 			return false;
 		}
 		return URLHelper::is_external($this->url);
+	}
+
+	/**
+	 * Return the type of the menu item
+	 * @since 1.0.4
+	 * @return string
+	 */
+	public function type() {
+		return $this->_menu_item_type;
 	}
 
 	/**

@@ -3,6 +3,7 @@
 {% block content %}
   <main class="page-content row">
     <section class="post-list small-12 columns">
+      This is the index template
       {% block post_list %}
         {% for post in posts %}
           {% include ['teaser-'~post.post_type~'.twig', 'teaser.twig'] %}

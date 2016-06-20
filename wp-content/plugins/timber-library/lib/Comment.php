@@ -39,18 +39,19 @@ class Comment extends Core implements CoreInterface {
 	public $comment_date;
 	public $comment_ID;
 	public $user_id;
+	public $post_id;
 	public $comment_author;
 
-	public $children = array();
+	protected $children = array();
 
 	/**
 	 * @param int $cid
 	 */
-	function __construct( $cid ) {
+	public function __construct( $cid ) {
 		$this->init($cid);
 	}
 
-	function __toString() {
+	public function __toString() {
 		return $this->content();
 	}
 
@@ -58,7 +59,7 @@ class Comment extends Core implements CoreInterface {
 	 * @internal
 	 * @param integer $cid
 	 */
-	function init( $cid ) {
+	public function init( $cid ) {
 		$comment_data = $cid;
 		if ( is_integer($cid) ) {
 			$comment_data = get_comment($cid);
@@ -152,6 +153,23 @@ class Comment extends Core implements CoreInterface {
 
 	/**
 	 * @api
+	 * @return array Comments
+	 */
+	public function children() {
+		return $this->children;
+	}
+
+	/**
+	 */
+	public function add_child( Comment $child_comment ) {
+		if ( !is_array($this->children) ) {
+			$this->children = array();
+		}
+		return $this->children[] = $child_comment;
+	}
+
+	/**
+	 * @api
 	 * @example
 	 * ```twig
 	 * {% if comment.approved %}
@@ -163,7 +181,7 @@ class Comment extends Core implements CoreInterface {
 	 * @return boolean
 	 */
 	public function approved() {
-		return $this->comment_approved;
+		return Helper::is_true($this->comment_approved);		
 	}
 
 	/**

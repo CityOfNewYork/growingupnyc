@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: svg, vector, css, style, mime, mime type, embed, img, inline
 Requires at least: 4.0
 Tested up to: 4.6
-Stable tag: 2.2.3
+Stable tag: 2.2.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -110,6 +110,14 @@ I will put the answers to any questions asked here.
 
 == Changelog ==
 
+= 2.2.3.2 =
+
+* Changed text domain to match plugin slug for localization.
+
+= 2.2.3.1 =
+
+* Attempt to fix ability to translate
+
 = 2.2.3 =
 
 * Modified code in svg-support/js/svg-inline.js and svg-support/js/min/svg-inline-min.js to allow JS control of the SVG elements and detect if they have been loaded (IMG tag swapped out). Thanks to [laurosello](https://wordpress.org/support/profile/laurosollero) for this suggestion and code contribution.
@@ -189,6 +197,14 @@ I will put the answers to any questions asked here.
 * Initial Release.
 
 == Upgrade Notice ==
+
+= 2.2.3.2 =
+
+* Changed text domain to match plugin slug for localization.
+
+= 2.2.3.1 =
+
+* This release attempts to fix translation issues.
 
 = 2.2.3 =
 

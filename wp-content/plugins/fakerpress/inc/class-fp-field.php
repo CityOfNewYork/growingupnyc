@@ -824,7 +824,7 @@ class Field {
 		$max->placeholder = esc_attr__( 'e.g.: 12', 'fakerpress' );
 
 		$content[] = self::type_input( $min, null, 'string', array() );
-		$content[] = '<div class="dashicons dashicons-arrow-right-alt2 dashicon-date" style="display: inline-block;"></div>';
+		$content[] = '<div title="' . esc_attr__( 'To', 'fakerpress' ) . '" class="dashicons dashicons-arrow-right-alt2 dashicon-date" style="display: inline-block;"></div>';
 		$content[] = self::type_input( $max, null, 'string', array() );
 
 		if ( is_a( $container, __CLASS__ ) ){
@@ -941,6 +941,7 @@ class Field {
 		$terms->_name[] = 'terms';
 		$terms->type = 'dropdown';
 		$terms->multiple = true;
+		$terms->description = esc_html__( 'If you do not select any, the plugin will choose from all the existing terms.', 'fakerpress' );
 		$terms->{'data-source'} = 'search_terms';
 
 		$terms->placeholder = esc_attr__( 'Which terms can be used', 'fakerpress' );
@@ -950,8 +951,8 @@ class Field {
 		$rate_container = clone $container;
 		$rate_container->id[] = 'rate';
 		$rate_container->type .= 'rate';
-		$rate_container->label = __( 'Rate', 'fakerpress' );
-		$rate_container->description = __( 'Percentage rate of posts that will have terms generated for the amount below', 'fakerpress' );
+		$rate_container->label = esc_html__( 'Rate', 'fakerpress' );
+		$rate_container->description = esc_html__( 'Percentage rate of posts that will have terms generated for the amount below', 'fakerpress' );
 		$rate_container->blocks = $blocks;
 
 		$rate = clone $field;
@@ -968,8 +969,8 @@ class Field {
 		$qty_container = clone $container;
 		$qty_container->id[] = 'qty';
 		$qty_container->type .= '_qty';
-		$qty_container->label = __( 'Quantity', 'fakerpress' );
-		$qty_container->description = __( 'How many terms will be selected', 'fakerpress' );
+		$qty_container->label = esc_html__( 'Quantity', 'fakerpress' );
+		$qty_container->description = __( 'How many terms will be selected. <br> E.g.: From 1 to 4 or just fill the first field for an exact number', 'fakerpress' );
 		$qty_container->blocks = $blocks;
 
 		$qty = clone $field;
@@ -1174,7 +1175,6 @@ class Field {
 				$range->class = array();
 				$range->label = __( 'Range of possible numbers', 'fakerpress' );
 				$range->_min = 0;
-				$range->_max = 9;
 
 				$html[] = Field::wrapper( Field::type_range( $range, null, 'string' ), $range );
 				$html[] = Field::wrapper( Field::type_number( $default->weight, null, 'string' ), $default->weight );

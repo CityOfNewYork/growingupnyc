@@ -13,15 +13,15 @@ module.exports = {
     ],
   },
   externals: {
-    'jquery': 'jQuery',
+    //'jquery': 'jQuery',
   },
   resolve: {
     modulesDirectories: ['src', 'node_modules']
   },
   plugins: [
     new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery'
+      //$: 'jquery',
+      //jQuery: 'jquery'
     })
   ]
 };

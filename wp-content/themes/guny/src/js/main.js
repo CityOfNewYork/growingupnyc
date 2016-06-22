@@ -1,8 +1,16 @@
 import 'babel-polyfill';
+import globalSearch from './modules/globalSearch.js';
 
-$(document).ready(function() {
-    // Initialize social share functionality
-    // Replace the empty string parameter with your Facebook ID
-    // socialShare('');
+function ready(fn) {
+  if (document.readyState != 'loading'){
+    fn();
+  } else {
+    document.addEventListener('DOMContentLoaded', fn);
+  }
+}
 
-});
+function init() {
+  globalSearch();
+}
+
+ready(init);

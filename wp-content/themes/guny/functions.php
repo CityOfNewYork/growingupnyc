@@ -56,7 +56,7 @@ class gunySite extends TimberSite {
     if (!is_admin()) {
       wp_deregister_script('jquery');
       wp_enqueue_script( 'jquery', get_template_directory_uri() . '/src/js/vendor/jquery.js', array(), '2.1.14', false );
-      wp_enqueue_script( 'site-js', get_template_directory_uri() . '/assets/js/source.js', array( 'jquery' ), '1.0.0', true );
+      wp_enqueue_script( 'site-js', get_template_directory_uri() . '/assets/js/source.js', array(), '1.0.0', true );
     }
   }
 

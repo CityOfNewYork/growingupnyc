@@ -142,8 +142,17 @@
 
 .facetwp-region .facet-name,
 .facetwp-region .template-name {
-    background: #fffbcc;
-    padding: 0 4px;
+    display: inline-block;
+    margin-left: 4px;
+    color: #906DBE;
+}
+
+.facetwp-region .facet-name::after,
+.facetwp-region .template-name::after {
+    font: 400 16px/1 dashicons;
+    content: '\f464';
+    cursor: text;
+    vertical-align: top;
 }
 
 .table-row {
@@ -156,6 +165,7 @@
 }
 
 .facetwp-region input.facet-count,
+.facetwp-region input.facet-soft-limit,
 .facetwp-region input.facet-step,
 .facetwp-region input.facet-parent-term {
     width: 50px;
@@ -216,6 +226,12 @@
 
 .facetwp-region td {
     padding: 0 0 10px 0;
+}
+
+/* Data Source dropdown */
+
+.name-source .fs-dropdown {
+    width: 280px;
 }
 
 /* Code-based facets */
@@ -359,13 +375,8 @@
     padding-bottom: 20px;
 }
 
-.facetwp-region .export-code,
 .facetwp-region .import-code {
     height: 100px;
-}
-
-.facetwp-region .export-code {
-    display: none;
 }
 
 .field-notes {

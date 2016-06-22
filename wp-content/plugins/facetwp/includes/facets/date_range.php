@@ -20,6 +20,9 @@ class FacetWP_Facet_Date_Range
         $value = empty( $value ) ? array( '', '' ) : $value;
         $fields = empty( $params['facet']['fields'] ) ? 'both' : $params['facet']['fields'];
 
+        if ( 'exact' == $fields ) {
+            $output .= '<input type="text" class="facetwp-date facetwp-date-min" value="' . $value[0] . '" placeholder="' . __( 'Date', 'fwp' ) . '" />';
+        }
         if ( 'both' == $fields || 'start_date' == $fields ) {
             $output .= '<input type="text" class="facetwp-date facetwp-date-min" value="' . $value[0] . '" placeholder="' . __( 'Start Date', 'fwp' ) . '" />';
         }
@@ -37,25 +40,34 @@ class FacetWP_Facet_Date_Range
         global $wpdb;
 
         $facet = $params['facet'];
-        $dates = $params['selected_values'];
+        $values = $params['selected_values'];
         $where = '';
 
-        // For dual ranges, find any overlap
-        if ( ! empty( $facet['source_other'] ) ) {
-            $start = empty( $dates[0] ) ? '0000-01-01' : $dates[0];
-            $end = empty( $dates[1] ) ? '3000-12-31' : $dates[1];
+        $start = empty( $values[0] ) ? false : $values[0];
+        $end = empty( $values[1] ) ? false : $values[1];
 
-            // http://stackoverflow.com/a/325964
+        $is_dual = ! empty( $facet['source_other'] ) && $start && $end;
+        $is_intersect = FWP()->helper->facet_setting_is( $facet, 'compare_type', 'intersect' );
+
+        /**
+         * Intersect compare
+         * @link http://stackoverflow.com/a/325964
+         */
+        if ( $is_dual && $is_intersect ) {
             $where .= " AND (LEFT(facet_value, 10) <= '$end')";
             $where .= " AND (LEFT(facet_display_value, 10) >= '$start')";
         }
-        // Otherwise, do a basic comparison
-        else {
-            if ( '' != $dates[0] ) {
-                $where .= " AND LEFT(facet_value, 10) >= '" . $dates[0] . "'";
+        elseif ( 'exact' == $facet['fields'] ) {
+            if ( $start ) {
+                $where .= " AND LEFT(facet_value, 10) = '$start'";
             }
-            if ( '' != $dates[1] ) {
-                $where .= " AND LEFT(facet_display_value, 10) <= '" . $dates[1] . "'";
+        }
+        else {
+            if ( $start ) {
+                $where .= " AND LEFT(facet_value, 10) >= '$start'";
+            }
+            if ( $end ) {
+                $where .= " AND LEFT(facet_display_value, 10) <= '$end'";
             }
         }
 
@@ -76,14 +88,20 @@ class FacetWP_Facet_Date_Range
     wp.hooks.addAction('facetwp/load/date_range', function($this, obj) {
         $this.find('.facet-source').val(obj.source);
         $this.find('.facet-source-other').val(obj.source_other);
+        $this.find('.facet-compare-type').val(obj.compare_type);
         $this.find('.facet-date-fields').val(obj.fields);
     });
 
     wp.hooks.addFilter('facetwp/save/date_range', function($this, obj) {
         obj['source'] = $this.find('.facet-source').val();
         obj['source_other'] = $this.find('.facet-source-other').val();
+        obj['compare_type'] = $this.find('.facet-compare-type').val();
         obj['fields'] = $this.find('.facet-date-fields').val();
         return obj;
+    });
+
+    wp.hooks.addAction('facetwp/change/date_range', function($this) {
+        $this.closest('.facetwp-row').find('.facet-source-other').trigger('change');
     });
 })(jQuery);
 </script>
@@ -95,35 +113,29 @@ class FacetWP_Facet_Date_Range
      * Output any front-end scripts
      */
     function front_scripts() {
-?>
-<link href="<?php echo FACETWP_URL; ?>/assets/js/bootstrap-datepicker/datepicker.css?ver=<?php echo FACETWP_VERSION; ?>" rel="stylesheet">
-<script src="<?php echo FACETWP_URL; ?>/assets/js/bootstrap-datepicker/bootstrap-datepicker.js?ver=<?php echo FACETWP_VERSION; ?>"></script>
-<script>
-(function($) {
-    wp.hooks.addAction('facetwp/refresh/date_range', function($this, facet_name) {
-        var min = $this.find('.facetwp-date-min').val() || '';
-        var max = $this.find('.facetwp-date-max').val() || '';
-        FWP.facets[facet_name] = ('' != min || '' != max) ? [min, max] : [];
-    });
+        $i18n = array(
+            'months' => array(
+                __( 'January', 'fwp' ),
+                __( 'February', 'fwp' ),
+                __( 'March', 'fwp' ),
+                __( 'April', 'fwp' ),
+                __( 'May', 'fwp' ),
+                __( 'June', 'fwp' ),
+                __( 'July', 'fwp' ),
+                __( 'August', 'fwp' ),
+                __( 'September', 'fwp' ),
+                __( 'October', 'fwp' ),
+                __( 'November', 'fwp' ),
+                __( 'December', 'fwp' ),
+            ),
+            'daysMin'   => __( 'S-M-T-W-T-F-S', 'fwp' ),
+            'clear'     => __( 'Clear', 'fwp' ),
+        );
 
-    wp.hooks.addFilter('facetwp/selections/date_range', function(output, params) {
-        return params.selected_values[0] + ' - ' + params.selected_values[1];
-    });
-
-    wp.hooks.addAction('facetwp/ready', function() {
-        $(document).on('facetwp-loaded', function() {
-            $('.facetwp-date').datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                clearBtn: true
-            }).on('changeDate', function(e) {
-                FWP.autoload();
-            });
-        });
-    });
-})(jQuery);
-</script>
-<?php
+        $i18n['daysMin'] = explode( '-', $i18n['daysMin'] );
+        FWP()->display->json['datepicker'] = $i18n;
+        FWP()->display->assets['bootstrap-datepicker.css'] = FACETWP_URL . '/assets/js/bootstrap-datepicker/bootstrap-datepicker.css';
+        FWP()->display->assets['bootstrap-datepicker.js'] = FACETWP_URL . '/assets/js/bootstrap-datepicker/bootstrap-datepicker.min.js';
     }
 
 
@@ -155,10 +167,20 @@ class FacetWP_Facet_Date_Range
             </td>
         </tr>
         <tr>
+            <td><?php _e('Compare type', 'fwp'); ?>:</td>
+            <td>
+                <select class="facet-compare-type">
+                    <option value=""><?php _e( 'Basic', 'fwp' ); ?></option>
+                    <option value="intersect"><?php _e( 'Intersect', 'fwp' ); ?></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <td><?php _e('Fields to show', 'fwp'); ?>:</td>
             <td>
                 <select class="facet-date-fields">
-                    <option value="both"><?php _e( 'Both', 'fwp' ); ?></option>
+                    <option value="both"><?php _e( 'Start + End Dates', 'fwp' ); ?></option>
+                    <option value="exact"><?php _e( 'Exact Date', 'fwp' ); ?></option>
                     <option value="start_date"><?php _e( 'Start Date', 'fwp' ); ?></option>
                     <option value="end_date"><?php _e( 'End Date', 'fwp' ); ?></option>
                 </select>
@@ -173,6 +195,10 @@ class FacetWP_Facet_Date_Range
      * @since 2.1.1
      */
     function index_row( $params, $class ) {
+        if ( $class->is_overridden ) {
+            return $params;
+        }
+
         $facet = FWP()->helper->get_facet_by_name( $params['facet_name'] );
 
         if ( 'date_range' == $facet['type'] && ! empty( $facet['source_other'] ) ) {

@@ -2,11 +2,13 @@ var FWP = {
     'facets': {},
     'template': null,
     'settings': {},
+    'is_reset': false,
     'is_refresh': false,
     'is_bfcache': false,
     'auto_refresh': true,
     'soft_refresh': false,
     'static_facet': null,
+    'used_facets': {},
     'loaded': false,
     'jqXHR': false,
     'extras': {},
@@ -18,18 +20,23 @@ var FWP_Helper = {};
 
 (function($) {
 
-    $(window).on('popstate', function() {
+    // Safari popstate fix
+    $(window).on('load', function() {
+        setTimeout(function() {
+            $(window).on('popstate', function() {
 
-        // Detect browser "back-foward" cache
-        if (FWP.is_bfcache) {
-            FWP.loaded = false;
-        }
+                // Detect browser "back-foward" cache
+                if (FWP.is_bfcache) {
+                    FWP.loaded = false;
+                }
 
-        if ((FWP.loaded || FWP.is_bfcache) && ! FWP.is_refresh) {
-            FWP.is_popstate = true;
-            FWP.refresh();
-            FWP.is_popstate = false;
-        }
+                if ((FWP.loaded || FWP.is_bfcache) && ! FWP.is_refresh) {
+                    FWP.is_popstate = true;
+                    FWP.refresh();
+                    FWP.is_popstate = false;
+                }
+            });
+        }, 0);
     });
 
 
@@ -47,7 +54,7 @@ var FWP_Helper = {};
     }
 
 
-    FWP.serialize = function(obj, prefix) {
+    FWP_Helper.serialize = function(obj, prefix) {
         var str = [];
         var prefix = ('undefined' != typeof prefix) ? prefix : '';
         for (var p in obj) {
@@ -71,10 +78,14 @@ var FWP_Helper = {};
         FWP.is_refresh = true;
 
         // Load facet DOM values
-        FWP.parse_facets();
+        if (! FWP.is_reset) {
+            console.log('Resetting');
+            FWP.parse_facets();
+        }
 
         // Check the URL on pageload
         if (! FWP.loaded) {
+            console.log('Page loaded');
             FWP.load_from_hash();
         }
 
@@ -94,6 +105,7 @@ var FWP_Helper = {};
         FWP.static_facet = null;
         FWP.soft_refresh = false;
         FWP.is_refresh = false;
+        FWP.is_reset = false;
     }
 
 
@@ -108,18 +120,20 @@ var FWP_Helper = {};
             // Plugin hook
             wp.hooks.doAction('facetwp/refresh/' + facet_type, $this, facet_name);
 
-            // Allow for custom loading handler
-            if (false === FWP.soft_refresh && facet_name != FWP.static_facet) {
-                if ('function' != typeof FWP.loading_handler) {
-                    $this.html('<div class="facetwp-loading"></div>');
+            // Support custom loader
+            var do_loader = true;
+            if (FWP.loaded) {
+                if (FWP.soft_refresh || facet_name == FWP.static_facet || 'undefined' != typeof FWP.used_facets[facet_name]) {
+                    do_loader = false;
                 }
-                else {
-                    FWP.loading_handler({
-                        'element': $this,
-                        'facet_name': facet_name,
-                        'facet_type': facet_type
-                    });
-                }
+            }
+
+            if (do_loader) {
+                FWP.loading_handler({
+                    'element': $this,
+                    'facet_name': facet_name,
+                    'facet_type': facet_type
+                });
             }
         });
 
@@ -140,6 +154,11 @@ var FWP_Helper = {};
     }
 
 
+    FWP.loading_handler = function(args) {
+        args.element.html('<div class="facetwp-loading"></div>');
+    }
+
+
     FWP.build_query_string = function() {
         var query_string = '';
 
@@ -156,7 +175,7 @@ var FWP_Helper = {};
             hash = hash.join('&');
 
             // FacetWP URL variables
-            var fwp_vars = FWP.serialize(FWP.facets, 'fwp_');
+            var fwp_vars = FWP_Helper.serialize(FWP.facets, 'fwp_');
 
             if ('' != hash) {
                 query_string += hash;
@@ -166,7 +185,7 @@ var FWP_Helper = {};
             }
         }
         else {
-            query_string = FWP.serialize(FWP.facets);
+            query_string = FWP_Helper.serialize(FWP.facets);
         }
 
         return query_string;
@@ -251,11 +270,13 @@ var FWP_Helper = {};
             'data': {
                 'facets': JSON.stringify(FWP.facets),
                 'static_facet': FWP.static_facet,
+                'used_facets': FWP.used_facets,
                 'http_params': FWP_HTTP,
                 'template': FWP.template,
                 'extras': FWP.extras,
                 'soft_refresh': FWP.soft_refresh ? 1 : 0,
-                'first_load': (FWP.loaded || FWP.is_bfcache) ? 0 : 1,
+                'is_bfcache': FWP.is_bfcache ? 1 : 0,
+                'first_load': FWP.loaded ? 0 : 1,
                 'paged': FWP.paged
             }
         }, function(response) {
@@ -282,6 +303,13 @@ var FWP_Helper = {};
                 }
             }
 
+            // WP Playlist support
+            if ('function' === typeof WPPlaylistView) {
+                $('.facetwp-template .wp-playlist').each(function() {
+                    return new WPPlaylistView({ el: this });
+                });
+            }
+
             // Fire a notification event
             $(document).trigger('facetwp-loaded');
 
@@ -301,7 +329,7 @@ var FWP_Helper = {};
     FWP.render = function(response) {
 
         // Populate the template
-        if (! FWP.is_bfcache && 'get' == FWP.permalink_type) {
+        if (! FWP.loaded && ! FWP.is_bfcache && 'get' == FWP.permalink_type) {
             var inject = false;
         }
         else if ('wp' == FWP.template) {
@@ -312,7 +340,7 @@ var FWP_Helper = {};
         }
 
         if (false !== inject) {
-            if (! wp.hooks.applyFilters('facetwp/template_html', false, { 'response': response })) {
+            if (! wp.hooks.applyFilters('facetwp/template_html', false, { 'response': response, 'html': inject })) {
                 $('.facetwp-template').html(inject);
             }
         }
@@ -351,17 +379,16 @@ var FWP_Helper = {};
 
     FWP.reset = function() {
         FWP.parse_facets();
+        FWP.is_reset = true;
         $.each(FWP.facets, function(f) {
             FWP.facets[f] = [];
         });
-        FWP.set_hash();
-        FWP.fetch_data();
+        FWP.used_facets = {};
+        FWP.refresh();
     }
 
 
-    // Event handlers
-    $(function() {
-
+    FWP.init = function() {
         if (0 < $('.facetwp-sort').length) {
             FWP.extras.sort = 'default';
         }
@@ -412,7 +439,10 @@ var FWP_Helper = {};
                         });
 
                         if ('' != label) {
-                            selections += '<li data-facet="' + key + '">' + label + '</li>';
+                            selections += '<li data-facet="' + key + '">' +
+                                '<span class="facetwp-selection-label">' + FWP.settings.labels[key] + ':</span> ' +
+                                '<span class="facetwp-selection-value">' + label + '</span>' +
+                                '</li>';
                         }
                     }
                 });
@@ -427,13 +457,20 @@ var FWP_Helper = {};
 
         // Click on a user selection
         $(document).on('click', '.facetwp-selections li', function() {
+            if (FWP.is_refresh) {
+                return;
+            }
+
             var facet_name = $(this).attr('data-facet');
+
+            FWP.parse_facets();
+            FWP.is_reset = true;
             FWP.facets[facet_name] = [];
             if ('undefined' != typeof FWP.used_facets) {
                 delete FWP.used_facets[facet_name]; // slider support
             }
-            FWP.set_hash();
-            FWP.fetch_data();
+            delete FWP.facets['paged']; // remove "paged" from URL
+            FWP.refresh();
         });
 
         // Pagination
@@ -461,5 +498,10 @@ var FWP_Helper = {};
         });
 
         FWP.refresh();
+    }
+
+
+    $(function() {
+        FWP.init();
     });
 })(jQuery);

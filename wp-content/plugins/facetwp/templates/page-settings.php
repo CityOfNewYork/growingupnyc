@@ -8,9 +8,11 @@ $i18n = array(
     'Indexing complete' => __( 'Indexing complete', 'fwp' ),
     'Indexing' => __( 'Indexing', 'fwp' ),
     'Saving' => __( 'Saving', 'fwp' ),
+    'Loading' => __( 'Loading', 'fwp' ),
     'Importing' => __( 'Importing', 'fwp' ),
     'Activating' => __( 'Activating', 'fwp' ),
     'Are you sure?' => __( 'Are you sure?', 'fwp' ),
+    'Select some items' => __( 'Select some items', 'fwp' ),
 );
 
 // An array of facet type objects
@@ -62,7 +64,7 @@ $sources = FWP()->helper->get_data_sources();
 
 ?>
 
-<script src="<?php echo FACETWP_URL; ?>/assets/js/event-manager.js?ver=<?php echo FACETWP_VERSION; ?>"></script>
+<script src="<?php echo FACETWP_URL; ?>/assets/js/src/event-manager.js?ver=<?php echo FACETWP_VERSION; ?>"></script>
 <script src="<?php echo FACETWP_URL; ?>/assets/js/src/query-builder.js?ver=<?php echo FACETWP_VERSION; ?>"></script>
 <script src="<?php echo FACETWP_URL; ?>/assets/js/fSelect/fSelect.js?ver=<?php echo FACETWP_VERSION; ?>"></script>
 <?php
@@ -102,23 +104,12 @@ FWP.builder = {
 
     <div class="facetwp-region facetwp-region-welcome about-wrap">
         <h1><?php _e( 'Welcome to FacetWP', 'fwp' ); ?> <span class="version"><?php echo FACETWP_VERSION; ?></span></h1>
-        <div class="about-text">Thank you for choosing FacetWP. Below is a quick introduction to the plugin's key components - Facets and Templates.</div>
-        <div class="welcome-box-wrap">
-            <div class="welcome-box">
-                <h2><?php _e( 'Facets', 'fwp' ); ?></h2>
-                <p>Facets are interactive elements used to narrow lists of content.</p>
-                <a class="button" href="https://facetwp.com/documentation/facet-configuration/" target="_blank">Learn more</a>
-            </div>
-            <div class="welcome-box">
-                <h2><?php _e( 'Templates', 'fwp' ); ?></h2>
-                <p>In order for facets to appear, FacetWP needs to know <strong>which posts to filter upon</strong>. There are two ways to do it:</p>
-                <p><strong>(Option 1) Add a CSS class to your theme file</strong></p>
-                <p>For Search and Archive pages, simply add the CSS class "<strong>facetwp-template</strong>" to an HTML element surrounding the <a href="http://www.elegantthemes.com/blog/tips-tricks/the-wordpress-loop-explained-for-beginners" target="_blank">WordPress Loop</a>. FacetWP will attempt to auto-detect the listing.</p>
-                <p><strong>(Option 2) Create a FacetWP template</strong></p>
-                <p>Within the Templates tab, click "Add new". This method generates a shortcode, which can be pasted into the WYSIWYG editor, a text widget, or into a theme file (see the <code>facetwp_display</code> function).</p>
-                <a class="button" href="https://facetwp.com/documentation/template-configuration/" target="_blank">Learn more</a>
-            </div>
-        </div>
+        <div class="about-text">Thank you for choosing FacetWP. Check out our intro screencast.</div>
+        <iframe src="https://player.vimeo.com/video/162724676?title=0&byline=0&portrait=0" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        <p>
+            <a class="button" href="https://facetwp.com/documentation/facet-configuration/" target="_blank">Learn more about facets</a>
+            <a class="button" href="https://facetwp.com/documentation/template-configuration/" target="_blank">Learn more about templates</a>
+        </p>
     </div>
 
     <!-- Facets tab -->
@@ -194,6 +185,9 @@ FWP.builder = {
             <!-- General settings -->
 
             <table>
+
+<?php if ( 'hash' == FWP()->helper->get_setting( 'permalink_type' ) ) : ?>
+
                 <tr>
                     <td style="width:175px; vertical-align:top">
                         <?php _e( 'Permalink Type', 'fwp' ); ?>
@@ -209,6 +203,9 @@ FWP.builder = {
                         </select>
                     </td>
                 </tr>
+
+<?php endif; ?>
+
                 <tr>
                     <td style="width:175px; vertical-align:top">
                         <?php _e( 'Separators', 'fwp' ); ?>
@@ -229,16 +226,13 @@ FWP.builder = {
                     <td style="width:175px; vertical-align:top">
                         <?php _e( 'Export', 'fwp' ); ?>
                     </td>
-                    <td valign="top" style="width:260px">
+                    <td valign="top">
                         <select class="export-items" multiple="multiple" style="width:250px; height:100px">
                             <?php foreach ( $export as $val => $label ) : ?>
                             <option value="<?php echo $val; ?>"><?php echo $label; ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <div style="margin-top:5px"><a class="button export-submit"><?php _e( 'Export', 'fwp' ); ?></a></div>
-                    </td>
-                    <td valign="top">
-                        <textarea class="export-code" placeholder="Loading..."></textarea>
+                        <a class="button export-submit"><?php _e( 'Export', 'fwp' ); ?></a>
                     </td>
                 </tr>
             </table>

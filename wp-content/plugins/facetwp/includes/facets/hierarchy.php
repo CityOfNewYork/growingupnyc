@@ -14,12 +14,12 @@ class FacetWP_Facet_Hierarchy
     function render( $params ) {
         global $wpdb;
 
-
-        $output = '';
         $facet = $params['facet'];
-        $selected_values = (array) $params['selected_values'];
+        $from_clause = $wpdb->prefix . 'facetwp_index f';
         $where_clause = $params['where_clause'];
 
+        $output = '';
+        $selected_values = (array) $params['selected_values'];
 
         // Orderby
         $orderby = 'counter DESC, f.facet_display_value ASC';
@@ -90,11 +90,17 @@ class FacetWP_Facet_Hierarchy
             }
         }
 
+        // Update the WHERE clause
+        $where_clause .= " AND parent_id = '$facet_parent_id'";
+
+        $orderby = apply_filters( 'facetwp_facet_orderby', $orderby, $facet );
+        $from_clause = apply_filters( 'facetwp_facet_from', $from_clause, $facet );
+        $where_clause = apply_filters( 'facetwp_facet_where', $where_clause, $facet );
 
         $sql = "
         SELECT f.facet_value, f.facet_display_value, COUNT(*) AS counter
-        FROM {$wpdb->prefix}facetwp_index f
-        WHERE f.facet_name = '{$facet['name']}' $where_clause AND parent_id = '$facet_parent_id'
+        FROM $from_clause
+        WHERE f.facet_name = '{$facet['name']}' $where_clause
         GROUP BY f.facet_value
         ORDER BY $orderby";
 
@@ -102,14 +108,14 @@ class FacetWP_Facet_Hierarchy
 
         $key = 0;
 
-        if ( !empty( $prev_links ) ) {
+        if ( ! empty( $prev_links ) ) {
             $output .= '<div class="facetwp-depth">';
         }
 
-        if ( !empty( $results ) ) {
+        if ( ! empty( $results ) ) {
             foreach ( $results as $key => $result ) {
                 if ( $key == (int) $num_visible ) {
-                    $output .= '<div class="facetwp-collapsed facetwp-hidden">';
+                    $output .= '<div class="facetwp-overflow facetwp-hidden">';
                 }
                 $output .= '<div class="facetwp-link" data-value="' . $result->facet_value . '">';
                 $output .= $result->facet_display_value . ' <span class="facetwp-counter">(' . $result->counter . ')</span>';
@@ -119,15 +125,15 @@ class FacetWP_Facet_Hierarchy
 
         if ( $num_visible <= $key ) {
             $output .= '</div>';
-            $output .= '<div class="facetwp-toggle">+ ' . __( 'More', 'fwp' ) . '</div>';
-            $output .= '<div class="facetwp-toggle facetwp-hidden">- ' . __( 'Less', 'fwp' ) . '</div>';
+            $output .= '<a class="facetwp-toggle">' . __( 'See more', 'fwp' ) . '</a>';
+            $output .= '<a class="facetwp-toggle facetwp-hidden">' . __( 'See less', 'fwp' ) . '</a>';
         }
 
         for ( $i = 0; $i <= $max_depth; $i++ ) {
             $output .= '</div>';
         }
 
-        if ( !empty( $prev_links ) ) {
+        if ( ! empty( $prev_links ) ) {
             $output .= '</div>';
         }
 
@@ -170,45 +176,6 @@ class FacetWP_Facet_Hierarchy
         obj['orderby'] = $this.find('.facet-orderby').val();
         obj['count'] = $this.find('.facet-count').val();
         return obj;
-    });
-})(jQuery);
-</script>
-<?php
-    }
-
-
-    /**
-     * Output any front-end scripts
-     */
-    function front_scripts() {
-?>
-<script>
-(function($) {
-    wp.hooks.addAction('facetwp/refresh/hierarchy', function($this, facet_name) {
-        var selected_values = [];
-        $this.find('.facetwp-link.checked').each(function() {
-            selected_values.push($(this).attr('data-value'));
-        });
-        FWP.facets[facet_name] = selected_values;
-    });
-
-    wp.hooks.addFilter('facetwp/selections/hierarchy', function(output, params) {
-        return params.el.find('.facetwp-link.checked').text();
-    });
-
-    wp.hooks.addAction('facetwp/ready', function() {
-        $(document).on('click', '.facetwp-facet .facetwp-link', function() {
-            $(this).closest('.facetwp-facet').find('.facetwp-link').removeClass('checked');
-            if ('' != $(this).attr('data-value')) {
-                $(this).addClass('checked');
-            }
-            FWP.autoload();
-        });
-
-        $(document).on('click', '.facetwp-facet .facetwp-toggle', function() {
-            $(this).closest('.facetwp-facet').find('.facetwp-toggle').toggleClass('facetwp-hidden');
-            $(this).closest('.facetwp-facet').find('.facetwp-collapsed').toggleClass('facetwp-hidden');
-        });
     });
 })(jQuery);
 </script>

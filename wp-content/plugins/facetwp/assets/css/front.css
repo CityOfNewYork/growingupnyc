@@ -2,9 +2,12 @@
     margin-bottom: 40px;
 }
 
-.facetwp-type-checkboxes {
-    overflow: auto;
-    max-height: 160px;
+.facetwp-type-checkboxes .facetwp-depth {
+    display: none;
+}
+
+.facetwp-type-checkboxes .facetwp-depth.visible {
+    display: inherit;
 }
 
 .facetwp-checkbox {
@@ -22,6 +25,10 @@
 .facetwp-checkbox.disabled {
     opacity: 0.4;
     cursor: default;
+}
+
+.facetwp-checkbox .facetwp-expand {
+    float: right;
 }
 
 .facetwp-pager-label {
@@ -49,6 +56,13 @@
     -webkit-animation: rotate 700ms infinite linear;
     -moz-animation: rotate 700ms infinite linear;
     animation: rotate 700ms infinite linear;
+}
+
+/* fSelect */
+
+.facetwp-type-fselect .fs-wrap,
+.facetwp-type-fselect .fs-dropdown {
+    width: 220px;
 }
 
 /* Hierarchy */
@@ -91,6 +105,39 @@
 
 .noUi-target {
     padding: 0 15px;
+}
+
+/* Search */
+
+.facetwp-search-wrap {
+    position: relative;
+}
+
+.facetwp-search {
+    padding-right: 28px;
+}
+
+.facetwp-btn {
+    top: 0;
+    right: 5px;
+    line-height: 1;
+    position: absolute;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.facetwp-btn:before {
+    display: inline-block;
+    content: '';
+    width: 20px;
+    height: 20px;
+    background: url(../images/icon-search.png) no-repeat;
+    background-size: 20px 20px;
+}
+
+.facetwp-btn.reset:before {
+    background: url(../images/icon-close.png) no-repeat;
+    background-size: 20px 20px;
 }
 
 /* Proximity */

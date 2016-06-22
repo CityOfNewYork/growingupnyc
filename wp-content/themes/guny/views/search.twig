@@ -1,0 +1,15 @@
+{% extends "base.twig" %}
+
+{% block content %}
+  <main class="page-content row">
+    <section class="facets">
+      {{facet_categories}}
+      {{facet_tags}}
+    </section>
+    <section class="post-list">
+      {{search}}
+      {{results}}
+      {{pagination}}
+    </section> <!-- /.post-list -->
+  </main> <!-- /.page-content.row -->
+{% endblock %}

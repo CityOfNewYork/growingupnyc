@@ -19,7 +19,7 @@ class FacetWP_Facet_Autocomplete
 
         $output = '';
         $value = (array) $params['selected_values'];
-        $value = empty( $value ) ? '' : $value[0];
+        $value = empty( $value ) ? '' : stripslashes( $value[0] );
         $output .= '<input type="search" class="facetwp-autocomplete" value="' . $value . '" placeholder="' . __( 'Start typing...', 'fwp' ) . '" />';
         $output .= '<input type="button" class="facetwp-autocomplete-update" value="' . __( 'Update', 'fwp' ) . '" />';
         return $output;
@@ -35,11 +35,7 @@ class FacetWP_Facet_Autocomplete
         $facet = $params['facet'];
         $selected_values = $params['selected_values'];
         $selected_values = is_array( $selected_values ) ? $selected_values[0] : $selected_values;
-
-        // like_escape was deprecated in 4.0
-        $selected_values = method_exists( $wpdb, 'esc_like' ) ?
-            $wpdb->esc_like( $selected_values ) :
-            like_escape( $selected_values );
+        $selected_values = stripslashes( $selected_values );
 
         if ( empty( $selected_values ) ) {
             return 'continue';
@@ -47,8 +43,11 @@ class FacetWP_Facet_Autocomplete
 
         $sql = "
         SELECT DISTINCT post_id FROM {$wpdb->prefix}facetwp_index
-        WHERE facet_name = '{$facet['name']}' AND facet_display_value LIKE '%$selected_values%'";
-        return $wpdb->get_col( $sql );
+        WHERE facet_name = %s AND facet_display_value LIKE %s";
+
+        return $wpdb->get_col(
+            $wpdb->prepare( $sql, $facet['name'], '%' . $selected_values . '%' )
+        );
     }
 
 
@@ -77,46 +76,9 @@ class FacetWP_Facet_Autocomplete
      * Output any front-end scripts
      */
     function front_scripts() {
-?>
-<script src="<?php echo FACETWP_URL; ?>/assets/js/jquery-autocomplete/jquery.autocomplete.min.js"></script>
-<link href="<?php echo FACETWP_URL; ?>/assets/js/jquery-autocomplete/jquery.autocomplete.css" rel="stylesheet">
-<script>
-(function($) {
-    wp.hooks.addAction('facetwp/refresh/autocomplete', function($this, facet_name) {
-        var val = $this.find('.facetwp-autocomplete').val() || '';
-        FWP.facets[facet_name] = val;
-    });
-
-    $(document).on('facetwp-loaded', function() {
-        $('.facetwp-autocomplete').each(function() {
-            var $this = $(this);
-            $this.autocomplete({
-                serviceUrl: ajaxurl,
-                type: 'POST',
-                minChars: 3,
-                deferRequestBy: 200,
-                showNoSuggestionNotice: true,
-                noSuggestionNotice: 'No results',
-                params: {
-                    action: 'facetwp_autocomplete_load',
-                    facet_name: $this.closest('.facetwp-facet').attr('data-name')
-                }
-            });
-        });
-    });
-
-    $(document).on('keyup', '.facetwp-autocomplete', function(e) {
-        if (13 == e.which) {
-            FWP.autoload();
-        }
-    });
-
-    $(document).on('click', '.facetwp-autocomplete-update', function() {
-        FWP.autoload();
-    });
-})(jQuery);
-</script>
-<?php
+        FWP()->display->json['no_results'] = __( 'No results', 'fwp' );
+        FWP()->display->assets['jquery.autocomplete.js'] = FACETWP_URL . '/assets/js/jquery-autocomplete/jquery.autocomplete.min.js';
+        FWP()->display->assets['jquery.autocomplete.css'] = FACETWP_URL . '/assets/js/jquery-autocomplete/jquery.autocomplete.css';
     }
 
 

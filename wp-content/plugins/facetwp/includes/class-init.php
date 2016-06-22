@@ -43,6 +43,7 @@ class FacetWP_Init
         add_action( 'wp_enqueue_scripts', array( $this, 'front_scripts' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
         add_filter( 'redirect_canonical', array( $this, 'redirect_canonical' ), 10, 2 );
+        add_filter( 'plugin_action_links_facetwp/index.php', array( $this, 'plugin_action_links' ) );
     }
 
 
@@ -106,6 +107,17 @@ class FacetWP_Init
         }
         return $redirect_url;
     }
+
+
+    /**
+     * Add "Settings" link to plugin listing page
+     */
+    function plugin_action_links( $links ) {
+        $settings_link = admin_url( 'options-general.php?page=facetwp' );
+        $settings_link = '<a href=" ' . $settings_link . '">' . __( 'Settings', 'fwp' )  . '</a>';
+        array_unshift( $links, $settings_link );
+        return $links;
+    }
 }
 
-new FacetWP_Init();
+$this->init = new FacetWP_Init();

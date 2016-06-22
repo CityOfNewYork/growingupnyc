@@ -1,4 +1,7 @@
-var FWP = {};
+var FWP = {
+    is_indexing: false,
+    is_name_editable: false
+};
 
 (function($) {
     $(function() {
@@ -84,6 +87,10 @@ var FWP = {};
                 placeholder: FWP.i18n['All post types']
             });
 
+            $('.export-items').fSelect({
+                placeholder: FWP.i18n['Select some items']
+            });
+
             // Hide the preloader
             $('.facetwp-loading').hide();
             $('.facetwp-header-nav a:first').click();
@@ -98,7 +105,7 @@ var FWP = {};
             if ('facet' == params.card) {
                 output += '<div class="card-type">' + params.type + '</div>';
             }
-            output += '<div class="card-shortcode">[facetwp ' + params.card + '="<span class="card-name">' + params.name + '</span>"]</div>';
+            output += '<div class="card-shortcode">[facetwp ' + params.card + '="' + params.name + '"]</div>';
             output += '</div>';
             output += '</li>';
             return output;
@@ -116,6 +123,7 @@ var FWP = {};
 
                 if ('-1' == response) {
                     $('.facetwp-response').html(FWP.i18n['Indexing complete']);
+                    FWP.is_indexing = false;
                 }
                 else if ($.isNumeric(response)) {
                     $('.facetwp-response').html(FWP.i18n['Indexing'] + '... ' + response + '%');
@@ -126,6 +134,7 @@ var FWP = {};
                 }
                 else {
                     $('.facetwp-response').html(response);
+                    FWP.is_indexing = false;
                 }
             });
         }
@@ -178,6 +187,17 @@ var FWP = {};
                 $facet.find('.facet-parent-term').closest('tr').css({ 'display' : display });
                 $facet.find('.facet-hierarchical').closest('tr').css({ 'display' : display });
             }
+            else if ('fselect' == facet_type) {
+                $facet.find('.facet-parent-term').closest('tr').css({ 'display' : display });
+            }
+        });
+
+
+        // Conditionals based on facet source_other
+        $(document).on('change', '.facet-source-other', function() {
+            var $facet = $(this).closest('.facetwp-row');
+            var display = ('' != $(this).val()) ? 'table-row' : 'none';
+            $facet.find('.facet-compare-type').closest('tr').css({ 'display' : display });
         });
 
 
@@ -226,6 +246,7 @@ var FWP = {};
 
             var id = $(this).closest('li').attr('data-id');
             var $parent = $(this).closest('.facetwp-region');
+            var $el = $parent.find('.facetwp-row[data-id="' + id + '"]');
             var type = $parent.hasClass('facetwp-region-facets') ? 'facets' : 'templates';
 
             $parent.find('.facetwp-cards').hide();
@@ -233,11 +254,12 @@ var FWP = {};
             $parent.find('.facetwp-back').closest('.btn-wrap').show();
             $parent.find('.facetwp-add').closest('.btn-wrap').hide();
             $parent.find('.facetwp-row').hide();
-            $parent.find('.facetwp-row[data-id="' + id + '"]').show();
+            $el.show();
 
             // Trigger conditional settings
             if ('facets' == type) {
-                $parent.find('.facetwp-row[data-id=' + id + '] .facet-type').trigger('change');
+                $el.find('.facet-type').trigger('change');
+                $el.find('.facet-source').fSelect();
             }
 
             // Set the active row
@@ -254,24 +276,44 @@ var FWP = {};
         });
 
 
-        // Change the sidebar link label
+        // Focus on the label
+        $(document).on('focus', '.facet-label, .template-label', function() {
+            var type = $(this).hasClass('facet-label') ? 'facet' : 'template';
+            var name_val = $(this).siblings('.' + type + '-name').text();
+            FWP.is_name_editable = ('' == name_val || ('new_' + type) == name_val);
+        });
+
+
+        // Change the name
+        $(document).on('keyup', '.facet-name, .template-name', function() {
+            var val = $(this).text();
+            var type = $(this).hasClass('.facet-name') ? 'facet' : 'template';
+            var $row = $(this).closest('.facetwp-row');
+            var id = $row.attr('data-id');
+            $('.facetwp-cards li[data-id="'+ id +'"] .card-shortcode').text('[facetwp ' + type + '="' + val + '"]');
+        });
+
+
+        // Change the label
         $(document).on('keyup', '.facet-label, .template-label', function() {
             var label = $(this).val();
             var type = $(this).hasClass('facet-label') ? 'facet' : 'template';
             var $row = $(this).closest('.facetwp-row');
             var id = $row.attr('data-id');
 
-            var val = $.trim(label).toLowerCase();
-            val = val.replace(/[^\w- ]/g, ''); // strip invalid characters
-            val = val.replace(/[- ]/g, '_'); // replace space and hyphen with underscore
-            val = val.replace(/[_]{2,}/g, '_'); // strip consecutive underscores
+            if (FWP.is_name_editable) {
+                var val = $.trim(label).toLowerCase();
+                val = val.replace(/[^\w- ]/g, ''); // strip invalid characters
+                val = val.replace(/[- ]/g, '_'); // replace space and hyphen with underscore
+                val = val.replace(/[_]{2,}/g, '_'); // strip consecutive underscores
 
-            // Update the input field
-            $(this).siblings('.' + type + '-name').text(val);
+                // Update the input field
+                $(this).siblings('.' + type + '-name').text(val);
+                $('.facetwp-cards li[data-id="'+ id +'"] .card-shortcode').text('[facetwp ' + type + '="' + val + '"]');
+            }
 
-            // Update the card
+            // Edit the card
             $('.facetwp-cards li[data-id="'+ id +'"] .card-label').text(label);
-            $('.facetwp-cards li[data-id="'+ id +'"] .card-name').text(val);
         });
 
 
@@ -355,15 +397,14 @@ var FWP = {};
 
         // Export
         $(document).on('click', '.export-submit', function() {
-                $('.export-code').show();
-                $('.export-code').val('');
+                $('.import-code').val(FWP.i18n['Loading'] + '...');
                 $.post(ajaxurl, {
                     action: 'facetwp_migrate',
                     action_type: 'export',
                     items: $('.export-items').val()
                 },
                 function(response) {
-                    $('.export-code').val(response);
+                    $('.import-code').val(response);
                 });
         });
 
@@ -380,12 +421,21 @@ var FWP = {};
             },
             function(response) {
                 $('.facetwp-response').html(response);
+                setTimeout(function() {
+                    window.location.reload();
+                }, 1500);
             });
         });
 
 
         // Rebuild index
         $(document).on('click', '.facetwp-rebuild', function() {
+            if (FWP.is_indexing) {
+                return;
+            }
+
+            FWP.is_indexing = true;
+
             $.post(ajaxurl, { action: 'facetwp_rebuild_index' });
             $('.facetwp-response').html(FWP.i18n['Indexing'] + '...');
             $('.facetwp-response').show();

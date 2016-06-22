@@ -24,7 +24,7 @@ class FacetWP_Upgrade
         global $wpdb;
 
         $sql = "
-        CREATE TABLE {$wpdb->prefix}facetwp_index (
+        CREATE TABLE IF NOT EXISTS {$wpdb->prefix}facetwp_index (
             id BIGINT unsigned not null auto_increment,
             post_id INT unsigned,
             facet_name VARCHAR(255),
@@ -41,7 +41,7 @@ class FacetWP_Upgrade
         dbDelta( $sql );
 
         // Add default settings
-        $settings = file_get_contents( FACETWP_DIR . '/assets/js/sample.json' );
+        $settings = file_get_contents( FACETWP_DIR . '/assets/js/src/sample.json' );
         add_option( 'facetwp_settings', $settings );
     }
 

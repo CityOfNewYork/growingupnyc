@@ -26,6 +26,7 @@ final class FacetWP_Helper
         include( FACETWP_DIR . '/includes/facets/checkboxes.php' );
         include( FACETWP_DIR . '/includes/facets/date_range.php' );
         include( FACETWP_DIR . '/includes/facets/dropdown.php' );
+        include( FACETWP_DIR . '/includes/facets/fselect.php' );
         include( FACETWP_DIR . '/includes/facets/hierarchy.php' );
         include( FACETWP_DIR . '/includes/facets/number_range.php' );
         include( FACETWP_DIR . '/includes/facets/search.php' );
@@ -35,6 +36,7 @@ final class FacetWP_Helper
         $this->facet_types = apply_filters( 'facetwp_facet_types', array(
             'checkboxes'        => new FacetWP_Facet_Checkboxes(),
             'dropdown'          => new FacetWP_Facet_Dropdown(),
+            'fselect'           => new FacetWP_Facet_fSelect(),
             'hierarchy'         => new FacetWP_Facet_Hierarchy(),
             'search'            => new FacetWP_Facet_Search(),
             'autocomplete'      => new FacetWP_Facet_Autocomplete(),
@@ -81,13 +83,11 @@ final class FacetWP_Helper
         if ( empty( $settings['settings'] ) ) {
             $settings['settings'] = array();
         }
-
-        // Default global settings
         if ( ! isset( $settings['settings']['permalink_type'] ) ) {
             $settings['settings']['permalink_type'] = 'get';
         }
         if ( ! isset( $settings['settings']['term_permalink'] ) ) {
-            $settings['settings']['term_permalink'] = 'slug';
+            $settings['settings']['term_permalink'] = 'slug'; // Listify compat
         }
         if ( ! isset( $settings['settings']['thousands_separator'] ) ) {
             $settings['settings']['thousands_separator'] = ',';
@@ -146,7 +146,7 @@ final class FacetWP_Helper
 
     /**
      * Get a general setting value
-     * 
+     *
      * @param string $name The setting name
      * @param mixed $default The default value
      * @since 1.9
@@ -195,7 +195,7 @@ final class FacetWP_Helper
 
     /**
      * Get all properties for a single template
-     * 
+     *
      * @param string $template_name
      * @return mixed An array of template info, or false
      */
@@ -313,7 +313,7 @@ final class FacetWP_Helper
 
 
     /**
-     * Does a facet with the specified setting exist?
+     * Does an active facet with the specified setting exist?
      * @return boolean
      * @since 1.4.0
      */
@@ -323,6 +323,24 @@ final class FacetWP_Helper
                 return true;
             }
         }
+        return false;
+    }
+
+
+    /**
+     * Does this facet have a setting with the specified value?
+     * @return boolean
+     * @since 2.3.4
+     */
+    function facet_setting_is( $facet, $setting_name, $setting_value ) {
+        if ( is_string( $facet ) ) {
+            $facet = $this->get_facet_by_name( $facet );
+        }
+
+        if ( isset( $facet[ $setting_name ] ) && $facet[ $setting_name ] == $setting_value ) {
+            return true;
+        }
+
         return false;
     }
 

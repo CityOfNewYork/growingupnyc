@@ -9,6 +9,12 @@ class FacetWP_Display
     /* (boolean) Whether to enable FacetWP for the current page */
     public $load_assets = false;
 
+    /* (array) Scripts and stylesheets to enqueue */
+    public $assets = array();
+
+    /* (array) Data to pass to front-end JS */
+    public $json = array();
+
 
     function __construct() {
         add_filter( 'widget_text', 'do_shortcode' );
@@ -77,27 +83,6 @@ class FacetWP_Display
 
 
     /**
-     * Output any necessary JS parameters
-     */
-    function ajaxurl() {
-
-        $http_params = json_encode( array(
-            'get' => $_GET,
-            'uri' => FWP()->helper->get_uri(),
-        ) );
-
-        $url = admin_url( 'admin-ajax.php' );
-        $permalink_type = FWP()->helper->get_setting( 'permalink_type' );
-
-        echo "<script>\n";
-        echo "var ajaxurl = '$url';\n";
-        echo "var FWP_HTTP = $http_params;\n";
-        echo "FWP.permalink_type = '$permalink_type';\n";
-        echo "</script>\n";
-    }
-
-
-    /**
      * Output facet scripts
      */
     function front_scripts() {
@@ -105,18 +90,60 @@ class FacetWP_Display
         // Not enqueued - front.js needs to load before front_scripts()
         if ( true === apply_filters( 'facetwp_load_assets', $this->load_assets ) ) {
             if ( true === apply_filters( 'facetwp_load_css', true ) ) {
-                echo '<link href="' . FACETWP_URL . '/assets/css/front.css?ver=' . FACETWP_VERSION . '" rel="stylesheet">' . "\n";
+                $this->assets['front.css'] = FACETWP_URL . '/assets/css/front.css';
             }
 
-            echo '<script src="' . FACETWP_URL . '/assets/js/event-manager.js?ver=' . FACETWP_VERSION . '"></script>' . "\n";
-            echo '<script src="' . FACETWP_URL . '/assets/js/front.js?ver=' . FACETWP_VERSION . '"></script>' . "\n";
+            $this->assets['event-manager.js'] = FACETWP_URL . '/assets/js/src/event-manager.js';
+            $this->assets['front.js'] = FACETWP_URL . '/assets/js/front.js';
+            $this->assets['front-facets.js'] = FACETWP_URL . '/assets/js/front-facets.js';
 
-            // Output the ajaxurl and HTTP params
-            $this->ajaxurl();
+            // Pass GET and URI params
+            $http_params = array(
+                'get' => $_GET,
+                'uri' => FWP()->helper->get_uri()
+            );
+
+            // See FWP()->facet->get_query_args()
+            if ( ! empty( FWP()->facet->archive_args ) ) {
+                $http_params['archive_args'] = FWP()->facet->archive_args;
+            }
+
+            ob_start();
 
             foreach ( $this->active_types as $type ) {
-                FWP()->helper->facet_types[ $type ]->front_scripts();
+                $facet_class = FWP()->helper->facet_types[ $type ];
+                if ( method_exists( $facet_class, 'front_scripts' ) ) {
+                    $facet_class->front_scripts();
+                }
             }
+
+            $inline_scripts = ob_get_clean();
+            $assets = apply_filters( 'facetwp_assets', $this->assets );
+
+            foreach ( $assets as $slug => $url ) {
+                $html = '<script src="{url}"></script>';
+
+                if ( 'css' == substr( $slug, -3 ) ) {
+                    $html = '<link href="{url}" rel="stylesheet">';
+                }
+
+                if ( false !== strpos( $url, 'facetwp' ) ) {
+                    $url .= '?ver=' . FACETWP_VERSION;
+                }
+
+                echo str_replace( '{url}', $url, $html ) . "\n";
+            }
+
+            echo $inline_scripts;
+?>
+<script>
+var FWP_JSON = <?php echo json_encode( $this->json ); ?>;
+var FWP_HTTP = <?php echo json_encode( $http_params ); ?>;
+var ajaxurl = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
+var FWP = FWP || {};
+FWP.permalink_type = '<?php echo FWP()->helper->get_setting( 'permalink_type' ); ?>';
+</script>
+<?php
         }
     }
 }

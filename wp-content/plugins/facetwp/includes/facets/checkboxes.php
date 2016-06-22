@@ -81,7 +81,7 @@ class FacetWP_Facet_Checkboxes
 
             $sql = "
             SELECT f.facet_value, f.facet_display_value, f.term_id, f.parent_id, f.depth, 0 AS counter
-            FROM {$wpdb->prefix}facetwp_index f
+            FROM $from_clause
             WHERE f.facet_name = '{$facet['name']}' AND post_id IN ($raw_post_ids)
             GROUP BY f.facet_value
             ORDER BY $orderby
@@ -140,13 +140,24 @@ class FacetWP_Facet_Checkboxes
         $output = '';
         $values = (array) $params['values'];
         $selected_values = (array) $params['selected_values'];
+        $soft_limit = empty( $facet['soft_limit'] ) ? 0 : (int) $facet['soft_limit'];
 
-        foreach ( $values as $result ) {
+        $key = 0;
+        foreach ( $values as $key => $result ) {
+            if ( 0 < $soft_limit && $key == $soft_limit ) {
+                $output .= '<div class="facetwp-overflow facetwp-hidden">';
+            }
             $selected = in_array( $result['facet_value'], $selected_values ) ? ' checked' : '';
             $selected .= ( 0 == $result['counter'] ) ? ' disabled' : '';
             $output .= '<div class="facetwp-checkbox' . $selected . '" data-value="' . $result['facet_value'] . '">';
             $output .= $result['facet_display_value'] . ' <span class="facetwp-counter">(' . $result['counter'] . ')</span>';
             $output .= '</div>';
+        }
+
+        if ( 0 < $soft_limit && $soft_limit <= $key ) {
+            $output .= '</div>';
+            $output .= '<a class="facetwp-toggle">' . __( 'See {num} more', 'fwp' ) . '</a>';
+            $output .= '<a class="facetwp-toggle facetwp-hidden">' . __( 'See less', 'fwp' ) . '</a>';
         }
 
         return $output;
@@ -246,6 +257,7 @@ class FacetWP_Facet_Checkboxes
         $this.find('.facet-ghosts').val(obj.ghosts);
         $this.find('.facet-preserve-ghosts').val(obj.preserve_ghosts);
         $this.find('.facet-count').val(obj.count);
+        $this.find('.facet-soft-limit').val(obj.soft_limit);
     });
 
     wp.hooks.addFilter('facetwp/save/checkboxes', function($this, obj) {
@@ -257,6 +269,7 @@ class FacetWP_Facet_Checkboxes
         obj['ghosts'] = $this.find('.facet-ghosts').val();
         obj['preserve_ghosts'] = $this.find('.facet-preserve-ghosts').val();
         obj['count'] = $this.find('.facet-count').val();
+        obj['soft_limit'] = $this.find('.facet-soft-limit').val();
         return obj;
     });
 
@@ -271,44 +284,6 @@ class FacetWP_Facet_Checkboxes
     });
 
 
-})(jQuery);
-</script>
-<?php
-    }
-
-
-    /**
-     * Output any front-end scripts
-     */
-    function front_scripts() {
-?>
-<script>
-(function($) {
-    wp.hooks.addAction('facetwp/refresh/checkboxes', function($this, facet_name) {
-        var selected_values = [];
-        $this.find('.facetwp-checkbox.checked').each(function() {
-            selected_values.push($(this).attr('data-value'));
-        });
-        FWP.facets[facet_name] = selected_values;
-    });
-
-    wp.hooks.addFilter('facetwp/selections/checkboxes', function(output, params) {
-        var labels = [];
-        $.each(params.selected_values, function(idx, val) {
-            var label = params.el.find('.facetwp-checkbox[data-value="' + val + '"]').clone();
-            label.find('.facetwp-counter').remove();
-            labels.push(label.text());
-        });
-        return labels.join(' / ');
-    });
-
-    wp.hooks.addAction('facetwp/ready', function() {
-        $(document).on('click', '.facetwp-facet .facetwp-checkbox:not(.disabled)', function() {
-            $(this).toggleClass('checked');
-            var $facet = $(this).closest('.facetwp-facet');
-            FWP.autoload();
-        });
-    });
 })(jQuery);
 </script>
 <?php
@@ -415,6 +390,16 @@ class FacetWP_Facet_Checkboxes
                 </div>
             </td>
             <td><input type="text" class="facet-count" value="10" /></td>
+        </tr>
+        <tr>
+            <td>
+                <?php _e('Soft Limit', 'fwp'); ?>:
+                <div class="facetwp-tooltip">
+                    <span class="icon-question">?</span>
+                    <div class="facetwp-tooltip-content"><?php _e( 'Show a toggle link after this many choices', 'fwp' ); ?></div>
+                </div>
+            </td>
+            <td><input type="text" class="facet-soft-limit" value="5" /></td>
         </tr>
 <?php
     }

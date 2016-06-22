@@ -19,6 +19,7 @@ if ( $disabled ) {
 $plugins = get_plugins();
 $active_plugins = get_option( 'active_plugins', array() );
 $theme = wp_get_theme();
+$parent = $theme->parent();
 
 ob_start();
 
@@ -29,7 +30,9 @@ FacetWP License:            <?php echo '~' . substr( get_option( 'facetwp_licens
 
 WordPress Version:          <?php echo get_bloginfo( 'version' ); ?>
 
-Active Theme:               <?php echo $theme->get( 'Name' ) . ' ' . $theme->get( 'Version' ); ?>
+Theme:                      <?php echo $theme->get( 'Name' ) . ' ' . $theme->get( 'Version' ); ?>
+
+Parent Theme:               <?php echo empty( $parent ) ? '' : $parent->get( 'Name' ) . ' ' . $parent->get( 'Version' ); ?>
 
 
 PHP Version:                <?php echo phpversion(); ?>
@@ -39,8 +42,6 @@ MySQL Version:              <?php echo $wpdb->get_var( "SELECT VERSION()" ); ?>
 Web Server Info:            <?php echo $_SERVER['SERVER_SOFTWARE']; ?>
 
 PHP Memory Limit:           <?php echo ini_get( 'memory_limit' ); ?>
-
-PHP Memory Usage:           <?php echo round( memory_get_usage( true ) / 1048576 ) . 'M'; ?>
 
 
 <?php

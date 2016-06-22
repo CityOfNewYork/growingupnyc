@@ -11,7 +11,7 @@
       {% block nav %}
         {% include 'nav.twig' %}
       {% endblock %}
-      
+
       <div class="off-canvas-content" data-off-canvas-content>
         {% block header %}
           <div class="title-bar hide-for-large">
@@ -44,5 +44,5 @@
       </div> <!-- /.off-canvas-content -->
     </div> <!-- /.off-canvas-wrapper-inner -->
   </div> <!-- /.off-canvas-wrapper -->
-  {{ function('wp_footer') }}
+  {{wp_footer}}
 </body>

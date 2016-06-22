@@ -1,0 +1,3 @@
+{% for post in posts %}
+  {% include ['teaser-'~post.post_type~'.twig', 'teaser.twig'] %}
+{% endfor %}

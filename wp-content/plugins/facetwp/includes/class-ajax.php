@@ -49,11 +49,11 @@ class FacetWP_Ajax
                     $new_key = substr( $key, 4 );
                     $this->url_vars[ $new_key ] = $val;
                 }
+            }
 
-                // At this point, we don't know if the template is a shortcode
-                if ( ! empty( $this->url_vars ) ) {
-                    add_action( 'pre_get_posts', array( $this, 'update_query_vars' ), 999 );
-                }
+            // At this point, we don't know if the template is a shortcode
+            if ( ! empty( $this->url_vars ) ) {
+                add_action( 'pre_get_posts', array( $this, 'update_query_vars' ), 999 );
             }
         }
 
@@ -120,17 +120,19 @@ class FacetWP_Ajax
         $this->is_shortcode = ( 'wp' != $template_name );
 
         $params = array(
-            'facets' => array(),
-            'template' => $template_name,
-            'http_params' => array(
+            'facets'        => array(),
+            'template'      => $template_name,
+            'http_params'   => array(
                 'get' => $_GET,
                 'uri' => FWP()->helper->get_uri(),
             ),
-            'static_facet' => '',
-            'soft_refresh' => 0,
-            'first_load' => 0, // force a template load
-            'extras' => array(),
-            'paged' => 1,
+            'static_facet'  => '',
+            'used_facets'   => array(),
+            'soft_refresh'  => 0,
+            'is_bfcache'    => 0,
+            'first_load'    => 0, // force load template
+            'extras'        => array(),
+            'paged'         => 1,
         );
 
         foreach ( $this->url_vars as $key => $val ) {
@@ -163,11 +165,10 @@ class FacetWP_Ajax
         $html = ob_get_clean();
 
         // We only want the <body>
-        if ( false !== ( $pos = strpos( $html, '<body' ) ) ) {
-            $html = substr( $html, $pos );
-            if ( false !== ( $pos = strpos( $html, '</body>' ) ) ) {
-                $html = substr( $html, 0, $pos + 7 );
-            }
+        preg_match( "/<body(.*?)>(.*?)<\/body>/s", $html, $matches );
+
+        if ( ! empty( $matches ) ) {
+            $html = trim( $matches[2] );
         }
 
         $this->output['template'] = $html;
@@ -240,14 +241,17 @@ class FacetWP_Ajax
         $data = stripslashes_deep( $_POST['data'] );
         $facets = json_decode( $data['facets'] );
         $extras = isset( $data['extras'] ) ? $data['extras'] : array();
+        $used_facets = isset( $data['used_facets'] ) ? $data['used_facets'] : array();
 
         $params = array(
             'facets'            => array(),
             'template'          => $data['template'],
             'static_facet'      => $data['static_facet'],
+            'used_facets'       => $used_facets,
             'http_params'       => $data['http_params'],
             'extras'            => $extras,
             'soft_refresh'      => (int) $data['soft_refresh'],
+            'is_bfcache'        => (int) $data['is_bfcache'],
             'first_load'        => (int) $data['first_load'],
             'paged'             => (int) $data['paged'],
         );
@@ -320,7 +324,7 @@ class FacetWP_Ajax
         if ( 'export' == $action_type ) {
             $items = $_POST['items'];
 
-            if ( !empty( $items ) ) {
+            if ( ! empty( $items ) ) {
                 foreach ( $items as $item ) {
                     if ( 'facet' == substr( $item, 0, 5 ) ) {
                         $item_name = substr( $item, 6 );

@@ -148,7 +148,7 @@ class FacetWP_Facet_Checkboxes
                 $output .= '<div class="facetwp-overflow facetwp-hidden">';
             }
             $selected = in_array( $result['facet_value'], $selected_values ) ? ' checked' : '';
-            $selected .= ( 0 == $result['counter'] ) ? ' disabled' : '';
+            $selected .= ( 0 == $result['counter'] && '' == $selected ) ? ' disabled' : '';
             $output .= '<div class="facetwp-checkbox' . $selected . '" data-value="' . $result['facet_value'] . '">';
             $output .= $result['facet_display_value'] . ' <span class="facetwp-counter">(' . $result['counter'] . ')</span>';
             $output .= '</div>';
@@ -188,7 +188,7 @@ class FacetWP_Facet_Checkboxes
             }
 
             $selected = in_array( $result['facet_value'], $selected_values ) ? ' checked' : '';
-            $selected .= ( 0 == $result['counter'] ) ? ' disabled' : '';
+            $selected .= ( 0 == $result['counter'] && '' == $selected ) ? ' disabled' : '';
             $output .= '<div class="facetwp-checkbox' . $selected . '" data-value="' . $result['facet_value'] . '">';
             $output .= $result['facet_display_value'] . ' <span class="facetwp-counter">(' . $result['counter'] . ')</span>';
             $output .= '</div>';

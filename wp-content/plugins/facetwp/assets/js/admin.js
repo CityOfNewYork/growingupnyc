@@ -340,7 +340,7 @@ var FWP = {
 
 
         // Code unlock
-        $(document).on('click', '.dashicons-unlock', function() {
+        $(document).on('click', '.code-unlock .unlock', function() {
             $(this).closest('.facetwp-row').removeClass('in-code');
         });
 

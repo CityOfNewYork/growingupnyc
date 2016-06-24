@@ -36,6 +36,7 @@ class FacetWP_Init
             include( FACETWP_DIR . "/includes/integrations/{$f}/{$f}.php" );
         }
 
+        include( FACETWP_DIR . '/includes/libraries/github-updater.php' );
         include( FACETWP_DIR . '/includes/functions.php' );
 
         // hooks

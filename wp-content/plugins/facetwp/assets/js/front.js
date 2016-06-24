@@ -1,24 +1,30 @@
-var FWP = {
-    'facets': {},
-    'template': null,
-    'settings': {},
-    'is_reset': false,
-    'is_refresh': false,
-    'is_bfcache': false,
-    'auto_refresh': true,
-    'soft_refresh': false,
-    'static_facet': null,
-    'used_facets': {},
-    'loaded': false,
-    'jqXHR': false,
-    'extras': {},
-    'paged': 1
-};
-
-var FWP_Helper = {};
-
+var FWP = FWP || {};
 
 (function($) {
+
+    var defaults = {
+        'facets': {},
+        'template': null,
+        'settings': {},
+        'is_reset': false,
+        'is_refresh': false,
+        'is_bfcache': false,
+        'auto_refresh': true,
+        'soft_refresh': false,
+        'static_facet': null,
+        'used_facets': {},
+        'loaded': false,
+        'jqXHR': false,
+        'extras': {},
+        'helper': {},
+        'paged': 1
+    };
+
+    for (var prop in defaults) {
+        if ('undefined' == typeof FWP[prop]) {
+            FWP[prop] = defaults[prop];
+        }
+    }
 
     // Safari popstate fix
     $(window).on('load', function() {
@@ -40,7 +46,7 @@ var FWP_Helper = {};
     });
 
 
-    FWP_Helper.get_url_var = function(name) {
+    FWP.helper.get_url_var = function(name) {
         var name = ('get' == FWP.permalink_type) ? 'fwp_' + name : name;
         var query_string = FWP.build_query_string();
         var url_vars = query_string.split('&');
@@ -54,7 +60,7 @@ var FWP_Helper = {};
     }
 
 
-    FWP_Helper.serialize = function(obj, prefix) {
+    FWP.helper.serialize = function(obj, prefix) {
         var str = [];
         var prefix = ('undefined' != typeof prefix) ? prefix : '';
         for (var p in obj) {
@@ -79,13 +85,11 @@ var FWP_Helper = {};
 
         // Load facet DOM values
         if (! FWP.is_reset) {
-            console.log('Resetting');
             FWP.parse_facets();
         }
 
         // Check the URL on pageload
         if (! FWP.loaded) {
-            console.log('Page loaded');
             FWP.load_from_hash();
         }
 
@@ -175,7 +179,7 @@ var FWP_Helper = {};
             hash = hash.join('&');
 
             // FacetWP URL variables
-            var fwp_vars = FWP_Helper.serialize(FWP.facets, 'fwp_');
+            var fwp_vars = FWP.helper.serialize(FWP.facets, 'fwp_');
 
             if ('' != hash) {
                 query_string += hash;
@@ -185,7 +189,7 @@ var FWP_Helper = {};
             }
         }
         else {
-            query_string = FWP_Helper.serialize(FWP.facets);
+            query_string = FWP.helper.serialize(FWP.facets);
         }
 
         return query_string;

@@ -135,7 +135,7 @@
     background-size: 20px 20px;
 }
 
-.facetwp-btn.reset:before {
+.facetwp-btn.f-reset:before {
     background: url(../images/icon-close.png) no-repeat;
     background-size: 20px 20px;
 }
@@ -168,7 +168,7 @@
     background-size: 20px 20px;
 }
 
-.locate-me.loading:before {
+.locate-me.f-loading:before {
     background: url(../images/loading.png) no-repeat;
     background-size: 20px 20px;
     -webkit-animation: rotate 700ms infinite linear;
@@ -176,7 +176,7 @@
     animation: rotate 700ms infinite linear;
 }
 
-.locate-me.reset:before {
+.locate-me.f-reset:before {
     background: url(../images/icon-close.png) no-repeat;
     background-size: 20px 20px;
 }

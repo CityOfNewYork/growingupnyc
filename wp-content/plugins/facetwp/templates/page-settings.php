@@ -281,7 +281,7 @@ var FWP_Clone = <?php echo json_encode( $settings ); ?>
     <div class="hidden clone-facet">
         <div class="facetwp-row">
             <div class="table-row code-unlock">
-                This facet was added with PHP code. Click <span class="dashicons dashicons-unlock"></span> to enable changes.
+                This facet is locked to prevent changes. <button class="unlock">Unlock now</button>
             </div>
             <table>
                 <tr>
@@ -327,7 +327,7 @@ var FWP_Clone = <?php echo json_encode( $settings ); ?>
     <div class="hidden clone-template">
         <div class="facetwp-row">
             <div class="table-row code-unlock">
-                This template was added with PHP code. Click <span class="dashicons dashicons-unlock"></span> to enable changes.
+                This template is locked to prevent changes. <button class="unlock">Unlock now</button>
             </div>
             <div class="table-row">
                 <input type="text" class="template-label" value="New template" />

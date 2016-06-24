@@ -83,18 +83,22 @@
         });
 
         // hierarchy support
-        $('.facetwp-type-checkboxes .facetwp-depth').each(function() {
-            var $parent = $(this).prev('.facetwp-checkbox');
-            $parent.append(' <span class="facetwp-expand">[+]</span>');
-        });
+        var show_toggles = wp.hooks.applyFilters( 'facetwp/checkboxes/show_toggles', true );
 
-        // un-hide groups with selected items
-        $('.facetwp-type-checkboxes .facetwp-checkbox.checked').each(function() {
-            $(this).parents('.facetwp-depth').each(function() {
-                $(this).prev('.facetwp-checkbox').find('.facetwp-expand').text('[-]');
-                $(this).addClass('visible');
+        if (show_toggles && 1 > $('.facetwp-type-checkboxes .facetwp-expand').length) {
+            $('.facetwp-type-checkboxes .facetwp-depth').each(function() {
+                var $parent = $(this).prev('.facetwp-checkbox');
+                $parent.append(' <span class="facetwp-expand">[+]</span>');
             });
-        });
+
+            // un-hide groups with selected items
+            $('.facetwp-type-checkboxes .facetwp-checkbox.checked').each(function() {
+                $(this).parents('.facetwp-depth').each(function() {
+                    $(this).prev('.facetwp-checkbox').find('.facetwp-expand').text('[-]');
+                    $(this).addClass('visible');
+                });
+            });
+        }
     });
 
     /* ======== Date Range ======== */
@@ -264,7 +268,7 @@
         var $lng = $('.facetwp-lng');
 
         // Reset
-        if ($this.hasClass('reset')) {
+        if ($this.hasClass('f-reset')) {
             $facet.find('.facetwp-lat').val('');
             $facet.find('.facetwp-lng').val('');
             $facet.find('#facetwp-location').val('');
@@ -273,7 +277,7 @@
         }
 
         // loading icon
-        $('.locate-me').addClass('loading');
+        $('.locate-me').addClass('f-loading');
 
         // HTML5 geolocation
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -292,23 +296,23 @@
                 else {
                     $input.val('Your location');
                 }
-                $('.locate-me').addClass('reset');
+                $('.locate-me').addClass('f-reset');
                 FWP.autoload();
             });
 
-            $('.locate-me').removeClass('loading');
+            $('.locate-me').removeClass('f-loading');
         },
         function() {
-            $('.locate-me').removeClass('loading');
+            $('.locate-me').removeClass('f-loading');
         });
     });
 
     $(document).on('keyup', '#facetwp-location', function() {
         if ('' == $(this).val()) {
-            $('.locate-me').removeClass('reset');
+            $('.locate-me').removeClass('f-reset');
         }
         else {
-            $('.locate-me').addClass('reset');
+            $('.locate-me').addClass('f-reset');
         }
     });
 
@@ -346,10 +350,10 @@
         var $facet = $(this).closest('.facetwp-facet');
 
         if ('' == $(this).val()) {
-            $facet.find('.facetwp-btn').removeClass('reset');
+            $facet.find('.facetwp-btn').removeClass('f-reset');
         }
         else {
-            $facet.find('.facetwp-btn').addClass('reset');
+            $facet.find('.facetwp-btn').addClass('f-reset');
         }
 
         if (13 == e.keyCode) {
@@ -367,7 +371,7 @@
         var $facet = $this.closest('.facetwp-facet');
         var facet_name = $facet.attr('data-name');
 
-        if ($this.hasClass('reset') || '' == $facet.find('.facetwp-search').val()) {
+        if ($this.hasClass('f-reset') || '' == $facet.find('.facetwp-search').val()) {
             $facet.find('.facetwp-search').val('');
             FWP.facets[facet_name] = [];
             FWP.set_hash();
@@ -426,7 +430,7 @@
             var opts = FWP.settings[facet_name];
 
             // on first load, check for slider URL variable
-            if (false !== FWP_Helper.get_url_var(facet_name)) {
+            if (false !== FWP.helper.get_url_var(facet_name)) {
                 FWP.used_facets[facet_name] = true;
             }
 

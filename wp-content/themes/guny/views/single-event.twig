@@ -1,0 +1,117 @@
+<div id="tribe-events-content" class="tribe-events-single">
+  <p class="tribe-events-back">
+		<a href="{{events_link}}">&laquo; All {{events_label_plural}}</a>
+	</p>
+
+  {{post.notices}}
+
+<h1 class="tribe-events-single-event-title">{{post.title}}</h1>
+
+<div class="tribe-events-schedule tribe-clearfix">
+  <h2>{{post.event_schedule_details}}</h2>
+  {% if post.event_cost %}
+    <span class="tribe-events-divider">|</span>
+    <span class="tribe-events-cost">{{post.event_cost}}</span>
+  {% endif %}
+</div>
+
+<div id="tribe-events-header">
+  <h3 class="visuallyhidden">{{events_label_singular}} Navigation</h3>
+  <ul class="tribe-events-sub-nav">
+    <li class="tribe-events-nav-previous">{{post.prev_event_link}}</li>
+    <li class="tribe-events-nav-next">{{post.next_event_link}}</li>
+  </ul>
+</div>
+
+<div class="{{post.class}}">
+  <img src="{{post.thumbnail.src}}" alt="{{post.thumbnail.alt}}">
+
+  <div class="tribe-events-single-event-description tribe-events-content">
+    {{post.content}}
+
+    <div class="tribe-events-meta-group tribe-events-meta-group-details">
+      <h3 class="tribe-events-single-section-title">Details</h3>
+      <dl>
+        {% if post.all_day and post.multiday %}
+          <dt>Start:</dt>
+          <dd>
+            <abbr class="tribe-events-abbr tribe-events-start-datetime published dtstart">{{post.start_datetime|date('F j')}}</abbr>
+          </dd>
+          <dt>End:</dt>
+          <dd>
+            <abbr class="tribe-events-abbr dtend">{{post.end_datetime|date('F j')}}</abbr>
+          </dd>
+        {% elseif post.all_day %}
+          <dt>Date:</dt>
+          <dd>
+            <abbr class="tribe-events-abbr tribe-events-start-datetime published dtstart">{{post.start_datetime|date('F j')}}</abbr>
+          </dd>
+        {% elseif post.multiday %}
+          <dt>Start:</dt>
+          <dd>
+            <abbr class="tribe-events-abbr tribe-events-start-datetime published dtstart">{{post.start_datetime|date('F j')}}</abbr>
+          </dd>
+          <dt>End:</dt>
+          <dd>
+            <abbr class="tribe-events-abbr dtend">{{post.end_datetime|date('F j')}}</abbr>
+          </dd>
+        {% else %}
+          <dt>Date:</dt>
+          <dd>
+            <abbr class="tribe-events-abbr tribe-events-start-datetime published dtstart">{{post.start_datetime|date('F j')}}</abbr>
+          </dd>
+          <dt>Time:</dt>
+          <dd class="tribe-events-abbr tribe-events-start-time published dtstart">
+            {{post.start_datetime|date('g:m a')}}
+            {% if post.end_datetime != post.start_datetime %}
+            - {{post.end_datetime|date('g:m a')}}
+            {% endif %}
+          </dd>
+        {% endif %}
+        {% if post.event_cost %}
+          <dt>Cost:</dt>
+          <dd class="tribe-events-event-cost">{{post.event_cost}}</dd>
+        {% endif %}
+        <dt>Category:</dt>
+        {% for term in post.terms('tribe_events_cat') %}
+          <dd>{{term}}</dd>
+        {% endfor %}
+        {{post.tags()|join(',')}}
+        {% if post.event_website %}
+          <dt>Website:</dt>
+          <dd><a href="{{post.event_website}}" target="_blank">Visit Website</a></dd>
+        {% endif %}
+      </dl>
+    </div> <!-- /.tribe-events-meta-group -->
+    {% if post.venue %}
+    <div class="tribe-events-meta-group">
+      <h3 class="tribe-events-single-section-title">Venue</h3>
+      <dl>
+        <dd class="tribe-venue">{{post.venue}}</dd>
+        {% if post.venue_address %}
+          <span class="tribe-street-address">{{post.venue_address.address}}</span><br>
+          <span class="tribe-locality">{{post.venue_address.city}}</span><span class="tribe-delimiter">,</span>
+          <abbr class="tribe-region tribe-events-abbr" title="{{post.venue_address.full_region}}">{{post.venue_address.region}}</abbr>
+          <span class="tribe-postal-code">{{post.venue_address.zip}}</span>
+          {% if post.venue_address.phone %}
+            <br>{{post.venue_address.phone}}
+          {% endif %}
+          {% if post.venue_address.website %}
+            <br>{{post.venue_address.website}}
+          {% endif %}
+        {% endif %}
+      </dl>
+    </div> <!-- /.tribe-events-meta-group -->
+    {% endif %}
+    <div class="tribe-events-venue-map">
+      {{post.venue_map}}
+    </div>
+    <div class="tribe-events-footer">
+      <h3 class="visuallyhidden">{{events_label_singular}} Navigation</h3>
+      <ul class="tribe-events-sub-nav">
+        <li class="tribe-events-nav-previous">{{post.prev_event_link}}</li>
+        <li class="tribe-events-nav-next">{{post.next_event_link}}</li>
+      </ul>
+    </div>
+  </div>
+</div>

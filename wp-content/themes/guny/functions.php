@@ -7,7 +7,7 @@ if ( ! class_exists( 'Timber' ) ) {
   return;
 }
 
-class gunySite extends TimberSite {
+class GunySite extends TimberSite {
 
   function __construct() {
     add_theme_support( 'title-tag' );
@@ -99,7 +99,101 @@ class gunySite extends TimberSite {
   }
 }
 
-new gunySite();
+/**
+* Extends TimberPost to include functionality provided by The Events Calendar
+*/
+class GunyEvent extends TimberPost {
+  private $_event_type;
+  private $_venue_address;
+
+  public function notices() {
+    if (function_exists('tribe_the_notices')) {
+      return tribe_the_notices(false);
+    }
+  }
+
+  public function event_schedule_details() {
+    if (function_exists('tribe_events_event_schedule_details')) {
+      return tribe_events_event_schedule_details($this->ID);
+    }
+  }
+
+  public function event_cost() {
+    if (function_exists('tribe_get_cost')) {
+      return tribe_get_cost($this->ID, true);
+    }
+  }
+
+  public function prev_event_link() {
+    if (function_exists('tribe_get_prev_event_link')) {
+      return tribe_get_prev_event_link('<span>&laquo;</span> %title%');
+    }
+  }
+
+  public function next_event_link() {
+    if (function_exists('tribe_get_next_event_link')) {
+      return tribe_get_next_event_link('%title% <span>&raquo;</span>');
+    }
+  }
+
+  public function all_day() {
+    if (function_exists('tribe_event_is_all_day')) {
+      return tribe_event_is_all_day($this->ID);
+    }
+  }
+
+  public function multiday() {
+    if (function_exists('tribe_event_is_multiday')) {
+      return tribe_event_is_multiday($this->ID);
+    }
+  }
+
+  public function start_datetime() {
+    if (function_exists('tribe_get_start_date')) {
+      return tribe_get_start_date($this->ID, true, 'U');
+    }
+  }
+
+  public function end_datetime() {
+    if (function_exists('tribe_get_end_date')) {
+      return tribe_get_end_date($this->ID, true, 'U');
+    }
+  }
+
+  public function event_website() {
+    if (function_exists('tribe_get_event_website_url')) {
+      return tribe_get_event_website_url($this->ID);
+    }
+  }
+
+  public function venue() {
+    if (function_exists('tribe_get_venue')) {
+      return tribe_get_venue($this->ID);
+    }
+  }
+
+  public function venue_address() {
+    if (!$this->_venue_address && function_exists('tribe_get_address')) {
+      $this->_venue_address = array();
+      $this->_venue_address['address'] = tribe_get_address($this->ID);
+      $this->_venue_address['city'] = tribe_get_city($this->ID);
+      $this->_venue_address['region'] = tribe_get_region($this->ID);
+      $this->_venue_address['country'] = tribe_get_country($this->ID);
+      $this->_venue_address['zip'] = tribe_get_zip($this->ID);
+      $this->_venue_address['full_region'] = tribe_get_full_region($this->ID);
+      $this->_venue_address['phone'] = tribe_get_phone();
+      $this->_venue_address['website'] = tribe_get_venue_website_link();
+    }
+    return $this->_venue_address;
+  }
+
+  public function venue_map() {
+    if (function_exists('tribe_get_embedded_map')) {
+      return tribe_get_embedded_map();
+    }
+  }
+}
+new GunySite();
 
 /**
 * Returns the sidebar id for the page, based on page section

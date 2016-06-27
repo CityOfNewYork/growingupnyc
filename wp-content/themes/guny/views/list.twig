@@ -2,12 +2,16 @@
 
 {% block content %}
   <main class="page-content row">
+    {% block before_list %}
+    {% endblock %}
     <section class="post-list small-12 columns">
       {% block post_list %}
         {% for post in posts %}
-          {% include ['teaser-'~post.post_type~'.twig', 'teaser.twig'] %}
+          {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
         {% endfor %}
       {% endblock %}
     </section> <!-- /.post-list.small-12.columns -->
+    {% block after_list %}
+    {% endblock %}
   </main> <!-- /.page-content.row -->
 {% endblock %}

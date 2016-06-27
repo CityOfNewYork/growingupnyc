@@ -1,0 +1,23 @@
+{% if post.event_cost %}
+  <div class="tribe-events-event-cost">
+    <span>{{post.event_cost}}</span>
+  </div>
+{% endif %}
+{{function('do_action', 'tribe_events_before_the_event_title')}}
+<h2 class="tribe-events-list-event-title">
+	<a class="tribe-event-url" href="{{post.link}}" title="{{post.title}}" rel="bookmark">
+		{{post.title}}
+	</a>
+</h2>
+{{function('do_action', 'tribe_events_after_the_event_title')}}
+{{function('do_action', 'tribe_events_before_the_meta')}}
+  <div class="tribe_events_event_schedule_details">
+    {{post.schedule_details}}
+  </div>
+  <div class="tribe-event-venue-details">
+    {{post.venue}}, {{post.venue_address.address}}
+  </div>
+{{function('do_action', 'tribe_events_after_the_meta')}}
+<div class="tribe-events-list-event-description tribe-events-content">
+  {{post.post_content|excerpt(15)}}
+</div>

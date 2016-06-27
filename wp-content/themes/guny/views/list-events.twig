@@ -1,0 +1,53 @@
+{% extends "list.twig" %}
+
+{% block before_list %}
+  {{function('do_action', 'tribe_events_before_template')}}
+  <div id="tribe-events-bar">
+    <form id="tribe-bar-form" class="tribe-clearfix" name="tribe-bar-form" method="post" action="{{current_url}}">
+      <div id="tribe-bar-collapse-toggle" {% if post_views|length == 1 %}class="tribe-bar-collapse-toggle-full-width"{% endif %}>
+        Find Events: <span class="tribe-bar-toggle-arrow"></span>
+      </div>
+      {% if post_views|length > 1 %}
+        <div id="tribe-bar-views">
+          <div class="tribe-bar-views-inner tribe-clearfix">
+            <h3 class="tribe-events-visuallyhidden">Event Views Navigation</h3>
+            <label for="tribe-bar-view">View As</label>
+            <select class="tribe-bar-views-select tribe-no-param" name="tribe-bar-view" id="tribe-bar-view">
+              {% for view in post_views %}
+                <option {% if view.selected %}selected{% else %}tribe-inactive{% endif %} value="{{view.url}}" data-view="{{view.displaying}}">
+                  {{view.anchor}}
+                </option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if post_filters %}
+        <div class="tribe-bar-filters">
+          <div class="tribe-bar-filters-inner tribe-clearfix">
+            {% for post_filter in post_filters %}
+              <div class="{{post_filter.name|sanitize}}-filter">
+                <label class="label-{{post_filter.name|sanitize}}" for="{{post_filter.name|sanitize}}">{{post_filter.caption}}</label>
+                {{post_filter.html}}
+              </div>
+              <div class="tribe-bar-submit">
+                <input class="tribe-events-button tribe-no-param" type="submit" name="submit-bar" value="Find Events" />
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+    </form>
+  </div>
+{% endblock %}
+
+{% block post_list %}
+  <div id="tribe-events-content">
+    {% include 'partials/post-list.twig' %}
+  </div>
+{% endblock %}
+
+{% block after_list %}
+  {{function('do_action', 'tribe_events_after_template')}}
+{% endblock %}

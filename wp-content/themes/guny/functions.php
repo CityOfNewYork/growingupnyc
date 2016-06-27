@@ -160,6 +160,12 @@ class GunyEvent extends TimberPost {
     }
   }
 
+  public function schedule_details() {
+    if (function_exists('tribe_events_event_schedule_details')) {
+      return tribe_events_event_schedule_details($this->ID);
+    }
+  }
+
   public function event_website() {
     if (function_exists('tribe_get_event_website_url')) {
       return tribe_get_event_website_url($this->ID);

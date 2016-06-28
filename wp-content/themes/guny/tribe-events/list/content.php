@@ -6,6 +6,6 @@ if ( ! class_exists( 'Timber' ) ) {
 }
 $context = Timber::get_context();
 $context['posts'] = Timber::get_posts(false, 'GunyEvent');
-$templates = array( 'partials/post-list.twig' );
+$templates = array( 'partials/tribe-events-list.twig' );
 
 Timber::render( $templates, $context );

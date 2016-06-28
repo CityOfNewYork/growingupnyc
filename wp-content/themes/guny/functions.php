@@ -7,6 +7,13 @@ if ( ! class_exists( 'Timber' ) ) {
   return;
 }
 
+if ( ! class_exists( 'GUPostTypes' ) ) {
+  add_action( 'admin_notices', function() {
+    echo '<div class="error"><p>GUPostTypes not activated. Make sure you activate the plugin in <a href="' . esc_url( admin_url( 'plugins.php#growing-up-nyc-post-types' ) ) . '">' . esc_url( admin_url( 'plugins.php' ) ) . '</a></p></div>';
+  } );
+  return;
+}
+
 class GunySite extends TimberSite {
 
   function __construct() {

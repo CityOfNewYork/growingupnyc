@@ -2,18 +2,18 @@
 # This file is distributed under the same license as the Event Tickets package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Event Tickets 4.2.1\n"
+"Project-Id-Version: Event Tickets 4.2rc1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/event-tickets\n"
-"POT-Creation-Date: 2016-06-22 14:58:10+00:00\n"
+"POT-Creation-Date: 2016-06-01 20:57:47+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2016-06-22 14:58\n"
+"PO-Revision-Date: 2016-06-01 20:57\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 
 #: src/Tribe/Admin/Ticket_Settings.php:22 src/Tribe/Metabox.php:31
-#: src/Tribe/Tickets_View.php:608
+#: src/Tribe/Tickets_View.php:580
 msgid "Tickets"
 msgstr ""
 
@@ -46,7 +46,7 @@ msgid "Security Code"
 msgstr ""
 
 #: src/Tribe/Attendees_Table.php:83 src/Tribe/Attendees_Table.php:263
-#: src/Tribe/Attendees_Table.php:356
+#: src/Tribe/Attendees_Table.php:357
 msgid "Check in"
 msgstr ""
 
@@ -54,27 +54,28 @@ msgstr ""
 msgid "View order"
 msgstr ""
 
-#: src/Tribe/Attendees_Table.php:264 src/Tribe/Attendees_Table.php:357
+#: src/Tribe/Attendees_Table.php:264 src/Tribe/Attendees_Table.php:358
 msgid "Undo Check in"
 msgstr ""
 
-#: src/Tribe/Attendees_Table.php:329
+#: src/Tribe/Attendees_Table.php:330
 msgid "Print"
 msgstr ""
 
-#: src/Tribe/Attendees_Table.php:330 src/views/tickets/rsvp.php:118
+#: src/Tribe/Attendees_Table.php:331 src/views/tickets/orders-rsvp.php:50
+#: src/views/tickets/rsvp.php:118
 msgid "Email"
 msgstr ""
 
-#: src/Tribe/Attendees_Table.php:331
+#: src/Tribe/Attendees_Table.php:332
 msgid "Export"
 msgstr ""
 
-#: src/Tribe/Attendees_Table.php:337
+#: src/Tribe/Attendees_Table.php:338
 msgid "Filter by purchaser name, ticket #, order # or security code"
 msgstr ""
 
-#: src/Tribe/Attendees_Table.php:358 src/admin-views/list.php:43
+#: src/Tribe/Attendees_Table.php:359 src/admin-views/list.php:43
 msgid "Delete"
 msgstr ""
 
@@ -114,7 +115,7 @@ msgstr ""
 msgid "Recurring event tickets are not supported, event %d."
 msgstr ""
 
-#: src/Tribe/CSV_Importer/Rows.php:35 src/Tribe/Tickets_View.php:604
+#: src/Tribe/CSV_Importer/Rows.php:35 src/Tribe/Tickets_View.php:576
 msgid "RSVPs"
 msgstr ""
 
@@ -194,7 +195,7 @@ msgstr ""
 msgid "Buy"
 msgstr ""
 
-#: src/Tribe/Main.php:528 src/Tribe/Tickets_View.php:604
+#: src/Tribe/Main.php:528 src/Tribe/Tickets_View.php:576
 #: src/views/tickets/rsvp.php:19 src/views/tickets/rsvp.php:127
 msgid "RSVP"
 msgstr ""
@@ -220,43 +221,43 @@ msgstr ""
 msgid "Your tickets from %s"
 msgstr ""
 
-#: src/Tribe/RSVP.php:720
+#: src/Tribe/RSVP.php:719
 msgid "Your RSVP has been received! Check your email for your RSVP confirmation."
 msgstr ""
 
-#: src/Tribe/RSVP.php:726
+#: src/Tribe/RSVP.php:725
 msgid "You can't RSVP more than the total remaining tickets."
 msgstr ""
 
-#: src/Tribe/RSVP.php:731
+#: src/Tribe/RSVP.php:730
 msgid "In order to RSVP, you must enter your name and a valid email address."
 msgstr ""
 
-#: src/Tribe/RSVP.php:870
+#: src/Tribe/RSVP.php:869
 msgid "(deleted)"
 msgstr ""
 
-#: src/Tribe/RSVP.php:1127
+#: src/Tribe/RSVP.php:1126
 msgid "Return to the %1$sAttendees Report%2$s."
 msgstr ""
 
-#: src/Tribe/RSVP.php:1134
+#: src/Tribe/RSVP.php:1133
 msgid "Post updated. %1$s"
 msgstr ""
 
-#: src/Tribe/RSVP.php:1138
+#: src/Tribe/RSVP.php:1137
 msgid "Post published. %1$s"
 msgstr ""
 
-#: src/Tribe/RSVP.php:1141
+#: src/Tribe/RSVP.php:1140
 msgid "Post submitted."
 msgstr ""
 
-#: src/Tribe/RSVP.php:1142
+#: src/Tribe/RSVP.php:1141
 msgid "Post scheduled."
 msgstr ""
 
-#: src/Tribe/RSVP.php:1143
+#: src/Tribe/RSVP.php:1142
 msgid "Post draft updated."
 msgstr ""
 
@@ -321,71 +322,71 @@ msgstr ""
 msgid "You can use Screen Options to select which columns you want to see. The selection works in the table below, in the email, for print and for the CSV export."
 msgstr ""
 
-#: src/Tribe/Tickets_Handler.php:292
+#: src/Tribe/Tickets_Handler.php:281
 msgid "Customer Name"
 msgstr ""
 
-#: src/Tribe/Tickets_Handler.php:293
+#: src/Tribe/Tickets_Handler.php:282
 msgid "Customer Email Address"
 msgstr ""
 
-#: src/Tribe/Tickets_Handler.php:322
+#: src/Tribe/Tickets_Handler.php:311
 msgid "Yes"
 msgstr ""
 
-#: src/Tribe/Tickets_Handler.php:360
+#: src/Tribe/Tickets_Handler.php:340
 msgid "attendees"
 msgstr ""
 
-#: src/Tribe/Tickets_Handler.php:387
+#: src/Tribe/Tickets_Handler.php:367
 msgid "Invalid Event ID"
 msgstr ""
 
-#: src/Tribe/Tickets_Handler.php:404
+#: src/Tribe/Tickets_Handler.php:384
 msgid "Cheatin Huh?"
 msgstr ""
 
-#: src/Tribe/Tickets_Handler.php:410
+#: src/Tribe/Tickets_Handler.php:390
 msgid "Empty user and email"
 msgstr ""
 
-#: src/Tribe/Tickets_Handler.php:422
+#: src/Tribe/Tickets_Handler.php:402
 msgid "Invalid Email"
 msgstr ""
 
-#: src/Tribe/Tickets_Handler.php:428 src/Tribe/Tickets_Handler.php:444
+#: src/Tribe/Tickets_Handler.php:408 src/Tribe/Tickets_Handler.php:424
 msgid "Invalid User ID"
 msgstr ""
 
-#: src/Tribe/Tickets_Handler.php:464
+#: src/Tribe/Tickets_Handler.php:444
 msgid "Attendee List for: %s"
 msgstr ""
 
-#: src/Tribe/Tickets_Handler.php:465
+#: src/Tribe/Tickets_Handler.php:445
 msgid "Error when sending the email"
 msgstr ""
 
-#: src/Tribe/Tickets_Handler.php:470
+#: src/Tribe/Tickets_Handler.php:450
 msgid "Email sent successfully!"
 msgstr ""
 
-#: src/Tribe/Tickets_View.php:511
+#: src/Tribe/Tickets_View.php:483
 msgid "Going"
 msgstr ""
 
-#: src/Tribe/Tickets_View.php:512
+#: src/Tribe/Tickets_View.php:484
 msgid "Not Going"
 msgstr ""
 
-#: src/Tribe/Tickets_View.php:608
+#: src/Tribe/Tickets_View.php:580
 msgid "Ticket"
 msgstr ""
 
-#: src/Tribe/Tickets_View.php:616 src/views/tickets/orders-link.php:45
+#: src/Tribe/Tickets_View.php:588 src/views/tickets/orders-link.php:45
 msgid " and "
 msgstr ""
 
-#: src/Tribe/Tickets_View.php:674
+#: src/Tribe/Tickets_View.php:646
 msgid "This RSVP is no longer active."
 msgstr ""
 
@@ -668,31 +669,31 @@ msgstr ""
 msgid "View your %s"
 msgstr ""
 
-#: src/views/tickets/orders-rsvp.php:29
+#: src/views/tickets/orders-rsvp.php:27
 msgid "My RSVPs for This %s"
 msgstr ""
 
-#: src/views/tickets/orders-rsvp.php:38
-msgid "Reserved by %1$s (%2$s)"
+#: src/views/tickets/orders-rsvp.php:34
+msgid "RSVP: "
 msgstr ""
 
-#: src/views/tickets/orders-rsvp.php:44
-msgid " on %s"
-msgstr ""
-
-#: src/views/tickets/orders-rsvp.php:63
+#: src/views/tickets/orders-rsvp.php:37
 msgid "Attendee %d"
 msgstr ""
 
-#: src/views/tickets/orders-rsvp.php:68
-msgid "RSVP: "
+#: src/views/tickets/orders-rsvp.php:42 src/views/tickets/rsvp.php:110
+msgid "Full Name"
+msgstr ""
+
+#: src/views/tickets/orders-rsvp.php:59 src/views/tickets/rsvp.php:138
+msgid "Don't list me on the public attendee list"
 msgstr ""
 
 #: src/views/tickets/orders.php:26
 msgid "View %s"
 msgstr ""
 
-#: src/views/tickets/orders.php:57
+#: src/views/tickets/orders.php:52
 msgid "Update %s"
 msgstr ""
 
@@ -710,14 +711,6 @@ msgstr ""
 
 #: src/views/tickets/rsvp.php:98
 msgid "Send RSVP confirmation to:"
-msgstr ""
-
-#: src/views/tickets/rsvp.php:110
-msgid "Full Name"
-msgstr ""
-
-#: src/views/tickets/rsvp.php:138
-msgid "Don't list me on the public attendee list"
 msgstr ""
 
 #: src/views/tickets/rsvp.php:149

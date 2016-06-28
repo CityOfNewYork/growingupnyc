@@ -50,7 +50,7 @@ abstract class Tribe__JSON_LD__Abstract {
 		$post = get_post( $post );
 
 		if ( ! $post instanceof WP_Post ) {
-			return array();
+			return $data;
 		}
 
 		$data = (object) array();

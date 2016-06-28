@@ -409,7 +409,7 @@ if ( ! class_exists( 'Tribe__Events__Query' ) ) {
 			// and event query on the tribe_events edit page
 			return ( is_admin()
 						&& $query->tribe_is_event_query
-						&& Tribe__Admin__Helpers::instance()->is_screen( 'edit-' . Tribe__Events__Main::POSTTYPE ) )
+						&& Tribe__Admin__Helpers::instance()->is_screen( 'edit-' . Tribe__Events__Main::POSTTYPE ) ) 
 			       || true === $query->get( 'tribe_remove_date_filters', false );
 		}
 
@@ -527,7 +527,7 @@ if ( ! class_exists( 'Tribe__Events__Query' ) ) {
 		 */
 		public static function posts_where( $where_sql, $query ) {
 			global $wpdb;
-
+			
 			// if it's a true event query then we to setup where conditions
 			// but only if we aren't grabbing a specific post
 			if (

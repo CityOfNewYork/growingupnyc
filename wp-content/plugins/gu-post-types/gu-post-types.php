@@ -38,12 +38,13 @@ class GUPostTypes {
       'tribe_events',
       array(
         'label' => __( 'Boroughs' ),
+        'hierarchical' => true
       )
     );
 
     register_taxonomy(
       'age_group',
-      'age',
+      array('age', 'tribe_events'),
       array(
         'label' => __( 'Age Groups' ),
         'rewrite' => array(
@@ -53,7 +54,6 @@ class GUPostTypes {
         'hierarchical' => true
       )
     );
-    register_taxonomy_for_object_type('age_group', 'age');
   }
 
   function populate_taxonomies() {
@@ -115,5 +115,4 @@ class GUPostTypes {
     }
   }
 }
-
 new GUPostTypes();

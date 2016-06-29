@@ -49,7 +49,8 @@ class GUPostTypes {
         'rewrite' => array(
           'slug' => 'age-group',
           'with_front' => false
-        )
+        ),
+        'hierarchical' => true
       )
     );
     register_taxonomy_for_object_type('age_group', 'age');

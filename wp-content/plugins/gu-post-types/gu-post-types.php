@@ -22,11 +22,36 @@ class GUPostTypes {
 
   function create_post_types() {
     register_post_type(
+      'program',
+      array(
+        'labels' => array(
+          'name' => 'Programs',
+          'singular_name' => 'Program',
+          'add_new_item' => 'Add New Program',
+          'edit_item' => 'Edit Program',
+          'new_item' => 'New Program',
+          'view_item' => 'View Program',
+          'search_items' => 'Search Programs',
+          'not_found' => 'No programs found',
+          'not_found_in_trash' => 'No programs found in trash',
+          'all_items' => 'All Programs',
+          'archives' => 'Program Archives',
+          'insert_into_item' => 'Insert into program',
+          'uploaded_to_this_item' => 'Uploaded to this program'
+        ),
+        'public' => true,
+        'menu_position' => 21,
+        'menu_icon' => 'dashicons-carrot',
+        'supports' => array( 'title', 'editor', 'excerpt' )
+      )
+    );
+
+    register_post_type(
       'age',
       array(
         'label' => 'Ages',
         'public' => true,
-        'menu_position' => 21,
+        'menu_position' => 22,
         'menu_icon' => 'dashicons-groups'
       )
     );

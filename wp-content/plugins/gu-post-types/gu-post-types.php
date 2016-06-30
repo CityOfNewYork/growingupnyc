@@ -49,7 +49,21 @@ class GUPostTypes {
     register_post_type(
       'age',
       array(
-        'label' => 'Ages',
+        'labels' => array(
+          'name' => 'Ages',
+          'singular_name' => 'Age',
+          'add_new_item' => 'Add New Age',
+          'edit_item' => 'Edit Age',
+          'new_item' => 'New Age',
+          'view_item' => 'View Age',
+          'search_items' => 'Search Ages',
+          'not_found' => 'No ages found',
+          'not_found_in_trash' => 'No ages found in trash',
+          'all_items' => 'All Ages',
+          'archives' => 'Age Archives',
+          'insert_into_item' => 'Insert into age',
+          'uploaded_to_this_item' => 'Uploaded to this age'
+        ),
         'public' => true,
         'menu_position' => 22,
         'menu_icon' => 'dashicons-groups',

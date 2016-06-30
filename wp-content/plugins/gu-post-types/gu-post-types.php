@@ -52,7 +52,8 @@ class GUPostTypes {
         'label' => 'Ages',
         'public' => true,
         'menu_position' => 22,
-        'menu_icon' => 'dashicons-groups'
+        'menu_icon' => 'dashicons-groups',
+        'supports' => array( 'title' )
       )
     );
   }

@@ -1,0 +1,71 @@
+{
+    "key": "group_57755bf2b325d",
+    "title": "Programs",
+    "fields": [
+        {
+            "key": "field_57755c0074da4",
+            "label": "Programs Text",
+            "name": "programs_text",
+            "type": "textarea",
+            "instructions": "Optional text displayed above the featured programs.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": "wpautop",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "key": "field_57755e4574da5",
+            "label": "Featured Programs",
+            "name": "featured_programs",
+            "type": "relationship",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "program"
+            ],
+            "taxonomy": [],
+            "filters": [
+                "search",
+                "taxonomy"
+            ],
+            "elements": "",
+            "min": 1,
+            "max": 5,
+            "return_format": "id"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "age"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1467309891
+}

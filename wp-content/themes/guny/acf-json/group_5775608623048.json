@@ -1,0 +1,213 @@
+{
+    "key": "group_5775608623048",
+    "title": "Developmental Milestones",
+    "fields": [
+        {
+            "key": "field_577560903a688",
+            "label": "Milestones Text",
+            "name": "milestones_text",
+            "type": "textarea",
+            "instructions": "Optional text displayed above the milestones list",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": "wpautop",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "key": "field_577560e43a689",
+            "label": "Milestones Heading",
+            "name": "milestones_heading",
+            "type": "text",
+            "instructions": "Heading displayed before milestones accordion, e.g. \"What most 3 year olds do at this age:\"",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": "",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "key": "field_577565d13a68a",
+            "label": "Milestone List",
+            "name": "milestone_list",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": "",
+            "max": "",
+            "layout": "block",
+            "button_label": "Add Row",
+            "sub_fields": [
+                {
+                    "key": "field_577566093a68b",
+                    "label": "Milestone Category",
+                    "name": "milestone_category",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": "",
+                    "readonly": 0,
+                    "disabled": 0
+                },
+                {
+                    "key": "field_5775661e3a68c",
+                    "label": "Milestones",
+                    "name": "milestones",
+                    "type": "repeater",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "collapsed": "",
+                    "min": "",
+                    "max": "",
+                    "layout": "block",
+                    "button_label": "Add Row",
+                    "sub_fields": [
+                        {
+                            "key": "field_5775664d3a68d",
+                            "label": "Milestone",
+                            "name": "milestone",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": "",
+                            "readonly": 0,
+                            "disabled": 0
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "key": "field_577567423a68e",
+            "label": "Warning Signs Heading",
+            "name": "warning_signs_heading",
+            "type": "text",
+            "instructions": "Heading displayed before warning signs list, e.g. \"Act early by talking to your child's doctor if your child:\"",
+            "required": "",
+            "conditional_logic": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": "",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "key": "field_5775680e3a68f",
+            "label": "Warning Signs List",
+            "name": "warning_signs_list",
+            "type": "repeater",
+            "instructions": "",
+            "required": "",
+            "conditional_logic": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": "",
+            "max": "",
+            "layout": "block",
+            "button_label": "Add Row",
+            "sub_fields": [
+                {
+                    "key": "field_5775681f3a690",
+                    "label": "Warning Sign",
+                    "name": "warning_sign",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": "",
+                    "readonly": 0,
+                    "disabled": 0
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "age"
+            }
+        ]
+    ],
+    "menu_order": 2,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1467312277
+}

@@ -26,6 +26,7 @@
     "gulp-eslint": "^2.0.0",
     "gulp-if": "^2.0.1",
     "gulp-imagemin": "^2.3.0",
+    "gulp-modernizr": "^1.0.0-alpha",
     "gulp-notify": "^2.2.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.0",

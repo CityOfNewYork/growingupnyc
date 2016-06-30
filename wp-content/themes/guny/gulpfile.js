@@ -22,6 +22,7 @@ var autoprefixer = require('gulp-autoprefixer'),
     gif = require('gulp-if'),
     imagemin = require('gulp-imagemin'),
     minifycss = require('gulp-clean-css'),
+    modernizr = require('gulp-modernizr'),
     notify = require('gulp-notify'),
     p = require('./package.json'),
     path = require('path'),
@@ -104,6 +105,28 @@ gulp.task('lint', function() {
   return gulp.src([source + 'js/**/*.js', '!' + source + 'js/vendor/*.js'])
     .pipe(eslint())
     .pipe(gif(!browserSync.active, eslint.failOnError()));
+});
+
+// Modernizr
+gulp.task('modernizr', function() {
+  gulp.src(source+'js/*.js')
+    .pipe(modernizr({
+        crawl: false,
+        options: [
+          "setClasses",
+          "addTest",
+          "html5printshiv",
+          "testProp",
+          "fnBind"
+        ],
+        // https://modernizr.com/docs
+        tests: [
+          'cssanimations',
+          'touchevents'
+        ]
+    }))
+    .pipe(uglify())
+    .pipe(gulp.dest(dist+'js'))
 });
 
 // Webpack
@@ -209,5 +232,5 @@ gulp.task('default', function() {
 
 // Build
 gulp.task('build', ['clean'], function() {
-    gulp.start('styles', 'scripts', 'styleguide');
+    gulp.start('modernizr', 'styles', 'scripts', 'styleguide');
 });

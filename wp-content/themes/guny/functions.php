@@ -256,5 +256,5 @@ require_once(get_template_directory() . '/includes/guny_editor_styles.php');
 // Custom Shortcodes
 require_once(get_template_directory() . '/includes/guny_shortcodes.php');
 
-// Age Group Taxonomy Autopopulation
-require_once(get_template_directory() . '/includes/guny_autopopulate_age_group.php');
+// Customize Wordpress meta boxes
+require_once(get_template_directory() . '/includes/guny_meta_boxes.php');

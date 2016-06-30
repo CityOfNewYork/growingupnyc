@@ -181,10 +181,18 @@ class GUPostTypes {
       );
     }
 
-    $age_groups = array( 'Baby', 'Toddler', 'Pre-Schooler', 'Grade Schooler' );
+    $age_groups = array(
+      array( 'name' => 'Baby', 'description' => '0-11 months' ),
+      array( 'name' => 'Toddler', 'description' => '1-3 years' ),
+      array( 'name' => 'Pre-Schooler', 'description' => '4-5 years' ),
+      array( 'name' => 'Grade Schooler', 'description' => '6-10 years' ),
+      array( 'name' => 'Pre-Teen', 'description' => '11-12 years' )
+    );
     foreach( $age_groups as $age_group ) {
-      if ( !term_exists( $age_group, 'age_group' ) ) {
-        wp_insert_term( $age_group, 'age_group' );
+      if ( !term_exists( $age_group['name'], 'age_group' ) ) {
+        wp_insert_term( $age_group['name'], 'age_group', array(
+          'description' => $age_group['description']
+        ) );
       }
     }
   }

@@ -69,13 +69,22 @@ class GUPostTypes {
 
     register_taxonomy(
       'age_group',
-      array('age', 'tribe_events'),
+      array('age', 'tribe_events', 'program'),
       array(
         'label' => __( 'Age Groups' ),
         'rewrite' => array(
           'slug' => 'age-group',
           'with_front' => false
         ),
+        'hierarchical' => true
+      )
+    );
+
+    register_taxonomy(
+      'programs_cat',
+      'program',
+      array(
+        'label' => __( 'Program Categories' ),
         'hierarchical' => true
       )
     );

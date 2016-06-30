@@ -102,7 +102,7 @@ class GUPostTypes {
       'borough',
       'tribe_events',
       array(
-        'label' => __( 'Boroughs' ),
+        'label' => __( 'Event Location' ),
         'hierarchical' => true
       )
     );
@@ -131,9 +131,9 @@ class GUPostTypes {
   }
 
   function populate_taxonomies() {
-    if ( !term_exists( 'The Bronx', 'borough' ) ) {
+    if ( !term_exists( 'Bronx', 'borough' ) ) {
       wp_insert_term(
-        'The Bronx',
+        'Bronx',
         'borough',
         array(
           'slug' => 'bronx'

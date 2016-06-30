@@ -1,53 +1,54 @@
-{% block html_head_container %}
-  {% include 'html-header.twig' %}
-    {% block head %}{% endblock %}
-  </head>
-{% endblock %}
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html lang="en" class="no-js oldie">
+<![endif]-->
+<!--[if IE 9 ]>
+<html lang="en" class="no-js ie9">
+<![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="icon" type="image/x-icon" href="{{theme.path}}/favicon.ico">
+
+  <link rel="stylesheet" href="{{theme.path}}/style.css" type="text/css" media="screen">
+  {{function('wp_head')}}
+</head>
 
 <body class="{{body_class}}" data-template="base.twig">
-  <div class="off-canvas-wrapper">
-    <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+  <a href="#main" class="show-for-keyboard">Skip to main content</a>
+  {% block nav %}
+    {% include 'nav.twig' %}
+  {% endblock %}
 
-      {% block nav %}
-        {% include 'nav.twig' %}
+  {% block header %}
+    <header>
+      <h1><a href="{{site.url}}">{{site.name}}</a></h1>
+      <form action="/" method="get" class="js-global-search">
+        <label for="fwp-search">Search<label>
+        <input type="text" name="s" placeholder="Search" id="search">
+        <button type="submit">Submit</button>
+      </form>
+    </header>
+  {% endblock %}
+
+  <main id="main" role="main">
+    {% block content %}
+      <section class="post-list small-12 columns">
+        <p>Sorry, no entries match your criteria</p>
+      </section> <!-- /.post-list.small-12.columns -->
       {% endblock %}
+  </main> <!-- /#main -->
 
-      <div class="off-canvas-content" data-off-canvas-content>
-        {% block header %}
-          <div class="title-bar hide-for-large">
-            <div class="title-bar-left">
-              <h1 class="title-bar-title"><a href="{{site.url}}">{{site.name}}</a></h1>
-            </div> <!-- /.title-bar-left -->
-            <div class="title-bar-right">
-              <form action="/" method="get" class="js-global-search">
-                <label for="fwp-search">Search<label>
-                <input type="text" name="s" placeholder="Search" id="search">
-                <button type="submit">Submit</button>
-              </form>
-              <button class="menu-icon" type="button" data-toggle="primaryNav"></button>
-            </div> <!-- /.title-bar-right -->
-          </div> <!-- /.title-bar -->
-        {% endblock %}
+  <hr>
+  <footer class="site-footer" role="contentinfo">
+    {% include 'footer.twig' %}
+  </footer> <!-- /.site-footer -->
+  <a class="exit-off-canvas"></a>
 
-        {% block content %}
-          <main class="page-content row">
-            <section class="post-list small-12 columns">
-              <p>Sorry, no entries match your criteria</p>
-            </section> <!-- /.post-list.small-12.columns -->
-          </main> <!-- /.page-content.row -->
-        {% endblock %}
-
-        {% block footer %}
-          <hr>
-          <footer class="site-footer" role="contentinfo">
-            {% include 'footer.twig' %}
-          </footer> <!-- /.site-footer -->
-          <a class="exit-off-canvas"></a>
-        {% endblock %}
-
-        {{cta}}
-      </div> <!-- /.off-canvas-content -->
-    </div> <!-- /.off-canvas-wrapper-inner -->
-  </div> <!-- /.off-canvas-wrapper -->
   {{wp_footer}}
 </body>

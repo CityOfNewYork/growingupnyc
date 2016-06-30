@@ -69,6 +69,9 @@ gulp.task('styles_dev', ['lint-css'], function() {
     return gulp.src([
       source+'scss/style.scss'
     ])
+    .pipe(cssGlobbing({
+      extensions: ['.scss']
+    }))
     .pipe(sourcemaps.init())
     .pipe(sass({includePaths: ['node_modules']}))
         .on('error', handleError)
@@ -156,15 +159,17 @@ gulp.task('styleguide:generate', function() {
 
 // Apply styles to styleguide
 gulp.task('styleguide:applystyles', function() {
-  return gulp.src(source + 'scss/style.scss')
-    .pipe(cssGlobbing({
-      extensions: ['.scss']
-    }))
-    .pipe(sass({includePaths: ['node_modules']}))
+  return gulp.src([
+      source+'scss/style.scss'
+  ])
+  .pipe(cssGlobbing({
+    extensions: ['.scss']
+  }))
+  .pipe(sass({includePaths: ['node_modules']}))
       .on('error', handleError)
       .on('error', notify.onError())
-    .pipe(styleguide.applyStyles())
-    .pipe(gulp.dest(dist + 'styleguide'))
+  .pipe(styleguide.applyStyles())
+  .pipe(gulp.dest(dist + 'styleguide'))
 });
 
 

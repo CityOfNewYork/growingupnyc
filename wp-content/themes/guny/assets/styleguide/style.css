@@ -6,6 +6,7 @@ Author URI: http://www.bluestatedigital.com
 Description: Custom theme for GUNY
 */
 /* No files to import found in tools//* */
+/* stylelint-disable */
 /*! sanitize.css v3.3.0 | CC0 1.0 Public Domain | github.com/10up/sanitize.css */
 /*
  * Normalization
@@ -241,6 +242,7 @@ textarea {
   color: #ffffff;
   text-shadow: none; }
 
+/* stylelint-enable */
 /* No files to import found in base//* */
 /* No files to import found in objects//* */
 /* No files to import found in components//* */
@@ -266,3 +268,22 @@ textarea {
 .aligncenter {
   max-width: 100%;
   margin: 0 auto; }
+
+.show-for-screen-reader {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute !important;
+  width: 1px; }
+
+.show-for-keyboard {
+  height: 1px;
+  left: -1000px;
+  overflow: hidden;
+  position: absolute;
+  top: auto;
+  width: 1px; }
+  .show-for-keyboard:focus {
+    height: auto;
+    position: static;
+    width: auto; }

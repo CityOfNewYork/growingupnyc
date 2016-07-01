@@ -6,7 +6,7 @@
 
 // Off-Canvas Wrapper
 .o-offcanvas {
-  background: #444;
+  background: $color-offcanvas-bg;
   height: 100%;
   overflow: hidden;
   position: relative;
@@ -16,6 +16,7 @@
 //
 // The content that is initially offcanvas and then revealed
 .o-offcanvas__side {
+  background: $color-body-bg;
   width: $offcanvas_side_width;
 }
 
@@ -65,19 +66,11 @@
   }
 }
 
-.js.csstransforms3d .o-offcanvas__side {
-  transform: translate3d(-50%, 0, 0);
-}
-
-.js.csstransforms3d .is-open .o-offcanvas__side {
-  transform: translate3d(0, 0, 0);
-}
-
 // Off-Canvas Main
 //
 // The content that slides over to make room for the offcanvas content
 .o-offcanvas__main {
-  background: white;
+  background: $color-body-bg;
 }
 
 .js .o-offcanvas__main {

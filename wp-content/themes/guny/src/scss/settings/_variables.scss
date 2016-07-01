@@ -5,12 +5,14 @@
 $large: 1000px;
 
 $root-font-size: 100%;
-$black: #000;
+
+// Colors by Name
+$black: #444;
 $white: #fff;
 
-$fa-font-path: "assets/fonts";
+// Colors by Usage
+$color-body-bg: $white;
+$color-offcanvas-bg: $black;
 
-//////////////////////////////
-// Menu
-/////////////////////////////
+// Offcanvas
 $offcanvas_side_width: 300px;

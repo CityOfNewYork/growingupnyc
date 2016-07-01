@@ -254,6 +254,7 @@ body {
   position: relative; }
 
 .o-offcanvas__side {
+  background: #fff;
   width: 300px; }
 
 @media (min-width: 600px) {
@@ -293,14 +294,8 @@ body {
     transition: opacity .5s, width .1s .5s, height .1s .5s;
     width: 0; }
 
-.js.csstransforms3d .o-offcanvas__side {
-  transform: translate3d(-50%, 0, 0); }
-
-.js.csstransforms3d .is-open .o-offcanvas__side {
-  transform: translate3d(0, 0, 0); }
-
 .o-offcanvas__main {
-  background: white; }
+  background: #fff; }
 
 .js .o-offcanvas__main {
   backface-visibility: hidden;

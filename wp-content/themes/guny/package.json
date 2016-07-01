@@ -61,7 +61,8 @@
     "rules": {
       "comment-whitespace-inside": null,
       "no-missing-eof-newline": null,
-      "number-leading-zero": "never"
+      "number-leading-zero": "never",
+      "selector-pseudo-element-colon-notation": null
     }
   }
 }

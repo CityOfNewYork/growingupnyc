@@ -20,7 +20,6 @@
 </head>
 
 <body class="{{body_class}}" data-template="base.twig">
-  <h1><a href="{{site.url}}">{{site.name}}</a></h1>
   <div class="o-offcanvas" id="offcanvas-ages">
     <a href="#main" class="show-for-keyboard">Skip to main content</a>
     <nav class="o-offcanvas__side" id="ages" role="navigation" aria-labelledby="ages-heading">
@@ -42,6 +41,7 @@
     <div class="o-offcanvas__main">
       {% block header %}
         <header>
+          <h1><a href="{{site.url}}">{{site.name}}</a></h1>
           <nav role="navigation" role="navigation" aria-label="Primary">
             <a href="#ages" data-toggle="offcanvas-ages">Ages</a>
           </nav>
@@ -65,6 +65,7 @@
       <footer class="site-footer" role="contentinfo">
         {% include 'footer.twig' %}
       </footer> <!-- /.site-footer -->
+      <a class="o-offcanvas__overlay" data-toggle="offcanvas-ages" aria-hidden="true"></a>
     </div> <!-- /.o-offcanvas__main -->
   </div> <!-- /.o-offcanvas -->
 

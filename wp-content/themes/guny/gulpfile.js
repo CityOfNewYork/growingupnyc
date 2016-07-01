@@ -77,8 +77,8 @@ gulp.task('styles_dev', ['lint-css'], function() {
     .pipe(sass({includePaths: ['node_modules']}))
         .on('error', handleError)
         .on('error', notify.onError())
-    .pipe(autoprefixer('last 2 versions'))
-    .pipe(minifycss())
+    .pipe(autoprefixer(['last 2 versions', 'ie 9-11']))
+    //.pipe(minifycss())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./'))
     .pipe(browserSync.stream({match: '**/*.css'}));
@@ -94,7 +94,7 @@ gulp.task('styles', ['lint-css'], function() {
     .pipe(sass({includePaths: ['node_modules']}))
         .on('error', handleError)
         .on('error', notify.onError())
-    .pipe(autoprefixer('last 2 versions'))
+    .pipe(autoprefixer(['last 2 versions', 'ie 9-11']))
     .pipe(minifycss())
     .pipe(gulp.dest('./'));
 });
@@ -121,7 +121,8 @@ gulp.task('modernizr', function() {
         ],
         // https://modernizr.com/docs
         tests: [
-          'cssanimations',
+          'csstransforms3d',
+          'csstransitions',
           'touchevents'
         ]
     }))

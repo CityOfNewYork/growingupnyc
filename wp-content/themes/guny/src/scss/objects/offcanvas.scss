@@ -6,7 +6,9 @@
 
 // Off-Canvas Wrapper
 .o-offcanvas {
+  background: #444;
   height: 100%;
+  overflow: hidden;
   position: relative;
 }
 
@@ -14,7 +16,6 @@
 //
 // The content that is initially offcanvas and then revealed
 .o-offcanvas__side {
-  background: lightblue;
   width: $offcanvas_side_width;
 }
 
@@ -27,24 +28,60 @@
 
 .js .o-offcanvas__side {
   height: 100%;
-  left: right;
   position: absolute;
+  right: 0;
   top: 0;
   transition: all .5s;
   visibility: hidden;
   z-index: 1;
+
+  &:after {
+    background: rgba(0, 0, 0, .2);
+    content: '';
+    height: 100%;
+    opacity: 1;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: opacity .5s;
+    width: 100%;
+  }
 }
 
 .js .is-open .o-offcanvas__side {
   transition: transform .5s;
   visibility: visible;
+  z-index: 100;
+}
+
+.js.csstransitions .is-open .o-offcanvas__side {
+  z-index: 1;
+
+  &:after {
+    height: 0;
+    opacity: 0;
+    transition: opacity .5s, width .1s .5s, height .1s .5s;
+    width: 0;
+  }
+}
+
+.js.csstransforms3d .o-offcanvas__side {
+  transform: translate3d(-50%, 0, 0);
+}
+
+.js.csstransforms3d .is-open .o-offcanvas__side {
+  transform: translate3d(0, 0, 0);
 }
 
 // Off-Canvas Main
 //
 // The content that slides over to make room for the offcanvas content
+.o-offcanvas__main {
+  background: white;
+}
+
 .js .o-offcanvas__main {
-  background: magenta;
+  backface-visibility: hidden;
   height: 100%;
   left: 0;
   perspective: 1000px;
@@ -53,6 +90,33 @@
   z-index: 99;
 }
 
-.js .is-open .o-offcanvas__main {
-  transform: translate3d(#{$offcanvas_side_width}, 0, 0);
+.js.csstransitions .is-open .o-offcanvas__main {
+  transform: translateX(-#{$offcanvas_side_width});
+}
+
+.js.csstransforms3d .is-open .o-offcanvas__main {
+  transform: translate3d(-#{$offcanvas_side_width}, 0, 0);
+}
+
+// Off-Canvas Overlay
+//
+// Overlay on main content when offcanvas content is visible
+.o-offcanvas__overlay {
+  background: rgba(0, 0, 0, .2);
+  display: block;
+  height: 0;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: opacity .5s, width .1s .5s, height .1s .5s;
+  width: 0;
+}
+
+.is-open .o-offcanvas__overlay {
+  height: 100%;
+  opacity: 1;
+  transition: opacity .5s;
+  width: 100%;
+  z-index: 100;
 }

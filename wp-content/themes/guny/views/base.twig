@@ -20,9 +20,10 @@
 </head>
 
 <body class="{{body_class}}" data-template="base.twig">
-  <div class="o-offcanvas">
+  <h1><a href="{{site.url}}">{{site.name}}</a></h1>
+  <div class="o-offcanvas" id="offcanvas-ages">
     <a href="#main" class="show-for-keyboard">Skip to main content</a>
-    <nav id="ages" role="navigation" aria-labelledby="ages-heading">
+    <nav class="o-offcanvas__side" id="ages" role="navigation" aria-labelledby="ages-heading">
       <h2 id="ages-heading">Resources by Age</h2>
       <ol>
         {% for age_group in age_menu %}
@@ -38,32 +39,33 @@
       </ol>
     </nav>
 
-    {% block header %}
-      <header>
-        <h1><a href="{{site.url}}">{{site.name}}</a></h1>
-        <nav role="navigation" role="navigation" aria-label="Primary">
-          <a href="#ages">Ages</a>
-        </nav>
-        <form action="/" method="get" class="js-global-search">
-          <label for="fwp-search">Search<label>
-          <input type="text" name="s" placeholder="Search" id="search">
-          <button type="submit">Submit</button>
-        </form>
-      </header>
-    {% endblock %}
+    <div class="o-offcanvas__main">
+      {% block header %}
+        <header>
+          <nav role="navigation" role="navigation" aria-label="Primary">
+            <a href="#ages" data-toggle="offcanvas-ages">Ages</a>
+          </nav>
+          <form action="/" method="get" class="js-global-search">
+            <label for="fwp-search">Search<label>
+            <input type="text" name="s" placeholder="Search" id="search">
+            <button type="submit">Submit</button>
+          </form>
+        </header>
+      {% endblock %}
 
-    <main id="main" role="main">
-      {% block content %}
-        <section class="post-list small-12 columns">
-          <p>Sorry, no entries match your criteria</p>
-        </section> <!-- /.post-list.small-12.columns -->
-        {% endblock %}
-    </main> <!-- /#main -->
+      <main id="main" role="main">
+        {% block content %}
+          <section class="post-list small-12 columns">
+            <p>Sorry, no entries match your criteria</p>
+          </section> <!-- /.post-list.small-12.columns -->
+          {% endblock %}
+      </main> <!-- /#main -->
 
-    <hr>
-    <footer class="site-footer" role="contentinfo">
-      {% include 'footer.twig' %}
-    </footer> <!-- /.site-footer -->
+      <hr>
+      <footer class="site-footer" role="contentinfo">
+        {% include 'footer.twig' %}
+      </footer> <!-- /.site-footer -->
+    </div> <!-- /.o-offcanvas__main -->
   </div> <!-- /.o-offcanvas -->
 
   {{wp_footer}}

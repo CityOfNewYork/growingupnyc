@@ -4,7 +4,55 @@
 // Content should only be hidden initially if JS is enabled.
 // Closely related to the offcanvas JS module
 
+// Off-Canvas Wrapper
 .o-offcanvas {
   height: 100%;
   position: relative;
+}
+
+// Off-Canvas Side
+//
+// The content that is initially offcanvas and then revealed
+.o-offcanvas__side {
+  background: lightblue;
+  width: $offcanvas_side_width;
+}
+
+.no-js .o-offcanvas__side {
+  @include breakpoint(600px) {
+    float: right;
+    height: 100%;
+  }
+}
+
+.js .o-offcanvas__side {
+  height: 100%;
+  left: right;
+  position: absolute;
+  top: 0;
+  transition: all .5s;
+  visibility: hidden;
+  z-index: 1;
+}
+
+.js .is-open .o-offcanvas__side {
+  transition: transform .5s;
+  visibility: visible;
+}
+
+// Off-Canvas Main
+//
+// The content that slides over to make room for the offcanvas content
+.js .o-offcanvas__main {
+  background: magenta;
+  height: 100%;
+  left: 0;
+  perspective: 1000px;
+  position: relative;
+  transition: transform .5s;
+  z-index: 99;
+}
+
+.js .is-open .o-offcanvas__main {
+  transform: translate3d(#{$offcanvas_side_width}, 0, 0);
 }

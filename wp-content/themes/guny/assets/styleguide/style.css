@@ -243,8 +243,48 @@ textarea {
   text-shadow: none; }
 
 /* stylelint-enable */
-/* No files to import found in base//* */
-/* No files to import found in objects//* */
+html,
+body {
+  height: 100%; }
+
+.o-offcanvas {
+  height: 100%;
+  position: relative; }
+
+.o-offcanvas__side {
+  background: lightblue;
+  width: 300px; }
+
+@media (min-width: 600px) {
+  .no-js .o-offcanvas__side {
+    float: right;
+    height: 100%; } }
+
+.js .o-offcanvas__side {
+  height: 100%;
+  left: right;
+  position: absolute;
+  top: 0;
+  transition: all .5s;
+  visibility: hidden;
+  z-index: 1; }
+
+.js .is-open .o-offcanvas__side {
+  transition: transform .5s;
+  visibility: visible; }
+
+.js .o-offcanvas__main {
+  background: magenta;
+  height: 100%;
+  left: 0;
+  perspective: 1000px;
+  position: relative;
+  transition: transform .5s;
+  z-index: 99; }
+
+.js .is-open .o-offcanvas__main {
+  transform: translate3d(300px, 0, 0); }
+
 /* No files to import found in components//* */
 /* No files to import found in scopes//* */
 /**

@@ -1,23 +1,26 @@
 # WordPress #
 ############
 wp-config.php
-wp-cli.local.yml
-wp-content/uploads
+wp-content/uploads/
 wp-content/blogs.dir/
-wp-content/upgrade/
-wp-content/backup-db/
-wp-content/updraft/
-wp-content/backupwordpress-*/
-wp-content/managewp/backups/
+wp-content/upgrade/*
+wp-content/backup-db/*
 wp-content/advanced-cache.php
 wp-content/wp-cache-config.php
-sitemap.xml
-sitemap.xml.gz
-*.log
+wp-content/cache/*
+wp-content/cache/supercache/*
 
-# @TODO writable paths
-wp-content/cache/
-wp-content/backups/
+# WP-Engine Specific #
+######################
+.smushit-status
+.gitattributes
+_wpeprivate
+wp-content/object-cache.php
+wp-content/mu-plugins/mu-plugin.php
+wp-content/mu-plugins/slt-force-strong-passwords.php
+wp-content/mu-plugins/limit-login-attempts
+wp-content/mu-plugins/wpengine-common
+wp-content/mysql.sql
 
 
 # Packages #
@@ -57,3 +60,39 @@ Thumbs.db
 # npm #
 ##########
 node_modules
+
+# Large/disallowed filetypes #
+# See https://wpengine.com/git/#toc_4
+##############################
+*.hqx
+*.bin
+*.exe
+*.dll
+*.deb
+*.dmg
+*.iso
+*.img
+*.msi
+*.msp
+*.msm
+*.mid
+*.midi
+*.kar
+*.mp3
+*.ogg
+*.m4a
+*.ra
+*.3gpp
+*.3gp
+*.mp4
+*.mpeg
+*.mpg
+*.mov
+*.webm
+*.flv
+*.m4v
+*.mng
+*.asx
+*.asf
+*.wmv
+*.avi

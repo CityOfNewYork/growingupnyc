@@ -11811,6 +11811,11 @@
 	   */
 	  function togglePanel($panelElem, makeVisible) {
 	    $panelElem.attr('aria-hidden', !makeVisible);
+	    if (makeVisible) {
+	      $panelElem.css('height', $panelElem.data('height') + 'px');
+	    } else {
+	      $panelElem.css('height', '');
+	    }
 	  }
 
 	  /**
@@ -11819,11 +11824,13 @@
 	   * @param {string} labelledby - ID of element (accordion header) that labels panel
 	   */
 	  function initializePanel($panelElem, labelledby) {
+	    $panelElem.addClass('o-accordion__content');
+	    $panelElem.data('height', $panelElem.height());
 	    $panelElem.attr({
 	      'aria-hidden': true,
 	      'role': 'tabpanel',
 	      'aria-labelledby': labelledby
-	    }).addClass('o-accordion__content');
+	    });
 	  }
 
 	  /**
@@ -11833,9 +11840,11 @@
 	   */
 	  function toggleAccordionItem($item, makeVisible) {
 	    if (makeVisible) {
-	      $item.addClass('is-open');
+	      $item.addClass('is-expanded');
+	      $item.removeClass('is-collapsed');
 	    } else {
-	      $item.removeClass('is-open');
+	      $item.removeClass('is-expanded');
+	      $item.addClass('is-collapsed');
 	    }
 	  }
 
@@ -11866,6 +11875,9 @@
 	          toggleHeader($accordionHeader, makeVisible);
 	          togglePanel($accordionContent, makeVisible);
 	        });
+
+	        // Collapse panels initially
+	        $item.trigger('toggle.accordion', [false]);
 	      })();
 	    }
 	  }
@@ -11896,7 +11908,7 @@
 	       */
 	      $(this).on('click.accordion', '.js-accordion__header', $.proxy(function (event) {
 	        event.preventDefault();
-	        var $openItem = $(this).find('.is-open');
+	        var $openItem = $(this).find('.is-expanded');
 	        var $newItem = $(event.target).parent();
 	        $openItem.trigger('toggle.accordion', [false]);
 	        if ($openItem.get(0) !== $newItem.get(0)) {

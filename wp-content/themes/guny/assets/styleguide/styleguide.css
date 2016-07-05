@@ -247,8 +247,14 @@ html,
 body {
   height: 100%; }
 
-.o-accordion {
-  display: block; }
+.o-accordion__content {
+  display: block;
+  overflow: hidden;
+  transition: height .5s ease-in-out; }
+
+.is-collapsed .o-accordion__content {
+  height: 0;
+  transition: height .3s ease-in-out; }
 
 .o-offcanvas {
   background: #444;

@@ -1,12 +1,12 @@
 # Growing Up NYC
 
-**Demo URL:** [#](TBD)
+**URL:** [http://growingupnyc.wpengine.com/](http://growingupnyc.wpengine.com/)
+
+**Staging URL:** [http://growingupnyc.staging.wpengine.com/](http://growingupnyc.staging.wpengine.com/)
 
 **Local URL:** http://guny.wp.local
 
-[**Confluence Documentation**](https://confluence.bluestatedigital.com/display/WPD/Growing+Up+NYC)
-
-[**Style Guide**](http://guny.wp.local/wp-content/themes/guny/assets/styleguide)
+[**Style Guide**](http://growingupnyc.staging.wpengine.com/wp-content/themes/guny/assets/styleguide)
 
 ---
 ## Technical Details

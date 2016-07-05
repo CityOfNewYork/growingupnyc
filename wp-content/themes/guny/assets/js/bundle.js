@@ -60,6 +60,10 @@
 
 	var _accordion2 = _interopRequireDefault(_accordion);
 
+	var _offcanvas = __webpack_require__(410);
+
+	var _offcanvas2 = _interopRequireDefault(_offcanvas);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function ready(fn) {
@@ -73,6 +77,7 @@
 	function init() {
 	  (0, _globalSearch2.default)();
 	  (0, _toggleOpen2.default)();
+	  (0, _offcanvas2.default)();
 	  (0, _accordion2.default)();
 	}
 
@@ -8220,6 +8225,14 @@
 	          toggleElem.addEventListener('click', function (e) {
 	            e.preventDefault();
 	            targetElem.classList.toggle(openClass);
+	            var toggleEvent = void 0;
+	            if (typeof window.CustomEvent === 'function') {
+	              toggleEvent = new CustomEvent('changeOpenState', { detail: targetElem.classList.contains(openClass) });
+	            } else {
+	              toggleEvent = document.createEvent('CustomEvent');
+	              toggleEvent.initCustomEvent('changeOpenState', true, true, { detail: targetElem.classList.contains(openClass) });
+	            }
+	            targetElem.dispatchEvent(toggleEvent);
 	          });
 	        }();
 
@@ -11931,6 +11944,47 @@
 /***/ function(module, exports) {
 
 	module.exports = jQuery;
+
+/***/ },
+/* 410 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  var offCanvas = document.querySelectorAll('.js-offcanvas');
+	  if (offCanvas) {
+	    (0, _forEach2.default)(offCanvas, function (offCanvasElem) {
+	      var offCanvasSide = offCanvasElem.querySelector('.js-offcanvas__side');
+
+	      /**
+	      * Add event listener for 'changeOpenState'.
+	      * The value of event.detail indicates whether the open state is true
+	      * (i.e. the offcanvas content is visible).
+	      * @function
+	      * @param {object} event - The event object
+	      */
+	      offCanvasElem.addEventListener('changeOpenState', function (event) {
+	        if (event.detail) {
+	          if (!/^(?:a|select|input|button|textarea)$/i.test(offCanvasSide.tagName)) {
+	            offCanvasSide.tabIndex = -1;
+	          }
+	          offCanvasSide.focus();
+	        }
+	      }, false);
+	    });
+	  }
+	};
+
+	var _forEach = __webpack_require__(301);
+
+	var _forEach2 = _interopRequireDefault(_forEach);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }
 /******/ ]);

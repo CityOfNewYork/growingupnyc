@@ -2,6 +2,7 @@ import 'babel-polyfill';
 import globalSearch from './modules/globalSearch.js';
 import toggleOpen from './modules/toggleOpen.js';
 import accordion from './modules/accordion.js';
+import offcanvas from './modules/offcanvas.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -14,6 +15,7 @@ function ready(fn) {
 function init() {
   globalSearch();
   toggleOpen();
+  offcanvas();
   accordion();
 }
 

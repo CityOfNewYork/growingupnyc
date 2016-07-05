@@ -37,6 +37,14 @@ export default function(openClass) {
         toggleElem.addEventListener('click', function(e) {
           e.preventDefault();
           targetElem.classList.toggle(openClass);
+          let toggleEvent;
+          if (typeof window.CustomEvent === 'function') {
+            toggleEvent = new CustomEvent('changeOpenState', {detail: targetElem.classList.contains(openClass)});
+          } else {
+            toggleEvent = document.createEvent('CustomEvent');
+            toggleEvent.initCustomEvent('changeOpenState', true, true, {detail: targetElem.classList.contains(openClass)});
+          }
+          targetElem.dispatchEvent(toggleEvent);
         });
       }
     });

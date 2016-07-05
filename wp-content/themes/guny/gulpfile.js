@@ -70,7 +70,7 @@ gulp.task('styles_dev', ['lint-css'], function() {
       source+'scss/style.scss'
     ])
     .pipe(sourcemaps.init())
-    .pipe(sass({includePaths: ['node_modules']}))
+    .pipe(sass({includePaths: ['node_modules', require('bourbon-neat').includePaths]}))
         .on('error', handleError)
         .on('error', notify.onError())
     .pipe(autoprefixer('last 2 versions'))
@@ -87,7 +87,7 @@ gulp.task('styles', ['lint-css'], function() {
     .pipe(cssGlobbing({
       extensions: ['.scss']
     }))
-    .pipe(sass({includePaths: ['node_modules']}))
+    .pipe(sass({includePaths: ['node_modules', require('bourbon-neat').includePaths]}))
         .on('error', handleError)
         .on('error', notify.onError())
     .pipe(autoprefixer('last 2 versions'))

@@ -8,7 +8,7 @@
 .alignright {
   float: none;
 
-  @include breakpoint($large) {
+  @include media($large) {
     float: right;
   }
 }
@@ -16,7 +16,7 @@
 .alignleft {
   float: none;
 
-  @include breakpoint($large) {
+  @include media($large) {
     float: left;
   }
 }

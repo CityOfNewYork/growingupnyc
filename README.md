@@ -1,12 +1,12 @@
 # Growing Up NYC
 
-**Demo URL:** [#](TBD)
+**URL:** [http://growingupnyc.wpengine.com/](http://growingupnyc.wpengine.com/)
+
+**Staging URL:** [http://growingupnyc.staging.wpengine.com/](http://growingupnyc.staging.wpengine.com/)
 
 **Local URL:** http://guny.wp.local
 
-[**Confluence Documentation**](https://confluence.bluestatedigital.com/display/WPD/Growing+Up+NYC)
-
-[**Style Guide**](http://guny.wp.local/wp-content/themes/guny/assets/styleguide)
+[**Style Guide**](http://growingupnyc.staging.wpengine.com/wp-content/themes/guny/assets/styleguide)
 
 ---
 ## Technical Details
@@ -128,11 +128,34 @@ Add the database credentials to that file as well.
 Project-level development dependences can be found in the theme's `package.json` file.
 
 ### Deploying
-To deploy, you will need to log into WP Engine and add your SSH public key under "Git Push". Once your key has been added, follow the instructions at https://wpengine.com/git/ to set up 'git remote' endpoints for production. After your end points have been set up, you will deploy new code by pushing to the `production` remote, i.e. `git push production master`.
+To deploy, you will need to log into WP Engine and add your SSH public key under "Git Push". Once your key has been added, follow the instructions at https://wpengine.com/git/ to set up 'git remote' endpoints for staging and production. After your end points have been set up, you will deploy new code by pushing to the `staging` remote, i.e. `git push staging develop`, and then to the `production` remote.
 
-To deploy:
+--
 
-1. Run `gulp build` to minify CSS and JS for production
-2. Commit the compiled files
-3. Push to the local repo `git push origin master`
-4. Push to the WP Engine `git push production master`
+## Workflow
+1. Create a new branch off of **master** for the feature you are working on. Small tweaks and typo fixes can be made directly in develop, but anything that has its own ticket should have its own branch, named for the ticket.
+2. Build the feature.
+3. Run `gulp build` to minify CSS and JS for production. Fix any linting errors that are flagged.
+4. Merge your changes into **develop**.
+```
+git checkout develop
+git pull origin develop
+git merge YOUR_FEATURE_BRANCH
+git push origin develop
+```
+5. Deploy develop to staging
+```
+git push staging develop
+```
+6. Once QA has verified the feature in staging, merge your feature branch into **master**.
+```
+git checkout master
+git pull origin master
+git merge YOUR_FEATURE_BRANCH
+git push origin master
+```
+7. Deploy master to production
+```
+git push production master
+```
+8. Once the ticket is resolved, delete your feature branch (if you pushed it to the GitHub repo).

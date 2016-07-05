@@ -5,7 +5,6 @@
 */
 
 export default function() {
-
   function searchRedirect(searchForm) {
     const searchField = searchForm.querySelector('[name="s"]');
     if (searchField) {
@@ -20,7 +19,10 @@ export default function() {
     const searchFormLength = allSearchForms.length;
     for (let i = 0; i < searchFormLength; ++i) {
       let searchForm = allSearchForms[i];
-      searchForm.addEventListener('submit', function(e){e.preventDefault();searchRedirect(searchForm);}, false);
+      searchForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        searchRedirect(searchForm);
+      }, false);
     }
   }
 }

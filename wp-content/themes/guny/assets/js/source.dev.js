@@ -55,10 +55,10 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function ready(fn) {
-	  if (document.readyState != 'loading') {
-	    fn();
-	  } else {
+	  if (document.readyState === 'loading') {
 	    document.addEventListener('DOMContentLoaded', fn);
+	  } else {
+	    fn();
 	  }
 	}
 
@@ -8131,7 +8131,6 @@
 	});
 
 	exports.default = function () {
-
 	  function searchRedirect(searchForm) {
 	    var searchField = searchForm.querySelector('[name="s"]');
 	    if (searchField) {
@@ -8148,7 +8147,8 @@
 	    var _loop = function _loop(i) {
 	      var searchForm = allSearchForms[i];
 	      searchForm.addEventListener('submit', function (e) {
-	        e.preventDefault();searchRedirect(searchForm);
+	        e.preventDefault();
+	        searchRedirect(searchForm);
 	      }, false);
 	    };
 

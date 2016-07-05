@@ -1,6 +1,7 @@
 import 'babel-polyfill';
 import globalSearch from './modules/globalSearch.js';
 import toggleOpen from './modules/toggleOpen.js';
+import accordion from './modules/accordion.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -13,6 +14,7 @@ function ready(fn) {
 function init() {
   globalSearch();
   toggleOpen();
+  accordion();
 }
 
 ready(init);

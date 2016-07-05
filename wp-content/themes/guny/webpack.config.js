@@ -14,15 +14,16 @@ module.exports = {
   },
   externals: {
     'modernizr': 'Modernizr',
+    'jquery': 'jQuery'
   },
   resolve: {
     modulesDirectories: ['src', 'node_modules']
   },
   plugins: [
     new webpack.ProvidePlugin({
-      Modernizr : 'modernizr'
-      //$: 'jquery',
-      //jQuery: 'jquery'
+      Modernizr : 'modernizr',
+      $: 'jquery',
+      jQuery: 'jquery'
     })
   ]
 };

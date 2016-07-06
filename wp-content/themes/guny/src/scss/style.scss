@@ -5,14 +5,15 @@ Author: Blue State Digital
 Author URI: http://www.bluestatedigital.com
 Description: Custom theme for GUNY
 */
-@import "neat";
 
 // Settings (Global variables)
 // =====================
+@import "neat-helpers";
 @import "settings/*";
 
 // Tools (Default mixins and functions)
 // =====================
+@import "neat";
 @import "tools/*";
 
 // Resets (CSS resets and normalizers)

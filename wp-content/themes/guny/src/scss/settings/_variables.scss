@@ -44,6 +44,14 @@ $font-family-display: 'museo-sans-rounded', sans-serif;
 $font-weight-semibold: 600;
 $font-weight-extrablack: 900;
 
+// Grid Settings
+// See http://thoughtbot.github.io/neat-docs/latest
+// =====================
+$column: 70px;
+$gutter: 40px;
+$grid-columns: 12;
+$max-width: 1280px;
+
 // Breakpoints
 // =====================
 $large: 1000px;

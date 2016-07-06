@@ -50,9 +50,14 @@
     <div class="o-offcanvas__main">
       {% block header %}
         <header>
-          <h1><a href="{{site.url}}">{{site.name}}</a></h1>
+          <a href="{{site.url}}">{{site.name}}</a>
           <nav role="navigation" role="navigation" aria-label="Primary">
-            <a href="#ages" data-toggle="offcanvas-ages">Ages</a>
+            <ul>
+              {% for menu_item in menu.get_items %}
+                <li><a href="{{menu_item.link}}">{{menu_item.title}}</a></li>
+              {% endfor %}
+              <li><a href="#ages" data-toggle="offcanvas-ages">Ages</a></li>
+            </ul>
           </nav>
           <form action="/" method="get" class="js-global-search">
             <label for="fwp-search">Search<label>
@@ -67,7 +72,7 @@
           <section class="post-list small-12 columns">
             <p>Sorry, no entries match your criteria</p>
           </section> <!-- /.post-list.small-12.columns -->
-          {% endblock %}
+        {% endblock %}
       </main> <!-- /#main -->
 
       <hr>

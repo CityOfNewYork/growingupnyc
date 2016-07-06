@@ -44,7 +44,7 @@ class GunySite extends TimberSite {
   }
 
   function add_to_context ( $context ) {
-    $context['menu'] = new TimberMenu();
+    $context['menu'] = new TimberMenu('header-menu');
     $context['site'] = $this;
     $context['age_menu'] = Timber::get_terms('age_group', array(
       'orderby' => 'term_order',

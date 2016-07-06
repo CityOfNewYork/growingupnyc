@@ -73,26 +73,6 @@ class GunySite extends TimberSite {
       'before_widget' => '',
       'after_widget' => ''
     ));
-
-    register_sidebar(array(
-      'id' => 'sidebar',
-      'name' => __('Default Sidebar'),
-      'description' => __('Default sidebar for interior pages'),
-      'before_widget' => '',
-      'after_widget' => '',
-      'before_title' => '<h3>',
-      'after_title' => '</h3>'
-    ));
-
-    register_sidebar(array(
-      'id' => 'sidebar_blog',
-      'name' => __('Blog Sidebar'),
-      'description' => __('Special sidebar for the blog'),
-      'before_widget' => '',
-      'after_widget' => '',
-      'before_title' => '<h3>',
-      'after_title' => '</h3>'
-    ));
   }
 
   function add_menus() {

@@ -133,7 +133,7 @@ To deploy, you will need to log into WP Engine and add your SSH public key under
 --
 
 ## Workflow
-1. Create a new branch off of **master** for the feature you are working on. Small tweaks and typo fixes can be made directly in develop, but anything that has its own ticket should have its own branch, named for the ticket.
+1. Create a new branch off of **master** for the feature you are working on. Small tweaks and typo fixes can be made directly in develop, but anything that has its own ticket should be created in a separate branch. (It may make sense to work on several closely related tickets in a single branch so long as they will be tested and deployed together.)
 2. Build the feature.
 3. Run `gulp build` to minify CSS and JS for production. Fix any linting errors that are flagged.
 4. Merge your changes into **develop**.

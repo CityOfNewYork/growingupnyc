@@ -25,6 +25,8 @@ $color-text: $very-dark-gray;
 $color-text-invert: $white;
 $color-text-weak: $dark-gray;
 $color-text-link: $color-primary;
+$color-body-bg: $white;
+$color-offcanvas-bg: $black;
 
 // Colors By Age Group
 // =====================
@@ -71,3 +73,6 @@ $max-width: 1280px;
 // =====================
 $large: new-breakpoint(min-width 1000px);
 $breakpoint-font: $large;
+
+// Offcanvas
+$offcanvas_side_width: 300px;

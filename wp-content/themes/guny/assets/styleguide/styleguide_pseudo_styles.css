@@ -1,3 +1,9 @@
 [hidden][aria-hidden="false"].pseudo-class-focus {
   clip: auto;
 }
+
+.show-for-keyboard.pseudo-class-focus {
+  height: auto;
+  position: static;
+  width: auto;
+}

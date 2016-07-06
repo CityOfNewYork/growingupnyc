@@ -25,6 +25,7 @@
     "gulp-eslint": "^2.0.0",
     "gulp-if": "^2.0.1",
     "gulp-imagemin": "^2.3.0",
+    "gulp-modernizr": "^1.0.0-alpha",
     "gulp-notify": "^2.2.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.0",
@@ -32,6 +33,7 @@
     "gulp-stylelint": "^2.0.2",
     "gulp-uglify": "^1.2.0",
     "gulp-util": "^3.0.6",
+    "lodash": "^4.13.1",
     "stylelint-config-standard": "^9.0.0",
     "vinyl-source-stream": "^1.1.0",
     "webpack-stream": "^3.2.0"
@@ -59,7 +61,9 @@
     "rules": {
       "comment-whitespace-inside": null,
       "no-missing-eof-newline": null,
-      "at-rule-empty-line-before": null
+      "at-rule-empty-line-before": null,
+      "number-leading-zero": "never",
+      "selector-pseudo-element-colon-notation": null
     }
   }
 }

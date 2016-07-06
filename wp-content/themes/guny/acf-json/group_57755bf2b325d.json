@@ -45,7 +45,7 @@
                 "taxonomy"
             ],
             "elements": "",
-            "min": 1,
+            "min": "",
             "max": 5,
             "return_format": "id"
         }
@@ -67,5 +67,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1467309891
+    "modified": 1467316699
 }

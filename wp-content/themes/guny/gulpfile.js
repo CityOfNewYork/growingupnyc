@@ -22,6 +22,7 @@ var autoprefixer = require('gulp-autoprefixer'),
     gif = require('gulp-if'),
     imagemin = require('gulp-imagemin'),
     minifycss = require('gulp-clean-css'),
+    modernizr = require('gulp-modernizr'),
     notify = require('gulp-notify'),
     p = require('./package.json'),
     path = require('path'),
@@ -77,8 +78,8 @@ gulp.task('styles_dev', ['lint-css'], function() {
     .pipe(sass({includePaths: sassInclude}))
         .on('error', handleError)
         .on('error', notify.onError())
-    .pipe(autoprefixer('last 2 versions'))
-    .pipe(minifycss())
+    .pipe(autoprefixer(['last 2 versions', 'ie 9-11']))
+    //.pipe(minifycss())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./'))
     .pipe(browserSync.stream({match: '**/*.css'}));
@@ -94,7 +95,7 @@ gulp.task('styles', ['lint-css'], function() {
     .pipe(sass({includePaths: sassInclude}))
         .on('error', handleError)
         .on('error', notify.onError())
-    .pipe(autoprefixer('last 2 versions'))
+    .pipe(autoprefixer(['last 2 versions', 'ie 9-11']))
     .pipe(minifycss())
     .pipe(gulp.dest('./'));
 });
@@ -105,6 +106,29 @@ gulp.task('lint', function() {
   return gulp.src([source + 'js/**/*.js', '!' + source + 'js/vendor/*.js'])
     .pipe(eslint())
     .pipe(gif(!browserSync.active, eslint.failOnError()));
+});
+
+// Modernizr
+gulp.task('modernizr', function() {
+  gulp.src(source+'js/*.js')
+    .pipe(modernizr({
+        crawl: false,
+        options: [
+          "setClasses",
+          "addTest",
+          "html5printshiv",
+          "testProp",
+          "fnBind"
+        ],
+        // https://modernizr.com/docs
+        tests: [
+          'csstransforms3d',
+          'csstransitions',
+          'touchevents'
+        ]
+    }))
+    .pipe(uglify())
+    .pipe(gulp.dest(dist+'js'))
 });
 
 // Webpack
@@ -167,8 +191,8 @@ gulp.task('styleguide:applystyles', function() {
     .pipe(sass({includePaths: sassInclude}))
       .on('error', handleError)
       .on('error', notify.onError())
-    .pipe(styleguide.applyStyles())
-    .pipe(gulp.dest(dist + 'styleguide'))
+  .pipe(styleguide.applyStyles())
+  .pipe(gulp.dest(dist + 'styleguide'))
 });
 
 
@@ -208,5 +232,5 @@ gulp.task('default', function() {
 
 // Build
 gulp.task('build', ['clean'], function() {
-    gulp.start('styles', 'scripts', 'styleguide');
+    gulp.start('modernizr', 'styles', 'scripts', 'styleguide');
 });

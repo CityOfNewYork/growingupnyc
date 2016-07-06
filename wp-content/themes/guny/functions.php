@@ -46,14 +46,11 @@ class GunySite extends TimberSite {
   function add_to_context ( $context ) {
     $context['menu'] = new TimberMenu();
     $context['site'] = $this;
-    $context['footer_widgets'] = Timber::get_widgets('footer_widgets');
-    $cta = Timber::get_post( array(
-      'post_type' => 'call_to_action',
-      'post_status' => 'publish'
+    $context['age_menu'] = Timber::get_terms('age_group', array(
+      'orderby' => 'term_order',
+      'hide_empty' => false,
+      'parent' => 0
     ) );
-    if ( $cta ) {
-      $context['cta'] = Timber::render( 'cta-' . $cta->call_to_action_type . '.twig', array('post' => $cta), false );
-    }
     return $context;
   }
 
@@ -62,6 +59,7 @@ class GunySite extends TimberSite {
 
     if (!is_admin()) {
       wp_deregister_script('jquery');
+      wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/assets/js/modernizr.js', array(), '3.0.0', false );
       wp_enqueue_script( 'jquery', get_template_directory_uri() . '/src/js/vendor/jquery.js', array(), '2.1.14', false );
       wp_enqueue_script( 'site-js', get_template_directory_uri() . '/assets/js/source.js', array(), '1.0.0', true );
     }
@@ -105,6 +103,7 @@ class GunySite extends TimberSite {
     );
   }
 }
+new GunySite();
 
 /**
 * Extends TimberPost to include functionality provided by The Events Calendar
@@ -205,33 +204,6 @@ class GunyEvent extends TimberPost {
       return tribe_get_embedded_map();
     }
   }
-}
-new GunySite();
-
-/**
-* Returns the sidebar id for the page, based on page section
-*/
-function guny_get_sidebar_slug( $post ) {
-  if ( $post->post_type == 'page' ) {
-    $parents = array_reverse( get_post_ancestors( $post->ID ) );
-    $slug = '_';
-    // If there are no parents, the page itself is a top-level page
-    if (empty($parents)) {
-      $slug .= $post->post_name;
-    } else {
-      $ancestor = get_post($parents[0] );
-      $slug .= $ancestor->post_name;
-    }
-
-    return $slug;
-  }
-
-  // For blog posts, get the blog sidebar
-  if ( $post->post_type == 'post' ) {
-    return 'blog';
-  }
-
-  return '';
 }
 
 /**

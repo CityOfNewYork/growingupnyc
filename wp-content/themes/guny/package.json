@@ -58,7 +58,8 @@
     "extends": "stylelint-config-standard",
     "rules": {
       "comment-whitespace-inside": null,
-      "no-missing-eof-newline": null
+      "no-missing-eof-newline": null,
+      "at-rule-empty-line-before": null
     }
   }
 }

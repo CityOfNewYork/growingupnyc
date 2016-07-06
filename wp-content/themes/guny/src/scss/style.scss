@@ -14,7 +14,8 @@ Description: Custom theme for GUNY
 // Tools (Default mixins and functions)
 // =====================
 @import "neat";
-@import "tools/*";
+@import "tools/unit";
+@import "tools/type";
 
 // Resets (CSS resets and normalizers)
 // =====================

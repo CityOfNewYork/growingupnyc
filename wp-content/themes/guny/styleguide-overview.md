@@ -1,3 +1,5 @@
-# Living Styleguide
+# Growing Up NYC Styleguide
 
-Put an introduction to your styleguide here.
+Living styleguide for the Growing Up NYC site. Styles are generated from KSS-style
+comments within the project's SCSS files. This styleguide provides a reference
+to the existing site components.

@@ -2,6 +2,10 @@
   clip: auto;
 }
 
+.o-inline__item.pseudo-class-first-child {
+  margin-left: 0;
+}
+
 .show-for-keyboard.pseudo-class-focus {
   height: auto;
   position: static;

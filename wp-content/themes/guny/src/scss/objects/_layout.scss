@@ -7,7 +7,7 @@
   padding-left: 20px;
   padding-right: 20px;
 
-  @include media($large) {
+  @include media($bp-large) {
     padding-left: 40px;
     padding-right: 40px;
   }

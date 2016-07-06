@@ -1,0 +1,115 @@
+// Global Elements
+//
+// Styleguide 1
+
+// Local Variables
+$height-banner-logo-small: $height-banner-logo * 1.3333333333;
+$height-banner-logo-large: $height-banner-logo * 2.1;
+$width-banner-logo-small: $width-banner-logo * 1.33333333333;
+$width-banner-logo-large: $width-banner-logo * 2.133333333;
+
+// Banner
+//
+// Global site header
+//
+// markup:
+// <header class="c-banner">
+//   <div class="o-layout">
+//     <sg-insert>1.1.1</sg-insert>
+//     <sg-insert>1.1.2</sg-insert>
+//   </div>
+// </header>
+//
+// Styleguide 1.1
+.c-banner {
+  background: $color-background;
+  box-shadow: 0 0 4px 0 $color-shadow;
+  height: $height-banner;
+  margin-bottom: $height-banner-logo - $height-banner;
+
+  @include media($bp-small) {
+    margin-bottom: ($height-banner-logo-small) - $height-banner;
+  }
+
+  @include media($bp-large) {
+    height: $height-banner-large;
+    margin-bottom: ($height-banner-logo-large) - $height-banner-large;
+  }
+}
+
+// Banner Logo Wrapper
+//
+// markup:
+// <a href="#" class="c-banner__logo-wrapper"><span class="c-banner__logo">Site Title</span></a>
+//
+// Styleguide 1.1.1
+.c-banner__logo-wrapper {
+  background: $color-background;
+  box-shadow: 0 0 4px 0 $color-shadow;
+  display: block;
+  float: left;
+  height: $height-banner-logo;
+  padding: 0 5px 8px;
+  width: $width-banner-logo;
+
+  @include media($bp-small) {
+    height: $height-banner-logo-small;
+    width: $width-banner-logo-small;
+  }
+
+  @include media($bp-large) {
+    height: $height-banner-logo-large;
+    padding: 0 16px 20px 14px;
+    width: $width-banner-logo-large;
+  }
+}
+
+// Banner Logo
+.c-banner__logo {
+  background: url(/wp-content/themes/guny/assets/img/GrowingUpNYC-logo-stacked.gif) center bottom no-repeat;
+  background-size: contain;
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+  width: 100%;
+}
+
+// Banner Navigation
+//
+// markup:
+// <nav class="c-banner__nav">
+//   <ul class="o-inline">
+//     <li class="o-inline__item"><sg-insert>1.1.3</sg-insert></li>
+//     <li class="o-inline__item"><sg-insert>1.1.3</sg-insert></li>
+//   </ul>
+// </nav>
+//
+// Styleguide 1.1.2
+.c-banner__nav {
+  float: right;
+  line-height: 1;
+  padding-top: rem-calc(18);
+
+  @include media($bp-large) {
+    padding-top: rem-calc(20);
+  }
+}
+
+// Banner Link
+//
+// markup:
+// <a href="#" class="c-banner__link">Item</a>
+//
+// Styleguide 1.1.3
+.c-banner__link {
+  font-family: $font-family-display;
+  @include font-size-small;
+  font-weight: $font-weight-extrablack;
+  @include text-uppercase;
+
+  @include media($breakpoint-font) {
+    letter-spacing: 1.1;
+  }
+}

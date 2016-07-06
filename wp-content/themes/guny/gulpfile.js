@@ -171,13 +171,14 @@ gulp.task('images', function() {
 
 // Generate Styleguide
 gulp.task('styleguide:generate', function() {
-  return gulp.src([source + 'scss/_*.scss'])
+  return gulp.src([source + 'scss/components/_*.scss'])
     .pipe(styleguide.generate({
-      title: 'Styleguide',
+      title: 'Growing Up NYC',
       rootPath: dist + 'styleguide',
       appRoot: appRoot + 'styleguide',
       overviewPath: 'styleguide-overview.md',
-      extraHead: ''
+      extraHead: '<script src="//use.typekit.net/gyh3xur.js"></script><script>try{Typekit.load({ async: true });}catch(e){}</script>',
+      commonClass: 'styleguide'
     }))
     .pipe(gulp.dest(dist + 'styleguide'))
 });
@@ -215,7 +216,7 @@ gulp.task('default', function() {
     });
 
     // Watch .scss files
-    gulp.watch(source+'scss/**/*.scss', ['styles_dev', 'styleguide']);
+    gulp.watch(source+'scss/**/*.scss', ['styles_dev']);
 
     // Watch .js files
     gulp.watch(source+'js/**/*.js', ['scripts']);

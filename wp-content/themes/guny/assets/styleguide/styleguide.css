@@ -257,15 +257,18 @@ body {
 html {
   font-size: 100%; }
 
-body {
+body,
+.styleguide {
   color: #333;
   font-family: "open-sans", sans-serif;
   font-size: 0.9375rem; }
   @media screen and (min-width: 1000px) {
-    body {
+    body,
+    .styleguide {
       font-size: 1.125rem; } }
 
-.wf-active body {
+.wf-active body,
+.styleguide {
   font-weight: 600; }
 
 h1,
@@ -279,6 +282,23 @@ h6 {
 
 a {
   color: #2793e0; }
+
+.o-inline {
+  display: block; }
+
+ul.o-inline,
+ol.o-inline {
+  list-style: none; }
+
+.o-inline__item {
+  display: inline-block;
+  margin-left: 1rem;
+  margin-right: -4px; }
+  .o-inline__item:first-child {
+    margin-left: 0; }
+  @media screen and (min-width: 1000px) {
+    .o-inline__item {
+      margin-left: 3.5rem; } }
 
 .o-layout {
   max-width: 1280px;
@@ -305,7 +325,7 @@ a {
   transition: height .3s ease-in-out; }
 
 .o-offcanvas {
-  background: #000;
+  background: #333;
   height: 100%;
   overflow: hidden;
   position: relative; }
@@ -387,7 +407,69 @@ a {
   width: 100%;
   z-index: 100; }
 
-/* No files to import found in components//* */
+.c-banner {
+  background: #fff;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+  height: 50px;
+  margin-bottom: 10px; }
+  @media screen and (min-width: 375px) {
+    .c-banner {
+      margin-bottom: 30.0px; } }
+  @media screen and (min-width: 1000px) {
+    .c-banner {
+      height: 60px;
+      margin-bottom: 66px; } }
+
+.c-banner__logo-wrapper {
+  background: #fff;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
+  display: block;
+  float: left;
+  height: 60px;
+  padding: 0 5px 8px;
+  width: 75px; }
+  @media screen and (min-width: 375px) {
+    .c-banner__logo-wrapper {
+      height: 80.0px;
+      width: 100.0px; } }
+  @media screen and (min-width: 1000px) {
+    .c-banner__logo-wrapper {
+      height: 126px;
+      padding: 0 16px 20px 14px;
+      width: 160.0px; } }
+
+.c-banner__logo {
+  background: url(/wp-content/themes/guny/assets/img/GrowingUpNYC-logo-stacked.gif) center bottom no-repeat;
+  background-size: contain;
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+  width: 100%; }
+
+.c-banner__nav {
+  float: right;
+  line-height: 1;
+  padding-top: 1.125rem; }
+  @media screen and (min-width: 1000px) {
+    .c-banner__nav {
+      padding-top: 1.25rem; } }
+
+.c-banner__link {
+  font-family: "museo-sans-rounded", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: .5px;
+  line-height: 1;
+  text-transform: uppercase; }
+  @media screen and (min-width: 1000px) {
+    .c-banner__link {
+      font-size: 1rem; } }
+  @media screen and (min-width: 1000px) {
+    .c-banner__link {
+      letter-spacing: 1.1; } }
+
 /* No files to import found in scopes//* */
 /**
 * Utility classes

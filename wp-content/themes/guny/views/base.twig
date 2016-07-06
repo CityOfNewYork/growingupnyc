@@ -49,21 +49,25 @@
 
     <div class="o-offcanvas__main">
       {% block header %}
-        <header>
-          <a href="{{site.url}}">{{site.name}}</a>
-          <nav role="navigation" role="navigation" aria-label="Primary">
-            <ul>
-              {% for menu_item in menu.get_items %}
-                <li><a href="{{menu_item.link}}">{{menu_item.title}}</a></li>
-              {% endfor %}
-              <li><a href="#ages" data-toggle="offcanvas-ages">Ages</a></li>
-            </ul>
-          </nav>
-          <form action="/" method="get" class="js-global-search">
-            <label for="fwp-search">Search<label>
-            <input type="text" name="s" placeholder="Search" id="search">
-            <button type="submit">Submit</button>
-          </form>
+        <header class="c-banner">
+          <div class="o-layout">
+            <a href="{{site.url}}" class="c-banner__logo-wrapper"><span class="c-banner__logo">{{site.name}}</span></a>
+            <nav class="c-banner__nav" role="navigation" role="navigation" aria-label="Primary">
+              <ul class="o-inline">
+                {% for menu_item in menu.get_items %}
+                  <li class="o-inline__item"><a href="{{menu_item.link}}" class="c-banner__link">{{menu_item.title}}</a></li>
+                {% endfor %}
+                <li class="o-inline__item"><a href="#ages" data-toggle="offcanvas-ages" class="c-banner__link">Ages</a></li>
+              </ul>
+            </nav>
+            {#
+            <form action="/" method="get" class="js-global-search">
+              <label for="fwp-search">Search<label>
+              <input type="text" name="s" placeholder="Search" id="search">
+              <button type="submit">Submit</button>
+            </form>
+            #}
+          </div>
         </header>
       {% endblock %}
 

@@ -17,6 +17,7 @@ $white: #fff;
 
 // Colors By Usage
 // =====================
+$color-shadow: rgba(0, 0, 0, .2);
 $color-accent: $pure-orange;
 $color-primary: $bright-blue;
 $color-background: $white;
@@ -25,8 +26,6 @@ $color-text: $very-dark-gray;
 $color-text-invert: $white;
 $color-text-weak: $dark-gray;
 $color-text-link: $color-primary;
-$color-body-bg: $white;
-$color-offcanvas-bg: $black;
 
 // Colors By Age Group
 // =====================
@@ -50,8 +49,8 @@ $font-weight-extrablack: 900;
 // =====================
 $font-size-x-small-mobile: 11;
 $font-size-x-small: 13;
-$font-size-small-mobile: 14;
-$font-size-small: 15;
+$font-size-small-mobile: 12;
+$font-size-small: 16;
 $font-size-regular-mobile: 15;
 $font-size-regular: 18;
 $font-size-large-mobile: 18;
@@ -71,8 +70,17 @@ $max-width: 1280px;
 
 // Breakpoints
 // =====================
-$large: new-breakpoint(min-width 1000px);
-$breakpoint-font: $large;
+$bp-small: new-breakpoint(min-width 375px);
+$bp-large: new-breakpoint(min-width 1000px);
+$breakpoint-font: $bp-large;
 
-// Offcanvas
-$offcanvas_side_width: 300px;
+// Heights
+// =====================
+$height-banner: 50px;
+$height-banner-large: 60px;
+$height-banner-logo: 60px;
+
+// Widths
+// =====================
+$width-banner-logo: 75px;
+$width-offcanvas-side: 300px;

@@ -8,7 +8,7 @@
 .alignright {
   float: none;
 
-  @include media($large) {
+  @include media($bp-large) {
     float: right;
   }
 }
@@ -16,7 +16,7 @@
 .alignleft {
   float: none;
 
-  @include media($large) {
+  @include media($bp-large) {
     float: left;
   }
 }

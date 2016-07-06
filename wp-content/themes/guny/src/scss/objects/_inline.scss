@@ -1,0 +1,28 @@
+// Inline List
+//
+// Displays things in a horizontal row
+
+// Inline List Container
+.o-inline {
+  display: block;
+}
+
+ul.o-inline,
+ol.o-inline {
+  list-style: none;
+}
+
+// Inline list item
+.o-inline__item {
+  display: inline-block;
+  margin-left: rem-calc(16);
+  margin-right: -4px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  @include media($bp-large) {
+    margin-left: rem-calc(56);
+  }
+}

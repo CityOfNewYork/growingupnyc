@@ -33,3 +33,9 @@
 @mixin font-size-xx-large {
   @include font-size($font-size-xx-large-mobile, $font-size-xx-large);
 }
+
+@mixin text-uppercase {
+  letter-spacing: .5px;
+  line-height: 1;
+  text-transform: uppercase;
+}

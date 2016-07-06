@@ -276,7 +276,21 @@ h6 {
 a {
   color: #2793e0; }
 
-/* No files to import found in objects//* */
+.o-layout {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 20px;
+  padding-right: 20px; }
+  .o-layout::after {
+    clear: both;
+    content: "";
+    display: block; }
+  @media screen and (min-width: 1000px) {
+    .o-layout {
+      padding-left: 40px;
+      padding-right: 40px; } }
+
 /* No files to import found in components//* */
 /* No files to import found in scopes//* */
 /**

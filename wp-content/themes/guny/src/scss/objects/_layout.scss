@@ -1,0 +1,14 @@
+// Layout patterns and containers
+//
+// Uses Neat for the grid mixins
+
+.o-layout {
+  @include outer-container;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  @include media($large) {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}

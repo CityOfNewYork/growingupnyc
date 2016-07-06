@@ -54,4 +54,4 @@ $max-width: 1280px;
 
 // Breakpoints
 // =====================
-$large: 1000px;
+$large: new-breakpoint(min-width 1000px);

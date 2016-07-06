@@ -254,6 +254,9 @@ html,
 body {
   height: 100%; }
 
+svg {
+  fill: currentColor; }
+
 html {
   font-size: 100%; }
 
@@ -292,10 +295,13 @@ ol.o-inline {
 
 .o-inline__item {
   display: inline-block;
-  margin-left: 1rem;
+  margin-left: 0.75rem;
   margin-right: -4px; }
   .o-inline__item:first-child {
     margin-left: 0; }
+  @media screen and (min-width: 375px) {
+    .o-inline__item {
+      margin-left: 1rem; } }
   @media screen and (min-width: 1000px) {
     .o-inline__item {
       margin-left: 3.5rem; } }
@@ -304,12 +310,16 @@ ol.o-inline {
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 20px;
-  padding-right: 20px; }
+  padding-left: 15px;
+  padding-right: 15px; }
   .o-layout::after {
     clear: both;
     content: "";
     display: block; }
+  @media screen and (min-width: 375px) {
+    .o-layout {
+      padding-left: 20px;
+      padding-right: 20px; } }
   @media screen and (min-width: 1000px) {
     .o-layout {
       padding-left: 40px;
@@ -468,7 +478,14 @@ ol.o-inline {
       font-size: 1rem; } }
   @media screen and (min-width: 1000px) {
     .c-banner__link {
-      letter-spacing: 1.1; } }
+      letter-spacing: 1.1px; } }
+
+.c-banner__icon {
+  display: inline-block;
+  height: 1.25em;
+  margin-top: -4px;
+  vertical-align: middle;
+  width: 1.25em; }
 
 /* No files to import found in scopes//* */
 /**

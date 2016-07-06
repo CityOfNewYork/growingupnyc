@@ -32,6 +32,7 @@ var autoprefixer = require('gulp-autoprefixer'),
     stylelint = require('gulp-stylelint'),
     sourcemaps = require('gulp-sourcemaps'),
     sourcestream = require('vinyl-source-stream'),
+    svgSprite = require('gulp-svg-sprite'),
     uglify = require('gulp-uglify'),
     webpack = require('webpack-stream');
 
@@ -41,6 +42,7 @@ var autoprefixer = require('gulp-autoprefixer'),
 var dist = 'assets/',
     appRoot = '/wp-content/themes/guny/assets/',
     source = 'src/',
+    views = 'views/',
     sassInclude = ['node_modules', require('bourbon-neat').includePaths];
 
 
@@ -169,6 +171,22 @@ gulp.task('images', function() {
     .pipe(notify({ message: 'Images task complete' }));
 });
 
+// SVGs
+gulp.task('icons', function() {
+  return gulp.src(source+'icons/*.svg')
+    .pipe(svgSprite({
+      mode: {
+        symbol: {
+          dest: '.',
+          sprite: 'svg-sprite.twig',
+          bust: false,
+          inline: true
+        }
+      }
+    }))
+    .pipe(gulp.dest(views + 'partials'))
+});
+
 // Generate Styleguide
 gulp.task('styleguide:generate', function() {
   return gulp.src([source + 'scss/components/_*.scss'])
@@ -223,6 +241,9 @@ gulp.task('default', function() {
 
     // Watch image files
     gulp.watch(source+'img/**/*', ['images']);
+
+    // Watch SVG icons
+    gulp.watch(source+'icons/*.svg', ['icons']);
 
     // Watch templates, JS, and CSS, reload on change
     gulp.watch([

@@ -15,11 +15,15 @@ ol.o-inline {
 // Inline list item
 .o-inline__item {
   display: inline-block;
-  margin-left: rem-calc(16);
+  margin-left: rem-calc(12);
   margin-right: -4px;
 
   &:first-child {
     margin-left: 0;
+  }
+
+  @include media($bp-small) {
+    margin-left: rem-calc(16);
   }
 
   @include media($bp-large) {

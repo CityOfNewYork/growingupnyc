@@ -5,6 +5,12 @@ Author: Blue State Digital
 Author URI: http://www.bluestatedigital.com
 Description: Custom theme for GUNY
 */
+html {
+  box-sizing: border-box; }
+
+*, *::after, *::before {
+  box-sizing: inherit; }
+
 /* No files to import found in tools//* */
 /* stylelint-disable */
 /*! sanitize.css v3.3.0 | CC0 1.0 Public Domain | github.com/10up/sanitize.css */
@@ -255,13 +261,13 @@ textarea {
 */
 .alignright {
   float: none; }
-  @media (min-width: 1000px) {
+  @media screen and (min-width: 1000px) {
     .alignright {
       float: right; } }
 
 .alignleft {
   float: none; }
-  @media (min-width: 1000px) {
+  @media screen and (min-width: 1000px) {
     .alignleft {
       float: left; } }
 

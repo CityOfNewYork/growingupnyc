@@ -39,7 +39,8 @@ var autoprefixer = require('gulp-autoprefixer'),
 // ----------
 var dist = 'assets/',
     appRoot = '/wp-content/themes/guny/assets/',
-    source = 'src/';
+    source = 'src/',
+    sassInclude = ['node_modules', require('bourbon-neat').includePaths];
 
 
 // ERROR HANDLING
@@ -69,8 +70,11 @@ gulp.task('styles_dev', ['lint-css'], function() {
     return gulp.src([
       source+'scss/style.scss'
     ])
+    .pipe(cssGlobbing({
+      extensions: ['.scss']
+    }))
     .pipe(sourcemaps.init())
-    .pipe(sass({includePaths: ['node_modules', require('bourbon-neat').includePaths]}))
+    .pipe(sass({includePaths: sassInclude}))
         .on('error', handleError)
         .on('error', notify.onError())
     .pipe(autoprefixer('last 2 versions'))
@@ -87,7 +91,7 @@ gulp.task('styles', ['lint-css'], function() {
     .pipe(cssGlobbing({
       extensions: ['.scss']
     }))
-    .pipe(sass({includePaths: ['node_modules', require('bourbon-neat').includePaths]}))
+    .pipe(sass({includePaths: sassInclude}))
         .on('error', handleError)
         .on('error', notify.onError())
     .pipe(autoprefixer('last 2 versions'))
@@ -160,7 +164,7 @@ gulp.task('styleguide:applystyles', function() {
     .pipe(cssGlobbing({
       extensions: ['.scss']
     }))
-    .pipe(sass({includePaths: ['node_modules']}))
+    .pipe(sass({includePaths: sassInclude}))
       .on('error', handleError)
       .on('error', notify.onError())
     .pipe(styleguide.applyStyles())

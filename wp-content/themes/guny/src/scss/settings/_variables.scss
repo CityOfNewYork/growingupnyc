@@ -1,16 +1,49 @@
 // Site Variables
 //
 
-// Breakpoints
-$large: 1000px;
-
-$root-font-size: 100%;
+// Colors By Name
+// =====================
 $black: #000;
+$bright-blue: #2793e0;
+$dark-gray: #999;
+$pure-orange: #ffb900;
+$strong-blue: #0055b8;
+$strong-lime-green: #35c621;
+$strong-pink: #d8006d;
+$very-dark-gray: #333;
+$very-light-gray: #eee;
+$vivid-orange: #ff9030;
 $white: #fff;
 
-$fa-font-path: "assets/fonts";
+// Colors By Usage
+// =====================
+$color-accent: $pure-orange;
+$color-primary: $bright-blue;
+$color-background: $white;
+$color-background-shade: $very-light-gray;
+$color-text: $very-dark-gray;
+$color-text-invert: $white;
+$color-text-weak: $dark-gray;
+$color-text-link: $color-primary;
 
-//////////////////////////////
-// Menu
-/////////////////////////////
-$offcanvas-fixed-reveal: false;
+// Colors By Age Group
+// =====================
+$color-baby: $strong-pink;
+$color-toddler: $vivid-orange;
+$color-pre-schooler: $pure-orange;
+$color-grade-schooler: $strong-lime-green;
+$color-pre-teen: $strong-blue;
+
+// Font Families
+// =====================
+$font-family-text: 'open-sans', sans-serif;
+$font-family-display: 'museo-sans-rounded', sans-serif;
+
+// Font Weights
+// =====================
+$font-weight-semibold: 600;
+$font-weight-extrablack: 900;
+
+// Breakpoints
+// =====================
+$large: 1000px;

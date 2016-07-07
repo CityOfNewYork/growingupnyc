@@ -48,7 +48,7 @@
       </ol>
     </nav>
 
-    <div class="o-offcanvas__main">
+    <div class="o-offcanvas__main o-sticky-footer">
       {% block header %}
         <header class="c-banner">
           <div class="o-layout">
@@ -75,7 +75,7 @@
         </header>
       {% endblock %}
 
-      <main id="main" role="main">
+      <main id="main" role="main" class="o-sticky-footer__content">
         {% block content %}
           <section class="post-list small-12 columns">
             <p>Sorry, no entries match your criteria</p>
@@ -83,7 +83,6 @@
         {% endblock %}
       </main> <!-- /#main -->
 
-      <hr>
       <footer class="c-footer" role="contentinfo">
         <div class="o-layout">
           <img class="c-footer__logo" alt="Growing Up NYC" src="{{theme.link}}/assets/img/GrowingUpNYC-logo-white.gif">

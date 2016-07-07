@@ -417,6 +417,20 @@ ol.o-inline {
   width: 100%;
   z-index: 100; }
 
+.flexbox .o-sticky-footer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; }
+
+.flexbox .o-sticky-footer__content {
+  flex: 1; }
+
+.no-flexbox .o-sticky-footer {
+  background: #2793e0; }
+
+.no-flexbox .o-sticky-footer__content {
+  background: #fff; }
+
 .c-banner {
   background: #fff;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);

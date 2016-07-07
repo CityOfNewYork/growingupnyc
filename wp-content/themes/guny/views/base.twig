@@ -32,8 +32,9 @@
   {% include 'partials/svg-sprite.twig' %}
   <div class="o-offcanvas js-offcanvas" id="offcanvas-ages">
     <a href="#main" class="show-for-keyboard">Skip to main content</a>
-    <nav class="o-offcanvas__side js-offcanvas__side" id="ages" role="navigation" aria-labelledby="ages-heading">
+    <nav class="o-offcanvas__side js-offcanvas__side" id="ages" role="navigation" aria-label="ages-heading">
       <h2 id="ages-heading" class="show-for-screen-reader">Resources by Age</h2>
+      <button data-toggle="offcanvas-ages" class="o-offcanvas__close button--text"><svg class="icon--small" role="img"><title>Close Resources by Age</title><use xlink:href="#close"></use></svg></button>
       <ol class="js-accordion" data-multiselectable="true">
         {% for age_group in age_menu %}
           <li>

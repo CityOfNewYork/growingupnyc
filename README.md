@@ -24,7 +24,7 @@ file.
 
 - <kbd>/resets</kbd>: CSS resets/normalizers
 
-- <kbd>/base</kbd>: Unclassed HTML elements (generic headings, lists, links)
+- <kbd>/base</kbd>: Unclassed HTML elements (generic headings, lists, links) and styles that apply to a single element only (buttons, icons).
 
 - <kbd>/objects</kbd>: Design patterns (think OOCSS). Classes prefixed with `o-`
 

@@ -45,8 +45,6 @@ wp-content/mysql.sql
 ######################
 .DS_Store*
 ehthumbs.db
-Icon?
-!wp-content/themes/guny/src/icons
 Thumbs.db
 ._*
 

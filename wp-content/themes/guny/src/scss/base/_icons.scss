@@ -1,0 +1,14 @@
+// Icons
+//
+// markup:
+// <svg role="img" {$modifiers}>
+//   <title>Descriptive title</title>
+//   <use xlink:href="#iconId"></use>
+// </svg>
+//
+// Not in styleguide because display is dependent on embedded SVG sprite
+
+.icon--small {
+  height: rem-calc(22);
+  width: rem-calc(22);
+}

@@ -2,6 +2,12 @@
   clip: auto;
 }
 
+.button--text.pseudo-class-hover,
+.button--text.pseudo-class-focus {
+  color: #0055b8;
+  outline: none;
+}
+
 a.pseudo-class-hover,
 a.pseudo-class-focus {
   color: #2793e0;

@@ -1,0 +1,23 @@
+// Buttons
+//
+// Styleguide 1
+
+// Text-only button
+//
+// Button styled to look like a text link.
+// Can also be used with an SVG icon for an icon-only button
+//
+// markup:
+// <button class="button--text">Button Text</button>
+//
+// Styleguide 1.1
+.button--text {
+  color: $color-primary;
+  min-height: 0;
+
+  &:hover,
+  &:focus {
+    color: $color-secondary;
+    outline: none;
+  }
+}

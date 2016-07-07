@@ -1,0 +1,34 @@
+html {
+  font-size: 100%;
+}
+
+body,
+.styleguide {
+  color: $color-text;
+  font-family: $font-family-text;
+  @include font-size-regular;
+}
+
+.wf-active body,
+.styleguide {
+  font-weight: $font-weight-semibold;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
+}
+
+a {
+  color: $color-text;
+
+  &:hover,
+  &:focus {
+    color: $color-primary;
+  }
+}

@@ -190,7 +190,7 @@ gulp.task('icons', function() {
 
 // Generate Styleguide
 gulp.task('styleguide:generate', function() {
-  return gulp.src([source + 'scss/components/_*.scss'])
+  return gulp.src([source + 'scss/base/_*.scss', source + 'scss/components/_*.scss'])
     .pipe(styleguide.generate({
       title: 'Growing Up NYC',
       rootPath: dist + 'styleguide',

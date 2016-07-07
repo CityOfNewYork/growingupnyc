@@ -4,9 +4,9 @@
 
 // Local Variables
 $height-banner-logo-small: $height-banner-logo * 1.3333333333;
-$height-banner-logo-large: $height-banner-logo * 2.1;
+$height-banner-logo-large: $height-banner-logo * 2.4;
 $width-banner-logo-small: $width-banner-logo * 1.33333333333;
-$width-banner-logo-large: $width-banner-logo * 2.133333333;
+$width-banner-logo-large: $width-banner-logo * 2.4;
 
 // Banner
 //
@@ -20,20 +20,19 @@ $width-banner-logo-large: $width-banner-logo * 2.133333333;
 //   </div>
 // </header>
 //
+// sg-wrapper:
+// <div style="min-height:152px">
+//   <sg-wrapper-content/>
+// </div>
+//
 // Styleguide 1.1
 .c-banner {
   background: $color-background;
   box-shadow: 0 0 4px 0 $color-shadow;
   height: $height-banner;
-  margin-bottom: $height-banner-logo - $height-banner;
-
-  @include media($bp-small) {
-    margin-bottom: ($height-banner-logo-small) - $height-banner;
-  }
 
   @include media($bp-large) {
     height: $height-banner-large;
-    margin-bottom: ($height-banner-logo-large) - $height-banner-large;
   }
 }
 
@@ -47,9 +46,11 @@ $width-banner-logo-large: $width-banner-logo * 2.133333333;
   background: $color-background;
   box-shadow: 0 0 4px 0 $color-shadow;
   display: block;
-  float: left;
   height: $height-banner-logo;
+  @include layout-inner-left-edge;
   padding: 0 5px 8px;
+  position: absolute;
+  top: 0;
   width: $width-banner-logo;
 
   @include media($bp-small) {
@@ -100,10 +101,16 @@ $width-banner-logo-large: $width-banner-logo * 2.133333333;
 //
 // Styleguide 1.1.3
 .c-banner__link {
+  color: $color-primary;
   font-family: $font-family-display;
   @include font-size-small;
   font-weight: $font-weight-extrablack;
   @include text-uppercase;
+
+  &:hover,
+  &:focus {
+    color: $color-secondary;
+  }
 
   @include media($breakpoint-font) {
     letter-spacing: 1.1px;

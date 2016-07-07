@@ -25,5 +25,10 @@ h6 {
 }
 
 a {
-  color: $color-text-link;
+  color: $color-text;
+
+  &:hover,
+  &:focus {
+    color: $color-primary;
+  }
 }

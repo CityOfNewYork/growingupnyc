@@ -18,8 +18,8 @@ $white: #fff;
 // Colors By Usage
 // =====================
 $color-shadow: rgba(0, 0, 0, .2);
-$color-accent: $pure-orange;
 $color-primary: $bright-blue;
+$color-secondary: $strong-blue;
 $color-background: $white;
 $color-background-shade: $very-light-gray;
 $color-text: $very-dark-gray;
@@ -68,12 +68,15 @@ $column: 70px;
 $gutter: 40px;
 $grid-columns: 12;
 $max-width: 1280px;
+$outer-gutter: 15px;
+$outer-gutter-small: 20px;
+$outer-gutter-large: 40px;
 
 // Breakpoints
 // =====================
 $bp-small: new-breakpoint(min-width 375px);
 $bp-medium: new-breakpoint(min-width 700px);
-$bp-large: new-breakpoint(min-width 1000px);
+$bp-large: new-breakpoint(min-width 1024px);
 $breakpoint-font: $bp-large;
 
 // Heights

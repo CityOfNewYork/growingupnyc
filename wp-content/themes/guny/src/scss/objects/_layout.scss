@@ -4,16 +4,17 @@
 
 .o-layout {
   @include outer-container;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: $outer-gutter;
+  padding-right: $outer-gutter;
+  position: relative;
 
   @include media($bp-small) {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: $outer-gutter-small;
+    padding-right: $outer-gutter-small;
   }
 
   @include media($bp-large) {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: $outer-gutter-large;
+    padding-right: $outer-gutter-large;
   }
 }

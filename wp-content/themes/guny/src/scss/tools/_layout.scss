@@ -1,0 +1,15 @@
+// Layout functions and mixins
+
+// Aligns an element to the left edge of other content in a layout object
+// @see objects/_layout
+@mixin layout-inner-left-edge {
+  left: $outer-gutter;
+
+  @include media($bp-small) {
+    left: $outer-gutter-small;
+  }
+
+  @include media($bp-large) {
+    left: $outer-gutter-large;
+  }
+}

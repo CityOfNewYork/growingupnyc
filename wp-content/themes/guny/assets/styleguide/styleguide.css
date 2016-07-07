@@ -265,7 +265,7 @@ body,
   color: #333;
   font-family: "open-sans", sans-serif;
   font-size: 0.9375rem; }
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 1024px) {
     body,
     .styleguide {
       font-size: 1.125rem; } }
@@ -284,7 +284,9 @@ h6 {
   font-weight: 900; }
 
 a {
-  color: #2793e0; }
+  color: #333; }
+  a:hover, a:focus {
+    color: #2793e0; }
 
 .o-accordion__content {
   display: block;
@@ -311,7 +313,7 @@ ol.o-inline {
   @media screen and (min-width: 375px) {
     .o-inline__item {
       margin-left: 1rem; } }
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 1024px) {
     .o-inline__item {
       margin-left: 3.5rem; } }
 
@@ -320,7 +322,8 @@ ol.o-inline {
   margin-left: auto;
   margin-right: auto;
   padding-left: 15px;
-  padding-right: 15px; }
+  padding-right: 15px;
+  position: relative; }
   .o-layout::after {
     clear: both;
     content: "";
@@ -329,7 +332,7 @@ ol.o-inline {
     .o-layout {
       padding-left: 20px;
       padding-right: 20px; } }
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 1024px) {
     .o-layout {
       padding-left: 40px;
       padding-right: 40px; } }
@@ -434,33 +437,36 @@ ol.o-inline {
 .c-banner {
   background: #fff;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
-  height: 50px;
-  margin-bottom: 10px; }
-  @media screen and (min-width: 375px) {
+  height: 50px; }
+  @media screen and (min-width: 1024px) {
     .c-banner {
-      margin-bottom: 30.0px; } }
-  @media screen and (min-width: 1000px) {
-    .c-banner {
-      height: 60px;
-      margin-bottom: 66px; } }
+      height: 60px; } }
 
 .c-banner__logo-wrapper {
   background: #fff;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
   display: block;
-  float: left;
   height: 60px;
+  left: 15px;
   padding: 0 5px 8px;
+  position: absolute;
+  top: 0;
   width: 75px; }
+  @media screen and (min-width: 375px) {
+    .c-banner__logo-wrapper {
+      left: 20px; } }
+  @media screen and (min-width: 1024px) {
+    .c-banner__logo-wrapper {
+      left: 40px; } }
   @media screen and (min-width: 375px) {
     .c-banner__logo-wrapper {
       height: 80.0px;
       width: 100.0px; } }
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 1024px) {
     .c-banner__logo-wrapper {
-      height: 126px;
+      height: 144px;
       padding: 0 16px 20px 14px;
-      width: 160.0px; } }
+      width: 180px; } }
 
 .c-banner__logo {
   background: url("/wp-content/themes/guny/assets/img/GrowingUpNYC-logo-stacked.gif") no-repeat;
@@ -477,21 +483,24 @@ ol.o-inline {
   float: right;
   line-height: 1;
   padding-top: 1.125rem; }
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 1024px) {
     .c-banner__nav {
       padding-top: 1.25rem; } }
 
 .c-banner__link {
+  color: #2793e0;
   font-family: "museo-sans-rounded", sans-serif;
   font-size: 0.75rem;
   font-weight: 900;
   letter-spacing: .5px;
   line-height: 1;
   text-transform: uppercase; }
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 1024px) {
     .c-banner__link {
       font-size: 1rem; } }
-  @media screen and (min-width: 1000px) {
+  .c-banner__link:hover, .c-banner__link:focus {
+    color: #0055b8; }
+  @media screen and (min-width: 1024px) {
     .c-banner__link {
       letter-spacing: 1.1px; } }
 
@@ -534,7 +543,7 @@ ol.o-inline {
     clear: both;
     content: "";
     display: block; }
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 1024px) {
     .c-footer__nav {
       float: left;
       display: block;
@@ -570,13 +579,13 @@ ol.o-inline {
 */
 .alignright {
   float: none; }
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 1024px) {
     .alignright {
       float: right; } }
 
 .alignleft {
   float: none; }
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: 1024px) {
     .alignleft {
       float: left; } }
 

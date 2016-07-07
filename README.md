@@ -44,6 +44,8 @@ Any styles that should be included in the styleguide must be commented following
 the [KSS](http://warpspire.com/kss/) syntax. In general, this should include any
 Sass components (as described above) and potentially scopes.
 
+It is not necessary to separate list :hover and :focus states in the styleguide, but any variations based on CSS class should be documented and displayed using {$modifers}. (See https://github.com/kss-node/kss/blob/spec/SPEC.md for an example).
+
 ### JavaScript
 
 This project uses Webpack to manage JavaScript modules. The source.dev.js and

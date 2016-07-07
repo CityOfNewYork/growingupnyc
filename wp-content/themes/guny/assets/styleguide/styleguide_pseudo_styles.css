@@ -2,8 +2,18 @@
   clip: auto;
 }
 
+a.pseudo-class-hover,
+a.pseudo-class-focus {
+  color: #2793e0;
+}
+
 .o-inline__item.pseudo-class-first-child {
   margin-left: 0;
+}
+
+.c-banner__link.pseudo-class-hover,
+.c-banner__link.pseudo-class-focus {
+  color: #0055b8;
 }
 
 .c-footer__logo.pseudo-class-last-child {

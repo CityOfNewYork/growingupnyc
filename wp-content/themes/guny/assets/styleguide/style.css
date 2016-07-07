@@ -286,6 +286,15 @@ h6 {
 a {
   color: #2793e0; }
 
+.o-accordion__content {
+  display: block;
+  overflow: hidden;
+  transition: height .5s ease-in-out; }
+
+.is-collapsed .o-accordion__content {
+  height: 0;
+  transition: height .3s ease-in-out; }
+
 .o-inline {
   display: block; }
 
@@ -324,15 +333,6 @@ ol.o-inline {
     .o-layout {
       padding-left: 40px;
       padding-right: 40px; } }
-
-.o-accordion__content {
-  display: block;
-  overflow: hidden;
-  transition: height .5s ease-in-out; }
-
-.is-collapsed .o-accordion__content {
-  height: 0;
-  transition: height .3s ease-in-out; }
 
 .o-offcanvas {
   background: #333;

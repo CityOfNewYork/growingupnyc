@@ -126,7 +126,8 @@ gulp.task('modernizr', function() {
         tests: [
           'csstransforms3d',
           'csstransitions',
-          'touchevents'
+          'touchevents',
+          'flexbox'
         ]
     }))
     .pipe(uglify())

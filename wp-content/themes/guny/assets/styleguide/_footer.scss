@@ -63,4 +63,9 @@
   color: $color-text-invert;
   font-family: $font-family-display;
   font-weight: $font-weight-extrablack;
+
+  &:hover,
+  &:focus {
+    color: $color-secondary;
+  }
 }

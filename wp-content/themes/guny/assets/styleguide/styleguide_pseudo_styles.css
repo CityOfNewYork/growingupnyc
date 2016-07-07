@@ -24,6 +24,11 @@ a.pseudo-class-focus {
   margin-right: 0;
 }
 
+.c-footer__link.pseudo-class-hover,
+.c-footer__link.pseudo-class-focus {
+  color: #0055b8;
+}
+
 .show-for-keyboard.pseudo-class-focus {
   height: auto;
   position: static;

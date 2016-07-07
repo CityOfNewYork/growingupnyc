@@ -569,6 +569,8 @@ ol.o-inline {
   color: #fff;
   font-family: "museo-sans-rounded", sans-serif;
   font-weight: 900; }
+  .c-footer__link:hover, .c-footer__link:focus {
+    color: #0055b8; }
 
 /* No files to import found in scopes//* */
 /**

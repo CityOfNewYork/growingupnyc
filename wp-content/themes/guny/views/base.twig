@@ -84,9 +84,11 @@
       </main> <!-- /#main -->
 
       <hr>
-      <footer class="site-footer" role="contentinfo">
-        {% include 'footer.twig' %}
-      </footer> <!-- /.site-footer -->
+      <footer class="c-footer" role="contentinfo">
+        <div class="o-layout">
+          {{footer_widgets}}
+        </div> <!-- /.o-layout -->
+      </footer> <!-- /.c-footer -->
       <a class="o-offcanvas__overlay" data-toggle="offcanvas-ages" aria-hidden="true"></a>
     </div> <!-- /.o-offcanvas__main -->
   </div> <!-- /.o-offcanvas -->

@@ -487,6 +487,10 @@ ol.o-inline {
   vertical-align: middle;
   width: 1.25em; }
 
+.c-footer {
+  background: #2793e0;
+  color: #fff; }
+
 /* No files to import found in scopes//* */
 /**
 * Utility classes

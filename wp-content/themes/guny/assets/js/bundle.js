@@ -11898,11 +11898,12 @@
 	  /**
 	   * Add the ARIA attributes and CSS classes to the root accordion elements.
 	   * @param {object} $accordionElem - The jQuery object containing the root element of the accordion
+	   * @param {boolean} multiSelectable - Whether multiple accordion drawers can be open at the same time
 	   */
-	  function initialize($accordionElem) {
+	  function initialize($accordionElem, multiSelectable) {
 	    $accordionElem.attr({
 	      'role': 'tablist',
-	      'aria-multiselectable': false
+	      'aria-multiselectable': multiSelectable
 	    }).addClass('o-accordion');
 	    $accordionElem.children().each(function () {
 	      initializeAccordionItem($(this));
@@ -11912,7 +11913,8 @@
 	  var $accordions = $('.js-accordion');
 	  if ($accordions.length) {
 	    $accordions.each(function () {
-	      initialize($(this));
+	      var multiSelectable = $(this).data('multiselectable') || false;
+	      initialize($(this), multiSelectable);
 	      /**
 	       * Handle click events on accordion headers.
 	       * Close the open accordion item and open the new one.
@@ -11921,11 +11923,15 @@
 	       */
 	      $(this).on('click.accordion', '.js-accordion__header', $.proxy(function (event) {
 	        event.preventDefault();
-	        var $openItem = $(this).find('.is-expanded');
 	        var $newItem = $(event.target).parent();
-	        $openItem.trigger('toggle.accordion', [false]);
-	        if ($openItem.get(0) !== $newItem.get(0)) {
-	          $newItem.trigger('toggle.accordion', [true]);
+	        if (multiSelectable) {
+	          $newItem.trigger('toggle.accordion', [!$newItem.hasClass('is-expanded')]);
+	        } else {
+	          var $openItem = $(this).find('.is-expanded');
+	          $openItem.trigger('toggle.accordion', [false]);
+	          if ($openItem.get(0) !== $newItem.get(0)) {
+	            $newItem.trigger('toggle.accordion', [true]);
+	          }
 	        }
 	      }, this));
 	    });

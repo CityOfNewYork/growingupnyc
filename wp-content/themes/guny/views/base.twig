@@ -34,7 +34,7 @@
     <a href="#main" class="show-for-keyboard">Skip to main content</a>
     <nav class="o-offcanvas__side js-offcanvas__side" id="ages" role="navigation" aria-labelledby="ages-heading">
       <h2 id="ages-heading" class="show-for-screen-reader">Resources by Age</h2>
-      <ol class="js-accordion">
+      <ol class="js-accordion" data-multiselectable="true">
         {% for age_group in age_menu %}
           <li>
             <h3 class="js-accordion__header" id="ages-heading-{{loop.index}}">{{age_group.name}}</h3>
@@ -53,7 +53,7 @@
         <header class="c-banner">
           <div class="o-layout">
             <a href="{{site.url}}" class="c-banner__logo-wrapper"><span class="c-banner__logo">{{site.name}}</span></a>
-            <nav class="c-banner__nav" role="navigation" role="navigation" aria-label="Primary">
+            <nav class="c-banner__nav" role="navigation" aria-label="Primary">
               <ul class="o-inline">
                 {% for menu_item in menu.get_items %}
                   <li class="o-inline__item"><a href="{{menu_item.link}}" class="c-banner__link">{{menu_item.title}}</a></li>

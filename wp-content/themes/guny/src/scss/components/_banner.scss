@@ -66,13 +66,9 @@ $width-banner-logo-large: $width-banner-logo * 2.133333333;
 
 // Banner Logo
 .c-banner__logo {
-  background: url(/wp-content/themes/guny/assets/img/GrowingUpNYC-logo-stacked.gif) center bottom no-repeat;
-  background-size: contain;
-  display: block;
+  @include image-replace('/wp-content/themes/guny/assets/img/GrowingUpNYC-logo-stacked.gif');
+  background-position: center bottom;
   height: 100%;
-  overflow: hidden;
-  text-indent: 100%;
-  white-space: nowrap;
   width: 100%;
 }
 

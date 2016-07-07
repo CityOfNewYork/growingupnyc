@@ -5,6 +5,8 @@
 // markup:
 // <footer class="c-footer">
 //   <div class="o-layout">
+//     <img class="c-footer__logo" alt="Growing Up NYC" src="/wp-content/themes/guny/assets/img/GrowingUpNYC-logo-white.gif">
+//     <sg-insert>1.2.1</sg-insert>
 //   </div>
 // </footer>
 //
@@ -12,4 +14,70 @@
 .c-footer {
   background: $color-primary;
   color: $color-text-invert;
+  padding: 36px 0 60px;
+}
+
+// Footer Logo
+//
+// Not displayed separately in styleguide
+.c-footer__logo {
+  @include span-columns(7);
+  @include omega;
+  @include media($bp-medium) {
+    @include span-columns(3);
+    max-width: rem-calc(250);
+  }
+}
+
+// Footer Navigation
+//
+// markup:
+// <nav class="c-footer__nav">
+//     <sg-insert>1.2.2</sg-insert>
+//     <sg-insert>1.2.2</sg-insert>
+//   </ul>
+// </nav>
+//
+// Styleguide 1.2.1
+.c-footer__nav {
+  @include row;
+  clear: left;
+  line-height: 1.2;
+  padding-top: 28px;
+  @include media($bp-large) {
+    @include span-columns(6);
+  }
+}
+
+// Footer Navigation Column
+//
+// markup:
+// <ul class="c-footer__column">
+//   <li class="c-footer__nav-item"><sg-insert>1.2.3</sg-insert></li>
+//   <li class="c-footer__nav-item"><sg-insert>1.2.3</sg-insert></li>
+// </ul>
+//
+// Styleguide 1.2.2
+.c-footer__column {
+  @include span-columns(2 of 4);
+  @include omega(even);
+}
+
+// Footer Navigation Item
+//
+// Not included separately in styleguide
+.c-footer__nav-item {
+  margin-bottom: 8px;
+}
+
+// Footer Link
+//
+// markup:
+// <a class="c-footer__link" href="#">Item</a>
+//
+// Styleguide 1.2.3
+.c-footer__link {
+  color: $color-text-invert;
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
 }

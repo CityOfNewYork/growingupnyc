@@ -86,6 +86,20 @@
       <hr>
       <footer class="c-footer" role="contentinfo">
         <div class="o-layout">
+          <img class="c-footer__logo" alt="Growing Up NYC" src="{{theme.link}}/assets/img/GrowingUpNYC-logo-white.gif">
+          <nav role="navigation" class="c-footer__nav" aria-label="Secondary">
+            <ul class="c-footer__column">
+              <li class="c-footer__nav-item"><a class="c-footer__link" href="{{site.url}}">Home</a></li>
+              {% for menu_item in menu.get_items %}
+                <li class="c-footer__nav-item"><a class="c-footer__link" href="{{menu_item.link}}">{{menu_item.title}}</a></li>
+              {% endfor %}
+            </ul>
+            <ul class="c-footer__column">
+              {% for menu_item in footer_menu.get_items %}
+                <li class="c-footer__nav-item"><a class="c-footer__link" href="{{menu_item.link}}">{{menu_item.title}}</a></li>
+              {% endfor %}
+            </ul>
+          </nav>
           {{footer_widgets}}
         </div> <!-- /.o-layout -->
       </footer> <!-- /.c-footer -->

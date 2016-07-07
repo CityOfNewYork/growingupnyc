@@ -71,6 +71,7 @@ $max-width: 1280px;
 // Breakpoints
 // =====================
 $bp-small: new-breakpoint(min-width 375px);
+$bp-medium: new-breakpoint(min-width 700px);
 $bp-large: new-breakpoint(min-width 1000px);
 $breakpoint-font: $bp-large;
 

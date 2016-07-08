@@ -2,18 +2,38 @@
   background: $color-baby !important;
 }
 
+.baby-text {
+  color: $color-baby;
+}
+
 .toddler-background {
   background: $color-toddler !important;
+}
+
+.toddler-text {
+  color: $color-toddler;
 }
 
 .pre-schooler-background {
   background: $color-pre-schooler !important;
 }
 
+.pre-schooler-text {
+  color: $color-pre-schooler;
+}
+
 .grade-schooler-background {
   background: $color-grade-schooler !important;
 }
 
+.grade-schooler-text {
+  color: $color-grade-schooler;
+}
+
 .pre-teen-background {
   background: $color-pre-teen !important;
+}
+
+.pre-teen-text {
+  color: $color-pre-teen;
 }

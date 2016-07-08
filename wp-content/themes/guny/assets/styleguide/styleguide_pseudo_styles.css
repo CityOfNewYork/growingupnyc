@@ -2,6 +2,12 @@
   clip: auto;
 }
 
+.button--primary.pseudo-class-hover,
+.button--primary.pseudo-class-focus {
+  background: transparent;
+  color: #fff;
+}
+
 .button--text.pseudo-class-hover,
 .button--text.pseudo-class-focus {
   color: #0055b8;

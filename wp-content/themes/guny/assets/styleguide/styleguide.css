@@ -259,6 +259,29 @@ svg {
   height: 100%;
   width: 100%; }
 
+.button--primary {
+  border: 2px solid #fff;
+  border-radius: 1.5625rem;
+  display: inline-block;
+  font-family: "museo-sans-rounded", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 900;
+  line-height: 1;
+  padding: 0.875rem 1.875rem;
+  text-align: center; }
+
+.button--primary {
+  background: #fff;
+  color: #333;
+  letter-spacing: 1px;
+  text-transform: uppercase; }
+  .button--primary:hover, .button--primary:focus {
+    background: transparent;
+    color: #fff; }
+
+.button--full-width {
+  width: 100%; }
+
 .button--text {
   color: #2793e0;
   min-height: 0; }
@@ -725,17 +748,32 @@ ol.o-inline {
 .baby-background {
   background: #d8006d !important; }
 
+.baby-text {
+  color: #d8006d; }
+
 .toddler-background {
   background: #ff9030 !important; }
+
+.toddler-text {
+  color: #ff9030; }
 
 .pre-schooler-background {
   background: #ffb900 !important; }
 
+.pre-schooler-text {
+  color: #ffb900; }
+
 .grade-schooler-background {
   background: #35c621 !important; }
 
+.grade-schooler-text {
+  color: #35c621; }
+
 .pre-teen-background {
   background: #0055b8 !important; }
+
+.pre-teen-text {
+  color: #0055b8; }
 
 .show-for-screen-reader {
   clip: rect(1px, 1px, 1px, 1px);

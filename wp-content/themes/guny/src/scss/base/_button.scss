@@ -2,6 +2,56 @@
 //
 // Styleguide 1
 
+// Common styles across buttons
+%button-base {
+  border: 2px solid $color-text-invert;
+  border-radius: rem-calc(25);
+  display: inline-block;
+  font-family: $font-family-display;
+  font-size: rem-calc(18);
+  font-weight: $font-weight-extrablack;
+  line-height: 1;
+  padding: rem-calc(14 30);
+  text-align: center;
+}
+
+// Primary button
+//
+// Primary button. Solid color initially and turns ghosty on hover
+//
+// .button--full-width - Button spans width of parent
+//
+// markup:
+// <a class="button--primary {$modifiers}">Button</a>
+// <button class="button--primary {$modifiers}">Button</button>
+//
+// sg-wrapper:
+// <div style="background:#333; padding:20px">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 1.1
+.button--primary {
+  @extend %button-base;
+  background: $color-text-invert;
+  color: $color-text;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  &:hover,
+  &:focus {
+    background: transparent;
+    color: $color-text-invert;
+  }
+}
+
+// Size Variations
+
+// Full-width
+.button--full-width {
+  width: 100%;
+}
+
 // Text-only button
 //
 // Button styled to look like a text link.
@@ -10,7 +60,7 @@
 // markup:
 // <button class="button--text">Button Text</button>
 //
-// Styleguide 1.1
+// Styleguide 1.2
 .button--text {
   color: $color-primary;
   min-height: 0;

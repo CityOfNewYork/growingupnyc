@@ -16,6 +16,10 @@
 .o-offcanvas__side {
   background: $color-background;
   width: $width-offcanvas-side;
+
+  @include media($bp-large) {
+    width: $width-offcanvas-side-large;
+  }
 }
 
 .no-js .o-offcanvas__side {
@@ -101,6 +105,10 @@
   position: fixed;
   right: $width-offcanvas-side;
   width: 100%;
+
+  @include media($bp-large) {
+    right: $width-offcanvas-side-large;
+  }
 }
 
 // Off-Canvas Overlay

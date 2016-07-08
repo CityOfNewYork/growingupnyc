@@ -23,7 +23,7 @@ export default function() {
     newHeaderElem.setAttribute('type', 'button');
     const $newHeaderElem = $(newHeaderElem);
     $newHeaderElem.html($headerElem.html());
-    $newHeaderElem.append('<svg class="o-accordion__caret" aria-hidden="true"><use xlink:href="#caret-down"></use></svg>');
+    $newHeaderElem.append('<svg class="o-accordion__caret icon" aria-hidden="true"><use xlink:href="#caret-down"></use></svg>');
     return $newHeaderElem;
   }
 

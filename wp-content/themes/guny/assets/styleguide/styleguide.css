@@ -370,6 +370,9 @@ ol.o-inline {
 .o-offcanvas__side {
   background: #fff;
   width: 300px; }
+  @media screen and (min-width: 1024px) {
+    .o-offcanvas__side {
+      width: 350px; } }
 
 @media screen and (min-width: 600px) {
   .no-js .o-offcanvas__side {
@@ -435,6 +438,9 @@ ol.o-inline {
   position: fixed;
   right: 300px;
   width: 100%; }
+  @media screen and (min-width: 1024px) {
+    .js .is-open .o-offcanvas__main {
+      right: 350px; } }
 
 .o-offcanvas__overlay {
   background: rgba(0, 0, 0, 0.4);
@@ -630,9 +636,13 @@ ol.o-inline {
   @media screen and (min-width: 1024px) {
     .c-list-box--secondary .c-list-box__heading {
       font-size: 1.5rem; } }
+  .c-list-box--secondary .c-list-box__heading .icon {
+    color: #999; }
   .c-list-box--secondary .c-list-box__heading:hover, .c-list-box--secondary .c-list-box__heading:focus {
     color: #0055b8;
     outline: none; }
+    .c-list-box--secondary .c-list-box__heading:hover .icon, .c-list-box--secondary .c-list-box__heading:focus .icon {
+      color: #333; }
 
 .c-list-box--secondary .c-list-box__content {
   background: #2793e0;

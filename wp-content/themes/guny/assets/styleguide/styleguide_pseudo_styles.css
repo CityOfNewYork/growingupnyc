@@ -36,6 +36,11 @@
   outline: none;
 }
 
+.c-list-box--secondary .c-list-box__heading.pseudo-class-hover .icon,
+.c-list-box--secondary .c-list-box__heading.pseudo-class-focus .icon {
+  color: #333;
+}
+
 .c-list-box--secondary .c-list-box__subitem.pseudo-class-hover,
 .c-list-box--secondary .c-list-box__subitem.pseudo-class-focus {
   background: #0055b8;

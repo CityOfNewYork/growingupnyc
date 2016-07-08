@@ -62,11 +62,19 @@
   @include font-size(21, 24);
   padding: rem-calc(13 28);
 
+  .icon {
+    color: $color-text-weak;
+  }
+
   // :focus styling is necessary for keyboard users so that it's clear what item is currently selected
   &:hover,
   &:focus {
     color: $color-secondary;
     outline: none;
+
+    .icon {
+      color: $color-text;
+    }
   }
 }
 

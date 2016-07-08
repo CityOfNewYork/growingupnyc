@@ -70,6 +70,10 @@ to this file.
 
 jQuery and Modernizr are available globally and do not have to be required by a module. Modernizr is built via gulp-modernizr. [Lodash](https://lodash.com/) is installed via npm but does need to be imported. You should only import the method(s) you need.
 
+#### ES2015
+
+This project uses Babel to transpile JavaScript so that ES2015 features can (and should) be used where appropriate. 
+
 ### Structure
 
 <kbd>/wp-admin</kbd>: Wordpress core files. Do not make changes here. They will be overwritten when Wordpress updates.

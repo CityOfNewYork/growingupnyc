@@ -685,6 +685,21 @@ ol.o-inline {
   max-width: 100%;
   margin: 0 auto; }
 
+.baby-background {
+  background: #d8006d !important; }
+
+.toddler-background {
+  background: #ff9030 !important; }
+
+.pre-schooler-background {
+  background: #ffb900 !important; }
+
+.grade-schooler-background {
+  background: #35c621 !important; }
+
+.pre-teen-background {
+  background: #0055b8 !important; }
+
 .show-for-screen-reader {
   clip: rect(1px, 1px, 1px, 1px);
   height: 1px;

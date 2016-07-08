@@ -299,6 +299,9 @@ h6 {
 a {
   color: inherit; }
 
+.o-accordion__header {
+  position: relative; }
+
 .o-accordion__content {
   display: block;
   overflow: hidden;
@@ -307,6 +310,17 @@ a {
 .is-collapsed .o-accordion__content {
   height: 0;
   transition: height .3s ease-in-out; }
+
+.o-accordion__caret {
+  height: 1.375rem;
+  top: 50%;
+  margin-top: -0.6875rem;
+  position: absolute;
+  right: 1.75rem;
+  width: 1.375rem; }
+
+.is-expanded .o-accordion__caret {
+  transform: rotate(180deg); }
 
 .o-inline {
   display: block; }

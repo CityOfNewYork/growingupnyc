@@ -1,6 +1,9 @@
 // Accordion
 //
 // Layout object for accordion content.
+.o-accordion__header {
+  position: relative;
+}
 
 // Accordion panel
 .o-accordion__content {
@@ -12,4 +15,18 @@
 .is-collapsed .o-accordion__content {
   height: 0;
   transition: height .3s ease-in-out;
+}
+
+// Accordion caret
+.o-accordion__caret {
+  height: rem-calc(22);
+  top: 50%;
+  margin-top: rem-calc(-11);
+  position: absolute;
+  right: rem-calc(28);
+  width: rem-calc(22);
+}
+
+.is-expanded .o-accordion__caret {
+  transform: rotate(180deg);
 }

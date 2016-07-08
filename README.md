@@ -36,6 +36,14 @@ use case for this is content that will be entered through the Wordpress WYSIWYG 
 - <kbd>/utilities</kbd>: Single-responsibility (or close to single responsibility)
 helper classes. If you've been wanting to use !important, here's your chance.
 
+#### Units
+
+Use `rem` or `em` for any values that should scale in proportion to the user's browser font size. Use `px` for any values that will remain consistent. Widths of layout containers should generally be given in percents so that they will scale with the user's screen width.
+
+#### Grid
+
+The layout is designed on a 12-column grid using [Neat](http://neat.bourbon.io/).
+
 ### Styleguide
 
 This project uses [SC5 Styleguide Generator](http://styleguide.sc5.io/) to generate a living styleguide. Style guide files are updated as part of the gulp watch and build tasks. You can view the styleguide at <kbd>/wp-content/themes/guny/assets/styleguide</kbd>.
@@ -58,13 +66,15 @@ source.js files are automatically generated from the source JS files.
 needed. Most functionality will be written as a module rather than added directly
 to this file.
 
+#### JavaScript libraries
+
+jQuery and Modernizr are available globally and do not have to be required by a module. Modernizr is built via gulp-modernizr. [Lodash](https://lodash.com/) is installed via npm but does need to be imported. You should only import the method(s) you need.
+
 ### Structure
 
 <kbd>/wp-admin</kbd>: Wordpress core files. Do not make changes here. They will be overwritten when Wordpress updates.
 
 <kbd>/wp-content</kbd>: The directory for Wordpress themes, plugins, and uploads.
-
-- <kbd>/mu-plugins</kbd>: Must-use plugins. These plugins are loaded automatically and cannot be deactivated via the Wordpress admin. Custom post types should be defined here.
 
 - <kbd>/plugins</kbd>: Wordpress plugins. Any third-party and custom-plugins (other than the must-use plugins) will go in this directory.
 

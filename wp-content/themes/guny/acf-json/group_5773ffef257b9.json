@@ -23,6 +23,29 @@
             "load_terms": 1,
             "return_format": "id",
             "multiple": 0
+        },
+        {
+            "key": "field_577fdb0192b4c",
+            "label": "Numeric Age",
+            "name": "numeric_age",
+            "type": "number",
+            "instructions": "Numeric value for the age. For example, for \"11 months,\" enter 11.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": 1,
+            "max": "",
+            "step": 1,
+            "readonly": 0,
+            "disabled": 0
         }
     ],
     "location": [
@@ -42,5 +65,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1467220379
+    "modified": 1467996988
 }

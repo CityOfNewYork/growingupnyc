@@ -1,0 +1,100 @@
+// Lists
+//
+// Styleguide 3
+
+// List Box
+//
+// List styled as colorful boxes. Often used with the accordion pattern.
+//
+// .c-list-box--secondary - More subdued box styling. Uses global palette colors and smaller boxes.
+//
+// markup:
+// <ul class="c-list-box {$modifiers}">
+//   <li class="c-list-box__item c-list-box__heading">Item
+//     <ul class="c-list-box__content">
+//       <li class="c-list-box__subitem">Subitem</li>
+//       <li class="c-list-box__subitem">Subitem</li>
+//       <li class="c-list-box__subitem">Subitem</li>
+//     </ul>
+//   </li>
+//   <li class="c-list-box__item c-list-box__heading">Item
+//     <ul class="c-list-box__content">
+//       <li class="c-list-box__subitem">Subitem</li>
+//       <li class="c-list-box__subitem">Subitem</li>
+//       <li class="c-list-box__subitem">Subitem</li>
+//     </ul>
+//   </li>
+// </ul>
+//
+// Styleguide 3.1
+.c-list-box {
+  display: block;
+}
+
+// List Box Item
+//
+// Section within the list box. Encompasses the list heading and any sublists.
+.c-list-box__item {
+  margin-bottom: 4px;
+}
+
+.c-list-box--secondary {
+  margin-bottom: 2px;
+}
+
+// List Box Heading
+//
+// Top level list item or section heading.
+// If used with the accordion pattern, this will be whatever the accordion drawer
+// heading is.
+//
+.c-list-box__heading {
+  display: block;
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
+  text-align: left;
+  width: 100%;
+}
+
+.c-list-box--secondary .c-list-box__heading {
+  background: $color-background-shade;
+  color: $color-primary;
+  @include font-size(21, 24);
+  padding: rem-calc(13 28);
+
+  // :focus styling is necessary for keyboard users so that it's clear what item is currently selected
+  &:hover,
+  &:focus {
+    color: $color-secondary;
+    outline: none;
+  }
+}
+
+// List Box Content
+//
+// The sublist of items within a box
+.c-list-box--secondary .c-list-box__content {
+  background: $color-primary;
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
+}
+
+// List Box Subitem
+//
+// Item within a sublist. If the sublist is a list of links, this class may be applied
+// to the a element rather than the li element.
+.c-list-box__subitem {
+  display: block;
+}
+
+.c-list-box--secondary .c-list-box__subitem {
+  color: $color-text-invert;
+  font-size: rem-calc(16);
+  padding: rem-calc(16 28);
+  @include text-uppercase;
+
+  &:hover,
+  &:focus {
+    background: $color-secondary;
+  }
+}

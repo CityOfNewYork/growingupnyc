@@ -7,7 +7,6 @@
 .o-offcanvas {
   background: $color-text;
   height: 100%;
-  overflow: hidden;
   position: relative;
 }
 
@@ -28,6 +27,8 @@
 
 .js .o-offcanvas__side {
   height: 100%;
+  overflow: hidden;
+  padding-top: 50px;
   position: absolute;
   right: 0;
   top: 0;
@@ -46,9 +47,14 @@
     transition: opacity .5s;
     width: 100%;
   }
+
+  @include media($bp-large) {
+    padding-top: 60px;
+  }
 }
 
 .js .is-open .o-offcanvas__side {
+  overflow: auto;
   transition: transform .5s;
   visibility: visible;
   z-index: 100;
@@ -84,19 +90,17 @@
 .js .o-offcanvas__main {
   backface-visibility: hidden;
   height: 100%;
-  left: 0;
+  right: 0;
   perspective: 1000px;
   position: relative;
-  transition: transform .5s;
+  transition: right .5s;
   z-index: 99;
 }
 
-.js.csstransitions .is-open .o-offcanvas__main {
-  transform: translateX(-#{$width-offcanvas-side});
-}
-
-.js.csstransforms3d .is-open .o-offcanvas__main {
-  transform: translate3d(-#{$width-offcanvas-side}, 0, 0);
+.js .is-open .o-offcanvas__main {
+  position: fixed;
+  right: $width-offcanvas-side;
+  width: 100%;
 }
 
 // Off-Canvas Overlay

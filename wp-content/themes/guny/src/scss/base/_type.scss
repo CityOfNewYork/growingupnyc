@@ -25,10 +25,5 @@ h6 {
 }
 
 a {
-  color: $color-text;
-
-  &:hover,
-  &:focus {
-    color: $color-primary;
-  }
+  color: inherit;
 }

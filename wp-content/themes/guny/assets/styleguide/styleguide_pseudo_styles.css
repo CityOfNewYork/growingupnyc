@@ -41,6 +41,10 @@
   color: #333;
 }
 
+.c-list-box--primary .c-list-box__subitem.pseudo-class-last-child {
+  padding-bottom: 1.875rem;
+}
+
 .c-list-box--secondary .c-list-box__subitem.pseudo-class-hover,
 .c-list-box--secondary .c-list-box__subitem.pseudo-class-focus {
   background: #0055b8;

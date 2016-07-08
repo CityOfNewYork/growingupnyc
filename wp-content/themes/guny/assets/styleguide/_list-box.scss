@@ -6,18 +6,21 @@
 //
 // List styled as colorful boxes. Often used with the accordion pattern.
 //
+// .c-list-box--primary - Brightly-colored list box
 // .c-list-box--secondary - More subdued box styling. Uses global palette colors and smaller boxes.
 //
 // markup:
 // <ul class="c-list-box {$modifiers}">
-//   <li class="c-list-box__item c-list-box__heading">Item
+//   <li class="c-list-box__item">
+//     <h3 class="c-list-box__heading">Item</h3>
 //     <ul class="c-list-box__content">
 //       <li class="c-list-box__subitem">Subitem</li>
 //       <li class="c-list-box__subitem">Subitem</li>
 //       <li class="c-list-box__subitem">Subitem</li>
 //     </ul>
 //   </li>
-//   <li class="c-list-box__item c-list-box__heading">Item
+//   <li class="c-list-box__item">
+//     <h3 class="c-list-box__heading">Item</h3>
 //     <ul class="c-list-box__content">
 //       <li class="c-list-box__subitem">Subitem</li>
 //       <li class="c-list-box__subitem">Subitem</li>
@@ -35,10 +38,12 @@
 //
 // Section within the list box. Encompasses the list heading and any sublists.
 .c-list-box__item {
+  display: block;
+  list-style: none;
   margin-bottom: 4px;
 }
 
-.c-list-box--secondary {
+.c-list-box--secondary .c-list-box__item {
   margin-bottom: 2px;
 }
 
@@ -51,15 +56,26 @@
 .c-list-box__heading {
   display: block;
   font-family: $font-family-display;
+  @include font-size(21, 24);
   font-weight: $font-weight-extrablack;
   text-align: left;
   width: 100%;
 }
 
+.c-list-box--primary .c-list-box__heading {
+  background: $color-primary;
+  color: $color-text-invert;
+  padding: rem-calc(12 20);
+  @include text-uppercase;
+
+  @include media($bp-large) {
+    padding: rem-calc(28 40);
+  }
+}
+
 .c-list-box--secondary .c-list-box__heading {
   background: $color-background-shade;
   color: $color-primary;
-  @include font-size(21, 24);
   padding: rem-calc(13 28);
 
   .icon {
@@ -78,9 +94,30 @@
   }
 }
 
+// List Box Subheading
+//
+// Optional subtitle on a list box heading
+.c-list-box__subheading {
+  display: block;
+  font-weight: $font-weight-medium;
+
+  @include media($bp-large) {
+    font-size: .875em;
+  }
+}
+
+.c-list-box--primary .c-list-box__subheading {
+  text-transform: none;
+}
+
 // List Box Content
 //
 // The sublist of items within a box
+.c-list-box--primary .c-list-box__content {
+  background: $color-primary;
+  color: $color-text-invert;
+}
+
 .c-list-box--secondary .c-list-box__content {
   background: $color-primary;
   font-family: $font-family-display;
@@ -93,6 +130,23 @@
 // to the a element rather than the li element.
 .c-list-box__subitem {
   display: block;
+}
+
+.c-list-box--primary .c-list-box__subitem {
+  padding: rem-calc(3 20);
+
+  &:last-child {
+    padding-bottom: rem-calc(30);
+  }
+
+  @include media($bp-large) {
+    padding: rem-calc(3 40);
+
+    &:last-child {
+      padding-bottom: rem-calc(40);
+    }
+
+  }
 }
 
 .c-list-box--secondary .c-list-box__subitem {

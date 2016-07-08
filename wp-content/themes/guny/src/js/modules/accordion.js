@@ -48,6 +48,11 @@ export default function() {
       'aria-expanded': false,
       'role': 'tab'
     }).addClass('o-accordion__header');
+
+    $headerElem.on('click.accordion', function(event) {
+      event.preventDefault();
+      $headerElem.trigger('changeState');
+    });
   }
 
   /**
@@ -147,13 +152,12 @@ export default function() {
       const multiSelectable = $(this).data('multiselectable') || false;
       initialize($(this), multiSelectable);
       /**
-       * Handle click events on accordion headers.
+       * Handle changeState events on accordion headers.
        * Close the open accordion item and open the new one.
        * @function
        * @param {object} event - The event object
        */
-      $(this).on('click.accordion', '.js-accordion__header', $.proxy(function(event) {
-        event.preventDefault();
+      $(this).on('changeState.accordion', '.js-accordion__header', $.proxy(function(event) {
         const $newItem = $(event.target).parent();
         if (multiSelectable) {
           $newItem.trigger('toggle.accordion', [!$newItem.hasClass('is-expanded')]);

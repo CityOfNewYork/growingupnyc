@@ -8,3 +8,10 @@ svg {
   height: 100%;
   width: 100%;
 }
+
+*,
+*:after,
+*:before {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

@@ -7,6 +7,7 @@ if ( ! class_exists( 'Timber' ) ) {
   return;
 }
 $context = Timber::get_context();
+
 if (function_exists('tribe_get_events')) {
   $events = tribe_get_events( array(
     'orderby' => 'menu_order',
@@ -17,6 +18,7 @@ if (function_exists('tribe_get_events')) {
   }
   $context['events'] = $events;
 }
+
 $templates = array( 'home.twig' );
 
 Timber::render( $templates, $context );

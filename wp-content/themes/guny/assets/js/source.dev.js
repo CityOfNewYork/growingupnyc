@@ -339,6 +339,10 @@ if (objCtr.defineProperty) {
 
 	var _offcanvas2 = _interopRequireDefault(_offcanvas);
 
+	var _overlay = __webpack_require__(411);
+
+	var _overlay2 = _interopRequireDefault(_overlay);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function ready(fn) {
@@ -354,6 +358,7 @@ if (objCtr.defineProperty) {
 	  (0, _toggleOpen2.default)();
 	  (0, _offcanvas2.default)();
 	  (0, _accordion2.default)();
+	  (0, _overlay2.default)();
 	}
 
 	ready(init);
@@ -8286,6 +8291,31 @@ if (objCtr.defineProperty) {
 	// shim for using process in browser
 
 	var process = module.exports = {};
+
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+
+	(function () {
+	  try {
+	    cachedSetTimeout = setTimeout;
+	  } catch (e) {
+	    cachedSetTimeout = function () {
+	      throw new Error('setTimeout is not defined');
+	    }
+	  }
+	  try {
+	    cachedClearTimeout = clearTimeout;
+	  } catch (e) {
+	    cachedClearTimeout = function () {
+	      throw new Error('clearTimeout is not defined');
+	    }
+	  }
+	} ())
 	var queue = [];
 	var draining = false;
 	var currentQueue;
@@ -8310,7 +8340,7 @@ if (objCtr.defineProperty) {
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = setTimeout(cleanUpNextTick);
+	    var timeout = cachedSetTimeout(cleanUpNextTick);
 	    draining = true;
 
 	    var len = queue.length;
@@ -8327,7 +8357,7 @@ if (objCtr.defineProperty) {
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    clearTimeout(timeout);
+	    cachedClearTimeout(timeout);
 	}
 
 	process.nextTick = function (fun) {
@@ -8339,7 +8369,7 @@ if (objCtr.defineProperty) {
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        setTimeout(drainQueue, 0);
+	        cachedSetTimeout(drainQueue, 0);
 	    }
 	};
 
@@ -8474,6 +8504,8 @@ if (objCtr.defineProperty) {
 	    openClass = 'is-open';
 	  }
 
+	  var linkActiveClass = 'is-active';
+
 	  var toggleElems = document.querySelectorAll('[data-toggle]');
 
 	  /**
@@ -8499,6 +8531,7 @@ if (objCtr.defineProperty) {
 	          }
 	          toggleElem.addEventListener('click', function (e) {
 	            e.preventDefault();
+	            toggleElem.classList.toggle(linkActiveClass);
 	            targetElem.classList.toggle(openClass);
 	            var toggleEvent = void 0;
 	            if (typeof window.CustomEvent === 'function') {
@@ -12260,6 +12293,51 @@ if (objCtr.defineProperty) {
 	            offCanvasSide.tabIndex = -1;
 	          }
 	          offCanvasSide.focus();
+	        }
+	      }, false);
+	    });
+	  }
+	};
+
+	var _forEach = __webpack_require__(301);
+
+	var _forEach2 = _interopRequireDefault(_forEach);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 411 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  var overlay = document.querySelectorAll('.js-overlay');
+	  if (overlay) {
+	    (0, _forEach2.default)(overlay, function (overlayElem) {
+
+	      /**
+	      * Add event listener for 'changeOpenState'.
+	      * The value of event.detail indicates whether the open state is true
+	      * (i.e. the overlay is visible).
+	      * @function
+	      * @param {object} event - The event object
+	      */
+	      overlayElem.addEventListener('changeOpenState', function (event) {
+	        if (event.detail) {
+	          if (!/^(?:a|select|input|button|textarea)$/i.test(overlay.tagName)) {
+	            overlay.tabIndex = -1;
+	          }
+
+	          if (document.querySelectorAll('.js-overlay input')) {
+	            document.querySelectorAll('.js-overlay input')[0].focus();
+	          } else {
+	            overlay.focus();
+	          }
 	        }
 	      }, false);
 	    });

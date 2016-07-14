@@ -3,6 +3,7 @@ import globalSearch from './modules/globalSearch.js';
 import toggleOpen from './modules/toggleOpen.js';
 import accordion from './modules/accordion.js';
 import offcanvas from './modules/offcanvas.js';
+import overlay from './modules/overlay.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -17,6 +18,7 @@ function init() {
   toggleOpen();
   offcanvas();
   accordion();
+  overlay();
 }
 
 ready(init);

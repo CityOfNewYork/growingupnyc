@@ -12,3 +12,13 @@
   height: rem-calc(22);
   width: rem-calc(22);
 }
+
+.icon--xsmall {
+  height: rem-calc(13);
+  width: rem-calc(13);
+
+  @include media($bp-small) {
+    height: rem-calc(15);
+    width: rem-calc(15);
+  }
+}

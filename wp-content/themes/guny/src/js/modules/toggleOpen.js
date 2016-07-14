@@ -13,6 +13,8 @@ export default function(openClass) {
   if (!openClass) {
     openClass = 'is-open';
   }
+  
+  const linkActiveClass = 'is-active';
 
   const toggleElems = document.querySelectorAll('[data-toggle]');
 
@@ -36,6 +38,7 @@ export default function(openClass) {
         }
         toggleElem.addEventListener('click', function(e) {
           e.preventDefault();
+          toggleElem.classList.toggle(linkActiveClass);
           targetElem.classList.toggle(openClass);
           let toggleEvent;
           if (typeof window.CustomEvent === 'function') {

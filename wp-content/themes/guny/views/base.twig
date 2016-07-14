@@ -61,19 +61,76 @@
                 {% endfor %}
                 <li class="o-inline__item"><a href="#ages" data-toggle="offcanvas-ages" class="c-banner__link">Ages</a></li>
                 <li class="o-inline__item">
-                  <a class="c-banner__link" href="#search"><svg class="c-banner__icon" role="img"><title>Search</title><use xlink:href="#search"></use></svg></a>
+                  <a class="c-banner__link" href="#search" data-toggle="overlay-search">
+                    <svg class="c-banner__icon c-banner__icon__search" role="img"><title>Search</title><use xlink:href="#search"></use></svg>
+                    <svg class="c-banner__icon c-banner__icon__close" role="img"><title>Search</title><use xlink:href="#close"></use></svg>
+                  </a>
                 </li>
               </ul>
             </nav>
-            {#
-            <form action="/" method="get" class="js-global-search">
-              <label for="fwp-search">Search<label>
-              <input type="text" name="s" placeholder="Search" id="search">
-              <button type="submit">Submit</button>
-            </form>
-            #}
           </div>
         </header>
+        <section class="o-overlay js-overlay" id="overlay-search">
+          <div class="o-layout-med">
+            <form action="/" method="get" class="form-field__icon-container">
+              <label for="fwp-search" class="show-for-screen-reader">Search</label>
+              <input type="search" name="s" placeholder="Search" class="form-field form-field--large form-field--full-width" id="fwp-search">
+              <button type="submit" class="form-field__icon form-field__icon--large"><svg role="img"><title>Search</title><use xlink:href="#search"></use></svg></button>
+            </form>
+
+            <section class="c-content-tout">
+              <h2 class="c-content-tout__heading">
+                Programs
+                <a class="c-content-tout__link" href="{{site.url}}/programs">See all programs<svg role="img" class="icon--xsmall"><use xlink:href="#caret-right"></use></svg></a>
+              </h2> <!-- /.c-content-tout__link -->
+              <div class="c-content-tout__item-wrapper">
+                {{top_programs}}
+              </div> <!-- /.c-content-tout__item-wrapper -->
+            </section> <!-- /.c-content-tout -->
+
+            <section class="c-content-tout">
+              <h2 class="c-content-tout__heading">
+                Events
+                <a class="c-content-tout__link" href="{{site.url}}/events">See all events<svg role="img" class="icon--xsmall"><use xlink:href="#caret-right"></use></svg></a>
+              </h2> <!-- /.c-content-tout__link -->
+              <div class="c-content-tout__item-wrapper">
+              {% for event in top_events %}
+                <div class="c-content-tout__item">
+                  <a class="c-content-tout__item__title" href="{{event.path}}">{{event.post_title}}</a>
+                  <p class="c-content-tout__item__subtitle">
+                    {{event.start_date_formatted}}
+                    {% if not event.all_day %}
+                      <svg role="img" class="icon--xsmall"><title>Time:</title><use xlink:href="#clock-o"></use></svg>
+                      {{event.start_datetime|date('g:i A')}}
+                      {% if not event.multiday and event.end_datetime != event.start_datetime %}
+                        - {{event.end_datetime|date('g:i A')}}
+                      {% endif %}
+                    {% endif %}
+                    {% if event.multiday %}
+                      - {{event.end_date_formatted}}
+                      {% if not event.all_day and event.end_datetime %}
+                        <svg role="img" class="icon--xsmall"><title>Time:</title><use xlink:href="#clock-o"></use></svg>
+                        {{event.end_datetime|date('g:i A')}}
+                      {% endif %}
+                    {% endif %}
+                  </p> <!-- /.c-content-tout__item__subtitle -->
+                  {% if event.venue %}
+                    <svg role="img" class="icon--xsmall"><use xlink:href="#map-marker"></use></svg>
+                    <a class="c-content-tout__item__link"
+                      href="https://maps.google.com?q={{event.venue_address.address|url_encode}},+{{event.venue_address.city}},+{{event.venue_address.region}}+{{event.venue_address.zip}},+{{event.venue_address.country}}"
+                      target="_blank">
+                      {{event.venue}},
+                      {% for borough in event.terms('borough') %}
+                        {{borough.name}}
+                      {% endfor %}
+                    </a> <!-- /.c-content-tout__item__link -->
+                  {% endif %}
+                </div> <!-- /.c-content-tout__item -->
+              {% endfor %}
+              </div> <!-- /.c-content-tout__item-wrapper -->
+            </section> <!-- /.c-content-tout -->
+          </div> <!-- /.o-layout-med -->
+        </section> <!-- /.o-overlay -->
       {% endblock %}
 
       <main id="main" role="main">

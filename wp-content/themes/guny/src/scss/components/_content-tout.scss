@@ -1,0 +1,153 @@
+// Content Blocks
+//
+// Styleguide 5
+
+// Content Touts
+//
+// Displays post previews
+//
+// markup:
+// <section class="c-content-tout">
+//   <h2 class="c-content-tout__heading">
+//     Heading
+//     <a href="#" class="c-content-tout__link">More Link</a>
+//   </h2>
+//   <div class="c-content-tout__item-wrapper">
+//     <div class="c-content-tout__item">
+//       <a class="c-content-tout__item__title">Post Title</a>
+//       <p class="c-content-tout__item__subtitle">Post Subtitle</p>
+//       <a class="c-content-tout__item__link">Post Subtitle</a>
+//     </div>
+//     <div class="c-content-tout__item">
+//       <a class="c-content-tout__item__title">Post Title</a>
+//       <p class="c-content-tout__item__subtitle">Post Subtitle</p>
+//       <a class="c-content-tout__item__link">Post Subtitle</a>
+//     </div>
+//     <div class="c-content-tout__item">
+//       <a class="c-content-tout__item__title">Post Title</a>
+//       <p class="c-content-tout__item__subtitle">Post Subtitle</p>
+//       <a class="c-content-tout__item__link">Post Subtitle</a>
+//     </div>
+//   </div>
+// </section>
+//
+// sg-wrapper:
+// <div style="min-height:152px">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 5.1
+
+.c-content-tout {
+  color: $very-dark-gray-semitransparent;
+  font-size: rem-calc($font-size-small-mobile);
+  padding-bottom: rem-calc(35);
+
+  @include media($bp-small) {
+    font-size: rem-calc($font-size-small);
+  }
+}
+
+.c-content-tout + .c-content-tout {
+  border-top: 2px solid $white;
+  padding-top: rem-calc(30);
+}
+
+.c-content-tout__heading {
+  color: $very-dark-gray-transparent;
+  font-size: rem-calc($font-size-x-small);
+  letter-spacing: rem-calc(.5);
+  text-transform: uppercase;
+
+  @include media($bp-small) {
+    font-size: rem-calc($font-size-small);
+  }
+}
+
+.c-content-tout__link {
+  float: right;
+  text-transform: none;
+
+  &:hover,
+  &:focus {
+    color: $color-text;
+  }
+}
+
+.c-content-tout__item-wrapper {
+  margin: rem-calc(5 0 0);
+
+  @include media($bp-small) {
+    margin: rem-calc(10 -20);
+  }
+}
+
+.c-content-tout__item {
+  display: inline-block;
+  padding: rem-calc(8 0);
+  vertical-align: top;
+  width: 100%;
+
+  @include media($bp-small) {
+    margin-right: rem-calc(-3);
+    padding: rem-calc(20);
+    width: 50%;
+  }
+
+  @include media($bp-medium) {
+    width: (100% / 3);
+  }
+}
+
+.c-content-tout__item__title {
+  color: $color-text;
+  font-family: $font-family-display;
+  font-size: rem-calc($font-size-large-mobile);
+  font-weight: $font-weight-extrablack;
+  letter-spacing: rem-calc(.44);
+  line-height: 1.2;
+
+  @include media($bp-small) {
+    font-size: rem-calc($font-size-large);
+  }
+
+  &:hover,
+  &:focus {
+    color: $color-primary;
+  }
+}
+
+.c-content-tout__item__subtitle {
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
+  margin: rem-calc(7 0 3);
+  text-transform: uppercase;
+
+  @include media($bp-small) {
+    margin: rem-calc(10 0 1);
+  }
+
+  .icon--xsmall {
+    position: relative;
+    top: 2px;
+    vertical-align: top;
+
+    @include media($bp-small) {
+      top: 3px;
+    }
+  }
+}
+
+.c-content-tout__item__link {
+  font-size: rem-calc($font-size-x-small-mobile);
+  text-decoration: underline;
+
+  @include media($bp-small) {
+    font-size: rem-calc(14);
+  }
+
+  &:hover,
+  &:focus {
+    color: $color-text;
+  }
+}

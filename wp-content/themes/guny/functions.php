@@ -52,6 +52,44 @@ class GunySite extends TimberSite {
       'hide_empty' => false,
       'parent' => 0
     ) );
+    $context['top_programs'] = Timber::get_widgets('top_programs_widgets');
+
+    // Get Featured Events in order of ascending date
+    if (function_exists('tribe_get_events')) {
+      $top_events = tribe_get_events( array(
+        'posts_per_page' => 3,
+        'orderby' => 'menu_order',
+        'meta_query' => array(
+          array(
+            'key'     => 'featured_event',
+            'value'   => 'Yes',
+            'compare' => 'LIKE'
+          ),
+        ),
+      ) );
+      // Get remaining events if count of Featured Events is less than 3
+      $number_remaining = 3 - count($top_events);
+      if( $number_remaining > 0 ) {
+        $top_events_remaining = tribe_get_events( array(
+          'posts_per_page' => $number_remaining,
+          'orderby' => 'menu_order',
+          'meta_query' => array(
+            array(
+              'key'     => 'featured_event',
+              'value'   => 'Yes',
+              'compare' => 'NOT LIKE'
+            ),
+          ),
+        ));
+
+        // Combine arrays with Featured Events first
+        array_push($top_events,  $top_events_remaining[0]);
+      }
+      foreach($top_events as $i => $top_event) {
+        $top_events[$i] = new GunyEvent($top_event);
+      }
+      $context['top_events'] = $top_events;
+    }
     return $context;
   }
 
@@ -71,6 +109,13 @@ class GunySite extends TimberSite {
       'id' => 'footer_widgets',
       'name' => __('Footer'),
       'description' => __('Widgets in the site global footer'),
+      'before_widget' => '',
+      'after_widget' => ''
+    ));
+    register_sidebar(array(
+      'id' => 'top_programs_widgets',
+      'name' => __('Top Programs'),
+      'description' => __('Manually selected top programs'),
       'before_widget' => '',
       'after_widget' => ''
     ));
@@ -148,6 +193,44 @@ class GunyEvent extends TimberPost {
     }
   }
 
+  public function start_date_formatted() {
+    // TODO - format for user's timezone (possibly with JS)
+    if (function_exists('tribe_get_start_date')) {
+      $today = date('Y-m-d');
+      $tomorrow = date('Y-m-d', strtotime('+24 hours'));
+      $start_time = date('Y-m-d', $this->start_datetime());
+
+      if ($start_time == $today ) {
+        $time = 'today';
+      } else if ($start_time == $tomorrow) {
+        $time = 'tomorrow';
+      } else {
+        $time = date('l M j', $this->start_datetime());
+      }
+
+      return $time;
+    }
+  }
+
+  public function end_date_formatted() {
+    // TODO - format for user's timezone (possibly with JS)
+    if (function_exists('tribe_get_end_date')) {
+      $today = date('Y-m-d');
+      $tomorrow = date('Y-m-d', strtotime('+24 hours'));
+      $end_time = date('Y-m-d', $this->end_datetime());
+
+      if ($end_time == $today ) {
+        $time = 'today';
+      } else if ($end_time == $tomorrow) {
+        $time = 'tomorrow';
+      } else {
+        $time = date('l M j', $this->end_datetime());
+      }
+
+      return $time;
+    }
+  }
+
   public function schedule_details() {
     if (function_exists('tribe_events_event_schedule_details')) {
       return tribe_events_event_schedule_details($this->ID);
@@ -212,3 +295,6 @@ require_once(get_template_directory() . '/includes/guny_shortcodes.php');
 
 // Customize Wordpress meta boxes
 require_once(get_template_directory() . '/includes/guny_meta_boxes.php');
+
+// Add Top Programs Widget
+require_once(get_template_directory() . '/includes/guny_top_programs.php');

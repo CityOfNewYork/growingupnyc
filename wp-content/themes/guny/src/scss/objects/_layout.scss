@@ -18,3 +18,21 @@
     padding-right: $outer-gutter-large;
   }
 }
+
+.o-layout-med {
+  @include outer-container;
+  max-width: $max-width-med;
+  padding-left: $outer-gutter;
+  padding-right: $outer-gutter;
+  position: relative;
+
+  @include media($bp-small) {
+    padding-left: $outer-gutter-small;
+    padding-right: $outer-gutter-small;
+  }
+
+  @include media($bp-large) {
+    padding-left: $outer-gutter-large;
+    padding-right: $outer-gutter-large;
+  }
+}

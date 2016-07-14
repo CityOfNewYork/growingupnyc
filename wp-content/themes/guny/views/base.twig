@@ -101,16 +101,16 @@
                     {{event.start_date_formatted}}
                     {% if not event.all_day %}
                       <svg role="img" class="icon--xsmall"><title>Time:</title><use xlink:href="#clock-o"></use></svg>
-                      {{event.start_datetime|date('g:i A')}}
+                      <span class="nowrap">{{event.start_datetime|date('g:i A')}}</span>
                       {% if not event.multiday and event.end_datetime != event.start_datetime %}
-                        - {{event.end_datetime|date('g:i A')}}
+                        - <span class="nowrap">{{event.end_datetime|date('g:i A')}}</span>
                       {% endif %}
                     {% endif %}
                     {% if event.multiday %}
                       - {{event.end_date_formatted}}
                       {% if not event.all_day and event.end_datetime %}
                         <svg role="img" class="icon--xsmall"><title>Time:</title><use xlink:href="#clock-o"></use></svg>
-                        {{event.end_datetime|date('g:i A')}}
+                        <span class="nowrap">{{event.end_datetime|date('g:i A')}}</span>
                       {% endif %}
                     {% endif %}
                   </p> <!-- /.c-content-tout__item__subtitle -->

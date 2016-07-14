@@ -40,12 +40,8 @@
 
 .c-content-tout {
   color: $very-dark-gray-semitransparent;
-  font-size: rem-calc($font-size-small-mobile);
+  @include font-size-small;
   padding-bottom: rem-calc(35);
-
-  @include media($bp-small) {
-    font-size: rem-calc($font-size-small);
-  }
 }
 
 .c-content-tout + .c-content-tout {
@@ -56,8 +52,7 @@
 .c-content-tout__heading {
   color: $very-dark-gray-transparent;
   font-size: rem-calc($font-size-x-small);
-  letter-spacing: rem-calc(.5);
-  text-transform: uppercase;
+  @include text-uppercase;
 
   @include media($bp-small) {
     font-size: rem-calc($font-size-small);
@@ -102,14 +97,10 @@
 .c-content-tout__item__title {
   color: $color-text;
   font-family: $font-family-display;
-  font-size: rem-calc($font-size-large-mobile);
+  @include font-size-large;
   font-weight: $font-weight-extrablack;
   letter-spacing: rem-calc(.44);
   line-height: 1.2;
-
-  @include media($bp-small) {
-    font-size: rem-calc($font-size-large);
-  }
 
   &:hover,
   &:focus {

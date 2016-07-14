@@ -59,13 +59,13 @@ class GunySite extends TimberSite {
       $top_events = tribe_get_events( array(
         'posts_per_page' => 3,
         'orderby' => 'menu_order',
-        'meta_query' => array(
-          array(
-            'key'     => 'featured_event',
-            'value'   => 'Yes',
-            'compare' => 'LIKE'
+          'meta_query' => array(
+            array(
+              'key'     => 'featured_event',
+              'value'   => 'Yes',
+              'compare' => 'LIKE'
+            ),
           ),
-        ),
       ) );
       // Get remaining events if count of Featured Events is less than 3
       $number_remaining = 3 - count($top_events);
@@ -83,7 +83,9 @@ class GunySite extends TimberSite {
         ));
 
         // Combine arrays with Featured Events first
-        array_push($top_events,  $top_events_remaining[0]);
+        foreach($top_events_remaining as $i => $top_event_remaining) {
+          array_push($top_events,  $top_events_remaining[$i]);
+        }
       }
       foreach($top_events as $i => $top_event) {
         $top_events[$i] = new GunyEvent($top_event);

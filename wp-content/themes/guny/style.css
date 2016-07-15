@@ -266,10 +266,13 @@ svg {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
+a {
+  transition: all ease-in-out 0.15s; }
+
 #main {
   position: relative; }
 
-.button--primary {
+.button--primary, .button--outline {
   border: 2px solid #fff;
   border-radius: 1.5625rem;
   display: inline-block;
@@ -278,7 +281,8 @@ svg {
   font-weight: 900;
   line-height: 1;
   padding: 0.875rem 1.875rem;
-  text-align: center; }
+  text-align: center;
+  transition: all ease-in-out 0.15s; }
 
 .button--primary {
   background: #fff;
@@ -288,6 +292,15 @@ svg {
   .button--primary:hover, .button--primary:focus {
     background: transparent;
     color: #fff; }
+
+.button--outline {
+  background: transparent;
+  border-color: #333;
+  color: #333;
+  letter-spacing: 1px;
+  opacity: .7; }
+  .button--outline:hover, .button--outline:focus {
+    opacity: 1; }
 
 .button--full-width {
   width: 100%; }
@@ -420,7 +433,7 @@ a {
 
 .o-col-3, .o-col-2, .o-col-1 {
   display: inline-block;
-  padding: 0.5rem 0;
+  padding: 0.5rem 1.25rem;
   vertical-align: top;
   width: 100%; }
 
@@ -439,10 +452,17 @@ a {
   padding-top: 1.875rem; }
 
 .o-col__row {
-  margin: 0.3125rem 0 2.1875rem; }
+  margin: 0.3125rem -1.25rem 2.1875rem; }
   @media screen and (min-width: 375px) {
     .o-col__row {
-      margin: 0.625rem -1.25rem 2.8125rem; } }
+      margin-bottom: 2.8125rem;
+      margin-top: 0.625rem; } }
+
+.o-content-container {
+  padding: 3.125rem; }
+
+.o-content-container--shade {
+  background: #eee; }
 
 .o-inline {
   display: block; }
@@ -777,6 +797,87 @@ ol.o-inline {
   .is-active .c-banner__icon__close {
     opacity: 1; }
 
+.c-card {
+  background: #fff;
+  margin-right: 3.125rem;
+  padding: 1.875rem;
+  padding-right: 3.75rem;
+  position: relative; }
+
+.c-card__sticker {
+  background: #2793e0;
+  border-radius: 6.25rem;
+  color: #fff;
+  display: block;
+  font-family: "museo-sans-rounded", sans-serif;
+  font-size: 0.6875rem;
+  height: 6.25rem;
+  position: absolute;
+  right: -3.125rem;
+  text-align: center;
+  top: 0.625rem;
+  letter-spacing: .5px;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  width: 6.25rem;
+  line-height: 6.25rem; }
+  @media screen and (min-width: 1024px) {
+    .c-card__sticker {
+      font-size: 0.8125rem; } }
+  .c-card__sticker .event-day {
+    display: none; }
+
+.c-card__title {
+  font-family: "museo-sans-rounded", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 900;
+  line-height: 1.2;
+  margin: 0 0 0.3125rem; }
+  @media screen and (min-width: 1024px) {
+    .c-card__title {
+      font-size: 1.3125rem; } }
+
+.c-card__tags {
+  margin: 0 0 0.625rem; }
+
+.c-card__subtitle {
+  color: rgba(51, 51, 51, 0.5);
+  font-family: "museo-sans-rounded", sans-serif;
+  font-weight: 900;
+  font-size: 0.75rem;
+  margin: 0 0 0.625rem;
+  text-transform: uppercase; }
+  @media screen and (min-width: 1024px) {
+    .c-card__subtitle {
+      font-size: 0.9375rem; } }
+  .c-card__subtitle .icon--xsmall {
+    position: relative;
+    top: 2px;
+    vertical-align: top; }
+    @media screen and (min-width: 375px) {
+      .c-card__subtitle .icon--xsmall {
+        top: 3px; } }
+
+.c-card__body {
+  font-size: 0.75rem;
+  margin: 0 0 0.3125rem; }
+  @media screen and (min-width: 1024px) {
+    .c-card__body {
+      font-size: 1rem; } }
+
+.c-card__link {
+  font-size: 0.6875rem;
+  text-decoration: underline;
+  color: rgba(51, 51, 51, 0.5); }
+  @media screen and (min-width: 1024px) {
+    .c-card__link {
+      font-size: 0.875rem; } }
+  .c-card__link a {
+    text-decoration: underline; }
+    .c-card__link a:hover, .c-card__link a:focus {
+      color: #333; }
+
 .c-content-tout__heading {
   font-size: 1.5rem;
   letter-spacing: .5px;
@@ -792,10 +893,10 @@ ol.o-inline {
       .c-content-tout__heading--small {
         font-size: 1rem; } }
 
-.c-content-tout__link {
+.c-content-tout__heading__link {
   float: right;
   text-transform: none; }
-  .c-content-tout__link:hover, .c-content-tout__link:focus {
+  .c-content-tout__heading__link:hover, .c-content-tout__heading__link:focus {
     color: #333; }
 
 .c-content-tout {
@@ -815,51 +916,33 @@ ol.o-inline {
   @media screen and (min-width: 1024px) {
     .c-content-tout__title {
       font-size: 1.3125rem; } }
-  .c-content-tout__title:hover, .c-content-tout__title:focus {
+  .c-content-tout__title a:hover,
+  .c-content-tout__title a:focus {
     color: #2793e0; }
 
 .c-content-tout__subtitle {
-  margin: 0.4375rem 0 0.1875rem; }
-  @media screen and (min-width: 375px) {
-    .c-content-tout__subtitle {
-      margin: 0.625rem 0 0.0625rem; } }
-
-.c-event-listing__title {
-  color: #333;
-  font-family: "museo-sans-rounded", sans-serif;
-  font-size: 1.125rem;
-  font-weight: 900;
-  letter-spacing: 0.0275rem;
-  line-height: 1.2; }
-  @media screen and (min-width: 1024px) {
-    .c-event-listing__title {
-      font-size: 1.3125rem; } }
-  .c-event-listing__title:hover, .c-event-listing__title:focus {
-    color: #2793e0; }
-
-.c-event-listing__date {
   font-family: "museo-sans-rounded", sans-serif;
   font-weight: 900;
   margin: 0.4375rem 0 0.1875rem;
   text-transform: uppercase; }
   @media screen and (min-width: 375px) {
-    .c-event-listing__date {
+    .c-content-tout__subtitle {
       margin: 0.625rem 0 0.0625rem; } }
-  .c-event-listing__date .icon--xsmall {
+  .c-content-tout__subtitle .icon--xsmall {
     position: relative;
     top: 2px;
     vertical-align: top; }
     @media screen and (min-width: 375px) {
-      .c-event-listing__date .icon--xsmall {
+      .c-content-tout__subtitle .icon--xsmall {
         top: 3px; } }
 
-.c-event-listing__link {
+.c-content-tout__link {
   font-size: 0.6875rem;
   text-decoration: underline; }
   @media screen and (min-width: 1024px) {
-    .c-event-listing__link {
+    .c-content-tout__link {
       font-size: 0.875rem; } }
-  .c-event-listing__link:hover, .c-event-listing__link:focus {
+  .c-content-tout__link:hover, .c-content-tout__link:focus {
     color: #333; }
 
 .c-footer {
@@ -928,17 +1011,16 @@ ol.o-inline {
   background-size: cover; }
 
 .c-list-box {
-  display: block; }
+  display: block;
+  padding: 0.375rem 0.25rem 0.125rem; }
 
 .c-list-box__item {
   display: block;
   list-style: none;
-  padding: 0.375rem 0.25rem 0.25rem; }
-  .c-list-box__item + .c-list-box__item {
-    padding-top: 0; }
+  margin-bottom: 0.25rem; }
 
 .c-list-box--secondary .c-list-box__item {
-  padding-bottom: 0.125rem; }
+  margin-bottom: 0.125rem; }
 
 .c-list-box__heading {
   border-radius: 0.1875rem;
@@ -1073,6 +1155,9 @@ ol.o-inline {
 .aligncenter {
   max-width: 100%;
   margin: 0 auto; }
+
+.text-center {
+  text-align: center; }
 
 .show-for-screen-reader {
   clip: rect(1px, 1px, 1px, 1px);

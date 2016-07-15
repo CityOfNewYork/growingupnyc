@@ -1,0 +1,5 @@
+<svg role="img" class="icon--xsmall"><use xlink:href="#map-marker"></use></svg><a class="c-card__link" href="https://maps.google.com?q={{post.venue_address.address|url_encode}},+{{post.venue_address.city}},+{{post.venue_address.region}}+{{post.venue_address.zip}},+{{post.venue_address.country}}" target="_blank">{{post.venue}},
+  {% for borough in post.terms('borough') %}
+    {{borough.name}}
+  {% endfor %}
+</a>

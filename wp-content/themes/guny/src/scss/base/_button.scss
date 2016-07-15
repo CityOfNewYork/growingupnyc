@@ -13,6 +13,7 @@
   line-height: 1;
   padding: rem-calc(14 30);
   text-align: center;
+  transition: $button-transition;
 }
 
 // Primary button
@@ -42,6 +43,36 @@
   &:focus {
     background: transparent;
     color: $color-text-invert;
+  }
+}
+
+// Oulined Button
+//
+// Primary button. Solid color initially and turns ghosty on hover
+//
+// .button--full-width - Button spans width of parent
+//
+// markup:
+// <a class="button--primary {$modifiers}">Button</a>
+// <button class="button--primary {$modifiers}">Button</button>
+//
+// sg-wrapper:
+// <div style="background:#333; padding:20px">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 1.1
+.button--outline {
+  @extend %button-base;
+  background: transparent;
+  border-color: $color-text;
+  color: $color-text;
+  letter-spacing: 1px;
+  opacity: .7;
+
+  &:hover,
+  &:focus {
+    opacity: 1;
   }
 }
 

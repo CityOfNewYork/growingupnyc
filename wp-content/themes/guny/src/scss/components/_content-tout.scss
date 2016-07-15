@@ -9,11 +9,12 @@
 // markup:
 // <h2 class="c-content-tout__heading">
 //   Heading
-//   <a href="#" class="c-content-tout__link">More Link</a>
+//   <a href="#" class="c-content-tout__heading__link">More Link</a>
 // </h2>
 // <div class="c-content-tout">
 //   <a class="c-content-tout__title">Post Title</a>
-//   <p class="c-content-tout__subtitle">Post Subtitle</p>
+//   <p class="c-content-tout__subtitle">Subtitle</p>
+//   <a class="c-content-tout__link">Link</a>
 // </div>
 //
 // sg-wrapper:
@@ -33,7 +34,7 @@
   }
 }
 
-.c-content-tout__link {
+.c-content-tout__heading__link {
   float: right;
   text-transform: none;
 
@@ -56,16 +57,39 @@
   letter-spacing: rem-calc(.44);
   line-height: 1.2;
 
-  &:hover,
-  &:focus {
+  a:hover,
+  a:focus {
     color: $color-primary;
   }
 }
 
 .c-content-tout__subtitle {
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
   margin: rem-calc(7 0 3);
+  text-transform: uppercase;
 
   @include media($bp-small) {
     margin: rem-calc(10 0 1);
+  }
+
+  .icon--xsmall {
+    position: relative;
+    top: 2px;
+    vertical-align: top;
+
+    @include media($bp-small) {
+      top: 3px;
+    }
+  }
+}
+
+.c-content-tout__link {
+  @include font-size($font-size-x-small-mobile, 14);
+  text-decoration: underline;
+
+  &:hover,
+  &:focus {
+    color: $color-text;
   }
 }

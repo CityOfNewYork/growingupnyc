@@ -32,6 +32,7 @@
 // Styleguide 3.1
 .c-list-box {
   display: block;
+  padding: rem-calc(6 4 2);
 }
 
 // List Box Item
@@ -40,15 +41,11 @@
 .c-list-box__item {
   display: block;
   list-style: none;
-  padding: rem-calc(6 4 4);
-
-  + .c-list-box__item {
-    padding-top: 0;
-  }
+  margin-bottom: rem-calc(4);
 }
 
 .c-list-box--secondary .c-list-box__item {
-  padding-bottom: rem-calc(2);
+  margin-bottom: rem-calc(2);
 }
 
 // List Box Heading

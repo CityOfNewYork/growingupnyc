@@ -25,10 +25,19 @@
     {% endfor %}
   </ol>
 
-  <h2 class="c-content-tout__heading">Events</h2>
-  {% for post in events %}
-    {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
-  {% endfor %}
-  <a href="/events">See all events</a>
+  <div class="o-content-container o-content-container--shade">
+    <h2 class="c-content-tout__heading">Events</h2>
+    <div class="o-col__row">
+      {% for post in events %}
+        <div class="o-col-1">
+        {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="text-center">
+      <a href="/events" class="button--outline">See all events</a>
+    </div>
+  </div> <!-- /.c-content-container.c-content-container--shade -->
 </section> <!-- /.o-scroll-column.o-scroll-column--right -->
+
 {% endblock %}

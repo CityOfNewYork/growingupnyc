@@ -4,7 +4,7 @@
 // Common column layout
 %column-base {
   display: inline-block;
-  padding: rem-calc(8 0);
+  padding: rem-calc(8 20);
   vertical-align: top;
   width: 100%;
 }
@@ -35,10 +35,11 @@
 
 // Column Row
 .o-col__row {
-  margin: rem-calc(5 0 35);
+  margin: rem-calc(5 -20 35);
 
   @include media($bp-small) {
-    margin: rem-calc(10 -20 45);
+    margin-bottom: rem-calc(45);
+    margin-top: rem-calc(10);
   }
 }
 

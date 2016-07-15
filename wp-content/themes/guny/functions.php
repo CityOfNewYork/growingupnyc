@@ -207,7 +207,8 @@ class GunyEvent extends TimberPost {
       } else if ($start_time == $tomorrow) {
         $time = 'tomorrow';
       } else {
-        $time = date('l M j', $this->start_datetime());
+        $time = '<span class="event-day">' . date('l ', $this->start_datetime()) . '</span>'
+                . date('M j', $this->start_datetime());
       }
 
       return $time;

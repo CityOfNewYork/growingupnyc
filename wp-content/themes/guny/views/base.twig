@@ -81,7 +81,7 @@
             <section class="o-col__divider">
               <h2 class="c-content-tout__heading--small">
                 Programs
-                <a class="c-content-tout__link" href="{{site.url}}/programs">See all programs<svg role="img" class="icon--xsmall"><use xlink:href="#caret-right"></use></svg></a>
+                <a class="c-content-tout__heading__link" href="{{site.url}}/programs">See all programs<svg role="img" class="icon--xsmall"><use xlink:href="#caret-right"></use></svg></a>
               </h2> <!-- /.c-content-tout__heading--small -->
               <div class="o-col__row">
                 {{top_programs}}
@@ -91,39 +91,21 @@
             <section class="o-col__divider">
               <h2 class="c-content-tout__heading--small">
                 Events
-                <a class="c-content-tout__link" href="{{site.url}}/events">See all events<svg role="img" class="icon--xsmall"><use xlink:href="#caret-right"></use></svg></a>
+                <a class="c-content-tout__heading__link" href="{{site.url}}/events">See all events<svg role="img" class="icon--xsmall"><use xlink:href="#caret-right"></use></svg></a>
               </h2> <!-- /.c-content-tout__heading--small -->
               <div class="o-col__row">
-              {% for event in top_events %}
+              {% for post in top_events %}
                 <div class="o-col-3 c-content-tout">
-                  <a class="c-content-tout__title" href="{{event.path}}">{{event.post_title}}</a>
-                  <p class="c-content-tout__subtitle c-event-listing__date">
-                    {{event.start_date_formatted}}
-                    {% if not event.all_day %}
-                      <svg role="img" class="icon--xsmall"><title>Time:</title><use xlink:href="#clock-o"></use></svg>
-                      <span class="nowrap">{{event.start_datetime|date('g:i A')}}</span>
-                      {% if not event.multiday and event.end_datetime != event.start_datetime %}
-                        - <span class="nowrap">{{event.end_datetime|date('g:i A')}}</span>
-                      {% endif %}
-                    {% endif %}
-                    {% if event.multiday %}
-                      - {{event.end_date_formatted}}
-                      {% if not event.all_day and event.end_datetime %}
-                        <svg role="img" class="icon--xsmall"><title>Time:</title><use xlink:href="#clock-o"></use></svg>
-                        <span class="nowrap">{{event.end_datetime|date('g:i A')}}</span>
-                      {% endif %}
-                    {% endif %}
-                  </p> <!-- /.c-content-tout__subtitle.c-event-listing__date -->
-                  {% if event.venue %}
-                    <svg role="img" class="icon--xsmall"><use xlink:href="#map-marker"></use></svg>
-                    <a class="c-event-listing__link"
-                      href="https://maps.google.com?q={{event.venue_address.address|url_encode}},+{{event.venue_address.city}},+{{event.venue_address.region}}+{{event.venue_address.zip}},+{{event.venue_address.country}}"
-                      target="_blank">
-                      {{event.venue}},
-                      {% for borough in event.terms('borough') %}
-                        {{borough.name}}
-                      {% endfor %}
-                    </a> <!-- /.c-event-listing__link -->
+                  <h3 class="c-content-tout__title">
+                    <a href="{{post.path}}" title="{{post.post_title}}" rel="bookmark">{{post.post_title}}</a>
+                  </h3>
+                  <div class="c-content-tout__subtitle">
+                    {% include 'partials/event-date.twig' %}
+                  </div> <!-- /.c-content-tout__subtitle -->
+                  {% if post.venue %}
+                    <div class="c-content-tout__link">
+                      {% include 'partials/event-link.twig' %}
+                    </div>
                   {% endif %}
                 </div> <!-- /.o-col-3.c-content-tout -->
               {% endfor %}

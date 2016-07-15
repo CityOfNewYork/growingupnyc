@@ -64,6 +64,11 @@ $font-size-x-large: 30;
 $font-size-xx-large-mobile: 40;
 $font-size-xx-large: 80;
 
+// transitions
+// =====================
+$button-transition: all ease-in-out .15s;
+$link-transition: all ease-in-out .15s;
+
 // Z-Indexes
 // =====================
 $z-index-header: 2;

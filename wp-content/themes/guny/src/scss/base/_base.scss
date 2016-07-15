@@ -16,6 +16,10 @@ svg {
   -moz-osx-font-smoothing: grayscale;
 }
 
+a {
+  transition: $link-transition;
+}
+
 #main {
   position: relative;
 }

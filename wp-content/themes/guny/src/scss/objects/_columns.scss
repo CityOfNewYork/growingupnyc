@@ -1,0 +1,58 @@
+// Columns
+//
+
+// Common column layout
+%column-base {
+  display: inline-block;
+  padding: rem-calc(8 0);
+  vertical-align: top;
+  width: 100%;
+}
+
+%column-base-2 {
+  @extend %column-base;
+
+  @include media($bp-small) {
+    margin-right: rem-calc(-4);
+    padding: rem-calc(20);
+    width: 50%;
+  }
+}
+
+%column-base-3 {
+  @extend %column-base-2;
+
+  @include media($bp-medium) {
+    width: (100% / 3);
+  }
+}
+
+// Divider 
+.o-col__divider + .o-col__divider {
+  border-top: 2px solid $white;
+  padding-top: rem-calc(30);
+}
+
+// Column Row
+.o-col__row {
+  margin: rem-calc(5 0 35);
+
+  @include media($bp-small) {
+    margin: rem-calc(10 -20 45);
+  }
+}
+
+.o-col-1 {
+  @extend %column-base;
+
+}
+
+// 2 Columns
+.o-col-2 {
+  @extend %column-base-2;
+}
+
+// 3 Columns
+.o-col-3 {
+  @extend %column-base-3;
+}

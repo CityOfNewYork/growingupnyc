@@ -1,0 +1,75 @@
+// Event Listing
+//
+// Displays event preview
+//
+// markup:
+// <section class="c-event-listing">
+//   <h2 class="c-content-tout__heading">
+//     Heading
+//     <a href="#" class="c-content-tout__link">More Link</a>
+//   </h2>
+//   <div class="c-content-tout__item-wrapper">
+//     <div class="c-content-tout__item">
+//       <a class="c-content-tout__item__title">Post Title</a>
+//       <p class="c-content-tout__item__subtitle">Post Subtitle</p>
+//       <a class="c-content-tout__item__link">Post Subtitle</a>
+//     </div>
+//     <div class="c-content-tout__item">
+//       <a class="c-content-tout__item__title">Post Title</a>
+//       <p class="c-content-tout__item__subtitle">Post Subtitle</p>
+//       <a class="c-content-tout__item__link">Post Subtitle</a>
+//     </div>
+//     <div class="c-content-tout__item">
+//       <a class="c-content-tout__item__title">Post Title</a>
+//       <p class="c-content-tout__item__subtitle">Post Subtitle</p>
+//       <a class="c-content-tout__item__link">Post Subtitle</a>
+//     </div>
+//   </div>
+// </section>
+//
+// Styleguide 5.2
+
+.c-event-listing__title {
+  color: $color-text;
+  font-family: $font-family-display;
+  @include font-size-large;
+  font-weight: $font-weight-extrablack;
+  letter-spacing: rem-calc(.44);
+  line-height: 1.2;
+
+  &:hover,
+  &:focus {
+    color: $color-primary;
+  }
+}
+
+.c-event-listing__date {
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
+  margin: rem-calc(7 0 3);
+  text-transform: uppercase;
+
+  @include media($bp-small) {
+    margin: rem-calc(10 0 1);
+  }
+
+  .icon--xsmall {
+    position: relative;
+    top: 2px;
+    vertical-align: top;
+
+    @include media($bp-small) {
+      top: 3px;
+    }
+  }
+}
+
+.c-event-listing__link {
+  @include font-size($font-size-x-small-mobile, 14);
+  text-decoration: underline;
+
+  &:hover,
+  &:focus {
+    color: $color-text;
+  }
+}

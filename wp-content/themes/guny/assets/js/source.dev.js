@@ -12372,23 +12372,14 @@ if (objCtr.defineProperty) {
 
 	  if (staticColumn) {
 	    (0, _forEach2.default)(staticColumn, function (staticColumnElem) {
-	      var elemTop = staticColumnElem.parentElement.getBoundingClientRect().top;
 
-	      if (elemTop > 0) {
-	        staticColumnElem.classList.add(notStickyClass);
-	      } else {
-	        staticColumnElem.classList.remove(notStickyClass);
-	      }
-
-	      /**
-	      * Add event listener for 'scroll'.
-	      * @function
-	      * @param {object} event - The event object
-	      */
-	      window.addEventListener('scroll', function (event) {
+	      function calcWindowPos() {
 	        var elemTop = staticColumnElem.parentElement.getBoundingClientRect().top;
 	        var isPastBottom = window.innerHeight - staticColumnElem.parentElement.clientHeight - staticColumnElem.parentElement.getBoundingClientRect().top > 0;
 
+	        // Sets element to position absolute if not scrolled to yet.
+	        // Absolutely positioning only when necessary and not by default prevents flickering
+	        // when removing the "is-bottom" class on Chrome
 	        if (elemTop > 0) {
 	          staticColumnElem.classList.add(notStickyClass);
 	        } else {
@@ -12399,6 +12390,26 @@ if (objCtr.defineProperty) {
 	        } else {
 	          staticColumnElem.classList.remove(bottomClass);
 	        }
+	      }
+
+	      calcWindowPos();
+
+	      /**
+	      * Add event listener for 'scroll'.
+	      * @function
+	      * @param {object} event - The event object
+	      */
+	      window.addEventListener('scroll', function (event) {
+	        calcWindowPos();
+	      }, false);
+
+	      /**
+	      * Add event listener for 'resize'.
+	      * @function
+	      * @param {object} event - The event object
+	      */
+	      window.addEventListener('resize', function (event) {
+	        calcWindowPos();
 	      }, false);
 	    });
 	  }

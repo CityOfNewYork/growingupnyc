@@ -27,8 +27,8 @@ class Top_Programs_Widget extends WP_Widget {
   public function widget( $args, $instance ) {
     $programs = get_field('programs', 'widget_' . $args['widget_id']);
     foreach($programs as $program) {
-      echo '<div class="c-content-tout__item">';
-      echo '<a class="c-content-tout__item__title" href="' . get_permalink($program->ID) . '">';
+      echo '<div class="o-col-3 c-content-tout">';
+      echo '<a class="c-content-tout__title" href="' . get_permalink($program->ID) . '">';
       echo $program->post_title;
       echo '</a></div>';
     }

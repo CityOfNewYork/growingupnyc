@@ -78,26 +78,26 @@
               <button type="submit" class="form-field__icon form-field__icon--large"><svg role="img"><title>Search</title><use xlink:href="#search"></use></svg></button>
             </form>
 
-            <section class="c-content-tout">
-              <h2 class="c-content-tout__heading">
+            <section class="o-col__divider">
+              <h2 class="c-content-tout__heading--small">
                 Programs
                 <a class="c-content-tout__link" href="{{site.url}}/programs">See all programs<svg role="img" class="icon--xsmall"><use xlink:href="#caret-right"></use></svg></a>
-              </h2> <!-- /.c-content-tout__link -->
-              <div class="c-content-tout__item-wrapper">
+              </h2> <!-- /.c-content-tout__heading--small -->
+              <div class="o-col__row">
                 {{top_programs}}
-              </div> <!-- /.c-content-tout__item-wrapper -->
+              </div> <!-- /.o-col__divider -->
             </section> <!-- /.c-content-tout -->
 
-            <section class="c-content-tout">
-              <h2 class="c-content-tout__heading">
+            <section class="o-col__divider">
+              <h2 class="c-content-tout__heading--small">
                 Events
                 <a class="c-content-tout__link" href="{{site.url}}/events">See all events<svg role="img" class="icon--xsmall"><use xlink:href="#caret-right"></use></svg></a>
-              </h2> <!-- /.c-content-tout__link -->
-              <div class="c-content-tout__item-wrapper">
+              </h2> <!-- /.c-content-tout__heading--small -->
+              <div class="o-col__row">
               {% for event in top_events %}
-                <div class="c-content-tout__item">
-                  <a class="c-content-tout__item__title" href="{{event.path}}">{{event.post_title}}</a>
-                  <p class="c-content-tout__item__subtitle">
+                <div class="o-col-3 c-content-tout">
+                  <a class="c-content-tout__title" href="{{event.path}}">{{event.post_title}}</a>
+                  <p class="c-content-tout__subtitle c-event-listing__date">
                     {{event.start_date_formatted}}
                     {% if not event.all_day %}
                       <svg role="img" class="icon--xsmall"><title>Time:</title><use xlink:href="#clock-o"></use></svg>
@@ -113,22 +113,22 @@
                         <span class="nowrap">{{event.end_datetime|date('g:i A')}}</span>
                       {% endif %}
                     {% endif %}
-                  </p> <!-- /.c-content-tout__item__subtitle -->
+                  </p> <!-- /.c-content-tout__subtitle.c-event-listing__date -->
                   {% if event.venue %}
                     <svg role="img" class="icon--xsmall"><use xlink:href="#map-marker"></use></svg>
-                    <a class="c-content-tout__item__link"
+                    <a class="c-event-listing__link"
                       href="https://maps.google.com?q={{event.venue_address.address|url_encode}},+{{event.venue_address.city}},+{{event.venue_address.region}}+{{event.venue_address.zip}},+{{event.venue_address.country}}"
                       target="_blank">
                       {{event.venue}},
                       {% for borough in event.terms('borough') %}
                         {{borough.name}}
                       {% endfor %}
-                    </a> <!-- /.c-content-tout__item__link -->
+                    </a> <!-- /.c-event-listing__link -->
                   {% endif %}
-                </div> <!-- /.c-content-tout__item -->
+                </div> <!-- /.o-col-3.c-content-tout -->
               {% endfor %}
-              </div> <!-- /.c-content-tout__item-wrapper -->
-            </section> <!-- /.c-content-tout -->
+              </div> <!-- /.o-col__row -->
+            </section> <!-- /.o-col__divider -->
           </div> <!-- /.o-layout-med -->
         </section> <!-- /.o-overlay -->
       {% endblock %}

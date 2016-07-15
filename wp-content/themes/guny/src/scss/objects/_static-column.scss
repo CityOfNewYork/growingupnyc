@@ -24,10 +24,12 @@
 }
 
 .o-static-column--left {
+  border-left: 4px solid $color-background;
   left: 0;
 }
 
 .o-static-column--right {
+  border-right: 4px solid $color-background;
   right: 0;
 }
 

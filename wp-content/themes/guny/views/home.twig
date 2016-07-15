@@ -1,26 +1,34 @@
 {% extends "base.twig" %}
 
 {% block content %}
-<h2>Upcoming Events</h2>
-{% for post in events %}
-  {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
-{% endfor %}
-<a href="/events">See Full Calendar</a>
 
-{# Age/Milestone Picker #}
-<ol class="js-accordion c-list-box c-list-box--primary" data-multiselectable="true">
-  {% for age_group in age_menu %}
-    <li class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading {{age_group|sanitize}}-background" id="homepage-ages-heading-{{loop.index}}">
-        {{age_group.name}}
-        <span class="c-list-box__subheading">{{age_group.description}}</span>
-      </h3>
-      <ol class="js-accordion__content c-list-box__content {{age_group|sanitize}}-background" id="homepage-ages-panel-{{loop.index}}">
-        {% for post in age_group.posts('numberposts=-1&post_type=age&meta_key=numeric_age&orderby=meta_value_num&order=ASC') %}
-          <li class="c-list-box__subitem"><a href="{{post.link}}" class="button--full-width button--primary {{age_group|sanitize}}-text">{{post.title}}</a></li>
-        {% endfor %}
-      </ol>
-    </li>
+{# Side Hero #}
+<section class="o-static-column o-static-column--left c-side-hero js-static-column" style="background-image:url({{post.thumbnail.src}});">
+
+</section> <!-- /.o-static-column.o-static-column--left -->
+
+<section class="o-scroll-column o-scroll-column--right">
+  {# Age/Milestone Picker #}
+  <ol class="js-accordion c-list-box c-list-box--primary" data-multiselectable="true">
+    {% for age_group in age_menu %}
+      <li class="c-list-box__item">
+        <h3 class="js-accordion__header c-list-box__heading {{age_group|sanitize}}-background" id="homepage-ages-heading-{{loop.index}}">
+          {{age_group.name}}
+          <span class="c-list-box__subheading">{{age_group.description}}</span>
+        </h3>
+        <ol class="js-accordion__content c-list-box__content {{age_group|sanitize}}-background" id="homepage-ages-panel-{{loop.index}}">
+          {% for post in age_group.posts('numberposts=-1&post_type=age&meta_key=numeric_age&orderby=meta_value_num&order=ASC') %}
+            <li class="c-list-box__subitem"><a href="{{post.link}}" class="button--full-width button--primary {{age_group|sanitize}}-text">{{post.title}}</a></li>
+          {% endfor %}
+        </ol>
+      </li>
+    {% endfor %}
+  </ol>
+
+  <h2>Events</h2>
+  {% for post in events %}
+    {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
   {% endfor %}
-</ol>
+  <a href="/events">See all events</a>
+</section> <!-- /.o-scroll-column.o-scroll-column--right -->
 {% endblock %}

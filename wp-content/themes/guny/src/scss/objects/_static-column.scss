@@ -1,0 +1,41 @@
+// Static column remains fixed while other column scrolls
+//
+
+//Static Column
+.o-static-column {
+  backface-visibility: hidden;
+  height: 100vh;
+  max-height: 100%;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 60%;
+
+  // Uses "not sticky" class to prevent jumping when going from absolute bottom to fixed top
+  &.is-not-sticky {
+    position: absolute;
+  }
+
+  &.is-bottom {
+    position: absolute;
+    bottom: 0;
+    top: auto;
+  }
+}
+
+.o-static-column--left {
+  left: 0;
+}
+
+.o-static-column--right {
+  right: 0;
+}
+
+// Scroll Column
+.o-scroll-column {
+  width: 40%;
+}
+
+.o-scroll-column--right {
+  margin-left: 60%;
+}

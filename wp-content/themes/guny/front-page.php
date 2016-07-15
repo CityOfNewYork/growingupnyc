@@ -7,6 +7,7 @@ if ( ! class_exists( 'Timber' ) ) {
   return;
 }
 $context = Timber::get_context();
+$context['post'] = Timber::get_post();
 
 if (function_exists('tribe_get_events')) {
   $events = tribe_get_events( array(

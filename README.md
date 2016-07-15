@@ -117,6 +117,7 @@ Custom shortcodes are located in <kbd>/wp-content/themes/guny/includes/guny_shor
 - `[stat value="100" label="Stat text"]`: Inserts a callout stat
 - `[iframe type="youtube" id="2jE59c9ncio"]`, `[iframe type="vimeo" id="142354343"]`,
 `[iframe src="http://yoururlhere.com"]`: Inserts a video iframe, wrapped in Foundation's flex-video class
+- `[nyc_logo]`: Inserts an NYC svg logo into the text
 
 --
 

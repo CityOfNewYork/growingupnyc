@@ -36,3 +36,14 @@
     padding-right: $outer-gutter-large;
   }
 }
+
+.o-content-static--left {
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+}

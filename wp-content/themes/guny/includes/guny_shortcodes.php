@@ -116,3 +116,15 @@ function guny_video( $attr ) {
   return $output;
 }
 add_shortcode( 'iframe', 'guny_video' );
+
+/**
+* NYC logo embedded in the WYSIWYG of a detail page
+*
+* @return string HTML markup to display a callout box with the stat
+*/
+function guny_logo(  ) {
+
+  $output = '<svg role="img" class="icon--nyc"><title>NYC</title><use xlink:href="#nyc-logo"></use></svg>';
+  return $output;
+}
+add_shortcode( 'nyc_logo', 'guny_logo' );

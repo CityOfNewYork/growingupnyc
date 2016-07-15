@@ -1,0 +1,140 @@
+// Heroes
+//
+// Styleguide 6
+
+// Side Hero
+//
+// Full height left aligned hero
+//
+// markup:
+// <header class="c-side-hero">
+//   <div class="o-layout">
+//     <sg-insert>2.1.1</sg-insert>
+//     <sg-insert>2.1.2</sg-insert>
+//   </div>
+// </header>
+//
+// sg-wrapper:
+// <div style="min-height:152px">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 6.1
+
+.c-side-hero {
+  background: $color-primary center center no-repeat;
+  background-size: cover;
+}
+
+// Banner Logo Wrapper
+//
+// markup:
+// <a href="#" class="c-banner__logo-wrapper"><span class="c-banner__logo">Site Title</span></a>
+//
+// Styleguide 2.1.1
+.c-banner__logo-wrapper {
+  background: $color-background;
+  box-shadow: 0 0 4px 0 $color-shadow;
+  display: block;
+  height: $height-banner-logo;
+  @include layout-inner-left-edge;
+  padding: 0 5px 8px;
+  position: absolute;
+  top: 0;
+  width: $width-banner-logo;
+
+  @include media($bp-small) {
+    height: $height-banner-logo-small;
+    width: $width-banner-logo-small;
+  }
+
+  @include media($bp-large) {
+    height: $height-banner-logo-large;
+    padding: 0 16px 20px 14px;
+    width: $width-banner-logo-large;
+  }
+}
+
+// Banner Logo
+.c-banner__logo {
+  @include image-replace('/wp-content/themes/guny/assets/img/GrowingUpNYC-logo-stacked.gif');
+  background-position: center bottom;
+  height: 100%;
+  width: 100%;
+}
+
+// Banner Navigation
+//
+// markup:
+// <nav class="c-banner__nav">
+//   <ul class="o-inline">
+//     <li class="o-inline__item"><sg-insert>2.1.3</sg-insert></li>
+//     <li class="o-inline__item"><sg-insert>2.1.3</sg-insert></li>
+//   </ul>
+// </nav>
+//
+// Styleguide 2.1.2
+.c-banner__nav {
+  float: right;
+  line-height: 1;
+  padding-top: rem-calc(18);
+
+  @include media($bp-large) {
+    padding-top: rem-calc(20);
+  }
+}
+
+// Banner Link
+//
+// markup:
+// <a href="#" class="c-banner__link">Item</a>
+//
+// Styleguide 2.1.3
+.c-banner__link {
+  color: $color-primary;
+  font-family: $font-family-display;
+  @include font-size-small;
+  font-weight: $font-weight-extrablack;
+  position: relative;
+  @include text-uppercase;
+
+  &:hover,
+  &:focus {
+    color: $color-secondary;
+  }
+
+  @include media($breakpoint-font) {
+    letter-spacing: 1.1px;
+  }
+}
+
+// Banner Icon
+//
+// SVG icon. Does not appear in styleguide
+.c-banner__icon {
+  display: inline-block;
+  height: 1.25em;
+  margin-top: rem-calc(-4);
+  transition: all .25s ease-in;
+  vertical-align: middle;
+  width: 1.25em;
+}
+
+.c-banner__icon__search {
+  opacity: 1;
+
+  .is-active & {
+    opacity: 0;
+  }
+}
+
+.c-banner__icon__close {
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  top: rem-calc(2);
+
+  .is-active & {
+    opacity: 1;
+  }
+}

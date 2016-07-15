@@ -343,6 +343,10 @@ if (objCtr.defineProperty) {
 
 	var _overlay2 = _interopRequireDefault(_overlay);
 
+	var _staticColumn = __webpack_require__(412);
+
+	var _staticColumn2 = _interopRequireDefault(_staticColumn);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function ready(fn) {
@@ -359,6 +363,7 @@ if (objCtr.defineProperty) {
 	  (0, _offcanvas2.default)();
 	  (0, _accordion2.default)();
 	  (0, _overlay2.default)();
+	  (0, _staticColumn2.default)();
 	}
 
 	ready(init);
@@ -12338,6 +12343,61 @@ if (objCtr.defineProperty) {
 	          } else {
 	            overlay.focus();
 	          }
+	        }
+	      }, false);
+	    });
+	  }
+	};
+
+	var _forEach = __webpack_require__(301);
+
+	var _forEach2 = _interopRequireDefault(_forEach);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 412 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  var staticColumn = document.querySelectorAll('.js-static-column');
+	  var notStickyClass = 'is-not-sticky';
+	  var bottomClass = 'is-bottom';
+
+	  if (staticColumn) {
+	    (0, _forEach2.default)(staticColumn, function (staticColumnElem) {
+	      var elemTop = staticColumnElem.parentElement.getBoundingClientRect().top;
+
+	      if (elemTop > 0) {
+	        staticColumnElem.classList.add(notStickyClass);
+	      } else {
+	        staticColumnElem.classList.remove(notStickyClass);
+	      }
+
+	      /**
+	      * Add event listener for 'scroll'.
+	      * @function
+	      * @param {object} event - The event object
+	      */
+	      window.addEventListener('scroll', function (event) {
+	        var elemTop = staticColumnElem.parentElement.getBoundingClientRect().top;
+	        var isPastBottom = window.innerHeight - staticColumnElem.parentElement.clientHeight - staticColumnElem.parentElement.getBoundingClientRect().top > 0;
+
+	        if (elemTop > 0) {
+	          staticColumnElem.classList.add(notStickyClass);
+	        } else {
+	          staticColumnElem.classList.remove(notStickyClass);
+	        }
+	        if (isPastBottom) {
+	          staticColumnElem.classList.add(bottomClass);
+	        } else {
+	          staticColumnElem.classList.remove(bottomClass);
 	        }
 	      }, false);
 	    });

@@ -6,7 +6,7 @@
   margin-top: rem-calc(-200);
   padding-top: rem-calc(200);
 
-  @include media($bp-large) {
+  @include media($bp-medium) {
     backface-visibility: hidden;
     height: 100vh;
     margin: 0;
@@ -19,7 +19,7 @@
   }
 }
 
-@include media($bp-large) {
+@include media($bp-medium) {
   .js .o-static-column {
     position: fixed;
 

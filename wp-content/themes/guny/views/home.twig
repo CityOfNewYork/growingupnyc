@@ -3,8 +3,9 @@
 {% block content %}
 
 {# Side Hero #}
-<section class="o-static-column o-static-column--left c-side-hero js-sticky" style="background-image:url({{post.thumbnail.src}});">
-  <img title="{{site.name}}" alt="{{site.name}}" src="{{post.thumbnail.src|resize(auto, 200)}}">
+<section class="o-static-column o-static-column--left c-side-hero js-sticky">
+  <div class="c-side-hero__image c-side-hero__image--desktop" style="background-image:url({{post.thumbnail.src}})"></div>
+  <div class="c-side-hero__image c-side-hero__image--mobile" style="background-image:url({{post.thumbnail.src|resize(700, 0)}})"></div>
   <div class="c-side-hero__content">
     <h1 class="c-side-hero__title">
       <span class="c-side-hero__title--small">{{post.get_field('hero_title_top')}}</span>

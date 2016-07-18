@@ -674,7 +674,7 @@ ol.o-inline {
 .o-static-column {
   margin-top: -12.5rem;
   padding-top: 12.5rem; }
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 700px) {
     .o-static-column {
       backface-visibility: hidden;
       height: 100vh;
@@ -686,7 +686,7 @@ ol.o-inline {
       top: 0;
       width: 60%; } }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 700px) {
   .js .o-static-column {
     position: fixed; }
     .js .o-static-column.is-not-sticky {
@@ -1026,22 +1026,30 @@ ol.o-inline {
   .c-footer__link:hover, .c-footer__link:focus {
     color: #0055b8; }
 
-.c-side-hero {
+.c-side-hero__image {
   background: #2793e0 center center no-repeat;
   background-size: cover; }
-  @media screen and (min-width: 700px) {
-    .c-side-hero {
-      background: none; } }
 
-@media screen and (min-width: 700px) {
-  .c-side-hero__image {
-    display: none; } }
+.c-side-hero__image--desktop {
+  display: none; }
+  @media screen and (min-width: 700px) {
+    .c-side-hero__image--desktop {
+      display: block;
+      height: 100%; } }
+
+.c-side-hero__image--mobile {
+  height: 12.5rem; }
+  @media screen and (min-width: 700px) {
+    .c-side-hero__image--mobile {
+      display: none; } }
 
 .c-side-hero__content {
+  background: #2793e0;
   color: #fff;
   padding: 1.875rem; }
   @media screen and (min-width: 700px) {
     .c-side-hero__content {
+      background: none;
       bottom: 0;
       left: 0;
       padding: 3.75rem;
@@ -1065,6 +1073,7 @@ ol.o-inline {
       font-size: 4.125rem; } }
 
 .c-side-hero__title--small {
+  display: block;
   font-size: 1.3125rem;
   text-transform: none; }
   @media screen and (min-width: 1024px) {

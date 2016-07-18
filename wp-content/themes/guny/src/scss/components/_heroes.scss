@@ -8,10 +8,10 @@
 //
 // markup:
 // <header class="c-side-hero">
-//   <div class="o-layout">
-//     <div class="c-side-hero__content">
+//   <div class="c-side-hero__image--desktop"></div>
+//   <div class="c-side-hero__image--mobile"></div>
+//   <div class="c-side-hero__content">
 //     <h1 class="c-side-hero__title">Hero Title</h1>
-//     </div>
 //   </div>
 // </header>
 //
@@ -22,16 +22,22 @@
 //
 // Styleguide 6.1
 
-.c-side-hero {
+.c-side-hero__image {
   background: $color-primary center center no-repeat;
   background-size: cover;
+}
+
+.c-side-hero__image--desktop {
+  display: none;
 
   @include media($bp-medium) {
-    background: none;
+    display: block;
+    height: 100%;
   }
 }
 
-.c-side-hero__image {
+.c-side-hero__image--mobile {
+  height: rem-calc(200);
 
   @include media($bp-medium) {
     display: none;
@@ -39,10 +45,12 @@
 }
 
 .c-side-hero__content {
+  background: $color-primary;
   color: $white;
   padding: rem-calc(30);
 
   @include media($bp-medium) {
+    background: none;
     bottom: 0;
     left: 0;
     padding: rem-calc(60);
@@ -72,6 +80,7 @@
 }
 
 .c-side-hero__title--small {
+  display: block;
   @include font-size(21, 24);
   text-transform: none;
 }

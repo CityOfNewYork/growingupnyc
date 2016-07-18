@@ -10,6 +10,7 @@ $pure-orange: #ffb900;
 $strong-blue: #0055b8;
 $strong-lime-green: #35c621;
 $strong-pink: #d8006d;
+$very-dark-blue: #0051a9;
 $very-dark-gray: #333;
 $very-dark-gray-semitransparent: rgba(51, 51, 51, .7);
 $very-dark-gray-transparent: rgba(51, 51, 51, .5);
@@ -71,8 +72,9 @@ $link-transition: all ease-in-out .15s;
 
 // Z-Indexes
 // =====================
-$z-index-header: 2;
-$z-index-search-overlay: 1;
+$z-index-header: 3;
+$z-index-search-overlay: 2;
+$z-index-hero-title: 1;
 
 // Grid Settings
 // See http://thoughtbot.github.io/neat-docs/latest
@@ -92,6 +94,8 @@ $bp-small: new-breakpoint(min-width 375px);
 $bp-medium: new-breakpoint(min-width 700px);
 $bp-large: new-breakpoint(min-width 1024px);
 $breakpoint-font: $bp-large;
+
+$bp-mobile-only: new-breakpoint(max-width 701px);
 
 // Heights
 // =====================

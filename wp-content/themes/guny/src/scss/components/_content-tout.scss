@@ -27,10 +27,12 @@
 .c-content-tout__heading {
   @include font-size-x-large;
   @include text-uppercase;
+  margin-bottom: rem-calc(30);
 
   &--small {
     color: $very-dark-gray-transparent;
     @include font-size($font-size-x-small, $font-size-small);
+    margin: 0;
   }
 }
 

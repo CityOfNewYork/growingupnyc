@@ -3,6 +3,30 @@
     "title": "Homepage",
     "fields": [
         {
+            "key": "field_578d0a155865c",
+            "label": "Hero Mobile Image",
+            "name": "hero_mobile_image",
+            "type": "image",
+            "instructions": "Minimum image width should be 700px",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
             "key": "field_5787d9aace881",
             "label": "Hero Title Top",
             "name": "hero_title_top",
@@ -22,9 +46,9 @@
         },
         {
             "key": "field_5787da03ce882",
-            "label": "Hero Title Bottom",
-            "name": "hero_title_bottom",
-            "type": "text",
+            "label": "Hero Rotating Text",
+            "name": "hero_rotating_text_repeater",
+            "type": "repeater",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -33,13 +57,34 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": "",
-            "readonly": 0,
-            "disabled": 0
+            "collapsed": "",
+            "min": "",
+            "max": 4,
+            "layout": "table",
+            "button_label": "Add Text",
+            "sub_fields": [
+                {
+                    "key": "field_578cfd20e5069",
+                    "label": "Text",
+                    "name": "hero_rotating_text",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": "",
+                    "readonly": 0,
+                    "disabled": 0
+                }
+            ]
         },
         {
             "key": "field_5787da14ce883",
@@ -103,5 +148,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1468644776
+    "modified": 1468868314
 }

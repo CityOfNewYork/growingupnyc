@@ -24,9 +24,14 @@ $sticker-size: 100;
 .c-card {
   background: $color-background;
   margin-right: rem-calc($sticker-size / 2);
-  padding: rem-calc(30);
+  padding: rem-calc(25 15);
   padding-right: rem-calc(($sticker-size / 2) + 10);
   position: relative;
+
+  @include media($bp-medium) {
+    padding: rem-calc(30);
+    padding-right: rem-calc(($sticker-size / 2) + 10);
+  }
 }
 
 .c-card__sticker {
@@ -54,10 +59,14 @@ $sticker-size: 100;
 
 .c-card__title {
   font-family: $font-family-display;
-  @include font-size-large;
+  font-size: rem-calc(20);
   font-weight: $font-weight-extrablack;
   line-height: 1.2;
   margin: rem-calc(0 0 5);
+
+  @include media($bp-small) {
+    @include font-size(22, $font-size-x-large);
+  }
 }
 
 .c-card__tags {
@@ -68,28 +77,24 @@ $sticker-size: 100;
   color: $very-dark-gray-transparent;
   font-family: $font-family-display;
   font-weight: $font-weight-extrablack;
-  @include font-size($font-size-small-mobile, 15);
+  font-size: rem-calc(15);
   margin: rem-calc(0 0 10);
   text-transform: uppercase;
 
   .icon--xsmall {
     position: relative;
-    top: 2px;
+    top: rem-calc(3);
     vertical-align: top;
-
-    @include media($bp-small) {
-      top: 3px;
-    }
   }
 }
 
 .c-card__body {
-  @include font-size-small;
+  @include font-size(14, $font-size-small);
   margin: rem-calc(0 0 5);
 }
 
 .c-card__link {
-  @include font-size($font-size-x-small-mobile, 14);
+  font-size: rem-calc(14);
   text-decoration: underline;
   color: $very-dark-gray-transparent;
 

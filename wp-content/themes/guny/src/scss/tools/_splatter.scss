@@ -1,0 +1,35 @@
+// Paint Splatter
+//
+
+@mixin splatter($v-alignment, $h-alignment) {
+  position: relative;
+
+  @if $v-alignment == 'top' {
+    &:before {
+      content: '';
+      background: url(assets/img/splatter-#{$v-alignment}-#{$h-alignment}.png) $v-alignment $h-alignment no-repeat;
+      bottom: 0;
+      display: block;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+    }
+  }
+  @else {
+    &:after {
+      content: '';
+      background: url(assets/img/splatter-#{$v-alignment}-#{$h-alignment}.png) $v-alignment $h-alignment no-repeat;
+      bottom: 0;
+      display: block;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+    }
+  }
+}

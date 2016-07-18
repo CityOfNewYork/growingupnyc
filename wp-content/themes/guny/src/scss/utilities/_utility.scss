@@ -30,6 +30,24 @@
   margin: 0 auto;
 }
 
+/**
+* Text Alignment
+*/
 .text-center {
   text-align: center;
+}
+
+/**
+* Conditional Display
+*/
+.mobile-hide {
+  @include media($bp-mobile-only) {
+    display: none !important;
+  }
+}
+
+.desktop-hide {
+  @include media($bp-medium) {
+    display: none !important;
+  }
 }

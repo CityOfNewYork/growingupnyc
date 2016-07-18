@@ -2,7 +2,16 @@
 //
 
 .o-content-container {
-  padding: rem-calc(50);
+  padding: rem-calc(35 $outer-gutter-small 40);
+
+  @include media($bp-medium) {
+    padding-left: rem-calc(30);
+    padding-right: rem-calc(30);
+  }
+
+  @include media($bp-large) {
+    padding: rem-calc(50);
+  }
 }
 
 .o-content-container--shade {

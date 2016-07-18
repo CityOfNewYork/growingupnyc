@@ -5,13 +5,19 @@
 {# Side Hero #}
 <section class="o-static-column o-static-column--left c-side-hero js-sticky">
   <div class="c-side-hero__image c-side-hero__image--desktop" style="background-image:url({{post.thumbnail.src}})"></div>
-  <div class="c-side-hero__image c-side-hero__image--mobile" style="background-image:url({{post.thumbnail.src|resize(700, 0)}})"></div>
+  <div class="c-side-hero__image c-side-hero__image--mobile" style="background-image:url({{TimberImage(post.hero_mobile_image).src|resize(700, 0)}})"></div>
   <div class="c-side-hero__content">
     <h1 class="c-side-hero__title">
-      <span class="c-side-hero__title--small">{{post.get_field('hero_title_top')}}</span>
-      {{post.hero_title_bottom}}
+      {{post.get_field('hero_title_top')}}
+      <div class="c-side-hero__title__large rotating-text">
+        {% for text in post.get_field('hero_rotating_text_repeater') %}
+          <span class="rotating-text__entry">
+            {{text.hero_rotating_text}}
+          </span>
+        {% endfor %}
+      </div> <!-- /.c-side-hero__title__large -->
     </h1>
-    <a href="{{post.hero_button_url}}" class="button--outline button--outline--white">{{post.hero_button_text}}</a>
+    <a href="{{post.hero_button_url}}" class="button--outline button--outline--white mobile-hide">{{post.hero_button_text}}</a>
   </div> <!--/.c-side-hero__content -->
 </section> <!-- /.o-static-column.o-static-column--left -->
 

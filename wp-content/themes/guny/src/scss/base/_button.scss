@@ -85,10 +85,44 @@
     &:hover,
     &:focus {
       background: $white;
-      color: $color-text;
+      color: $color-primary;
     }
   }
 
+}
+
+// Pill button
+//
+// Pill button. Used primarily for tags
+//
+// markup:
+// <button class="button--pill">Button Text</button>
+//
+// Styleguide 1.3
+.button--pill {
+  @extend %button-base;
+  background: $color-primary;
+  border: 0;
+  border-radius: rem-calc(15);
+  color: $white;
+  font-size: rem-calc($font-size-x-small-mobile);
+  margin: rem-calc(0 2 4 0);
+  padding: rem-calc(10 17);
+  @include text-uppercase;
+
+  &:hover,
+  &:focus {
+    background: $color-secondary;
+  }
+}
+
+.button--pill--alt {
+  background: $color-secondary;
+
+  &:hover,
+  &:focus {
+    background: $very-dark-blue;
+  }
 }
 
 // Size Variations
@@ -106,7 +140,7 @@
 // markup:
 // <button class="button--text">Button Text</button>
 //
-// Styleguide 1.3
+// Styleguide 1.4
 .button--text {
   color: $color-primary;
   min-height: 0;

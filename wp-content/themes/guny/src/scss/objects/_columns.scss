@@ -37,7 +37,7 @@
 .o-col__row {
   margin: rem-calc(5 -20 35);
 
-  @include media($bp-small) {
+  @include media($bp-medium) {
     margin-bottom: rem-calc(45);
     margin-top: rem-calc(10);
   }

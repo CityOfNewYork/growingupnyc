@@ -68,9 +68,9 @@
 
 	var _overlay2 = _interopRequireDefault(_overlay);
 
-	var _staticColumn = __webpack_require__(412);
+	var _sticky = __webpack_require__(412);
 
-	var _staticColumn2 = _interopRequireDefault(_staticColumn);
+	var _sticky2 = _interopRequireDefault(_sticky);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -88,7 +88,7 @@
 	  (0, _offcanvas2.default)();
 	  (0, _accordion2.default)();
 	  (0, _overlay2.default)();
-	  (0, _staticColumn2.default)();
+	  (0, _sticky2.default)();
 	}
 
 	ready(init);
@@ -12091,29 +12091,29 @@
 	});
 
 	exports.default = function () {
-	  var staticColumn = document.querySelectorAll('.js-static-column');
+	  var stickyContent = document.querySelectorAll('.js-sticky');
 	  var notStickyClass = 'is-not-sticky';
 	  var bottomClass = 'is-bottom';
 
-	  if (staticColumn) {
-	    (0, _forEach2.default)(staticColumn, function (staticColumnElem) {
+	  if (stickyContent) {
+	    (0, _forEach2.default)(stickyContent, function (stickyContentElem) {
 
 	      function calcWindowPos() {
-	        var elemTop = staticColumnElem.parentElement.getBoundingClientRect().top;
-	        var isPastBottom = window.innerHeight - staticColumnElem.parentElement.clientHeight - staticColumnElem.parentElement.getBoundingClientRect().top > 0;
+	        var elemTop = stickyContentElem.parentElement.getBoundingClientRect().top;
+	        var isPastBottom = window.innerHeight - stickyContentElem.parentElement.clientHeight - stickyContentElem.parentElement.getBoundingClientRect().top > 0;
 
 	        // Sets element to position absolute if not scrolled to yet.
 	        // Absolutely positioning only when necessary and not by default prevents flickering
 	        // when removing the "is-bottom" class on Chrome
 	        if (elemTop > 0) {
-	          staticColumnElem.classList.add(notStickyClass);
+	          stickyContentElem.classList.add(notStickyClass);
 	        } else {
-	          staticColumnElem.classList.remove(notStickyClass);
+	          stickyContentElem.classList.remove(notStickyClass);
 	        }
 	        if (isPastBottom) {
-	          staticColumnElem.classList.add(bottomClass);
+	          stickyContentElem.classList.add(bottomClass);
 	        } else {
-	          staticColumnElem.classList.remove(bottomClass);
+	          stickyContentElem.classList.remove(bottomClass);
 	        }
 	      }
 

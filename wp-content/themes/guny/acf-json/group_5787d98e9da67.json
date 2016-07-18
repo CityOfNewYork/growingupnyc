@@ -15,7 +15,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": "The official [nyc_logo] resource for",
             "tabs": "all",
             "toolbar": "full",
             "media_upload": 0
@@ -103,5 +103,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1468522018
+    "modified": 1468644776
 }

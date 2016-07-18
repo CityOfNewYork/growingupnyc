@@ -1,38 +1,34 @@
 /**
  * Offcanvas module
- * @module modules/staticColumn
+ * @module modules/sticky
  */
 
 import forEach from 'lodash/forEach';
 
-/**
- * Shift keyboard focus when the search overlay is open.
- * The 'changeOpenState' event is fired by modules/toggleOpen
- */
 export default function() {
-  const staticColumn = document.querySelectorAll('.js-static-column');
+  const stickyContent = document.querySelectorAll('.js-sticky');
   const notStickyClass = 'is-not-sticky';
   const bottomClass = 'is-bottom';
 
-  if (staticColumn) {
-    forEach(staticColumn, function(staticColumnElem) {
+  if (stickyContent) {
+    forEach(stickyContent, function(stickyContentElem) {
 
       function calcWindowPos() {
-        let elemTop = staticColumnElem.parentElement.getBoundingClientRect().top;
-        let isPastBottom = window.innerHeight - staticColumnElem.parentElement.clientHeight - staticColumnElem.parentElement.getBoundingClientRect().top > 0;
+        let elemTop = stickyContentElem.parentElement.getBoundingClientRect().top;
+        let isPastBottom = window.innerHeight - stickyContentElem.parentElement.clientHeight - stickyContentElem.parentElement.getBoundingClientRect().top > 0;
         
         // Sets element to position absolute if not scrolled to yet.
         // Absolutely positioning only when necessary and not by default prevents flickering 
         // when removing the "is-bottom" class on Chrome
         if (elemTop > 0) {
-          staticColumnElem.classList.add(notStickyClass);
+          stickyContentElem.classList.add(notStickyClass);
         } else {
-          staticColumnElem.classList.remove(notStickyClass);
+          stickyContentElem.classList.remove(notStickyClass);
         }
         if (isPastBottom) {
-          staticColumnElem.classList.add(bottomClass);
+          stickyContentElem.classList.add(bottomClass);
         } else {
-          staticColumnElem.classList.remove(bottomClass);
+          stickyContentElem.classList.remove(bottomClass);
         }
       }
 

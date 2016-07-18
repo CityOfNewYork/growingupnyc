@@ -9,8 +9,9 @@
 // markup:
 // <header class="c-side-hero">
 //   <div class="o-layout">
-//     <sg-insert>2.1.1</sg-insert>
-//     <sg-insert>2.1.2</sg-insert>
+//     <div class="c-side-hero__content">
+//     <h1 class="c-side-hero__title">Hero Title</h1>
+//     </div>
 //   </div>
 // </header>
 //
@@ -24,4 +25,53 @@
 .c-side-hero {
   background: $color-primary center center no-repeat;
   background-size: cover;
+
+  @include media($bp-medium) {
+    background: none;
+  }
+}
+
+.c-side-hero__image {
+
+  @include media($bp-medium) {
+    display: none;
+  }
+}
+
+.c-side-hero__content {
+  color: $white;
+  padding: rem-calc(30);
+
+  @include media($bp-medium) {
+    bottom: 0;
+    left: 0;
+    padding: rem-calc(60);
+    position: absolute;
+    width: 60%;
+  }
+}
+
+@include media($bp-medium) {
+  .js {
+    .c-side-hero__content {
+      position: fixed;
+    }
+
+    .is-bottom .c-side-hero__content {
+      left: rem-calc(-4); // accounts for border on container
+      position: absolute;
+    }
+  }
+}
+
+.c-side-hero__title {
+  @include font-size(50, 66);
+  line-height: 1.2;
+  margin-bottom: rem-calc(20);
+  text-transform: uppercase;
+}
+
+.c-side-hero__title--small {
+  @include font-size(21, 24);
+  text-transform: none;
 }

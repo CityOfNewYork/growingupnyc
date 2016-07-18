@@ -4,7 +4,7 @@ import toggleOpen from './modules/toggleOpen.js';
 import accordion from './modules/accordion.js';
 import offcanvas from './modules/offcanvas.js';
 import overlay from './modules/overlay.js';
-import staticColumn from './modules/staticColumn.js';
+import sticky from './modules/sticky.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -20,7 +20,7 @@ function init() {
   offcanvas();
   accordion();
   overlay();
-  staticColumn();
+  sticky();
 }
 
 ready(init);

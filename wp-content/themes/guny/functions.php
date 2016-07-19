@@ -69,8 +69,7 @@ class GunySite extends TimberSite {
           array(
             'key'     => '_EventEndDate',
             'value'   => current_time('mysql'),
-            'compare' => '>=',
-            'type'    => 'DATE'
+            'compare' => '>='
           )
         ),
       ) );
@@ -91,12 +90,11 @@ class GunySite extends TimberSite {
             array(
               'key'     => '_EventEndDate',
               'value'   => current_time('mysql'),
-              'compare' => '>=',
-              'type'    => 'DATE'
+              'compare' => '>='
             )
           ),
         ));
-
+        
         // Combine arrays with Featured Events first
         foreach($top_events_remaining as $i => $top_event_remaining) {
           array_push($top_events,  $top_events_remaining[$i]);

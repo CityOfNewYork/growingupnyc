@@ -9,17 +9,6 @@ if ( ! class_exists( 'Timber' ) ) {
 $context = Timber::get_context();
 $context['post'] = Timber::get_post();
 
-if (function_exists('tribe_get_events')) {
-  $events = tribe_get_events( array(
-    'orderby' => 'menu_order',
-    'posts_per_page' => 4
-  ) );
-  foreach($events as $i => $event) {
-    $events[$i] = new GunyEvent($event);
-  }
-  $context['events'] = $events;
-}
-
 $templates = array( 'home.twig' );
 
 Timber::render( $templates, $context );

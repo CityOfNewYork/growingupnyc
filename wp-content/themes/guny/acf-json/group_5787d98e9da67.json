@@ -58,7 +58,7 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
+            "min": 4,
             "max": 4,
             "layout": "table",
             "button_label": "Add Text",
@@ -148,5 +148,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1468868314
+    "modified": 1468875922
 }

@@ -57,28 +57,43 @@ class GunySite extends TimberSite {
     // Get Featured Events in order of ascending date
     if (function_exists('tribe_get_events')) {
       $top_events = tribe_get_events( array(
-        'posts_per_page' => 3,
+        'posts_per_page' => 4,
         'orderby' => 'menu_order',
-          'meta_query' => array(
-            array(
-              'key'     => 'featured_event',
-              'value'   => 'Yes',
-              'compare' => 'LIKE'
-            ),
+        'meta_query' => array(
+          'relation' => 'AND',
+          array(
+            'key'     => 'featured_event',
+            'value'   => 'Yes',
+            'compare' => 'LIKE'
           ),
+          array(
+            'key'     => '_EventEndDate',
+            'value'   => current_time('mysql'),
+            'compare' => '>=',
+            'type'    => 'DATE'
+          )
+        ),
       ) );
+
       // Get remaining events if count of Featured Events is less than 3
-      $number_remaining = 3 - count($top_events);
+      $number_remaining = 4 - count($top_events);
       if( $number_remaining > 0 ) {
         $top_events_remaining = tribe_get_events( array(
           'posts_per_page' => $number_remaining,
           'orderby' => 'menu_order',
           'meta_query' => array(
+            'relation' => 'AND',
             array(
               'key'     => 'featured_event',
               'value'   => 'Yes',
               'compare' => 'NOT LIKE'
             ),
+            array(
+              'key'     => '_EventEndDate',
+              'value'   => current_time('mysql'),
+              'compare' => '>=',
+              'type'    => 'DATE'
+            )
           ),
         ));
 

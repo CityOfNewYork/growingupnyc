@@ -1,0 +1,40 @@
+{
+    "key": "group_578f7ff94d3c9",
+    "title": "Age Picker",
+    "fields": [
+        {
+            "key": "field_578f801489ac8",
+            "label": "Age\/Milestone Picker",
+            "name": "include_in_age_picker",
+            "type": "true_false",
+            "instructions": "If selected, the age group will be included in the age\/milestone picker on the home page and in the ages navigation. If unselected, the age group will only be included as a filter option for Programs.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Include in age\/milestone picker",
+            "default_value": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "age_group"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1469022695
+}

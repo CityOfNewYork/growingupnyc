@@ -316,3 +316,6 @@ require_once(get_template_directory() . '/includes/guny_meta_boxes.php');
 
 // Add Top Programs Widget
 require_once(get_template_directory() . '/includes/guny_top_programs.php');
+
+// Add custom meta fields to taxonomies
+require_once(get_template_directory() . '/includes/guny_term_meta.php');

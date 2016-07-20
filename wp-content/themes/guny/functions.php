@@ -50,7 +50,9 @@ class GunySite extends TimberSite {
     $context['age_menu'] = Timber::get_terms('age_group', array(
       'orderby' => 'term_order',
       'hide_empty' => false,
-      'parent' => 0
+      'parent' => 0,
+      'meta_key' => 'include_in_age_picker',
+      'meta_value' => 'yes'
     ) );
     $context['top_programs'] = Timber::get_widgets('top_programs_widgets');
 
@@ -94,7 +96,7 @@ class GunySite extends TimberSite {
             )
           ),
         ));
-        
+
         // Combine arrays with Featured Events first
         foreach($top_events_remaining as $i => $top_event_remaining) {
           array_push($top_events,  $top_events_remaining[$i]);

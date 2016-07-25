@@ -18,6 +18,7 @@ class GUPostTypes {
     $this->create_post_types();
     $this->create_taxonomies();
     $this->populate_taxonomies();
+    flush_rewrite_rules();
   }
 
   function create_post_types() {
@@ -67,7 +68,12 @@ class GUPostTypes {
         'public' => true,
         'menu_position' => 22,
         'menu_icon' => 'dashicons-groups',
-        'supports' => array( 'title' )
+        'supports' => array( 'title' ),
+        'has_archive' => false,
+        'rewrite' => array(
+          'slug' => 'age',
+          'with_front' => false
+        )
       )
     );
 

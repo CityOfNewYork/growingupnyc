@@ -1,7 +1,6 @@
 /**
- * Offcanvas module
+ * Overlay module
  * @module modules/overlay
- * @see modules/toggleOpen
  */
 
 import forEach from 'lodash/forEach';

@@ -1,5 +1,5 @@
 /**
- * Offcanvas module
+ * Sticky content module
  * @module modules/sticky
  */
 
@@ -10,6 +10,10 @@ export default function() {
   const notStickyClass = 'is-not-sticky';
   const bottomClass = 'is-bottom';
 
+  /**
+  * Calculates the window position and sets the appropriate class on the element
+  * @param {object} stickyContentElem - DOM node that should be stickied
+  */
   function calcWindowPos(stickyContentElem) {
     let elemTop = stickyContentElem.parentElement.getBoundingClientRect().top;
     let isPastBottom = window.innerHeight - stickyContentElem.parentElement.clientHeight - stickyContentElem.parentElement.getBoundingClientRect().top > 0;

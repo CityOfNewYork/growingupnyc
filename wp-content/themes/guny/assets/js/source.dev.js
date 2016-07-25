@@ -12342,6 +12342,10 @@ if (objCtr.defineProperty) {
 	  var notStickyClass = 'is-not-sticky';
 	  var bottomClass = 'is-bottom';
 
+	  /**
+	  * Calculates the window position and sets the appropriate class on the element
+	  * @param {object} stickyContentElem - DOM node that should be stickied
+	  */
 	  function calcWindowPos(stickyContentElem) {
 	    var elemTop = stickyContentElem.parentElement.getBoundingClientRect().top;
 	    var isPastBottom = window.innerHeight - stickyContentElem.parentElement.clientHeight - stickyContentElem.parentElement.getBoundingClientRect().top > 0;

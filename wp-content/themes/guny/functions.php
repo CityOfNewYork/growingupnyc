@@ -51,8 +51,8 @@ class GunySite extends TimberSite {
       'orderby' => 'term_order',
       'hide_empty' => false,
       'parent' => 0,
-      'meta_key' => 'include_in_age_picker',
-      'meta_value' => 'yes'
+      'meta_key' => 'include-in-age-picker',
+      'meta_value' => 1
     ) );
     $context['top_programs'] = Timber::get_widgets('top_programs_widgets');
 

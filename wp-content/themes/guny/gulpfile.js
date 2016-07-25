@@ -189,7 +189,7 @@ gulp.task('icons', function() {
 });
 
 // Generate Styleguide
-gulp.task('styleguide:generate', function() {
+gulp.task('styleguide:generate', ['styles'], function() {
   return gulp.src([source + 'scss/base/_*.scss', source + 'scss/components/_*.scss'])
     .pipe(styleguide.generate({
       title: 'Growing Up NYC',
@@ -203,7 +203,7 @@ gulp.task('styleguide:generate', function() {
 });
 
 // Apply styles to styleguide
-gulp.task('styleguide:applystyles', function() {
+gulp.task('styleguide:applystyles', ['styleguide:generate'], function() {
   return gulp.src(source + 'scss/style.scss')
     .pipe(cssGlobbing({
       extensions: ['.scss']
@@ -220,7 +220,7 @@ gulp.task('styleguide:applystyles', function() {
 // ------------
 
 // Build styleguide
-gulp.task('styleguide', ['styleguide:generate', 'styleguide:applystyles']);
+gulp.task('styleguide', ['styleguide:applystyles']);
 
 // Watch
 gulp.task('default', function() {
@@ -255,5 +255,5 @@ gulp.task('default', function() {
 
 // Build
 gulp.task('build', ['clean'], function() {
-    gulp.start('modernizr', 'styles', 'scripts', 'styleguide');
+    gulp.start('modernizr', 'scripts', 'styleguide');
 });

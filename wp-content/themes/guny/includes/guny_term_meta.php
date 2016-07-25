@@ -38,13 +38,25 @@ function guny_edit_age_picker_field( $term ) {
 add_action( 'age_group_edit_form_fields', 'guny_edit_age_picker_field' );
 
 /**
-* Save 'Include in Age/Milestone Picker' field when term saved
+* Save 'Include in Age/Milestone Picker' field when term created
 */
 function guny_save_age_picker_field( $term_id ) {
   $include = false;
   if ( isset( $_POST['include_in_age_picker'] ) ) {
     $include = boolval($_POST['include_in_age_picker']);
   }
-  add_term_meta( $term_id, 'include-in-age-picker', $group, true );
+  add_term_meta( $term_id, 'include-in-age-picker', $include, true );
 }
 add_action( 'created_age_group', 'guny_save_age_picker_field' );
+
+/**
+* Update 'Include in Age/Milestone Picker' when existing term saved
+*/
+function guny_update_age_picker_field( $term_id ) {
+  $include = false;
+  if ( isset( $_POST['include_in_age_picker'] ) ) {
+    $include = boolval($_POST['include_in_age_picker']);
+  }
+  update_term_meta( $term_id, 'include-in-age-picker', $include, true );
+}
+add_action( 'edited_age_group', 'guny_update_age_picker_field' );

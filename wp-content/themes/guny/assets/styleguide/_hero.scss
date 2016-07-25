@@ -7,12 +7,14 @@
 // Traditional, top-of-the-page hero
 //
 // markup:
-// <header class="c-hero">
+// <header class="c-hero" style="background:#333">
 //   <div class="o-layout">
 //     <h1 class="c-hero__title">Title</h1>
 //     <p class="c-hero__tagline">Tagline text</p>
 //   </div>
 // </header>
+//
+// Styleguide 6.1
 .c-hero {
   background-position: top center;
   background-repeat: no-repeat;

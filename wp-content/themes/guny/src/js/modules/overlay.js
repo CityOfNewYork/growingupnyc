@@ -14,7 +14,6 @@ export default function() {
   const overlay = document.querySelectorAll('.js-overlay');
   if (overlay) {
     forEach(overlay, function(overlayElem) {
-
       /**
       * Add event listener for 'changeOpenState'.
       * The value of event.detail indicates whether the open state is true

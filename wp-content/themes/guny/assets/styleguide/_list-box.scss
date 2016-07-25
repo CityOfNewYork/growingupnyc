@@ -32,6 +32,7 @@
 // Styleguide 3.1
 .c-list-box {
   display: block;
+  padding: rem-calc(6 4 2);
 }
 
 // List Box Item
@@ -40,11 +41,11 @@
 .c-list-box__item {
   display: block;
   list-style: none;
-  margin-bottom: 4px;
+  margin-bottom: rem-calc(4);
 }
 
 .c-list-box--secondary .c-list-box__item {
-  margin-bottom: 2px;
+  margin-bottom: rem-calc(2);
 }
 
 // List Box Heading
@@ -54,6 +55,7 @@
 // heading is.
 //
 .c-list-box__heading {
+  border-radius: rem-calc(3);
   display: block;
   font-family: $font-family-display;
   @include font-size(21, 24);
@@ -75,6 +77,7 @@
 
 .c-list-box--secondary .c-list-box__heading {
   background: $color-background-shade;
+  border-radius: rem-calc(3);
   color: $color-primary;
   padding: rem-calc(13 28);
 

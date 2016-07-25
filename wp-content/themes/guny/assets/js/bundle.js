@@ -8021,31 +8021,6 @@
 	// shim for using process in browser
 
 	var process = module.exports = {};
-
-	// cached from whatever global is present so that test runners that stub it
-	// don't break things.  But we need to wrap it in a try catch in case it is
-	// wrapped in strict mode code which doesn't define any globals.  It's inside a
-	// function because try/catches deoptimize in certain engines.
-
-	var cachedSetTimeout;
-	var cachedClearTimeout;
-
-	(function () {
-	  try {
-	    cachedSetTimeout = setTimeout;
-	  } catch (e) {
-	    cachedSetTimeout = function () {
-	      throw new Error('setTimeout is not defined');
-	    }
-	  }
-	  try {
-	    cachedClearTimeout = clearTimeout;
-	  } catch (e) {
-	    cachedClearTimeout = function () {
-	      throw new Error('clearTimeout is not defined');
-	    }
-	  }
-	} ())
 	var queue = [];
 	var draining = false;
 	var currentQueue;
@@ -8070,7 +8045,7 @@
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = cachedSetTimeout(cleanUpNextTick);
+	    var timeout = setTimeout(cleanUpNextTick);
 	    draining = true;
 
 	    var len = queue.length;
@@ -8087,7 +8062,7 @@
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    cachedClearTimeout(timeout);
+	    clearTimeout(timeout);
 	}
 
 	process.nextTick = function (fun) {
@@ -8099,7 +8074,7 @@
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        cachedSetTimeout(drainQueue, 0);
+	        setTimeout(drainQueue, 0);
 	    }
 	};
 
@@ -8233,9 +8208,7 @@
 	  if (!openClass) {
 	    openClass = 'is-open';
 	  }
-
 	  var linkActiveClass = 'is-active';
-
 	  var toggleElems = document.querySelectorAll('[data-toggle]');
 
 	  /**
@@ -12049,7 +12022,6 @@
 	  var overlay = document.querySelectorAll('.js-overlay');
 	  if (overlay) {
 	    (0, _forEach2.default)(overlay, function (overlayElem) {
-
 	      /**
 	      * Add event listener for 'changeOpenState'.
 	      * The value of event.detail indicates whether the open state is true
@@ -12095,37 +12067,36 @@
 	  var notStickyClass = 'is-not-sticky';
 	  var bottomClass = 'is-bottom';
 
+	  function calcWindowPos(stickyContentElem) {
+	    var elemTop = stickyContentElem.parentElement.getBoundingClientRect().top;
+	    var isPastBottom = window.innerHeight - stickyContentElem.parentElement.clientHeight - stickyContentElem.parentElement.getBoundingClientRect().top > 0;
+
+	    // Sets element to position absolute if not scrolled to yet.
+	    // Absolutely positioning only when necessary and not by default prevents flickering
+	    // when removing the "is-bottom" class on Chrome
+	    if (elemTop > 0) {
+	      stickyContentElem.classList.add(notStickyClass);
+	    } else {
+	      stickyContentElem.classList.remove(notStickyClass);
+	    }
+	    if (isPastBottom) {
+	      stickyContentElem.classList.add(bottomClass);
+	    } else {
+	      stickyContentElem.classList.remove(bottomClass);
+	    }
+	  }
+
 	  if (stickyContent) {
 	    (0, _forEach2.default)(stickyContent, function (stickyContentElem) {
-
-	      function calcWindowPos() {
-	        var elemTop = stickyContentElem.parentElement.getBoundingClientRect().top;
-	        var isPastBottom = window.innerHeight - stickyContentElem.parentElement.clientHeight - stickyContentElem.parentElement.getBoundingClientRect().top > 0;
-
-	        // Sets element to position absolute if not scrolled to yet.
-	        // Absolutely positioning only when necessary and not by default prevents flickering
-	        // when removing the "is-bottom" class on Chrome
-	        if (elemTop > 0) {
-	          stickyContentElem.classList.add(notStickyClass);
-	        } else {
-	          stickyContentElem.classList.remove(notStickyClass);
-	        }
-	        if (isPastBottom) {
-	          stickyContentElem.classList.add(bottomClass);
-	        } else {
-	          stickyContentElem.classList.remove(bottomClass);
-	        }
-	      }
-
-	      calcWindowPos();
+	      calcWindowPos(stickyContentElem);
 
 	      /**
 	      * Add event listener for 'scroll'.
 	      * @function
 	      * @param {object} event - The event object
 	      */
-	      window.addEventListener('scroll', function (event) {
-	        calcWindowPos();
+	      window.addEventListener('scroll', function () {
+	        calcWindowPos(stickyContentElem);
 	      }, false);
 
 	      /**
@@ -12133,8 +12104,8 @@
 	      * @function
 	      * @param {object} event - The event object
 	      */
-	      window.addEventListener('resize', function (event) {
-	        calcWindowPos();
+	      window.addEventListener('resize', function () {
+	        calcWindowPos(stickyContentElem);
 	      }, false);
 	    });
 	  }

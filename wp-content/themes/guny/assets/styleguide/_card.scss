@@ -1,0 +1,109 @@
+// Content Cards
+//
+// Content cards used across site
+//
+// markup:
+// <div class="c-card">
+//   <a class="c-card__sticker">TODAY</a>
+//   <p class="c-card__subtitle">Subtitle</p>
+//   <a class="c-card__title">Post Title</a>
+//   <p class="c-card__body">Body</p>
+//   <p class="c-card__link">Link</p>
+// </div>
+//
+// sg-wrapper:
+// <div style="min-height:152px">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 5.2
+
+// Local Variables
+$sticker-size: 100;
+
+.c-card {
+  background: $color-background;
+  margin-right: rem-calc($sticker-size / 2);
+  padding: rem-calc(25 15);
+  padding-right: rem-calc(($sticker-size / 2) + 10);
+  position: relative;
+
+  @include media($bp-medium) {
+    padding: rem-calc(30);
+    padding-right: rem-calc(($sticker-size / 2) + 10);
+  }
+}
+
+.c-card__sticker {
+  background: $color-primary;
+  border-radius: rem-calc($sticker-size);
+  color: $white;
+  display: block;
+  font-family: $font-family-display;
+  @include font-size-x-small;
+  height: rem-calc($sticker-size);
+  position: absolute;
+  right: rem-calc(-$sticker-size / 2);
+  text-align: center;
+  top: rem-calc(10);
+  @include text-uppercase;
+  white-space: nowrap;
+  width: rem-calc($sticker-size);
+  //override text-uppercase
+  line-height: rem-calc($sticker-size);
+
+  .event-day {
+    display: none;
+  }
+}
+
+.c-card__title {
+  font-family: $font-family-display;
+  font-size: rem-calc(20);
+  font-weight: $font-weight-extrablack;
+  line-height: 1.2;
+  margin: rem-calc(0 0 5);
+
+  @include media($bp-small) {
+    @include font-size(22, $font-size-x-large);
+  }
+}
+
+.c-card__tags {
+  margin: rem-calc(0 0 10);
+}
+
+.c-card__subtitle {
+  color: $very-dark-gray-transparent;
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
+  font-size: rem-calc(15);
+  margin: rem-calc(0 0 10);
+  text-transform: uppercase;
+
+  .icon--xsmall {
+    position: relative;
+    top: rem-calc(3);
+    vertical-align: top;
+  }
+}
+
+.c-card__body {
+  @include font-size(14, $font-size-small);
+  margin: rem-calc(0 0 5);
+}
+
+.c-card__link {
+  font-size: rem-calc(14);
+  text-decoration: underline;
+  color: $very-dark-gray-transparent;
+
+  a {
+    text-decoration: underline;
+
+    &:hover,
+    &:focus {
+      color: $color-text;
+    }
+  }
+}

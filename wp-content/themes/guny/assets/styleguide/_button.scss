@@ -13,6 +13,7 @@
   line-height: 1;
   padding: rem-calc(14 30);
   text-align: center;
+  transition: $button-transition;
 }
 
 // Primary button
@@ -45,6 +46,85 @@
   }
 }
 
+// Outlined Button
+//
+// Primary button. Solid color initially and turns ghosty on hover
+//
+// .button--full-width - Button spans width of parent
+//
+// markup:
+// <a class="button--outline button--outline--gray {$modifiers}">Button</a>
+// <button class="button--outline button--outline--white {$modifiers}">Button</button>
+//
+// sg-wrapper:
+// <div style="background:#333; padding:20px">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 1.2
+.button--outline {
+  @extend %button-base;
+  background: transparent;
+  letter-spacing: 1px;
+
+  &--gray {
+    border-color: $color-text;
+    color: $color-text;
+    opacity: .7;
+
+    &:hover,
+    &:focus {
+      opacity: 1;
+    }
+  }
+
+  &--white {
+    border-color: $white;
+    color: $white;
+
+    &:hover,
+    &:focus {
+      background: $white;
+      color: $color-primary;
+    }
+  }
+
+}
+
+// Pill button
+//
+// Pill button. Used primarily for tags
+//
+// markup:
+// <button class="button--pill">Button Text</button>
+//
+// Styleguide 1.3
+.button--pill {
+  @extend %button-base;
+  background: $color-primary;
+  border: 0;
+  border-radius: rem-calc(15);
+  color: $white;
+  font-size: rem-calc($font-size-x-small-mobile);
+  margin: rem-calc(0 2 4 0);
+  padding: rem-calc(10 17);
+  @include text-uppercase;
+
+  &:hover,
+  &:focus {
+    background: $color-secondary;
+  }
+}
+
+.button--pill--alt {
+  background: $color-secondary;
+
+  &:hover,
+  &:focus {
+    background: $very-dark-blue;
+  }
+}
+
 // Size Variations
 
 // Full-width
@@ -60,7 +140,7 @@
 // markup:
 // <button class="button--text">Button Text</button>
 //
-// Styleguide 1.2
+// Styleguide 1.4
 .button--text {
   color: $color-primary;
   min-height: 0;

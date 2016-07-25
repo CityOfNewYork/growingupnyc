@@ -13,9 +13,7 @@ export default function(openClass) {
   if (!openClass) {
     openClass = 'is-open';
   }
-  
   const linkActiveClass = 'is-active';
-
   const toggleElems = document.querySelectorAll('[data-toggle]');
 
   /**

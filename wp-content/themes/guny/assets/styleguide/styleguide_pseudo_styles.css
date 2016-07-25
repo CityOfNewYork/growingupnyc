@@ -8,10 +8,36 @@
   color: #fff;
 }
 
+.button--outline--gray.pseudo-class-hover,
+.button--outline--gray.pseudo-class-focus {
+  opacity: 1;
+}
+
+.button--outline--white.pseudo-class-hover,
+.button--outline--white.pseudo-class-focus {
+  background: #fff;
+  color: #2793e0;
+}
+
+.button--pill.pseudo-class-hover,
+.button--pill.pseudo-class-focus {
+  background: #0055b8;
+}
+
+.button--pill--alt.pseudo-class-hover,
+.button--pill--alt.pseudo-class-focus {
+  background: #0051a9;
+}
+
 .button--text.pseudo-class-hover,
 .button--text.pseudo-class-focus {
   color: #0055b8;
   outline: none;
+}
+
+.form-field__icon.pseudo-class-hover,
+.form-field__icon.pseudo-class-focus {
+  color: #0055b8;
 }
 
 .o-inline__item.pseudo-class-first-child {
@@ -21,6 +47,26 @@
 .c-banner__link.pseudo-class-hover,
 .c-banner__link.pseudo-class-focus {
   color: #0055b8;
+}
+
+.c-card__link a.pseudo-class-hover,
+.c-card__link a.pseudo-class-focus {
+  color: #333;
+}
+
+.c-content-tout__heading__link.pseudo-class-hover,
+.c-content-tout__heading__link.pseudo-class-focus {
+  color: #333;
+}
+
+.c-content-tout__title a.pseudo-class-hover,
+.c-content-tout__title a.pseudo-class-focus {
+  color: #2793e0;
+}
+
+.c-content-tout__link.pseudo-class-hover,
+.c-content-tout__link.pseudo-class-focus {
+  color: #333;
 }
 
 .c-footer__logo.pseudo-class-last-child {

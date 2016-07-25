@@ -12,3 +12,21 @@
   height: rem-calc(22);
   width: rem-calc(22);
 }
+
+.icon--xsmall {
+  height: rem-calc(13);
+  width: rem-calc(13);
+
+  @include media($bp-small) {
+    height: rem-calc(15);
+    width: rem-calc(15);
+  }
+}
+
+.icon--nyc {
+  height: rem-calc(15);
+  margin: rem-calc(0 3);
+  position: relative;
+  top: rem-calc(-3);
+  width: rem-calc(45);
+}

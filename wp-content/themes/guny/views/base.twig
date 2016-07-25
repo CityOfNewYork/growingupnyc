@@ -26,6 +26,7 @@
     })(document);
   </script>
   {{function('wp_head')}}
+  {% block head_extras %}{% endblock %}
 </head>
 
 <body class="{{body_class}}" data-template="base.twig">

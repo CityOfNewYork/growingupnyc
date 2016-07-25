@@ -1,0 +1,98 @@
+// Side Hero
+//
+// Full height left aligned hero
+//
+// markup:
+// <header class="c-side-hero">
+//   <div class="c-side-hero__image--desktop"></div>
+//   <div class="c-side-hero__image--mobile"></div>
+//   <div class="c-side-hero__content">
+//     <h1 class="c-side-hero__title">Hero Title</h1>
+//   </div>
+// </header>
+//
+// sg-wrapper:
+// <div style="min-height:152px">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 6.2
+
+.c-side-hero__image {
+  background: $color-primary center center no-repeat;
+  background-size: cover;
+}
+
+.c-side-hero__image--desktop {
+  display: none;
+
+  @include media($bp-medium) {
+    display: block;
+    height: 100%;
+  }
+}
+
+.c-side-hero__image--mobile {
+  height: rem-calc(200);
+
+  @include media($bp-medium) {
+    display: none;
+  }
+}
+
+.c-side-hero__content {
+  color: $white;
+  padding: rem-calc(40 15);
+
+  @include media($bp-mobile-only) {
+    background: $color-primary;
+    @include splatter(top, left);
+    @include splatter(bottom, right);
+  }
+
+  @include media($bp-medium) {
+    bottom: 0;
+    left: 0;
+    padding: rem-calc(60);
+    position: absolute;
+    width: 60%;
+  }
+}
+
+@include media($bp-medium) {
+  .js {
+    .c-side-hero__content {
+      position: fixed;
+    }
+
+    .is-bottom .c-side-hero__content {
+      left: rem-calc(-4); // accounts for border on container
+      position: absolute;
+      width: 100%;
+    }
+  }
+}
+
+.c-side-hero__title {
+  @include font-size(18, 24);
+  line-height: 1.2;
+  position: relative;
+  text-align: center;
+  z-index: $z-index-hero-title;
+
+  @include media($bp-medium) {
+    margin-bottom: rem-calc(20);
+    text-align: left;
+  }
+}
+
+.c-side-hero__title__large {
+  @include font-size(40, 66);
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  .rotating-text__entry {
+    display: block;
+    width: 100%;
+  }
+}

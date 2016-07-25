@@ -82,6 +82,10 @@
   color: #0055b8;
 }
 
+.c-hero__tagline.pseudo-class-last-child {
+  margin-right: 0;
+}
+
 .c-list-box--secondary .c-list-box__heading.pseudo-class-hover,
 .c-list-box--secondary .c-list-box__heading.pseudo-class-focus {
   color: #0055b8;

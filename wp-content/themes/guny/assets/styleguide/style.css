@@ -467,6 +467,9 @@ a {
   a:hover, a:focus {
     color: #2793e0; }
 
+strong {
+  font-weight: 700; }
+
 .o-accordion__header {
   position: relative; }
 

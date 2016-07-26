@@ -95,7 +95,7 @@
                 <a class="c-content-tout__heading__link" href="{{site.url}}/events">See all events<svg role="img" class="icon--xsmall"><use xlink:href="#caret-right"></use></svg></a>
               </h2> <!-- /.c-content-tout__heading--small -->
               <div class="o-col__row">
-              {% for post in top_events|slice(0, 3) %}
+              {% for post in top_events %}
                 <div class="o-col-3 c-content-tout">
                   <h3 class="c-content-tout__title">
                     <a href="{{post.path}}" title="{{post.post_title}}" rel="bookmark">{{post.post_title}}</a>

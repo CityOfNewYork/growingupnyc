@@ -59,7 +59,7 @@ class GunySite extends TimberSite {
     // Get Featured Events in order of ascending date
     if (function_exists('tribe_get_events')) {
       $top_events = tribe_get_events( array(
-        'posts_per_page' => 4,
+        'posts_per_page' => 3,
         'orderby' => 'menu_order',
         'meta_query' => array(
           'relation' => 'AND',
@@ -77,7 +77,7 @@ class GunySite extends TimberSite {
       ) );
 
       // Get remaining events if count of Featured Events is less than 3
-      $number_remaining = 4 - count($top_events);
+      $number_remaining = 3 - count($top_events);
       if( $number_remaining > 0 ) {
         $top_events_remaining = tribe_get_events( array(
           'posts_per_page' => $number_remaining,

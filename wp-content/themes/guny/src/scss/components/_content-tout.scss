@@ -25,15 +25,10 @@
 // Styleguide 5.1
 
 .c-content-tout__heading {
-  @include font-size-x-large;
+  color: $very-dark-gray-transparent;
+  @include font-size($font-size-x-small, $font-size-small);
+  margin: 0;
   @include text-uppercase;
-  margin-bottom: rem-calc(30);
-
-  &--small {
-    color: $very-dark-gray-transparent;
-    @include font-size($font-size-x-small, $font-size-small);
-    margin: 0;
-  }
 }
 
 .c-content-tout__heading__link {

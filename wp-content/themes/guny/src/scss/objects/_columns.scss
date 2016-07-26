@@ -1,5 +1,8 @@
-// Columns
+// Rows and Columns
 //
+// Not to be confused with the general grid layout patterns, which use Neat
+// and can be placed in _layout.scss. This covers layout objects where items are
+// top-aligned in a block grid, i.e. on the search overlay
 
 // Common column layout
 %column-base {
@@ -27,20 +30,16 @@
   }
 }
 
-// Divider 
+// Divider
 .o-col__divider + .o-col__divider {
   border-top: 2px solid $white;
   padding-top: rem-calc(30);
 }
 
 // Column Row
-.o-col__row {
-  margin: rem-calc(5 -20 35);
-
-  @include media($bp-medium) {
-    margin-bottom: rem-calc(45);
-    margin-top: rem-calc(10);
-  }
+.o-row {
+  margin-left: rem-calc(-20);
+  margin-right: rem-calc(-20);
 }
 
 // 1 Column

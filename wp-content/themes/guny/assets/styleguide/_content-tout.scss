@@ -7,19 +7,11 @@
 // Displays post previews
 //
 // markup:
-// <h2 class="c-content-tout__heading--small">
-//   Heading
-//   <a href="#" class="c-content-tout__heading__link">link</a>
-// </h2>
-// <div class="o-col__row">
-//   <div class="o-col-1">
-//     <div class="c-content-tout">
-//       <a class="c-content-tout__title">Post Title</a>
-//       <p class="c-content-tout__subtitle">Subtitle</p>
-//       <a class="c-content-tout__link">Link</a>
-//      </div>
-//    </div>
-//  </div>
+// <div class="c-content-tout">
+//   <a class="c-content-tout__title">Post Title</a>
+//   <p class="c-content-tout__subtitle">Subtitle</p>
+//   <a class="c-content-tout__link">Link</a>
+// </div>
 //
 // sg-wrapper:
 // <div style="min-height:152px">
@@ -27,31 +19,8 @@
 // </div>
 //
 // Styleguide 5.1
-
-.c-content-tout__heading {
-  @include font-size-x-large;
-  @include text-uppercase;
-  margin-bottom: rem-calc(30);
-
-  &--small {
-    color: $very-dark-gray-transparent;
-    @include font-size($font-size-x-small, $font-size-small);
-    margin: 0;
-  }
-}
-
-.c-content-tout__heading__link {
-  float: right;
-  text-transform: none;
-
-  &:hover,
-  &:focus {
-    color: $color-text;
-  }
-}
-
 .c-content-tout {
-  color: $very-dark-gray-semitransparent;
+  color: $dark-gray;
   @include font-size-small;
 }
 

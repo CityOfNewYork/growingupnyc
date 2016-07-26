@@ -1,0 +1,70 @@
+// Block List
+//
+// A list of block items, such as content touts
+//
+// markup:
+// <div class="c-block-list o-content-container o-content-container--shade">
+//   <sg-insert>3.2.1</sg-insert>
+//   <div class="c-block-list__inner">
+//     <div class="c-block-list__item"><div style="background:white;height:100px"></div></div>
+//     <div class="c-block-list__item"><div style="background:white;height:100px"></div></div>
+//     <div class="c-block-list__item"><div style="background:white;height:100px"></div></div>
+//   </div>
+// </div>
+//
+// Styleguide 3.2
+
+// Block List Heading
+//
+// .c-block-list__heading - Standard block list heading
+// .c-block-list__heading--small - Smaller version of the heading
+//
+// markup:
+// <h2 class="c-block-list__heading {$modifiers}">
+//   Heading
+//   <a href="#" class="c-block-list__link">link</a>
+// </h2>
+//
+// Styleguide 3.2.1
+.c-block-list__heading {
+  @include font-size-x-large;
+  @include text-uppercase;
+  margin-bottom: rem-calc(30);
+
+  &--small {
+    color: $very-dark-gray-transparent;
+    @include font-size($font-size-x-small, $font-size-small);
+    margin: 0;
+  }
+}
+
+// Block List Link
+.c-block-list__link {
+  float: right;
+  text-transform: none;
+
+  &:hover,
+  &:focus {
+    color: $color-text;
+  }
+}
+
+// Block List Inner
+//
+// Inner container within a block list
+.c-block-list__inner {
+  margin-bottom: rem-calc(35);
+  margin-top: rem-calc(5);
+
+  @include media($bp-medium) {
+    margin-bottom: rem-calc(45);
+    margin-top: rem-calc(10);
+  }
+}
+
+// Block List Item
+//
+// Individual item within the list
+.c-block-list__item {
+  padding: rem-calc(8 0);
+}

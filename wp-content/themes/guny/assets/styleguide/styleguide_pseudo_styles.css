@@ -49,13 +49,13 @@
   color: #0055b8;
 }
 
-.c-card__link a.pseudo-class-hover,
-.c-card__link a.pseudo-class-focus {
+.c-block-list__link.pseudo-class-hover,
+.c-block-list__link.pseudo-class-focus {
   color: #333;
 }
 
-.c-content-tout__heading__link.pseudo-class-hover,
-.c-content-tout__heading__link.pseudo-class-focus {
+.c-card__link a.pseudo-class-hover,
+.c-card__link a.pseudo-class-focus {
   color: #333;
 }
 

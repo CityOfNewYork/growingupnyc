@@ -41,14 +41,16 @@
     </header>
     {{post.content}}
     {% if upcoming_events %}
-    <section>
-      <h2>Events</h2>
+    <section class="c-block-list o-content-container o-content-container--shade">
+      <h2 class="c-block-list__heading">Events</h2>
       {% if post.events_text %}
         <p>{{post.events_text}}</p>
       {% endif %}
-      {% for post in upcoming_events %}
-        {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
-      {% endfor %}
+      <div class="c-block-list__inner">
+        {% for post in upcoming_events %}
+          {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
+        {% endfor %}
+      </div>
     </section>
     {% endif %}
   </article>

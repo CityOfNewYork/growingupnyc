@@ -20,7 +20,6 @@ h3,
 h4,
 h5,
 h6 {
-  color: $color-heading;
   font-family: $font-family-display;
   font-weight: $font-weight-extrablack;
   line-height: 1.3;
@@ -28,7 +27,6 @@ h6 {
 
 h1 {
   @include font-size-xx-large;
-  text-transform: uppercase;
 }
 
 h2 {
@@ -44,4 +42,10 @@ h3 {
 
 a {
   color: inherit;
+  text-decoration: underline;
+
+  &:hover,
+  &:focus {
+    color: $color-text-link;
+  }
 }

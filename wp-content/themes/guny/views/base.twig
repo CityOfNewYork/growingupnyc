@@ -80,22 +80,22 @@
             </form>
 
             <section class="o-col__divider">
-              <h2 class="c-content-tout__heading--small">
+              <h2 class="c-content-tout__heading">
                 Programs
                 <a class="c-content-tout__heading__link" href="{{site.url}}/programs">See all programs<svg role="img" class="icon--xsmall"><use xlink:href="#caret-right"></use></svg></a>
-              </h2> <!-- /.c-content-tout__heading--small -->
+              </h2> <!-- /.c-content-tout__heading -->
               <div class="o-col__row">
                 {{top_programs}}
               </div> <!-- /.o-col__divider -->
             </section> <!-- /.c-content-tout -->
 
             <section class="o-col__divider">
-              <h2 class="c-content-tout__heading--small">
+              <h2 class="c-content-tout__heading">
                 Events
                 <a class="c-content-tout__heading__link" href="{{site.url}}/events">See all events<svg role="img" class="icon--xsmall"><use xlink:href="#caret-right"></use></svg></a>
-              </h2> <!-- /.c-content-tout__heading--small -->
+              </h2> <!-- /.c-content-tout__heading -->
               <div class="o-col__row">
-              {% for post in top_events|slice(0, 3) %}
+              {% for post in top_events %}
                 <div class="o-col-3 c-content-tout">
                   <h3 class="c-content-tout__title">
                     <a href="{{post.path}}" title="{{post.post_title}}" rel="bookmark">{{post.post_title}}</a>

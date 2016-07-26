@@ -45,6 +45,7 @@ $sticker-size: 100;
   position: absolute;
   right: rem-calc(-$sticker-size / 2);
   text-align: center;
+  text-decoration: none;
   top: rem-calc(10);
   @include text-uppercase;
   white-space: nowrap;
@@ -57,15 +58,28 @@ $sticker-size: 100;
   }
 }
 
+a.c-card__sticker {
+  &:hover,
+  &:focus {
+    background: $color-secondary;
+    color: $white;
+  }
+}
+
 .c-card__title {
   font-family: $font-family-display;
   font-size: rem-calc(20);
   font-weight: $font-weight-extrablack;
   line-height: 1.2;
   margin: rem-calc(0 0 5);
+  text-decoration: none;
 
   @include media($bp-small) {
     @include font-size(22, $font-size-x-large);
+  }
+
+  a {
+    text-decoration: inherit;
   }
 }
 

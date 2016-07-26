@@ -10,6 +10,7 @@
 
 .button--outline--gray.pseudo-class-hover,
 .button--outline--gray.pseudo-class-focus {
+  color: #333;
   opacity: 1;
 }
 
@@ -22,6 +23,7 @@
 .button--pill.pseudo-class-hover,
 .button--pill.pseudo-class-focus {
   background: #0055b8;
+  color: #fff;
 }
 
 .button--pill--alt.pseudo-class-hover,
@@ -40,6 +42,11 @@
   color: #0055b8;
 }
 
+a.pseudo-class-hover,
+a.pseudo-class-focus {
+  color: #2793e0;
+}
+
 .o-inline__item.pseudo-class-first-child {
   margin-left: 0;
 }
@@ -47,6 +54,12 @@
 .c-banner__link.pseudo-class-hover,
 .c-banner__link.pseudo-class-focus {
   color: #0055b8;
+}
+
+a.c-card__sticker.pseudo-class-hover,
+a.c-card__sticker.pseudo-class-focus {
+  background: #0055b8;
+  color: #fff;
 }
 
 .c-card__link a.pseudo-class-hover,
@@ -57,11 +70,6 @@
 .c-content-tout__heading__link.pseudo-class-hover,
 .c-content-tout__heading__link.pseudo-class-focus {
   color: #333;
-}
-
-.c-content-tout__title a.pseudo-class-hover,
-.c-content-tout__title a.pseudo-class-focus {
-  color: #2793e0;
 }
 
 .c-content-tout__link.pseudo-class-hover,

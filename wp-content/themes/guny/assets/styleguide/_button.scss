@@ -13,6 +13,7 @@
   line-height: 1;
   padding: rem-calc(14 30);
   text-align: center;
+  text-decoration: none;
   transition: $button-transition;
 }
 
@@ -75,6 +76,7 @@
 
     &:hover,
     &:focus {
+      color: $color-text;
       opacity: 1;
     }
   }
@@ -114,6 +116,7 @@
   &:hover,
   &:focus {
     background: $color-secondary;
+    color: $color-text-invert;
   }
 }
 

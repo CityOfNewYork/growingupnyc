@@ -42,6 +42,7 @@
   clear: left;
   line-height: 1.2;
   padding-top: 28px;
+
   @include media($bp-large) {
     @include span-columns(6);
   }
@@ -63,6 +64,7 @@
   color: $color-text-invert;
   font-family: $font-family-display;
   font-weight: $font-weight-extrablack;
+  text-decoration: none;
 
   &:hover,
   &:focus {

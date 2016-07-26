@@ -8,19 +8,21 @@
       {% endblock %}
     {% endembed %}
   </div>
-  <h2 class="c-card__title">
+  <h3 class="c-card__title">
   	<a href="{{post.link}}" title="{{post.title}}" rel="bookmark">
   		{{post.title}}
   	</a>
-  </h2>
-  <div class="c-card__tags">
-    {% for term in post.terms('tribe_events_cat') %}
-      <a href="{{term.link}}" class="button--pill">{{term.name}}</a>
-    {% endfor %}
-    {% for term in post.terms('age_group') %}
-      <a href="{{term.link}}" class="button--pill button--pill--alt">{{term.name}}</a>
-    {% endfor %}
-  </div>
+  </h3>
+  {% if post.terms %}
+    <div class="c-card__tags">
+      {% for term in post.terms('tribe_events_cat') %}
+        <a href="{{term.link}}" class="button--pill">{{term.name}}</a>
+      {% endfor %}
+      {% for term in post.terms('age_group') %}
+        <a href="{{term.link}}" class="button--pill button--pill--alt">{{term.name}}</a>
+      {% endfor %}
+    </div>
+  {% endif %}
   <div class="c-card__body">
     {{post.post_content|excerpt(15)}}
   </div>

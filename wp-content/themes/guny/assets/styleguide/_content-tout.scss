@@ -9,13 +9,17 @@
 // markup:
 // <h2 class="c-content-tout__heading">
 //   Heading
-//   <a href="#" class="c-content-tout__heading__link">More Link</a>
+//   <a href="#" class="c-content-tout__heading__link">link</a>
 // </h2>
-// <div class="c-content-tout">
-//   <a class="c-content-tout__title">Post Title</a>
-//   <p class="c-content-tout__subtitle">Subtitle</p>
-//   <a class="c-content-tout__link">Link</a>
-// </div>
+// <div class="o-col__row">
+//   <div class="o-col-1">
+//     <div class="c-content-tout">
+//       <a class="c-content-tout__title">Post Title</a>
+//       <p class="c-content-tout__subtitle">Subtitle</p>
+//       <a class="c-content-tout__link">Link</a>
+//      </div>
+//    </div>
+//  </div>
 //
 // sg-wrapper:
 // <div style="min-height:152px">
@@ -25,19 +29,15 @@
 // Styleguide 5.1
 
 .c-content-tout__heading {
-  @include font-size-x-large;
+  color: $very-dark-gray-transparent;
+  @include font-size($font-size-x-small, $font-size-small);
+  margin: 0;
   @include text-uppercase;
-  margin-bottom: rem-calc(30);
-
-  &--small {
-    color: $very-dark-gray-transparent;
-    @include font-size($font-size-x-small, $font-size-small);
-    margin: 0;
-  }
 }
 
 .c-content-tout__heading__link {
   float: right;
+  text-decoration: none;
   text-transform: none;
 
   &:hover,
@@ -58,10 +58,10 @@
   font-weight: $font-weight-extrablack;
   letter-spacing: rem-calc(.44);
   line-height: 1.2;
+  text-decoration: none;
 
-  a:hover,
-  a:focus {
-    color: $color-primary;
+  a {
+    text-decoration: inherit;
   }
 }
 

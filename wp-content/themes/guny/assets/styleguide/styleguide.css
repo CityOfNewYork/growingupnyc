@@ -281,6 +281,7 @@ a {
   line-height: 1;
   padding: 0.875rem 1.875rem;
   text-align: center;
+  text-decoration: none;
   transition: all ease-in-out 0.15s; }
 
 .button--primary {
@@ -300,6 +301,7 @@ a {
     color: #333;
     opacity: .7; }
     .button--outline--gray:hover, .button--outline--gray:focus {
+      color: #333;
       opacity: 1; }
   .button--outline--white {
     border-color: #fff;
@@ -320,7 +322,8 @@ a {
   line-height: 1;
   text-transform: uppercase; }
   .button--pill:hover, .button--pill:focus {
-    background: #0055b8; }
+    background: #0055b8;
+    color: #fff; }
 
 .button--pill--alt {
   background: #0055b8; }
@@ -432,10 +435,37 @@ h4,
 h5,
 h6 {
   font-family: "museo-sans-rounded", sans-serif;
-  font-weight: 900; }
+  font-weight: 900;
+  line-height: 1.3; }
+
+h1 {
+  font-size: 2.5rem; }
+  @media screen and (min-width: 1024px) {
+    h1 {
+      font-size: 4.125rem; } }
+
+h2 {
+  font-size: 1.3125rem;
+  margin: 0 0 1.25rem;
+  letter-spacing: .5px;
+  line-height: 1;
+  text-transform: uppercase; }
+  @media screen and (min-width: 1024px) {
+    h2 {
+      font-size: 1.875rem; } }
+
+h3 {
+  font-size: 1.125rem;
+  margin: 0 0 0.9375rem; }
+  @media screen and (min-width: 1024px) {
+    h3 {
+      font-size: 1.3125rem; } }
 
 a {
-  color: inherit; }
+  color: inherit;
+  text-decoration: underline; }
+  a:hover, a:focus {
+    color: #2793e0; }
 
 .o-accordion__header {
   position: relative; }
@@ -800,6 +830,7 @@ ol.o-inline {
   font-size: 0.75rem;
   font-weight: 900;
   position: relative;
+  text-decoration: none;
   letter-spacing: .5px;
   line-height: 1;
   text-transform: uppercase; }
@@ -855,6 +886,7 @@ ol.o-inline {
   position: absolute;
   right: -3.125rem;
   text-align: center;
+  text-decoration: none;
   top: 0.625rem;
   letter-spacing: .5px;
   line-height: 1;
@@ -868,18 +900,25 @@ ol.o-inline {
   .c-card__sticker .event-day {
     display: none; }
 
+a.c-card__sticker:hover, a.c-card__sticker:focus {
+  background: #0055b8;
+  color: #fff; }
+
 .c-card__title {
   font-family: "museo-sans-rounded", sans-serif;
   font-size: 1.25rem;
   font-weight: 900;
   line-height: 1.2;
-  margin: 0 0 0.3125rem; }
+  margin: 0 0 0.3125rem;
+  text-decoration: none; }
   @media screen and (min-width: 375px) {
     .c-card__title {
       font-size: 1.375rem; } }
   @media screen and (min-width: 375px) and (min-width: 1024px) {
     .c-card__title {
       font-size: 1.875rem; } }
+  .c-card__title a {
+    text-decoration: inherit; }
 
 .c-card__tags {
   margin: 0 0 0.625rem; }
@@ -913,24 +952,19 @@ ol.o-inline {
       color: #333; }
 
 .c-content-tout__heading {
-  font-size: 1.3125rem;
+  color: rgba(51, 51, 51, 0.5);
+  font-size: 0.8125rem;
+  margin: 0;
   letter-spacing: .5px;
   line-height: 1;
-  text-transform: uppercase;
-  margin-bottom: 1.875rem; }
+  text-transform: uppercase; }
   @media screen and (min-width: 1024px) {
     .c-content-tout__heading {
-      font-size: 1.875rem; } }
-  .c-content-tout__heading--small {
-    color: rgba(51, 51, 51, 0.5);
-    font-size: 0.8125rem;
-    margin: 0; }
-    @media screen and (min-width: 1024px) {
-      .c-content-tout__heading--small {
-        font-size: 1rem; } }
+      font-size: 1rem; } }
 
 .c-content-tout__heading__link {
   float: right;
+  text-decoration: none;
   text-transform: none; }
   .c-content-tout__heading__link:hover, .c-content-tout__heading__link:focus {
     color: #333; }
@@ -948,13 +982,13 @@ ol.o-inline {
   font-size: 1.125rem;
   font-weight: 900;
   letter-spacing: 0.0275rem;
-  line-height: 1.2; }
+  line-height: 1.2;
+  text-decoration: none; }
   @media screen and (min-width: 1024px) {
     .c-content-tout__title {
       font-size: 1.3125rem; } }
-  .c-content-tout__title a:hover,
-  .c-content-tout__title a:focus {
-    color: #2793e0; }
+  .c-content-tout__title a {
+    text-decoration: inherit; }
 
 .c-content-tout__subtitle {
   font-family: "museo-sans-rounded", sans-serif;
@@ -1038,7 +1072,8 @@ ol.o-inline {
 .c-footer__link {
   color: #fff;
   font-family: "museo-sans-rounded", sans-serif;
-  font-weight: 900; }
+  font-weight: 900;
+  text-decoration: none; }
   .c-footer__link:hover, .c-footer__link:focus {
     color: #0055b8; }
 
@@ -1175,7 +1210,8 @@ ol.o-inline {
   font-weight: 900; }
 
 .c-list-box__subitem {
-  display: block; }
+  display: block;
+  text-decoration: none; }
 
 .c-list-box--primary .c-list-box__subitem {
   padding: 0.1875rem 1.25rem; }
@@ -1197,6 +1233,9 @@ ol.o-inline {
   .c-list-box--secondary .c-list-box__subitem:hover, .c-list-box--secondary .c-list-box__subitem:focus {
     background: #0055b8; }
 
+.styleguide-example .c-side-hero {
+  height: 100%; }
+
 .c-side-hero__image {
   background: #2793e0 center center no-repeat;
   background-size: cover; }
@@ -1207,12 +1246,16 @@ ol.o-inline {
     .c-side-hero__image--desktop {
       display: block;
       height: 100%; } }
+  .styleguide-example .c-side-hero__image--desktop {
+    background-image: url(/wp-content/uploads/2016/07/hero-home.jpg); }
 
 .c-side-hero__image--mobile {
   height: 12.5rem; }
   @media screen and (min-width: 700px) {
     .c-side-hero__image--mobile {
       display: none; } }
+  .styleguide-example .c-side-hero__image--mobile {
+    background-image: url(/wp-content/uploads/2016/07/hero-mobile-700x0-c-default.jpg); }
 
 .c-side-hero__content {
   color: #fff;

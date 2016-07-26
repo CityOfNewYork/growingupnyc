@@ -6,7 +6,7 @@
 // <div class="c-card">
 //   <a class="c-card__sticker">TODAY</a>
 //   <p class="c-card__subtitle">Subtitle</p>
-//   <a class="c-card__title">Post Title</a>
+//   <h3 class="c-card__title"><a href="#">Post Title</a></h3>
 //   <p class="c-card__body">Body</p>
 //   <p class="c-card__link">Link</p>
 // </div>
@@ -23,6 +23,8 @@ $sticker-size: 100;
 
 .c-card {
   background: $color-background;
+  display: flex;
+  flex-flow: column;
   margin-right: rem-calc($sticker-size / 2);
   padding: rem-calc(25 15);
   padding-right: rem-calc(($sticker-size / 2) + 10);
@@ -42,6 +44,7 @@ $sticker-size: 100;
   font-family: $font-family-display;
   @include font-size-x-small;
   height: rem-calc($sticker-size);
+  order: 1;
   position: absolute;
   right: rem-calc(-$sticker-size / 2);
   text-align: center;
@@ -63,6 +66,11 @@ $sticker-size: 100;
   font-weight: $font-weight-extrablack;
   line-height: 1.2;
   margin: rem-calc(0 0 5);
+  order: 3;
+
+  &:hover {
+    color: $color-primary;
+  }
 
   @include media($bp-small) {
     @include font-size(22, $font-size-x-large);
@@ -71,14 +79,16 @@ $sticker-size: 100;
 
 .c-card__tags {
   margin: rem-calc(0 0 10);
+  order: 4;
 }
 
 .c-card__subtitle {
-  color: $very-dark-gray-transparent;
+  color: $color-text-weak;
   font-family: $font-family-display;
   font-weight: $font-weight-extrablack;
   font-size: rem-calc(15);
   margin: rem-calc(0 0 10);
+  order: 2;
   text-transform: uppercase;
 
   .icon--xsmall {
@@ -91,12 +101,14 @@ $sticker-size: 100;
 .c-card__body {
   @include font-size(14, $font-size-small);
   margin: rem-calc(0 0 5);
+  order: 5;
 }
 
 .c-card__link {
+  color: $color-text-weak;
   font-size: rem-calc(14);
   text-decoration: underline;
-  color: $very-dark-gray-transparent;
+  order: 6;
 
   a {
     text-decoration: underline;

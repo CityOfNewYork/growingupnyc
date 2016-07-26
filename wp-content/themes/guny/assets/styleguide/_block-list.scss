@@ -2,9 +2,12 @@
 //
 // A list of block items, such as content touts
 //
+// .c-block-list--shade - Block List with a shaded background
+//
 // markup:
-// <div class="c-block-list o-content-container o-content-container--shade">
+// <div class="c-block-list o-content-container {$modifiers}">
 //   <sg-insert>3.2.1</sg-insert>
+//   <p class="c-block-list__text">Nullam quis risus eget urna mollis ornare vel eu leo.</p>
 //   <div class="c-block-list__inner">
 //     <div class="c-block-list__item"><div style="background:white;height:100px"></div></div>
 //     <div class="c-block-list__item"><div style="background:white;height:100px"></div></div>
@@ -13,6 +16,9 @@
 // </div>
 //
 // Styleguide 3.2
+.c-block-list--shade {
+  background: $color-background-shade;
+}
 
 // Block List Heading
 //
@@ -29,13 +35,23 @@
 .c-block-list__heading {
   @include font-size-x-large;
   @include text-uppercase;
-  margin-bottom: rem-calc(30);
 
   &--small {
     color: $very-dark-gray-transparent;
     @include font-size($font-size-x-small, $font-size-small);
-    margin: 0;
+    margin-bottom: rem-calc(-30);
   }
+}
+
+// Block List Text
+//
+// Content that appears before the block list
+.c-block-list__text {
+  margin-top: rem-calc(10);
+}
+
+.c-block-list--shade .c-block-list__text {
+  color: $dark-gray;
 }
 
 // Block List Link
@@ -54,11 +70,11 @@
 // Inner container within a block list
 .c-block-list__inner {
   margin-bottom: rem-calc(35);
-  margin-top: rem-calc(5);
+  margin-top: rem-calc(35);
 
   @include media($bp-medium) {
     margin-bottom: rem-calc(45);
-    margin-top: rem-calc(10);
+    margin-top: rem-calc(30);
   }
 }
 

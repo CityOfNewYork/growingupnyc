@@ -54,6 +54,10 @@
   color: #333;
 }
 
+.c-card__title.pseudo-class-hover {
+  color: #2793e0;
+}
+
 .c-card__link a.pseudo-class-hover,
 .c-card__link a.pseudo-class-focus {
   color: #333;

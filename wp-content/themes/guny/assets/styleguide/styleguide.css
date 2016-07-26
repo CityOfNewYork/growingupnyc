@@ -494,9 +494,6 @@ a {
     .o-content-container {
       padding: 3.125rem; } }
 
-.o-content-container--shade {
-  background: #eee; }
-
 .o-inline {
   display: block; }
 
@@ -830,22 +827,30 @@ ol.o-inline {
   .is-active .c-banner__icon__close {
     opacity: 1; }
 
+.c-block-list--shade {
+  background: #eee; }
+
 .c-block-list__heading {
   font-size: 1.3125rem;
   letter-spacing: .5px;
   line-height: 1;
-  text-transform: uppercase;
-  margin-bottom: 1.875rem; }
+  text-transform: uppercase; }
   @media screen and (min-width: 1024px) {
     .c-block-list__heading {
       font-size: 1.875rem; } }
   .c-block-list__heading--small {
     color: rgba(51, 51, 51, 0.5);
     font-size: 0.8125rem;
-    margin: 0; }
+    margin-bottom: -1.875rem; }
     @media screen and (min-width: 1024px) {
       .c-block-list__heading--small {
         font-size: 1rem; } }
+
+.c-block-list__text {
+  margin-top: 0.625rem; }
+
+.c-block-list--shade .c-block-list__text {
+  color: #6a6a6a; }
 
 .c-block-list__link {
   float: right;
@@ -855,17 +860,19 @@ ol.o-inline {
 
 .c-block-list__inner {
   margin-bottom: 2.1875rem;
-  margin-top: 0.3125rem; }
+  margin-top: 2.1875rem; }
   @media screen and (min-width: 700px) {
     .c-block-list__inner {
       margin-bottom: 2.8125rem;
-      margin-top: 0.625rem; } }
+      margin-top: 1.875rem; } }
 
 .c-block-list__item {
   padding: 0.5rem 0; }
 
 .c-card {
   background: #fff;
+  display: flex;
+  flex-flow: column;
   margin-right: 3.125rem;
   padding: 1.5625rem 0.9375rem;
   padding-right: 3.75rem;
@@ -883,6 +890,7 @@ ol.o-inline {
   font-family: "museo-sans-rounded", sans-serif;
   font-size: 0.6875rem;
   height: 6.25rem;
+  order: 1;
   position: absolute;
   right: -3.125rem;
   text-align: center;
@@ -904,7 +912,10 @@ ol.o-inline {
   font-size: 1.25rem;
   font-weight: 900;
   line-height: 1.2;
-  margin: 0 0 0.3125rem; }
+  margin: 0 0 0.3125rem;
+  order: 3; }
+  .c-card__title:hover {
+    color: #2793e0; }
   @media screen and (min-width: 375px) {
     .c-card__title {
       font-size: 1.375rem; } }
@@ -913,14 +924,16 @@ ol.o-inline {
       font-size: 1.875rem; } }
 
 .c-card__tags {
-  margin: 0 0 0.625rem; }
+  margin: 0 0 0.625rem;
+  order: 4; }
 
 .c-card__subtitle {
-  color: rgba(51, 51, 51, 0.5);
+  color: #999;
   font-family: "museo-sans-rounded", sans-serif;
   font-weight: 900;
   font-size: 0.9375rem;
   margin: 0 0 0.625rem;
+  order: 2;
   text-transform: uppercase; }
   .c-card__subtitle .icon--xsmall {
     position: relative;
@@ -929,15 +942,17 @@ ol.o-inline {
 
 .c-card__body {
   font-size: 0.875rem;
-  margin: 0 0 0.3125rem; }
+  margin: 0 0 0.3125rem;
+  order: 5; }
   @media screen and (min-width: 1024px) {
     .c-card__body {
       font-size: 1rem; } }
 
 .c-card__link {
+  color: #999;
   font-size: 0.875rem;
   text-decoration: underline;
-  color: rgba(51, 51, 51, 0.5); }
+  order: 6; }
   .c-card__link a {
     text-decoration: underline; }
     .c-card__link a:hover, .c-card__link a:focus {

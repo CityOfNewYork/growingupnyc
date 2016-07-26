@@ -534,6 +534,29 @@ ol.o-inline {
       padding-left: 40px;
       padding-right: 40px; } }
 
+@media screen and (min-width: 1024px) {
+  .o-layout--large {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 40px;
+    padding-right: 40px; }
+    .o-layout--large::after {
+      clear: both;
+      content: "";
+      display: block; } }
+
+@media screen and (min-width: 1024px) {
+  .o-article {
+    margin-left: 34.375%;
+    float: left;
+    display: block;
+    margin-right: 3.125%;
+    width: 65.625%;
+    margin-right: 0; }
+    .o-article:last-child {
+      margin-right: 0; } }
+
 .o-layout-med {
   max-width: 1280px;
   margin-left: auto;
@@ -873,39 +896,47 @@ ol.o-inline {
   background: #fff;
   display: flex;
   flex-flow: column;
-  margin-right: 3.125rem;
+  margin-right: 2.5rem;
   padding: 1.5625rem 0.9375rem;
-  padding-right: 3.75rem;
+  padding-right: 3.125rem;
   position: relative; }
   @media screen and (min-width: 700px) {
     .c-card {
+      margin-right: 3.125rem;
       padding: 1.875rem;
       padding-right: 3.75rem; } }
 
 .c-card__sticker {
   background: #2793e0;
-  border-radius: 6.25rem;
+  border-radius: 5rem;
   color: #fff;
   display: block;
   font-family: "museo-sans-rounded", sans-serif;
   font-size: 0.6875rem;
-  height: 6.25rem;
+  height: 5rem;
   order: 1;
   position: absolute;
-  right: -3.125rem;
+  right: -2.5rem;
   text-align: center;
   top: 0.625rem;
   letter-spacing: .5px;
   line-height: 1;
   text-transform: uppercase;
   white-space: nowrap;
-  width: 6.25rem;
-  line-height: 6.25rem; }
+  width: 5rem;
+  line-height: 5rem; }
   @media screen and (min-width: 1024px) {
     .c-card__sticker {
       font-size: 0.8125rem; } }
   .c-card__sticker .event-day {
     display: none; }
+  @media screen and (min-width: 700px) {
+    .c-card__sticker {
+      border-radius: 6.25rem;
+      height: 6.25rem;
+      line-height: 6.25rem;
+      right: -3.125rem;
+      width: 6.25rem; } }
 
 .c-card__title {
   font-family: "museo-sans-rounded", sans-serif;

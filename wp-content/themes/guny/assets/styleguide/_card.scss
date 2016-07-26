@@ -19,18 +19,20 @@
 // Styleguide 5.2
 
 // Local Variables
+$sticker-size-mobile: 80;
 $sticker-size: 100;
 
 .c-card {
   background: $color-background;
   display: flex;
   flex-flow: column;
-  margin-right: rem-calc($sticker-size / 2);
+  margin-right: rem-calc($sticker-size-mobile / 2);
   padding: rem-calc(25 15);
-  padding-right: rem-calc(($sticker-size / 2) + 10);
+  padding-right: rem-calc(($sticker-size-mobile / 2) + 10);
   position: relative;
 
   @include media($bp-medium) {
+    margin-right: rem-calc($sticker-size / 2);
     padding: rem-calc(30);
     padding-right: rem-calc(($sticker-size / 2) + 10);
   }
@@ -38,25 +40,33 @@ $sticker-size: 100;
 
 .c-card__sticker {
   background: $color-primary;
-  border-radius: rem-calc($sticker-size);
+  border-radius: rem-calc($sticker-size-mobile);
   color: $white;
   display: block;
   font-family: $font-family-display;
   @include font-size-x-small;
-  height: rem-calc($sticker-size);
+  height: rem-calc($sticker-size-mobile);
   order: 1;
   position: absolute;
-  right: rem-calc(-$sticker-size / 2);
+  right: rem-calc(-$sticker-size-mobile / 2);
   text-align: center;
   top: rem-calc(10);
   @include text-uppercase;
   white-space: nowrap;
-  width: rem-calc($sticker-size);
+  width: rem-calc($sticker-size-mobile);
   //override text-uppercase
-  line-height: rem-calc($sticker-size);
+  line-height: rem-calc($sticker-size-mobile);
 
   .event-day {
     display: none;
+  }
+
+  @include media($bp-medium) {
+    border-radius: rem-calc($sticker-size);
+    height: rem-calc($sticker-size);
+    line-height: rem-calc($sticker-size);
+    right: rem-calc(-$sticker-size / 2);
+    width: rem-calc($sticker-size);
   }
 }
 

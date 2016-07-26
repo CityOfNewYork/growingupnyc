@@ -19,6 +19,24 @@
   }
 }
 
+// Applies the layout only at the large breakpoint
+// Used for weird situations where something is full-width at mobile but within a grid elsewhere
+.o-layout--large {
+  @include media($bp-large) {
+    @include outer-container;
+    padding-left: $outer-gutter-large;
+    padding-right: $outer-gutter-large;
+  }
+}
+
+.o-article {
+  @include media($bp-large) {
+    @include shift(4);
+    @include span-columns(8);
+    @include omega;
+  }
+}
+
 .o-layout-med {
   @include outer-container;
   max-width: $max-width-med;

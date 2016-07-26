@@ -325,7 +325,7 @@ a {
 .button--pill--alt {
   background: #0055b8; }
   .button--pill--alt:hover, .button--pill--alt:focus {
-    background: #0051a9; }
+    background: #2793e0; }
 
 .button--full-width {
   width: 100%; }
@@ -480,12 +480,9 @@ a {
   border-top: 2px solid #fff;
   padding-top: 1.875rem; }
 
-.o-col__row {
-  margin: 0.3125rem -1.25rem 2.1875rem; }
-  @media screen and (min-width: 700px) {
-    .o-col__row {
-      margin-bottom: 2.8125rem;
-      margin-top: 0.625rem; } }
+.o-row {
+  margin-left: -1.25rem;
+  margin-right: -1.25rem; }
 
 .o-content-container {
   padding: 2.1875rem 1.25rem 2.5rem; }
@@ -496,9 +493,6 @@ a {
   @media screen and (min-width: 1024px) {
     .o-content-container {
       padding: 3.125rem; } }
-
-.o-content-container--shade {
-  background: #eee; }
 
 .o-inline {
   display: block; }
@@ -539,6 +533,29 @@ ol.o-inline {
     .o-layout {
       padding-left: 40px;
       padding-right: 40px; } }
+
+@media screen and (min-width: 1024px) {
+  .o-layout--large {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 40px;
+    padding-right: 40px; }
+    .o-layout--large::after {
+      clear: both;
+      content: "";
+      display: block; } }
+
+@media screen and (min-width: 1024px) {
+  .o-article {
+    margin-left: 34.375%;
+    float: left;
+    display: block;
+    margin-right: 3.125%;
+    width: 65.625%;
+    margin-right: 0; }
+    .o-article:last-child {
+      margin-right: 0; } }
 
 .o-layout-med {
   max-width: 1280px;
@@ -833,47 +850,103 @@ ol.o-inline {
   .is-active .c-banner__icon__close {
     opacity: 1; }
 
+.c-block-list--shade {
+  background: #eee; }
+
+.c-block-list__heading {
+  font-size: 1.3125rem;
+  letter-spacing: .5px;
+  line-height: 1;
+  text-transform: uppercase; }
+  @media screen and (min-width: 1024px) {
+    .c-block-list__heading {
+      font-size: 1.875rem; } }
+  .c-block-list__heading--small {
+    color: rgba(51, 51, 51, 0.5);
+    font-size: 0.8125rem;
+    margin-bottom: -1.875rem; }
+    @media screen and (min-width: 1024px) {
+      .c-block-list__heading--small {
+        font-size: 1rem; } }
+
+.c-block-list__text {
+  margin-top: 0.625rem; }
+
+.c-block-list--shade .c-block-list__text {
+  color: #6a6a6a; }
+
+.c-block-list__link {
+  float: right;
+  text-transform: none; }
+  .c-block-list__link:hover, .c-block-list__link:focus {
+    color: #333; }
+
+.c-block-list__inner {
+  margin-bottom: 2.1875rem;
+  margin-top: 2.1875rem; }
+  @media screen and (min-width: 700px) {
+    .c-block-list__inner {
+      margin-bottom: 2.8125rem;
+      margin-top: 1.875rem; } }
+
+.c-block-list__item {
+  padding: 0.5rem 0; }
+
 .c-card {
   background: #fff;
-  margin-right: 3.125rem;
+  display: flex;
+  flex-flow: column;
+  margin-right: 2.5rem;
   padding: 1.5625rem 0.9375rem;
-  padding-right: 3.75rem;
+  padding-right: 3.125rem;
   position: relative; }
   @media screen and (min-width: 700px) {
     .c-card {
+      margin-right: 3.125rem;
       padding: 1.875rem;
       padding-right: 3.75rem; } }
 
 .c-card__sticker {
   background: #2793e0;
-  border-radius: 6.25rem;
+  border-radius: 5rem;
   color: #fff;
   display: block;
   font-family: "museo-sans-rounded", sans-serif;
   font-size: 0.6875rem;
-  height: 6.25rem;
+  height: 5rem;
+  order: 1;
   position: absolute;
-  right: -3.125rem;
+  right: -2.5rem;
   text-align: center;
   top: 0.625rem;
   letter-spacing: .5px;
   line-height: 1;
   text-transform: uppercase;
   white-space: nowrap;
-  width: 6.25rem;
-  line-height: 6.25rem; }
+  width: 5rem;
+  line-height: 5rem; }
   @media screen and (min-width: 1024px) {
     .c-card__sticker {
       font-size: 0.8125rem; } }
   .c-card__sticker .event-day {
     display: none; }
+  @media screen and (min-width: 700px) {
+    .c-card__sticker {
+      border-radius: 6.25rem;
+      height: 6.25rem;
+      line-height: 6.25rem;
+      right: -3.125rem;
+      width: 6.25rem; } }
 
 .c-card__title {
   font-family: "museo-sans-rounded", sans-serif;
   font-size: 1.25rem;
   font-weight: 900;
   line-height: 1.2;
-  margin: 0 0 0.3125rem; }
+  margin: 0 0 0.3125rem;
+  order: 3; }
+  .c-card__title:hover {
+    color: #2793e0; }
   @media screen and (min-width: 375px) {
     .c-card__title {
       font-size: 1.375rem; } }
@@ -882,14 +955,16 @@ ol.o-inline {
       font-size: 1.875rem; } }
 
 .c-card__tags {
-  margin: 0 0 0.625rem; }
+  margin: 0 0 0.625rem;
+  order: 4; }
 
 .c-card__subtitle {
-  color: rgba(51, 51, 51, 0.5);
+  color: #999;
   font-family: "museo-sans-rounded", sans-serif;
   font-weight: 900;
   font-size: 0.9375rem;
   margin: 0 0 0.625rem;
+  order: 2;
   text-transform: uppercase; }
   .c-card__subtitle .icon--xsmall {
     position: relative;
@@ -898,45 +973,24 @@ ol.o-inline {
 
 .c-card__body {
   font-size: 0.875rem;
-  margin: 0 0 0.3125rem; }
+  margin: 0 0 0.3125rem;
+  order: 5; }
   @media screen and (min-width: 1024px) {
     .c-card__body {
       font-size: 1rem; } }
 
 .c-card__link {
+  color: #999;
   font-size: 0.875rem;
   text-decoration: underline;
-  color: rgba(51, 51, 51, 0.5); }
+  order: 6; }
   .c-card__link a {
     text-decoration: underline; }
     .c-card__link a:hover, .c-card__link a:focus {
       color: #333; }
 
-.c-content-tout__heading {
-  font-size: 1.3125rem;
-  letter-spacing: .5px;
-  line-height: 1;
-  text-transform: uppercase;
-  margin-bottom: 1.875rem; }
-  @media screen and (min-width: 1024px) {
-    .c-content-tout__heading {
-      font-size: 1.875rem; } }
-  .c-content-tout__heading--small {
-    color: rgba(51, 51, 51, 0.5);
-    font-size: 0.8125rem;
-    margin: 0; }
-    @media screen and (min-width: 1024px) {
-      .c-content-tout__heading--small {
-        font-size: 1rem; } }
-
-.c-content-tout__heading__link {
-  float: right;
-  text-transform: none; }
-  .c-content-tout__heading__link:hover, .c-content-tout__heading__link:focus {
-    color: #333; }
-
 .c-content-tout {
-  color: rgba(51, 51, 51, 0.7);
+  color: #999;
   font-size: 0.75rem; }
   @media screen and (min-width: 1024px) {
     .c-content-tout {

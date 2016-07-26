@@ -39,13 +39,13 @@
     {% endfor %}
   </ol>
 
-  <div class="o-content-container o-content-container--shade">
-    <h2 class="c-content-tout__heading">Events</h2>
-    <div class="o-col__row">
+  <div class="c-block-list c-block-list--shade o-content-container">
+    <h2 class="c-block-list__heading">Events</h2>
+    <div class="c-block-list__inner">
       {% for post in top_events %}
-        <div class="o-col-1">
-        {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
-        </div>
+        <div class="c-block-list__item">
+          {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
+        </div> <!-- /.c-block-list__item -->
       {% endfor %}
     </div>
     <div class="text-center">

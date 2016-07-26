@@ -26,7 +26,7 @@
 
 .button--pill--alt.pseudo-class-hover,
 .button--pill--alt.pseudo-class-focus {
-  background: #0051a9;
+  background: #2793e0;
 }
 
 .button--text.pseudo-class-hover,
@@ -49,13 +49,17 @@
   color: #0055b8;
 }
 
-.c-card__link a.pseudo-class-hover,
-.c-card__link a.pseudo-class-focus {
+.c-block-list__link.pseudo-class-hover,
+.c-block-list__link.pseudo-class-focus {
   color: #333;
 }
 
-.c-content-tout__heading__link.pseudo-class-hover,
-.c-content-tout__heading__link.pseudo-class-focus {
+.c-card__title.pseudo-class-hover {
+  color: #2793e0;
+}
+
+.c-card__link a.pseudo-class-hover,
+.c-card__link a.pseudo-class-focus {
   color: #333;
 }
 

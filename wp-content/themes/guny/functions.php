@@ -43,6 +43,84 @@ class GunySite extends TimberSite {
     add_filter( 'tiny_mce_plugins', 'guny_disable_emojis_tinymce' );
   }
 
+  /**
+  * Returns a list of upcoming events
+  * @param {integer} $num_events - Total number of events to return
+  * @param {array} $tax_query - (Optional) Set of taxonomy query params to include in the event query
+  * @param {boolean} $featured_first - Whether to first query for featured events and display them at the top of the list
+  * @return Array of GunyEvent objects
+  */
+  public static function get_featured_events($num_events = 4, $tax_query = null, $featured_first = true) {
+    $top_events = array();
+    // Get Featured Events in order of ascending date
+    if (function_exists('tribe_get_events')) {
+      if ($featured_first) {
+        $top_event_params = array(
+          'posts_per_page' => $num_events,
+          'meta_query' => array(
+            'relation' => 'AND',
+            array(
+              'key'     => 'featured_event',
+              'value'   => 'Yes',
+              'compare' => 'LIKE'
+            ),
+            array(
+              'key'     => '_EventEndDate',
+              'value'   => current_time('mysql'),
+              'compare' => '>='
+            )
+          ),
+        );
+        if ( !empty( $tax_query ) ) {
+          $top_event_params['tax_query'] = $tax_query;
+        }
+        $top_events = tribe_get_events( $top_event_params );
+      }
+
+      // Get remaining events if count of Featured Events is less than $num_events
+      $number_remaining = $num_events - count($top_events);
+      if( $number_remaining > 0 ) {
+        $top_remaining_params = array(
+          'posts_per_page' => $number_remaining,
+        );
+        if ($featured_first) {
+          $top_remaining_params['meta_query'] = array(
+            'relation' => 'AND',
+            array(
+              'key'     => 'featured_event',
+              'value'   => 'Yes',
+              'compare' => 'NOT LIKE'
+            ),
+            array(
+              'key'     => '_EventEndDate',
+              'value'   => current_time('mysql'),
+              'compare' => '>='
+            )
+          );
+        } else {
+          $top_remaining_params['meta_query'] = array(
+            array(
+              'key'     => '_EventEndDate',
+              'value'   => current_time('mysql'),
+              'compare' => '>='
+            )
+          );
+        }
+        if ( !empty( $tax_query ) ) {
+          $top_remaining_params['tax_query'] = $tax_query;
+        }
+        $top_events_remaining = tribe_get_events( $top_remaining_params );
+
+        // Combine arrays with Featured Events first
+        $top_events = array_merge($top_events, $top_events_remaining);
+      }
+      foreach($top_events as $i => $top_event) {
+        $top_events[$i] = new GunyEvent($top_event);
+      }
+    }
+    return $top_events;
+  }
+
   function add_to_context ( $context ) {
     $context['menu'] = new TimberMenu('header-menu');
     $context['footer_menu'] = new TimberMenu('footer-menu');
@@ -55,58 +133,7 @@ class GunySite extends TimberSite {
       'meta_value' => 1
     ) );
     $context['top_programs'] = Timber::get_widgets('top_programs_widgets');
-
-    // Get Featured Events in order of ascending date
-    if (function_exists('tribe_get_events')) {
-      $top_events = tribe_get_events( array(
-        'posts_per_page' => 4,
-        'orderby' => 'menu_order',
-        'meta_query' => array(
-          'relation' => 'AND',
-          array(
-            'key'     => 'featured_event',
-            'value'   => 'Yes',
-            'compare' => 'LIKE'
-          ),
-          array(
-            'key'     => '_EventEndDate',
-            'value'   => current_time('mysql'),
-            'compare' => '>='
-          )
-        ),
-      ) );
-
-      // Get remaining events if count of Featured Events is less than 3
-      $number_remaining = 4 - count($top_events);
-      if( $number_remaining > 0 ) {
-        $top_events_remaining = tribe_get_events( array(
-          'posts_per_page' => $number_remaining,
-          'orderby' => 'menu_order',
-          'meta_query' => array(
-            'relation' => 'AND',
-            array(
-              'key'     => 'featured_event',
-              'value'   => 'Yes',
-              'compare' => 'NOT LIKE'
-            ),
-            array(
-              'key'     => '_EventEndDate',
-              'value'   => current_time('mysql'),
-              'compare' => '>='
-            )
-          ),
-        ));
-
-        // Combine arrays with Featured Events first
-        foreach($top_events_remaining as $i => $top_event_remaining) {
-          array_push($top_events,  $top_events_remaining[$i]);
-        }
-      }
-      foreach($top_events as $i => $top_event) {
-        $top_events[$i] = new GunyEvent($top_event);
-      }
-      $context['top_events'] = $top_events;
-    }
+    $context['top_events'] = $this->get_featured_events(4);
     return $context;
   }
 

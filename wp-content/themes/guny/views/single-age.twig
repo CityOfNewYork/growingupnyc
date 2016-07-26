@@ -40,5 +40,16 @@
       </svg>
     </header>
     {{post.content}}
+    {% if upcoming_events %}
+    <section>
+      <h2>Events</h2>
+      {% if post.events_text %}
+        <p>{{post.events_text}}</p>
+      {% endif %}
+      {% for post in upcoming_events %}
+        {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
+      {% endfor %}
+    </section>
+    {% endif %}
   </article>
 {% endblock %}

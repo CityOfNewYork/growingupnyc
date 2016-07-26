@@ -18,16 +18,29 @@
 .c-hero {
   background-position: top center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   color: $color-text-invert;
   overflow: hidden;
-  padding: rem-calc(230 80 80);
+  padding: percentage(126/375) 0 rem-calc(65);
   position: relative;
+  text-align: center;
+
+  @include media($bp-medium) {
+    background-size: cover;
+    text-align: left;
+    padding: rem-calc(165 40 40);
+  }
+
+  @include media($bp-xlarge) {
+    padding: rem-calc(227 80 80);
+  }
 }
 
 // Hero Title
 .c-hero__title {
   @include font-size-xx-large;
+  line-height: 1;
+  padding-top: rem-calc(35);
   text-transform: uppercase;
 }
 
@@ -37,17 +50,36 @@
   @include font-size-x-large;
   font-weight: $font-weight-extrablack;
   line-height: 1.2;
-  @include span-columns(6);
-  @include omega;
+
+  @include media($bp-medium) {
+    @include span-columns(6);
+    @include omega;
+  }
 }
 
 // Hero Frill
 //
 // Decorative element (i.e. a paint splatter) added to the hero
 .c-hero__frill {
-  bottom: -87px;
-  height: 359px;
+  height: auto;
   position: absolute;
-  right: -115px;
-  width: 404px;
+  top: percentage(60/375);
+  right: percentage(-50/375);
+  width: percentage(140/375);
+
+  @include media($bp-medium) {
+    bottom: percentage(-87/480);
+    top: auto;
+    right: percentage(-114/1440);
+    width: percentage(404/1440);
+    .stop1 {
+      stop-opacity: .3;
+    }
+  }
+
+  @include media($bp-xlarge) {
+    bottom: -87px;
+    right: -114px;
+    width: 404px;
+  }
 }

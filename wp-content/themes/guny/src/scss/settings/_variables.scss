@@ -60,7 +60,7 @@ $font-size-regular-mobile: 15;
 $font-size-regular: 18;
 $font-size-large-mobile: 18;
 $font-size-large: 21;
-$font-size-x-large-mobile: 24;
+$font-size-x-large-mobile: 21;
 $font-size-x-large: 30;
 $font-size-xx-large-mobile: 40;
 $font-size-xx-large: 66;
@@ -93,6 +93,7 @@ $outer-gutter-large: 40px;
 $bp-small: new-breakpoint(min-width 375px);
 $bp-medium: new-breakpoint(min-width 700px);
 $bp-large: new-breakpoint(min-width 1024px);
+$bp-xlarge: new-breakpoint(min-width 1200px);
 $breakpoint-font: $bp-large;
 
 $bp-mobile-only: new-breakpoint(max-width 701px);

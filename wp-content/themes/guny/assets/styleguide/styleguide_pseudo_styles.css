@@ -28,7 +28,7 @@
 
 .button--pill--alt.pseudo-class-hover,
 .button--pill--alt.pseudo-class-focus {
-  background: #0051a9;
+  background: #2793e0;
 }
 
 .button--text.pseudo-class-hover,
@@ -56,6 +56,11 @@ a.pseudo-class-focus {
   color: #0055b8;
 }
 
+.c-block-list__link.pseudo-class-hover,
+.c-block-list__link.pseudo-class-focus {
+  color: #333;
+}
+
 a.c-card__sticker.pseudo-class-hover,
 a.c-card__sticker.pseudo-class-focus {
   background: #0055b8;
@@ -64,11 +69,6 @@ a.c-card__sticker.pseudo-class-focus {
 
 .c-card__link a.pseudo-class-hover,
 .c-card__link a.pseudo-class-focus {
-  color: #333;
-}
-
-.c-content-tout__heading__link.pseudo-class-hover,
-.c-content-tout__heading__link.pseudo-class-focus {
   color: #333;
 }
 

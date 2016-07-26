@@ -1,18 +1,18 @@
 <div class="c-card">
-  <div class="c-card__sticker">
+  <div class="c-card__sticker" aria-hidden="true">
     {{post.start_date_formatted}}
   </div>
+  <h3 class="c-card__title">
+    <a href="{{post.link}}" title="{{post.title}}" rel="bookmark">
+      {{post.title}}
+    </a>
+  </h3>
   <div class="c-card__subtitle">
     {% embed "partials/event-date.twig" %}
       {% block startDate %}
       {% endblock %}
     {% endembed %}
   </div>
-  <h3 class="c-card__title">
-  	<a href="{{post.link}}" title="{{post.title}}" rel="bookmark">
-  		{{post.title}}
-  	</a>
-  </h3>
   {% if post.terms %}
     <div class="c-card__tags">
       {% for term in post.terms('tribe_events_cat') %}

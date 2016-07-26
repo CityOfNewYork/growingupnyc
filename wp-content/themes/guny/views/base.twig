@@ -79,22 +79,22 @@
               <button type="submit" class="form-field__icon form-field__icon--large"><svg role="img"><title>Search</title><use xlink:href="#search"></use></svg></button>
             </form>
 
-            <section class="o-col__divider">
-              <h2 class="c-content-tout__heading">
+            <section class="o-col__divider c-block-list">
+              <h2 class="c-block-list__heading">
                 Programs
-                <a class="c-content-tout__heading__link" href="{{site.url}}/programs">See all programs<svg role="img" class="icon--xsmall"><use xlink:href="#caret-right"></use></svg></a>
+                <a class="c-block-list__link" href="{{site.url}}/programs">See all programs<svg role="img" class="icon--xsmall"><use xlink:href="#caret-right"></use></svg></a>
               </h2> <!-- /.c-content-tout__heading -->
-              <div class="o-col__row">
+              <div class="c-block-list__inner o-row">
                 {{top_programs}}
               </div> <!-- /.o-col__divider -->
             </section> <!-- /.c-content-tout -->
 
-            <section class="o-col__divider">
-              <h2 class="c-content-tout__heading">
+            <section class="o-col__divider c-block-list">
+              <h2 class="c-block-list__heading">
                 Events
-                <a class="c-content-tout__heading__link" href="{{site.url}}/events">See all events<svg role="img" class="icon--xsmall"><use xlink:href="#caret-right"></use></svg></a>
+                <a class="c-block-list__link" href="{{site.url}}/events">See all events<svg role="img" class="icon--xsmall"><use xlink:href="#caret-right"></use></svg></a>
               </h2> <!-- /.c-content-tout__heading -->
-              <div class="o-col__row">
+              <div class="c-block-list__inner o-row">
               {% for post in top_events %}
                 <div class="o-col-3 c-content-tout">
                   <h3 class="c-content-tout__title">

@@ -98,8 +98,11 @@
 //
 // Pill button. Used primarily for tags
 //
+// .button--pill - Standard, primary-colored version
+// .button--pill--alt - Darker-colored version
+//
 // markup:
-// <button class="button--pill">Button Text</button>
+// <button class="button--pill {$modifiers}">Button Text</button>
 //
 // Styleguide 1.3
 .button--pill {
@@ -125,7 +128,7 @@
 
   &:hover,
   &:focus {
-    background: $very-dark-blue;
+    background: $color-primary;
   }
 }
 

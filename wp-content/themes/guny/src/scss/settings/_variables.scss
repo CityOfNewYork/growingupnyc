@@ -5,14 +5,14 @@
 // =====================
 $black: #000;
 $bright-blue: #2793e0;
-$dark-gray: #999;
+$dark-gray: #6a6a6a;
+$gray: #999;
 $pure-orange: #ffb900;
 $strong-blue: #0055b8;
 $strong-lime-green: #35c621;
 $strong-pink: #d8006d;
 $very-dark-blue: #0051a9;
 $very-dark-gray: #333;
-$very-dark-gray-semitransparent: rgba(51, 51, 51, .7);
 $very-dark-gray-transparent: rgba(51, 51, 51, .5);
 $very-light-gray: #eee;
 $vivid-orange: #ff9030;
@@ -27,7 +27,7 @@ $color-background: $white;
 $color-background-shade: $very-light-gray;
 $color-text: $very-dark-gray;
 $color-text-invert: $white;
-$color-text-weak: $dark-gray;
+$color-text-weak: $gray;
 $color-text-link: $color-primary;
 $color-background-footer: $color-primary;
 

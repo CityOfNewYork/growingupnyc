@@ -328,7 +328,7 @@ a {
 .button--pill--alt {
   background: #0055b8; }
   .button--pill--alt:hover, .button--pill--alt:focus {
-    background: #2793e0; }
+    background: #0f4a8f; }
 
 .button--full-width {
   width: 100%; }
@@ -391,6 +391,14 @@ a {
       height: 1.875rem;
       margin-top: -2.5rem;
       width: 1.875rem; } }
+
+.icon--large {
+  height: 2.3125rem;
+  width: 2.3125rem; }
+  @media screen and (min-width: 1024px) {
+    .icon--large {
+      height: 2.9375rem;
+      width: 2.9375rem; } }
 
 .icon--small {
   height: 1.375rem;
@@ -936,6 +944,15 @@ ol.o-inline {
       padding: 1.875rem;
       padding-right: 3.75rem; } }
 
+.c-card--hero {
+  background-position: top center;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  padding-top: 36.71642%; }
+  @media screen and (min-width: 700px) {
+    .c-card--hero {
+      padding-top: 35%; } }
+
 .c-card__sticker {
   background: #2793e0;
   border-radius: 5rem;
@@ -992,25 +1009,32 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 
 .c-card__tags {
   margin: 0 0 0.625rem;
-  order: 4; }
+  order: 5; }
 
 .c-card__subtitle {
   color: #999;
   font-family: "museo-sans-rounded", sans-serif;
   font-weight: 900;
   font-size: 0.9375rem;
+  letter-spacing: .5px;
   margin: 0 0 0.625rem;
-  order: 2;
-  text-transform: uppercase; }
+  order: 4; }
   .c-card__subtitle .icon--xsmall {
     position: relative;
     top: 0.1875rem;
     vertical-align: top; }
 
+.c-card__subtitle strong {
+  color: #333;
+  font-weight: inherit; }
+
+.c-card--subtitle-first .c-card__subtitle {
+  order: 2; }
+
 .c-card__body {
   font-size: 0.875rem;
   margin: 0 0 0.3125rem;
-  order: 5; }
+  order: 6; }
   @media screen and (min-width: 1024px) {
     .c-card__body {
       font-size: 1rem; } }
@@ -1019,7 +1043,7 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   color: #999;
   font-size: 0.875rem;
   text-decoration: underline;
-  order: 6; }
+  order: 7; }
   .c-card__link a {
     text-decoration: underline; }
     .c-card__link a:hover, .c-card__link a:focus {
@@ -1435,11 +1459,17 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 .baby-text {
   color: #d8006d; }
 
+.baby-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/baby-gradient.png); }
+
 .toddler-background {
   background-color: #ff9030 !important; }
 
 .toddler-text {
   color: #ff9030; }
+
+.toddler-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/toddler-gradient.png); }
 
 .pre-schooler-background {
   background-color: #ffb900 !important; }
@@ -1447,17 +1477,29 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 .pre-schooler-text {
   color: #ffb900; }
 
+.pre-schooler-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/pre-schooler-gradient.png); }
+
 .grade-schooler-background {
   background-color: #35c621 !important; }
 
 .grade-schooler-text {
   color: #35c621; }
 
+.grade-schooler-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/program_detail_hero_fpo.png); }
+
 .pre-teen-background {
   background-color: #0055b8 !important; }
 
 .pre-teen-text {
   color: #0055b8; }
+
+.pre-teen-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/pre-teen-gradient.png); }
+
+.u-h-gutter {
+  margin-bottom: 20px; }
 
 /**
 * Utility classes

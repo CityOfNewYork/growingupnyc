@@ -65,10 +65,17 @@
         {% if post.programs_text %}
           <p class="c-block-list__text">{{post.events_text}}</p>
         {% endif %}
-        {% for program in post.get_field('featured_programs') %}
-          {% set program = TimberPost(program) %}
-          {% include ['partials/teaser-'~program.post_type~'.twig', 'partials/teaser.twig'] with {post: program} %}
-        {% endfor %}
+        <div class="c-block-list__inner">
+          {% for program in post.get_field('featured_programs') %}
+            {% set program = TimberPost(program) %}
+            <div class="c-block-list__item">
+              {% include ['partials/teaser-'~program.post_type~'.twig', 'partials/teaser.twig'] with {post: program} %}
+            </div>
+          {% endfor %}
+        </div> <!-- /.c-block-list__inner -->
+        <div class="text-center">
+          <a href="/programs" class="button--outline button--outline--gray">See all programs</a>
+        </div>
       </section>
       {% endif %}
     </div> <!-- /.o-article -->

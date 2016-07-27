@@ -1,22 +1,32 @@
-<article class="post-list__entry media-object stack-for-small">
-  {% if post.get_thumbnail %}
-    <div class="media-object-section">
-      <img srcset="{{post.thumbnail.src|resize(150,150)}}, {{post.thumbnail.src|resize(300,300)|retina(2)}} 2x" alt="{{post.thumbnail.alt}}" class="media__img">
-    </div> <!-- /.media-object-section -->
+<div class="c-card {% block classes %}{% endblock %}">
+  {% block sticker %}
+  <div class="c-card__sticker" aria-hidden="true">
+    {% block sticker_content %}{% endblock %}
+  </div>
+  {% endblock %}
+  <h3 class="c-card__title">
+    {% block title %}
+    <a href="{{post.link}}" title="{{post.title}}" rel="bookmark">
+      {{post.title}}
+    </a>
+    {% endblock %}
+  </h3>
+  <div class="c-card__subtitle">
+    {% block subtitle %}{% endblock %}
+  </div>
+  {% if post.terms %}
+    <div class="c-card__tags">
+    {% block tags %}
+      {% for term in post.terms('age_group') %}
+        <a href="{{term.link}}" class="button--pill button--pill--alt">{{term.name}}</a>
+      {% endfor %}
+    {% endblock %}
+    </div>
   {% endif %}
-    <div class="media-object-section">
-      <h2><a href="{{post.link}}">{{post.title}}</a></h2>
-      <p class="post-list__byline">
-        By <a href="{{post.author.link}}">{{post.author.name}}</a>
-        <time datetime="{{post.post_date|date('r')}}">{{post.post_date|date('l, F d, Y')}}</time>
-      </p>
-      <p class="post-list__summary">{{post.get_preview}}</p>
-      {% if post.terms %}
-      <ul class="menu simple">
-        {% for term in post.terms %}
-          <li class="entry-category"><a href="{{term.link}}">{{term.name}}</a></li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-    </div> <!-- /.media-object-section -->
-</article> <!-- /.post-list__entry -->
+  <div class="c-card__body">
+    {% block body %}
+    {{post.post_excerpt ? post.post_excerpt : post.post_content|excerpt(15)}}
+    {% endblock %}
+  </div>
+  {% block link %}{% endblock %}
+</div>

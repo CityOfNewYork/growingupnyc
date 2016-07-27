@@ -45,11 +45,12 @@ $sticker-size: 100;
 
 .c-card--hero {
   background-position: top center;
+  background-size: 100% auto;
   background-repeat: no-repeat;
-  padding-top: rem-calc(123);
+  padding-top: percentage(123/335);
 
-  @include media($bp-large) {
-    padding-top: rem-calc(266);
+  @include media($bp-medium) {
+    padding-top: percentage(266/760);
   }
 }
 

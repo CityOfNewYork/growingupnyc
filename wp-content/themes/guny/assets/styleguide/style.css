@@ -946,11 +946,12 @@ ol.o-inline {
 
 .c-card--hero {
   background-position: top center;
+  background-size: 100% auto;
   background-repeat: no-repeat;
-  padding-top: 7.6875rem; }
-  @media screen and (min-width: 1024px) {
+  padding-top: 36.71642%; }
+  @media screen and (min-width: 700px) {
     .c-card--hero {
-      padding-top: 16.625rem; } }
+      padding-top: 35%; } }
 
 .c-card__sticker {
   background: #2793e0;

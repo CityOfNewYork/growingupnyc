@@ -71,6 +71,18 @@ $sticker-size: 100;
   }
 }
 
+.flexbox .c-card__sticker {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.2;
+
+  .event-day,
+  .event-month-year {
+    display: block;
+  }
+}
+
 a.c-card__sticker {
   &:hover,
   &:focus {

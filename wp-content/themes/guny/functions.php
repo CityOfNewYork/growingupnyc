@@ -50,7 +50,7 @@ class GunySite extends TimberSite {
   * @param {boolean} $featured_first - Whether to first query for featured events and display them at the top of the list
   * @return Array of GunyEvent objects
   */
-  public static function get_featured_events($num_events = 4, $tax_query = null, $featured_first = true) {
+  public static function get_featured_events($num_events = 3, $tax_query = null, $featured_first = true) {
     $top_events = array();
     // Get Featured Events in order of ascending date
     if (function_exists('tribe_get_events')) {
@@ -134,6 +134,7 @@ class GunySite extends TimberSite {
     ) );
     $context['top_programs'] = Timber::get_widgets('top_programs_widgets');
     $context['top_events'] = $this->get_featured_events(3);
+    $context['options'] = get_fields('options');
     return $context;
   }
 
@@ -249,8 +250,7 @@ class GunyEvent extends TimberPost {
       } else if ($start_time == $tomorrow) {
         $time = 'tomorrow';
       } else {
-        $time = '<span class="event-day">' . date('l ', $this->start_datetime()) . '</span>'
-                . date('M j', $this->start_datetime());
+        $time = '<span class="event-day">' . date('l ', $this->start_datetime()) . '</span> <span class="event-month-year">' . date('M j', $this->start_datetime()) . '</span>';
       }
 
       return $time;
@@ -330,6 +330,17 @@ function guny_disable_emojis_tinymce( $plugins ) {
   } else {
     return array();
   }
+}
+
+// Add ACF Options Page
+if( function_exists('acf_add_options_page') ) {
+  acf_add_options_page(array(
+    'page_title'  => 'Theme General Settings',
+    'menu_title'  => 'Theme Settings',
+    'menu_slug'   => 'theme-general-settings',
+    'capability'  => 'edit_posts',
+    'redirect'    => false
+  ));
 }
 
 // Customize TinyMCE settings

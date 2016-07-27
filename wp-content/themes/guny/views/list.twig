@@ -1,17 +1,19 @@
 {% extends "base.twig" %}
 
 {% block content %}
-  <main class="page-content row">
-    {% block before_list %}
-    {% endblock %}
-    <section class="post-list small-12 columns">
+  {% block hero %}
+  {% endblock %}
+  <section class="o-layout--large">
+    <div class="o-article">
+      {% block before_list %}
+      {% endblock %}
       {% block post_list %}
         {% for post in posts %}
           {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
         {% endfor %}
       {% endblock %}
-    </section> <!-- /.post-list.small-12.columns -->
-    {% block after_list %}
-    {% endblock %}
-  </main> <!-- /.page-content.row -->
+      {% block after_list %}
+      {% endblock %}
+    </div> <!-- /.o-article -->
+  </section> <!-- /.o-layout--large -->
 {% endblock %}

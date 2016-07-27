@@ -1,5 +1,15 @@
 {% extends "list.twig" %}
 
+{% block hero %}
+  <header class="c-hero c-hero--bg-secondary">
+    <div class="o-layout">
+      <h1 class="c-hero__title">{{options.event_landing_title}}</h1>
+      <p class="c-hero__tagline">{{options.event_landing_tagline}}</p>
+    </div>
+    {% include 'partials/hero-full-splatter.twig' %}
+  </header>
+{% endblock %}
+
 {% block before_list %}
   {{function('do_action', 'tribe_events_before_template')}}
   <div id="tribe-events-bar">

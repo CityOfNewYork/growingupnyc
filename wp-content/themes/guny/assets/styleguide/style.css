@@ -969,6 +969,15 @@ ol.o-inline {
       right: -3.125rem;
       width: 6.25rem; } }
 
+.flexbox .c-card__sticker {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.2; }
+  .flexbox .c-card__sticker .event-day,
+  .flexbox .c-card__sticker .event-month-year {
+    display: block; }
+
 a.c-card__sticker:hover, a.c-card__sticker:focus {
   background: #0055b8;
   color: #fff; }
@@ -1151,11 +1160,19 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
     .c-hero {
       padding: 14.1875rem 5rem 5rem; } }
 
+.c-hero--bg-primary {
+  background: #2793e0; }
+
+.c-hero--bg-secondary {
+  background: #0055b8; }
+
 .c-hero__title {
   font-size: 2.5rem;
   line-height: 1;
   padding-top: 2.1875rem;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1; }
   @media screen and (min-width: 1024px) {
     .c-hero__title {
       font-size: 4.125rem; } }
@@ -1164,7 +1181,9 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   font-family: "museo-sans-rounded", sans-serif;
   font-size: 1.3125rem;
   font-weight: 900;
-  line-height: 1.2; }
+  line-height: 1.2;
+  position: relative;
+  z-index: 1; }
   @media screen and (min-width: 1024px) {
     .c-hero__tagline {
       font-size: 1.875rem; } }
@@ -1197,6 +1216,14 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
       bottom: -87px;
       right: -114px;
       width: 404px; } }
+
+.c-hero__full-bg {
+  height: 100%;
+  left: 0;
+  min-width: 100%;
+  position: absolute;
+  top: 0;
+  width: auto; }
 
 .c-list-box {
   display: block;

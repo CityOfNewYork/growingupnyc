@@ -3,33 +3,12 @@
     "title": "Developmental Milestones",
     "fields": [
         {
-            "key": "field_577560903a688",
-            "label": "Milestones Text",
-            "name": "milestones_text",
-            "type": "textarea",
-            "instructions": "Optional text displayed above the milestones list",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "maxlength": "",
-            "rows": "",
-            "new_lines": "wpautop",
-            "readonly": 0,
-            "disabled": 0
-        },
-        {
             "key": "field_577560e43a689",
             "label": "Milestones Heading",
             "name": "milestones_heading",
             "type": "text",
-            "instructions": "Heading displayed before milestones accordion, e.g. \"What most 3 year olds do at this age:\"",
-            "required": 0,
+            "instructions": "Age as it should be displayed in the milestone heading",
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -38,8 +17,8 @@
             },
             "default_value": "",
             "placeholder": "",
-            "prepend": "",
-            "append": "",
+            "prepend": "What most",
+            "append": "do at this age",
             "maxlength": "",
             "readonly": 0,
             "disabled": 0
@@ -209,5 +188,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1469646113
+    "modified": 1469652056
 }

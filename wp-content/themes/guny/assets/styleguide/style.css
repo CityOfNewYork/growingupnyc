@@ -392,6 +392,14 @@ a {
       margin-top: -2.5rem;
       width: 1.875rem; } }
 
+.icon--large {
+  height: 2.3125rem;
+  width: 2.3125rem; }
+  @media screen and (min-width: 1024px) {
+    .icon--large {
+      height: 2.9375rem;
+      width: 2.9375rem; } }
+
 .icon--small {
   height: 1.375rem;
   width: 1.375rem; }

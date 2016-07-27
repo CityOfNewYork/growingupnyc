@@ -8,6 +8,16 @@
 //
 // Not in styleguide because display is dependent on embedded SVG sprite
 
+.icon--large {
+  height: rem-calc(37);
+  width: rem-calc(37);
+
+  @include media($bp-large) {
+    height: rem-calc(47);
+    width: rem-calc(47);
+  }
+}
+
 .icon--small {
   height: rem-calc(22);
   width: rem-calc(22);

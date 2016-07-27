@@ -1,12 +1,12 @@
 {
-    "key": "group_57756a7323e7f",
-    "title": "Tips",
+    "key": "group_5799047f98171",
+    "title": "Page Introduction",
     "fields": [
         {
-            "key": "field_57756a9352666",
-            "label": "Related Tip",
-            "name": "related_tip",
-            "type": "post_object",
+            "key": "field_579904887cbe3",
+            "label": "Intro Content",
+            "name": "intro_content",
+            "type": "wysiwyg",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -15,14 +15,10 @@
                 "class": "",
                 "id": ""
             },
-            "post_type": [
-                "tip"
-            ],
-            "taxonomy": [],
-            "allow_null": 0,
-            "multiple": 0,
-            "return_format": "id",
-            "ui": 1
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 0
         }
     ],
     "location": [
@@ -34,7 +30,7 @@
             }
         ]
     ],
-    "menu_order": 5,
+    "menu_order": 1,
     "position": "normal",
     "style": "default",
     "label_placement": "top",
@@ -42,5 +38,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1469646121
+    "modified": 1469646049
 }

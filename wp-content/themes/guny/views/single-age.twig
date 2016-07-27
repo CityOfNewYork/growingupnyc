@@ -41,7 +41,7 @@
   <article class="o-layout--large">
     <div class="o-article">
       {% if post.intro_content %}
-        <section class="o-content-container--text">
+        <section class="o-content-container--text u-top-spacing u-bottom-spacing">
           {{post.get_field('intro_content')}}
         </section>
       {% endif %}
@@ -82,6 +82,11 @@
         </div>
       </section>
       {% endif %}
+      <div class="o-content-container--text u-top-spacing u-h-gutter">
+        <h2>Milestone</h2>
+        <p>How your child plays, learns, speaks, and acts offers important clues about your child&rsquo;s development.</p>
+      </div>
+      <h3>What most XXXX do at this age:</h3>
     </div> <!-- /.o-article -->
   </article>
 {% endblock %}

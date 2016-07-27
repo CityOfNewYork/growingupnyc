@@ -539,14 +539,16 @@ p + p {
       padding: 3.125rem; } }
 
 .o-content-container--text {
-  padding: 2.8125rem 1.25rem; }
+  padding-left: 1.25rem;
+  padding-right: 1.25rem; }
   @media screen and (min-width: 700px) {
     .o-content-container--text {
       padding-left: 1.875rem;
       padding-right: 1.875rem; } }
   @media screen and (min-width: 1024px) {
     .o-content-container--text {
-      padding: 4.0625rem 0;
+      padding-left: 0;
+      padding-right: 0;
       width: 91.66667%; } }
 
 .o-inline {
@@ -1514,6 +1516,18 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 
 .u-h-gutter {
   margin-bottom: 20px; }
+
+.u-top-spacing {
+  padding-top: 2.8125rem; }
+  @media screen and (min-width: 1024px) {
+    .u-top-spacing {
+      padding-top: 3.75rem; } }
+
+.u-bottom-spacing {
+  padding-bottom: 2.8125rem; }
+  @media screen and (min-width: 1024px) {
+    .u-bottom-spacing {
+      padding-bottom: 3.75rem; } }
 
 /**
 * Utility classes

@@ -1000,7 +1000,7 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 
 .c-card__tags {
   margin: 0 0 0.625rem;
-  order: 4; }
+  order: 5; }
 
 .c-card__subtitle {
   color: #999;
@@ -1008,17 +1008,20 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   font-weight: 900;
   font-size: 0.9375rem;
   margin: 0 0 0.625rem;
-  order: 2;
+  order: 4;
   text-transform: uppercase; }
   .c-card__subtitle .icon--xsmall {
     position: relative;
     top: 0.1875rem;
     vertical-align: top; }
 
+.c-card--subtitle-first .c-card__subtitle {
+  order: 2; }
+
 .c-card__body {
   font-size: 0.875rem;
   margin: 0 0 0.3125rem;
-  order: 5; }
+  order: 6; }
   @media screen and (min-width: 1024px) {
     .c-card__body {
       font-size: 1rem; } }
@@ -1027,7 +1030,7 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   color: #999;
   font-size: 0.875rem;
   text-decoration: underline;
-  order: 6; }
+  order: 7; }
   .c-card__link a {
     text-decoration: underline; }
     .c-card__link a:hover, .c-card__link a:focus {

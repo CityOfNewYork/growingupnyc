@@ -1,5 +1,7 @@
 {% extends "partials/teaser.twig" %}
 
+{% block classes %}c-card--subtitle-first{% endblock %}
+
 {% block sticker_content %}
   {{post.start_date_formatted}}
 {% endblock %}
@@ -9,6 +11,15 @@
     {% block startDate %}
     {% endblock %}
   {% endembed %}
+{% endblock %}
+
+{% block tags %}
+  {% for term in post.terms('tribe_events_cat') %}
+    <a href="{{term.link}}" class="button--pill">{{term.name}}</a>
+  {% endfor %}
+  {% for term in post.terms('age_group') %}
+    <a href="{{term.link}}" class="button--pill button--pill--alt">{{term.name}}</a>
+  {% endfor %}
 {% endblock %}
 
 {% block link %}

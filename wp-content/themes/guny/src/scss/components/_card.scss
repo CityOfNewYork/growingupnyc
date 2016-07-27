@@ -2,8 +2,11 @@
 //
 // Content cards used across site
 //
+// .c-card - Standard card
+// .c-card--subtitle-first - Variation in which the subtitle content is displayed above the heading
+//
 // markup:
-// <div class="c-card">
+// <div class="c-card {$modifiers}">
 //   <a class="c-card__sticker">TODAY</a>
 //   <p class="c-card__subtitle">Subtitle</p>
 //   <h3 class="c-card__title"><a href="#">Post Title</a></h3>
@@ -99,7 +102,7 @@ a.c-card__sticker {
 
 .c-card__tags {
   margin: rem-calc(0 0 10);
-  order: 4;
+  order: 5;
 }
 
 .c-card__subtitle {
@@ -108,7 +111,7 @@ a.c-card__sticker {
   font-weight: $font-weight-extrablack;
   font-size: rem-calc(15);
   margin: rem-calc(0 0 10);
-  order: 2;
+  order: 4;
   text-transform: uppercase;
 
   .icon--xsmall {
@@ -118,17 +121,21 @@ a.c-card__sticker {
   }
 }
 
+.c-card--subtitle-first .c-card__subtitle {
+  order: 2;
+}
+
 .c-card__body {
   @include font-size(14, $font-size-small);
   margin: rem-calc(0 0 5);
-  order: 5;
+  order: 6;
 }
 
 .c-card__link {
   color: $color-text-weak;
   font-size: rem-calc(14);
   text-decoration: underline;
-  order: 6;
+  order: 7;
 
   a {
     text-decoration: underline;

@@ -1459,6 +1459,9 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 .pre-teen-text {
   color: #0055b8; }
 
+.u-h-gutter {
+  margin-bottom: 20px; }
+
 /**
 * Utility classes
 */

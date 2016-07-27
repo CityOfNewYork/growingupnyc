@@ -42,7 +42,7 @@
     <div class="o-article">
       {{post.content}}
       {% if upcoming_events %}
-      <section class="c-block-list c-block-list--shade o-content-container">
+      <section class="c-block-list c-block-list--shade o-content-container u-h-gutter">
         <h2>Events</h2>
         {% if post.events_text %}
           <p class="c-block-list__text">{{post.events_text}}</p>
@@ -54,7 +54,18 @@
             </div>
           {% endfor %}
         </div> <!-- /.c-block-list-inner -->
+        <div class="text-center">
+          <a href="/events" class="button--outline button--outline--gray">See all events</a>
+        </div>
       </section> <!-- /.c-block-list -->
+      {% endif %}
+      {% if post.featured_programs %}
+      <section class="c-block-list c-block-list--shade o-content-container">
+        <h2>Programs</h2>
+        {% if post.programs_text %}
+          <p class="c-block-list__text">{{post.events_text}}</p>
+        {% endif %}
+      </section>
       {% endif %}
     </div> <!-- /.o-article -->
   </article>

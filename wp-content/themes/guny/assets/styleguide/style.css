@@ -478,6 +478,9 @@ a {
 strong {
   font-weight: 700; }
 
+p + p {
+  margin-top: 1em; }
+
 .o-accordion__header {
   position: relative; }
 

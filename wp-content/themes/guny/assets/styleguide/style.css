@@ -478,6 +478,9 @@ a {
 strong {
   font-weight: 700; }
 
+p + p {
+  margin-top: 1em; }
+
 .o-accordion__header {
   position: relative; }
 
@@ -534,6 +537,17 @@ strong {
   @media screen and (min-width: 1024px) {
     .o-content-container {
       padding: 3.125rem; } }
+
+.o-content-container--text {
+  padding: 2.8125rem 1.25rem; }
+  @media screen and (min-width: 700px) {
+    .o-content-container--text {
+      padding-left: 1.875rem;
+      padding-right: 1.875rem; } }
+  @media screen and (min-width: 1024px) {
+    .o-content-container--text {
+      padding: 4.0625rem 0;
+      width: 91.66667%; } }
 
 .o-inline {
   display: block; }

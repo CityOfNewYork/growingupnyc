@@ -53,3 +53,7 @@ a {
 strong {
   font-weight: 700;
 }
+
+p + p {
+  margin-top: 1em;
+}

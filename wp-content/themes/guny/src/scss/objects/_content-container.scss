@@ -1,15 +1,31 @@
 // Content Container
 //
-
 .o-content-container {
   padding: rem-calc(35 $outer-gutter-small 40);
 
   @include media($bp-medium) {
-    padding-left: rem-calc(30);
-    padding-right: rem-calc(30);
+    padding-left: rem-calc($outer-gutter-medium);
+    padding-right: rem-calc($outer-gutter-medium);
   }
 
   @include media($bp-large) {
     padding: rem-calc(50);
+  }
+}
+
+// Content container with vertical-only padding on mobile,
+// and extra right padding to control line length at the largest breakpoint.
+// Used predominently with WYSIWYG text content
+.o-content-container--text {
+  padding: rem-calc(45 $outer-gutter-small);
+
+  @include media($bp-medium) {
+    padding-left: rem-calc($outer-gutter-medium);
+    padding-right: rem-calc($outer-gutter-medium);
+  }
+
+  @include media ($bp-large) {
+    padding: rem-calc(65 0);
+    width: flex-grid(7, 8) + flex-gutter(8);
   }
 }

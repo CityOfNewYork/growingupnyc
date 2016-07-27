@@ -48,9 +48,9 @@
           <p class="c-block-list__text">{{post.events_text}}</p>
         {% endif %}
         <div class="c-block-list__inner">
-          {% for post in upcoming_events %}
+          {% for event in upcoming_events %}
             <div class="c-block-list__item">
-              {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
+              {% include ['partials/teaser-'~event.post_type~'.twig', 'partials/teaser.twig'] with {post: event} %}
             </div>
           {% endfor %}
         </div> <!-- /.c-block-list-inner -->
@@ -65,6 +65,10 @@
         {% if post.programs_text %}
           <p class="c-block-list__text">{{post.events_text}}</p>
         {% endif %}
+        {% for program in post.get_field('featured_programs') %}
+          {% set program = TimberPost(program) %}
+          {% include ['partials/teaser-'~program.post_type~'.twig', 'partials/teaser.twig'] with {post: program} %}
+        {% endfor %}
       </section>
       {% endif %}
     </div> <!-- /.o-article -->

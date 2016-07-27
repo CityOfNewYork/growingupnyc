@@ -41,9 +41,10 @@
   <article class="o-layout--large">
     <div class="o-article">
       {% if post.intro_content %}
-        {{post.get_field('intro_content')}}
+        <section class="o-content-container--text">
+          {{post.get_field('intro_content')}}
+        </section>
       {% endif %}
-      {{post.content}}
       {% if upcoming_events %}
       <section class="c-block-list c-block-list--shade o-content-container u-h-gutter">
         <h2>Events</h2>

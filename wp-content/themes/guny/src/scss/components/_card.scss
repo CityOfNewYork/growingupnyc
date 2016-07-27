@@ -4,6 +4,7 @@
 //
 // .c-card - Standard card
 // .c-card--subtitle-first - Variation in which the subtitle content is displayed above the heading
+// .c-card--hero.toddler-gradient - Variation with a hero image displayed at the top of the card
 //
 // markup:
 // <div class="c-card {$modifiers}">
@@ -41,6 +42,17 @@ $sticker-size: 100;
   }
 }
 
+.c-card--hero {
+  background-position: top center;
+  background-repeat: no-repeat;
+  padding-top: rem-calc(123);
+
+  @include media($bp-large) {
+    padding-top: rem-calc(266);
+  }
+}
+
+// Content Card Sticker
 .c-card__sticker {
   background: $color-primary;
   border-radius: rem-calc($sticker-size-mobile);
@@ -82,6 +94,7 @@ a.c-card__sticker {
   }
 }
 
+// Content Card Title
 .c-card__title {
   font-family: $font-family-display;
   font-size: rem-calc(20);
@@ -100,11 +113,16 @@ a.c-card__sticker {
   }
 }
 
+// Content Card Tags
 .c-card__tags {
   margin: rem-calc(0 0 10);
   order: 5;
 }
 
+// Content Card Subtitle
+//
+// Displayed below the title on most variations,
+// above the title when c-card--subtitle-first variation is used
 .c-card__subtitle {
   color: $color-text-weak;
   font-family: $font-family-display;
@@ -125,12 +143,14 @@ a.c-card__sticker {
   order: 2;
 }
 
+// Content Card Body
 .c-card__body {
   @include font-size(14, $font-size-small);
   margin: rem-calc(0 0 5);
   order: 6;
 }
 
+// Content Card Link
 .c-card__link {
   color: $color-text-weak;
   font-size: rem-calc(14);

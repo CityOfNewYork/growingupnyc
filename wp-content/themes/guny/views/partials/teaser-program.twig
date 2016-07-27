@@ -1,5 +1,7 @@
 {% extends "partials/teaser.twig" %}
 
+{% block classes %}{{is_first ? "c-card--hero #{age_group|sanitize}-gradient"}}{% endblock %}
+
 {% block sticker_content %}
   <svg class="icon--large"><title>Book</title><use xlink:href="#book"></use></svg>
 {% endblock %}

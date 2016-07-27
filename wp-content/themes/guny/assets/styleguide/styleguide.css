@@ -944,6 +944,14 @@ ol.o-inline {
       padding: 1.875rem;
       padding-right: 3.75rem; } }
 
+.c-card--hero {
+  background-position: top center;
+  background-repeat: no-repeat;
+  padding-top: 7.6875rem; }
+  @media screen and (min-width: 1024px) {
+    .c-card--hero {
+      padding-top: 16.625rem; } }
+
 .c-card__sticker {
   background: #2793e0;
   border-radius: 5rem;
@@ -1446,11 +1454,17 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 .baby-text {
   color: #d8006d; }
 
+.baby-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/baby-gradient.png); }
+
 .toddler-background {
   background-color: #ff9030 !important; }
 
 .toddler-text {
   color: #ff9030; }
+
+.toddler-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/toddler-gradient.png); }
 
 .pre-schooler-background {
   background-color: #ffb900 !important; }
@@ -1458,17 +1472,26 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 .pre-schooler-text {
   color: #ffb900; }
 
+.pre-schooler-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/pre-schooler-gradient.png); }
+
 .grade-schooler-background {
   background-color: #35c621 !important; }
 
 .grade-schooler-text {
   color: #35c621; }
 
+.grade-schooler-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/program_detail_hero_fpo.png); }
+
 .pre-teen-background {
   background-color: #0055b8 !important; }
 
 .pre-teen-text {
   color: #0055b8; }
+
+.pre-teen-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/pre-teen-gradient.png); }
 
 .u-h-gutter {
   margin-bottom: 20px; }

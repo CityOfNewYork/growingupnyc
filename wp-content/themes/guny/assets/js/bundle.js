@@ -72,6 +72,10 @@
 
 	var _sticky2 = _interopRequireDefault(_sticky);
 
+	var _filters = __webpack_require__(418);
+
+	var _filters2 = _interopRequireDefault(_filters);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function ready(fn) {
@@ -89,6 +93,7 @@
 	  (0, _accordion2.default)();
 	  (0, _overlay2.default)();
 	  (0, _sticky2.default)();
+	  (0, _filters2.default)();
 	}
 
 	ready(init);
@@ -12259,6 +12264,26 @@
 	var _forEach2 = _interopRequireDefault(_forEach);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 418 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(jQuery) {'use strict';
+
+	module.exports = function () {
+	  var $filterForm = jQuery('.filter__form'),
+	      $inputs;
+
+	  if ($filterForm.length) {
+	    $inputs = $filterForm.find('select');
+
+	    $inputs.on('change', function () {
+	      return this.form.submit();
+	    });
+	  }
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(414)))
 
 /***/ }
 /******/ ]);

@@ -547,23 +547,17 @@ p + p {
   margin-right: -1.25rem; }
 
 .o-content-container {
-  padding: 2.1875rem 1.25rem 2.5rem; }
+  padding: 1.875rem 0.9375rem 2.1875rem; }
+  @media screen and (min-width: 375px) {
+    .o-content-container {
+      padding: 2.1875rem 1.25rem 2.5rem; } }
   @media screen and (min-width: 700px) {
     .o-content-container {
       padding-left: 1.875rem;
       padding-right: 1.875rem; } }
   @media screen and (min-width: 1024px) {
     .o-content-container {
-      padding: 3.125rem; } }
-
-.o-content-container--narrow {
-  padding: 1.25rem; }
-  @media screen and (min-width: 700px) {
-    .o-content-container--narrow {
-      padding: 1.5625rem 1.875rem 1.875rem; } }
-  @media screen and (min-width: 1024px) {
-    .o-content-container--narrow {
-      padding: 2.1875rem 2.5rem 2.5rem; } }
+      padding: 2.5rem; } }
 
 .o-content-container--compact {
   padding-left: 1.25rem;

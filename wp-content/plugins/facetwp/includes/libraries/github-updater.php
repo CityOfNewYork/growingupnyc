@@ -5,12 +5,12 @@ defined( 'ABSPATH' ) or exit;
 if ( ! class_exists( 'GHU_Core' ) ) {
     class GHU_Core
     {
-        public $update_data;
-        public $active_plugins;
+        public $update_data = array();
+        public $active_plugins = array();
 
 
         function __construct() {
-            add_action( 'admin_init', array( $this, 'admin_init' ), 99 );
+            add_action( 'admin_init', array( $this, 'admin_init' ) );
             add_filter( 'plugins_api', array( $this, 'plugins_api' ), 10, 3 );
             add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'set_update_data' ) );
             add_filter( 'upgrader_source_selection', array( $this, 'upgrader_source_selection' ), 10, 4 );
@@ -132,8 +132,8 @@ if ( ! class_exists( 'GHU_Core' ) ) {
         function upgrader_source_selection( $source, $remote_source, $upgrader, $hook_extra = null ) {
             global $wp_filesystem;
 
-            $plugin = $hook_extra['plugin'];
-            if ( isset( $this->update_data[ $plugin ] ) ) {
+            $plugin = isset( $hook_extra['plugin'] ) ? $hook_extra['plugin'] : false;
+            if ( isset( $this->update_data[ $plugin ] ) && $plugin ) {
                 $new_source = trailingslashit( $remote_source ) . dirname( $plugin );
                 $wp_filesystem->move( $source, $new_source );
                 return trailingslashit( $new_source );

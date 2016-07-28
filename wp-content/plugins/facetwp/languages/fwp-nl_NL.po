@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FacetWP\n"
-"POT-Creation-Date: 2016-06-09 13:40-0400\n"
-"PO-Revision-Date: 2016-06-09 13:41-0400\n"
+"POT-Creation-Date: 2016-06-24 08:44-0400\n"
+"PO-Revision-Date: 2016-06-24 08:45-0400\n"
 "Last-Translator: Matt Gibbs <hello@facetwp.com>\n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -110,13 +110,13 @@ msgstr "Taxonomieën"
 msgid "Custom Fields"
 msgstr "Aangepaste Velden"
 
-#: includes/class-init.php:117 templates/page-settings.php:93
+#: includes/class-init.php:118 templates/page-settings.php:93
 msgid "Settings"
 msgstr "Instellingen"
 
 #: includes/class-updater.php:100
 msgid "Please activate or renew your license for automatic updates."
-msgstr "Activeer of vernieuw uw licentie voor automatische updates."
+msgstr "Activeer of vernieuw je licentie voor automatische updates."
 
 #: includes/facets/autocomplete.php:7
 msgid "Autocomplete"
@@ -302,7 +302,7 @@ msgstr "December"
 
 #: includes/facets/date_range.php:131
 msgid "S-M-T-W-T-F-S"
-msgstr "Z M D W D V Z"
+msgstr "S-M-T-W-T-F-S"
 
 #: includes/facets/date_range.php:132
 msgid "Clear"
@@ -406,7 +406,7 @@ msgstr "Nabijheid"
 
 #: includes/facets/proximity.php:55
 msgid "Enter location"
-msgstr "Vul uw locatie in"
+msgstr "Vul je locatie in"
 
 #: includes/facets/proximity.php:163
 msgid "Unit of measurement"
@@ -535,7 +535,7 @@ msgstr "Bezig met activeren"
 
 #: templates/page-settings.php:14
 msgid "Are you sure?"
-msgstr "Bent u zeker?"
+msgstr "Ben je zeker?"
 
 #: templates/page-settings.php:15
 msgid "Select some items"
@@ -688,7 +688,7 @@ msgstr "Query-builder"
 
 #: templates/page-settings.php:362
 msgid "Which posts would you like to use for the content listing?"
-msgstr "Welke berichten zou u willen gebruiken voor de inhoudslijst?"
+msgstr "Welke berichten zou je willen gebruiken voor de inhoudslijst?"
 
 #: templates/page-settings.php:371
 msgid "Send to editor"

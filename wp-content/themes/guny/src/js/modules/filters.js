@@ -1,6 +1,6 @@
-module.exports = function () {
+module.exports = function() {
   var $filterForm = jQuery('.filter__form'),
-      $inputs;
+    $inputs;
 
   if ($filterForm.length) {
     $inputs = $filterForm.find('select');
@@ -9,4 +9,4 @@ module.exports = function () {
       return this.form.submit();
     });
   }
-}
+};

@@ -28,7 +28,7 @@
 
 .button--pill--alt.pseudo-class-hover,
 .button--pill--alt.pseudo-class-focus {
-  background: #0f4a8f;
+  background: #00326d;
 }
 
 .button--text.pseudo-class-hover,
@@ -108,6 +108,45 @@ a.c-card__sticker.pseudo-class-focus {
 .c-list-box--secondary .c-list-box__subitem.pseudo-class-hover,
 .c-list-box--secondary .c-list-box__subitem.pseudo-class-focus {
   background: #0055b8;
+}
+
+button.baby-secondary.pseudo-class-hover,
+button.baby-secondary.pseudo-class-focus,
+a.baby-secondary.pseudo-class-hover,
+a.baby-secondary.pseudo-class-focus {
+  background-color: #d8006d !important;
+}
+
+button.toddler-secondary.pseudo-class-hover,
+button.toddler-secondary.pseudo-class-focus,
+a.toddler-secondary.pseudo-class-hover,
+a.toddler-secondary.pseudo-class-focus {
+  background-color: #ff6100 !important;
+  outline: none;
+}
+
+button.pre-schooler-secondary.pseudo-class-hover,
+button.pre-schooler-secondary.pseudo-class-focus,
+a.pre-schooler-secondary.pseudo-class-hover,
+a.pre-schooler-secondary.pseudo-class-focus {
+  background-color: #ff9d00 !important;
+  outline: none;
+}
+
+button.grade-schooler-secondary.pseudo-class-hover,
+button.grade-schooler-secondary.pseudo-class-focus,
+a.grade-schooler-secondary.pseudo-class-hover,
+a.grade-schooler-secondary.pseudo-class-focus {
+  background-color: #35c621 !important;
+  outline: none;
+}
+
+button.pre-teen-secondary.pseudo-class-hover,
+button.pre-teen-secondary.pseudo-class-focus,
+a.pre-teen-secondary.pseudo-class-hover,
+a.pre-teen-secondary.pseudo-class-focus {
+  background-color: #0055b8 !important;
+  outline: none;
 }
 
 .show-for-keyboard.pseudo-class-focus {

@@ -328,7 +328,7 @@ a {
 .button--pill--alt {
   background: #0055b8; }
   .button--pill--alt:hover, .button--pill--alt:focus {
-    background: #0f4a8f; }
+    background: #00326d; }
 
 .button--full-width {
   width: 100%; }
@@ -1490,6 +1490,14 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 .baby-background {
   background-color: #d8006d !important; }
 
+.baby-secondary {
+  background-color: #7f1c4e !important; }
+
+button.baby-secondary:hover, button.baby-secondary:focus,
+a.baby-secondary:hover,
+a.baby-secondary:focus {
+  background-color: #d8006d !important; }
+
 .baby-text {
   color: #d8006d; }
 
@@ -1497,25 +1505,52 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   background-image: url(/wp-content/themes/guny/assets/img/baby-gradient.png); }
 
 .toddler-background {
-  background-color: #ff9030 !important; }
+  background-color: #ff6100 !important; }
+
+.toddler-secondary {
+  background-color: #fb0000 !important; }
+
+button.toddler-secondary:hover, button.toddler-secondary:focus,
+a.toddler-secondary:hover,
+a.toddler-secondary:focus {
+  background-color: #ff6100 !important;
+  outline: none; }
 
 .toddler-text {
-  color: #ff9030; }
+  color: #ff6100; }
 
 .toddler-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/toddler-gradient.png); }
 
 .pre-schooler-background {
-  background-color: #ffb900 !important; }
+  background-color: #ff9d00 !important; }
+
+.pre-schooler-secondary {
+  background-color: #ff6100 !important; }
+
+button.pre-schooler-secondary:hover, button.pre-schooler-secondary:focus,
+a.pre-schooler-secondary:hover,
+a.pre-schooler-secondary:focus {
+  background-color: #ff9d00 !important;
+  outline: none; }
 
 .pre-schooler-text {
-  color: #ffb900; }
+  color: #ff9d00; }
 
 .pre-schooler-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/pre-schooler-gradient.png); }
 
 .grade-schooler-background {
   background-color: #35c621 !important; }
+
+.grade-schooler-secondary {
+  background-color: #1d5d11 !important; }
+
+button.grade-schooler-secondary:hover, button.grade-schooler-secondary:focus,
+a.grade-schooler-secondary:hover,
+a.grade-schooler-secondary:focus {
+  background-color: #35c621 !important;
+  outline: none; }
 
 .grade-schooler-text {
   color: #35c621; }
@@ -1525,6 +1560,15 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 
 .pre-teen-background {
   background-color: #0055b8 !important; }
+
+.pre-teen-secondary {
+  background-color: #00326d !important; }
+
+button.pre-teen-secondary:hover, button.pre-teen-secondary:focus,
+a.pre-teen-secondary:hover,
+a.pre-teen-secondary:focus {
+  background-color: #0055b8 !important;
+  outline: none; }
 
 .pre-teen-text {
   color: #0055b8; }

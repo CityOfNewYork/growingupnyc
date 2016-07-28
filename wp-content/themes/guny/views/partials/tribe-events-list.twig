@@ -1,4 +1,4 @@
-{% for event in events %}
+{% for event in event_list %}
   {% if loop.first %}
     {% for post in event.posts %}
       <a href="{{post.tribe_get_previous_month_link}}" rel="prev">&lt;</a>

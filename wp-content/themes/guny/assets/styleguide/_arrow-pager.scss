@@ -1,0 +1,36 @@
+// Pagination
+//
+// Styleguide 6
+
+// Arrow Pager
+//
+// Global site header
+//
+// markup:
+// <div class="arrow-pager">
+//   <div class="o-layout">
+//     <sg-insert>2.1.1</sg-insert>
+//     <sg-insert>2.1.2</sg-insert>
+//   </div>
+// </div>
+//
+// sg-wrapper:
+// <div style="min-height:152px">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 6.1
+
+.arrow-pager {
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
+  @include font-size-x-large;
+  margin: rem-calc(55 0 35);
+  text-align: center;
+  @include text-uppercase;
+}
+
+.arrow-pager__arrow {
+  color: $very-dark-gray-transparent;
+  text-decoration: none;
+}

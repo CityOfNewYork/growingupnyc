@@ -406,11 +406,13 @@ a {
 
 .icon--xsmall {
   height: 1em;
-  width: 1em; }
+  width: 1em;
+  vertical-align: top; }
 
 .icon--xxsmall {
   height: 0.8125rem;
-  width: 0.8125rem; }
+  width: 0.8125rem;
+  vertical-align: top; }
   @media screen and (min-width: 375px) {
     .icon--xxsmall {
       height: 0.9375rem;
@@ -825,6 +827,23 @@ ol.o-inline {
 
 .no-flexbox .o-sticky-footer__content {
   background: #fff; }
+
+.arrow-pager {
+  font-family: "museo-sans-rounded", sans-serif;
+  font-weight: 900;
+  font-size: 1.3125rem;
+  margin: 3.4375rem 0 2.1875rem;
+  text-align: center;
+  letter-spacing: .5px;
+  line-height: 1;
+  text-transform: uppercase; }
+  @media screen and (min-width: 1024px) {
+    .arrow-pager {
+      font-size: 1.875rem; } }
+
+.arrow-pager__arrow {
+  color: rgba(51, 51, 51, 0.5);
+  text-decoration: none; }
 
 .c-banner {
   background: #fff;

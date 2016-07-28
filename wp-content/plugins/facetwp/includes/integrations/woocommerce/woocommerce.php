@@ -15,8 +15,8 @@ class FacetWP_Integration_WooCommerce
      * @since 2.0.9
      */
     function front_scripts() {
-        wp_enqueue_script( 'query-string', FACETWP_URL . '/assets/js/src/query-string.js', array(), FACETWP_VERSION );
-        wp_enqueue_script( 'facetwp-woocommerce', FACETWP_URL . '/includes/integrations/woocommerce/woocommerce.js', array( 'jquery' ), FACETWP_VERSION );
+        FWP()->display->assets['query-string.js'] = FACETWP_URL . '/assets/js/src/query-string.js';
+        FWP()->display->assets['woocommerce.js'] = FACETWP_URL . '/includes/integrations/woocommerce/woocommerce.js';
     }
 
 

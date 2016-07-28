@@ -75,8 +75,8 @@ class FacetWP_Facet_Checkboxes
 
         $output = $wpdb->get_results( $sql, ARRAY_A );
 
-        // Show "ghost" facet choices (those that return zero results)
-        if ( 'yes' == $facet['ghosts'] && ! empty( FWP()->unfiltered_post_ids ) ) {
+        // Show "ghost" facet choices
+        if ( isset( $facet['ghosts'] ) && 'yes' == $facet['ghosts'] && ! empty( FWP()->unfiltered_post_ids ) ) {
             $raw_post_ids = implode( ',', FWP()->unfiltered_post_ids );
 
             $sql = "

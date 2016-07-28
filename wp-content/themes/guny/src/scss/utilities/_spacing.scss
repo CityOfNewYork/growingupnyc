@@ -2,3 +2,21 @@
 .u-h-gutter {
   margin-bottom: $horizontal-gutter;
 }
+
+// Extra top padding
+.u-top-spacing {
+  padding-top: rem-calc(45);
+
+  @include media($bp-large) {
+    padding-top: rem-calc(60);
+  }
+}
+
+// Extra bottom padding
+.u-bottom-spacing {
+  padding-bottom: rem-calc(45);
+
+  @include media($bp-large) {
+    padding-bottom: rem-calc(60);
+  }
+}

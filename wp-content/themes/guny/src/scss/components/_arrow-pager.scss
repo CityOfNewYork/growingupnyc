@@ -1,10 +1,10 @@
 // Pagination
 //
-// Styleguide 6
+// Styleguide 7
 
 // Arrow Pager
 //
-// Global site header
+// Used to toggle dates on events page
 //
 // markup:
 // <div class="arrow-pager">
@@ -22,19 +22,15 @@
 //   <sg-wrapper-content/>
 // </div>
 //
-// Styleguide 6.1
+// Styleguide 7.1
 
 .arrow-pager {
   font-family: $font-family-display;
   font-weight: $font-weight-extrablack;
   @include font-size-x-large;
-  margin: rem-calc(35 0);
+  margin: rem-calc(0 0 35);
   text-align: center;
   @include text-uppercase;
-
-  @include media($bp-large) {
-    margin-top: rem-calc(55);
-  }
 }
 
 .arrow-pager__arrow {

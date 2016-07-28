@@ -624,6 +624,22 @@ ol.o-inline {
 .o-container-med {
   max-width: 900px; }
 
+.o-article-sidebar {
+  margin-left: -15px;
+  margin-right: -15px; }
+  @media screen and (min-width: 375px) {
+    .o-article-sidebar {
+      margin-left: -20px;
+      margin-right: -20px; } }
+  @media screen and (min-width: 1024px) {
+    .o-article-sidebar {
+      float: left;
+      display: block;
+      margin-right: 3.125%;
+      width: 31.25%; }
+      .o-article-sidebar:last-child {
+        margin-right: 0; } }
+
 .o-article {
   margin-left: -15px;
   margin-right: -15px; }
@@ -643,6 +659,9 @@ ol.o-inline {
       margin-right: 0; }
       .o-article:last-child {
         margin-right: 0; } }
+
+.o-article-sidebar + .o-article {
+  margin-left: 0%; }
 
 .o-content-static--left {
   bottom: 0;
@@ -826,7 +845,7 @@ ol.o-inline {
   font-family: "museo-sans-rounded", sans-serif;
   font-weight: 900;
   font-size: 1.3125rem;
-  margin: 2.1875rem 0;
+  margin: 0 0 2.1875rem;
   text-align: center;
   letter-spacing: .5px;
   line-height: 1;
@@ -834,9 +853,6 @@ ol.o-inline {
   @media screen and (min-width: 1024px) {
     .arrow-pager {
       font-size: 1.875rem; } }
-  @media screen and (min-width: 1024px) {
-    .arrow-pager {
-      margin-top: 3.4375rem; } }
 
 .arrow-pager__arrow {
   color: rgba(51, 51, 51, 0.5);

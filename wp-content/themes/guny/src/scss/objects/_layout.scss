@@ -25,6 +25,20 @@
   max-width: $max-width-med;
 }
 
+.o-article-sidebar {
+  margin-left: -#{$outer-gutter};
+  margin-right: -#{$outer-gutter};
+
+  @include media($bp-small) {
+    margin-left: -#{$outer-gutter-small};
+    margin-right: -#{$outer-gutter-small};
+  }
+
+  @include media($bp-large) {
+    @include span-columns(4);
+  }
+}
+
 .o-article {
   margin-left: -#{$outer-gutter};
   margin-right: -#{$outer-gutter};
@@ -41,6 +55,10 @@
     @include span-columns(8);
     @include omega;
   }
+}
+
+.o-article-sidebar + .o-article {
+  @include shift(0);
 }
 
 .o-content-static--left {

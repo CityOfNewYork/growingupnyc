@@ -535,6 +535,15 @@ strong {
     .o-content-container {
       padding: 3.125rem; } }
 
+.o-content-container--narrow {
+  padding: 1.25rem; }
+  @media screen and (min-width: 700px) {
+    .o-content-container--narrow {
+      padding: 1.5625rem 1.875rem 1.875rem; } }
+  @media screen and (min-width: 1024px) {
+    .o-content-container--narrow {
+      padding: 2.1875rem 2.5rem 2.5rem; } }
+
 .o-inline {
   display: block; }
 
@@ -992,7 +1001,7 @@ ol.o-inline {
   justify-content: center;
   line-height: 1.2; }
   .flexbox .c-card__sticker .event-day,
-  .flexbox .c-card__sticker .event-month-year {
+  .flexbox .c-card__sticker .event-month-date {
     display: block; }
 
 a.c-card__sticker:hover, a.c-card__sticker:focus {
@@ -1051,12 +1060,9 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 .c-card__link {
   color: #999;
   font-size: 0.875rem;
-  text-decoration: underline;
   order: 7; }
-  .c-card__link a {
-    text-decoration: underline; }
-    .c-card__link a:hover, .c-card__link a:focus {
-      color: #333; }
+  .c-card__link a:hover, .c-card__link a:focus {
+    color: #333; }
 
 .c-content-tout {
   color: #999;

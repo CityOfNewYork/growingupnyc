@@ -1,28 +1,25 @@
+<h2 class="arrow-pager">
+  <a class="arrow-pager__arrow arrow-pager__arrow--left" href="{{prev_month_url}}" rel="prev">
+    <svg role="img" class="icon--xsmall"><title>Previous Month</title><use xlink:href="#caret-left"></use></svg>
+  </a>
+  {{current_month_text}}
+  <a class="arrow-pager__arrow arrow-pager__arrow--right" href="{{next_month_url}}" rel="next">
+    <svg role="img" class="icon--xsmall"><title>Next Month</title><use xlink:href="#caret-right"></use></svg>
+  </a>
+</h2>
+
 {% for event in event_list %}
-  {% if loop.first %}
-    {% for post in event.posts %}
-      {% if loop.first %}
-        <h2 class="arrow-pager">
-          <a class="arrow-pager__arrow arrow-pager__arrow--left" href="{{post.tribe_get_previous_month_link}}" rel="prev">
-            <svg role="img" class="icon--xsmall"><title>Previous Month</title><use xlink:href="#caret-left"></use></svg>
-          </a>
-          {{post.current_month_text}}
-          <a class="arrow-pager__arrow arrow-pager__arrow--right" href="{{post.tribe_get_next_month_link}}" rel="next">
-            <svg role="img" class="icon--xsmall"><title>Next Month</title><use xlink:href="#caret-right"></use></svg>
-          </a>
-        </h2>
-      {% endif %}
-    {% endfor %}
-  {% endif %}
-
   <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-h-gutter">
-  <h3>{{ event.date_header }}</h3>
+    <h3>{{ event.date_header }}</h3>
 
-  {% for post in event.posts %}
-  <div class="c-block-list__item">
-    {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
-  </div>
-  {% endfor %}
-  
+    {% for post in event.posts %}
+      <div class="c-block-list__item">
+        {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
+      </div>
+    {% endfor %}
+  </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-h-gutter -->
+{% else %}
+  <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-h-gutter">
+    <p class="type--no-results">Sorry, we couldn’t find anything matching your search. <a href="/events">Clear filters</a></p>
   </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-h-gutter -->
 {% endfor %}

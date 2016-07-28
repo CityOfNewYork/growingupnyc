@@ -8,10 +8,13 @@
 //
 // markup:
 // <div class="arrow-pager">
-//   <div class="o-layout">
-//     <sg-insert>2.1.1</sg-insert>
-//     <sg-insert>2.1.2</sg-insert>
-//   </div>
+//   <a class="arrow-pager__arrow arrow-pager__arrow--left" href="#" rel="prev">
+//     <svg role="img" class="icon--xsmall"><title>Previous Month</title><use xlink:href="#caret-left"></use></svg>
+//   </a>
+//   July
+//   <a class="arrow-pager__arrow arrow-pager__arrow--right" href="#" rel="next">
+//     <svg role="img" class="icon--xsmall"><title>Next Month</title><use xlink:href="#caret-right"></use></svg>
+//   </a>
 // </div>
 //
 // sg-wrapper:
@@ -25,9 +28,13 @@
   font-family: $font-family-display;
   font-weight: $font-weight-extrablack;
   @include font-size-x-large;
-  margin: rem-calc(55 0 35);
+  margin: rem-calc(35 0);
   text-align: center;
   @include text-uppercase;
+
+  @include media($bp-large) {
+    margin-top: rem-calc(55);
+  }
 }
 
 .arrow-pager__arrow {

@@ -565,18 +565,21 @@ p + p {
     .o-content-container--narrow {
       padding: 2.1875rem 2.5rem 2.5rem; } }
 
-.o-content-container--text {
+.o-content-container--compact {
   padding-left: 1.25rem;
   padding-right: 1.25rem; }
   @media screen and (min-width: 700px) {
-    .o-content-container--text {
+    .o-content-container--compact {
       padding-left: 1.875rem;
       padding-right: 1.875rem; } }
   @media screen and (min-width: 1024px) {
-    .o-content-container--text {
+    .o-content-container--compact {
       padding-left: 0;
-      padding-right: 0;
-      width: 91.66667%; } }
+      padding-right: 0; } }
+
+@media screen and (min-width: 1024px) {
+  .o-content-container--text {
+    width: 91.66667%; } }
 
 .o-inline {
   display: block; }
@@ -598,69 +601,48 @@ ol.o-inline {
     .o-inline__item {
       margin-left: 3.5rem; } }
 
-.o-layout {
+.o-container, .o-container-med {
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 15px;
   padding-right: 15px;
   position: relative; }
-  .o-layout::after {
+  .o-container::after, .o-container-med::after {
     clear: both;
     content: "";
     display: block; }
   @media screen and (min-width: 375px) {
-    .o-layout {
+    .o-container, .o-container-med {
       padding-left: 20px;
       padding-right: 20px; } }
   @media screen and (min-width: 1024px) {
-    .o-layout {
+    .o-container, .o-container-med {
       padding-left: 40px;
       padding-right: 40px; } }
 
-@media screen and (min-width: 1024px) {
-  .o-layout--large {
-    max-width: 1280px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 40px;
-    padding-right: 40px; }
-    .o-layout--large::after {
-      clear: both;
-      content: "";
-      display: block; } }
+.o-container-med {
+  max-width: 900px; }
 
-@media screen and (min-width: 1024px) {
-  .o-article {
-    margin-left: 34.375%;
-    float: left;
-    display: block;
-    margin-right: 3.125%;
-    width: 65.625%;
-    margin-right: 0; }
-    .o-article:last-child {
-      margin-right: 0; } }
-
-.o-layout-med {
-  max-width: 1280px;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 900px;
-  padding-left: 15px;
-  padding-right: 15px;
-  position: relative; }
-  .o-layout-med::after {
-    clear: both;
-    content: "";
-    display: block; }
+.o-article {
+  margin-left: -15px;
+  margin-right: -15px; }
   @media screen and (min-width: 375px) {
-    .o-layout-med {
-      padding-left: 20px;
-      padding-right: 20px; } }
+    .o-article {
+      margin-left: -20px;
+      margin-right: -20px; } }
   @media screen and (min-width: 1024px) {
-    .o-layout-med {
-      padding-left: 40px;
-      padding-right: 40px; } }
+    .o-article {
+      margin-left: 0;
+      margin-right: 0;
+      margin-left: 34.375%;
+      float: left;
+      display: block;
+      margin-right: 3.125%;
+      width: 65.625%;
+      margin-right: 0; }
+      .o-article:last-child {
+        margin-right: 0; } }
 
 .o-content-static--left {
   bottom: 0;

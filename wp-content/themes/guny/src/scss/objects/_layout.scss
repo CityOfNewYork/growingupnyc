@@ -2,7 +2,8 @@
 //
 // Uses Neat for the grid mixins
 
-.o-layout {
+// Outer Containers
+.o-container {
   @include outer-container;
   padding-left: $outer-gutter;
   padding-right: $outer-gutter;
@@ -19,39 +20,26 @@
   }
 }
 
-// Applies the layout only at the large breakpoint
-// Used for weird situations where something is full-width at mobile but within a grid elsewhere
-.o-layout--large {
-  @include media($bp-large) {
-    @include outer-container;
-    padding-left: $outer-gutter-large;
-    padding-right: $outer-gutter-large;
-  }
+.o-container-med {
+  @extend .o-container;
+  max-width: $max-width-med;
 }
 
 .o-article {
+  margin-left: -#{$outer-gutter};
+  margin-right: -#{$outer-gutter};
+
+  @include media($bp-small) {
+    margin-left: -#{$outer-gutter-small};
+    margin-right: -#{$outer-gutter-small};
+  }
+
   @include media($bp-large) {
+    margin-left: 0;
+    margin-right: 0;
     @include shift(4);
     @include span-columns(8);
     @include omega;
-  }
-}
-
-.o-layout-med {
-  @include outer-container;
-  max-width: $max-width-med;
-  padding-left: $outer-gutter;
-  padding-right: $outer-gutter;
-  position: relative;
-
-  @include media($bp-small) {
-    padding-left: $outer-gutter-small;
-    padding-right: $outer-gutter-small;
-  }
-
-  @include media($bp-large) {
-    padding-left: $outer-gutter-large;
-    padding-right: $outer-gutter-large;
   }
 }
 

@@ -405,10 +405,14 @@ a {
   width: 1.375rem; }
 
 .icon--xsmall {
+  height: 1em;
+  width: 1em; }
+
+.icon--xxsmall {
   height: 0.8125rem;
   width: 0.8125rem; }
   @media screen and (min-width: 375px) {
-    .icon--xsmall {
+    .icon--xxsmall {
       height: 0.9375rem;
       width: 0.9375rem; } }
 
@@ -1341,11 +1345,13 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 
 .c-list-box--tertiary .c-list-box__subitem {
   background: #eee;
+  line-height: 1.2;
   padding: 1.125rem 1.875rem;
   margin-bottom: 0.125rem; }
   .c-list-box--tertiary .c-list-box__subitem .icon {
     color: rgba(51, 51, 51, 0.2);
-    margin-right: 0.75rem; }
+    margin-right: 0.75rem;
+    margin-top: -0.125rem; }
 
 .styleguide-example .c-side-hero {
   height: 100%; }

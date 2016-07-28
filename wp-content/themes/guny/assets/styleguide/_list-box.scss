@@ -176,11 +176,13 @@
 
 .c-list-box--tertiary .c-list-box__subitem {
   background: $color-background-shade;
+  line-height: 1.2;
   padding: rem-calc(18 30);
   margin-bottom: rem-calc(2);
 
   .icon {
     color: rgba($color-text, .2);
     margin-right: rem-calc(12);
+    margin-top: rem-calc(-2);
   }
 }

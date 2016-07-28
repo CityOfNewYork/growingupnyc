@@ -36,6 +36,11 @@
   }
 }
 
+// Hero Background Variations
+.c-hero--bg-primary {
+  background: $color-primary;
+}
+
 // Hero Title
 .c-hero__title {
   @include font-size-xx-large;
@@ -82,4 +87,16 @@
     right: -114px;
     width: 404px;
   }
+}
+
+// Hero Full BG
+//
+// Full background overlay added to the hero
+.c-hero__full-bg {
+  height: 100%;
+  left: 0;
+  min-width: 100%;
+  position: absolute;
+  top: 0;
+  width: auto;
 }

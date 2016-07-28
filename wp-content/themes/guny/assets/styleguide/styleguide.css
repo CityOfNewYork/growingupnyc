@@ -340,7 +340,8 @@ a {
     color: #0055b8;
     outline: none; }
 
-.form-field {
+.form-field,
+.facetwp-search {
   appearance: none;
   background: #fff;
   border: 1px solid transparent;
@@ -1177,6 +1178,9 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
     .c-hero {
       padding: 14.1875rem 5rem 5rem; } }
 
+.c-hero--bg-primary {
+  background: #2793e0; }
+
 .c-hero__title {
   font-size: 2.5rem;
   line-height: 1;
@@ -1223,6 +1227,14 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
       bottom: -87px;
       right: -114px;
       width: 404px; } }
+
+.c-hero__full-bg {
+  height: 100%;
+  left: 0;
+  min-width: 100%;
+  position: absolute;
+  top: 0;
+  width: auto; }
 
 .c-list-box {
   display: block;

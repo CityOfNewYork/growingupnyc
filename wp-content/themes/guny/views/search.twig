@@ -1,13 +1,24 @@
 {% extends "base.twig" %}
 
+{% block head_extras %}
+<style>
+  .c-hero { background-color: #469BFF; background-image: url(/wp-content/themes/guny/assets/img/hero-full-splatter-2.svg); }
+</style>
+{% endblock %}
+
 {% block content %}
+<header class="c-hero">
+  <div class="o-container">
+    <h1 class="show-for-screen-reader">Search Results</h1>
+    {{search}}
+  </div>
+</header>
   <main class="page-content row">
     <section class="facets">
       {{facet_categories}}
       {{facet_tags}}
     </section>
     <section class="post-list">
-      {{search}}
       {{results}}
       {{pagination}}
     </section> <!-- /.post-list -->

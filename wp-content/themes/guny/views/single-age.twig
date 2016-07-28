@@ -83,10 +83,51 @@
       </section>
       {% endif %}
       <div class="o-content-container--text u-top-spacing u-h-gutter">
-        <h2>Milestone</h2>
+        <h2>Milestones</h2>
         <p>How your child plays, learns, speaks, and acts offers important clues about your child&rsquo;s development.</p>
       </div>
       <h3>What most {{post.milestones_heading}} do at this age:</h3>
+      <ul class="js-accordion c-list-box c-list-box--tertiary">
+        <li class="c-list-box__item">
+          <h4 class="c-list-box__heading js-accordion__header" id="milestones-header-social">Social/Emotional</h4>
+          <ul class="c-list-box__content js-accordion__content" id="milestones-panel-social">
+          {% for milestone in post.get_field('social_milestones') %}
+            <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--small"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
+          {% endfor %}
+          </ul>
+        </li>
+        <li class="c-list-box__item">
+          <h4 class="c-list-box__heading js-accordion__header" id="milestones-header-language">Language/Communication</h4>
+          <ul class="c-list-box__content js-accordion__content" id="milestones-panel-language">
+          {% for milestone in post.get_field('communication_milestones') %}
+            <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--small"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
+          {% endfor %}
+          </ul>
+        </li>
+        <li class="c-list-box__item">
+          <h4 class="c-list-box__heading js-accordion__header" id="milestones-header-cognitive">Cognitive (learning, thinking, problem-solving)</h4>
+          <ul class="c-list-box__content js-accordion__content" id="milestones-panel-cognitive">
+          {% for milestone in post.get_field('learning_milestones') %}
+            <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--small"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
+          {% endfor %}
+          </ul>
+        </li>
+        <li class="c-list-box__item">
+          <h4 class="c-list-box__heading js-accordion__header" id="milestones-header-movement">Movement/Physical development</h4>
+          <ul class="c-list-box__content js-accordion__content" id="milestones-panel-movement">
+          {% for milestone in post.get_field('movement_milestones') %}
+            <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--small"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
+          {% endfor %}
+          </ul>
+        </li>
+      </ul>
+
+      <h3>Act early by talking to your child&rsquo;s doctor if your child:</h3>
+      <ul class="c-list-box">
+      {% for warning_sign in post.get_field('warning_sign') %}
+        <li class="c-list-box__subitem">{{warning_sign.warning_sign}}</li>
+      {% endfor %}
+      </ul>
     </div> <!-- /.o-article -->
   </article>
 {% endblock %}

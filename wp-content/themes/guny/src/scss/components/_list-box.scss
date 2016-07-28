@@ -8,6 +8,7 @@
 //
 // .c-list-box--primary - Brightly-colored list box
 // .c-list-box--secondary - More subdued box styling. Uses global palette colors and smaller boxes.
+// .c-list-box--tertiary - Smaller list box styling used for longer content items
 //
 // markup:
 // <ul class="c-list-box {$modifiers}">
@@ -60,6 +61,7 @@
   font-family: $font-family-display;
   @include font-size(21, 24);
   font-weight: $font-weight-extrablack;
+  margin-bottom: 0;
   text-align: left;
   width: 100%;
 }
@@ -95,6 +97,13 @@
       color: $color-text;
     }
   }
+}
+
+.c-list-box--tertiary .c-list-box__heading {
+  background: $color-primary;
+  color: $color-text-invert;
+  @include font-size-large;
+  padding: rem-calc(15 30);
 }
 
 // List Box Subheading
@@ -162,5 +171,16 @@
   &:hover,
   &:focus {
     background: $color-secondary;
+  }
+}
+
+.c-list-box--tertiary .c-list-box__subitem {
+  background: $color-background-shade;
+  padding: rem-calc(18 30);
+  margin-bottom: rem-calc(2);
+
+  .icon {
+    color: rgba($color-text, .2);
+    margin-right: rem-calc(12);
   }
 }

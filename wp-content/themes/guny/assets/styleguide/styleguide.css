@@ -1256,6 +1256,7 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   font-family: "museo-sans-rounded", sans-serif;
   font-size: 1.3125rem;
   font-weight: 900;
+  margin-bottom: 0;
   text-align: left;
   width: 100%; }
   @media screen and (min-width: 1024px) {
@@ -1285,6 +1286,15 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
     outline: none; }
     .c-list-box--secondary .c-list-box__heading:hover .icon, .c-list-box--secondary .c-list-box__heading:focus .icon {
       color: #333; }
+
+.c-list-box--tertiary .c-list-box__heading {
+  background: #2793e0;
+  color: #fff;
+  font-size: 1.125rem;
+  padding: 0.9375rem 1.875rem; }
+  @media screen and (min-width: 1024px) {
+    .c-list-box--tertiary .c-list-box__heading {
+      font-size: 1.3125rem; } }
 
 .c-list-box__subheading {
   display: block;
@@ -1328,6 +1338,14 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   text-transform: uppercase; }
   .c-list-box--secondary .c-list-box__subitem:hover, .c-list-box--secondary .c-list-box__subitem:focus {
     background: #0055b8; }
+
+.c-list-box--tertiary .c-list-box__subitem {
+  background: #eee;
+  padding: 1.125rem 1.875rem;
+  margin-bottom: 0.125rem; }
+  .c-list-box--tertiary .c-list-box__subitem .icon {
+    color: rgba(51, 51, 51, 0.2);
+    margin-right: 0.75rem; }
 
 .styleguide-example .c-side-hero {
   height: 100%; }

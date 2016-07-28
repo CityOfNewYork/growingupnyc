@@ -1,5 +1,20 @@
+// Utility classes for applying milestone-specific coloring to elements
+// Hover/focus styling is applied only to elements that are clickable (links and buttons)
+
 .baby-background {
   background-color: $color-baby !important;
+}
+
+.baby-secondary {
+  background-color: $color-baby-secondary !important;
+}
+
+button.baby-secondary,
+a.baby-secondary {
+  &:hover,
+  &:focus {
+    background-color: $color-baby !important;
+  }
 }
 
 .baby-text {
@@ -14,6 +29,19 @@
   background-color: $color-toddler !important;
 }
 
+.toddler-secondary {
+  background-color: $color-toddler-secondary !important;
+}
+
+button.toddler-secondary,
+a.toddler-secondary {
+  &:hover,
+  &:focus {
+    background-color: $color-toddler !important;
+    outline: none;
+  }
+}
+
 .toddler-text {
   color: $color-toddler;
 }
@@ -24,6 +52,19 @@
 
 .pre-schooler-background {
   background-color: $color-pre-schooler !important;
+}
+
+.pre-schooler-secondary {
+  background-color: $color-pre-schooler-secondary !important;
+}
+
+button.pre-schooler-secondary,
+a.pre-schooler-secondary {
+  &:hover,
+  &:focus {
+    background-color: $color-pre-schooler !important;
+    outline: none;
+  }
 }
 
 .pre-schooler-text {
@@ -38,6 +79,19 @@
   background-color: $color-grade-schooler !important;
 }
 
+.grade-schooler-secondary {
+  background-color: $color-grade-schooler-secondary !important;
+}
+
+button.grade-schooler-secondary,
+a.grade-schooler-secondary {
+  &:hover,
+  &:focus {
+    background-color: $color-grade-schooler !important;
+    outline: none;
+  }
+}
+
 .grade-schooler-text {
   color: $color-grade-schooler;
 }
@@ -48,6 +102,19 @@
 
 .pre-teen-background {
   background-color: $color-pre-teen !important;
+}
+
+.pre-teen-secondary {
+  background-color: $color-pre-teen-secondary !important;
+}
+
+button.pre-teen-secondary,
+a.pre-teen-secondary {
+  &:hover,
+  &:focus {
+    background-color: $color-pre-teen !important;
+    outline: none;
+  }
 }
 
 .pre-teen-text {

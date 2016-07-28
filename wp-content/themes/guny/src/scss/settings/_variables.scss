@@ -5,17 +5,20 @@
 // =====================
 $black: #000;
 $bright-blue: #2793e0;
+$bright-red: #fb0000;
+$dark-pink: #7f1c4e;
 $dark-gray: #6a6a6a;
+$dark-green: #1d5d11;
 $gray: #999;
-$pure-orange: #ffb900;
+$pure-orange: #ff9d00;
 $strong-blue: #0055b8;
 $strong-lime-green: #35c621;
 $strong-pink: #d8006d;
-$very-dark-blue: #0f4a8f;
+$very-dark-blue: #00326d;
 $very-dark-gray: #333;
 $very-dark-gray-transparent: rgba(51, 51, 51, .5);
 $very-light-gray: #eee;
-$vivid-orange: #ff9030;
+$vivid-orange: #ff6100;
 $white: #fff;
 
 // Colors By Usage
@@ -34,10 +37,15 @@ $color-background-footer: $color-primary;
 // Colors By Age Group
 // =====================
 $color-baby: $strong-pink;
+$color-baby-secondary: $dark-pink;
 $color-toddler: $vivid-orange;
+$color-toddler-secondary: $bright-red;
 $color-pre-schooler: $pure-orange;
+$color-pre-schooler-secondary: $vivid-orange;
 $color-grade-schooler: $strong-lime-green;
+$color-grade-schooler-secondary: $dark-green;
 $color-pre-teen: $strong-blue;
+$color-pre-teen-secondary: $very-dark-blue;
 
 // Font Families
 // =====================
@@ -86,6 +94,7 @@ $max-width-med: 900px;
 $max-width: 1280px;
 $outer-gutter: 15px;
 $outer-gutter-small: 20px;
+$outer-gutter-medium: 30px;
 $outer-gutter-large: 40px;
 $horizontal-gutter: 20px;
 

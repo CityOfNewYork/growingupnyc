@@ -1,2 +1,20 @@
-<div id="tribe-events-header" {{function('tribe_events_the_header_attributes')}}></div>
-{% include 'partials/post-list.twig' %}
+{% for event in events %}
+  {% if loop.first %}
+    {% for post in event.posts %}
+      <a href="{{post.tribe_get_previous_month_link}}" rel="prev">&lt;</a>
+      {{post.current_month_text}}
+      <a href="{{post.tribe_get_next_month_link}}" rel="next">&gt;</a>
+    {% endfor %}
+  {% endif %}
+
+  <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-h-gutter">
+  <h3>{{ event.date_header }}</h3>
+
+  {% for post in event.posts %}
+  <div class="c-block-list__item">
+    {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
+  </div>
+  {% endfor %}
+  
+  </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-h-gutter -->
+{% endfor %}

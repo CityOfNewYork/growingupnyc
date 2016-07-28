@@ -13,3 +13,15 @@
     padding: rem-calc(50);
   }
 }
+
+.o-content-container--narrow {
+  padding: rem-calc($outer-gutter-small);
+
+  @include media($bp-medium) {
+    padding: rem-calc(25 30 30);
+  }
+
+  @include media($bp-large) {
+    padding: rem-calc(35 40 40);
+  }
+}

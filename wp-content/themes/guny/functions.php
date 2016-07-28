@@ -22,6 +22,7 @@ class GunySite extends TimberSite {
     add_theme_support( 'menus' );
     add_action( 'init', array( $this, 'cleanup_header' ) );
     add_action( 'init', array( $this, 'add_menus' ) );
+    add_action( 'init', array( $this, 'add_options_page' ) );
     add_filter( 'timber_context', array( $this, 'add_to_context' ) );
     add_action( 'wp_enqueue_scripts', array( $this, 'add_styles_and_scripts' ), 999 );
     add_action( 'widgets_init', array( $this, 'add_sidebars' ) );
@@ -174,6 +175,19 @@ class GunySite extends TimberSite {
       )
     );
   }
+
+  // Add ACF Options Page
+  function add_options_page() {
+    if( function_exists('acf_add_options_page') ) {
+      acf_add_options_page(array(
+        'page_title'  => 'Theme General Settings',
+        'menu_title'  => 'Theme Settings',
+        'menu_slug'   => 'theme-general-settings',
+        'capability'  => 'edit_posts',
+        'redirect'    => false
+      ));
+    }
+  }
 }
 new GunySite();
 
@@ -199,6 +213,30 @@ class GunyEvent extends TimberPost {
   public function event_cost() {
     if (function_exists('tribe_get_cost')) {
       return tribe_get_cost($this->ID, true);
+    }
+  }
+
+  public function google_map_link() {
+    if (function_exists('tribe_get_map_link')) {
+      return tribe_get_map_link($this->ID);
+    }
+  }
+
+  public function current_month_text() {
+    if (function_exists('tribe_get_current_month_text')) {
+      return tribe_get_current_month_text();
+    }
+  }
+
+  public function tribe_get_previous_month_link() {
+    if (function_exists('tribe_get_previous_month_link')) {
+      return tribe_get_previous_month_link();
+    }
+  }
+
+  public function tribe_get_next_month_link() {
+    if (function_exists('tribe_get_next_month_link')) {
+      return tribe_get_next_month_link();
     }
   }
 
@@ -250,7 +288,7 @@ class GunyEvent extends TimberPost {
       } else if ($start_time == $tomorrow) {
         $time = 'tomorrow';
       } else {
-        $time = '<span class="event-day">' . date('l ', $this->start_datetime()) . '</span> <span class="event-month-year">' . date('M j', $this->start_datetime()) . '</span>';
+        $time = '<span class="event-day">' . date('l ', $this->start_datetime()) . '</span> <span class="event-month-date">' . date('M j', $this->start_datetime()) . '</span>';
       }
 
       return $time;
@@ -330,17 +368,6 @@ function guny_disable_emojis_tinymce( $plugins ) {
   } else {
     return array();
   }
-}
-
-// Add ACF Options Page
-if( function_exists('acf_add_options_page') ) {
-  acf_add_options_page(array(
-    'page_title'  => 'Theme General Settings',
-    'menu_title'  => 'Theme Settings',
-    'menu_slug'   => 'theme-general-settings',
-    'capability'  => 'edit_posts',
-    'redirect'    => false
-  ));
 }
 
 // Customize TinyMCE settings

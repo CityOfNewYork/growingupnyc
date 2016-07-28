@@ -107,7 +107,7 @@ $sticker-size: 100;
   line-height: 1.2;
 
   .event-day,
-  .event-month-year {
+  .event-month-date {
     display: block;
   }
 }
@@ -221,11 +221,9 @@ a.c-card__sticker {
 .c-card__link {
   color: $color-text-weak;
   font-size: rem-calc(14);
-  text-decoration: underline;
   order: 7;
 
   a {
-    text-decoration: underline;
 
     &:hover,
     &:focus {

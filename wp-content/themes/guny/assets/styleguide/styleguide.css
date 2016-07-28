@@ -1295,7 +1295,9 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   background: #2793e0;
   color: #fff;
   font-size: 1.125rem;
-  padding: 0.9375rem 1.875rem; }
+  line-height: 1.1;
+  min-height: 3.5rem;
+  padding: 0.625rem 1.875rem; }
   @media screen and (min-width: 1024px) {
     .c-list-box--tertiary .c-list-box__heading {
       font-size: 1.3125rem; } }
@@ -1346,12 +1348,20 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 .c-list-box--tertiary .c-list-box__subitem {
   background: #eee;
   line-height: 1.2;
-  padding: 1.125rem 1.875rem;
+  padding: 0.9375rem 1.875rem 0.9375rem 2.625rem;
+  text-indent: -1.6875rem;
   margin-bottom: 0.125rem; }
   .c-list-box--tertiary .c-list-box__subitem .icon {
     color: rgba(51, 51, 51, 0.2);
     margin-right: 0.75rem;
     margin-top: -0.125rem; }
+  @media screen and (min-width: 1024px) {
+    .c-list-box--tertiary .c-list-box__subitem {
+      padding-left: 3.75rem; } }
+
+.c-list-box__border {
+  border-radius: 3px;
+  padding: 0.3125rem 0; }
 
 .styleguide-example .c-side-hero {
   height: 100%; }

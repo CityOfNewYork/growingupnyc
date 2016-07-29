@@ -101,6 +101,7 @@ $sticker-size: 100;
 }
 
 .flexbox .c-card__sticker {
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;

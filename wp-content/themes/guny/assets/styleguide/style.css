@@ -1125,6 +1125,7 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   font-weight: 900;
   letter-spacing: 0.0275rem;
   line-height: 1.2;
+  margin: 0;
   text-decoration: none; }
   @media screen and (min-width: 1024px) {
     .c-content-tout__title {

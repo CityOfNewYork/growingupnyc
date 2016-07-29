@@ -136,6 +136,8 @@ class GunySite extends TimberSite {
     $context['top_programs'] = Timber::get_widgets('top_programs_widgets');
     $context['top_events'] = $this->get_featured_events(3);
     $context['options'] = get_fields('options');
+    $context['is_archive'] = is_archive();
+    $context['current_url'] = strtok($_SERVER["REQUEST_URI"],'?');
     return $context;
   }
 
@@ -276,6 +278,12 @@ class GunyEvent extends TimberPost {
     }
   }
 
+  public function start_date_full() {
+    if (function_exists('tribe_get_start_date')) {
+      return date('l, F j', $this->start_datetime());
+    }
+  }
+  
   public function start_date_formatted() {
     // TODO - format for user's timezone (possibly with JS)
     if (function_exists('tribe_get_start_date')) {
@@ -350,6 +358,12 @@ class GunyEvent extends TimberPost {
   public function venue_map() {
     if (function_exists('tribe_get_embedded_map')) {
       return tribe_get_embedded_map();
+    }
+  }
+
+  public function is_new_event_day() {
+    if (function_exists('tribe_is_new_event_day')) {
+      return tribe_is_new_event_day();
     }
   }
 }

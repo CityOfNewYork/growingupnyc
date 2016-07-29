@@ -1,12 +1,20 @@
+/**
+ * Filter module
+ * @module modules/filters
+ */
+
+import forEach from 'lodash/forEach';
+
 module.exports = function() {
-  var $filterForm = jQuery('.filter__form'),
-    $inputs;
+  const filterForm = document.querySelectorAll('.filter__form');
 
-  if ($filterForm.length) {
-    $inputs = $filterForm.find('select');
+  if (filterForm) {
+    const inputs = document.querySelectorAll('.filter__form select');
 
-    $inputs.on('change', function() {
-      return this.form.submit();
+    forEach(inputs, function(inputElem) {
+      inputElem.addEventListener('change', function() {
+        return this.form.submit();
+      });
     });
   }
 };

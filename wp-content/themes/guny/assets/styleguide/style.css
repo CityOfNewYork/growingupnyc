@@ -1042,6 +1042,7 @@ ol.o-inline {
       width: 6.25rem; } }
 
 .flexbox .c-card__sticker {
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1124,6 +1125,7 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   font-weight: 900;
   letter-spacing: 0.0275rem;
   line-height: 1.2;
+  margin: 0;
   text-decoration: none; }
   @media screen and (min-width: 1024px) {
     .c-content-tout__title {
@@ -1413,7 +1415,7 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   .c-list-box--tertiary .c-list-box__subitem .icon {
     color: rgba(51, 51, 51, 0.2);
     margin-right: 0.75rem;
-    margin-top: -0.125rem; }
+    margin-top: 0.125rem; }
   @media screen and (min-width: 1024px) {
     .c-list-box--tertiary .c-list-box__subitem {
       padding-left: 3.75rem; } }

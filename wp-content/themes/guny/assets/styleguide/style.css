@@ -1309,8 +1309,10 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 
 .c-list-box__item {
   display: block;
+  color: #fff;
   list-style: none;
-  margin-bottom: 0.25rem; }
+  margin-bottom: 0.25rem;
+  position: relative; }
 
 .c-list-box--secondary .c-list-box__item {
   margin-bottom: 0.125rem; }

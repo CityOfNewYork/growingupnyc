@@ -283,7 +283,7 @@ class GunyEvent extends TimberPost {
       return date('l, F j', $this->start_datetime());
     }
   }
-  
+
   public function start_date_formatted() {
     // TODO - format for user's timezone (possibly with JS)
     if (function_exists('tribe_get_start_date')) {
@@ -399,10 +399,8 @@ require_once(get_template_directory() . '/includes/guny_top_programs.php');
 // Add custom meta fields to taxonomies
 require_once(get_template_directory() . '/includes/guny_term_meta.php');
 
-<<<<<<< HEAD
 // Customize Facet WP output
 require_once(get_template_directory() . '/includes/guny_facetwp.php');
-=======
+
 // Event filters
 require_once(get_template_directory() . '/includes/guny_filter_events.php');
->>>>>>> master

@@ -2,4 +2,6 @@
   <div class="c-block-list__item{% if not loop.last %} u-h-gutter{% endif %}">
     {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] with {show_post_type: true} %}
   </div>
+{% else %}
+  <p class="type--no-results">Sorry, we couldn’t find anything matching your search. <a href="/search">Clear filters</a></p>
 {% endfor %}

@@ -1410,6 +1410,7 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 
 .c-list-box--tertiary .c-list-box__subitem {
   background: #eee;
+  color: #333;
   line-height: 1.2;
   padding: 0.9375rem 1.875rem 0.9375rem 2.625rem;
   text-indent: -1.6875rem;

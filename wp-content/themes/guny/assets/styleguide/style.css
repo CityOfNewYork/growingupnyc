@@ -321,6 +321,7 @@ a {
   color: #fff;
   font-size: 0.6875rem;
   margin: 0 0.125rem 0.25rem 0;
+  min-width: 0;
   padding: 0.625rem 1.0625rem;
   letter-spacing: .5px;
   line-height: 1;
@@ -328,6 +329,9 @@ a {
   .button--pill:hover, .button--pill:focus {
     background: #0055b8;
     color: #fff; }
+  @media screen and (min-width: 375px) {
+    .button--pill {
+      min-width: 0; } }
 
 .button--pill--alt {
   background: #0055b8; }

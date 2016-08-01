@@ -11,10 +11,15 @@
   font-size: rem-calc(18);
   font-weight: $font-weight-extrablack;
   line-height: 1;
+  min-width: rem-calc(125);
   padding: rem-calc(14 30);
   text-align: center;
   text-decoration: none;
   transition: $button-transition;
+
+  @include media($bp-small) {
+    min-width: rem-calc(150);
+  }
 }
 
 // Primary button

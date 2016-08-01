@@ -279,10 +279,14 @@ a {
   font-size: 1.125rem;
   font-weight: 900;
   line-height: 1;
+  min-width: 7.8125rem;
   padding: 0.875rem 1.875rem;
   text-align: center;
   text-decoration: none;
   transition: all ease-in-out 0.15s; }
+  @media screen and (min-width: 375px) {
+    .button--primary, .button--outline, .button--pill {
+      min-width: 9.375rem; } }
 
 .button--primary {
   background: #fff;
@@ -654,8 +658,9 @@ ol.o-inline {
       .o-article:last-child {
         margin-right: 0; } }
 
-.o-article-sidebar + .o-article {
-  margin-left: 0%; }
+@media screen and (min-width: 1024px) {
+  .o-article-sidebar + .o-article {
+    margin-left: 0%; } }
 
 .o-content-static--left {
   bottom: 0;
@@ -1710,17 +1715,13 @@ a.pre-teen-secondary:focus {
 /**
 * Wordpress image alignment
 */
-.alignright {
-  float: none; }
-  @media screen and (min-width: 1024px) {
-    .alignright {
-      float: right; } }
+@media screen and (min-width: 375px) {
+  .alignright {
+    float: right; } }
 
-.alignleft {
-  float: none; }
-  @media screen and (min-width: 1024px) {
-    .alignleft {
-      float: left; } }
+@media screen and (min-width: 375px) {
+  .alignleft {
+    float: left; } }
 
 .aligncenter {
   max-width: 100%;

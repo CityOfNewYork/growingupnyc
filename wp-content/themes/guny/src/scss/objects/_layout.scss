@@ -58,7 +58,9 @@
 }
 
 .o-article-sidebar + .o-article {
-  @include shift(0);
+  @include media($bp-large) {
+    @include shift(0);
+  }
 }
 
 .o-content-static--left {

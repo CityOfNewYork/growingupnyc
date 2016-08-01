@@ -31,10 +31,10 @@ function guny_facetwp_pager_html( $output, $params ) {
     return $output;
   }
   if ( 1 <= ( $page - 1 ) ) {
-      $output .= '<a class="facetwp-page button--outline button--outline--gray" data-page="' . ($page - 1) . '">Previous</a>';
+      $output .= '<a class="facetwp-page button--outline button--outline--gray alignleft" data-page="' . ($page - 1) . '">Previous</a>';
   }
   if ( $total_pages > ( $page + 1 ) ) {
-      $output .= '<a class="facetwp-page button--outline button--outline--gray" data-page="' . ($page + 1) . '">Next</a>';
+      $output .= '<a class="facetwp-page button--outline button--outline--gray alignright" data-page="' . ($page + 1) . '">Next</a>';
   }
   var_dump($output);
   return $output;

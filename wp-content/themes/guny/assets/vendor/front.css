@@ -2,6 +2,10 @@
     margin-bottom: 40px;
 }
 
+.facetwp-pager {
+  overflow: hidden;
+}
+
 .facetwp-type-checkboxes .facetwp-depth {
     display: none;
 }
@@ -11,15 +15,7 @@
 }
 
 .facetwp-checkbox {
-    background: url(../images/checkbox.png) 0 50% no-repeat;
-    background-size: 14px 14px;
-    margin-bottom: 4px;
-    padding-left: 20px;
-    cursor: pointer;
-}
-
-.facetwp-checkbox.checked {
-    background-image: url(../images/checkbox-on.png);
+  cursor: pointer;
 }
 
 .facetwp-checkbox.disabled {
@@ -34,7 +30,7 @@
 .facetwp-loading {
     width: 20px;
     height: 20px;
-    background: url(../images/loading.png) no-repeat;
+    background: url(/wp-content/plugins/facetwp/assets/images/loading.png) no-repeat;
     background-size: 20px 20px;
     -webkit-animation: rotate 700ms infinite linear;
     -moz-animation: rotate 700ms infinite linear;

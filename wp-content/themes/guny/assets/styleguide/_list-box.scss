@@ -41,8 +41,10 @@
 // Section within the list box. Encompasses the list heading and any sublists.
 .c-list-box__item {
   display: block;
+  color: $color-text-invert;
   list-style: none;
   margin-bottom: rem-calc(4);
+  position: relative;
 }
 
 .c-list-box--secondary .c-list-box__item {
@@ -186,7 +188,7 @@
   .icon {
     color: rgba($color-text, .2);
     margin-right: rem-calc(12);
-    margin-top: rem-calc(-2);
+    margin-top: rem-calc(2);
   }
 
   @include media($bp-large) {

@@ -72,6 +72,10 @@
 
 	var _sticky2 = _interopRequireDefault(_sticky);
 
+	var _filters = __webpack_require__(413);
+
+	var _filters2 = _interopRequireDefault(_filters);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function ready(fn) {
@@ -89,6 +93,7 @@
 	  (0, _accordion2.default)();
 	  (0, _overlay2.default)();
 	  (0, _sticky2.default)();
+	  (0, _filters2.default)();
 	}
 
 	ready(init);
@@ -12120,6 +12125,35 @@
 	var _forEach2 = _interopRequireDefault(_forEach);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 413 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _forEach = __webpack_require__(301);
+
+	var _forEach2 = _interopRequireDefault(_forEach);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = function () {
+	  var filterForm = document.querySelectorAll('.filter__form');
+
+	  if (filterForm) {
+	    var inputs = document.querySelectorAll('.filter__form select');
+
+	    (0, _forEach2.default)(inputs, function (inputElem) {
+	      inputElem.addEventListener('change', function () {
+	        return this.form.submit();
+	      });
+	    });
+	  }
+	}; /**
+	    * Filter module
+	    * @module modules/filters
+	    */
 
 /***/ }
 /******/ ]);

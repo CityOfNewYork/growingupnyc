@@ -1,7 +1,11 @@
 // Content Container
 //
 .o-content-container {
-  padding: rem-calc(35 $outer-gutter-small 40);
+  padding: rem-calc(30 $outer-gutter 35);
+
+  @include media($bp-small) {
+    padding: rem-calc(35 $outer-gutter-small 40);
+  }
 
   @include media($bp-medium) {
     padding-left: rem-calc($outer-gutter-medium);
@@ -9,7 +13,7 @@
   }
 
   @include media($bp-large) {
-    padding: rem-calc(50);
+    padding: rem-calc($outer-gutter-large);
   }
 }
 

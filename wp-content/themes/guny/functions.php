@@ -22,6 +22,7 @@ class GunySite extends TimberSite {
     add_theme_support( 'menus' );
     add_action( 'init', array( $this, 'cleanup_header' ) );
     add_action( 'init', array( $this, 'add_menus' ) );
+    add_action( 'init', array( $this, 'add_options_page' ) );
     add_filter( 'timber_context', array( $this, 'add_to_context' ) );
     add_action( 'wp_enqueue_scripts', array( $this, 'add_styles_and_scripts' ), 999 );
     add_action( 'widgets_init', array( $this, 'add_sidebars' ) );
@@ -50,7 +51,7 @@ class GunySite extends TimberSite {
   * @param {boolean} $featured_first - Whether to first query for featured events and display them at the top of the list
   * @return Array of GunyEvent objects
   */
-  public static function get_featured_events($num_events = 4, $tax_query = null, $featured_first = true) {
+  public static function get_featured_events($num_events = 3, $tax_query = null, $featured_first = true) {
     $top_events = array();
     // Get Featured Events in order of ascending date
     if (function_exists('tribe_get_events')) {
@@ -134,6 +135,9 @@ class GunySite extends TimberSite {
     ) );
     $context['top_programs'] = Timber::get_widgets('top_programs_widgets');
     $context['top_events'] = $this->get_featured_events(3);
+    $context['options'] = get_fields('options');
+    $context['is_archive'] = is_archive();
+    $context['current_url'] = strtok($_SERVER["REQUEST_URI"],'?');
     return $context;
   }
 
@@ -173,6 +177,19 @@ class GunySite extends TimberSite {
       )
     );
   }
+
+  // Add ACF Options Page
+  function add_options_page() {
+    if( function_exists('acf_add_options_page') ) {
+      acf_add_options_page(array(
+        'page_title'  => 'Theme General Settings',
+        'menu_title'  => 'Theme Settings',
+        'menu_slug'   => 'theme-general-settings',
+        'capability'  => 'edit_posts',
+        'redirect'    => false
+      ));
+    }
+  }
 }
 new GunySite();
 
@@ -198,6 +215,30 @@ class GunyEvent extends TimberPost {
   public function event_cost() {
     if (function_exists('tribe_get_cost')) {
       return tribe_get_cost($this->ID, true);
+    }
+  }
+
+  public function google_map_link() {
+    if (function_exists('tribe_get_map_link')) {
+      return tribe_get_map_link($this->ID);
+    }
+  }
+
+  public function current_month_text() {
+    if (function_exists('tribe_get_current_month_text')) {
+      return tribe_get_current_month_text();
+    }
+  }
+
+  public function tribe_get_previous_month_link() {
+    if (function_exists('tribe_get_previous_month_link')) {
+      return tribe_get_previous_month_link();
+    }
+  }
+
+  public function tribe_get_next_month_link() {
+    if (function_exists('tribe_get_next_month_link')) {
+      return tribe_get_next_month_link();
     }
   }
 
@@ -237,6 +278,12 @@ class GunyEvent extends TimberPost {
     }
   }
 
+  public function start_date_full() {
+    if (function_exists('tribe_get_start_date')) {
+      return date('l, F j', $this->start_datetime());
+    }
+  }
+  
   public function start_date_formatted() {
     // TODO - format for user's timezone (possibly with JS)
     if (function_exists('tribe_get_start_date')) {
@@ -249,8 +296,7 @@ class GunyEvent extends TimberPost {
       } else if ($start_time == $tomorrow) {
         $time = 'tomorrow';
       } else {
-        $time = '<span class="event-day">' . date('l ', $this->start_datetime()) . '</span>'
-                . date('M j', $this->start_datetime());
+        $time = '<span class="event-day">' . date('l ', $this->start_datetime()) . '</span> <span class="event-month-date">' . date('M j', $this->start_datetime()) . '</span>';
       }
 
       return $time;
@@ -314,6 +360,12 @@ class GunyEvent extends TimberPost {
       return tribe_get_embedded_map();
     }
   }
+
+  public function is_new_event_day() {
+    if (function_exists('tribe_is_new_event_day')) {
+      return tribe_is_new_event_day();
+    }
+  }
 }
 
 /**
@@ -347,5 +399,10 @@ require_once(get_template_directory() . '/includes/guny_top_programs.php');
 // Add custom meta fields to taxonomies
 require_once(get_template_directory() . '/includes/guny_term_meta.php');
 
+<<<<<<< HEAD
 // Customize Facet WP output
 require_once(get_template_directory() . '/includes/guny_facetwp.php');
+=======
+// Event filters
+require_once(get_template_directory() . '/includes/guny_filter_events.php');
+>>>>>>> master

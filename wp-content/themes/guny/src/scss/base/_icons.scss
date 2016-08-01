@@ -26,11 +26,15 @@
 .icon--xsmall {
   height: 1em;
   width: 1em;
+  vertical-align: top;
 }
 
 .icon--xxsmall {
   height: rem-calc(13);
+  position: relative;
+  top: rem-calc(3);
   width: rem-calc(13);
+  vertical-align: top;
 
   @include media($bp-small) {
     height: rem-calc(15);

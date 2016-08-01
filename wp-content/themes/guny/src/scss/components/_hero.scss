@@ -41,12 +41,19 @@
   background: $color-primary;
 }
 
+.c-hero--bg-secondary {
+  background: $color-secondary;
+}
+
 // Hero Title
 .c-hero__title {
   @include font-size-xx-large;
   line-height: 1;
   padding-top: rem-calc(35);
   text-transform: uppercase;
+  // Set z-index for text to appear on top of bg image
+  position: relative;
+  z-index: 1;
 }
 
 // Hero Tagline
@@ -55,6 +62,9 @@
   @include font-size-x-large;
   font-weight: $font-weight-extrablack;
   line-height: 1.2;
+  // Set z-index for text to appear on top of bg image
+  position: relative;
+  z-index: 1;
 
   @include media($bp-medium) {
     @include span-columns(6);

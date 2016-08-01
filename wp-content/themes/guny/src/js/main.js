@@ -5,6 +5,7 @@ import accordion from './modules/accordion.js';
 import offcanvas from './modules/offcanvas.js';
 import overlay from './modules/overlay.js';
 import sticky from './modules/sticky.js';
+import filters from './modules/filters.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -21,6 +22,7 @@ function init() {
   accordion();
   overlay();
   sticky();
+  filters();
 }
 
 ready(init);

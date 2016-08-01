@@ -1,4 +1,5 @@
 {% for post in posts %}
-  {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
+  <div class="c-block-list__item{% if not loop.last %} u-h-gutter{% endif %}">
+    {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] with {show_post_type: true} %}
+  </div>
 {% endfor %}
-

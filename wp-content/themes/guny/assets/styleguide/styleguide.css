@@ -1088,6 +1088,8 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
     position: relative;
     top: 0.1875rem;
     vertical-align: top; }
+  .c-card__subtitle p + p {
+    margin-top: 0; }
 
 .c-card__subtitle strong {
   color: #333;
@@ -1110,6 +1112,24 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   order: 7; }
   .c-card__link a:hover, .c-card__link a:focus {
     color: #333; }
+
+.c-card__label {
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  color: #6a6a6a;
+  font-family: "museo-sans-rounded", sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 900;
+  padding: 0.625rem;
+  position: absolute;
+  letter-spacing: .5px;
+  line-height: 1;
+  text-transform: uppercase;
+  top: -1rem; }
+  @media screen and (min-width: 1024px) {
+    .c-card__label {
+      font-size: 0.8125rem; } }
 
 .c-content-tout {
   color: #999;

@@ -1,4 +1,4 @@
-{% extends "base.twig" %}
+{% extends "list.twig" %}
 
 {% block head_extras %}
 <style>
@@ -6,21 +6,26 @@
 </style>
 {% endblock %}
 
-{% block content %}
+{% block hero %}
 <header class="c-hero">
   <div class="o-container-med">
     <h1 class="show-for-screen-reader">Search Results</h1>
     {{search}}
   </div>
 </header>
-  <main class="page-content row">
-    <section class="facets">
-      {{facet_categories}}
-      {{facet_tags}}
-    </section>
-    <section class="post-list">
-      {{results}}
-      {{pagination}}
-    </section> <!-- /.post-list -->
-  </main> <!-- /.page-content.row -->
+{% endblock %}
+
+{% block list_sidebar %}
+{{facet_categories}}
+{{facet_tags}}
+{% endblock %}
+
+{% block post_list %}
+  <section class="c-block-list c-block-list--shade o-content-container u-h-gutter">
+    {{results}}
+  </section>
+{% endblock %}
+
+{% block after_list %}
+{{pagination}}
 {% endblock %}

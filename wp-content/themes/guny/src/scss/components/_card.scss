@@ -10,6 +10,7 @@
 // <div class="c-card {$modifiers}">
 //   <sg-insert>5.2.1</sg-insert>
 //   <sg-insert>5.2.2</sg-insert>
+//   <sg-insert>5.2.7</sg-insert>
 //   <sg-insert>5.2.4</sg-insert>
 //   <sg-insert>5.2.3</sg-insert>
 //   <sg-insert>5.2.5</sg-insert>
@@ -188,6 +189,10 @@ a.c-card__sticker {
     top: rem-calc(3);
     vertical-align: top;
   }
+
+  p + p {
+    margin-top: 0;
+  }
 }
 
 .c-card__subtitle strong {
@@ -231,4 +236,24 @@ a.c-card__sticker {
       color: $color-text;
     }
   }
+}
+
+// Content Card Label
+//
+// markup:
+// <p class="c-card__label">Post Type</p>
+//
+// Styleguide 5.2.7
+.c-card__label {
+  background: $color-background;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px 0 $color-shadow;
+  color: $dark-gray;
+  font-family: $font-family-display;
+  @include font-size-x-small;
+  font-weight: $font-weight-extrablack;
+  padding: rem-calc(10);
+  position: absolute;
+  @include text-uppercase;
+  top: rem-calc(-16);
 }

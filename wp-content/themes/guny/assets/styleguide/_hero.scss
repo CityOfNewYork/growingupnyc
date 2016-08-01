@@ -110,3 +110,13 @@
   top: 0;
   width: auto;
 }
+
+// Hero Label
+.c-hero__label {
+  display: block;
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
+  @include font-size(21,24);
+  margin-bottom: rem-calc(15);
+  text-align: center;
+}

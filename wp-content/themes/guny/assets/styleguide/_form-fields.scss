@@ -25,9 +25,9 @@
   background: $white;
   border: 1px solid transparent;
   border-radius: rem-calc(3);
+  color: $color-text;
   font-size: rem-calc($font-size-regular);
   font-weight: $font-weight-semibold;
-  margin: rem-calc(0 0 30);
   padding: rem-calc(10 50 10 15);
 }
 
@@ -36,12 +36,11 @@
 // Large
 .form-field--large {
   font-size: rem-calc($font-size-x-large-mobile);
-  margin: rem-calc(0 0 35);
+  line-height: 1;
   padding: rem-calc(10 40 10 20);
 
   @include media($bp-medium) {
     font-size: rem-calc($font-size-x-large);
-    margin: rem-calc(0 0 50);
     padding: rem-calc(20 60 20 25);
   }
 }
@@ -62,7 +61,7 @@
   color: $color-primary;
   cursor: pointer;
   height: rem-calc(20);
-  margin-top: rem-calc(-35);
+  margin-top: rem-calc(-10);
   position: absolute;
   right: rem-calc(20);
   top: 50%;
@@ -83,12 +82,12 @@
 // Large
 .form-field__icon--large {
   height: rem-calc(20);
-  margin-top: rem-calc(-30);
+  margin-top: rem-calc(-10);
   width: rem-calc(20);
 
   @include media($bp-medium) {
     height: rem-calc(30);
-    margin-top: rem-calc(-40);
+    margin-top: rem-calc(-15);
     width: rem-calc(30);
   }
 }

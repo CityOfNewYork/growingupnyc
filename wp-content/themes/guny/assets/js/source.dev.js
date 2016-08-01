@@ -351,6 +351,10 @@ if (objCtr.defineProperty) {
 
 	var _filters2 = _interopRequireDefault(_filters);
 
+	var _searchResultsHeader = __webpack_require__(414);
+
+	var _searchResultsHeader2 = _interopRequireDefault(_searchResultsHeader);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function ready(fn) {
@@ -369,6 +373,9 @@ if (objCtr.defineProperty) {
 	  (0, _overlay2.default)();
 	  (0, _sticky2.default)();
 	  (0, _filters2.default)();
+
+	  // Search results page
+	  (0, _searchResultsHeader2.default)();
 	}
 
 	ready(init);
@@ -12429,6 +12436,26 @@ if (objCtr.defineProperty) {
 	    * Filter module
 	    * @module modules/filters
 	    */
+
+/***/ },
+/* 414 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  if (typeof window.FWP !== 'undefined' && $('body').hasClass('page-template-template-search')) {
+	    $('.facetwp-facet-search').on('click', '.facetwp-searchbtn', function (event) {
+	      event.preventDefault();
+	      window.FWP.autoload();
+	    });
+	  }
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(409)))
 
 /***/ }
 /******/ ]);

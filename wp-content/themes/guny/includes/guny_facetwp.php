@@ -20,3 +20,29 @@ function guny_facetwp_facet_html( $output, $params ) {
   return $output;
 }
 add_filter( 'facetwp_facet_html', 'guny_facetwp_facet_html', 10, 2 );
+
+function guny_facetwp_pager_html( $output, $params ) {
+  $page = (int) $params['page'];
+  $per_page = (int) $params['per_page'];
+  $total_rows = (int) $params['total_rows'];
+  $total_pages = (int) $params['total_pages'];
+  $output = '';
+  if ( $total_pages <= 1 ) {
+    return $output;
+  }
+  if ( 1 <= ( $page - 1 ) ) {
+      $output .= '<a class="facetwp-page button--outline button--outline--gray" data-page="' . ($page - 1) . '">Previous</a>';
+  }
+  if ( $total_pages > ( $page + 1 ) ) {
+      $output .= '<a class="facetwp-page button--outline button--outline--gray" data-page="' . ($page + 1) . '">Next</a>';
+  }
+  var_dump($output);
+  return $output;
+}
+add_filter( 'facetwp_pager_html', 'guny_facetwp_pager_html', 10, 2 );
+
+function guny_facetwp_assets( $assets ) {
+  $assets['front.css'] = get_stylesheet_directory_uri() . '/assets/vendor/front.css';
+  return $assets;
+}
+add_filter( 'facetwp_assets', 'guny_facetwp_assets' );

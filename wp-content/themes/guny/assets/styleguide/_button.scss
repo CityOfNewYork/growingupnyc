@@ -11,10 +11,15 @@
   font-size: rem-calc(18);
   font-weight: $font-weight-extrablack;
   line-height: 1;
+  min-width: rem-calc(125);
   padding: rem-calc(14 30);
   text-align: center;
   text-decoration: none;
   transition: $button-transition;
+
+  @include media($bp-small) {
+    min-width: rem-calc(150);
+  }
 }
 
 // Primary button
@@ -113,6 +118,7 @@
   color: $color-text-invert;
   font-size: rem-calc($font-size-x-small-mobile);
   margin: rem-calc(0 2 4 0);
+  min-width: 0;
   padding: rem-calc(10 17);
   @include text-uppercase;
 
@@ -120,6 +126,10 @@
   &:focus {
     background: $color-secondary;
     color: $color-text-invert;
+  }
+
+  @include media($bp-small) {
+    min-width: 0;
   }
 }
 

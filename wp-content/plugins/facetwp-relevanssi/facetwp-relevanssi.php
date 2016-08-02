@@ -36,7 +36,9 @@ class FacetWP_Relevanssi
     function search_args( $args, $class ) {
 
         if ( $class->is_search ) {
-            $this->search_terms = $args['s'];
+            if ( !empty( $args['s'] ) ) {
+              $this->search_terms = $args['s'];
+            }
             unset( $args['s'] );
 
             $args['suppress_filters'] = true;

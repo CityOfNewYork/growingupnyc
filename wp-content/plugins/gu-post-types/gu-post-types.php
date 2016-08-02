@@ -68,7 +68,7 @@ class GUPostTypes {
         'public' => true,
         'menu_position' => 22,
         'menu_icon' => 'dashicons-groups',
-        'supports' => array( 'title' ),
+        'supports' => array( 'title', 'excerpt' ),
         'has_archive' => false,
         'rewrite' => array(
           'slug' => 'age',

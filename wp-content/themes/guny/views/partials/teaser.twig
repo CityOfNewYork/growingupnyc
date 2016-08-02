@@ -11,6 +11,19 @@
     </a>
     {% endblock %}
   </h3>
+  {% block label %}
+  {% if show_post_type %}
+    <p class="c-card__label">
+    {% if post.post_type == 'tribe_events' %}
+      Event
+    {% elseif post.post_type == 'age' %}
+      Age Guide
+    {% else %}
+      {{post.post_type|replace({'_': ' '})|title}}
+    {% endif %}
+    </p>
+  {% endif %}
+  {% endblock %}
   <div class="c-card__subtitle">
     {% block subtitle %}{% endblock %}
   </div>

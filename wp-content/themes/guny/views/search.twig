@@ -1,15 +1,34 @@
-{% extends "base.twig" %}
+{% extends "list.twig" %}
 
-{% block content %}
-  <main class="page-content row">
-    <section class="facets">
-      {{facet_categories}}
-      {{facet_tags}}
-    </section>
-    <section class="post-list">
-      {{search}}
-      {{results}}
-      {{pagination}}
-    </section> <!-- /.post-list -->
-  </main> <!-- /.page-content.row -->
+{% block head_extras %}
+<style>
+  .c-hero { background-color: #469BFF; background-image: url(/wp-content/themes/guny/assets/img/hero-full-splatter-2.svg); }
+</style>
+{% endblock %}
+
+{% block hero %}
+<header class="c-hero">
+  <div class="o-container-med">
+    <h1 class="show-for-screen-reader">Search Results</h1>
+    {{search}}
+  </div>
+</header>
+{% endblock %}
+
+{% block list_sidebar %}
+<ol class="c-list-box c-list-box--secondary facetwp-guny" data-multiselectable="false">
+  {{facet_post_type}}
+</ol>
+{% endblock %}
+
+{% block post_list %}
+  <section class="c-block-list c-block-list--shade o-content-container u-h-gutter">
+    {{results}}
+  </section>
+{% endblock %}
+
+{% block after_list %}
+<div class="o-content-container--compact">
+  {{pagination}}
+</div>
 {% endblock %}

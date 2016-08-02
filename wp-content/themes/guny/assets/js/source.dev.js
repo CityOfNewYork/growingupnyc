@@ -351,6 +351,10 @@ if (objCtr.defineProperty) {
 
 	var _filters2 = _interopRequireDefault(_filters);
 
+	var _searchResultsHeader = __webpack_require__(414);
+
+	var _searchResultsHeader2 = _interopRequireDefault(_searchResultsHeader);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function ready(fn) {
@@ -369,9 +373,15 @@ if (objCtr.defineProperty) {
 	  (0, _overlay2.default)();
 	  (0, _sticky2.default)();
 	  (0, _filters2.default)();
+
+	  // Search results page
+	  (0, _searchResultsHeader2.default)();
 	}
 
 	ready(init);
+
+	// Make certain functions available globally
+	window.accordion = _accordion2.default;
 
 /***/ },
 /* 1 */
@@ -12163,11 +12173,15 @@ if (objCtr.defineProperty) {
 	   * @param {object} $item - The accordion child jQuery object
 	   */
 	  function initializeAccordionItem($item) {
-	    $item.addClass('o-accordion__item');
 	    var $accordionContent = $item.find('.js-accordion__content');
 	    var $accordionInitialHeader = $item.find('.js-accordion__header');
-	    if ($accordionContent && $accordionInitialHeader) {
+	    // Clear any previously bound events
+	    $item.off('toggle.accordion');
+	    // Clear any existing state classes
+	    $item.removeClass('is-expanded is-collapsed');
+	    if ($accordionContent.length && $accordionInitialHeader.length) {
 	      (function () {
+	        $item.addClass('o-accordion__item');
 	        var $accordionHeader = convertHeaderToButton($accordionInitialHeader);
 	        $accordionInitialHeader.replaceWith($accordionHeader);
 	        initializeHeader($accordionHeader, $accordionContent);
@@ -12205,31 +12219,47 @@ if (objCtr.defineProperty) {
 	    $accordionElem.children().each(function () {
 	      initializeAccordionItem($(this));
 	    });
+	    /**
+	     * Handle changeState events on accordion headers.
+	     * Close the open accordion item and open the new one.
+	     * @function
+	     * @param {object} event - The event object
+	     */
+	    $accordionElem.on('changeState.accordion', '.js-accordion__header', $.proxy(function (event) {
+	      var $newItem = $(event.target).closest('.o-accordion__item');
+	      if (multiSelectable) {
+	        $newItem.trigger('toggle.accordion', [!$newItem.hasClass('is-expanded')]);
+	      } else {
+	        var $openItem = $accordionElem.find('.is-expanded');
+	        $openItem.trigger('toggle.accordion', [false]);
+	        if ($openItem.get(0) !== $newItem.get(0)) {
+	          $newItem.trigger('toggle.accordion', [true]);
+	        }
+	      }
+	    }, this));
 	  }
 
-	  var $accordions = $('.js-accordion');
+	  /**
+	   * Reinitialize an accordion after its contents were dynamically updated
+	   * @param {object} $accordionElem - The jQuery object containing the root element of the accordion
+	   */
+	  function reInitialize($accordionElem) {
+	    if ($accordionElem.hasClass('o-accordion')) {
+	      $accordionElem.children().each(function () {
+	        initializeAccordionItem($(this));
+	      });
+	    } else {
+	      var multiSelectable = $accordionElem.data('multiselectable') || false;
+	      initialize($accordionElem, multiSelectable);
+	    }
+	  }
+	  window.reInitializeAccordion = reInitialize;
+
+	  var $accordions = $('.js-accordion').not('.o-accordion');
 	  if ($accordions.length) {
 	    $accordions.each(function () {
 	      var multiSelectable = $(this).data('multiselectable') || false;
 	      initialize($(this), multiSelectable);
-	      /**
-	       * Handle changeState events on accordion headers.
-	       * Close the open accordion item and open the new one.
-	       * @function
-	       * @param {object} event - The event object
-	       */
-	      $(this).on('changeState.accordion', '.js-accordion__header', $.proxy(function (event) {
-	        var $newItem = $(event.target).parent();
-	        if (multiSelectable) {
-	          $newItem.trigger('toggle.accordion', [!$newItem.hasClass('is-expanded')]);
-	        } else {
-	          var $openItem = $(this).find('.is-expanded');
-	          $openItem.trigger('toggle.accordion', [false]);
-	          if ($openItem.get(0) !== $newItem.get(0)) {
-	            $newItem.trigger('toggle.accordion', [true]);
-	          }
-	        }
-	      }, this));
 	    });
 	  }
 	};
@@ -12429,6 +12459,26 @@ if (objCtr.defineProperty) {
 	    * Filter module
 	    * @module modules/filters
 	    */
+
+/***/ },
+/* 414 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  if (typeof window.FWP !== 'undefined' && $('body').hasClass('page-template-template-search')) {
+	    $('.facetwp-facet-search').on('click', '.facetwp-searchbtn', function (event) {
+	      event.preventDefault();
+	      window.FWP.autoload();
+	    });
+	  }
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(409)))
 
 /***/ }
 /******/ ]);

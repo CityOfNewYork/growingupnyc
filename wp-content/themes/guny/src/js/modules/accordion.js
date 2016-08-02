@@ -104,10 +104,14 @@ export default function() {
    * @param {object} $item - The accordion child jQuery object
    */
   function initializeAccordionItem($item) {
-    $item.addClass('o-accordion__item');
     const $accordionContent = $item.find('.js-accordion__content');
     const $accordionInitialHeader = $item.find('.js-accordion__header');
-    if ($accordionContent && $accordionInitialHeader) {
+    // Clear any previously bound events
+    $item.off('toggle.accordion');
+    // Clear any existing state classes
+    $item.removeClass('is-expanded is-collapsed');
+    if ($accordionContent.length && $accordionInitialHeader.length) {
+      $item.addClass('o-accordion__item');
       const $accordionHeader = convertHeaderToButton($accordionInitialHeader);
       $accordionInitialHeader.replaceWith($accordionHeader);
       initializeHeader($accordionHeader, $accordionContent);
@@ -144,31 +148,47 @@ export default function() {
     $accordionElem.children().each(function() {
       initializeAccordionItem($(this));
     });
+    /**
+     * Handle changeState events on accordion headers.
+     * Close the open accordion item and open the new one.
+     * @function
+     * @param {object} event - The event object
+     */
+    $accordionElem.on('changeState.accordion', '.js-accordion__header', $.proxy(function(event) {
+      const $newItem = $(event.target).closest('.o-accordion__item');
+      if (multiSelectable) {
+        $newItem.trigger('toggle.accordion', [!$newItem.hasClass('is-expanded')]);
+      } else {
+        const $openItem = $accordionElem.find('.is-expanded');
+        $openItem.trigger('toggle.accordion', [false]);
+        if ($openItem.get(0) !== $newItem.get(0)) {
+          $newItem.trigger('toggle.accordion', [true]);
+        }
+      }
+    }, this));
   }
 
-  const $accordions = $('.js-accordion');
+  /**
+   * Reinitialize an accordion after its contents were dynamically updated
+   * @param {object} $accordionElem - The jQuery object containing the root element of the accordion
+   */
+  function reInitialize($accordionElem) {
+    if ($accordionElem.hasClass('o-accordion')) {
+      $accordionElem.children().each(function() {
+        initializeAccordionItem($(this));
+      });
+    } else {
+      const multiSelectable = $accordionElem.data('multiselectable') || false;
+      initialize($accordionElem, multiSelectable);
+    }
+  }
+  window.reInitializeAccordion = reInitialize;
+
+  const $accordions = $('.js-accordion').not('.o-accordion');
   if ($accordions.length) {
     $accordions.each(function() {
       const multiSelectable = $(this).data('multiselectable') || false;
       initialize($(this), multiSelectable);
-      /**
-       * Handle changeState events on accordion headers.
-       * Close the open accordion item and open the new one.
-       * @function
-       * @param {object} event - The event object
-       */
-      $(this).on('changeState.accordion', '.js-accordion__header', $.proxy(function(event) {
-        const $newItem = $(event.target).parent();
-        if (multiSelectable) {
-          $newItem.trigger('toggle.accordion', [!$newItem.hasClass('is-expanded')]);
-        } else {
-          const $openItem = $(this).find('.is-expanded');
-          $openItem.trigger('toggle.accordion', [false]);
-          if ($openItem.get(0) !== $newItem.get(0)) {
-            $newItem.trigger('toggle.accordion', [true]);
-          }
-        }
-      }, this));
     });
   }
 }

@@ -10,17 +10,13 @@
 * Wordpress image alignment
 */
 .alignright {
-  float: none;
-
-  @include media($bp-large) {
+  @include media($bp-small) {
     float: right;
   }
 }
 
 .alignleft {
-  float: none;
-
-  @include media($bp-large) {
+  @include media($bp-small) {
     float: left;
   }
 }

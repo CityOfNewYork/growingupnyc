@@ -115,6 +115,11 @@ a.c-card__sticker.pseudo-class-focus {
   background: #0055b8;
 }
 
+.c-list-box--quaternary .c-list-box__subitem.pseudo-class-hover,
+.c-list-box--quaternary .c-list-box__subitem.pseudo-class-focus {
+  background: #00326d;
+}
+
 button.baby-secondary.pseudo-class-hover,
 button.baby-secondary.pseudo-class-focus,
 a.baby-secondary.pseudo-class-hover,

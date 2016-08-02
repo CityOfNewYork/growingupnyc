@@ -9,6 +9,7 @@
 // .c-list-box--primary - Brightly-colored list box
 // .c-list-box--secondary - More subdued box styling. Uses global palette colors and smaller boxes.
 // .c-list-box--tertiary - Smaller list box styling used for longer content items
+// .c-list-box--quaternary - List box style with a top level that closely resembles --primary and a secondary level that closely resembles --secondary
 //
 // markup:
 // <ul class="c-list-box {$modifiers}">
@@ -68,15 +69,19 @@
   width: 100%;
 }
 
-.c-list-box--primary .c-list-box__heading {
+.c-list-box--primary .c-list-box__heading,
+.c-list-box--quaternary .c-list-box__heading {
   background: $color-primary;
   color: $color-text-invert;
   padding: rem-calc(12 20);
-  @include text-uppercase;
 
   @include media($bp-large) {
     padding: rem-calc(28 40);
   }
+}
+
+.c-list-box--primary .c-list-box__heading {
+  @include text-uppercase;
 }
 
 .c-list-box--secondary .c-list-box__heading {
@@ -136,8 +141,17 @@
 
 .c-list-box--secondary .c-list-box__content {
   background: $color-primary;
+}
+
+.c-list-box--secondary .c-list-box__content,
+.c-list-box--quaternary .c-list-box__content {
   font-family: $font-family-display;
   font-weight: $font-weight-extrablack;
+}
+
+.c-list-box--quaternary .c-list-box__content {
+  background: $color-secondary;
+  color: $color-text-invert;
 }
 
 // List Box Subitem
@@ -167,15 +181,19 @@
 }
 
 .c-list-box--secondary .c-list-box__subitem {
-  color: $color-text-invert;
-  font-size: rem-calc(16);
-  padding: rem-calc(16 28);
   @include text-uppercase;
 
   &:hover,
   &:focus {
     background: $color-secondary;
   }
+}
+
+.c-list-box--secondary .c-list-box__subitem,
+.c-list-box--quaternary .c-list-box__subitem {
+  color: $color-text-invert;
+  font-size: rem-calc(16);
+  padding: rem-calc(16 28);
 }
 
 .c-list-box--tertiary .c-list-box__subitem {
@@ -194,6 +212,13 @@
 
   @include media($bp-large) {
     padding-left: rem-calc(60);
+  }
+}
+
+.c-list-box--quaternary .c-list-box__subitem {
+  &:hover,
+  &:focus {
+    background: $very-dark-blue;
   }
 }
 

@@ -108,6 +108,8 @@ export default function() {
     const $accordionInitialHeader = $item.find('.js-accordion__header');
     // Clear any previously bound events
     $item.off('toggle.accordion');
+    // Clear any existing state classes
+    $item.removeClass('is-expanded is-collapsed');
     if ($accordionContent.length && $accordionInitialHeader.length) {
       $item.addClass('o-accordion__item');
       const $accordionHeader = convertHeaderToButton($accordionInitialHeader);
@@ -123,7 +125,6 @@ export default function() {
        */
       $item.on('toggle.accordion', function(event, makeVisible) {
         event.preventDefault();
-        console.log('toggle the accordion');
         toggleAccordionItem($item, makeVisible);
         toggleHeader($accordionHeader, makeVisible);
         togglePanel($accordionContent, makeVisible);

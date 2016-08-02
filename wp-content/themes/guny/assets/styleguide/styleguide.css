@@ -389,6 +389,16 @@ a {
       right: 1.5625rem; } }
   .form-field__icon:hover, .form-field__icon:focus {
     color: #0055b8; }
+  .form-field__icon + .form-field__icon {
+    right: 3.125rem; }
+    @media screen and (min-width: 700px) {
+      .form-field__icon + .form-field__icon {
+        right: 3.4375rem; } }
+
+.form-field__icon--weak {
+  color: #999; }
+  .form-field__icon--weak:hover, .form-field__icon--weak:focus {
+    color: #333; }
 
 .form-field__icon--large {
   height: 1.25rem;
@@ -398,7 +408,9 @@ a {
     .form-field__icon--large {
       height: 1.875rem;
       margin-top: -0.9375rem;
-      width: 1.875rem; } }
+      width: 1.875rem; }
+      .form-field__icon--large + .form-field__icon--large {
+        right: 4.0625rem; } }
 
 .icon--large {
   height: 2.3125rem;

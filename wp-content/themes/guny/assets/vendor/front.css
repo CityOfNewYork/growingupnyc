@@ -90,26 +90,11 @@
 }
 
 .facetwp-btn {
-    top: 0;
-    right: 5px;
-    line-height: 1;
-    position: absolute;
-    cursor: pointer;
-    opacity: 0.5;
+  display: none;
 }
 
-.facetwp-btn:before {
-    display: inline-block;
-    content: '';
-    width: 20px;
-    height: 20px;
-    background: url(../images/icon-search.png) no-repeat;
-    background-size: 20px 20px;
-}
-
-.facetwp-btn.f-reset:before {
-    background: url(../images/icon-close.png) no-repeat;
-    background-size: 20px 20px;
+.facetwp-btn.f-reset {
+  display: block;
 }
 
 /* Proximity */

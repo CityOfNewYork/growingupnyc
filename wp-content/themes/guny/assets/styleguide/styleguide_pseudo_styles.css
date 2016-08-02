@@ -42,6 +42,11 @@
   color: #0055b8;
 }
 
+.form-field__icon--weak.pseudo-class-hover,
+.form-field__icon--weak.pseudo-class-focus {
+  color: #333;
+}
+
 a.pseudo-class-hover,
 a.pseudo-class-focus {
   color: #2793e0;

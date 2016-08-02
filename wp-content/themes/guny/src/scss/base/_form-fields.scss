@@ -75,6 +75,23 @@
   &:focus {
     color: $color-secondary;
   }
+
+  + .form-field__icon {
+    right: rem-calc(50);
+
+    @include media($bp-medium) {
+      right: rem-calc(55);
+    }
+  }
+}
+
+.form-field__icon--weak {
+  color: $color-text-weak;
+
+  &:hover,
+  &:focus {
+    color: $color-text;
+  }
 }
 
 // Icon Size Variations
@@ -89,5 +106,9 @@
     height: rem-calc(30);
     margin-top: rem-calc(-15);
     width: rem-calc(30);
+
+    + .form-field__icon--large {
+      right: rem-calc(65);
+    }
   }
 }

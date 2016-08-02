@@ -15,8 +15,13 @@
   <form class="filter__form" action="{{page.link}}" method="GET">
     <div class="c-list-box c-list-box--primary">
       <div class="c-list-box__item">
-        {{event_filter}}
-        <svg class="o-accordion__caret icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#caret-down"></use></svg>
+        <h3 class="c-list-box__heading">All Event Types</h3>
+        <ul class="c-list-box__content">
+          <li class="c-list-box__subitem" data-value="">All Event Types</li>
+        {% for event_type in event_filter %}
+          <li class="c-list-box__subitem" data-value="{{event_type.tid}}">{{event_type.name}}</li>
+        {% endfor %}
+        </ul>
       </div>
       <div class="c-list-box__item">
         {{age_filter}}

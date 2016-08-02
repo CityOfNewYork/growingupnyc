@@ -63,7 +63,7 @@ $context['next_month_url'] = $tribe_ecp->getLink( 'month', $tribe_ecp->nextMonth
 $context['current_month_text'] = date('F', strtotime( tribe_get_month_view_date() ));
 
 // Filters
-$context['event_filter'] = TimberHelper::function_wrapper(
+/*$context['event_filter'] = TimberHelper::function_wrapper(
   'wp_dropdown_categories',
   array(
     array (
@@ -79,7 +79,13 @@ $context['event_filter'] = TimberHelper::function_wrapper(
       'hide_empty' => 0
     )
   )
-);
+);*/
+$context['event_filter'] = Timber::get_terms('tribe_events_cat', array(
+  'orderby' => 'NAME',
+  'hide_empty' => 0,
+  'depth' => 1,
+  'hierarchical' => true,
+) );
 $context['age_filter'] = TimberHelper::function_wrapper(
   'wp_dropdown_categories',
   array(

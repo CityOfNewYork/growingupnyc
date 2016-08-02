@@ -16,8 +16,9 @@
 {% endblock %}
 
 {% block list_sidebar %}
-{{facet_categories}}
-{{facet_tags}}
+<ol class="c-list-box c-list-box--secondary facetwp-guny" data-multiselectable="false">
+  {{facet_post_type}}
+</ol>
 {% endblock %}
 
 {% block post_list %}

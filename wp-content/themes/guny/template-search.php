@@ -10,8 +10,7 @@ if ( ! class_exists( 'Timber' ) ) {
 $context = Timber::get_context();
 $context['results'] = facetwp_display('template', 'default');
 $context['search'] = facetwp_display('facet', 'search');
-$context['facet_categories'] = facetwp_display( 'facet', 'categories' );
-$context['facet_tags'] = facetwp_display('facet', 'tags' );
+$context['facet_post_type'] = facetwp_display( 'facet', 'post_type' );
 $context['pagination'] = facetwp_display('pager');
 //$context['did_you_mean'] = relevanssi_didyoumean(get_search_query(), '', '');
 $templates = array( 'search.twig', 'index.twig' );

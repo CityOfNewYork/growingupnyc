@@ -40,6 +40,10 @@ Description: Custom theme for GUNY
 // =====================
 @import "scopes/*";
 
+// Vendor (Styles for third-party plugins)
+// =====================
+@import "vendor/*";
+
 // Utilities
 // =====================
 @import "utilities/*";

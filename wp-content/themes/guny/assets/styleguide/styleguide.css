@@ -653,7 +653,6 @@ ol.o-inline {
     .o-article {
       margin-left: 0;
       margin-right: 0;
-      margin-left: 34.375%;
       float: left;
       display: block;
       margin-right: 3.125%;
@@ -661,10 +660,6 @@ ol.o-inline {
       margin-right: 0; }
       .o-article:last-child {
         margin-right: 0; } }
-
-@media screen and (min-width: 1024px) {
-  .o-article-sidebar + .o-article {
-    margin-left: 0%; } }
 
 .o-content-static--left {
   bottom: 0;
@@ -1562,6 +1557,7 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
     width: 100%; }
 
 /* No files to import found in scopes//* */
+/* No files to import found in vendor//* */
 /**
 * Animations
 */

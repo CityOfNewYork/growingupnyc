@@ -37,13 +37,6 @@
     animation: rotate 700ms infinite linear;
 }
 
-/* fSelect */
-
-.facetwp-type-fselect .fs-wrap,
-.facetwp-type-fselect .fs-dropdown {
-    width: 220px;
-}
-
 /* Hierarchy */
 
 .facetwp-depth {

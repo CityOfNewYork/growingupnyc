@@ -30,3 +30,6 @@ function init() {
 }
 
 ready(init);
+
+// Make certain functions available globally
+window.accordion = accordion;

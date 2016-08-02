@@ -105,6 +105,9 @@
 
 	ready(init);
 
+	// Make certain functions available globally
+	window.accordion = _accordion2.default;
+
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
@@ -11895,11 +11898,13 @@
 	   * @param {object} $item - The accordion child jQuery object
 	   */
 	  function initializeAccordionItem($item) {
-	    $item.addClass('o-accordion__item');
 	    var $accordionContent = $item.find('.js-accordion__content');
 	    var $accordionInitialHeader = $item.find('.js-accordion__header');
-	    if ($accordionContent && $accordionInitialHeader) {
+	    // Clear any previously bound events
+	    $item.off('toggle.accordion');
+	    if ($accordionContent.length && $accordionInitialHeader.length) {
 	      (function () {
+	        $item.addClass('o-accordion__item');
 	        var $accordionHeader = convertHeaderToButton($accordionInitialHeader);
 	        $accordionInitialHeader.replaceWith($accordionHeader);
 	        initializeHeader($accordionHeader, $accordionContent);
@@ -11913,6 +11918,7 @@
 	         */
 	        $item.on('toggle.accordion', function (event, makeVisible) {
 	          event.preventDefault();
+	          console.log('toggle the accordion');
 	          toggleAccordionItem($item, makeVisible);
 	          toggleHeader($accordionHeader, makeVisible);
 	          togglePanel($accordionContent, makeVisible);
@@ -11937,31 +11943,47 @@
 	    $accordionElem.children().each(function () {
 	      initializeAccordionItem($(this));
 	    });
+	    /**
+	     * Handle changeState events on accordion headers.
+	     * Close the open accordion item and open the new one.
+	     * @function
+	     * @param {object} event - The event object
+	     */
+	    $accordionElem.on('changeState.accordion', '.js-accordion__header', $.proxy(function (event) {
+	      var $newItem = $(event.target).closest('.o-accordion__item');
+	      if (multiSelectable) {
+	        $newItem.trigger('toggle.accordion', [!$newItem.hasClass('is-expanded')]);
+	      } else {
+	        var $openItem = $accordionElem.find('.is-expanded');
+	        $openItem.trigger('toggle.accordion', [false]);
+	        if ($openItem.get(0) !== $newItem.get(0)) {
+	          $newItem.trigger('toggle.accordion', [true]);
+	        }
+	      }
+	    }, this));
 	  }
 
-	  var $accordions = $('.js-accordion');
+	  /**
+	   * Reinitialize an accordion after its contents were dynamically updated
+	   * @param {object} $accordionElem - The jQuery object containing the root element of the accordion
+	   */
+	  function reInitialize($accordionElem) {
+	    if ($accordionElem.hasClass('o-accordion')) {
+	      $accordionElem.children().each(function () {
+	        initializeAccordionItem($(this));
+	      });
+	    } else {
+	      var multiSelectable = $accordionElem.data('multiselectable') || false;
+	      initialize($accordionElem, multiSelectable);
+	    }
+	  }
+	  window.reInitializeAccordion = reInitialize;
+
+	  var $accordions = $('.js-accordion').not('.o-accordion');
 	  if ($accordions.length) {
 	    $accordions.each(function () {
 	      var multiSelectable = $(this).data('multiselectable') || false;
 	      initialize($(this), multiSelectable);
-	      /**
-	       * Handle changeState events on accordion headers.
-	       * Close the open accordion item and open the new one.
-	       * @function
-	       * @param {object} event - The event object
-	       */
-	      $(this).on('changeState.accordion', '.js-accordion__header', $.proxy(function (event) {
-	        var $newItem = $(event.target).parent();
-	        if (multiSelectable) {
-	          $newItem.trigger('toggle.accordion', [!$newItem.hasClass('is-expanded')]);
-	        } else {
-	          var $openItem = $(this).find('.is-expanded');
-	          $openItem.trigger('toggle.accordion', [false]);
-	          if ($openItem.get(0) !== $newItem.get(0)) {
-	            $newItem.trigger('toggle.accordion', [true]);
-	          }
-	        }
-	      }, this));
 	    });
 	  }
 	};

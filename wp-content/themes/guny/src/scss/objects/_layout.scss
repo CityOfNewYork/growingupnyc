@@ -51,15 +51,8 @@
   @include media($bp-large) {
     margin-left: 0;
     margin-right: 0;
-    @include shift(4);
     @include span-columns(8);
     @include omega;
-  }
-}
-
-.o-article-sidebar + .o-article {
-  @include media($bp-large) {
-    @include shift(0);
   }
 }
 

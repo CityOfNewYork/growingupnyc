@@ -69,7 +69,7 @@ class FacetWP_Facet_Guny {
     global $wpdb;
 
     $facet = $params['facet'];
-    $where_clause = $params['where_clause'];
+    $raw_post_ids = implode( ',', FWP()->unfiltered_post_ids );
 
     // Orderby
     $orderby = 'counter DESC, f.facet_display_value ASC';
@@ -86,7 +86,7 @@ class FacetWP_Facet_Guny {
     $sql = "
     SELECT f.facet_value, f.facet_display_value, COUNT(*) AS counter
     FROM {$wpdb->prefix}facetwp_index f
-    WHERE f.facet_name = '{$facet['name']}' $where_clause
+    WHERE f.facet_name = '{$facet['name']}' AND post_id IN ($raw_post_ids)
     GROUP BY f.facet_value
     ORDER BY $orderby
     LIMIT $limit";

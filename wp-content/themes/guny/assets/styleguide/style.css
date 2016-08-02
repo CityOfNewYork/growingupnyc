@@ -1377,16 +1377,20 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
     .c-list-box__heading {
       font-size: 1.5rem; } }
 
-.c-list-box--primary .c-list-box__heading {
+.c-list-box--primary .c-list-box__heading,
+.c-list-box--quaternary .c-list-box__heading {
   background: #2793e0;
   color: #fff;
-  padding: 0.75rem 1.25rem;
+  padding: 0.75rem 1.25rem; }
+  @media screen and (min-width: 1024px) {
+    .c-list-box--primary .c-list-box__heading,
+    .c-list-box--quaternary .c-list-box__heading {
+      padding: 1.75rem 2.5rem; } }
+
+.c-list-box--primary .c-list-box__heading {
   letter-spacing: .5px;
   line-height: 1;
   text-transform: uppercase; }
-  @media screen and (min-width: 1024px) {
-    .c-list-box--primary .c-list-box__heading {
-      padding: 1.75rem 2.5rem; } }
 
 .c-list-box--secondary .c-list-box__heading {
   background: #eee;
@@ -1427,9 +1431,16 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   color: #fff; }
 
 .c-list-box--secondary .c-list-box__content {
-  background: #2793e0;
+  background: #2793e0; }
+
+.c-list-box--secondary .c-list-box__content,
+.c-list-box--quaternary .c-list-box__content {
   font-family: "museo-sans-rounded", sans-serif;
   font-weight: 900; }
+
+.c-list-box--quaternary .c-list-box__content {
+  background: #0055b8;
+  color: #fff; }
 
 .c-list-box__subitem {
   display: block;
@@ -1446,14 +1457,17 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
         padding-bottom: 2.5rem; } }
 
 .c-list-box--secondary .c-list-box__subitem {
-  color: #fff;
-  font-size: 1rem;
-  padding: 1rem 1.75rem;
   letter-spacing: .5px;
   line-height: 1;
   text-transform: uppercase; }
   .c-list-box--secondary .c-list-box__subitem:hover, .c-list-box--secondary .c-list-box__subitem:focus {
     background: #0055b8; }
+
+.c-list-box--secondary .c-list-box__subitem,
+.c-list-box--quaternary .c-list-box__subitem {
+  color: #fff;
+  font-size: 1rem;
+  padding: 1rem 1.75rem; }
 
 .c-list-box--tertiary .c-list-box__subitem {
   background: #eee;
@@ -1469,6 +1483,9 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   @media screen and (min-width: 1024px) {
     .c-list-box--tertiary .c-list-box__subitem {
       padding-left: 3.75rem; } }
+
+.c-list-box--quaternary .c-list-box__subitem:hover, .c-list-box--quaternary .c-list-box__subitem:focus {
+  background: #00326d; }
 
 .c-list-box__border {
   border-radius: 3px;

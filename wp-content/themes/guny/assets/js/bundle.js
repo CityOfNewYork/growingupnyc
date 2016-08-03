@@ -72,11 +72,7 @@
 
 	var _sticky2 = _interopRequireDefault(_sticky);
 
-	var _filters = __webpack_require__(413);
-
-	var _filters2 = _interopRequireDefault(_filters);
-
-	var _searchResultsHeader = __webpack_require__(414);
+	var _searchResultsHeader = __webpack_require__(413);
 
 	var _searchResultsHeader2 = _interopRequireDefault(_searchResultsHeader);
 
@@ -97,7 +93,6 @@
 	  (0, _accordion2.default)();
 	  (0, _overlay2.default)();
 	  (0, _sticky2.default)();
-	  (0, _filters2.default)();
 
 	  // Search results page
 	  (0, _searchResultsHeader2.default)();
@@ -12158,40 +12153,6 @@
 
 /***/ },
 /* 413 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _forEach = __webpack_require__(301);
-
-	var _forEach2 = _interopRequireDefault(_forEach);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	/**
-	 * Filter page contents when a filter is selected
-	 * Similar to behavior of Facet WP, for instances
-	 * where that plugin cannot be used (namely events)
-	 */
-	module.exports = function () {
-	  var filterForm = document.querySelectorAll('.js-filters');
-
-	  if (filterForm) {
-	    var inputs = document.querySelectorAll('.filter__form select');
-
-	    (0, _forEach2.default)(inputs, function (inputElem) {
-	      inputElem.addEventListener('change', function () {
-	        return this.form.submit();
-	      });
-	    });
-	  }
-	}; /**
-	    * Filter module
-	    * @module modules/filters
-	    */
-
-/***/ },
-/* 414 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';

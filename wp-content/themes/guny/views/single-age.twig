@@ -42,13 +42,13 @@
     <div class="o-article">
       {% if post.intro_content %}
         <section class="o-content-container--compact u-top-spacing u-bottom-spacing">
-          <div class="o-content-container--text u-h-gutter">
+          <div class="o-content-container--text u-sm-gutter">
             {{post.get_field('intro_content')}}
           </div>
         </section>
       {% endif %}
       {% if upcoming_events %}
-      <section class="c-block-list c-block-list--shade o-content-container u-h-gutter">
+      <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
         <h2>Events</h2>
         {% if post.events_text %}
           <p class="c-block-list__text">{{post.events_text}}</p>
@@ -86,11 +86,11 @@
       {% endif %}
       <div class="o-content-container--compact u-top-spacing u-bottom-spacing">
         <h2>Milestones</h2>
-        <div class="o-content-container--text u-h-gutter">
+        <div class="o-content-container--text u-sm-gutter">
           <p>How your child plays, learns, speaks, and acts offers important clues about your child&rsquo;s development.</p>
         </div>
         <h3>What most {{post.milestones_heading}} do at this age:</h3>
-        <ul class="js-accordion c-list-box c-list-box--tertiary u-h-gutter">
+        <ul class="js-accordion c-list-box c-list-box--tertiary u-sm-gutter">
           <li class="c-list-box__item">
             <h4 class="c-list-box__heading js-accordion__header {{post.age_group|sanitize}}-secondary" id="milestones-header-social">Social/Emotional</h4>
             <ul class="c-list-box__content js-accordion__content" id="milestones-panel-social">

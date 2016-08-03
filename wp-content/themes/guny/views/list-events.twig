@@ -1,7 +1,7 @@
 {% extends "list.twig" %}
 
 {% block hero %}
-  <header class="c-hero c-hero--bg-secondary">
+  <header class="c-hero c-hero--bg-secondary u-lg-gutter">
     <div class="o-container">
       <h1 class="c-hero__title">{{options.event_landing_title}}</h1>
       <p class="c-hero__tagline">{{options.event_landing_tagline}}</p>
@@ -12,10 +12,10 @@
 
 {% block list_sidebar %}
   {# Event List Filters #}
-  <div class="c-list-box c-list-box--quaternary js-filters">
+  <div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
     <div class="c-list-box__item">
-      <h3 class="c-list-box__heading">{{current_event_filter}}</h3>
-      <ul class="c-list-box__content">
+      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{current_event_filter}}</h3>
+      <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
         <li><a href="{{all_events.link}}" class="c-list-box__subitem">{{all_events.name}}</a></li>
       {% for event_type in event_filter %}
         <li><a href="{{event_type.link}}" class="c-list-box__subitem">{{event_type.name}}</a></li>
@@ -23,8 +23,8 @@
       </ul>
     </div>
     <div class="c-list-box__item">
-      <h3 class="c-list-box__heading">{{current_age_filter}}</h3>
-      <ul class="c-list-box__content">
+      <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{current_age_filter}}</h3>
+      <ul class="js-accordion__content c-list-box__content" id="age-filter-panel">
         <li><a href="{{all_ages.link}}" class="c-list-box__subitem">{{all_ages.name}}</a></li>
         {% for age in age_filter %}
           <li><a href="{{age.link}}" class="c-list-box__subitem">{{age.name}}</a></li>
@@ -32,8 +32,8 @@
       </ul>
     </div>
     <div class="c-list-box__item">
-      <h3 class="c-list-box__heading">{{current_borough_filter}}</h3>
-      <ul class="c-list-box__content">
+      <h3 class="js-accordion__header c-list-box__heading" id="borough-filter-heading">{{current_borough_filter}}</h3>
+      <ul class="js-accordion__content c-list-box__content" id="borough-filter-panel">
         <li><a href="{{all_boroughs.link}}" class="c-list-box__subitem">{{all_boroughs.name}}</a></li>
         {% for borough in borough_filter %}
           <li><a href="{{borough.link}}" class="c-list-box__subitem">{{borough.name}}</a></li>

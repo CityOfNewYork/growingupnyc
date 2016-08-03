@@ -65,7 +65,7 @@ if ($_SERVER['QUERY_STRING']) {
 $tribe_ecp = Tribe__Events__Main::instance();
 $context['prev_month_url'] = $tribe_ecp->getLink( 'month', $tribe_ecp->previousMonth( tribe_get_month_view_date() ), null ) . $query_string;
 $context['next_month_url'] = $tribe_ecp->getLink( 'month', $tribe_ecp->nextMonth( tribe_get_month_view_date() ), null ) . $query_string;
-$context['current_month_text'] = date('F', strtotime( tribe_get_month_view_date() ));
+$context['current_month_text'] = date('F Y', strtotime( tribe_get_month_view_date() ));
 
 // Event Category Filter
 $event_filter = Timber::get_terms('tribe_events_cat', array(

@@ -11,7 +11,7 @@
 
 {# Event List #}
 {% for event in event_list %}
-  <section class="c-block-list c-block-list--shade o-content-container u-h-gutter">
+  <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
     <h3>{{ event.date_header }}</h3>
 
     {% for post in event.posts %}
@@ -19,9 +19,9 @@
         {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
       </div>
     {% endfor %}
-  </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-h-gutter -->
+  </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-sm-gutter -->
 {% else %}
-  <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-h-gutter">
+  <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-sm-gutter">
     <p class="type--no-results">Sorry, we couldn’t find anything matching your search. <a href="/events">Clear filters</a></p>
-  </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-h-gutter -->
+  </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-sm-gutter -->
 {% endfor %}

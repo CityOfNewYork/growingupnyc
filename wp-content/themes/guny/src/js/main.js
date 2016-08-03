@@ -5,7 +5,6 @@ import accordion from './modules/accordion.js';
 import offcanvas from './modules/offcanvas.js';
 import overlay from './modules/overlay.js';
 import sticky from './modules/sticky.js';
-import filters from './modules/filters.js';
 import searchResultsHeader from './modules/searchResultsHeader.js';
 
 function ready(fn) {
@@ -23,7 +22,6 @@ function init() {
   accordion();
   overlay();
   sticky();
-  filters();
 
   // Search results page
   searchResultsHeader();

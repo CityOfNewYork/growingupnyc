@@ -1,6 +1,22 @@
 // Horizontal gutter
-.u-h-gutter {
+.u-sm-gutter {
   margin-bottom: $horizontal-gutter;
+}
+
+.u-lg-gutter {
+  margin-bottom: $outer-gutter;
+
+  @include media($bp-small) {
+    margin-bottom: $outer-gutter-small;
+  }
+
+  @include media($bp-medium) {
+    margin-bottom: $outer-gutter-medium;
+  }
+
+  @include media($bp-large) {
+    margin-bottom: $outer-gutter-large;
+  }
 }
 
 // Extra top padding

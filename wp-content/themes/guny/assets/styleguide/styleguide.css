@@ -1380,23 +1380,25 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 .c-list-box--primary .c-list-box__heading,
 .c-list-box--quaternary .c-list-box__heading {
   background: #2793e0;
-  color: #fff;
-  padding: 0.75rem 1.25rem; }
-  @media screen and (min-width: 1024px) {
-    .c-list-box--primary .c-list-box__heading,
-    .c-list-box--quaternary .c-list-box__heading {
-      padding: 1.75rem 2.5rem; } }
+  color: #fff; }
 
 .c-list-box--primary .c-list-box__heading {
   letter-spacing: .5px;
   line-height: 1;
-  text-transform: uppercase; }
+  text-transform: uppercase;
+  padding: 0.75rem 1.25rem; }
+  @media screen and (min-width: 1024px) {
+    .c-list-box--primary .c-list-box__heading {
+      padding: 1.75rem 2.5rem; } }
+
+.c-list-box--secondary .c-list-box__heading,
+.c-list-box--quaternary .c-list-box__heading {
+  padding: 0.8125rem 1.75rem; }
 
 .c-list-box--secondary .c-list-box__heading {
   background: #eee;
   border-radius: 0.1875rem;
-  color: #2793e0;
-  padding: 0.8125rem 1.75rem; }
+  color: #2793e0; }
   .c-list-box--secondary .c-list-box__heading .icon {
     color: #999; }
   .c-list-box--secondary .c-list-box__heading:hover, .c-list-box--secondary .c-list-box__heading:focus {
@@ -1415,6 +1417,10 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   @media screen and (min-width: 1024px) {
     .c-list-box--tertiary .c-list-box__heading {
       font-size: 1.3125rem; } }
+
+@media screen and (min-width: 1024px) {
+  .c-list-box--quaternary .c-list-box__heading {
+    padding: 1.75rem; } }
 
 .c-list-box__subheading {
   display: block;
@@ -1723,8 +1729,20 @@ a.pre-teen-secondary:focus {
 .pre-teen-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/pre-teen-gradient.png); }
 
-.u-h-gutter {
+.u-sm-gutter {
   margin-bottom: 20px; }
+
+.u-lg-gutter {
+  margin-bottom: 15px; }
+  @media screen and (min-width: 375px) {
+    .u-lg-gutter {
+      margin-bottom: 20px; } }
+  @media screen and (min-width: 700px) {
+    .u-lg-gutter {
+      margin-bottom: 30px; } }
+  @media screen and (min-width: 1024px) {
+    .u-lg-gutter {
+      margin-bottom: 40px; } }
 
 .u-top-spacing {
   padding-top: 2.8125rem; }

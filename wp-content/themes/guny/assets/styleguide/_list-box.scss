@@ -73,6 +73,10 @@
 .c-list-box--quaternary .c-list-box__heading {
   background: $color-primary;
   color: $color-text-invert;
+}
+
+.c-list-box--primary .c-list-box__heading {
+  @include text-uppercase;
   padding: rem-calc(12 20);
 
   @include media($bp-large) {
@@ -80,15 +84,15 @@
   }
 }
 
-.c-list-box--primary .c-list-box__heading {
-  @include text-uppercase;
+.c-list-box--secondary .c-list-box__heading,
+.c-list-box--quaternary .c-list-box__heading {
+  padding: rem-calc(13 28);
 }
 
 .c-list-box--secondary .c-list-box__heading {
   background: $color-background-shade;
   border-radius: rem-calc(3);
   color: $color-primary;
-  padding: rem-calc(13 28);
 
   .icon {
     color: $color-text-weak;
@@ -113,6 +117,12 @@
   line-height: 1.1;
   min-height: rem-calc(56);
   padding: rem-calc(10 30);
+}
+
+.c-list-box--quaternary .c-list-box__heading {
+  @include media($bp-large) {
+    padding: rem-calc(28);
+  }
 }
 
 // List Box Subheading

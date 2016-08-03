@@ -9,6 +9,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.php [L]
 </IfModule>
 
-RedirectMatch 301 /wp-content/uploads(.*) http://growingupnyc.staging.wpengine.com/wp-content/uploads/$1
-
 # END WordPress

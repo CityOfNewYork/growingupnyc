@@ -12,37 +12,35 @@
 
 {% block list_sidebar %}
   {# Event List Filters #}
-  <form class="filter__form" action="{{page.link}}" method="GET">
-    <div class="c-list-box c-list-box--quaternary">
-      <div class="c-list-box__item">
-        <h3 class="c-list-box__heading">All Event Types</h3>
-        <ul class="c-list-box__content">
-          <li class="c-list-box__subitem" data-value="">All Event Types</li>
-        {% for event_type in event_filter %}
-          <li class="c-list-box__subitem" data-value="{{event_type.ID}}">{{event_type.name}}</li>
-        {% endfor %}
-        </ul>
-      </div>
-      <div class="c-list-box__item">
-        <h3 class="c-list-box__heading">All Ages</h3>
-        <ul class="c-list-box__content">
-          <li class="c-list-box__subitem" data-value="">All Ages</li>
-          {% for age in age_filter %}
-            <li class="c-list-box__subitem" data-value="{{age.ID}}">{{age.name}}</li>
-          {% endfor %}
-        </ul>
-      </div>
-      <div class="c-list-box__item">
-        <h3 class="c-list-box__heading">All Boroughs</h3>
-        <ul class="c-list-box__content">
-          <li class="c-list-box__subitem" data-value="">All Boroughs</li>
-          {% for borough in borough_filter %}
-            <li class="c-list-box__subitem" data-value="{{borough.ID}}">{{borough.name}}</li>
-          {% endfor %}
-        </ul>
-      </div>
+  <div class="c-list-box c-list-box--quaternary js-filters">
+    <div class="c-list-box__item">
+      <h3 class="c-list-box__heading">{{current_event_filter}}</h3>
+      <ul class="c-list-box__content">
+        <li><a href="{{all_events.link}}" class="c-list-box__subitem">{{all_events.name}}</a></li>
+      {% for event_type in event_filter %}
+        <li><a href="{{event_type.link}}" class="c-list-box__subitem">{{event_type.name}}</a></li>
+      {% endfor %}
+      </ul>
     </div>
-  </form>
+    <div class="c-list-box__item">
+      <h3 class="c-list-box__heading">{{current_age_filter}}</h3>
+      <ul class="c-list-box__content">
+        <li><a href="{{all_ages.link}}" class="c-list-box__subitem">{{all_ages.name}}</a></li>
+        {% for age in age_filter %}
+          <li><a href="{{age.link}}" class="c-list-box__subitem">{{age.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="c-list-box__item">
+      <h3 class="c-list-box__heading">{{current_borough_filter}}</h3>
+      <ul class="c-list-box__content">
+        <li><a href="{{all_boroughs.link}}" class="c-list-box__subitem">{{all_boroughs.name}}</a></li>
+        {% for borough in borough_filter %}
+          <li><a href="{{borough.link}}" class="c-list-box__subitem">{{borough.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 {% endblock %}
 
 {% block before_list %}

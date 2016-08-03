@@ -7,6 +7,11 @@ if ( ! class_exists( 'Timber' ) ) {
 
 $context = Timber::get_context();
 
+// Get current filter selections
+$cat_id = get_query_var('cat_id');
+$age_id = get_query_var('age_id');
+$borough_id = get_query_var('borough_id');
+
 // Group current view's events by day
 while ( tribe_events_have_month_days() ) : tribe_events_the_month_day();
   $day = tribe_events_get_current_month_day();
@@ -18,18 +23,18 @@ while ( tribe_events_have_month_days() ) : tribe_events_the_month_day();
     foreach ($day['events']->posts as $post) {
       $passed_filtering = true;
 
-      if(get_query_var('cat_id') > 0) {
-        if(!has_term( get_query_var('cat_id'), 'tribe_events_cat', $post->ID)) {
+      if( $cat_id > 0) {
+        if( !has_term( $cat_id, 'tribe_events_cat', $post->ID ) ) {
           $passed_filtering = false;
         }
       }
-      if(get_query_var('age_id') > 0) {
-        if(!has_term( get_query_var('age_id'), 'age_group', $post->ID)) {
+      if( $age_id > 0) {
+        if(!has_term( $age_id, 'age_group', $post->ID)) {
           $passed_filtering = false;
         }
       }
-      if(get_query_var('borough_id') > 0) {
-        if(!has_term( get_query_var('borough_id'), 'borough', $post->ID)) {
+      if( $borough_id > 0) {
+        if(!has_term( $borough_id, 'borough', $post->ID)) {
           $passed_filtering = false;
         }
       }
@@ -62,75 +67,71 @@ $context['prev_month_url'] = $tribe_ecp->getLink( 'month', $tribe_ecp->previousM
 $context['next_month_url'] = $tribe_ecp->getLink( 'month', $tribe_ecp->nextMonth( tribe_get_month_view_date() ), null ) . $query_string;
 $context['current_month_text'] = date('F', strtotime( tribe_get_month_view_date() ));
 
-// Filters
-/*$context['event_filter'] = TimberHelper::function_wrapper(
-  'wp_dropdown_categories',
-  array(
-    array (
-      'show_option_all' => 'All Events',
-      'taxonomy' => 'tribe_events_cat',
-      'hierarchical' => true,
-      'depth' => 1,
-      'selected' => get_query_var( 'cat_id' ),
-      'name' => 'cat_id',
-      'class' => 'c-list-box__heading',
-      'echo' => 0,
-      'orderby' => 'NAME',
-      'hide_empty' => 0
-    )
-  )
-);*/
-$context['event_filter'] = Timber::get_terms('tribe_events_cat', array(
+// Event Category Filter
+$event_filter = Timber::get_terms('tribe_events_cat', array(
   'orderby' => 'NAME',
   'hide_empty' => 0,
   'depth' => 1,
   'hierarchical' => true,
 ) );
-/*$context['age_filter'] = TimberHelper::function_wrapper(
-  'wp_dropdown_categories',
-  array(
-    array (
-      'show_option_all' => 'All Ages',
-      'taxonomy' => 'age_group',
-      'hierarchical' => true,
-      'depth' => 1,
-      'selected' => get_query_var( 'age_id' ),
-      'name' => 'age_id',
-      'class' => 'c-list-box__heading',
-      'echo' => 0,
-      'hide_empty' => 0
-    )
-  )
-);*/
-$context['age_filter'] = Timber::get_terms('age_group', array(
+foreach ($event_filter as $key => $value) {
+  $value->link = add_query_arg( 'cat_id', $value->ID );
+  $event_filter[$key] = $value;
+}
+$context['event_filter'] = $event_filter;
+$context['all_events'] = array(
+  'name' => 'All Event Types',
+  'link' => remove_query_arg( 'cat_id' )
+);
+if ( $cat_id > 0 ) {
+  $context['current_event_filter'] = Timber::get_term( $cat_id )->name;
+} else {
+  $context['current_event_filter'] = $context['all_events']['name'];
+}
+
+// Age Group Filter
+$age_filter = Timber::get_terms('age_group', array(
   'hierarchical' => true,
   'depth' => 1,
   'hide_empty' => 0,
   'orderby' => 'term_order'
 ) );
-/*$context['borough_filter'] = TimberHelper::function_wrapper(
-  'wp_dropdown_categories',
-  array(
-    array (
-      'show_option_all' => 'All Boroughs',
-      'taxonomy' => 'borough',
-      'hierarchical' => true,
-      'depth' => 1,
-      'selected' => get_query_var( 'borough_id' ),
-      'name' => 'borough_id',
-      'class' => 'c-list-box__heading',
-      'echo' => 0,
-      'orderby' => 'NAME',
-      'hide_empty' => 0
-    )
-  )
-);*/
-$context['borough_filter'] = Timber::get_terms('borough', array(
+foreach ($age_filter as $key => $value) {
+  $value->link = add_query_arg( 'age_id', $value->ID );
+  $event_filter[$key] = $value;
+}
+$context['age_filter'] = $age_filter;
+$context['all_ages'] = array(
+  'name' => 'All Ages',
+  'link' => remove_query_arg( 'age_id' )
+);
+if ( $age_id > 0 ) {
+  $context['current_age_filter'] = Timber::get_term( $age_id )->name;
+} else {
+  $context['current_age_filter'] = $context['all_ages']['name'];
+}
+
+// Borough Filter
+$borough_filter = Timber::get_terms('borough', array(
   'hierarchical' => true,
   'depth' => 1,
   'orderby' => 'NAME',
   'hide_empty' => 0
 ) );
+foreach ($borough_filter as $key => $value) {
+  $value->link = add_query_arg( 'borough_id', $value->ID );
+  $event_filter[$key] = $value;
+}
+$context['borough_filter'] = $borough_filter;
+$context['all_boroughs'] = array(
+  'name' => 'All Boroughs',
+  'link' => remove_query_arg( 'borough_id' )
+);
+if ( $borough_id > 0 ) {
+  $context['current_borough_filter'] = Timber::get_term( $borough_id )->name;
+} else {
+  $context['current_borough_filter'] = $context['all_boroughs']['name'];
+}
 
 $templates = array( 'list-events.twig', 'index.twig' );
 

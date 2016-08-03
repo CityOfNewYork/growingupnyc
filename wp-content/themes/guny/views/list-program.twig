@@ -1,0 +1,16 @@
+{% extends "list.twig" %}
+
+{% block head_extras %}
+<style>
+  .c-hero { background-color: #2793E0; background-image: url(/wp-content/themes/guny/assets/img/hero-program-landing.svg); }
+</style>
+{% endblock %}
+
+{% block hero %}
+<header class="c-hero u-lg-gutter">
+  <div class="o-container">
+    <h1 class="c-hero__title">{{options.program_landing_title}}</h1>
+    <p class="c-hero__tagline">{{options.program_landing_tagline}}</p>
+  </div>
+</header>
+{% endblock %}

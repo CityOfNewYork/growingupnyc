@@ -12,10 +12,6 @@ if ( ! class_exists( 'Timber' ) ) {
 }
 $context = Timber::get_context();
 $context['posts'] = Timber::get_posts();
-$templates = array( 'list.twig' );
-if ( count( $context['posts'] ) > 0 ) {
-  $post_type = $context['posts'][0]->post_type;
-  array_unshift( $templates, "list-$post_type.twig" );
-}
+$templates = array( 'list-program.twig', 'list.twig' );
 
 Timber::render( $templates, $context );

@@ -6,8 +6,11 @@
 //
 // Traditional, top-of-the-page hero
 //
+// .c-hero - Standard size
+// .c-hero--large - Taller version
+//
 // markup:
-// <header class="c-hero" style="background:#333">
+// <header class="c-hero {$modifiers}" style="background:#333">
 //   <div class="o-layout">
 //     <h1 class="c-hero__title">Title</h1>
 //     <p class="c-hero__tagline">Tagline text</p>
@@ -21,13 +24,25 @@
   background-size: contain;
   color: $color-text-invert;
   overflow: hidden;
-  padding: percentage(126/375) 0 rem-calc(65);
+  padding: percentage(94/375) 0 rem-calc(65);
   position: relative;
   text-align: center;
 
   @include media($bp-medium) {
     background-size: cover;
     text-align: left;
+    padding: rem-calc(72 40 40);
+  }
+
+  @include media($bp-xlarge) {
+    padding: rem-calc(113 80 60);
+  }
+}
+
+.c-hero--large {
+  padding: percentage(126/375) 0 rem-calc(65);
+
+  @include media($bp-medium) {
     padding: rem-calc(165 40 40);
   }
 
@@ -62,9 +77,9 @@
   @include font-size-x-large;
   font-weight: $font-weight-extrablack;
   line-height: 1.2;
-  // Set z-index for text to appear on top of bg image
+  margin-top: rem-calc(10);
   position: relative;
-  z-index: 1;
+  z-index: 1; // Set z-index for text to appear on top of bg image
 
   @include media($bp-medium) {
     @include span-columns(6);

@@ -1262,16 +1262,25 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   background-size: contain;
   color: #fff;
   overflow: hidden;
-  padding: 33.6% 0 4.0625rem;
+  padding: 25.06667% 0 4.0625rem;
   position: relative;
   text-align: center; }
   @media screen and (min-width: 700px) {
     .c-hero {
       background-size: cover;
       text-align: left;
-      padding: 10.3125rem 2.5rem 2.5rem; } }
+      padding: 4.5rem 2.5rem 2.5rem; } }
   @media screen and (min-width: 1200px) {
     .c-hero {
+      padding: 7.0625rem 5rem 3.75rem; } }
+
+.c-hero--large {
+  padding: 33.6% 0 4.0625rem; }
+  @media screen and (min-width: 700px) {
+    .c-hero--large {
+      padding: 10.3125rem 2.5rem 2.5rem; } }
+  @media screen and (min-width: 1200px) {
+    .c-hero--large {
       padding: 14.1875rem 5rem 5rem; } }
 
 .c-hero--bg-primary {
@@ -1296,6 +1305,7 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   font-size: 1.3125rem;
   font-weight: 900;
   line-height: 1.2;
+  margin-top: 0.625rem;
   position: relative;
   z-index: 1; }
   @media screen and (min-width: 1024px) {

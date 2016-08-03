@@ -17,12 +17,12 @@
 
 {% block post_list %}
 <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
-  {% for post in posts %}
-    <div class="c-block-list__item">
-      {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
-    </div>
-  {% else %}
-    <p class="type--no-results">Sorry, we couldn’t find anything matching your search. <a href="/programs">Clear filters</a></p>
-  {% endfor %}
+  {{posts}}
 </section>
+{% endblock %}
+
+{% block after_list %}
+<div class="o-content-container--compact">
+  {{pagination}}
+</div>
 {% endblock %}

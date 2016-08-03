@@ -11,7 +11,8 @@ if ( ! class_exists( 'Timber' ) ) {
   return;
 }
 $context = Timber::get_context();
-$context['posts'] = Timber::get_posts();
+$context['posts'] = facetwp_display('template', 'programs');
+$context['pagination'] = facetwp_display('pager');
 $templates = array( 'list-program.twig', 'list.twig' );
 
 Timber::render( $templates, $context );

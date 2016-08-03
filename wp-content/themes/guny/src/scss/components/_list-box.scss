@@ -151,7 +151,9 @@
 
 .c-list-box--quaternary .c-list-box__content {
   background: $color-secondary;
+  border-radius: 0 0 3px 3px;
   color: $color-text-invert;
+  margin-top: -1px;
 }
 
 // List Box Subitem

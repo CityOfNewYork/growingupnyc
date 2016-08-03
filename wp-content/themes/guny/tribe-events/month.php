@@ -86,7 +86,7 @@ $context['event_filter'] = Timber::get_terms('tribe_events_cat', array(
   'depth' => 1,
   'hierarchical' => true,
 ) );
-$context['age_filter'] = TimberHelper::function_wrapper(
+/*$context['age_filter'] = TimberHelper::function_wrapper(
   'wp_dropdown_categories',
   array(
     array (
@@ -101,8 +101,14 @@ $context['age_filter'] = TimberHelper::function_wrapper(
       'hide_empty' => 0
     )
   )
-);
-$context['borough_filter'] = TimberHelper::function_wrapper(
+);*/
+$context['age_filter'] = Timber::get_terms('age_group', array(
+  'hierarchical' => true,
+  'depth' => 1,
+  'hide_empty' => 0,
+  'orderby' => 'term_order'
+) );
+/*$context['borough_filter'] = TimberHelper::function_wrapper(
   'wp_dropdown_categories',
   array(
     array (
@@ -118,7 +124,13 @@ $context['borough_filter'] = TimberHelper::function_wrapper(
       'hide_empty' => 0
     )
   )
-);
+);*/
+$context['borough_filter'] = Timber::get_terms('borough', array(
+  'hierarchical' => true,
+  'depth' => 1,
+  'orderby' => 'NAME',
+  'hide_empty' => 0
+) );
 
 $templates = array( 'list-events.twig', 'index.twig' );
 

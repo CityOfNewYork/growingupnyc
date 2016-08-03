@@ -13,23 +13,33 @@
 {% block list_sidebar %}
   {# Event List Filters #}
   <form class="filter__form" action="{{page.link}}" method="GET">
-    <div class="c-list-box c-list-box--primary">
+    <div class="c-list-box c-list-box--quaternary">
       <div class="c-list-box__item">
         <h3 class="c-list-box__heading">All Event Types</h3>
         <ul class="c-list-box__content">
           <li class="c-list-box__subitem" data-value="">All Event Types</li>
         {% for event_type in event_filter %}
-          <li class="c-list-box__subitem" data-value="{{event_type.tid}}">{{event_type.name}}</li>
+          <li class="c-list-box__subitem" data-value="{{event_type.ID}}">{{event_type.name}}</li>
         {% endfor %}
         </ul>
       </div>
       <div class="c-list-box__item">
-        {{age_filter}}
-        <svg class="o-accordion__caret icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#caret-down"></use></svg>
+        <h3 class="c-list-box__heading">All Ages</h3>
+        <ul class="c-list-box__content">
+          <li class="c-list-box__subitem" data-value="">All Ages</li>
+          {% for age in age_filter %}
+            <li class="c-list-box__subitem" data-value="{{age.ID}}">{{age.name}}</li>
+          {% endfor %}
+        </ul>
       </div>
       <div class="c-list-box__item">
-        {{borough_filter}}
-        <svg class="o-accordion__caret icon" aria-hidden="true"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#caret-down"></use></svg>
+        <h3 class="c-list-box__heading">All Boroughs</h3>
+        <ul class="c-list-box__content">
+          <li class="c-list-box__subitem" data-value="">All Boroughs</li>
+          {% for borough in borough_filter %}
+            <li class="c-list-box__subitem" data-value="{{borough.ID}}">{{borough.name}}</li>
+          {% endfor %}
+        </ul>
       </div>
     </div>
   </form>

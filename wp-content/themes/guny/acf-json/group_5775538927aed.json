@@ -85,7 +85,7 @@
         },
         {
             "key": "field_577553edd207f",
-            "label": "Eligibility",
+            "label": "Am I Eligible?",
             "name": "eligibility",
             "type": "wysiwyg",
             "instructions": "",
@@ -98,7 +98,7 @@
             },
             "default_value": "",
             "tabs": "all",
-            "toolbar": "basic",
+            "toolbar": "full",
             "media_upload": 0
         },
         {
@@ -137,5 +137,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1470330623
+    "modified": 1470339085
 }

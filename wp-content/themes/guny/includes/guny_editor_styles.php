@@ -13,14 +13,12 @@ add_filter( 'tiny_mce_before_init', 'guny_configure_tinymce' );
 * Remove buttons from the primary toolbar
 */
 function guny_mce_buttons( $buttons ) {
-  $remove = array( 
+  $remove = array(
     'blockquote',
     'alignleft',
     'alignright',
     'aligncenter',
     'strikethrough',
-    'bullist',
-    'numlist',
     'hr',
     'wp_more'
   );
@@ -32,8 +30,8 @@ add_filter( 'mce_buttons', 'guny_mce_buttons' );
 * Remove buttons from the advanced toolbar
 */
 function guny_mce_buttons_2( $buttons ) {
-  $remove = array( 
-    'underline', 
+  $remove = array(
+    'underline',
     'alignjustify',
     'forecolor',
     'pastetext',

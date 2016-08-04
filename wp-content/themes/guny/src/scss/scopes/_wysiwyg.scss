@@ -1,0 +1,22 @@
+// WYSIWYG styles
+
+.s-wysiwyg {
+  ul {
+    list-style: none;
+    margin-top: rem-calc(15);
+    padding-left: rem-calc(30);
+  }
+
+  ul li {
+    padding: rem-calc(15 0 15 27);
+    text-indent: rem-calc(-27);
+
+    &:before {
+      content: url(/wp-content/themes/guny/assets/img/check.svg);
+      margin-right: rem-calc(12);
+      margin-top: rem-calc(2);
+      opacity: .2;
+      vertical-align: middle;
+    }
+  }
+}

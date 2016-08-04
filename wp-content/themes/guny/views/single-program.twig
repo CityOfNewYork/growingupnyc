@@ -27,8 +27,15 @@
 <article class="o-container">
   <div class="o-article">
   {% if post.summary %}
-    <div class="o-content-container--text">
+    <div class="o-content-container--text s-wysiwyg">
       {{post.get_field('summary')}}
+    </div> <!-- /.o-content-container-text -->
+    <hr>
+  {% endif %}
+  {% if post.eligibility %}
+    <div class="o-content-container--text s-wysiwyg">
+      <h2>Am I Eligible?</h2>
+      {{post.get_field('eligibility')}}
     </div> <!-- /.o-content-container-text -->
     <hr>
   {% endif %}

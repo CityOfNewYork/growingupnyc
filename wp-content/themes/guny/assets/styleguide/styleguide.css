@@ -1327,6 +1327,25 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
       .c-hero__tagline:last-child {
         margin-right: 0; } }
 
+.c-hero--long-text .c-hero__tagline {
+  font-size: 1.125rem;
+  line-height: 1.3;
+  margin-top: 0; }
+  @media screen and (min-width: 1024px) {
+    .c-hero--long-text .c-hero__tagline {
+      font-size: 1.3125rem; } }
+  .c-hero--long-text .c-hero__tagline + .c-hero__tagline {
+    margin-top: 0.9375rem; }
+  @media screen and (min-width: 700px) {
+    .c-hero--long-text .c-hero__tagline {
+      float: left;
+      display: block;
+      margin-right: 3.125%;
+      width: 74.21875%;
+      margin-right: 0; }
+      .c-hero--long-text .c-hero__tagline:last-child {
+        margin-right: 0; } }
+
 .c-hero__frill {
   height: auto;
   position: absolute;

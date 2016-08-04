@@ -1,6 +1,29 @@
 {% extends "base.twig" %}
 
+{% block head_extras %}
+<style>
+  .c-hero { background-color: #469BFF; background-image: url(/wp-content/themes/guny/assets/img/hero-programs.svg); }
+</style>
+{% endblock %}
+
 {% block content %}
+<header class="c-hero c-hero--large c-hero--long-text u-lg-gutter">
+  <div class="o-container">
+    <h1>{{post.title}}</h1>
+    <p class="c-hero__tagline">
+      {{post.program_name}}{% if post.acronym %} ({{post.acronym}}){% endif %}
+      | {{post.government_agency}}
+    </p>
+    <p class="c-hero__tagline">
+    {% for term in post.terms('programs_cat') %}
+      <a href="/programs/?fwp_program_type={{term.slug}}" class="button--pill">{{term.name}}</a>
+    {% endfor %}
+    {% for term in post.terms('age_group') %}
+      <a href="/programs/?fwp_ages={{term.slug}}" class="button--pill button--pill--alt">{{term.name}}</a>
+    {% endfor %}
+  </p>
+  </div>
+</header>
 <article class="o-container">
   <div class="o-article">
   {% if post.summary %}

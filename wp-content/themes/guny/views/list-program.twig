@@ -15,6 +15,13 @@
 </header>
 {% endblock %}
 
+{% block list_sidebar %}
+<ol class="c-list-box c-list-box--quaternary facetwp-guny" data-multiselectable="false">
+  {{facet_program_type}}
+  {{facet_ages}}
+</ol>
+{% endblock %}
+
 {% block post_list %}
 <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
   {{posts}}

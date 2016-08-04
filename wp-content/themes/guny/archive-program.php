@@ -13,6 +13,8 @@ if ( ! class_exists( 'Timber' ) ) {
 $context = Timber::get_context();
 $context['posts'] = facetwp_display('template', 'programs');
 $context['pagination'] = facetwp_display('pager');
+$context['facet_program_type'] = facetwp_display( 'facet', 'program_type' );
+$context['facet_ages'] = facetwp_display( 'facet', 'ages' );
 $templates = array( 'list-program.twig', 'list.twig' );
 
 Timber::render( $templates, $context );

@@ -66,12 +66,30 @@
             "disabled": 0
         },
         {
+            "key": "field_57a376ebaf8b9",
+            "label": "Summary",
+            "name": "summary",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 0
+        },
+        {
             "key": "field_577553edd207f",
             "label": "Eligibility",
             "name": "eligibility",
             "type": "wysiwyg",
             "instructions": "",
-            "required": 1,
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -89,7 +107,7 @@
             "name": "how_to_apply",
             "type": "wysiwyg",
             "instructions": "",
-            "required": 1,
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -100,22 +118,6 @@
             "tabs": "all",
             "toolbar": "basic",
             "media_upload": 0
-        },
-        {
-            "key": "field_577559e7d2081",
-            "label": "Apply URL",
-            "name": "apply_url",
-            "type": "url",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
         }
     ],
     "location": [
@@ -135,5 +137,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1469626546
+    "modified": 1470330623
 }

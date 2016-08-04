@@ -1,0 +1,14 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<article class="o-container">
+  <div class="o-article">
+  {% if post.summary %}
+    <div class="o-content-container--text">
+      {{post.get_field('summary')}}
+    </div> <!-- /.o-content-container-text -->
+    <hr>
+  {% endif %}
+  </div> <!-- /.o-article -->
+</article> <!-- /.o-container -->
+{% endblock %}

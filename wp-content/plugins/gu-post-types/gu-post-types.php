@@ -43,7 +43,7 @@ class GUPostTypes {
         'public' => true,
         'menu_position' => 21,
         'menu_icon' => 'dashicons-carrot',
-        'supports' => array( 'title', 'editor', 'excerpt' ),
+        'supports' => array( 'title', 'excerpt' ),
         'has_archive' => true,
         'rewrite' => array(
           'slug' => 'programs',

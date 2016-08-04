@@ -191,7 +191,8 @@ class FacetWP_Facet_Guny {
     $output .= '<ol class="js-accordion__content c-list-box__content" id="' . $facet['name'] . '-panel">';
     $output .= '<li class="c-list-box__subitem facetwp-item" role="button" data-value="">' . $label_any . '</li>';
     foreach( $values as $result ) {
-      $output .= '<li class="c-list-box__subitem facetwp-item" role="button" data-value="' . $result['facet_value'] . '">' . $result['facet_display_value'] . '</li>';
+      $selected = in_array( $result['facet_value'], $selected_values) ? 'true' : 'false';
+      $output .= '<li class="c-list-box__subitem facetwp-item" role="button" aria-selected="' . $selected . '" data-value="' . $result['facet_value'] . '">' . $result['facet_display_value'] . '</li>';
     }
     $output .= '</ol>';
     $output .= '</div>';
@@ -203,8 +204,8 @@ class FacetWP_Facet_Guny {
   <script>
   (function($) {
       wp.hooks.addAction('facetwp/refresh/guny', function($this, facet_name) {
-        var val = $this.find('.facetwp-item[aria-selected="true"]').data('value') || '';
-        FWP.facets[facet_name] = val;
+        var val = $this.find('.facetwp-item[aria-selected="true"]').data('value');
+        FWP.facets[facet_name] = val ? [val] : [];
       });
 
       $(document).on('facetwp-loaded', function() {

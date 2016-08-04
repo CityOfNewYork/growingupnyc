@@ -13,9 +13,9 @@
 
 {% block tags %}
   {% for term in post.terms('programs_cat') %}
-    <a href="{{term.link}}" class="button--pill">{{term.name}}</a>
+    <a href="/programs/?fwp_program_type={{term.slug}}" class="button--pill">{{term.name}}</a>
   {% endfor %}
   {% for term in post.terms('age_group') %}
-    <a href="{{term.link}}" class="button--pill button--pill--alt">{{term.name}}</a>
+    <a href="/programs/?fwp_ages={{term.slug}}" class="button--pill button--pill--alt">{{term.name}}</a>
   {% endfor %}
 {% endblock %}

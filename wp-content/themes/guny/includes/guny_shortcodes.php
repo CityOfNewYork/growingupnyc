@@ -36,3 +36,13 @@ function guny_button( $attr ) {
   return '<a href="' . $atts['url'] . '" class="button--simple">' . $atts['text'] . '</a>';
 }
 add_shortcode( 'button', 'guny_button' );
+
+/**
+* Add the custom shortcodes to the TinyMCE dropdown
+*/
+function guny_add_custom_shortcodes($shortcodes) {
+  $shortcodes['NYC Logo'] = '[nyc_logo]';
+  $shortcodes['Button'] = '[button url="" text=""]';
+  return $shortcodes;
+}
+add_filter( 'bsd_shortcode_list', 'guny_add_custom_shortcodes' );

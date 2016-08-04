@@ -102,6 +102,24 @@
             "media_upload": 0
         },
         {
+            "key": "field_57a39e841892b",
+            "label": "What Will I Need to Apply?",
+            "name": "whats_needed",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 0
+        },
+        {
             "key": "field_57755401d2080",
             "label": "How To Apply",
             "name": "how_to_apply",
@@ -116,7 +134,7 @@
             },
             "default_value": "",
             "tabs": "all",
-            "toolbar": "basic",
+            "toolbar": "full",
             "media_upload": 0
         }
     ],
@@ -137,5 +155,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1470339085
+    "modified": 1470341172
 }

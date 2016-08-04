@@ -39,6 +39,20 @@
     </div> <!-- /.o-content-container-text -->
     <hr>
   {% endif %}
+  {% if post.whats_needed %}
+    <div class="o-content-container--text s-wysiwyg">
+      <h2>What Will I Need to Apply?</h2>
+      {{post.get_field('whats_needed')}}
+    </div> <!-- /.o-content-container-text -->
+    <hr>
+  {% endif %}
+  {% if post.how_to_apply %}
+    <div class="o-content-container--text s-wysiwyg">
+      <h2>I'm Ready to Apply</h2>
+      {{post.get_field('how_to_apply')}}
+    </div> <!-- /.o-content-container-text -->
+    <hr>
+  {% endif %}
   </div> <!-- /.o-article -->
 </article> <!-- /.o-container -->
 {% endblock %}

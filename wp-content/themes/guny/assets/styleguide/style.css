@@ -1629,9 +1629,21 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
     display: block;
     width: 100%; }
 
+.s-wysiwyg h3 {
+  margin-top: 3.125rem; }
+
+.s-wysiwyg ol {
+  padding-left: 3.125rem; }
+
+.s-wysiwyg ol li {
+  padding: 0.625rem 0; }
+
+.s-wysiwyg ol,
+.s-wysiwyg ul {
+  margin-top: 0.9375rem; }
+
 .s-wysiwyg ul {
   list-style: none;
-  margin-top: 0.9375rem;
   padding-left: 1.875rem; }
 
 .s-wysiwyg ul li {

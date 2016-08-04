@@ -142,6 +142,27 @@
   }
 }
 
+// Simple Button
+//
+// Basic blue button used for links within a detail page
+//
+// markup:
+// <a class="button--simple">Button</a>
+// <button class="button--simple">Button</button>
+//
+// Styleguide 1.4
+.button--simple {
+  @extend %button-base;
+  background: $color-primary;
+  color: $color-text-invert;
+
+  &:hover,
+  &:focus {
+    background: $color-secondary;
+    color: $color-text-invert;
+  }
+}
+
 // Size Variations
 
 // Full-width
@@ -157,7 +178,7 @@
 // markup:
 // <button class="button--text">Button Text</button>
 //
-// Styleguide 1.4
+// Styleguide 1.5
 .button--text {
   color: $color-primary;
   min-height: 0;

@@ -277,7 +277,7 @@ hr {
   height: 2px;
   margin: 2.5rem 0; }
 
-.button--primary, .button--outline, .button--pill {
+.button--primary, .button--outline, .button--pill, .button--simple {
   border: 2px solid #fff;
   border-radius: 1.5625rem;
   display: inline-block;
@@ -291,7 +291,7 @@ hr {
   text-decoration: none;
   transition: all ease-in-out 0.15s; }
   @media screen and (min-width: 375px) {
-    .button--primary, .button--outline, .button--pill {
+    .button--primary, .button--outline, .button--pill, .button--simple {
       min-width: 9.375rem; } }
 
 .button--primary {
@@ -343,6 +343,13 @@ hr {
   background: #0055b8; }
   .button--pill--alt:hover, .button--pill--alt:focus {
     background: #00326d; }
+
+.button--simple {
+  background: #2793e0;
+  color: #fff; }
+  .button--simple:hover, .button--simple:focus {
+    background: #0055b8;
+    color: #fff; }
 
 .button--full-width {
   width: 100%; }

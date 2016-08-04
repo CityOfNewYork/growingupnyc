@@ -31,6 +31,12 @@
   background: #00326d;
 }
 
+.button--simple.pseudo-class-hover,
+.button--simple.pseudo-class-focus {
+  background: #0055b8;
+  color: #fff;
+}
+
 .button--text.pseudo-class-hover,
 .button--text.pseudo-class-focus {
   color: #0055b8;

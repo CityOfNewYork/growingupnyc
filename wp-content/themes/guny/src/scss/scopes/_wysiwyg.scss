@@ -2,11 +2,19 @@
 
 .s-wysiwyg {
   h3 {
-    margin-top: rem-calc(50);
+    margin-top: rem-calc(30);
+
+    @include media($bp-large) {
+      margin-top: rem-calc(50);
+    }
   }
 
   ol {
-    padding-left: rem-calc(50);
+    padding-left: rem-calc(30);
+
+    @include media($bp-large) {
+      padding-left: rem-calc(50);
+    }
   }
 
   ol li {
@@ -20,7 +28,11 @@
 
   ul {
     list-style: none;
-    padding-left: rem-calc(30);
+    padding-left: rem-calc(10);
+
+    @include media($bp-large) {
+      padding-left: rem-calc(30);
+    }
   }
 
   ul li {

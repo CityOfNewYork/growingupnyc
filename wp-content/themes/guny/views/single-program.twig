@@ -24,8 +24,8 @@
   </p>
   </div>
 </header>
-<article class="o-container">
-  <div class="o-article">
+<article class="o-container u-bottom-spacing">
+  <div class="o-article o-content-container--compact">
   {% if post.summary %}
     <div class="o-content-container--text s-wysiwyg">
       {{post.get_field('summary')}}
@@ -51,7 +51,15 @@
       <h2>I'm Ready to Apply</h2>
       {{post.get_field('how_to_apply')}}
     </div> <!-- /.o-content-container-text -->
+    {% if post.get_help %}
     <hr>
+    {% endif %}
+  {% endif %}
+  {% if post.how_to_apply %}
+    <div class="o-content-container--text s-wysiwyg">
+      <h2>How Can I Get Help?</h2>
+      {{post.get_field('get_help')}}
+    </div> <!-- /.o-content-container-text -->
   {% endif %}
   </div> <!-- /.o-article -->
 </article> <!-- /.o-container -->

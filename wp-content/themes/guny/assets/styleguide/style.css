@@ -1296,6 +1296,9 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
     .c-hero--large {
       padding: 14.1875rem 5rem 5rem; } }
 
+.c-hero--long-text {
+  text-align: left; }
+
 .c-hero--bg-primary {
   background: #2793e0; }
 
@@ -1637,10 +1640,16 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
     width: 100%; }
 
 .s-wysiwyg h3 {
-  margin-top: 3.125rem; }
+  margin-top: 1.875rem; }
+  @media screen and (min-width: 1024px) {
+    .s-wysiwyg h3 {
+      margin-top: 3.125rem; } }
 
 .s-wysiwyg ol {
-  padding-left: 3.125rem; }
+  padding-left: 1.875rem; }
+  @media screen and (min-width: 1024px) {
+    .s-wysiwyg ol {
+      padding-left: 3.125rem; } }
 
 .s-wysiwyg ol li {
   padding: 0.625rem 0; }
@@ -1651,7 +1660,10 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
 
 .s-wysiwyg ul {
   list-style: none;
-  padding-left: 1.875rem; }
+  padding-left: 0.625rem; }
+  @media screen and (min-width: 1024px) {
+    .s-wysiwyg ul {
+      padding-left: 1.875rem; } }
 
 .s-wysiwyg ul li {
   padding: 0.9375rem 0 0.9375rem 1.6875rem;

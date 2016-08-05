@@ -1,0 +1,16 @@
+// Responsive embedded media
+
+.o-flex-embed {
+  height: 0;
+  margin: $horizontal-gutter 0;
+  padding-top: percentage(450/730);
+  position: relative;
+}
+
+.o-flex-embed iframe {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}

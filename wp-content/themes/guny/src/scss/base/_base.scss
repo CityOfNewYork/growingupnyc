@@ -30,3 +30,9 @@ hr {
   height: 2px;
   margin: rem-calc($outer-gutter-large 0);
 }
+
+.media {
+  display: inline-block;
+  margin: $horizontal-gutter 0;
+  max-width: 100%;
+}

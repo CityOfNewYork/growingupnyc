@@ -28,6 +28,69 @@
             "placeholder": "",
             "disabled": 0,
             "readonly": 0
+        },
+        {
+            "key": "field_57a4e2aa0d5b0",
+            "label": "About This Event",
+            "name": "summary",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 0
+        },
+        {
+            "key": "field_57a4e2d50d5b1",
+            "label": "Event Photo",
+            "name": "event_photo",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_57a4e3130d5b2",
+            "label": "Location Details",
+            "name": "location_details",
+            "type": "text",
+            "instructions": "Optional location details or instructions, i.e. what room to meet in.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": "",
+            "readonly": 0,
+            "disabled": 0
         }
     ],
     "location": [
@@ -45,12 +108,14 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": [
+        "the_content",
         "custom_fields",
         "discussion",
         "comments",
-        "author"
+        "author",
+        "featured_image"
     ],
     "active": 1,
     "description": "",
-    "modified": 1470423459
+    "modified": 1470425997
 }

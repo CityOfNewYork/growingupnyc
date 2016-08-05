@@ -199,6 +199,7 @@ new GunySite();
 class GunyEvent extends TimberPost {
   private $_event_type;
   private $_venue_address;
+  private $_google_dir_link;
 
   public function event_schedule_details() {
     if (function_exists('tribe_events_event_schedule_details')) {
@@ -216,6 +217,24 @@ class GunyEvent extends TimberPost {
     if (function_exists('tribe_get_map_link')) {
       return tribe_get_map_link($this->ID);
     }
+  }
+
+  public function google_directions_link() {
+    if ( !isset( $this->_google_dir_link ) ) {
+      $maps_link = $this->google_map_link();
+      if ( empty( $maps_link ) ) {
+        $this->_google_dir_link = false;
+      } else {
+        if ( strpos( $maps_link, 'maps.google.com' ) !== false ) {
+          $this->_google_dir_link = str_replace( '&#038;q', '&#038;daddr', $maps_link, $count );
+        } elseif ( strpos( $maps_link, 'google.com/maps' ) !== false ) {
+          $this->_google_dir_link = str_replace( '/place/', '/dir//', $maps_link );
+        } else {
+          $this->_google_dir_link = $maps_link;
+        }
+      }
+    }
+    return $this->_google_dir_link;
   }
 
   public function current_month_text() {
@@ -353,6 +372,13 @@ class GunyEvent extends TimberPost {
     if (function_exists('tribe_is_new_event_day')) {
       return tribe_is_new_event_day();
     }
+  }
+
+  public function image() {
+    if ( !empty( $this->event_photo ) ) {
+      return new TimberImage($this->event_photo);
+    }
+    return false;
   }
 }
 

@@ -63,81 +63,19 @@
       <dd class="c-details-list__descr">{{post.accessibility}}</dd>
     </dl>
   </aside>
-</section> <!-- /.o-container.u-bottom-spacing -->
-
-<div class="tribe-events-schedule tribe-clearfix">
-  {% if post.event_cost %}
-    <span class="tribe-events-divider">|</span>
-    <span class="tribe-events-cost">{{post.event_cost}}</span>
-  {% endif %}
-</div>
-
-<div class="{{post.class}}">
-  <img src="{{post.thumbnail.src}}" alt="{{post.thumbnail.alt}}">
-
-  <div class="tribe-events-single-event-description tribe-events-content">
-    {{post.content}}
-
-    <div class="tribe-events-meta-group tribe-events-meta-group-details">
-      <h3 class="tribe-events-single-section-title">Details</h3>
-      <dl>
-        {% if post.all_day and post.multiday %}
-          <dt>Start:</dt>
-          <dd>
-            <abbr class="tribe-events-abbr tribe-events-start-datetime published dtstart">{{post.start_datetime|date('F j')}}</abbr>
-          </dd>
-          <dt>End:</dt>
-          <dd>
-            <abbr class="tribe-events-abbr dtend">{{post.end_datetime|date('F j')}}</abbr>
-          </dd>
-        {% elseif post.all_day %}
-          <dt>Date:</dt>
-          <dd>
-            <abbr class="tribe-events-abbr tribe-events-start-datetime published dtstart">{{post.start_datetime|date('F j')}}</abbr>
-          </dd>
-        {% elseif post.multiday %}
-          <dt>Start:</dt>
-          <dd>
-            <abbr class="tribe-events-abbr tribe-events-start-datetime published dtstart">{{post.start_datetime|date('F j')}}</abbr>
-          </dd>
-          <dt>End:</dt>
-          <dd>
-            <abbr class="tribe-events-abbr dtend">{{post.end_datetime|date('F j')}}</abbr>
-          </dd>
-        {% else %}
-          <dt>Date:</dt>
-          <dd>
-            <abbr class="tribe-events-abbr tribe-events-start-datetime published dtstart">{{post.start_datetime|date('F j')}}</abbr>
-          </dd>
-          <dt>Time:</dt>
-          <dd class="tribe-events-abbr tribe-events-start-time published dtstart">
-            {{post.start_datetime|date('g:m a')}}
-            {% if post.end_datetime != post.start_datetime %}
-            - {{post.end_datetime|date('g:m a')}}
-            {% endif %}
-          </dd>
-        {% endif %}
-        <dt>Category:</dt>
-        {% for term in post.terms('tribe_events_cat') %}
-          <dd>{{term}}</dd>
-        {% endfor %}
-        {{post.tags()|join(',')}}
-        {% if post.event_website %}
-          <dt>Website:</dt>
-          <dd><a href="{{post.event_website}}" target="_blank">Visit Website</a></dd>
-        {% endif %}
-      </dl>
-    </div> <!-- /.tribe-events-meta-group -->
-    <div class="tribe-events-venue-map">
+  <article class="o-article o-content-container--compact">
+    <div class="o-content-container--text">
+      {% if post.summary %}
+      <h2>About This Event</h2>
+      {{post.get_field('summary')}}
+      {% endif %}
+      {% if post.image %}
+      <img src="{{post.image.src}}" alt="{{post.image.alt}}" class="media">
+      {% endif %}
+      <h3>Location Details</h3>
+      {{post.location_details}} <a href="{{post.google_directions_link}}" target="_blank">Get directions to the location.</a>
       {{post.venue_map}}
-    </div>
-    <div class="tribe-events-footer">
-      <h3 class="visuallyhidden">{{events_label_singular}} Navigation</h3>
-      <ul class="tribe-events-sub-nav">
-        <li class="tribe-events-nav-previous">{{post.prev_event_link}}</li>
-        <li class="tribe-events-nav-next">{{post.next_event_link}}</li>
-      </ul>
-    </div>
-  </div>
-</div>
+    </div> <!-- /.o-content-container-text -->
+  </article>
+</section> <!-- /.o-container.u-bottom-spacing -->
 {% endblock %}

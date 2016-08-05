@@ -1,17 +1,69 @@
 {% extends "base.twig" %}
 
 {% block content %}
-<div id="tribe-events-content" class="tribe-events-single">
-  <p class="tribe-events-back">
-		<a href="{{events_link}}">&laquo; All {{events_label_plural}}</a>
-	</p>
-
-  {{post.notices}}
-
-<h1 class="tribe-events-single-event-title">{{post.title}}</h1>
+<header class="c-hero c-hero--light">
+  <div class="o-container">
+    <h1>{{post.title}}</h1>
+    <p class="c-hero__tagline">
+    {% for term in post.terms('tribe_events_cat') %}
+      <a href="/events/?cat_id={{term.ID}}" class="button--pill">{{term.name}}</a>
+    {% endfor %}
+    {% for term in post.terms('age_group') %}
+      <a href="/events/?age_id={{term.ID}}" class="button--pill button--pill--alt">{{term.name}}</a>
+    {% endfor %}
+    </p>
+  </div> <!-- /.o-container -->
+</header>
+<section class="o-container u-bottom-spacing">
+  <aside class="o-article-sidebar o-content-container--compact u-lg-gutter">
+    <dl class="c-details-list">
+      <dt class="c-details-list__term">Date</dt>
+      <dd class="c-details-list__descr">
+        {{post.start_date_full}}
+        {% if post.multiday %}
+          - {{post.end_date_full}}
+        {% endif %}
+      </dd>
+      <dt class="c-details-list__term">Time</dt>
+      <dd class="c-details-list__descr">
+        {% if post.all_day %}
+          {{post.start_datetime|date('g:i A')}}
+          {% if post.end_datetime != post.start_datetime %}
+            - {{post.end_datetime|date('g:i A')}}
+          {% endif %}
+        {% else %}
+          All Day
+        {% endif %}
+      </dd>
+      <dt class="c-details-list__term">Location</dt>
+      <dd class="c-details-list__descr">
+        {{post.venue}},
+        {% for borough in post.terms('borough') %}
+          {{borough.name}}
+        {% endfor %}
+      </dd>
+      <dt class="c-details-list__term">Address</dt>
+      <dd class="c-details-list__descr">
+        {% if post.venue_address %}
+          <span class="tribe-street-address">{{post.venue_address.address}}</span><br>
+          <span class="tribe-locality">{{post.venue_address.city}}</span><span class="tribe-delimiter">,</span>
+          <abbr class="tribe-region tribe-events-abbr" title="{{post.venue_address.full_region}}">{{post.venue_address.region}}</abbr>
+          <span class="tribe-postal-code">{{post.venue_address.zip}}</span>
+        {% endif %}
+      </dd>
+      <dt class="c-details-list__term">Cost</dt>
+      <dd class="c-details-list__descr">
+        {% if post.event_cost %}
+          {{post.event_cost}}
+        {% else %}
+          Free
+        {% endif %}
+      </dd>
+    </dl>
+  </aside>
+</section> <!-- /.o-container.u-bottom-spacing -->
 
 <div class="tribe-events-schedule tribe-clearfix">
-  <h2>{{post.event_schedule_details}}</h2>
   {% if post.event_cost %}
     <span class="tribe-events-divider">|</span>
     <span class="tribe-events-cost">{{post.event_cost}}</span>
@@ -71,10 +123,6 @@
             {% endif %}
           </dd>
         {% endif %}
-        {% if post.event_cost %}
-          <dt>Cost:</dt>
-          <dd class="tribe-events-event-cost">{{post.event_cost}}</dd>
-        {% endif %}
         <dt>Category:</dt>
         {% for term in post.terms('tribe_events_cat') %}
           <dd>{{term}}</dd>
@@ -86,26 +134,6 @@
         {% endif %}
       </dl>
     </div> <!-- /.tribe-events-meta-group -->
-    {% if post.venue %}
-    <div class="tribe-events-meta-group">
-      <h3 class="tribe-events-single-section-title">Venue</h3>
-      <dl>
-        <dd class="tribe-venue">{{post.venue}}</dd>
-        {% if post.venue_address %}
-          <span class="tribe-street-address">{{post.venue_address.address}}</span><br>
-          <span class="tribe-locality">{{post.venue_address.city}}</span><span class="tribe-delimiter">,</span>
-          <abbr class="tribe-region tribe-events-abbr" title="{{post.venue_address.full_region}}">{{post.venue_address.region}}</abbr>
-          <span class="tribe-postal-code">{{post.venue_address.zip}}</span>
-          {% if post.venue_address.phone %}
-            <br>{{post.venue_address.phone}}
-          {% endif %}
-          {% if post.venue_address.website %}
-            <br>{{post.venue_address.website}}
-          {% endif %}
-        {% endif %}
-      </dl>
-    </div> <!-- /.tribe-events-meta-group -->
-    {% endif %}
     <div class="tribe-events-venue-map">
       {{post.venue_map}}
     </div>

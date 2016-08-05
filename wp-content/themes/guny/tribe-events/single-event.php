@@ -16,7 +16,6 @@ $context = Timber::get_context();
 $post = Timber::get_post(false, 'GunyEvent');
 $templates = array( 'single-event.twig', 'single.twig' );
 $context['post'] = $post;
-$context['events_link'] = tribe_get_events_link();
 $context['events_label_singular'] = tribe_get_event_label_singular();
 $context['events_label_plural'] = tribe_get_event_label_plural();
 Timber::render( $templates, $context );

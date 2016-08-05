@@ -200,12 +200,6 @@ class GunyEvent extends TimberPost {
   private $_event_type;
   private $_venue_address;
 
-  public function notices() {
-    if (function_exists('tribe_the_notices')) {
-      return tribe_the_notices(false);
-    }
-  }
-
   public function event_schedule_details() {
     if (function_exists('tribe_events_event_schedule_details')) {
       return tribe_events_event_schedule_details($this->ID);
@@ -281,6 +275,12 @@ class GunyEvent extends TimberPost {
   public function start_date_full() {
     if (function_exists('tribe_get_start_date')) {
       return date('l, F j', $this->start_datetime());
+    }
+  }
+
+  public function end_date_full() {
+    if (function_exists('tribe_get_end_date')) {
+      return date('l, F j', $this->end_datetime());
     }
   }
 

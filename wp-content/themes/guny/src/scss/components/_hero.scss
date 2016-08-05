@@ -9,6 +9,7 @@
 // .c-hero - Standard size
 // .c-hero--large - Taller version
 // .c-hero--long-text - Version that allows for longer titles and taglines
+// .c-hero--light - Version with dark text on a light background
 //
 // markup:
 // <header class="c-hero {$modifiers}" style="background:#333">
@@ -54,6 +55,10 @@
 
 .c-hero--long-text {
   text-align: left;
+}
+
+.c-hero--light {
+  color: $color-text;
 }
 
 // Hero Background Variations

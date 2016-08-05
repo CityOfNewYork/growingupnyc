@@ -380,6 +380,12 @@ class GunyEvent extends TimberPost {
     }
     return false;
   }
+
+  public function organizer() {
+    if (function_exists( 'tribe_get_organizer' ) ) {
+      return tribe_get_organizer( $this->ID );
+    }
+  }
 }
 
 /**

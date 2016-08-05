@@ -75,6 +75,10 @@
       <h3>Location Details</h3>
       {{post.location_details}} <a href="{{post.google_directions_link}}" target="_blank">Get directions to the location.</a>
       {{post.venue_map}}
+      {% if post.organizer %}
+      <h3>Event Organizer</h3>
+      <p>{{post.organizer}}</p>
+      {% endif %}
     </div> <!-- /.o-content-container-text -->
   </article>
 </section> <!-- /.o-container.u-bottom-spacing -->

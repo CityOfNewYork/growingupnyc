@@ -70,7 +70,7 @@ $context['current_month_text'] = date('F Y', strtotime( tribe_get_month_view_dat
 // Event Category Filter
 $event_filter = Timber::get_terms('tribe_events_cat', array(
   'orderby' => 'NAME',
-  'hide_empty' => 0,
+  'hide_empty' => true,
   'depth' => 1,
   'hierarchical' => true,
 ) );
@@ -93,7 +93,7 @@ if ( $cat_id > 0 ) {
 $age_filter = Timber::get_terms('age_group', array(
   'hierarchical' => true,
   'depth' => 1,
-  'hide_empty' => 0,
+  'hide_empty' => true,
   'orderby' => 'term_order'
 ) );
 foreach ($age_filter as $key => $value) {
@@ -116,7 +116,7 @@ $borough_filter = Timber::get_terms('borough', array(
   'hierarchical' => true,
   'depth' => 1,
   'orderby' => 'NAME',
-  'hide_empty' => 0
+  'hide_empty' => true
 ) );
 foreach ($borough_filter as $key => $value) {
   $value->link = add_query_arg( 'borough_id', $value->ID );

@@ -59,6 +59,8 @@
           Free
         {% endif %}
       </dd>
+      <dt class="c-details-list__term">Accessibility</dt>
+      <dd class="c-details-list__descr">{{post.accessibility}}</dd>
     </dl>
   </aside>
 </section> <!-- /.o-container.u-bottom-spacing -->
@@ -68,14 +70,6 @@
     <span class="tribe-events-divider">|</span>
     <span class="tribe-events-cost">{{post.event_cost}}</span>
   {% endif %}
-</div>
-
-<div id="tribe-events-header">
-  <h3 class="visuallyhidden">{{events_label_singular}} Navigation</h3>
-  <ul class="tribe-events-sub-nav">
-    <li class="tribe-events-nav-previous">{{post.prev_event_link}}</li>
-    <li class="tribe-events-nav-next">{{post.next_event_link}}</li>
-  </ul>
 </div>
 
 <div class="{{post.class}}">

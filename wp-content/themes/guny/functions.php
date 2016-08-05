@@ -236,18 +236,6 @@ class GunyEvent extends TimberPost {
     }
   }
 
-  public function prev_event_link() {
-    if (function_exists('tribe_get_prev_event_link')) {
-      return tribe_get_prev_event_link('<span>&laquo;</span> %title%');
-    }
-  }
-
-  public function next_event_link() {
-    if (function_exists('tribe_get_next_event_link')) {
-      return tribe_get_next_event_link('%title% <span>&raquo;</span>');
-    }
-  }
-
   public function all_day() {
     if (function_exists('tribe_event_is_all_day')) {
       return tribe_event_is_all_day($this->ID);

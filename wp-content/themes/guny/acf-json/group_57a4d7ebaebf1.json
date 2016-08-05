@@ -1,0 +1,56 @@
+{
+    "key": "group_57a4d7ebaebf1",
+    "title": "Additional Event Information",
+    "fields": [
+        {
+            "key": "field_57a4d809bc195",
+            "label": "Accessibility",
+            "name": "accessibility",
+            "type": "select",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Fully accessible": "Fully accessible",
+                "Partially accessible": "Partially accessible",
+                "Not accessible": "Not accessible"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "tribe_events"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "custom_fields",
+        "discussion",
+        "comments",
+        "author"
+    ],
+    "active": 1,
+    "description": "",
+    "modified": 1470423459
+}

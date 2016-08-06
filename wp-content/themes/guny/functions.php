@@ -382,8 +382,26 @@ class GunyEvent extends TimberPost {
   }
 
   public function organizer() {
-    if (function_exists( 'tribe_get_organizer' ) ) {
+    if ( function_exists( 'tribe_get_organizer' ) ) {
       return tribe_get_organizer( $this->ID );
+    }
+  }
+
+  public function organizer_phone() {
+    if ( function_exists( 'tribe_get_organizer_phone' ) ) {
+      return tribe_get_organizer_phone( $this->ID );
+    }
+  }
+
+  public function organizer_email() {
+    if ( function_exists( 'tribe_get_organizer_email' ) ) {
+      return tribe_get_organizer_email( $this->ID );
+    }
+  }
+
+  public function organizer_link() {
+    if ( function_exists( 'tribe_get_organizer_website_url' ) ) {
+      return tribe_get_organizer_website_url( $this->ID );
     }
   }
 }

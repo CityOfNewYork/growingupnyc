@@ -521,6 +521,9 @@ a {
   a:hover, a:focus {
     color: #2793e0; }
 
+a[href^="tel:"] {
+  text-decoration: none; }
+
 strong {
   font-weight: 700; }
 

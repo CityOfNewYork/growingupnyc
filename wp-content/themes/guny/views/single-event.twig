@@ -64,7 +64,7 @@
     </dl>
   </aside>
   <article class="o-article o-content-container--compact">
-    <div class="o-content-container--text">
+    <div class="o-content-container--text s-wysiwyg">
       {% if post.summary %}
       <h2>About This Event</h2>
       {{post.get_field('summary')}}
@@ -78,6 +78,18 @@
       {% if post.organizer %}
       <h3>Event Organizer</h3>
       <p>{{post.organizer}}</p>
+      {% endif %}
+      {% if post.organizer_phone %}
+      <h3>Phone Number</h3>
+      <p><a href="tel:{{post.organizer_phone}}">{{post.organizer_phone}}</a></p>
+      {% endif %}
+      {% if post.organizer_email %}
+      <h3>Email Address</h3>
+      <p><a href="mailto:{{post.organizer_email}}" rel="nofollow">{{post.organizer_email}}</a></p>
+      {% endif %}
+      {% if post.organizer_link %}
+      <h3>Website</h3>
+      <p><a href="{{post.organizer_link}}" target="_blank">{{post.organizer_link}}</a></p>
       {% endif %}
     </div> <!-- /.o-content-container-text -->
   </article>

@@ -72,7 +72,9 @@
       {{post.get_field('summary')}}
       {% endif %}
       {% if post.image %}
-      <img src="{{post.image.src}}" alt="{{post.image.alt}}" class="media">
+      <figure class="o-feature-photo">
+        <img src="{{post.image.src}}" alt="{{post.image.alt}}" class="o-feature-photo__photo">
+      </figure>
       {% endif %}
       <h3>Location Details</h3>
       {{post.location_details}} <a href="{{post.google_directions_link}}" target="_blank">Get directions to the location.</a>

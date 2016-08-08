@@ -277,11 +277,6 @@ hr {
   height: 2px;
   margin: 2.5rem 0; }
 
-.media {
-  display: inline-block;
-  margin: 20px 0;
-  max-width: 100%; }
-
 .button--primary, .button--outline, .button--pill, .button--simple {
   border: 2px solid #fff;
   border-radius: 1.5625rem;
@@ -615,6 +610,20 @@ p + p {
 @media screen and (min-width: 1024px) {
   .o-content-container--text {
     width: 91.66667%; } }
+
+.o-feature-photo {
+  display: block;
+  margin: 20px auto;
+  max-height: 440px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  text-align: center; }
+
+.o-feature-photo__photo {
+  display: inline-block;
+  margin: 0;
+  max-width: 100%; }
 
 .o-flex-embed {
   height: 0;

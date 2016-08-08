@@ -1,4 +1,5 @@
-import 'babel-polyfill';
+import 'babel-polyfill'; // Polyfill ES2015 features
+import 'object-fit-images'; // Polyfill object-fit for IE/Edge
 import globalSearch from './modules/globalSearch.js';
 import toggleOpen from './modules/toggleOpen.js';
 import accordion from './modules/accordion.js';

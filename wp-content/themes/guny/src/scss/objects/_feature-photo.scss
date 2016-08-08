@@ -1,0 +1,21 @@
+// Feature Photo
+//
+// Container object for a featured photo, e.g. on the events detail page
+// Photo has a constrained height and width and will scale and crop to fit
+
+// Local Variables
+.o-feature-photo {
+  display: block;
+  margin: $horizontal-gutter auto;
+  max-height: 440px;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+}
+
+.o-feature-photo__photo {
+  display: inline-block;
+  margin: 0;
+  max-width: 100%;
+}

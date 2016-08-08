@@ -59,8 +59,10 @@
           Free
         {% endif %}
       </dd>
-      <dt class="c-details-list__term">Accessibility</dt>
-      <dd class="c-details-list__descr">{{post.accessibility}}</dd>
+      {% if post.accessibility %}
+        <dt class="c-details-list__term">Accessibility</dt>
+        <dd class="c-details-list__descr">{{post.accessibility}}</dd>
+      {% endif %}
     </dl>
   </aside>
   <article class="o-article o-content-container--compact">

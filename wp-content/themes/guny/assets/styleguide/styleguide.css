@@ -432,7 +432,7 @@ hr {
       height: 3.125rem;
       width: 3.125rem; } }
 
-.icon--small {
+.icon--small, .icon--caret {
   height: 1.375rem;
   width: 1.375rem; }
 
@@ -458,6 +458,9 @@ hr {
   position: relative;
   top: -0.1875rem;
   width: 2.8125rem; }
+
+.icon--caret {
+  margin-top: -0.1875rem; }
 
 .sticker {
   background: #2793e0;
@@ -1486,6 +1489,9 @@ ol.o-inline {
     .c-list-box__heading {
       font-size: 1.5rem; } }
 
+a.c-list-box__heading {
+  text-decoration: none; }
+
 .c-list-box--primary .c-list-box__heading,
 .c-list-box--quaternary .c-list-box__heading {
   background: #2793e0;
@@ -1495,10 +1501,13 @@ ol.o-inline {
   letter-spacing: .5px;
   line-height: 1;
   text-transform: uppercase;
-  padding: 0.75rem 1.25rem; }
+  padding: 1.25rem; }
   @media screen and (min-width: 1024px) {
     .c-list-box--primary .c-list-box__heading {
       padding: 1.75rem 2.5rem; } }
+
+.c-list-box--primary .c-list-box__heading--subtitled {
+  padding: 0.75rem 1.25rem; }
 
 .c-list-box--secondary .c-list-box__heading,
 .c-list-box--quaternary .c-list-box__heading {
@@ -1941,6 +1950,9 @@ a.pre-teen-secondary:focus {
   @media screen and (min-width: 1024px) {
     .u-bottom-spacing {
       padding-bottom: 3.75rem; } }
+
+.u-shift-up {
+  margin-top: -40px; }
 
 /**
 * Utility classes

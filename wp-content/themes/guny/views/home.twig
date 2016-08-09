@@ -26,7 +26,7 @@
   <ol class="js-accordion c-list-box c-list-box--primary" data-multiselectable="true">
     {% for age_group in age_menu %}
       <li class="c-list-box__item">
-        <h3 class="js-accordion__header c-list-box__heading {{age_group|sanitize}}-background" id="homepage-ages-heading-{{loop.index}}">
+        <h3 class="js-accordion__header c-list-box__heading c-list-box__heading--subtitled {{age_group|sanitize}}-background" id="homepage-ages-heading-{{loop.index}}">
           {{age_group.name}}
           <span class="c-list-box__subheading">{{age_group.description}}</span>
         </h3>

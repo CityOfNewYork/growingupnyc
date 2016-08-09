@@ -36,3 +36,8 @@
     padding-bottom: rem-calc(60);
   }
 }
+
+// Pull an element up to overlap with the one above it
+.u-shift-up {
+  margin-top: $horizontal-gutter * -2;
+}

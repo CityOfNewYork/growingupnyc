@@ -49,3 +49,9 @@
   top: rem-calc(-3);
   width: rem-calc(45);
 }
+
+// Align the caret with the text it's next to
+.icon--caret {
+  @extend .icon--small;
+  margin-top: rem-calc(-3);
+}

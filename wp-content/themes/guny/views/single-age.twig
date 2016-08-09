@@ -39,7 +39,28 @@
     </svg>
   </header>
   <article class="o-container">
+    <div class="o-article-sidebar">
+      {# Anchor Links #}
+      <div class="o-content-container--compact u-shift-up">
+        <ol class="c-list-box c-list-box--primary">
+          {% if upcoming_events %}
+            <li class="c-list-box__item">
+              <a href="#section-events" class="c-list-box__heading {{post.age_group|sanitize}}-secondary">Events<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+            </li>
+          {% endif %}
+          {% if post.featured_programs %}
+            <li class="c-list-box__item">
+              <a href="#section-programs" class="c-list-box__heading {{post.age_group|sanitize}}-secondary">Programs<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+            </li>
+          {% endif %}
+          <li class="c-list-box__item">
+            <a href="#section-milestones" class="c-list-box__heading {{post.age_group|sanitize}}-secondary">Milestones<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+          </li>
+        </ol>
+      </div> <!-- /.o-content-container-compact -->
+    </div> <!-- /.o-article-sidebar -->
     <div class="o-article">
+      {# Introduction #}
       {% if post.intro_content %}
         <section class="o-content-container--compact u-top-spacing u-bottom-spacing">
           <div class="o-content-container--text u-sm-gutter">
@@ -47,8 +68,10 @@
           </div>
         </section>
       {% endif %}
+
+      {# Upcoming Events #}
       {% if upcoming_events %}
-      <section class="c-block-list c-block-list--shade o-content-container{% if not post.tip %} u-sm-gutter{% endif %}">
+      <section class="c-block-list c-block-list--shade o-content-container{% if not post.tip %} u-sm-gutter{% endif %}" id="section-events">
         <h2>Events</h2>
         {% if post.events_text %}
           <p class="c-block-list__text">{{post.events_text}}</p>
@@ -65,6 +88,8 @@
         </div>
       </section> <!-- /.c-block-list -->
       {% endif %}
+
+      {# Tip #}
       {% if post.tip %}
       <aside class="c-tip u-sm-gutter {{post.age_group|sanitize}}-secondary o-content-container">
         <div class="c-tip__sticker sticker {{post.age_group|sanitize}}-secondary">
@@ -84,8 +109,10 @@
         </footer>
       </aside>
       {% endif %}
+
+      {# Programs #}
       {% if post.featured_programs %}
-      <section class="c-block-list c-block-list--shade o-content-container">
+      <section class="c-block-list c-block-list--shade o-content-container" id="section-programs">
         <h2>Programs</h2>
         {% if post.programs_text %}
           <p class="c-block-list__text">{{post.events_text}}</p>
@@ -103,7 +130,9 @@
         </div>
       </section>
       {% endif %}
-      <div class="o-content-container--compact u-top-spacing u-bottom-spacing">
+
+      {# Milestones #}
+      <div class="o-content-container--compact u-top-spacing u-bottom-spacing" id="section-milestones">
         <h2>Milestones</h2>
         <div class="o-content-container--text u-sm-gutter">
           <p>How your child plays, learns, speaks, and acts offers important clues about your child&rsquo;s development.</p>

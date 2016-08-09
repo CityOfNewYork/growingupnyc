@@ -81,31 +81,6 @@ class GUPostTypes {
         )
       )
     );
-
-    register_post_type(
-      'tip',
-      array(
-        'labels' => array(
-          'name' => 'Tips',
-          'singular_name' => 'Tip',
-          'add_new_item' => 'Add New Tip',
-          'edit_item' => 'Edit Tip',
-          'new_item' => 'New Tip',
-          'view_item' => 'View Tip',
-          'search_items' => 'Search Tips',
-          'not_found' => 'No tips found',
-          'not_found_in_trash' => 'No tips found in trash',
-          'all_items' => 'All Tips',
-          'archives' => 'Tip Archives',
-          'insert_into_item' => 'Insert into tip',
-          'uploaded_to_this_item' => 'Uploaded to this tip'
-        ),
-        'public' => true,
-        'menu_position' => 23,
-        'menu_icon' => 'dashicons-lightbulb',
-        'supports' => array( 'title', 'editor', 'thumbnail' )
-      )
-    );
   }
 
   function create_taxonomies() {

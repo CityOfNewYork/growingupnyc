@@ -59,10 +59,6 @@ class acf_field_flexible_content extends acf_field {
 		add_action('wp_ajax_nopriv_acf/fields/flexible_content/layout_title',	array($this, 'ajax_layout_title'));
 		
 		
-		// filters
-		add_filter('acf/clone_field', array($this, 'acf_clone_field'), 10, 2);
-		
-		
 		// do not delete!
     	parent::__construct();
 		
@@ -711,10 +707,6 @@ class acf_field_flexible_content extends acf_field {
 				$sub_field = $layout[ $j ];
 				
 				
-				// bail ealry if no name (tab)
-				if( acf_is_empty($sub_field['name']) ) continue;
-				
-				
 				// update full name
 				$sub_field['name'] = "{$field['name']}_{$i}_{$sub_field['name']}";
 				
@@ -803,17 +795,13 @@ class acf_field_flexible_content extends acf_field {
 				$sub_field = $layout[ $j ];
 				
 				
-				// bail ealry if no name (tab)
-				if( acf_is_empty($sub_field['name']) ) continue;
-				
-				
-				// extract value
-				$sub_value = acf_extract_var( $value[ $i ], $sub_field['key'] );
-				
-				
 				// update $sub_field name
 				$sub_field['name'] = "{$field['name']}_{$i}_{$sub_field['name']}";
 					
+					
+				// extract value
+				$sub_value = acf_extract_var( $value[ $i ], $sub_field['key'] );
+				
 				
 				// format value
 				$sub_value = acf_format_value( $sub_value, $post_id, $sub_field );
@@ -1070,7 +1058,7 @@ class acf_field_flexible_content extends acf_field {
 		// save false for empty value
 		if( empty($order) ) {
 			
-			$order = '';
+			$order = false;
 		
 		}
 		
@@ -1303,10 +1291,10 @@ class acf_field_flexible_content extends acf_field {
 		
 		// options
    		$options = acf_parse_args( $_POST, array(
-			'post_id'		=> 0,
-			'i'				=> 0,
-			'field_key'		=> '',
-			'nonce'			=> '',
+			'post_id'		=>	0,
+			'i'				=>	0,
+			'field_key'		=>	'',
+			'nonce'			=>	'',
 			'layout'		=> '',
 			'acf'			=> array()
 		));
@@ -1405,47 +1393,10 @@ class acf_field_flexible_content extends acf_field {
 		
 	}
 	
-	
-	/*
-	*  acf_clone_field
-	*
-	*  This function will update clone field settings based on the origional field
-	*
-	*  @type	function
-	*  @date	28/06/2016
-	*  @since	5.3.8
-	*
-	*  @param	$clone (array)
-	*  @param	$field (array)
-	*  @return	$clone
-	*/
-	
-	function acf_clone_field( $field, $clone_field ) {
-		
-		// remove parent_layout
-		// - allows a sub field to be rendered as a normal field
-		unset($field['parent_layout']);
-		
-		
-		// attempt to merger parent_layout
-		if( isset($clone_field['parent_layout']) ) {
-			
-			$field['parent_layout'] = $clone_field['parent_layout'];
-			
-		}
-		
-		
-		// return
-		return $field;
-		
-	}
-	
 }
 
+new acf_field_flexible_content();
 
-// initialize
-acf_register_field_type( new acf_field_flexible_content() );
-
-endif; // class_exists check
+endif;
 
 ?>

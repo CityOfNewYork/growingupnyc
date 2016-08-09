@@ -71,8 +71,8 @@ class acf_settings_tools {
 	
 	function load() {
 		
-		// disable filters to ensure ACF loads raw data from DB
-		acf_disable_filters();
+		// all export pages should not load local fields
+		acf_disable_local();
 		
 		
 		// run import / export

@@ -237,10 +237,8 @@ class acf_field_textarea extends acf_field {
 	
 }
 
+new acf_field_textarea();
 
-// initialize
-acf_register_field_type( new acf_field_textarea() );
-
-endif; // class_exists check
+endif;
 
 ?>

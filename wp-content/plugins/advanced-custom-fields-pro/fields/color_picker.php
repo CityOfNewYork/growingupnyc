@@ -155,10 +155,8 @@ class acf_field_color_picker extends acf_field {
 	
 }
 
+new acf_field_color_picker();
 
-// initialize
-acf_register_field_type( new acf_field_color_picker() );
-
-endif; // class_exists check
+endif;
 
 ?>

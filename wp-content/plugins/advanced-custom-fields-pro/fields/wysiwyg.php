@@ -462,10 +462,8 @@ acf.fields.wysiwyg.toolbars = <?php echo json_encode($json); ?>;
 	
 }
 
+new acf_field_wysiwyg();
 
-// initialize
-acf_register_field_type( new acf_field_wysiwyg() );
-
-endif; // class_exists check
+endif;
 
 ?>

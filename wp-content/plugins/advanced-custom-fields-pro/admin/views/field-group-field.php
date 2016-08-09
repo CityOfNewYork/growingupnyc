@@ -1,8 +1,7 @@
 <?php 
 
-// vars
-$field = false;
-$i = 0;
+// global
+global $post;
 
 
 // extract args

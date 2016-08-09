@@ -41,6 +41,10 @@ class acf_settings_updates {
 	
 	function admin_menu() {
 		
+		// vars
+		$basename = acf_get_setting('basename');
+		
+		
 		// bail early if no show_admin
 		if( !acf_get_setting('show_admin') ) return;
 		
@@ -50,7 +54,7 @@ class acf_settings_updates {
 		
 		
 		// bail early if not a plugin (included in theme)
-		if( !acf_is_plugin_active() ) return;
+		if( !is_plugin_active($basename) ) return;
 				
 		
 		// add page
@@ -59,48 +63,6 @@ class acf_settings_updates {
 		
 		// actions
 		add_action('load-' . $page, array($this,'load'));
-		
-	}
-	
-	
-	/*
-	*  show_remote_response_error
-	*
-	*  This function will show an admin notice if server connection fails
-	*
-	*  @type	function
-	*  @date	25/07/2016
-	*  @since	5.4.0
-	*
-	*  @param	n/a
-	*  @return	n/a
-	*/
-	
-	function show_remote_response_error() {
-		
-		// only run once
-		if( acf_has_done('show_remote_response_error') ) return false;
-		
-		
-		// vars
-    	$error = acf_get_setting('remote_response_error');
-    	$notice = __('<b>Error</b>. Could not connect to update server', 'acf');
-    	
-    	
-    	// append error
-    	if( $error ) {
-        	
-        	$notice .= ' <span class="description">(' . $error . ')</span>';
-        	
-    	}
-    	
-    	
-    	// add notice
-    	acf_add_admin_notice( $notice, 'error' );
-		
-		
-		// return
-		return false;
 		
 	}
 	
@@ -159,8 +121,9 @@ class acf_settings_updates {
 		
 		// validate
         if( empty($info) ) {
-        	
-        	return $this->show_remote_response_error();
+        
+        	acf_add_admin_notice( __('<b>Error</b>. Could not connect to update server', 'acf'), 'error');
+        	return;
         	
         }
         
@@ -237,7 +200,8 @@ class acf_settings_updates {
 		// validate
 		if( empty($response) ) {
 			
-			return $this->show_remote_response_error();
+			acf_add_admin_notice( __('<b>Connection Error</b>. Sorry, please try again', 'acf'), 'error');
+			return;
 			
 		}
 		
@@ -307,7 +271,8 @@ class acf_settings_updates {
 		// validate
 		if( empty($response) ) {
 		
-			return $this->show_remote_response_error();
+			acf_add_admin_notice(__('<b>Connection Error</b>. Sorry, please try again', 'acf'), 'error');
+			return;
 			
 		}
 		

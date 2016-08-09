@@ -177,10 +177,8 @@ class acf_field_url extends acf_field {
 	
 }
 
+new acf_field_url();
 
-// initialize
-acf_register_field_type( new acf_field_url() );
-
-endif; // class_exists check
+endif;
 
 ?>

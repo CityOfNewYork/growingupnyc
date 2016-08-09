@@ -191,10 +191,8 @@ class acf_field_text extends acf_field {
 	
 }
 
+new acf_field_text();
 
-// initialize
-acf_register_field_type( new acf_field_text() );
-
-endif; // class_exists check
+endif;
 
 ?>

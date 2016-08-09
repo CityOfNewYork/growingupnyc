@@ -161,10 +161,8 @@ class acf_field_password extends acf_field {
 	
 }
 
+new acf_field_password();
 
-// initialize
-acf_register_field_type( new acf_field_password() );
-
-endif; // class_exists check
+endif;
 
 ?>

@@ -175,10 +175,8 @@ class acf_field_time_picker extends acf_field {
 	
 }
 
+new acf_field_time_picker();
 
-// initialize
-acf_register_field_type( new acf_field_time_picker() );
-
-endif; // class_exists check
+endif;
 
 ?>

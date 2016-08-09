@@ -207,10 +207,8 @@ class acf_field_true_false extends acf_field {
 	
 }
 
+new acf_field_true_false();
 
-// initialize
-acf_register_field_type( new acf_field_true_false() );
-
-endif; // class_exists check
+endif;
 
 ?>

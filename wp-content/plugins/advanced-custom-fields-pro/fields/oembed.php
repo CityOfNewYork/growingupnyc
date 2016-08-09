@@ -320,10 +320,8 @@ class acf_field_oembed extends acf_field {
 	
 }
 
+new acf_field_oembed();
 
-// initialize
-acf_register_field_type( new acf_field_oembed() );
-
-endif; // class_exists check
+endif;
 
 ?>

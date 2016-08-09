@@ -482,10 +482,8 @@ class acf_field_image extends acf_field {
 	
 }
 
+new acf_field_image();
 
-// initialize
-acf_register_field_type( new acf_field_image() );
-
-endif; // class_exists check
+endif;
 
 ?>

@@ -84,27 +84,8 @@ function acf_pro_get_remote_response( $action = '', $post = array() ) {
 	));
 	
 	
-	// error
-	if( is_wp_error($request) ) {
-		
-	    // loop
-	    foreach( $request->errors as $k => $v ) {
-		    
-			// bail early if no error
-		    if( empty($v[0]) ) continue;
-		    
-		    
-		    // save
-			acf_update_setting('remote_response_error', $k . ': ' . $v[0]);
-			
-		    
-		    // only run once
-		    break;
-		    
-	    }
-	    
-	// success
-	} elseif( wp_remote_retrieve_response_code($request) === 200) {
+	// return body
+    if( !is_wp_error($request) || wp_remote_retrieve_response_code($request) === 200) {
     	
         return $request['body'];
     

@@ -70,17 +70,8 @@ class acf_field_repeater extends acf_field {
 	
 	function load_field( $field ) {
 		
-		// vars
-		$sub_fields = acf_get_fields( $field );
+		$field['sub_fields'] = acf_get_fields( $field );
 		
-		
-		// append
-		if( $sub_fields ) {
-			
-			$field['sub_fields'] = $sub_fields;
-			
-		}
-				
 		
 		// return
 		return $field;
@@ -540,10 +531,6 @@ class acf_field_repeater extends acf_field {
 					$sub_field = $field['sub_fields'][ $j ];
 					
 					
-					// bail ealry if no name (tab)
-					if( acf_is_empty($sub_field['name']) ) continue;
-					
-					
 					// update $sub_field name
 					$sub_field['name'] = "{$field['name']}_{$i}_{$sub_field['name']}";
 					
@@ -607,16 +594,12 @@ class acf_field_repeater extends acf_field {
 				$sub_field = $field['sub_fields'][ $j ];
 				
 				
-				// bail ealry if no name (tab)
-				if( acf_is_empty($sub_field['name']) ) continue;
+				// update $sub_field name
+				$sub_field['name'] = "{$field['name']}_{$i}_{$sub_field['name']}";
 				
 				
 				// extract value
 				$sub_value = acf_extract_var( $value[ $i ], $sub_field['key'] );
-				
-				
-				// update $sub_field name
-				$sub_field['name'] = "{$field['name']}_{$i}_{$sub_field['name']}";
 				
 				
 				// format value
@@ -724,10 +707,6 @@ class acf_field_repeater extends acf_field {
 		$total = 0;
 		
 		
-		// bail early if no sub fields
-		if( empty($field['sub_fields']) ) return $value;
-		
-		
 		// remove acfcloneindex
 		if( isset($value['acfcloneindex']) ) {
 		
@@ -754,6 +733,14 @@ class acf_field_repeater extends acf_field {
 				$total++;
 				
 				
+				// continue if no sub fields
+				if( !$field['sub_fields'] ) {
+					
+					continue;
+					
+				}
+					
+					
 				// loop through sub fields
 				foreach( $field['sub_fields'] as $sub_field ) {
 					
@@ -825,14 +812,6 @@ class acf_field_repeater extends acf_field {
 		$value = $total;
 		
 		
-		// save false for empty value
-		if( empty($value) ) {
-			
-			$value = '';
-		
-		}
-		
-		
 		// return
 		return $value;
 	}
@@ -858,7 +837,7 @@ class acf_field_repeater extends acf_field {
 		
 		
 		// bail early if no rows or no sub fields
-		if( !$old_total || empty($field['sub_fields']) ) {
+		if( !$old_total || !$field['sub_fields'] ) {
 			
 			return;
 			
@@ -899,14 +878,14 @@ class acf_field_repeater extends acf_field {
 	
 	function delete_field( $field ) {
 		
-		// bail early if no sub fields
-		if( empty($field['sub_fields']) ) return;
-		
-		
 		// loop through sub fields
-		foreach( $field['sub_fields'] as $sub_field ) {
+		if( !empty($field['sub_fields']) ) {
 		
-			acf_delete_field( $sub_field['ID'] );
+			foreach( $field['sub_fields'] as $sub_field ) {
+			
+				acf_delete_field( $sub_field['ID'] );
+				
+			}
 			
 		}
 		
@@ -973,10 +952,8 @@ class acf_field_repeater extends acf_field {
 
 }
 
+new acf_field_repeater();
 
-// initialize
-acf_register_field_type( new acf_field_repeater() );
-
-endif; // class_exists check
+endif;
 
 ?>

@@ -34,3 +34,7 @@
     </p>
   {% endif %}
 {% endblock %}
+
+{% block body %}
+{{post.post_excerpt ? post.post_excerpt : post.summary|excerpt(15)}}
+{% endblock %}

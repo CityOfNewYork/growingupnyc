@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FacetWP\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-09 13:40-0400\n"
-"PO-Revision-Date: 2016-06-09 13:40-0400\n"
+"POT-Creation-Date: 2016-08-05 11:12-0400\n"
+"PO-Revision-Date: 2016-08-05 11:12-0400\n"
 "Last-Translator: Matt Gibbs <hello@facetwp.com>\n"
 "Language-Team: Matt Gibbs <hello@facetwp.com>\n"
 "Language: pt_BR\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
 "__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
 "_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
@@ -46,37 +46,37 @@ msgstr "Pulado"
 msgid "Error"
 msgstr "Erro"
 
-#: includes/class-facet.php:438 includes/class-facet.php:555
+#: includes/class-facet.php:435 includes/class-facet.php:552
 msgid "of"
 msgstr "de"
 
-#: includes/class-facet.php:472 includes/facets/checkboxes.php:315
+#: includes/class-facet.php:469 includes/facets/checkboxes.php:315
 #: includes/facets/dropdown.php:201 includes/facets/fselect.php:273
 #: includes/facets/hierarchy.php:192
 msgid "Sort by"
 msgstr "Ordenar poe"
 
-#: includes/class-facet.php:476
+#: includes/class-facet.php:473
 msgid "Title (A-Z)"
 msgstr "Título (A-Z)"
 
-#: includes/class-facet.php:483
+#: includes/class-facet.php:480
 msgid "Title (Z-A)"
 msgstr "Título (Z-A)"
 
-#: includes/class-facet.php:490
+#: includes/class-facet.php:487
 msgid "Date (Newest)"
 msgstr "Data (mais novos)"
 
-#: includes/class-facet.php:497
+#: includes/class-facet.php:494
 msgid "Date (Oldest)"
 msgstr "Data (mais antigos)"
 
-#: includes/class-facet.php:554
+#: includes/class-facet.php:551
 msgid "Page"
 msgstr "Página"
 
-#: includes/class-facet.php:605
+#: includes/class-facet.php:602
 msgid "Per page"
 msgstr "Por página"
 
@@ -112,7 +112,7 @@ msgstr "Taxonomias"
 msgid "Custom Fields"
 msgstr "Campos Personalizados"
 
-#: includes/class-init.php:117 templates/page-settings.php:93
+#: includes/class-init.php:119 templates/page-settings.php:93
 msgid "Settings"
 msgstr "Configurações"
 
@@ -128,13 +128,17 @@ msgstr "Completar Automaticamente "
 msgid "Start typing..."
 msgstr "Comece a digitar"
 
-#: includes/facets/autocomplete.php:24
+#: includes/facets/autocomplete.php:26
 msgid "Update"
 msgstr "Atualizar"
 
-#: includes/facets/autocomplete.php:79
+#: includes/facets/autocomplete.php:83
 msgid "No results"
 msgstr "Sem resultados"
+
+#: includes/facets/autocomplete.php:125 includes/facets/search.php:102
+msgid "Placeholder text"
+msgstr "Texto de espaço reservado"
 
 #: includes/facets/checkboxes.php:7
 msgid "Checkboxes"
@@ -246,111 +250,107 @@ msgstr "Intervalo de Datas"
 msgid "Date"
 msgstr "Data"
 
-#: includes/facets/date_range.php:27 includes/facets/date_range.php:184
+#: includes/facets/date_range.php:27 includes/facets/date_range.php:183
 msgid "Start Date"
 msgstr "Data Inicial"
 
-#: includes/facets/date_range.php:30 includes/facets/date_range.php:185
+#: includes/facets/date_range.php:30 includes/facets/date_range.php:184
 msgid "End Date"
 msgstr "Data Final"
 
-#: includes/facets/date_range.php:118
+#: includes/facets/date_range.php:120
 msgid "January"
 msgstr "Janeiro"
 
-#: includes/facets/date_range.php:119
+#: includes/facets/date_range.php:121
 msgid "February"
 msgstr "Fevereiro"
 
-#: includes/facets/date_range.php:120
+#: includes/facets/date_range.php:122
 msgid "March"
 msgstr "Março"
 
-#: includes/facets/date_range.php:121
+#: includes/facets/date_range.php:123
 msgid "April"
 msgstr "Abril"
 
-#: includes/facets/date_range.php:122
+#: includes/facets/date_range.php:124
 msgid "May"
 msgstr "Mai"
 
-#: includes/facets/date_range.php:123
+#: includes/facets/date_range.php:125
 msgid "June"
 msgstr "Junho"
 
-#: includes/facets/date_range.php:124
+#: includes/facets/date_range.php:126
 msgid "July"
 msgstr "Julho"
 
-#: includes/facets/date_range.php:125
+#: includes/facets/date_range.php:127
 msgid "August"
 msgstr "Agosto"
 
-#: includes/facets/date_range.php:126
+#: includes/facets/date_range.php:128
 msgid "September"
 msgstr "Setembro"
 
-#: includes/facets/date_range.php:127
+#: includes/facets/date_range.php:129
 msgid "October"
 msgstr "Outubro"
 
-#: includes/facets/date_range.php:128
+#: includes/facets/date_range.php:130
 msgid "November"
 msgstr "Novembro"
 
-#: includes/facets/date_range.php:129
+#: includes/facets/date_range.php:131
 msgid "December"
 msgstr "Dezembro"
 
-#: includes/facets/date_range.php:131
-msgid "S-M-T-W-T-F-S"
-msgstr "S-M-T-W-T-F-S"
-
-#: includes/facets/date_range.php:132
-msgid "Clear"
-msgstr "Limpar"
-
-#: includes/facets/date_range.php:150 includes/facets/number_range.php:106
+#: includes/facets/date_range.php:149 includes/facets/number_range.php:106
 #: includes/facets/slider.php:167
 msgid "Other data source"
 msgstr "Outra fonte de dados"
 
-#: includes/facets/date_range.php:153 includes/facets/number_range.php:109
+#: includes/facets/date_range.php:152 includes/facets/number_range.php:109
 #: includes/facets/slider.php:170
 msgid "Use a separate value for the upper limit?"
 msgstr "Usar um valor separado para o limite superior"
 
-#: includes/facets/date_range.php:158 includes/facets/number_range.php:114
+#: includes/facets/date_range.php:157 includes/facets/number_range.php:114
 #: includes/facets/slider.php:175
 msgid "None"
 msgstr "Nome"
 
-#: includes/facets/date_range.php:170 includes/facets/number_range.php:126
+#: includes/facets/date_range.php:169 includes/facets/number_range.php:126
 #: includes/facets/slider.php:187
 msgid "Compare type"
 msgstr "Compare o tipo"
 
-#: includes/facets/date_range.php:173 includes/facets/number_range.php:129
+#: includes/facets/date_range.php:172 includes/facets/number_range.php:129
 #: includes/facets/slider.php:190
 msgid "Basic"
 msgstr "Basico"
 
-#: includes/facets/date_range.php:174 includes/facets/number_range.php:130
+#: includes/facets/date_range.php:173 includes/facets/number_range.php:130
 #: includes/facets/slider.php:191
 msgid "Intersect"
 msgstr "Interceptar"
 
-#: includes/facets/date_range.php:179
+#: includes/facets/date_range.php:178
 msgid "Fields to show"
 msgstr "Campos a mostrar"
 
-#: includes/facets/date_range.php:182
+#: includes/facets/date_range.php:181
 msgid "Start + End Dates"
 msgstr "Datas Começo + Final "
 
-#: includes/facets/date_range.php:183
+#: includes/facets/date_range.php:182
 msgid "Exact Date"
 msgstr "Data Exata"
+
+#: includes/facets/date_range.php:190
+msgid "Display format"
+msgstr ""
 
 #: includes/facets/dropdown.php:7
 msgid "Dropdown"
@@ -410,19 +410,19 @@ msgstr "Proximidade "
 msgid "Enter location"
 msgstr "Localização"
 
-#: includes/facets/proximity.php:163
+#: includes/facets/proximity.php:164
 msgid "Unit of measurement"
 msgstr "Unidade de medida"
 
-#: includes/facets/proximity.php:167
+#: includes/facets/proximity.php:168
 msgid "Miles"
 msgstr "Milhas /"
 
-#: includes/facets/proximity.php:168
+#: includes/facets/proximity.php:169
 msgid "Kilometers"
 msgstr "Kilometros"
 
-#: includes/facets/proximity.php:211
+#: includes/facets/proximity.php:212
 msgid "Distance"
 msgstr "Distancia"
 
@@ -437,10 +437,6 @@ msgstr "Mecanismo de busca"
 #: includes/facets/search.php:94
 msgid "WP Default"
 msgstr "WP Padrão"
-
-#: includes/facets/search.php:102
-msgid "Placeholder text"
-msgstr "Texto de espaço reservado"
 
 #: includes/facets/slider.php:7
 msgid "Slider"
@@ -600,98 +596,82 @@ msgstr "Código de Licença "
 msgid "Activate"
 msgstr "Ativar"
 
-#: templates/page-settings.php:193
-msgid "Permalink Type"
-msgstr "Tipo de Permalink "
-
-#: templates/page-settings.php:196
-msgid "How should permalinks be constructed?"
-msgstr "Como o Permalink  será construído?"
-
-#: templates/page-settings.php:201
-msgid "GET variables"
-msgstr "Obter variáveis  "
-
-#: templates/page-settings.php:202
-msgid "URL Hash"
-msgstr "URL Hash"
-
-#: templates/page-settings.php:211
+#: templates/page-settings.php:190
 msgid "Separators"
 msgstr "Separadores"
 
-#: templates/page-settings.php:214
+#: templates/page-settings.php:193
 msgid "Thousands"
 msgstr "Milhares"
 
-#: templates/page-settings.php:216
+#: templates/page-settings.php:195
 msgid "Decimal"
 msgstr "Decimal"
 
-#: templates/page-settings.php:227 templates/page-settings.php:235
+#: templates/page-settings.php:206 templates/page-settings.php:214
 msgid "Export"
 msgstr "Exportar"
 
-#: templates/page-settings.php:243 templates/page-settings.php:248
+#: templates/page-settings.php:222 templates/page-settings.php:227
 msgid "Import"
 msgstr "Importar"
 
-#: templates/page-settings.php:246
+#: templates/page-settings.php:225
 msgid "Paste the import code here"
 msgstr "Cole o código de importação aqui"
 
-#: templates/page-settings.php:247
+#: templates/page-settings.php:226
 msgid "Overwrite existing items?"
 msgstr "Substituir os itens existentes?"
 
-#: templates/page-settings.php:268
+#: templates/page-settings.php:247
 msgid "This facet type has no additional settings."
 msgstr "Esta faceta não possui configurações adicionais."
 
-#: templates/page-settings.php:288
+#: templates/page-settings.php:267
 msgid "Label"
 msgstr "Rótulo"
 
-#: templates/page-settings.php:292 templates/page-settings.php:335
+#: templates/page-settings.php:271 templates/page-settings.php:314
 msgid "Name"
 msgstr "Nome"
 
-#: templates/page-settings.php:296
+#: templates/page-settings.php:275
 msgid "Facet type"
 msgstr "Tipo de faceta"
 
-#: templates/page-settings.php:307
+#: templates/page-settings.php:286
 msgid "Data source"
 msgstr "Fonte de dados"
 
-#: templates/page-settings.php:322
+#: templates/page-settings.php:301
 msgid "Other settings"
 msgstr "Outras configurações"
 
-#: templates/page-settings.php:338
+#: templates/page-settings.php:317
 msgid "Open query builder"
 msgstr "Abrir construtor de consulta"
 
-#: templates/page-settings.php:339
+#: templates/page-settings.php:318
 msgid "Query Arguments"
 msgstr "Argumentos de consulta"
 
-#: templates/page-settings.php:343
+#: templates/page-settings.php:322
 msgid "What goes here?"
 msgstr "O que vai aqui?"
 
-#: templates/page-settings.php:344
+#: templates/page-settings.php:323
 msgid "Display Code"
 msgstr "Mostrar Codigo"
 
-#: templates/page-settings.php:358
+#: templates/page-settings.php:337
 msgid "Query Builder"
 msgstr "Construtor de Consulta"
 
-#: templates/page-settings.php:362
+#: templates/page-settings.php:341
 msgid "Which posts would you like to use for the content listing?"
 msgstr "Quais as posts gostaria de usar para a listagem de conteúdo?"
 
-#: templates/page-settings.php:371
+#: templates/page-settings.php:350
 msgid "Send to editor"
 msgstr "Enviar para o editor"

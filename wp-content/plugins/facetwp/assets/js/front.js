@@ -47,7 +47,7 @@ var FWP = FWP || {};
 
 
     FWP.helper.get_url_var = function(name) {
-        var name = ('get' == FWP.permalink_type) ? 'fwp_' + name : name;
+        var name = 'fwp_' + name;
         var query_string = FWP.build_query_string();
         var url_vars = query_string.split('&');
         for (var i = 0; i < url_vars.length; i++) {
@@ -166,30 +166,25 @@ var FWP = FWP || {};
     FWP.build_query_string = function() {
         var query_string = '';
 
-        if ('get' == FWP.permalink_type) {
-            // Non-FacetWP URL variables
-            var hash = [];
-            var get_str = window.location.search.replace('?', '').split('&');
-            $.each(get_str, function(idx, val) {
-                var param_name = val.split('=')[0];
-                if ('fwp' != param_name.substr(0, 3)) {
-                    hash.push(val);
-                }
-            });
-            hash = hash.join('&');
-
-            // FacetWP URL variables
-            var fwp_vars = FWP.helper.serialize(FWP.facets, 'fwp_');
-
-            if ('' != hash) {
-                query_string += hash;
+        // Non-FacetWP URL variables
+        var hash = [];
+        var get_str = window.location.search.replace('?', '').split('&');
+        $.each(get_str, function(idx, val) {
+            var param_name = val.split('=')[0];
+            if ('fwp' != param_name.substr(0, 3)) {
+                hash.push(val);
             }
-            if ('' != fwp_vars) {
-                query_string += ('' != hash ? '&' : '') + fwp_vars;
-            }
+        });
+        hash = hash.join('&');
+
+        // FacetWP URL variables
+        var fwp_vars = FWP.helper.serialize(FWP.facets, 'fwp_');
+
+        if ('' != hash) {
+            query_string += hash;
         }
-        else {
-            query_string = FWP.helper.serialize(FWP.facets);
+        if ('' != fwp_vars) {
+            query_string += ('' != hash ? '&' : '') + fwp_vars;
         }
 
         return query_string;
@@ -199,36 +194,26 @@ var FWP = FWP || {};
     FWP.set_hash = function() {
         var query_string = FWP.build_query_string();
 
-        if ('get' == FWP.permalink_type) {
-            if ('' != query_string) {
-                query_string = '?' + query_string;
-            }
-
-            if (history.pushState) {
-                history.pushState(null, null, window.location.pathname + query_string);
-            }
+        if ('' != query_string) {
+            query_string = '?' + query_string;
         }
-        else {
-            window.location.hash = '!/' + query_string;
+
+        if (history.pushState) {
+            history.pushState(null, null, window.location.pathname + query_string);
         }
     }
 
 
     FWP.load_from_hash = function() {
-        if ('get' == FWP.permalink_type) {
-            var hash = [];
-            var get_str = window.location.search.replace('?', '').split('&');
-            $.each(get_str, function(idx, val) {
-                var param_name = val.split('=')[0];
-                if ('fwp' == param_name.substr(0, 3)) {
-                    hash.push(val.replace('fwp_', ''));
-                }
-            });
-            hash = hash.join('&');
-        }
-        else {
-            var hash = window.location.hash.replace('#!/', '');
-        }
+        var hash = [];
+        var get_str = window.location.search.replace('?', '').split('&');
+        $.each(get_str, function(idx, val) {
+            var param_name = val.split('=')[0];
+            if ('fwp' == param_name.substr(0, 3)) {
+                hash.push(val.replace('fwp_', ''));
+            }
+        });
+        hash = hash.join('&');
 
         // Reset facet values
         $.each(FWP.facets, function(f) {
@@ -333,7 +318,7 @@ var FWP = FWP || {};
     FWP.render = function(response) {
 
         // Populate the template
-        if (! FWP.loaded && ! FWP.is_bfcache && 'get' == FWP.permalink_type) {
+        if (! FWP.loaded && ! FWP.is_bfcache) {
             var inject = false;
         }
         else if ('wp' == FWP.template) {

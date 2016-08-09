@@ -2,6 +2,35 @@
     margin-bottom: 40px;
 }
 
+.facetwp-pager-label {
+    display: inline-block;
+    margin-right: 12px;
+}
+
+.facetwp-page {
+    display: inline-block;
+    padding: 0px 4px;
+    margin-right: 6px;
+    cursor: pointer;
+}
+
+.facetwp-page.active {
+    font-weight: bold;
+    cursor: default;
+}
+
+.facetwp-loading {
+    width: 20px;
+    height: 20px;
+    background: url(../images/loading.png) no-repeat;
+    background-size: 20px 20px;
+    -webkit-animation: rotate 700ms infinite linear;
+    -moz-animation: rotate 700ms infinite linear;
+    animation: rotate 700ms infinite linear;
+}
+
+/* Checkboxes */
+
 .facetwp-type-checkboxes .facetwp-depth {
     display: none;
 }
@@ -31,31 +60,12 @@
     float: right;
 }
 
-.facetwp-pager-label {
-    display: inline-block;
-    margin-right: 12px;
-}
+/* Date range */
 
-.facetwp-page {
-    display: inline-block;
-    padding: 0px 4px;
-    margin-right: 6px;
+.flatpickr-clear {
+    text-align: center;
+    padding: 5px 0;
     cursor: pointer;
-}
-
-.facetwp-page.active {
-    font-weight: bold;
-    cursor: default;
-}
-
-.facetwp-loading {
-    width: 20px;
-    height: 20px;
-    background: url(../images/loading.png) no-repeat;
-    background-size: 20px 20px;
-    -webkit-animation: rotate 700ms infinite linear;
-    -moz-animation: rotate 700ms infinite linear;
-    animation: rotate 700ms infinite linear;
 }
 
 /* fSelect */

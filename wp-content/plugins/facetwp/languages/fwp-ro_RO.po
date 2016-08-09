@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FacetWP\n"
-"POT-Creation-Date: 2016-06-09 13:40-0400\n"
-"PO-Revision-Date: 2016-06-09 13:40-0400\n"
+"POT-Creation-Date: 2016-08-05 11:12-0400\n"
+"PO-Revision-Date: 2016-08-05 11:12-0400\n"
 "Last-Translator: Matt Gibbs <hello@facetwp.com>\n"
 "Language-Team: Ciprian <ciprian@brainie.ro>\n"
 "Language: ro_RO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.8\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -41,37 +41,37 @@ msgstr "Ignorat"
 msgid "Error"
 msgstr "Eroare"
 
-#: includes/class-facet.php:438 includes/class-facet.php:555
+#: includes/class-facet.php:435 includes/class-facet.php:552
 msgid "of"
 msgstr "din"
 
-#: includes/class-facet.php:472 includes/facets/checkboxes.php:315
+#: includes/class-facet.php:469 includes/facets/checkboxes.php:315
 #: includes/facets/dropdown.php:201 includes/facets/fselect.php:273
 #: includes/facets/hierarchy.php:192
 msgid "Sort by"
 msgstr "Sortează după"
 
-#: includes/class-facet.php:476
+#: includes/class-facet.php:473
 msgid "Title (A-Z)"
 msgstr "Titlu (A-Z)"
 
-#: includes/class-facet.php:483
+#: includes/class-facet.php:480
 msgid "Title (Z-A)"
 msgstr "Titlu (Z-A)"
 
-#: includes/class-facet.php:490
+#: includes/class-facet.php:487
 msgid "Date (Newest)"
 msgstr "Data (cel mai recent)"
 
-#: includes/class-facet.php:497
+#: includes/class-facet.php:494
 msgid "Date (Oldest)"
 msgstr "Data (cel mai vechi)"
 
-#: includes/class-facet.php:554
+#: includes/class-facet.php:551
 msgid "Page"
 msgstr "Pagina"
 
-#: includes/class-facet.php:605
+#: includes/class-facet.php:602
 msgid "Per page"
 msgstr "Per pagină"
 
@@ -107,7 +107,7 @@ msgstr "Taxonomie"
 msgid "Custom Fields"
 msgstr "Câmpuri personalizate"
 
-#: includes/class-init.php:117 templates/page-settings.php:93
+#: includes/class-init.php:119 templates/page-settings.php:93
 msgid "Settings"
 msgstr "Setări"
 
@@ -124,13 +124,17 @@ msgstr "Completare automată"
 msgid "Start typing..."
 msgstr "Începe să tastezi"
 
-#: includes/facets/autocomplete.php:24
+#: includes/facets/autocomplete.php:26
 msgid "Update"
 msgstr "Actualizează"
 
-#: includes/facets/autocomplete.php:79
+#: includes/facets/autocomplete.php:83
 msgid "No results"
 msgstr "Niciun rezultat gasit"
+
+#: includes/facets/autocomplete.php:125 includes/facets/search.php:102
+msgid "Placeholder text"
+msgstr "Text placeholder"
 
 #: includes/facets/checkboxes.php:7
 msgid "Checkboxes"
@@ -242,111 +246,107 @@ msgstr "Interval dată"
 msgid "Date"
 msgstr "Data"
 
-#: includes/facets/date_range.php:27 includes/facets/date_range.php:184
+#: includes/facets/date_range.php:27 includes/facets/date_range.php:183
 msgid "Start Date"
 msgstr "Data de început"
 
-#: includes/facets/date_range.php:30 includes/facets/date_range.php:185
+#: includes/facets/date_range.php:30 includes/facets/date_range.php:184
 msgid "End Date"
 msgstr "Data de sfârșit"
 
-#: includes/facets/date_range.php:118
+#: includes/facets/date_range.php:120
 msgid "January"
 msgstr "Ianuarie"
 
-#: includes/facets/date_range.php:119
+#: includes/facets/date_range.php:121
 msgid "February"
 msgstr "Februarie"
 
-#: includes/facets/date_range.php:120
+#: includes/facets/date_range.php:122
 msgid "March"
 msgstr "Martie"
 
-#: includes/facets/date_range.php:121
+#: includes/facets/date_range.php:123
 msgid "April"
 msgstr "Aprilie"
 
-#: includes/facets/date_range.php:122
+#: includes/facets/date_range.php:124
 msgid "May"
 msgstr "Mai"
 
-#: includes/facets/date_range.php:123
+#: includes/facets/date_range.php:125
 msgid "June"
 msgstr "Iunie"
 
-#: includes/facets/date_range.php:124
+#: includes/facets/date_range.php:126
 msgid "July"
 msgstr "Iulie"
 
-#: includes/facets/date_range.php:125
+#: includes/facets/date_range.php:127
 msgid "August"
 msgstr "August"
 
-#: includes/facets/date_range.php:126
+#: includes/facets/date_range.php:128
 msgid "September"
 msgstr "Septembrie"
 
-#: includes/facets/date_range.php:127
+#: includes/facets/date_range.php:129
 msgid "October"
 msgstr "Octombrie"
 
-#: includes/facets/date_range.php:128
+#: includes/facets/date_range.php:130
 msgid "November"
 msgstr "Noiembrie"
 
-#: includes/facets/date_range.php:129
+#: includes/facets/date_range.php:131
 msgid "December"
 msgstr "Decembrie"
 
-#: includes/facets/date_range.php:131
-msgid "S-M-T-W-T-F-S"
-msgstr "S-M-T-W-T-F-S"
-
-#: includes/facets/date_range.php:132
-msgid "Clear"
-msgstr "Șterge"
-
-#: includes/facets/date_range.php:150 includes/facets/number_range.php:106
+#: includes/facets/date_range.php:149 includes/facets/number_range.php:106
 #: includes/facets/slider.php:167
 msgid "Other data source"
 msgstr "Altă sursă de date:"
 
-#: includes/facets/date_range.php:153 includes/facets/number_range.php:109
+#: includes/facets/date_range.php:152 includes/facets/number_range.php:109
 #: includes/facets/slider.php:170
 msgid "Use a separate value for the upper limit?"
 msgstr "Folosește o valoare separată pentru limita superioră?"
 
-#: includes/facets/date_range.php:158 includes/facets/number_range.php:114
+#: includes/facets/date_range.php:157 includes/facets/number_range.php:114
 #: includes/facets/slider.php:175
 msgid "None"
 msgstr "Nici una"
 
-#: includes/facets/date_range.php:170 includes/facets/number_range.php:126
+#: includes/facets/date_range.php:169 includes/facets/number_range.php:126
 #: includes/facets/slider.php:187
 msgid "Compare type"
 msgstr "Tipul de comparare"
 
-#: includes/facets/date_range.php:173 includes/facets/number_range.php:129
+#: includes/facets/date_range.php:172 includes/facets/number_range.php:129
 #: includes/facets/slider.php:190
 msgid "Basic"
 msgstr "De bază"
 
-#: includes/facets/date_range.php:174 includes/facets/number_range.php:130
+#: includes/facets/date_range.php:173 includes/facets/number_range.php:130
 #: includes/facets/slider.php:191
 msgid "Intersect"
 msgstr "Intersectare"
 
-#: includes/facets/date_range.php:179
+#: includes/facets/date_range.php:178
 msgid "Fields to show"
 msgstr "Câmpuri de afișat"
 
-#: includes/facets/date_range.php:182
+#: includes/facets/date_range.php:181
 msgid "Start + End Dates"
 msgstr "Datele de început + sfârșit"
 
-#: includes/facets/date_range.php:183
+#: includes/facets/date_range.php:182
 msgid "Exact Date"
 msgstr "Data exactă"
+
+#: includes/facets/date_range.php:190
+msgid "Display format"
+msgstr ""
 
 #: includes/facets/dropdown.php:7
 msgid "Dropdown"
@@ -406,19 +406,19 @@ msgstr "Proximitate"
 msgid "Enter location"
 msgstr "Introdu locația"
 
-#: includes/facets/proximity.php:163
+#: includes/facets/proximity.php:164
 msgid "Unit of measurement"
 msgstr "Unitate de măsurare"
 
-#: includes/facets/proximity.php:167
+#: includes/facets/proximity.php:168
 msgid "Miles"
 msgstr "Mile"
 
-#: includes/facets/proximity.php:168
+#: includes/facets/proximity.php:169
 msgid "Kilometers"
 msgstr "Kilometri"
 
-#: includes/facets/proximity.php:211
+#: includes/facets/proximity.php:212
 msgid "Distance"
 msgstr "Distanță"
 
@@ -433,10 +433,6 @@ msgstr "Motor căutare"
 #: includes/facets/search.php:94
 msgid "WP Default"
 msgstr "WP implicit"
-
-#: includes/facets/search.php:102
-msgid "Placeholder text"
-msgstr "Text placeholder"
 
 #: includes/facets/slider.php:7
 msgid "Slider"
@@ -596,98 +592,82 @@ msgstr "Cheie licență"
 msgid "Activate"
 msgstr "Activează"
 
-#: templates/page-settings.php:193
-msgid "Permalink Type"
-msgstr "Tip legaturi permanente"
-
-#: templates/page-settings.php:196
-msgid "How should permalinks be constructed?"
-msgstr "Cum ar trebui să fie construite legăturile permanente?"
-
-#: templates/page-settings.php:201
-msgid "GET variables"
-msgstr "Variabile GET"
-
-#: templates/page-settings.php:202
-msgid "URL Hash"
-msgstr "Hash URL"
-
-#: templates/page-settings.php:211
+#: templates/page-settings.php:190
 msgid "Separators"
 msgstr "Separatori"
 
-#: templates/page-settings.php:214
+#: templates/page-settings.php:193
 msgid "Thousands"
 msgstr "Mii"
 
-#: templates/page-settings.php:216
+#: templates/page-settings.php:195
 msgid "Decimal"
 msgstr "Decimale"
 
-#: templates/page-settings.php:227 templates/page-settings.php:235
+#: templates/page-settings.php:206 templates/page-settings.php:214
 msgid "Export"
 msgstr "Export"
 
-#: templates/page-settings.php:243 templates/page-settings.php:248
+#: templates/page-settings.php:222 templates/page-settings.php:227
 msgid "Import"
 msgstr "Import"
 
-#: templates/page-settings.php:246
+#: templates/page-settings.php:225
 msgid "Paste the import code here"
 msgstr "Copie codul de importat aici"
 
-#: templates/page-settings.php:247
+#: templates/page-settings.php:226
 msgid "Overwrite existing items?"
 msgstr "Suprascrie elemente deja existente?"
 
-#: templates/page-settings.php:268
+#: templates/page-settings.php:247
 msgid "This facet type has no additional settings."
 msgstr "Acest tip de facet nu are setări adiționale."
 
-#: templates/page-settings.php:288
+#: templates/page-settings.php:267
 msgid "Label"
 msgstr "Etichetă"
 
-#: templates/page-settings.php:292 templates/page-settings.php:335
+#: templates/page-settings.php:271 templates/page-settings.php:314
 msgid "Name"
 msgstr "Nume"
 
-#: templates/page-settings.php:296
+#: templates/page-settings.php:275
 msgid "Facet type"
 msgstr "Tip facet"
 
-#: templates/page-settings.php:307
+#: templates/page-settings.php:286
 msgid "Data source"
 msgstr "Sursă dată"
 
-#: templates/page-settings.php:322
+#: templates/page-settings.php:301
 msgid "Other settings"
 msgstr "Alte setări"
 
-#: templates/page-settings.php:338
+#: templates/page-settings.php:317
 msgid "Open query builder"
 msgstr "Deschide constructorul de interogare (query)"
 
-#: templates/page-settings.php:339
+#: templates/page-settings.php:318
 msgid "Query Arguments"
 msgstr "Argumente interogare (query)"
 
-#: templates/page-settings.php:343
+#: templates/page-settings.php:322
 msgid "What goes here?"
 msgstr "Ce e necesar aici?"
 
-#: templates/page-settings.php:344
+#: templates/page-settings.php:323
 msgid "Display Code"
 msgstr "Afișează codul"
 
-#: templates/page-settings.php:358
+#: templates/page-settings.php:337
 msgid "Query Builder"
 msgstr "Constructor interogare (query)"
 
-#: templates/page-settings.php:362
+#: templates/page-settings.php:341
 msgid "Which posts would you like to use for the content listing?"
 msgstr "Ce tipuri de postări doriți să utilizați pentru listarea conținutului?"
 
-#: templates/page-settings.php:371
+#: templates/page-settings.php:350
 msgid "Send to editor"
 msgstr "Trimite către editor"

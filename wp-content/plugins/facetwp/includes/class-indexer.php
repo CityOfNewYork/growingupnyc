@@ -292,9 +292,12 @@ class FacetWP_Indexer
         $source = $defaults['facet_source'];
 
         if ( 'tax/' == substr( $source, 0, 4 ) ) {
+            $used_terms = array();
             $taxonomy = substr( $source, 4 );
             $term_objects = wp_get_object_terms( $post_id, $taxonomy );
-            $used_terms = array();
+            if ( is_wp_error( $term_objects ) ) {
+                return $output;
+            }
 
             // Store the term depths
             $hierarchy = FWP()->helper->get_term_depths( $taxonomy );

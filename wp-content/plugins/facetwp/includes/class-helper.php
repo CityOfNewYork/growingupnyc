@@ -83,9 +83,6 @@ final class FacetWP_Helper
         if ( empty( $settings['settings'] ) ) {
             $settings['settings'] = array();
         }
-        if ( ! isset( $settings['settings']['permalink_type'] ) ) {
-            $settings['settings']['permalink_type'] = 'get';
-        }
         if ( ! isset( $settings['settings']['term_permalink'] ) ) {
             $settings['settings']['term_permalink'] = 'slug'; // Listify compat
         }
@@ -221,6 +218,9 @@ final class FacetWP_Helper
         $parents = array();
 
         $terms = get_terms( $taxonomy, array( 'hide_empty' => false ) );
+        if ( is_wp_error( $terms ) ) {
+            return $output;
+        }
 
         // Get term parents
         foreach ( $terms as $term ) {

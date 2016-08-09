@@ -185,27 +185,6 @@ FWP.builder = {
             <!-- General settings -->
 
             <table>
-
-<?php if ( 'hash' == FWP()->helper->get_setting( 'permalink_type' ) ) : ?>
-
-                <tr>
-                    <td style="width:175px; vertical-align:top">
-                        <?php _e( 'Permalink Type', 'fwp' ); ?>
-                        <div class="facetwp-tooltip">
-                            <span class="icon-question">?</span>
-                            <div class="facetwp-tooltip-content"><?php _e( 'How should permalinks be constructed?', 'fwp' ); ?></div>
-                        </div>
-                    </td>
-                    <td>
-                        <select class="facetwp-setting" data-name="permalink_type">
-                            <option value="get"><?php _e( 'GET variables', 'fwp' ); ?></option>
-                            <option value="hash"><?php _e( 'URL Hash', 'fwp' ); ?></option>
-                        </select>
-                    </td>
-                </tr>
-
-<?php endif; ?>
-
                 <tr>
                     <td style="width:175px; vertical-align:top">
                         <?php _e( 'Separators', 'fwp' ); ?>

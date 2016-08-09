@@ -140,11 +140,8 @@ class FacetWP_Facet
 
         // Generate the template HTML
         // For performance gains, skip the template on pageload
-        // except for hash-based URLs, since PHP can't detect hashes
         if ( 'wp' != $this->template['name'] ) {
-            $permalink_type = FWP()->helper->get_setting( 'permalink_type' );
-
-            if ( ! $first_load || $is_bfcache || 'hash' == $permalink_type ) {
+            if ( ! $first_load || $is_bfcache || apply_filters( 'facetwp_template_force_load', false ) ) {
                 $output['template'] = $this->get_template_html( $params['template'] );
             }
         }

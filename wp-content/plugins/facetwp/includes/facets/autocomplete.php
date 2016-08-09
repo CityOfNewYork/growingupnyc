@@ -20,7 +20,9 @@ class FacetWP_Facet_Autocomplete
         $output = '';
         $value = (array) $params['selected_values'];
         $value = empty( $value ) ? '' : stripslashes( $value[0] );
-        $output .= '<input type="search" class="facetwp-autocomplete" value="' . $value . '" placeholder="' . __( 'Start typing...', 'fwp' ) . '" />';
+        $placeholder = isset( $params['facet']['placeholder'] ) ? $params['facet']['placeholder'] : __( 'Start typing...', 'fwp' );
+        $placeholder = facetwp_i18n( $placeholder );
+        $output .= '<input type="search" class="facetwp-autocomplete" value="' . $value . '" placeholder="' . esc_attr( $placeholder ) . '" />';
         $output .= '<input type="button" class="facetwp-autocomplete-update" value="' . __( 'Update', 'fwp' ) . '" />';
         return $output;
     }
@@ -60,10 +62,12 @@ class FacetWP_Facet_Autocomplete
 (function($) {
     wp.hooks.addAction('facetwp/load/autocomplete', function($this, obj) {
         $this.find('.facet-source').val(obj.source);
+        $this.find('.facet-placeholder').val(obj.placeholder);
     });
 
     wp.hooks.addFilter('facetwp/save/autocomplete', function($this, obj) {
         obj['source'] = $this.find('.facet-source').val();
+        obj['placeholder'] = $this.find('.facet-placeholder').val();
         return obj;
     });
 })(jQuery);
@@ -109,5 +113,18 @@ class FacetWP_Facet_Autocomplete
 
         echo json_encode( array( 'suggestions' => $output ) );
         exit;
+    }
+
+
+    /**
+     * Output admin settings HTML
+     */
+    function settings_html() {
+?>
+        <tr>
+            <td><?php _e( 'Placeholder text', 'fwp' ); ?>:</td>
+            <td><input type="text" class="facet-placeholder" value="" /></td>
+        </tr>
+<?php
     }
 }

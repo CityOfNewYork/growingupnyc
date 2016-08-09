@@ -143,8 +143,9 @@ class FacetWP_Facet_Proximity_Core
      */
     function front_scripts() {
         if ( apply_filters( 'facetwp_proximity_load_js', true ) ) {
-            $api_key = defined( 'GMAPS_API_KEY' ) ? '&key=' . GMAPS_API_KEY : '';
-            FWP()->display->assets['gmaps'] = '//maps.googleapis.com/maps/api/js?libraries=places' . $api_key;
+            $api_key = defined( 'GMAPS_API_KEY' ) ? GMAPS_API_KEY : '';
+            $api_key = apply_filters( 'facetwp_gmaps_api_key', $api_key );
+            FWP()->display->assets['gmaps'] = '//maps.googleapis.com/maps/api/js?libraries=places&key=' . $api_key;
         }
 
         // Pass extra options into Places Autocomplete

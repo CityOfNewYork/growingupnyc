@@ -140,8 +140,6 @@ class FacetWP_Display
 var FWP_JSON = <?php echo json_encode( $this->json ); ?>;
 var FWP_HTTP = <?php echo json_encode( $http_params ); ?>;
 var ajaxurl = '<?php echo admin_url( 'admin-ajax.php' ); ?>';
-var FWP = FWP || {};
-FWP.permalink_type = '<?php echo FWP()->helper->get_setting( 'permalink_type' ); ?>';
 </script>
 <?php
         }

@@ -110,29 +110,55 @@
     });
 
     wp.hooks.addFilter('facetwp/selections/date_range', function(output, params) {
-        return params.selected_values[0] + ' - ' + params.selected_values[1];
+        var vals = params.selected_values;
+        var $el = params.el;
+        var out = '';
+
+        if ('' != vals[0]) {
+            out += ' from ' + $el.find('.facetwp-date-min').next().val();
+        }
+        if ('' != vals[1]) {
+            out += ' to ' + $el.find('.facetwp-date-max').next().val();
+        }
+        return out;
     });
 
     $(document).on('facetwp-loaded', function() {
+        if (0 === $('.facetwp-type-date_range').length) {
+            return;
+        }
 
         // datepicker i18n
-        if ('undefined' !== typeof FWP_JSON.datepicker) {
-            $.each(FWP_JSON.datepicker, function(key, val) {
-                $.fn.datepicker.dates['en'][key] = val;
-            });
-        }
+        Flatpickr.l10n.months.longhand = FWP_JSON.datepicker.months;
 
-        var opts = wp.hooks.applyFilters('facetwp/set_options/date_range', {
-            format: 'yyyy-mm-dd',
-            autoclose: true,
-            clearBtn: true
-        });
-
-        if (0 < $('.facetwp-type-date_range .facetwp-date').length) {
-            $('.facetwp-type-date_range .facetwp-date').datepicker(opts).on('changeDate', function(e) {
+        var flatpickr_opts = {
+            altInput: true,
+            altInputClass: 'flatpickr-alt',
+            altFormat: 'Y-m-d',
+            onChange: function() {
                 FWP.autoload();
+            },
+            onReady: function(dateObj, dateStr, instance) {
+                var $cal = $(instance.calendarContainer);
+                if ($cal.find('.flatpickr-clear').length < 1) {
+                    $cal.append('<div class="flatpickr-clear">Clear</div>');
+                    $cal.find('.flatpickr-clear').on('click', function() {
+                        instance.clear();
+                        instance.close();
+                    });
+                }
+            }
+        };
+
+        $('.facetwp-type-date_range .facetwp-date').each(function() {
+            var facet_name = $(this).closest('.facetwp-facet').attr('data-name');
+            flatpickr_opts.altFormat = FWP.settings[facet_name].format;
+
+            var opts = wp.hooks.applyFilters('facetwp/set_options/date_range', flatpickr_opts, {
+                'facet_name': facet_name
             });
-        }
+            new Flatpickr(this, opts);
+        });
     });
 
     /* ======== Dropdown ======== */

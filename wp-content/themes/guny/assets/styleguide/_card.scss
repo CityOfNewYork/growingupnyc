@@ -24,10 +24,6 @@
 //
 // Styleguide 5.2
 
-// Local Variables
-$sticker-size-mobile: 80;
-$sticker-size: 100;
-
 .c-card {
   background: $color-background;
   display: flex;
@@ -37,7 +33,7 @@ $sticker-size: 100;
   padding-right: rem-calc(($sticker-size-mobile / 2) + 10);
   position: relative;
 
-  @include media($bp-medium) {
+  @include media($bp-large) {
     margin-right: rem-calc($sticker-size / 2);
     padding: rem-calc(30);
     padding-right: rem-calc(($sticker-size / 2) + 10);
@@ -60,7 +56,7 @@ $sticker-size: 100;
 // Badge holding card icon or short descriptor
 //
 // markup:
-// <div class="c-card__sticker" aria-hidden="true">TODAY</div>
+// <div class="c-card__sticker sticker" aria-hidden="true">TODAY</div>
 //
 // sg-wrapper:
 // <div style="min-height:110px;position:relative;max-width:710px">
@@ -69,56 +65,24 @@ $sticker-size: 100;
 //
 // Styleguide 5.2.1
 .c-card__sticker {
-  background: $color-primary;
-  border-radius: rem-calc($sticker-size-mobile);
-  color: $white;
-  display: block;
-  font-family: $font-family-display;
-  @include font-size-x-small;
-  height: rem-calc($sticker-size-mobile);
   order: 1;
   position: absolute;
   right: rem-calc(-$sticker-size-mobile / 2);
-  text-align: center;
-  text-decoration: none;
   top: rem-calc(10);
-  @include text-uppercase;
-  white-space: nowrap;
-  width: rem-calc($sticker-size-mobile);
-  //override text-uppercase
-  line-height: rem-calc($sticker-size-mobile);
 
   .event-day {
     display: none;
   }
 
-  @include media($bp-medium) {
-    border-radius: rem-calc($sticker-size);
-    height: rem-calc($sticker-size);
-    line-height: rem-calc($sticker-size);
+  @include media($bp-large) {
     right: rem-calc(-$sticker-size / 2);
-    width: rem-calc($sticker-size);
   }
 }
 
 .flexbox .c-card__sticker {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  line-height: 1.2;
-
   .event-day,
   .event-month-date {
     display: block;
-  }
-}
-
-a.c-card__sticker {
-  &:hover,
-  &:focus {
-    background: $color-secondary;
-    color: $white;
   }
 }
 

@@ -429,8 +429,8 @@ hr {
   width: 2.3125rem; }
   @media screen and (min-width: 1024px) {
     .icon--large {
-      height: 2.9375rem;
-      width: 2.9375rem; } }
+      height: 3.125rem;
+      width: 3.125rem; } }
 
 .icon--small {
   height: 1.375rem;
@@ -458,6 +458,43 @@ hr {
   position: relative;
   top: -0.1875rem;
   width: 2.8125rem; }
+
+.sticker {
+  background: #2793e0;
+  border-radius: 5rem;
+  color: #fff;
+  display: block;
+  font-family: "museo-sans-rounded", sans-serif;
+  font-size: 0.6875rem;
+  height: 5rem;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: .5px;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  width: 5rem;
+  line-height: 5rem; }
+  @media screen and (min-width: 1024px) {
+    .sticker {
+      font-size: 0.8125rem; } }
+  @media screen and (min-width: 1024px) {
+    .sticker {
+      border-radius: 6.25rem;
+      height: 6.25rem;
+      line-height: 6.25rem;
+      width: 6.25rem; } }
+
+a.sticker:hover, a.sticker:focus {
+  background: #0055b8;
+  color: #fff; }
+
+.flexbox .sticker {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.2; }
 
 html {
   font-size: 100%; }
@@ -1051,7 +1088,7 @@ ol.o-inline {
   padding: 1.5625rem 0.9375rem;
   padding-right: 3.125rem;
   position: relative; }
-  @media screen and (min-width: 700px) {
+  @media screen and (min-width: 1024px) {
     .c-card {
       margin-right: 3.125rem;
       padding: 1.875rem;
@@ -1067,51 +1104,19 @@ ol.o-inline {
       padding-top: 35%; } }
 
 .c-card__sticker {
-  background: #2793e0;
-  border-radius: 5rem;
-  color: #fff;
-  display: block;
-  font-family: "museo-sans-rounded", sans-serif;
-  font-size: 0.6875rem;
-  height: 5rem;
   order: 1;
   position: absolute;
   right: -2.5rem;
-  text-align: center;
-  text-decoration: none;
-  top: 0.625rem;
-  letter-spacing: .5px;
-  line-height: 1;
-  text-transform: uppercase;
-  white-space: nowrap;
-  width: 5rem;
-  line-height: 5rem; }
-  @media screen and (min-width: 1024px) {
-    .c-card__sticker {
-      font-size: 0.8125rem; } }
+  top: 0.625rem; }
   .c-card__sticker .event-day {
     display: none; }
-  @media screen and (min-width: 700px) {
+  @media screen and (min-width: 1024px) {
     .c-card__sticker {
-      border-radius: 6.25rem;
-      height: 6.25rem;
-      line-height: 6.25rem;
-      right: -3.125rem;
-      width: 6.25rem; } }
+      right: -3.125rem; } }
 
-.flexbox .c-card__sticker {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  line-height: 1.2; }
-  .flexbox .c-card__sticker .event-day,
-  .flexbox .c-card__sticker .event-month-date {
-    display: block; }
-
-a.c-card__sticker:hover, a.c-card__sticker:focus {
-  background: #0055b8;
-  color: #fff; }
+.flexbox .c-card__sticker .event-day,
+.flexbox .c-card__sticker .event-month-date {
+  display: block; }
 
 .c-card__title {
   font-family: "museo-sans-rounded", sans-serif;
@@ -1697,6 +1702,48 @@ a.c-card__sticker:hover, a.c-card__sticker:focus {
   .c-side-hero__title__large .rotating-text__entry {
     display: block;
     width: 100%; }
+
+.c-tip {
+  background: #2793e0;
+  color: #fff;
+  padding-top: 2.5rem;
+  position: relative;
+  margin-top: 3.75rem; }
+  @media screen and (min-width: 1024px) {
+    .c-tip {
+      padding-top: 3.125rem;
+      margin-top: 4.375rem; } }
+
+.c-tip__sticker {
+  margin-left: -2.5rem;
+  position: absolute;
+  left: 50%;
+  top: -2.5rem; }
+  @media screen and (min-width: 1024px) {
+    .c-tip__sticker {
+      margin-left: -3.125rem;
+      top: -3.125rem; } }
+
+.c-tip__content {
+  font-family: "museo-sans-rounded", sans-serif;
+  font-size: 1.3125rem;
+  font-weight: 900;
+  line-height: 1.2; }
+  @media screen and (min-width: 1024px) {
+    .c-tip__content {
+      font-size: 1.5rem; } }
+
+.c-tip__footer {
+  font-size: 0.875rem;
+  margin-top: 1em; }
+  @media screen and (min-width: 1024px) {
+    .c-tip__footer {
+      font-size: 1rem; } }
+  .c-tip__footer p + p {
+    margin-top: 0; }
+
+.c-tip__link:hover, .c-tip__link:focus {
+  color: #d9d9d9; }
 
 .s-wysiwyg h3 {
   margin-top: 1.875rem; }

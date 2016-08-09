@@ -48,7 +48,7 @@
         </section>
       {% endif %}
       {% if upcoming_events %}
-      <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
+      <section class="c-block-list c-block-list--shade o-content-container{% if not post.tip %} u-sm-gutter{% endif %}">
         <h2>Events</h2>
         {% if post.events_text %}
           <p class="c-block-list__text">{{post.events_text}}</p>
@@ -64,6 +64,25 @@
           <a href="/events" class="button--outline button--outline--gray">See all events</a>
         </div>
       </section> <!-- /.c-block-list -->
+      {% endif %}
+      {% if post.tip %}
+      <aside class="c-tip u-sm-gutter {{post.age_group|sanitize}}-secondary o-content-container">
+        <div class="c-tip__sticker sticker {{post.age_group|sanitize}}-secondary">
+          <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#lightbulb"></use></svg>
+        </div>
+        <p class="c-tip__content">{{post.tip}}</p>
+        <footer class="c-tip__footer">
+          {% if post.tip_action_heading %}
+            <p>{{post.tip_action_heading}}</p>
+            {% if post.sms_text or post.website_link %}
+              <p>
+                {{post.sms_text}}{% if post.sms_text and post.website_link %}, or{% endif %}
+                {% if post.website_link %}<a href="{{post.website_link}}" class="c-tip__link" target="_blank">find out more here</a>{% endif %}.
+              </p>
+            {% endif %}
+          {% endif %}
+        </footer>
+      </aside>
       {% endif %}
       {% if post.featured_programs %}
       <section class="c-block-list c-block-list--shade o-content-container">

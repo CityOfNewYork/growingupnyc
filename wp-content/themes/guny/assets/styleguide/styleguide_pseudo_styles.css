@@ -53,6 +53,12 @@
   color: #333;
 }
 
+a.sticker.pseudo-class-hover,
+a.sticker.pseudo-class-focus {
+  background: #0055b8;
+  color: #fff;
+}
+
 a.pseudo-class-hover,
 a.pseudo-class-focus {
   color: #2793e0;
@@ -70,12 +76,6 @@ a.pseudo-class-focus {
 .c-block-list__link.pseudo-class-hover,
 .c-block-list__link.pseudo-class-focus {
   color: #333;
-}
-
-a.c-card__sticker.pseudo-class-hover,
-a.c-card__sticker.pseudo-class-focus {
-  background: #0055b8;
-  color: #fff;
 }
 
 .c-card__link a.pseudo-class-hover,
@@ -124,6 +124,11 @@ a.c-card__sticker.pseudo-class-focus {
 .c-list-box--quaternary .c-list-box__subitem.pseudo-class-hover,
 .c-list-box--quaternary .c-list-box__subitem.pseudo-class-focus {
   background: #00326d;
+}
+
+.c-tip__link.pseudo-class-hover,
+.c-tip__link.pseudo-class-focus {
+  color: #d9d9d9;
 }
 
 button.baby-secondary.pseudo-class-hover,

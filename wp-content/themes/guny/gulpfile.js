@@ -195,6 +195,21 @@ gulp.task('icons', function() {
     .pipe(gulp.dest(views + 'partials'))
 });
 
+gulp.task('styleguideIcons', function() {
+  return gulp.src(source+'icons/*.svg')
+    .pipe(svgSprite({
+      mode: {
+        symbol: {
+          dest: '.',
+          sprite: 'svg-sprite.svg',
+          bust: false,
+          inline: false
+        }
+      }
+    }))
+    .pipe(gulp.dest(dist + 'styleguide/assets/img'))
+});
+
 // Generate Styleguide
 gulp.task('styleguide:generate', ['styles'], function() {
   return gulp.src([source + 'scss/base/_*.scss', source + 'scss/components/_*.scss'])
@@ -251,7 +266,7 @@ gulp.task('default', function() {
     gulp.watch(source+'img/**/*', ['images']);
 
     // Watch SVG icons
-    gulp.watch(source+'icons/*.svg', ['icons']);
+    gulp.watch(source+'icons/*.svg', ['icons', 'styleguideIcons']);
 
     // Watch templates, JS, and CSS, reload on change
     gulp.watch([

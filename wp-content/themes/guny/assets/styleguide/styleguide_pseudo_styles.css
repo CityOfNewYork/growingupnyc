@@ -131,6 +131,23 @@ a.pseudo-class-focus {
   background: #00326d;
 }
 
+.c-nav-list__link.pseudo-class-hover,
+.c-nav-list__link.pseudo-class-focus {
+  color: #fff;
+}
+
+.c-nav-list__link.pseudo-class-hover:after,
+.c-nav-list__link.pseudo-class-focus:after {
+  content: '';
+  display: block;
+  border: 10px solid transparent;
+  border-left-color: inherit;
+  margin-top: -10px;
+  position: absolute;
+  right: -20px;
+  top: 50%;
+}
+
 .c-tip__link.pseudo-class-hover,
 .c-tip__link.pseudo-class-focus {
   color: #d9d9d9;
@@ -141,6 +158,8 @@ button.baby-secondary.pseudo-class-focus,
 a.baby-secondary.pseudo-class-hover,
 a.baby-secondary.pseudo-class-focus {
   background-color: #d8006d !important;
+  border-color: #d8006d !important;
+  outline: none;
 }
 
 button.toddler-secondary.pseudo-class-hover,
@@ -148,6 +167,7 @@ button.toddler-secondary.pseudo-class-focus,
 a.toddler-secondary.pseudo-class-hover,
 a.toddler-secondary.pseudo-class-focus {
   background-color: #ff6100 !important;
+  border-color: #ff6100 !important;
   outline: none;
 }
 
@@ -156,6 +176,7 @@ button.pre-schooler-secondary.pseudo-class-focus,
 a.pre-schooler-secondary.pseudo-class-hover,
 a.pre-schooler-secondary.pseudo-class-focus {
   background-color: #ff9d00 !important;
+  border-color: #ff9d00 !important;
   outline: none;
 }
 
@@ -164,6 +185,7 @@ button.grade-schooler-secondary.pseudo-class-focus,
 a.grade-schooler-secondary.pseudo-class-hover,
 a.grade-schooler-secondary.pseudo-class-focus {
   background-color: #35c621 !important;
+  border-color: #35c621 !important;
   outline: none;
 }
 

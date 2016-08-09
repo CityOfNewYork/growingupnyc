@@ -54,8 +54,6 @@
 
 // List Box Heading
 //
-// .c-list-box__heading--subtitled - Heading with a subtitle
-//
 // Top level list item or section heading.
 // If used with the accordion pattern, this will be whatever the accordion drawer
 // heading is.
@@ -71,10 +69,6 @@
   width: 100%;
 }
 
-a.c-list-box__heading {
-  text-decoration: none;
-}
-
 .c-list-box--primary .c-list-box__heading,
 .c-list-box--quaternary .c-list-box__heading {
   background: $color-primary;
@@ -83,15 +77,11 @@ a.c-list-box__heading {
 
 .c-list-box--primary .c-list-box__heading {
   @include text-uppercase;
-  padding: rem-calc(20);
+  padding: rem-calc(12 20);
 
   @include media($bp-large) {
     padding: rem-calc(28 40);
   }
-}
-
-.c-list-box--primary .c-list-box__heading--subtitled {
-  padding: rem-calc(12 20);
 }
 
 .c-list-box--secondary .c-list-box__heading,

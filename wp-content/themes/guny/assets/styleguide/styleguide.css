@@ -1493,9 +1493,6 @@ ol.o-inline {
     .c-list-box__heading {
       font-size: 1.5rem; } }
 
-a.c-list-box__heading {
-  text-decoration: none; }
-
 .c-list-box--primary .c-list-box__heading,
 .c-list-box--quaternary .c-list-box__heading {
   background: #2793e0;
@@ -1505,13 +1502,10 @@ a.c-list-box__heading {
   letter-spacing: .5px;
   line-height: 1;
   text-transform: uppercase;
-  padding: 1.25rem; }
+  padding: 0.75rem 1.25rem; }
   @media screen and (min-width: 1024px) {
     .c-list-box--primary .c-list-box__heading {
       padding: 1.75rem 2.5rem; } }
-
-.c-list-box--primary .c-list-box__heading--subtitled {
-  padding: 0.75rem 1.25rem; }
 
 .c-list-box--secondary .c-list-box__heading,
 .c-list-box--quaternary .c-list-box__heading {
@@ -1620,6 +1614,47 @@ a.c-list-box__heading {
 .c-list-box__border {
   border-radius: 3px;
   padding: 0.3125rem 0; }
+
+.c-nav-list {
+  display: block; }
+
+.c-nav-list__item {
+  display: block;
+  list-style: none;
+  margin-bottom: 0.25rem;
+  padding: 0; }
+
+.c-nav-list__link {
+  background-color: #2793e0;
+  border-radius: 3px;
+  color: #fff;
+  display: block;
+  font-family: "museo-sans-rounded", sans-serif;
+  font-size: 1.3125rem;
+  font-weight: 900;
+  padding: 1.25rem;
+  position: relative;
+  text-decoration: none;
+  letter-spacing: .5px;
+  line-height: 1;
+  text-transform: uppercase; }
+  @media screen and (min-width: 1024px) {
+    .c-nav-list__link {
+      font-size: 1.5rem; } }
+  @media screen and (min-width: 1024px) {
+    .c-nav-list__link {
+      padding: 1.75rem; } }
+  .c-nav-list__link:hover, .c-nav-list__link:focus {
+    color: #fff; }
+    .c-nav-list__link:hover:after, .c-nav-list__link:focus:after {
+      content: '';
+      display: block;
+      border: 10px solid transparent;
+      border-left-color: inherit;
+      margin-top: -10px;
+      position: absolute;
+      right: -20px;
+      top: 50%; }
 
 .styleguide-example .c-side-hero {
   height: 100%; }
@@ -1843,12 +1878,15 @@ a.c-list-box__heading {
   background-color: #d8006d !important; }
 
 .baby-secondary {
-  background-color: #7f1c4e !important; }
+  background-color: #7f1c4e !important;
+  border-color: #7f1c4e !important; }
 
 button.baby-secondary:hover, button.baby-secondary:focus,
 a.baby-secondary:hover,
 a.baby-secondary:focus {
-  background-color: #d8006d !important; }
+  background-color: #d8006d !important;
+  border-color: #d8006d !important;
+  outline: none; }
 
 .baby-text {
   color: #d8006d; }
@@ -1860,12 +1898,14 @@ a.baby-secondary:focus {
   background-color: #ff6100 !important; }
 
 .toddler-secondary {
-  background-color: #fb0000 !important; }
+  background-color: #fb0000 !important;
+  border-color: #fb0000 !important; }
 
 button.toddler-secondary:hover, button.toddler-secondary:focus,
 a.toddler-secondary:hover,
 a.toddler-secondary:focus {
   background-color: #ff6100 !important;
+  border-color: #ff6100 !important;
   outline: none; }
 
 .toddler-text {
@@ -1878,12 +1918,14 @@ a.toddler-secondary:focus {
   background-color: #ff9d00 !important; }
 
 .pre-schooler-secondary {
-  background-color: #ff6100 !important; }
+  background-color: #ff6100 !important;
+  border-color: #ff6100 !important; }
 
 button.pre-schooler-secondary:hover, button.pre-schooler-secondary:focus,
 a.pre-schooler-secondary:hover,
 a.pre-schooler-secondary:focus {
   background-color: #ff9d00 !important;
+  border-color: #ff9d00 !important;
   outline: none; }
 
 .pre-schooler-text {
@@ -1896,12 +1938,14 @@ a.pre-schooler-secondary:focus {
   background-color: #35c621 !important; }
 
 .grade-schooler-secondary {
-  background-color: #1d5d11 !important; }
+  background-color: #1d5d11 !important;
+  border-color: #1d5d11 !important; }
 
 button.grade-schooler-secondary:hover, button.grade-schooler-secondary:focus,
 a.grade-schooler-secondary:hover,
 a.grade-schooler-secondary:focus {
   background-color: #35c621 !important;
+  border-color: #35c621 !important;
   outline: none; }
 
 .grade-schooler-text {
@@ -1914,7 +1958,8 @@ a.grade-schooler-secondary:focus {
   background-color: #0055b8 !important; }
 
 .pre-teen-secondary {
-  background-color: #00326d !important; }
+  background-color: #00326d !important;
+  border-color: #00326d !important; }
 
 button.pre-teen-secondary:hover, button.pre-teen-secondary:focus,
 a.pre-teen-secondary:hover,

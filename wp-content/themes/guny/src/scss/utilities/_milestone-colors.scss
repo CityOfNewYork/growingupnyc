@@ -7,6 +7,7 @@
 
 .baby-secondary {
   background-color: $color-baby-secondary !important;
+  border-color: $color-baby-secondary !important;
 }
 
 button.baby-secondary,
@@ -14,6 +15,8 @@ a.baby-secondary {
   &:hover,
   &:focus {
     background-color: $color-baby !important;
+    border-color: $color-baby !important;
+    outline: none;
   }
 }
 
@@ -31,6 +34,7 @@ a.baby-secondary {
 
 .toddler-secondary {
   background-color: $color-toddler-secondary !important;
+  border-color: $color-toddler-secondary !important;
 }
 
 button.toddler-secondary,
@@ -38,6 +42,7 @@ a.toddler-secondary {
   &:hover,
   &:focus {
     background-color: $color-toddler !important;
+    border-color: $color-toddler !important;
     outline: none;
   }
 }
@@ -56,6 +61,7 @@ a.toddler-secondary {
 
 .pre-schooler-secondary {
   background-color: $color-pre-schooler-secondary !important;
+  border-color: $color-pre-schooler-secondary !important;
 }
 
 button.pre-schooler-secondary,
@@ -63,6 +69,7 @@ a.pre-schooler-secondary {
   &:hover,
   &:focus {
     background-color: $color-pre-schooler !important;
+    border-color: $color-pre-schooler !important;
     outline: none;
   }
 }
@@ -81,6 +88,7 @@ a.pre-schooler-secondary {
 
 .grade-schooler-secondary {
   background-color: $color-grade-schooler-secondary !important;
+  border-color: $color-grade-schooler-secondary !important;
 }
 
 button.grade-schooler-secondary,
@@ -88,6 +96,7 @@ a.grade-schooler-secondary {
   &:hover,
   &:focus {
     background-color: $color-grade-schooler !important;
+    border-color: $color-grade-schooler !important;
     outline: none;
   }
 }
@@ -106,6 +115,7 @@ a.grade-schooler-secondary {
 
 .pre-teen-secondary {
   background-color: $color-pre-teen-secondary !important;
+  border-color: $color-pre-teen-secondary !important;
 }
 
 button.pre-teen-secondary,

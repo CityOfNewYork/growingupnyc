@@ -28,6 +28,7 @@ var autoprefixer = require('gulp-autoprefixer'),
     path = require('path'),
     rename = require('gulp-rename'),
     sass = require('gulp-sass'),
+    size = require('gulp-size'),
     styleguide = require('sc5-styleguide'),
     stylelint = require('gulp-stylelint'),
     sourcemaps = require('gulp-sourcemaps'),
@@ -99,6 +100,9 @@ gulp.task('styles', ['lint-css'], function() {
         .on('error', notify.onError())
     .pipe(autoprefixer(['last 2 versions', 'ie 9-11']))
     .pipe(minifycss())
+    .pipe(size({
+      'showFiles': true
+    }))
     .pipe(gulp.dest('./'));
 });
 
@@ -153,6 +157,9 @@ gulp.task('scripts', ['pack'], function() {
   .pipe(gulp.dest(dist+'js'))
   .pipe(rename('source.js'))
   .pipe(uglify())
+  .pipe(size({
+    'showFiles': true
+  }))
   .pipe(gulp.dest(dist+'js'))
   .pipe(browserSync.stream({match: '**/*.js'}));
 });

@@ -20,6 +20,8 @@ module.exports = {
     modulesDirectories: ['src', 'node_modules']
   },
   plugins: [
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.ProvidePlugin({
       Modernizr : 'modernizr',
       $: 'jquery',

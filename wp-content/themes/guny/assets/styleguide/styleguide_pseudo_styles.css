@@ -2,6 +2,11 @@
   clip: auto;
 }
 
+main.pseudo-class-focus,
+section.pseudo-class-focus {
+  outline: none;
+}
+
 .button--primary.pseudo-class-hover,
 .button--primary.pseudo-class-focus {
   background: transparent;

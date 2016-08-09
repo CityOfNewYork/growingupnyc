@@ -276,6 +276,10 @@ hr {
   height: 2px;
   margin: 2.5rem 0; }
 
+main:focus,
+section:focus {
+  outline: none; }
+
 .button--primary, .button--outline, .button--pill, .button--simple {
   border: 2px solid #fff;
   border-radius: 1.5625rem;

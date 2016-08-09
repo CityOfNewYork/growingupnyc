@@ -3,42 +3,13 @@
     "title": "Tip",
     "fields": [
         {
-            "key": "field_57aa01ee48ec9",
-            "label": "Show Tip",
-            "name": "show_tip",
-            "type": "checkbox",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "Include a tip": "Include a tip"
-            },
-            "default_value": [],
-            "layout": "horizontal",
-            "toggle": 0,
-            "return_format": "value"
-        },
-        {
             "key": "field_57aa022d48eca",
             "label": "Tip Content",
             "name": "tip",
             "type": "textarea",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_57aa01ee48ec9",
-                        "operator": "==",
-                        "value": "Include a tip"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -59,15 +30,7 @@
             "type": "text",
             "instructions": "Text displayed before the tip actions, i.e. \"Want more Talk to Your Baby tips?\"",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_57aa01ee48ec9",
-                        "operator": "==",
-                        "value": "Include a tip"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -88,15 +51,7 @@
             "type": "text",
             "instructions": "Instructions to get more information by text",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_57aa01ee48ec9",
-                        "operator": "==",
-                        "value": "Include a tip"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "50",
                 "class": "",
@@ -117,15 +72,7 @@
             "type": "url",
             "instructions": "URL to website where a user can find out more",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_57aa01ee48ec9",
-                        "operator": "==",
-                        "value": "Include a tip"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "50",
                 "class": "",
@@ -152,5 +99,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1470759862
+    "modified": 1470760047
 }

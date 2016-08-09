@@ -317,8 +317,10 @@ class acf_field_number extends acf_field {
 	
 }
 
-new acf_field_number();
 
-endif;
+// initialize
+acf_register_field_type( new acf_field_number() );
+
+endif; // class_exists check
 
 ?>

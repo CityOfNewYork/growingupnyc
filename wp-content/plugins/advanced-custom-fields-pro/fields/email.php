@@ -158,8 +158,10 @@ class acf_field_email extends acf_field {
 	
 }
 
-new acf_field_email();
 
-endif;
+// initialize
+acf_register_field_type( new acf_field_email() );
+
+endif; // class_exists check
 
 ?>

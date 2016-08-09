@@ -81,7 +81,7 @@ class acf_field_google_map extends acf_field {
 		
 		
 		// value
-		$field['value'] = acf_parse_args($field['value'], array(
+		$field['value'] = wp_parse_args($field['value'], array(
 			'address'	=> '',
 			'lat'		=> '',
 			'lng'		=> ''
@@ -316,10 +316,13 @@ acf.fields.google_map.api = <?php echo json_encode($api); ?>;
 <?php
 	
    	}
+   	
 }
 
-new acf_field_google_map();
 
-endif;
+// initialize
+acf_register_field_type( new acf_field_google_map() );
+
+endif; // class_exists check
 
 ?>

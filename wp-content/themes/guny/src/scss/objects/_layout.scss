@@ -56,6 +56,12 @@
   }
 }
 
+.o-article--shift {
+  @include media($bp-large) {
+    @include shift(4);
+  }
+}
+
 .o-content-static--left {
   bottom: 0;
   height: 100%;

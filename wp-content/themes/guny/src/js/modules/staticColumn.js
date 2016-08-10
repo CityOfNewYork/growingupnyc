@@ -1,12 +1,15 @@
 /**
- * Sticky content module
- * @module modules/sticky
+ * Static column module
+ * Similar to the general sticky module but used specifically when one column
+ * of a two-column layout is meant to be sticky
+ * @module modules/staticColumn
+ * @see modules/stickyNav
  */
 
 import forEach from 'lodash/forEach';
 
 export default function() {
-  const stickyContent = document.querySelectorAll('.js-sticky');
+  const stickyContent = document.querySelectorAll('.js-static');
   const notStickyClass = 'is-not-sticky';
   const bottomClass = 'is-bottom';
 

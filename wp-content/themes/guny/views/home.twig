@@ -3,7 +3,7 @@
 {% block content %}
 
 {# Side Hero #}
-<section class="o-static-column o-static-column--left c-side-hero js-sticky">
+<section class="o-static-column o-static-column--left c-side-hero js-static">
   <div class="c-side-hero__image c-side-hero__image--desktop" style="background-image:url({{post.thumbnail.src}})"></div>
   <div class="c-side-hero__image c-side-hero__image--mobile" style="background-image:url({{TimberImage(post.hero_mobile_image).src|resize(700, 0)}})"></div>
   <div class="c-side-hero__content">

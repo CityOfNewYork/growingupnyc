@@ -1,1 +1,10 @@
 // Sticky Side Nav
+//
+// Sticks content in place on the side of the page
+
+.o-sticky-nav {
+  &.is-sticky {
+    position: fixed;
+    top: 0;
+  }
+}

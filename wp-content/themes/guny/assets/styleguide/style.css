@@ -759,6 +759,10 @@ ol.o-inline {
       .o-article:last-child {
         margin-right: 0; } }
 
+@media screen and (min-width: 1024px) {
+  .o-article--shift {
+    margin-left: 34.375%; } }
+
 .o-content-static--left {
   bottom: 0;
   height: 100%;
@@ -923,19 +927,9 @@ ol.o-inline {
   .o-scroll-column--right {
     margin-left: 60%; } }
 
-.flexbox .o-sticky-footer {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; }
-
-.flexbox .o-sticky-footer__content {
-  flex: 1; }
-
-.no-flexbox .o-sticky-footer {
-  background: #2793e0; }
-
-.no-flexbox .o-sticky-footer__content {
-  background: #fff; }
+.o-sticky-nav.is-sticky {
+  position: fixed;
+  top: 0; }
 
 .arrow-pager {
   font-family: "museo-sans-rounded", sans-serif;

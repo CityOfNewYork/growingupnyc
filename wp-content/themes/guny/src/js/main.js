@@ -1,10 +1,10 @@
-import 'object-fit-images'; // Polyfill object-fit for IE/Edge
 import globalSearch from './modules/globalSearch.js';
 import toggleOpen from './modules/toggleOpen.js';
 import accordion from './modules/accordion.js';
 import offcanvas from './modules/offcanvas.js';
 import overlay from './modules/overlay.js';
-import sticky from './modules/sticky.js';
+import stickyNav from './modules/stickyNav.js';
+import staticColumn from './modules/staticColumn.js';
 import searchResultsHeader from './modules/searchResultsHeader.js';
 
 function ready(fn) {
@@ -21,7 +21,10 @@ function init() {
   offcanvas();
   accordion();
   overlay();
-  sticky();
+  stickyNav();
+
+  // Homepage
+  staticColumn();
 
   // Search results page
   searchResultsHeader();

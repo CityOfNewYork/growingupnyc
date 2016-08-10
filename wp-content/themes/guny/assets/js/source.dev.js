@@ -2032,6 +2032,15 @@ window.matchMedia || (window.matchMedia = function() {
 	        window.removeEventListener('scroll', scrollListener);
 	      }
 	    }, 100));
+	    var event = void 0;
+	    if (document.createEvent) {
+	      event = new Event('resize');
+	      window.dispatchEvent(event);
+	    } else {
+	      event = document.createEventObject();
+	      event.eventType = "resize";
+	      window.fireEvent("onresize", event);
+	    }
 	  }
 
 	  var markers = document.querySelectorAll('.js-section');

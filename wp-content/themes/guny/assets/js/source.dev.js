@@ -2095,7 +2095,8 @@ window.matchMedia || (window.matchMedia = function() {
 	  if ($stickyNavs.length) {
 	    $stickyNavs.each(function () {
 	      var $outerContainer = $(this).closest('.js-sticky-container');
-	      stickyNav($(this), $outerContainer);
+	      var $article = $outerContainer.find('.js-sticky-article');
+	      stickyNav($(this), $outerContainer, $article);
 	    });
 	  }
 	};
@@ -2114,22 +2115,20 @@ window.matchMedia || (window.matchMedia = function() {
 	* "Stick" content in place as the user scrolls
 	* @param {object} $elem - jQuery element that should be sticky
 	* @param {object} $elemContainer - jQuery element for the element's container. Used to set the top and bottom points
-	* @param {object} options - Optional override for default settings
+	* @param {object} $elemArticle - Content next to the sticky nav
 	*/
 	/**
 	* Sticky Nav module
 	* @module modules/stickyNav
 	*/
 
-	function stickyNav($elem, $elemContainer, options) {
-	  // Module defaults
-	  var defaults = {
-	    stickyClass: 'is-sticky',
-	    largeBreakpoint: '1024px'
-	  };
-
+	function stickyNav($elem, $elemContainer, $elemArticle) {
 	  // Module settings
-	  var settings = $.extend({}, defaults, options);
+	  var settings = {
+	    stickyClass: 'is-sticky',
+	    largeBreakpoint: '1024px',
+	    articleClass: 'o-article--shift'
+	  };
 
 	  // Globals
 	  var stickyMode = false; // Flag to tell if sidebar is in "sticky mode"
@@ -2154,6 +2153,7 @@ window.matchMedia || (window.matchMedia = function() {
 	      if (!isSticky) {
 	        isSticky = true;
 	        $elem.addClass(settings.stickyClass);
+	        $elemArticle.addClass(settings.articleClass);
 	        updateDimensions();
 	      }
 
@@ -2161,6 +2161,7 @@ window.matchMedia || (window.matchMedia = function() {
 	      if ($elem.offset().top + elemHeight > switchPointBottom) {
 	        isSticky = false;
 	        $elem.removeClass(settings.stickyClass);
+	        $elemArticle.removeClass(settings.articleClass);
 	        updateDimensions();
 	        $elem.css('top', 'auto');
 	        $elem.css('bottom', $elemContainer.css('padding-bottom'));
@@ -2168,6 +2169,7 @@ window.matchMedia || (window.matchMedia = function() {
 	    } else if (isSticky) {
 	      isSticky = false;
 	      $elem.removeClass(settings.stickyClass);
+	      $elemArticle.removeClass(settings.articleClass);
 	      updateDimensions();
 	    }
 	  }
@@ -2218,7 +2220,8 @@ window.matchMedia || (window.matchMedia = function() {
 
 	    if (isSticky) {
 	      updateDimensions();
-	      $elem.addClass(this.settings.stickyClass);
+	      $elem.addClass(settings.stickyClass);
+	      $elemArticle.addClass(settings.articleClass);
 	    }
 	    $elem.css('visibility', '');
 	  }

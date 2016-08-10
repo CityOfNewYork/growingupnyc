@@ -10,17 +10,15 @@ import imagesReady from 'imagesready/dist/imagesready.js';
 * "Stick" content in place as the user scrolls
 * @param {object} $elem - jQuery element that should be sticky
 * @param {object} $elemContainer - jQuery element for the element's container. Used to set the top and bottom points
-* @param {object} options - Optional override for default settings
+* @param {object} $elemArticle - Content next to the sticky nav
 */
-function stickyNav($elem, $elemContainer, options) {
-  // Module defaults
-  const defaults = {
-    stickyClass: 'is-sticky',
-    largeBreakpoint: '1024px'
-  };
-
+function stickyNav($elem, $elemContainer, $elemArticle) {
   // Module settings
-  const settings = $.extend({}, defaults, options);
+  const settings = {
+    stickyClass: 'is-sticky',
+    largeBreakpoint: '1024px',
+    articleClass: 'o-article--shift'
+  };
 
   // Globals
   let stickyMode = false; // Flag to tell if sidebar is in "sticky mode"
@@ -45,6 +43,7 @@ function stickyNav($elem, $elemContainer, options) {
       if (!isSticky) {
         isSticky = true;
         $elem.addClass(settings.stickyClass);
+        $elemArticle.addClass(settings.articleClass);
         updateDimensions();
       }
 
@@ -52,6 +51,7 @@ function stickyNav($elem, $elemContainer, options) {
       if ($elem.offset().top + elemHeight > switchPointBottom) {
         isSticky = false;
         $elem.removeClass(settings.stickyClass);
+        $elemArticle.removeClass(settings.articleClass);
         updateDimensions();
         $elem.css('top', 'auto');
         $elem.css('bottom', $elemContainer.css('padding-bottom'));
@@ -59,6 +59,7 @@ function stickyNav($elem, $elemContainer, options) {
     } else if (isSticky) {
       isSticky = false;
       $elem.removeClass(settings.stickyClass);
+      $elemArticle.removeClass(settings.articleClass);
       updateDimensions();
     }
   }
@@ -110,7 +111,8 @@ function stickyNav($elem, $elemContainer, options) {
 
     if (isSticky) {
       updateDimensions();
-      $elem.addClass(this.settings.stickyClass);
+      $elem.addClass(settings.stickyClass);
+      $elemArticle.addClass(settings.articleClass);
     }
     $elem.css('visibility', '');
   }
@@ -184,7 +186,8 @@ export default function() {
   if ($stickyNavs.length) {
     $stickyNavs.each(function() {
       let $outerContainer = $(this).closest('.js-sticky-container');
-      stickyNav($(this), $outerContainer);
+      let $article = $outerContainer.find('.js-sticky-article');
+      stickyNav($(this), $outerContainer, $article);
     });
   }
 }

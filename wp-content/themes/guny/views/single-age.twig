@@ -42,19 +42,19 @@
     <div class="o-article-sidebar">
       {# Anchor Links #}
       <div class="o-content-container--compact u-shift-up">
-        <ol class="c-nav-list js-sticky o-sticky-nav">
+        <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
           {% if upcoming_events %}
             <li class="c-nav-list__item">
-              <a href="#section-events" class="c-nav-list__link {{post.age_group|sanitize}}-secondary">Events<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+              <a href="#section-events" data-section="section-events" class="js-section c-nav-list__link {{post.age_group|sanitize}}-secondary">Events<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
             </li>
           {% endif %}
           {% if post.featured_programs %}
             <li class="c-nav-list__item">
-              <a href="#section-programs" class="c-nav-list__link {{post.age_group|sanitize}}-secondary">Programs<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+              <a href="#section-programs" data-section="section-programs" class="js-section c-nav-list__link {{post.age_group|sanitize}}-secondary">Programs<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
             </li>
           {% endif %}
           <li class="c-nav-list__item">
-            <a href="#section-milestones" class="c-nav-list__link {{post.age_group|sanitize}}-secondary">Milestones<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+            <a href="#section-milestones" data-section="section-milestones" class="js-section c-nav-list__link {{post.age_group|sanitize}}-secondary">Milestones<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
           </li>
         </ol>
       </div> <!-- /.o-content-container-compact -->

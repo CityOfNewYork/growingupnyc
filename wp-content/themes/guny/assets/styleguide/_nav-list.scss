@@ -44,7 +44,8 @@ $indicator-size: 10px;
   }
 
   &:hover,
-  &:focus {
+  &:focus,
+  &.is-active {
     color: $color-text-invert;
 
     &:after {

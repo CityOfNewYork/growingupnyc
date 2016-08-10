@@ -4,6 +4,7 @@ import accordion from './modules/accordion.js';
 import offcanvas from './modules/offcanvas.js';
 import overlay from './modules/overlay.js';
 import stickyNav from './modules/stickyNav.js';
+import currentSection from './modules/currentSection.js';
 import staticColumn from './modules/staticColumn.js';
 import searchResultsHeader from './modules/searchResultsHeader.js';
 
@@ -22,6 +23,7 @@ function init() {
   accordion();
   overlay();
   stickyNav();
+  currentSection();
 
   // Homepage
   staticColumn();

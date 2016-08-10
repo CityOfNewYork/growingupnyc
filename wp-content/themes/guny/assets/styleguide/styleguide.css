@@ -1640,9 +1640,9 @@ ol.o-inline {
   @media screen and (min-width: 1024px) {
     .c-nav-list__link {
       padding: 1.75rem; } }
-  .c-nav-list__link:hover, .c-nav-list__link:focus {
+  .c-nav-list__link:hover, .c-nav-list__link:focus, .c-nav-list__link.is-active {
     color: #fff; }
-    .c-nav-list__link:hover:after, .c-nav-list__link:focus:after {
+    .c-nav-list__link:hover:after, .c-nav-list__link:focus:after, .c-nav-list__link.is-active:after {
       content: '';
       display: block;
       border: 10px solid transparent;
@@ -1877,9 +1877,10 @@ ol.o-inline {
   background-color: #7f1c4e !important;
   border-color: #7f1c4e !important; }
 
-button.baby-secondary:hover, button.baby-secondary:focus,
+button.baby-secondary:hover, button.baby-secondary:focus, button.baby-secondary.is-active,
 a.baby-secondary:hover,
-a.baby-secondary:focus {
+a.baby-secondary:focus,
+a.baby-secondary.is-active {
   background-color: #d8006d !important;
   border-color: #d8006d !important;
   outline: none; }
@@ -1897,9 +1898,10 @@ a.baby-secondary:focus {
   background-color: #fb0000 !important;
   border-color: #fb0000 !important; }
 
-button.toddler-secondary:hover, button.toddler-secondary:focus,
+button.toddler-secondary:hover, button.toddler-secondary:focus, button.toddler-secondary.is-active,
 a.toddler-secondary:hover,
-a.toddler-secondary:focus {
+a.toddler-secondary:focus,
+a.toddler-secondary.is-active {
   background-color: #ff6100 !important;
   border-color: #ff6100 !important;
   outline: none; }
@@ -1917,9 +1919,10 @@ a.toddler-secondary:focus {
   background-color: #ff6100 !important;
   border-color: #ff6100 !important; }
 
-button.pre-schooler-secondary:hover, button.pre-schooler-secondary:focus,
+button.pre-schooler-secondary:hover, button.pre-schooler-secondary:focus, button.pre-schooler-secondary.is-active,
 a.pre-schooler-secondary:hover,
-a.pre-schooler-secondary:focus {
+a.pre-schooler-secondary:focus,
+a.pre-schooler-secondary.is-active {
   background-color: #ff9d00 !important;
   border-color: #ff9d00 !important;
   outline: none; }
@@ -1937,9 +1940,10 @@ a.pre-schooler-secondary:focus {
   background-color: #1d5d11 !important;
   border-color: #1d5d11 !important; }
 
-button.grade-schooler-secondary:hover, button.grade-schooler-secondary:focus,
+button.grade-schooler-secondary:hover, button.grade-schooler-secondary:focus, button.grade-schooler-secondary.is-active,
 a.grade-schooler-secondary:hover,
-a.grade-schooler-secondary:focus {
+a.grade-schooler-secondary:focus,
+a.grade-schooler-secondary.is-active {
   background-color: #35c621 !important;
   border-color: #35c621 !important;
   outline: none; }
@@ -1957,9 +1961,10 @@ a.grade-schooler-secondary:focus {
   background-color: #00326d !important;
   border-color: #00326d !important; }
 
-button.pre-teen-secondary:hover, button.pre-teen-secondary:focus,
+button.pre-teen-secondary:hover, button.pre-teen-secondary:focus, button.pre-teen-secondary.is-active,
 a.pre-teen-secondary:hover,
-a.pre-teen-secondary:focus {
+a.pre-teen-secondary:focus,
+a.pre-teen-secondary.is-active {
   background-color: #0055b8 !important;
   outline: none; }
 

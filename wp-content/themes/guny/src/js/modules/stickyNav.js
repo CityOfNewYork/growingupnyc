@@ -152,7 +152,7 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
   */
   function onResize() {
     const largeMode = window.matchMedia('(min-width: ' +
-      settings.largeBreakpoint + ')'.matches);
+      settings.largeBreakpoint + ')').matches;
     if (largeMode) {
       setOffsetValues();
       if (!stickyMode) {

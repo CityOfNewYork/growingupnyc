@@ -2021,10 +2021,17 @@ window.matchMedia || (window.matchMedia = function() {
 	    if (!target) {
 	      return;
 	    }
-	    window.addEventListener('scroll', (0, _throttle2.default)(function () {
-	      toggleIndicator(marker, target);
+	    window.addEventListener('resize', (0, _throttle2.default)(function () {
+	      var scrollListener = void 0;
+	      if (window.matchMedia('(min-width: 1024px)').matches) {
+	        scrollListener = window.addEventListener('scroll', (0, _throttle2.default)(function () {
+	          toggleIndicator(marker, target);
+	        }, 100));
+	        toggleIndicator(marker, target);
+	      } else if (typeof scrollListener !== 'undefined') {
+	        window.removeEventListener('scroll', scrollListener);
+	      }
 	    }, 100));
-	    toggleIndicator(marker, target);
 	  }
 
 	  var markers = document.querySelectorAll('.js-section');
@@ -2437,7 +2444,7 @@ window.matchMedia || (window.matchMedia = function() {
 	  * @param {boolean} stickyMode - Whether sidebar should be considered sticky
 	  */
 	  function onResize() {
-	    var largeMode = window.matchMedia('(min-width: ' + settings.largeBreakpoint + ')'.matches);
+	    var largeMode = window.matchMedia('(min-width: ' + settings.largeBreakpoint + ')').matches;
 	    if (largeMode) {
 	      setOffsetValues();
 	      if (!stickyMode) {

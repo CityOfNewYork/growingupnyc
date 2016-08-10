@@ -72,10 +72,17 @@ export default function() {
     if (!target) {
       return;
     }
-    window.addEventListener('scroll', throttle(function() {
-      toggleIndicator(marker, target);
+    window.addEventListener('resize', throttle(function() {
+      let scrollListener;
+      if (window.matchMedia('(min-width: 1024px)').matches) {
+        scrollListener = window.addEventListener('scroll', throttle(function() {
+          toggleIndicator(marker, target);
+        }, 100));
+        toggleIndicator(marker, target);
+      } else if (typeof scrollListener !== 'undefined') {
+        window.removeEventListener('scroll', scrollListener);
+      }
     }, 100));
-    toggleIndicator(marker, target);
   }
 
   const markers = document.querySelectorAll('.js-section');

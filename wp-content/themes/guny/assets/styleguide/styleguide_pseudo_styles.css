@@ -133,6 +133,8 @@ a.pseudo-class-focus {
 
 .c-nav-list__link.pseudo-class-hover,
 .c-nav-list__link.pseudo-class-focus {
+  background-color: #2793e0;
+  border-color: #2793e0;
   color: #fff;
 }
 

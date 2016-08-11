@@ -27,8 +27,9 @@ $indicator-size: 10px;
 
 // Navigation List Link
 .c-nav-list__link {
-  background-color: $color-primary;
+  background-color: $color-secondary;
   border-radius: 3px;
+  border-color: $color-secondary;
   color: $color-text-invert;
   display: block;
   font-family: $font-family-display;
@@ -46,6 +47,8 @@ $indicator-size: 10px;
   &:hover,
   &:focus,
   &.is-active {
+    background-color: $color-primary;
+    border-color: $color-primary;
     color: $color-text-invert;
 
     &:after {

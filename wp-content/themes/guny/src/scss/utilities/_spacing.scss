@@ -28,12 +28,36 @@
   }
 }
 
+.u-top-spacing-small {
+  padding-top: rem-calc(30);
+
+  @include media($bp-small) {
+    padding-top: rem-calc(35);
+  }
+
+  @include media($bp-large) {
+    padding-top: rem-calc($outer-gutter-large);
+  }
+}
+
 // Extra bottom padding
 .u-bottom-spacing {
   padding-bottom: rem-calc(45);
 
   @include media($bp-large) {
     padding-bottom: rem-calc(60);
+  }
+}
+
+.u-bottom-spacing-small {
+  padding-bottom: rem-calc(30);
+
+  @include media($bp-small) {
+    padding-bottom: rem-calc(35);
+  }
+
+  @include media($bp-large) {
+    padding-bottom: rem-calc($outer-gutter-large);
   }
 }
 

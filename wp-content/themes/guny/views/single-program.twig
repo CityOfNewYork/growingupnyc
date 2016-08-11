@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<header class="c-hero c-hero--large c-hero--long-text u-lg-gutter">
+<header class="c-hero c-hero--large c-hero--long-text">
   <div class="o-container">
     <h1>{{post.title}}</h1>
     <p class="c-hero__tagline">
@@ -24,42 +24,70 @@
   </p>
   </div>
 </header>
-<article class="o-container u-bottom-spacing">
-  <div class="o-article o-content-container--compact">
+<article class="o-container u-bottom-spacing-small js-sticky-container">
+  <div class="o-article-sidebar">
+    <div class="o-content-container--compact u-shift-up">
+      <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
+        {% if post.summary %}
+        <li class="c-nav-list__item">
+          <a href="#section-summary" data-section="section-summary" class="js-section c-nav-list__link">Summary<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+        </li>
+        {% endif %}
+        {% if post.eligibility %}
+        <li class="c-nav-list__item">
+          <a href="#section-eligibility" data-section="section-eligibility" class="js-section c-nav-list__link">Eligibility<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+        </li>
+        {% endif %}
+        {% if post.whats_needed or post.how_to_apply %}
+        <li class="c-nav-list__item">
+          <a href="#section-application" data-section="section-application" class="js-section c-nav-list__link">Application<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+        </li>
+        {% endif %}
+        {% if post.get_help %}
+        <li class="c-nav-list__item">
+          <a href="#section-help" data-section="section-help" class="js-section c-nav-list__link">Help<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+        </li>
+        {% endif %}
+      </ol>
+    </div> <!-- /.o-content-container-compact -->
+  </div> <!-- /.o-article-sidebar -->
+  <div class="o-article o-content-container--compact js-sticky-article">
   {% if post.summary %}
-    <div class="o-content-container--text s-wysiwyg">
+    <section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" id="section-summary">
       {{post.get_field('summary')}}
-    </div> <!-- /.o-content-container-text -->
+    </section> <!-- /.o-content-container-text -->
     <hr>
   {% endif %}
   {% if post.eligibility %}
-    <div class="o-content-container--text s-wysiwyg">
+    <section class="o-content-container--text s-wysiwyg u-top-spacing-small u-bottom-spacing-small" id="section-eligibility">
       <h2>Am I Eligible?</h2>
       {{post.get_field('eligibility')}}
-    </div> <!-- /.o-content-container-text -->
+    </section> <!-- /.o-content-container-text -->
     <hr>
   {% endif %}
-  {% if post.whats_needed %}
-    <div class="o-content-container--text s-wysiwyg">
-      <h2>What Will I Need to Apply?</h2>
-      {{post.get_field('whats_needed')}}
-    </div> <!-- /.o-content-container-text -->
+  {% if post.whats_needed or post.how_to_apply %}
+    <section id="section-application" class="u-top-spacing-small u-bottom-spacing-small">
+      {% if post.whats_needed %}
+      <div class="o-content-container--text s-wysiwyg{% if post.how_to_apply %} u-bottom-spacing-small{% endif %}">
+        <h2>What Will I Need to Apply?</h2>
+        {{post.get_field('whats_needed')}}
+      </div>
+      <hr>
+      {% endif %}
+      {% if post.how_to_apply %}
+      <div class="o-content-container--text s-wysiwyg{% if post.whats_needed %} u-top-spacing-small{% endif %}">
+        <h2>I'm Ready to Apply</h2>
+        {{post.get_field('how_to_apply')}}
+      </div>
+      {% endif %}
+    </section> <!-- /.o-content-container-text -->
     <hr>
   {% endif %}
-  {% if post.how_to_apply %}
-    <div class="o-content-container--text s-wysiwyg">
-      <h2>I'm Ready to Apply</h2>
-      {{post.get_field('how_to_apply')}}
-    </div> <!-- /.o-content-container-text -->
-    {% if post.get_help %}
-    <hr>
-    {% endif %}
-  {% endif %}
-  {% if post.how_to_apply %}
-    <div class="o-content-container--text s-wysiwyg">
+  {% if post.get_help %}
+    <section id="section-help" class="u-top-spacing-small u-bottom-spacing-small o-content-container--text s-wysiwyg">
       <h2>How Can I Get Help?</h2>
       {{post.get_field('get_help')}}
-    </div> <!-- /.o-content-container-text -->
+    </section> <!-- /.o-content-container-text -->
   {% endif %}
   </div> <!-- /.o-article -->
 </article> <!-- /.o-container -->

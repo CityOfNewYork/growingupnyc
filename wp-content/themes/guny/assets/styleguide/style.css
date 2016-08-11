@@ -273,8 +273,7 @@ a {
 hr {
   background: #eee;
   border-radius: 6.5px;
-  height: 2px;
-  margin: 2.5rem 0; }
+  height: 2px; }
 
 main:focus,
 section:focus {
@@ -1621,8 +1620,9 @@ ol.o-inline {
   padding: 0; }
 
 .c-nav-list__link {
-  background-color: #2793e0;
+  background-color: #0055b8;
   border-radius: 3px;
+  border-color: #0055b8;
   color: #fff;
   display: block;
   font-family: "museo-sans-rounded", sans-serif;
@@ -1641,6 +1641,8 @@ ol.o-inline {
     .c-nav-list__link {
       padding: 1.75rem; } }
   .c-nav-list__link:hover, .c-nav-list__link:focus, .c-nav-list__link.is-active {
+    background-color: #2793e0;
+    border-color: #2793e0;
     color: #fff; }
     .c-nav-list__link:hover:after, .c-nav-list__link:focus:after, .c-nav-list__link.is-active:after {
       content: '';
@@ -1995,11 +1997,29 @@ a.pre-teen-secondary.is-active {
     .u-top-spacing {
       padding-top: 3.75rem; } }
 
+.u-top-spacing-small {
+  padding-top: 1.875rem; }
+  @media screen and (min-width: 375px) {
+    .u-top-spacing-small {
+      padding-top: 2.1875rem; } }
+  @media screen and (min-width: 1024px) {
+    .u-top-spacing-small {
+      padding-top: 2.5rem; } }
+
 .u-bottom-spacing {
   padding-bottom: 2.8125rem; }
   @media screen and (min-width: 1024px) {
     .u-bottom-spacing {
       padding-bottom: 3.75rem; } }
+
+.u-bottom-spacing-small {
+  padding-bottom: 1.875rem; }
+  @media screen and (min-width: 375px) {
+    .u-bottom-spacing-small {
+      padding-bottom: 2.1875rem; } }
+  @media screen and (min-width: 1024px) {
+    .u-bottom-spacing-small {
+      padding-bottom: 2.5rem; } }
 
 .u-shift-up {
   margin-top: -40px; }

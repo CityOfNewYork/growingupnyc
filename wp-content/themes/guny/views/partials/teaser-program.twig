@@ -2,10 +2,12 @@
 
 {% block classes %}{{is_first ? "c-card--hero #{age_group|sanitize}-gradient"}}{% endblock %}
 
-{% block sticker_content %}
+{% block sticker %}
   {% set category = post.terms('programs_cat')|first %}
   {% if category %}
-    <svg class="icon--large"><title>{{category.name}}</title><use xlink:href="#{{category.slug}}"></use></svg>
+    <div class="c-card__sticker sticker" aria-hidden="true">
+      <svg class="icon--large"><title>{{category.name}}</title><use xlink:href="#{{category.slug}}"></use></svg>
+    </div>
   {% endif %}
 {% endblock %}
 

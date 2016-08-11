@@ -14,7 +14,10 @@
 // markup:
 // <header class="c-hero {$modifiers}" style="background:#333">
 //   <div class="o-layout">
-//     <h1 class="c-hero__title">Title</h1>
+//     <h1 class="c-hero__title">
+//       <span class="c-hero__sticker><svg aria-hidden="true" class="icon--large"><use xlink:href="assets/img/svg-sprite.svg#baby"></use></svg></span>
+//       Title
+//     </h1>
 //     <p class="c-hero__tagline">Tagline text</p>
 //   </div>
 // </header>
@@ -33,7 +36,7 @@
   @include media($bp-medium) {
     background-size: cover;
     text-align: left;
-    padding: rem-calc(72 40 40);
+    padding: rem-calc(72 40 80);
   }
 
   @include media($bp-xlarge) {
@@ -45,7 +48,7 @@
   padding: percentage(126/375) 0 rem-calc(65);
 
   @include media($bp-medium) {
-    padding: rem-calc(165 40 40);
+    padding: rem-calc(165 40 80);
   }
 
   @include media($bp-xlarge) {
@@ -79,6 +82,32 @@
   // Set z-index for text to appear on top of bg image
   position: relative;
   z-index: 1;
+}
+
+.flexbox .c-hero__title {
+  @include media($bp-medium) {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+  }
+}
+
+// Hero Sticker
+.c-hero__sticker {
+  box-shadow: 0 2px 4px 0 $color-shadow;
+  display: inline-block;
+  left: 0;
+  top: rem-calc($sticker-size-mobile / -2);
+  position: absolute;
+
+  @include media($bp-medium) {
+    box-shadow: none;
+    height: rem-calc(65);
+    line-height: rem-calc(65);
+    margin-right: rem-calc(20);
+    position: static;
+    width: rem-calc(65);
+  }
 }
 
 // Hero Tagline
@@ -127,9 +156,6 @@
     top: auto;
     right: percentage(-114/1440);
     width: percentage(404/1440);
-    .stop1 {
-      stop-opacity: .3;
-    }
   }
 
   @include media($bp-xlarge) {

@@ -25,6 +25,15 @@ a.baby-secondary {
   color: $color-baby;
 }
 
+.baby-svg {
+  .stop1 {
+    stop-color: $color-baby-secondary;
+  }
+  .stop2 {
+    stop-color: $color-baby;
+  }
+}
+
 .baby-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/baby-gradient.png);
 }
@@ -57,6 +66,15 @@ a.toddler-secondary {
   background-image: url(/wp-content/themes/guny/assets/img/toddler-gradient.png);
 }
 
+.toddler-svg {
+  .stop1 {
+    stop-color: $color-toddler-secondary;
+  }
+  .stop2 {
+    stop-color: $color-toddler;
+  }
+}
+
 .pre-schooler-background {
   background-color: $color-pre-schooler !important;
 }
@@ -83,6 +101,15 @@ a.pre-schooler-secondary {
 
 .pre-schooler-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/pre-schooler-gradient.png);
+}
+
+.pre-schooler-svg {
+  .stop1 {
+    stop-color: $color-pre-schooler-secondary;
+  }
+  .stop2 {
+    stop-color: $color-pre-schooler;
+  }
 }
 
 .grade-schooler-background {
@@ -113,6 +140,15 @@ a.grade-schooler-secondary {
   background-image: url(/wp-content/themes/guny/assets/img/program_detail_hero_fpo.png);
 }
 
+.grade-schooler-svg {
+  .stop1 {
+    stop-color: $color-grade-schooler-secondary;
+  }
+  .stop2 {
+    stop-color: $color-grade-schooler;
+  }
+}
+
 .pre-teen-background {
   background-color: $color-pre-teen !important;
 }
@@ -138,4 +174,13 @@ a.pre-teen-secondary {
 
 .pre-teen-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/pre-teen-gradient.png);
+}
+
+.pre-teen-svg {
+  .stop1 {
+    stop-color: $color-pre-teen-secondary;
+  }
+  .stop2 {
+    stop-color: $color-pre-teen;
+  }
 }

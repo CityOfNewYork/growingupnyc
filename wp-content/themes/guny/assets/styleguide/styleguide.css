@@ -435,6 +435,14 @@ section:focus {
       height: 3.125rem;
       width: 3.125rem; } }
 
+.icon--medium {
+  height: 2.3125rem;
+  width: 2.3125rem; }
+  @media screen and (min-width: 700px) {
+    .icon--medium {
+      height: 2.1875rem;
+      width: 2.1875rem; } }
+
 .icon--small, .icon--caret {
   height: 1.375rem;
   width: 1.375rem; }
@@ -1345,7 +1353,7 @@ ol.o-inline {
     .c-hero {
       background-size: cover;
       text-align: left;
-      padding: 4.5rem 2.5rem 2.5rem; } }
+      padding: 4.5rem 2.5rem 5rem; } }
   @media screen and (min-width: 1200px) {
     .c-hero {
       padding: 7.0625rem 5rem 3.75rem; } }
@@ -1354,7 +1362,7 @@ ol.o-inline {
   padding: 33.6% 0 4.0625rem; }
   @media screen and (min-width: 700px) {
     .c-hero--large {
-      padding: 10.3125rem 2.5rem 2.5rem; } }
+      padding: 10.3125rem 2.5rem 5rem; } }
   @media screen and (min-width: 1200px) {
     .c-hero--large {
       padding: 14.1875rem 5rem 5rem; } }
@@ -1381,6 +1389,27 @@ ol.o-inline {
   @media screen and (min-width: 1024px) {
     .c-hero__title {
       font-size: 4.125rem; } }
+
+@media screen and (min-width: 700px) {
+  .flexbox .c-hero__title {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center; } }
+
+.c-hero__sticker {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  display: inline-block;
+  left: 0;
+  top: -2.5rem;
+  position: absolute; }
+  @media screen and (min-width: 700px) {
+    .c-hero__sticker {
+      box-shadow: none;
+      height: 4.0625rem;
+      line-height: 4.0625rem;
+      margin-right: 1.25rem;
+      position: static;
+      width: 4.0625rem; } }
 
 .c-hero__tagline {
   font-family: "museo-sans-rounded", sans-serif;
@@ -1433,9 +1462,7 @@ ol.o-inline {
       bottom: -18.125%;
       top: auto;
       right: -7.91667%;
-      width: 28.05556%; }
-      .c-hero__frill .stop1 {
-        stop-opacity: .3; } }
+      width: 28.05556%; } }
   @media screen and (min-width: 1200px) {
     .c-hero__frill {
       bottom: -87px;
@@ -1890,6 +1917,12 @@ a.baby-secondary.is-active {
 .baby-text {
   color: #d8006d; }
 
+.baby-svg .stop1 {
+  stop-color: #7f1c4e; }
+
+.baby-svg .stop2 {
+  stop-color: #d8006d; }
+
 .baby-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/baby-gradient.png); }
 
@@ -1914,6 +1947,12 @@ a.toddler-secondary.is-active {
 .toddler-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/toddler-gradient.png); }
 
+.toddler-svg .stop1 {
+  stop-color: #fb0000; }
+
+.toddler-svg .stop2 {
+  stop-color: #ff6100; }
+
 .pre-schooler-background {
   background-color: #ff9d00 !important; }
 
@@ -1934,6 +1973,12 @@ a.pre-schooler-secondary.is-active {
 
 .pre-schooler-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/pre-schooler-gradient.png); }
+
+.pre-schooler-svg .stop1 {
+  stop-color: #ff6100; }
+
+.pre-schooler-svg .stop2 {
+  stop-color: #ff9d00; }
 
 .grade-schooler-background {
   background-color: #35c621 !important; }
@@ -1956,6 +2001,12 @@ a.grade-schooler-secondary.is-active {
 .grade-schooler-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/program_detail_hero_fpo.png); }
 
+.grade-schooler-svg .stop1 {
+  stop-color: #1d5d11; }
+
+.grade-schooler-svg .stop2 {
+  stop-color: #35c621; }
+
 .pre-teen-background {
   background-color: #0055b8 !important; }
 
@@ -1975,6 +2026,12 @@ a.pre-teen-secondary.is-active {
 
 .pre-teen-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/pre-teen-gradient.png); }
+
+.pre-teen-svg .stop1 {
+  stop-color: #00326d; }
+
+.pre-teen-svg .stop2 {
+  stop-color: #0055b8; }
 
 .u-sm-gutter {
   margin-bottom: 20px; }

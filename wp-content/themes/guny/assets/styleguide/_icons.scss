@@ -18,6 +18,16 @@
   }
 }
 
+.icon--medium {
+  height: rem-calc(37);
+  width: rem-calc(37);
+
+  @include media($bp-medium) {
+    height: rem-calc(35);
+    width: rem-calc(35);
+  }
+}
+
 .icon--small {
   height: rem-calc(22);
   width: rem-calc(22);

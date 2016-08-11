@@ -2,7 +2,7 @@
 
 {% block sticker %}
 <div class="c-card__sticker {{post.age_group|sanitize}}-background sticker" aria-hidden="true">
-  <svg class="icon--large"><title>Duck</title><use xlink:href="#duck"></use></svg>
+  <svg class="icon--large"><title>{{post.age_group}}</title><use xlink:href="#{{post.age_group|sanitize}}"></use></svg>
 </div>
 {% endblock %}
 

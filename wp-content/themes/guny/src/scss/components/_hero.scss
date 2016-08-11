@@ -74,6 +74,9 @@
 }
 
 // Hero Title
+//
+// .c-hero__title--long - Variation for longer titles. Matches h1 styling
+//
 .c-hero__title {
   @include font-size-xx-large;
   line-height: 1;
@@ -84,7 +87,8 @@
   z-index: 1;
 }
 
-.flexbox .c-hero__title {
+.flexbox .c-hero__title,
+.flexbox .c-hero__title--long {
   @include media($bp-medium) {
     display: flex;
     flex-flow: row nowrap;
@@ -94,6 +98,7 @@
 
 // Hero Sticker
 .c-hero__sticker {
+  background-color: $color-secondary;
   box-shadow: 0 2px 4px 0 $color-shadow;
   display: inline-block;
   left: 0;

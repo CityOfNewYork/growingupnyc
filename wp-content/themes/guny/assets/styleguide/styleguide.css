@@ -1391,12 +1391,14 @@ ol.o-inline {
       font-size: 4.125rem; } }
 
 @media screen and (min-width: 700px) {
-  .flexbox .c-hero__title {
+  .flexbox .c-hero__title,
+  .flexbox .c-hero__title--long {
     display: flex;
     flex-flow: row nowrap;
     align-items: center; } }
 
 .c-hero__sticker {
+  background-color: #0055b8;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   display: inline-block;
   left: 0;

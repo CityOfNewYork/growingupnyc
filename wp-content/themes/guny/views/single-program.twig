@@ -9,7 +9,15 @@
 {% block content %}
 <header class="c-hero c-hero--large c-hero--long-text">
   <div class="o-container">
-    <h1>{{post.title}}</h1>
+    <h1 class="c-hero__title--long">
+      {% set category = post.terms('programs_cat')|first %}
+      {% if category %}
+      <span class="c-hero__sticker sticker">
+        <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{category.slug}}"></use></svg>
+      </span>
+      {% endif %}
+      {{post.title}}
+    </h1>
     <p class="c-hero__tagline">
       {{post.program_name}}{% if post.acronym %} ({{post.acronym}}){% endif %}
       | {{post.government_agency}}

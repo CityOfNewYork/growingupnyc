@@ -1,21 +1,12 @@
-{% block startDate %}
-  {{post.start_date_formatted}}
-{% endblock %}
-
+<svg role="img" class="icon--xxsmall"><title>Time:</title><use xlink:href="#clock-o"></use></svg>
 {% if post.all_day %}
-  {{post.start_date_formatted}}
+  All Day
+{% elseif post.multiday %}
+<span class="nowrap">{{post.start_datetime|date('D M j g:i A')}}</span>
+- <span class="nowrap">{{post.end_datetime|date('D M j g:i A')}}</span>
 {% else %}
-  <svg role="img" class="icon--xxsmall"><title>Time:</title><use xlink:href="#clock-o"></use></svg>
   <span class="nowrap">{{post.start_datetime|date('g:i A')}}</span>
   {% if not post.multiday and post.end_datetime != post.start_datetime %}
     - <span class="nowrap">{{post.end_datetime|date('g:i A')}}</span>
-  {% endif %}
-{% endif %}
-
-{% if post.multiday %}
-  - {{post.end_date_formatted}}
-  {% if not post.all_day and post.end_datetime %}
-    <svg role="img" class="icon--xxsmall"><title>Time:</title><use xlink:href="#clock-o"></use></svg>
-    <span class="nowrap">{{post.end_datetime|date('g:i A')}}</span>
   {% endif %}
 {% endif %}

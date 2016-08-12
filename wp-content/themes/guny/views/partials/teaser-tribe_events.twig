@@ -3,14 +3,16 @@
 {% block classes %}c-card--subtitle-first{% endblock %}
 
 {% block sticker_content %}
-  {{post.start_date_formatted}}
+  {% if post.multiday %}
+    <span class="event-month-date">{{post.start_datetime|date('M j')}} -</span>
+    <span class="event-month-date">{{post.end_datetime|date('M j')}}</span>
+  {% else %}
+    {{post.start_date_formatted}}
+  {% endif %}
 {% endblock %}
 
 {% block subtitle %}
-  {% embed "partials/event-date.twig" %}
-    {% block startDate %}
-    {% endblock %}
-  {% endembed %}
+  {% include "partials/event-date.twig" %}
 {% endblock %}
 
 {% block tags %}

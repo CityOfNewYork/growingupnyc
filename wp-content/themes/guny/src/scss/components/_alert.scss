@@ -1,0 +1,18 @@
+// Alert Banner
+//
+// markup:
+// <div class="c-alert">
+// </div>
+//
+// Styleguide 9
+.c-alert {
+  background: $very-dark-gray;
+  color: $color-text-invert;
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
+  text-align: center;
+
+  p + p {
+    margin-top: 0;
+  }
+}

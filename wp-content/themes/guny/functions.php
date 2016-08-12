@@ -136,6 +136,9 @@ class GunySite extends TimberSite {
     $context['top_programs'] = Timber::get_widgets('top_programs_widgets');
     $context['top_events'] = $this->get_featured_events(3);
     $context['options'] = get_fields('options');
+    if (!empty($context['options']) && !empty($context['options']['current_banner'])) {
+      $context['options']['current_banner'] = new TimberPost($context['options']['current_banner']);
+    }
     $context['is_archive'] = is_archive();
     $context['current_url'] = strtok($_SERVER["REQUEST_URI"],'?');
     return $context;
@@ -442,3 +445,6 @@ require_once(get_template_directory() . '/includes/guny_facetwp.php');
 
 // Event filters
 require_once(get_template_directory() . '/includes/guny_filter_events.php');
+
+// Admin messages
+require_once(get_template_directory() . '/includes/guny_messages.php');

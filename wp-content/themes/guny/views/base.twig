@@ -145,6 +145,13 @@
           {{footer_widgets}}
         </div> <!-- /.o-container -->
       </footer> <!-- /.c-footer -->
+      {% if options.show_banner %}
+        <div class="c-alert" data-cookie="{{options.current_banner.slug}}">
+          <div class="o-container">
+            {{options.current_banner.get_field('banner_content')}}
+          </div>
+        </div>
+      {% endif %}
       <a class="o-offcanvas__overlay" data-toggle="offcanvas-ages" aria-hidden="true"></a>
     </div> <!-- /.o-offcanvas__main -->
   </div> <!-- /.o-offcanvas -->

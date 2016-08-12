@@ -58,3 +58,12 @@ function guny_mce_buttons_3( $buttons ) {
   return $buttons;
 }
 add_filter( 'mce_buttons_3', 'guny_mce_buttons_3' );
+
+/**
+* Remove buttons from the basic ACF toolbar
+*/
+function guny_acf_toolbars( $toolbars ) {
+  $toolbars['Basic'][1] = array( 'italic', 'link', 'unlink' );
+  return $toolbars;
+}
+add_filter( 'acf/fields/wysiwyg/toolbars' , 'guny_acf_toolbars'  );

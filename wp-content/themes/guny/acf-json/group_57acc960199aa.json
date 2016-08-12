@@ -19,22 +19,34 @@
             "default_value": 0
         },
         {
-            "key": "field_57acc96b4cedc",
-            "label": "Banner Message",
-            "name": "banner_message",
-            "type": "wysiwyg",
+            "key": "field_57ae0b16d3897",
+            "label": "Current Banner",
+            "name": "current_banner",
+            "type": "post_object",
             "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_57acc9f64cedd",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "basic",
-            "media_upload": 0
+            "post_type": [
+                "banner"
+            ],
+            "taxonomy": [],
+            "allow_null": 1,
+            "multiple": 0,
+            "return_format": "id",
+            "ui": 1
         }
     ],
     "location": [
@@ -54,5 +66,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1470942583
+    "modified": 1471032837
 }

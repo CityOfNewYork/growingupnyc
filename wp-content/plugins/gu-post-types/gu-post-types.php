@@ -81,6 +81,33 @@ class GUPostTypes {
         )
       )
     );
+
+    register_post_type(
+      'banner',
+      array(
+        'labels' => array(
+          'name' => 'Banners',
+          'singular_name' => 'Banner',
+          'add_new_item' => 'Add New Banner',
+          'edit_item' => 'Edit Banner',
+          'new_item' => 'New Banner',
+          'view_item' => 'View Banner',
+          'search_items' => 'Search Banners',
+          'not_found' => 'No banners found',
+          'not_found_in_trash' => 'No banners found in trash',
+          'all_items' => 'All Banners',
+          'archives' => 'Banner Archives',
+          'insert_into_item' => 'Insert into banner',
+          'uploaded_to_this_item' => 'Uploaded to this banner'
+        ),
+        'public' => true,
+        'menu_position' => 23,
+        'menu_icon' => 'dashicons-megaphone',
+        'supports' => array( 'title' ),
+        'has_archive' => false,
+        'rewrite' => false
+      )
+    );
   }
 
   function create_taxonomies() {

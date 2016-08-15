@@ -10,10 +10,9 @@
 <header class="c-hero c-hero--large c-hero--long-text">
   <div class="o-container">
     <h1 class="c-hero__title--long">
-      {% set category = post.terms('programs_cat')|first %}
-      {% if category %}
+      {% if post.category %}
       <span class="c-hero__sticker sticker">
-        <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{category.slug}}"></use></svg>
+        <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{post.category.slug}}"></use></svg>
       </span>
       {% endif %}
       {{post.title}}
@@ -96,6 +95,21 @@
       <h2>How Can I Get Help?</h2>
       {{post.get_field('get_help')}}
     </section> <!-- /.o-content-container-text -->
+  {% endif %}
+  {% if post.related_posts %}
+  <div class="o-content-container c-block-list c-block-list--shade">
+    <h2>Other {{post.category.name}} Programs</h2>
+    <div class="c-block-list__inner">
+      {% for program in post.related_posts %}
+        <div class="c-block-list__item">
+          {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] with {post: program} %}
+        </div> <!-- /.c-block-list__item -->
+      {% endfor %}
+    </div> <!-- /.c-block-list__inner -->
+    <div class="text-center">
+      <a href="/programs" class="button--outline button--outline--gray">See all programs</a>
+    </div>
+  </div>
   {% endif %}
   </div> <!-- /.o-article -->
 </article> <!-- /.o-container -->

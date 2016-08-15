@@ -8,12 +8,12 @@
 $context = Timber::get_context();
 $post = Timber::get_post();
 
-if ($post->post_type == 'age') {
+if ( $post->post_type == 'age' ) {
   $age_groups = $post->terms('age_group');
   if( $age_groups ) {
     $post->age_group = $age_groups[0];
   }
-  $upcoming_events = GunySite::get_featured_events(3, array(
+  $upcoming_events = GunySite::get_featured_events( 3, array(
     array(
       'taxonomy' => 'age_group',
       'field' => 'term_id',
@@ -33,6 +33,23 @@ if ($post->post_type == 'age') {
     $upcoming_events = array_merge($upcoming_events, $remaining_events);
   }
   $context['upcoming_events'] = $upcoming_events;
+} elseif ( $post->post_type == 'program' ) {
+  $programs_cat = $post->terms('programs_cat');
+  if ( $programs_cat ) {
+    $post->category = $programs_cat[0];
+    $post->related_posts = Timber::get_posts( array(
+      'post_type' => 'program',
+      'posts_per_page' => 3,
+      'post__not_in' => array($post->ID),
+      'tax_query' => array(
+        array(
+          'taxonomy' => 'programs_cat',
+          'field' => 'term_id',
+          'terms' => $post->category->ID
+        )
+      )
+    ) );
+  }
 }
 
 $templates = array( 'single-' . $post->ID . '.twig', 'single-' . $post->post_type . '.twig', 'single.twig' );

@@ -941,14 +941,18 @@ ol.o-inline {
   top: 0; }
 
 .c-alert {
+  display: none; }
+
+.js .c-alert.is-open {
   background: #fff;
   bottom: 0;
+  display: block;
   left: 0;
   padding: 10px 4px 0;
   position: fixed;
   text-align: center;
   width: 100%; }
-  .c-alert p + p {
+  .js .c-alert.is-open p + p {
     margin-top: 0; }
 
 .c-alert__banner {
@@ -962,6 +966,14 @@ ol.o-inline {
   @media screen and (min-width: 1024px) {
     .c-alert__banner {
       font-size: 1.3125rem; } }
+
+.c-alert__button {
+  color: #fff;
+  position: absolute;
+  right: 10px;
+  top: 10px; }
+  .c-alert__button:hover, .c-alert__button:focus {
+    color: #d9d9d9; }
 
 .arrow-pager {
   font-family: "museo-sans-rounded", sans-serif;

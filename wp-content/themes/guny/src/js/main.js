@@ -7,6 +7,7 @@ import stickyNav from './modules/stickyNav.js';
 import currentSection from './modules/currentSection.js';
 import staticColumn from './modules/staticColumn.js';
 import searchResultsHeader from './modules/searchResultsHeader.js';
+import alert from './modules/alert.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -18,7 +19,8 @@ function ready(fn) {
 
 function init() {
   globalSearch();
-  toggleOpen();
+  toggleOpen('is-open');
+  alert('is-open');
   offcanvas();
   accordion();
   overlay();

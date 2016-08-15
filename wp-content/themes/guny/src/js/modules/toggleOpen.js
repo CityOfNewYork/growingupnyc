@@ -4,6 +4,7 @@
  */
 
 import forEach from 'lodash/forEach';
+import dataset from './dataset.js';
 
 /**
  * Toggles an element open/closed.
@@ -23,12 +24,7 @@ export default function(openClass) {
   */
   if (toggleElems) {
     forEach(toggleElems, function(toggleElem) {
-      let targetElemSelector;
-      if (typeof toggleElem.dataset === 'undefined') {
-        targetElemSelector = toggleElem.getAttribute('data-toggle');
-      } else {
-        targetElemSelector = toggleElem.dataset.toggle;
-      }
+      const targetElemSelector = dataset(toggleElem, 'toggle');
       if (targetElemSelector) {
         const targetElem = document.getElementById(targetElemSelector);
         if (!targetElem) {

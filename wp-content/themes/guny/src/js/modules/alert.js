@@ -22,9 +22,22 @@ export default function(openClass) {
   /**
   * Make an alert visible
   * @param {object} alert - DOM node of the alert to display
+  * @param {object} siblingElem - DOM node of alert's closest sibling,
+  * which gets some extra padding to make room for the alert
   */
-  function displayAlert(alert) {
+  function displayAlert(alert, siblingElem) {
     alert.classList.add(openClass);
+    const alertHeight = alert.offsetHeight;
+    const currentPadding = parseInt(window.getComputedStyle(siblingElem).getPropertyValue('padding-bottom'), 10);
+    siblingElem.style.paddingBottom = (alertHeight + currentPadding) + 'px';
+  }
+
+  /**
+  * Remove extra padding from alert sibling
+  * @param {object} siblingElem - DOM node of alert sibling
+  */
+  function removeAlertPadding(siblingElem) {
+    siblingElem.style.paddingBottom = null;
   }
 
   /**
@@ -55,7 +68,8 @@ export default function(openClass) {
   if (alerts.length) {
     forEach(alerts, function(alert) {
       if (!checkAlertCookie(alert)) {
-        displayAlert(alert);
+        const alertSibling = alert.previousElementSibling;
+        displayAlert(alert, alertSibling);
 
         /**
         * Add event listener for 'changeOpenState'.
@@ -67,6 +81,7 @@ export default function(openClass) {
         alert.addEventListener('changeOpenState', function(event) {
           if (!event.detail) {
             addAlertCookie(alert);
+            removeAlertPadding(alertSibling);
           }
         });
       }

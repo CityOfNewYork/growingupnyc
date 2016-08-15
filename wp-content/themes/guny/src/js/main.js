@@ -20,12 +20,12 @@ function ready(fn) {
 function init() {
   globalSearch();
   toggleOpen('is-open');
+  alert('is-open');
   offcanvas();
   accordion();
   overlay();
   stickyNav();
   currentSection();
-  alert('is-open');
 
   // Homepage
   staticColumn();

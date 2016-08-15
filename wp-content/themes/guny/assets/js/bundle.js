@@ -99,12 +99,12 @@
 	function init() {
 	  (0, _globalSearch2.default)();
 	  (0, _toggleOpen2.default)('is-open');
+	  (0, _alert2.default)('is-open');
 	  (0, _offcanvas2.default)();
 	  (0, _accordion2.default)();
 	  (0, _overlay2.default)();
 	  (0, _stickyNav2.default)();
 	  (0, _currentSection2.default)();
-	  (0, _alert2.default)('is-open');
 
 	  // Homepage
 	  (0, _staticColumn2.default)();
@@ -1587,9 +1587,22 @@
 	  /**
 	  * Make an alert visible
 	  * @param {object} alert - DOM node of the alert to display
+	  * @param {object} siblingElem - DOM node of alert's closest sibling,
+	  * which gets some extra padding to make room for the alert
 	  */
-	  function displayAlert(alert) {
+	  function displayAlert(alert, siblingElem) {
 	    alert.classList.add(openClass);
+	    var alertHeight = alert.offsetHeight;
+	    var currentPadding = parseInt(window.getComputedStyle(siblingElem).getPropertyValue('padding-bottom'), 10);
+	    siblingElem.style.paddingBottom = alertHeight + currentPadding + 'px';
+	  }
+
+	  /**
+	  * Remove extra padding from alert sibling
+	  * @param {object} siblingElem - DOM node of alert sibling
+	  */
+	  function removeAlertPadding(siblingElem) {
+	    siblingElem.style.paddingBottom = null;
 	  }
 
 	  /**
@@ -1620,20 +1633,24 @@
 	  if (alerts.length) {
 	    (0, _forEach2.default)(alerts, function (alert) {
 	      if (!checkAlertCookie(alert)) {
-	        displayAlert(alert);
+	        (function () {
+	          var alertSibling = alert.previousElementSibling;
+	          displayAlert(alert, alertSibling);
 
-	        /**
-	        * Add event listener for 'changeOpenState'.
-	        * The value of event.detail indicates whether the open state is true
-	        * (i.e. the alert is visible).
-	        * @function
-	        * @param {object} event - The event object
-	        */
-	        alert.addEventListener('changeOpenState', function (event) {
-	          if (!event.detail) {
-	            addAlertCookie(alert);
-	          }
-	        });
+	          /**
+	          * Add event listener for 'changeOpenState'.
+	          * The value of event.detail indicates whether the open state is true
+	          * (i.e. the alert is visible).
+	          * @function
+	          * @param {object} event - The event object
+	          */
+	          alert.addEventListener('changeOpenState', function (event) {
+	            if (!event.detail) {
+	              addAlertCookie(alert);
+	              removeAlertPadding(alertSibling);
+	            }
+	          });
+	        })();
 	      }
 	    });
 	  }

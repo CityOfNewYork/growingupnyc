@@ -147,8 +147,10 @@
       </footer> <!-- /.c-footer -->
       {% if options.show_banner %}
         <div class="c-alert" data-cookie="{{options.current_banner.slug}}">
-          <div class="o-container">
-            {{options.current_banner.get_field('banner_content')}}
+          <div class="c-alert__banner">
+            <div class="o-container">
+              {{options.current_banner.get_field('banner_content')}}
+            </div>
           </div>
         </div>
       {% endif %}

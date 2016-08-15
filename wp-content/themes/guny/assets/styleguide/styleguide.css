@@ -940,6 +940,29 @@ ol.o-inline {
   position: fixed;
   top: 0; }
 
+.c-alert {
+  background: #fff;
+  bottom: 0;
+  left: 0;
+  padding: 10px 4px 0;
+  position: fixed;
+  text-align: center;
+  width: 100%; }
+  .c-alert p + p {
+    margin-top: 0; }
+
+.c-alert__banner {
+  background: #333;
+  border-radius: 3px 3px 0 0;
+  color: #fff;
+  font-family: "museo-sans-rounded", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 900;
+  padding: 25px 0; }
+  @media screen and (min-width: 1024px) {
+    .c-alert__banner {
+      font-size: 1.3125rem; } }
+
 .arrow-pager {
   font-family: "museo-sans-rounded", sans-serif;
   font-weight: 900;

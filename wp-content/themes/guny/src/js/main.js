@@ -5,6 +5,7 @@ import offcanvas from './modules/offcanvas.js';
 import overlay from './modules/overlay.js';
 import stickyNav from './modules/stickyNav.js';
 import currentSection from './modules/currentSection.js';
+import parallax from './modules/parallax.js';
 import staticColumn from './modules/staticColumn.js';
 import searchResultsHeader from './modules/searchResultsHeader.js';
 
@@ -22,14 +23,13 @@ function init() {
   offcanvas();
   accordion();
   overlay();
-  stickyNav();
-  currentSection();
-
-  // Homepage
-  staticColumn();
-
   // Search results page
   searchResultsHeader();
+  // Homepage
+  staticColumn();
+  parallax();
+  stickyNav();
+  currentSection();
 }
 
 ready(init);

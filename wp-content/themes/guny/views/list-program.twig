@@ -7,12 +7,14 @@
 {% endblock %}
 
 {% block hero %}
-<header class="c-hero u-lg-gutter">
-  <div class="o-container">
-    <h1 class="c-hero__title">{{options.program_landing_title}}</h1>
-    <p class="c-hero__tagline">{{options.program_landing_tagline}}</p>
-  </div>
-</header>
+<div class="js-parallax">
+  <header class="c-hero js-parallax-content">
+    <div class="o-container js-parallax-text">
+      <h1 class="c-hero__title">{{options.program_landing_title}}</h1>
+      <p class="c-hero__tagline">{{options.program_landing_tagline}}</p>
+    </div>
+  </header>
+</div>
 {% endblock %}
 
 {% block list_sidebar %}

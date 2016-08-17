@@ -46,43 +46,47 @@
 
 	'use strict';
 
-	var _globalSearch = __webpack_require__(43);
+	var _globalSearch = __webpack_require__(45);
 
 	var _globalSearch2 = _interopRequireDefault(_globalSearch);
 
-	var _toggleOpen = __webpack_require__(50);
+	var _toggleOpen = __webpack_require__(53);
 
 	var _toggleOpen2 = _interopRequireDefault(_toggleOpen);
 
-	var _accordion = __webpack_require__(38);
+	var _accordion = __webpack_require__(40);
 
 	var _accordion2 = _interopRequireDefault(_accordion);
 
-	var _offcanvas = __webpack_require__(44);
+	var _offcanvas = __webpack_require__(46);
 
 	var _offcanvas2 = _interopRequireDefault(_offcanvas);
 
-	var _overlay = __webpack_require__(45);
+	var _overlay = __webpack_require__(47);
 
 	var _overlay2 = _interopRequireDefault(_overlay);
 
-	var _stickyNav = __webpack_require__(49);
+	var _stickyNav = __webpack_require__(52);
 
 	var _stickyNav2 = _interopRequireDefault(_stickyNav);
 
-	var _currentSection = __webpack_require__(41);
+	var _currentSection = __webpack_require__(43);
 
 	var _currentSection2 = _interopRequireDefault(_currentSection);
 
-	var _staticColumn = __webpack_require__(48);
+	var _parallax = __webpack_require__(48);
+
+	var _parallax2 = _interopRequireDefault(_parallax);
+
+	var _staticColumn = __webpack_require__(51);
 
 	var _staticColumn2 = _interopRequireDefault(_staticColumn);
 
-	var _searchResultsHeader = __webpack_require__(47);
+	var _searchResultsHeader = __webpack_require__(50);
 
 	var _searchResultsHeader2 = _interopRequireDefault(_searchResultsHeader);
 
-	var _alert = __webpack_require__(39);
+	var _alert = __webpack_require__(41);
 
 	var _alert2 = _interopRequireDefault(_alert);
 
@@ -103,14 +107,13 @@
 	  (0, _offcanvas2.default)();
 	  (0, _accordion2.default)();
 	  (0, _overlay2.default)();
-	  (0, _stickyNav2.default)();
-	  (0, _currentSection2.default)();
-
-	  // Homepage
-	  (0, _staticColumn2.default)();
-
 	  // Search results page
 	  (0, _searchResultsHeader2.default)();
+	  // Homepage
+	  (0, _staticColumn2.default)();
+	  (0, _parallax2.default)();
+	  (0, _stickyNav2.default)();
+	  (0, _currentSection2.default)();
 	}
 
 	ready(init);
@@ -122,7 +125,7 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {var checkGlobal = __webpack_require__(75);
+	/* WEBPACK VAR INJECTION */(function(global) {var checkGlobal = __webpack_require__(78);
 
 	/** Detect free variable `global` from Node.js. */
 	var freeGlobal = checkGlobal(typeof global == 'object' && global);
@@ -178,9 +181,9 @@
 /* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayEach = __webpack_require__(59),
-	    baseEach = __webpack_require__(61),
-	    baseIteratee = __webpack_require__(68),
+	var arrayEach = __webpack_require__(62),
+	    baseEach = __webpack_require__(64),
+	    baseIteratee = __webpack_require__(71),
 	    isArray = __webpack_require__(2);
 
 	/**
@@ -262,8 +265,8 @@
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsNative = __webpack_require__(67),
-	    getValue = __webpack_require__(85);
+	var baseIsNative = __webpack_require__(70),
+	    getValue = __webpack_require__(88);
 
 	/**
 	 * Gets the native function at `key` of `object`.
@@ -320,11 +323,11 @@
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var listCacheClear = __webpack_require__(96),
-	    listCacheDelete = __webpack_require__(97),
-	    listCacheGet = __webpack_require__(98),
-	    listCacheHas = __webpack_require__(99),
-	    listCacheSet = __webpack_require__(100);
+	var listCacheClear = __webpack_require__(99),
+	    listCacheDelete = __webpack_require__(100),
+	    listCacheGet = __webpack_require__(101),
+	    listCacheHas = __webpack_require__(102),
+	    listCacheSet = __webpack_require__(103);
 
 	/**
 	 * Creates an list cache object.
@@ -358,7 +361,7 @@
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var eq = __webpack_require__(117);
+	var eq = __webpack_require__(119);
 
 	/**
 	 * Gets the index at which the `key` is found in `array` of key-value pairs.
@@ -385,7 +388,7 @@
 /* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isKeyable = __webpack_require__(93);
+	var isKeyable = __webpack_require__(96);
 
 	/**
 	 * Gets the data for `map`.
@@ -576,11 +579,11 @@
 /* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var mapCacheClear = __webpack_require__(101),
-	    mapCacheDelete = __webpack_require__(102),
-	    mapCacheGet = __webpack_require__(103),
-	    mapCacheHas = __webpack_require__(104),
-	    mapCacheSet = __webpack_require__(105);
+	var mapCacheClear = __webpack_require__(104),
+	    mapCacheDelete = __webpack_require__(105),
+	    mapCacheGet = __webpack_require__(106),
+	    mapCacheHas = __webpack_require__(107),
+	    mapCacheSet = __webpack_require__(108);
 
 	/**
 	 * Creates a map cache object to store key-value pairs.
@@ -614,7 +617,7 @@
 /* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getLength = __webpack_require__(81),
+	var getLength = __webpack_require__(84),
 	    isFunction = __webpack_require__(18),
 	    isLength = __webpack_require__(13);
 
@@ -703,12 +706,12 @@
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseHas = __webpack_require__(25),
-	    baseKeys = __webpack_require__(69),
-	    indexKeys = __webpack_require__(92),
+	var baseHas = __webpack_require__(27),
+	    baseKeys = __webpack_require__(72),
+	    indexKeys = __webpack_require__(95),
 	    isArrayLike = __webpack_require__(17),
-	    isIndex = __webpack_require__(31),
-	    isPrototype = __webpack_require__(95);
+	    isIndex = __webpack_require__(33),
+	    isPrototype = __webpack_require__(98);
 
 	/**
 	 * Creates an array of the own enumerable property names of `object`.
@@ -763,6 +766,78 @@
 
 /***/ },
 /* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var debounce = __webpack_require__(37),
+	    isObject = __webpack_require__(4);
+
+	/** Used as the `TypeError` message for "Functions" methods. */
+	var FUNC_ERROR_TEXT = 'Expected a function';
+
+	/**
+	 * Creates a throttled function that only invokes `func` at most once per
+	 * every `wait` milliseconds. The throttled function comes with a `cancel`
+	 * method to cancel delayed `func` invocations and a `flush` method to
+	 * immediately invoke them. Provide an options object to indicate whether
+	 * `func` should be invoked on the leading and/or trailing edge of the `wait`
+	 * timeout. The `func` is invoked with the last arguments provided to the
+	 * throttled function. Subsequent calls to the throttled function return the
+	 * result of the last `func` invocation.
+	 *
+	 * **Note:** If `leading` and `trailing` options are `true`, `func` is
+	 * invoked on the trailing edge of the timeout only if the throttled function
+	 * is invoked more than once during the `wait` timeout.
+	 *
+	 * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+	 * for details over the differences between `_.throttle` and `_.debounce`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Function
+	 * @param {Function} func The function to throttle.
+	 * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
+	 * @param {Object} [options={}] The options object.
+	 * @param {boolean} [options.leading=true]
+	 *  Specify invoking on the leading edge of the timeout.
+	 * @param {boolean} [options.trailing=true]
+	 *  Specify invoking on the trailing edge of the timeout.
+	 * @returns {Function} Returns the new throttled function.
+	 * @example
+	 *
+	 * // Avoid excessively updating the position while scrolling.
+	 * jQuery(window).on('scroll', _.throttle(updatePosition, 100));
+	 *
+	 * // Invoke `renewToken` when the click event is fired, but not more than once every 5 minutes.
+	 * var throttled = _.throttle(renewToken, 300000, { 'trailing': false });
+	 * jQuery(element).on('click', throttled);
+	 *
+	 * // Cancel the trailing throttled invocation.
+	 * jQuery(window).on('popstate', throttled.cancel);
+	 */
+	function throttle(func, wait, options) {
+	  var leading = true,
+	      trailing = true;
+
+	  if (typeof func != 'function') {
+	    throw new TypeError(FUNC_ERROR_TEXT);
+	  }
+	  if (isObject(options)) {
+	    leading = 'leading' in options ? !!options.leading : leading;
+	    trailing = 'trailing' in options ? !!options.trailing : trailing;
+	  }
+	  return debounce(func, wait, {
+	    'leading': leading,
+	    'maxWait': wait,
+	    'trailing': trailing
+	  });
+	}
+
+	module.exports = throttle;
+
+
+/***/ },
+/* 21 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -779,7 +854,29 @@
 	};
 
 /***/ },
-/* 21 */
+/* 22 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function (elem, eventType) {
+	  var event = void 0;
+	  if (document.createEvent) {
+	    event = new Event(eventType);
+	    elem.dispatchEvent(event);
+	  } else {
+	    event = document.createEventObject();
+	    event.eventType = eventType;
+	    elem.fireEvent('on' + eventType, event);
+	  }
+	};
+
+/***/ },
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(5),
@@ -792,15 +889,15 @@
 
 
 /***/ },
-/* 22 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ListCache = __webpack_require__(7),
-	    stackClear = __webpack_require__(110),
-	    stackDelete = __webpack_require__(111),
-	    stackGet = __webpack_require__(112),
-	    stackHas = __webpack_require__(113),
-	    stackSet = __webpack_require__(114);
+	    stackClear = __webpack_require__(113),
+	    stackDelete = __webpack_require__(114),
+	    stackGet = __webpack_require__(115),
+	    stackHas = __webpack_require__(116),
+	    stackSet = __webpack_require__(117);
 
 	/**
 	 * Creates a stack cache object to store key-value pairs.
@@ -824,7 +921,7 @@
 
 
 /***/ },
-/* 23 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var root = __webpack_require__(1);
@@ -836,10 +933,10 @@
 
 
 /***/ },
-/* 24 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var castPath = __webpack_require__(28),
+	var castPath = __webpack_require__(30),
 	    isKey = __webpack_require__(10),
 	    toKey = __webpack_require__(12);
 
@@ -867,10 +964,10 @@
 
 
 /***/ },
-/* 25 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getPrototype = __webpack_require__(83);
+	var getPrototype = __webpack_require__(86);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -899,10 +996,10 @@
 
 
 /***/ },
-/* 26 */
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsEqualDeep = __webpack_require__(65),
+	var baseIsEqualDeep = __webpack_require__(68),
 	    isObject = __webpack_require__(4),
 	    isObjectLike = __webpack_require__(6);
 
@@ -935,7 +1032,7 @@
 
 
 /***/ },
-/* 27 */
+/* 29 */
 /***/ function(module, exports) {
 
 	/**
@@ -955,11 +1052,11 @@
 
 
 /***/ },
-/* 28 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isArray = __webpack_require__(2),
-	    stringToPath = __webpack_require__(115);
+	    stringToPath = __webpack_require__(118);
 
 	/**
 	 * Casts `value` to a path array if it's not one.
@@ -976,11 +1073,11 @@
 
 
 /***/ },
-/* 29 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var SetCache = __webpack_require__(56),
-	    arraySome = __webpack_require__(60);
+	var SetCache = __webpack_require__(59),
+	    arraySome = __webpack_require__(63);
 
 	/** Used to compose bitmasks for comparison styles. */
 	var UNORDERED_COMPARE_FLAG = 1,
@@ -1063,7 +1160,7 @@
 
 
 /***/ },
-/* 30 */
+/* 32 */
 /***/ function(module, exports) {
 
 	/**
@@ -1089,7 +1186,7 @@
 
 
 /***/ },
-/* 31 */
+/* 33 */
 /***/ function(module, exports) {
 
 	/** Used as references for various `Number` constants. */
@@ -1117,7 +1214,7 @@
 
 
 /***/ },
-/* 32 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isObject = __webpack_require__(4);
@@ -1138,7 +1235,7 @@
 
 
 /***/ },
-/* 33 */
+/* 35 */
 /***/ function(module, exports) {
 
 	/**
@@ -1164,7 +1261,7 @@
 
 
 /***/ },
-/* 34 */
+/* 36 */
 /***/ function(module, exports) {
 
 	/** Used to resolve the decompiled source of functions. */
@@ -1193,10 +1290,197 @@
 
 
 /***/ },
-/* 35 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArrayLikeObject = __webpack_require__(121);
+	var isObject = __webpack_require__(4),
+	    now = __webpack_require__(126),
+	    toNumber = __webpack_require__(128);
+
+	/** Used as the `TypeError` message for "Functions" methods. */
+	var FUNC_ERROR_TEXT = 'Expected a function';
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeMax = Math.max,
+	    nativeMin = Math.min;
+
+	/**
+	 * Creates a debounced function that delays invoking `func` until after `wait`
+	 * milliseconds have elapsed since the last time the debounced function was
+	 * invoked. The debounced function comes with a `cancel` method to cancel
+	 * delayed `func` invocations and a `flush` method to immediately invoke them.
+	 * Provide an options object to indicate whether `func` should be invoked on
+	 * the leading and/or trailing edge of the `wait` timeout. The `func` is invoked
+	 * with the last arguments provided to the debounced function. Subsequent calls
+	 * to the debounced function return the result of the last `func` invocation.
+	 *
+	 * **Note:** If `leading` and `trailing` options are `true`, `func` is invoked
+	 * on the trailing edge of the timeout only if the debounced function is
+	 * invoked more than once during the `wait` timeout.
+	 *
+	 * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+	 * for details over the differences between `_.debounce` and `_.throttle`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Function
+	 * @param {Function} func The function to debounce.
+	 * @param {number} [wait=0] The number of milliseconds to delay.
+	 * @param {Object} [options={}] The options object.
+	 * @param {boolean} [options.leading=false]
+	 *  Specify invoking on the leading edge of the timeout.
+	 * @param {number} [options.maxWait]
+	 *  The maximum time `func` is allowed to be delayed before it's invoked.
+	 * @param {boolean} [options.trailing=true]
+	 *  Specify invoking on the trailing edge of the timeout.
+	 * @returns {Function} Returns the new debounced function.
+	 * @example
+	 *
+	 * // Avoid costly calculations while the window size is in flux.
+	 * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
+	 *
+	 * // Invoke `sendMail` when clicked, debouncing subsequent calls.
+	 * jQuery(element).on('click', _.debounce(sendMail, 300, {
+	 *   'leading': true,
+	 *   'trailing': false
+	 * }));
+	 *
+	 * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
+	 * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
+	 * var source = new EventSource('/stream');
+	 * jQuery(source).on('message', debounced);
+	 *
+	 * // Cancel the trailing debounced invocation.
+	 * jQuery(window).on('popstate', debounced.cancel);
+	 */
+	function debounce(func, wait, options) {
+	  var lastArgs,
+	      lastThis,
+	      maxWait,
+	      result,
+	      timerId,
+	      lastCallTime,
+	      lastInvokeTime = 0,
+	      leading = false,
+	      maxing = false,
+	      trailing = true;
+
+	  if (typeof func != 'function') {
+	    throw new TypeError(FUNC_ERROR_TEXT);
+	  }
+	  wait = toNumber(wait) || 0;
+	  if (isObject(options)) {
+	    leading = !!options.leading;
+	    maxing = 'maxWait' in options;
+	    maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
+	    trailing = 'trailing' in options ? !!options.trailing : trailing;
+	  }
+
+	  function invokeFunc(time) {
+	    var args = lastArgs,
+	        thisArg = lastThis;
+
+	    lastArgs = lastThis = undefined;
+	    lastInvokeTime = time;
+	    result = func.apply(thisArg, args);
+	    return result;
+	  }
+
+	  function leadingEdge(time) {
+	    // Reset any `maxWait` timer.
+	    lastInvokeTime = time;
+	    // Start the timer for the trailing edge.
+	    timerId = setTimeout(timerExpired, wait);
+	    // Invoke the leading edge.
+	    return leading ? invokeFunc(time) : result;
+	  }
+
+	  function remainingWait(time) {
+	    var timeSinceLastCall = time - lastCallTime,
+	        timeSinceLastInvoke = time - lastInvokeTime,
+	        result = wait - timeSinceLastCall;
+
+	    return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
+	  }
+
+	  function shouldInvoke(time) {
+	    var timeSinceLastCall = time - lastCallTime,
+	        timeSinceLastInvoke = time - lastInvokeTime;
+
+	    // Either this is the first call, activity has stopped and we're at the
+	    // trailing edge, the system time has gone backwards and we're treating
+	    // it as the trailing edge, or we've hit the `maxWait` limit.
+	    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
+	      (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
+	  }
+
+	  function timerExpired() {
+	    var time = now();
+	    if (shouldInvoke(time)) {
+	      return trailingEdge(time);
+	    }
+	    // Restart the timer.
+	    timerId = setTimeout(timerExpired, remainingWait(time));
+	  }
+
+	  function trailingEdge(time) {
+	    timerId = undefined;
+
+	    // Only invoke if we have `lastArgs` which means `func` has been
+	    // debounced at least once.
+	    if (trailing && lastArgs) {
+	      return invokeFunc(time);
+	    }
+	    lastArgs = lastThis = undefined;
+	    return result;
+	  }
+
+	  function cancel() {
+	    lastInvokeTime = 0;
+	    lastArgs = lastCallTime = lastThis = timerId = undefined;
+	  }
+
+	  function flush() {
+	    return timerId === undefined ? result : trailingEdge(now());
+	  }
+
+	  function debounced() {
+	    var time = now(),
+	        isInvoking = shouldInvoke(time);
+
+	    lastArgs = arguments;
+	    lastThis = this;
+	    lastCallTime = time;
+
+	    if (isInvoking) {
+	      if (timerId === undefined) {
+	        return leadingEdge(lastCallTime);
+	      }
+	      if (maxing) {
+	        // Handle invocations in a tight loop.
+	        timerId = setTimeout(timerExpired, wait);
+	        return invokeFunc(lastCallTime);
+	      }
+	    }
+	    if (timerId === undefined) {
+	      timerId = setTimeout(timerExpired, wait);
+	    }
+	    return result;
+	  }
+	  debounced.cancel = cancel;
+	  debounced.flush = flush;
+	  return debounced;
+	}
+
+	module.exports = debounce;
+
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isArrayLikeObject = __webpack_require__(123);
 
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]';
@@ -1245,7 +1529,7 @@
 
 
 /***/ },
-/* 36 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isArray = __webpack_require__(2),
@@ -1291,79 +1575,7 @@
 
 
 /***/ },
-/* 37 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var debounce = __webpack_require__(116),
-	    isObject = __webpack_require__(4);
-
-	/** Used as the `TypeError` message for "Functions" methods. */
-	var FUNC_ERROR_TEXT = 'Expected a function';
-
-	/**
-	 * Creates a throttled function that only invokes `func` at most once per
-	 * every `wait` milliseconds. The throttled function comes with a `cancel`
-	 * method to cancel delayed `func` invocations and a `flush` method to
-	 * immediately invoke them. Provide an options object to indicate whether
-	 * `func` should be invoked on the leading and/or trailing edge of the `wait`
-	 * timeout. The `func` is invoked with the last arguments provided to the
-	 * throttled function. Subsequent calls to the throttled function return the
-	 * result of the last `func` invocation.
-	 *
-	 * **Note:** If `leading` and `trailing` options are `true`, `func` is
-	 * invoked on the trailing edge of the timeout only if the throttled function
-	 * is invoked more than once during the `wait` timeout.
-	 *
-	 * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
-	 * for details over the differences between `_.throttle` and `_.debounce`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.1.0
-	 * @category Function
-	 * @param {Function} func The function to throttle.
-	 * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
-	 * @param {Object} [options={}] The options object.
-	 * @param {boolean} [options.leading=true]
-	 *  Specify invoking on the leading edge of the timeout.
-	 * @param {boolean} [options.trailing=true]
-	 *  Specify invoking on the trailing edge of the timeout.
-	 * @returns {Function} Returns the new throttled function.
-	 * @example
-	 *
-	 * // Avoid excessively updating the position while scrolling.
-	 * jQuery(window).on('scroll', _.throttle(updatePosition, 100));
-	 *
-	 * // Invoke `renewToken` when the click event is fired, but not more than once every 5 minutes.
-	 * var throttled = _.throttle(renewToken, 300000, { 'trailing': false });
-	 * jQuery(element).on('click', throttled);
-	 *
-	 * // Cancel the trailing throttled invocation.
-	 * jQuery(window).on('popstate', throttled.cancel);
-	 */
-	function throttle(func, wait, options) {
-	  var leading = true,
-	      trailing = true;
-
-	  if (typeof func != 'function') {
-	    throw new TypeError(FUNC_ERROR_TEXT);
-	  }
-	  if (isObject(options)) {
-	    leading = 'leading' in options ? !!options.leading : leading;
-	    trailing = 'trailing' in options ? !!options.trailing : trailing;
-	  }
-	  return debounce(func, wait, {
-	    'leading': leading,
-	    'maxWait': wait,
-	    'trailing': trailing
-	  });
-	}
-
-	module.exports = throttle;
-
-
-/***/ },
-/* 38 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -1570,7 +1782,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ },
-/* 39 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1660,26 +1872,26 @@
 
 	var _forEach2 = _interopRequireDefault(_forEach);
 
-	var _readCookie = __webpack_require__(46);
+	var _readCookie = __webpack_require__(49);
 
 	var _readCookie2 = _interopRequireDefault(_readCookie);
 
-	var _dataset = __webpack_require__(20);
+	var _dataset = __webpack_require__(21);
 
 	var _dataset2 = _interopRequireDefault(_dataset);
 
-	var _createCookie = __webpack_require__(40);
+	var _createCookie = __webpack_require__(42);
 
 	var _createCookie2 = _interopRequireDefault(_createCookie);
 
-	var _getDomain = __webpack_require__(42);
+	var _getDomain = __webpack_require__(44);
 
 	var _getDomain2 = _interopRequireDefault(_getDomain);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 40 */
+/* 42 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1694,7 +1906,7 @@
 	};
 
 /***/ },
-/* 41 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1780,15 +1992,7 @@
 	        window.removeEventListener('scroll', scrollListener);
 	      }
 	    }, 100));
-	    var event = void 0;
-	    if (document.createEvent) {
-	      event = new Event('resize');
-	      window.dispatchEvent(event);
-	    } else {
-	      event = document.createEventObject();
-	      event.eventType = "resize";
-	      window.fireEvent("onresize", event);
-	    }
+	    (0, _dispatchEvent2.default)(window, 'resize');
 	  }
 
 	  var markers = document.querySelectorAll('.js-section');
@@ -1803,14 +2007,18 @@
 
 	var _forEach2 = _interopRequireDefault(_forEach);
 
-	var _throttle = __webpack_require__(37);
+	var _throttle = __webpack_require__(20);
 
 	var _throttle2 = _interopRequireDefault(_throttle);
+
+	var _dispatchEvent = __webpack_require__(22);
+
+	var _dispatchEvent2 = _interopRequireDefault(_dispatchEvent);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 42 */
+/* 44 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1838,7 +2046,7 @@
 	};
 
 /***/ },
-/* 43 */
+/* 45 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1876,7 +2084,7 @@
 	};
 
 /***/ },
-/* 44 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1917,7 +2125,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 45 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1961,7 +2169,186 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 46 */
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  /**
+	  * Get the scroll position
+	  * @return {integer} - Amount window has been scrolled
+	  */
+	  function scrollTop() {
+	    var supportPageOffset = window.pageYOffset !== undefined;
+	    var isCSS1Compat = (document.compatMode || "") === "CSS1Compat";
+	    return supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop;
+	  }
+
+	  /**
+	  * Initialize parallax container
+	  * @param {object} container - DOM node that wraps around the parallaxed elements
+	  */
+	  function initializeContainer(container) {
+	    container.classList.add('o-parallax');
+	  }
+
+	  /**
+	  * Remove modifications to parallax container
+	  * @param {object} container - DOM node that wraps around the parallaxed elements
+	  */
+	  function teardownContainer(container) {
+	    container.classList.remove('o-parallax');
+	    container.style.paddingTop = null;
+	  }
+
+	  /**
+	  * Initialize parallax base
+	  * @param {object} base - DOM node for the base parallax element
+	  * @param {integer} initialTop - The initial top position to set
+	  */
+	  function initializeBase(base, initialTop) {
+	    base.style.top = initialTop + 'px';
+	    base.classList.add('o-parallax__base');
+	  }
+
+	  /**
+	  * Remove modifications to parallax base
+	  * @param {object} base - DOM node for the base parallax element
+	  */
+	  function teardownBase(base) {
+	    base.style.top = null;
+	    base.style.height = null;
+	    base.classList.remove('o-parallax__base');
+	  }
+
+	  /**
+	  * Calculate hero offset
+	  * @param {object} elem - DOM node for the parallax element
+	  * @param {object} container - DOM node for the element's container
+	  */
+	  function calculateOffset(elem, container) {
+	    var offsetHeight = elem.offsetHeight;
+	    container.style.paddingTop = offsetHeight + 'px';
+	  }
+
+	  /**
+	  * Adjust the parallaxed element's height and position,
+	  * and the opacity of its children (the hero itself)
+	  * @param {object} base - The base (parallaxed) element
+	  * @param {integer} newHeight - The new height to set for base
+	  * @param {integer} newTop - The new top position to set for base
+	  */
+	  function repaintHero(base, newHeight, newTop) {
+	    base.style.height = newHeight + 'px';
+	    base.style.top = newTop + 'px';
+	  }
+
+	  /**
+	  * Adjust the element content's opacity and background position
+	  * @param {object} elem - The content element
+	  * @param {integer} scrollPos - The current scroll position
+	  * @param {float} opacity - The opacity value (between 0 and 1) to set
+	  */
+	  function repaintHeroContent(elem, scrollPos, opacity) {
+	    elem.style.opacity = opacity;
+	    if (window.matchMedia('(max-width:1023px)').matches) {
+	      var backgroundPosition = 0 - scrollPos;
+	      elem.style.backgroundPositionY = backgroundPosition + 'px';
+	    }
+	  }
+
+	  /**
+	  * Remove modifications to hero content
+	  * @param {object} elem - The content element
+	  */
+	  function teardownHeroContent(elem) {
+	    elem.style.opacity = null;
+	    elem.style.backgroundPositionY = null;
+	  }
+
+	  /**
+	  * Adjust the text content's top margin so that it appears to scroll upward
+	  * @param {object} content - DOM node for the inner content
+	  * @param {integer} scrollPos - The current scroll position
+	  */
+	  function repaintHeroText(content, scrollPos) {
+	    var newMargin = 0 - scrollPos;
+	    content.style.marginTop = newMargin + 'px';
+	  }
+
+	  /**
+	  * Remove modifications to hero text
+	  * @param {object} content - DOM node for the inner content
+	  */
+	  function teardownHeroText(content) {
+	    content.style.marginTop = null;
+	  }
+
+	  /**
+	  * Initialize parallax behavior
+	  * @param {object} parallaxBase - DOM element for the hero
+	  */
+	  function initialize(parallaxBase) {
+	    var parallaxContainer = parallaxBase.parentElement;
+	    var parallaxContent = parallaxBase.querySelector('.js-parallax-content');
+	    var parallaxText = parallaxBase.querySelector('.js-parallax-text');
+	    var baseHeight = parallaxBase.offsetHeight;
+	    var baseTop = parallaxBase.getBoundingClientRect().top;
+	    initializeContainer(parallaxContainer);
+	    initializeBase(parallaxBase, baseTop);
+
+	    var scrollListener = window.addEventListener('scroll', (0, _throttle2.default)(function () {
+	      var scrollPosition = scrollTop();
+	      var newHeight = baseHeight - scrollPosition < 0 ? 0 : baseHeight - scrollPosition;
+	      var newTop = baseTop - scrollPosition;
+	      var opacity = (newHeight + newTop) / (baseHeight + baseTop);
+	      opacity = opacity < 0 ? 0 : opacity;
+	      repaintHero(parallaxBase, newHeight, newTop);
+	      repaintHeroContent(parallaxContent, scrollPosition, opacity);
+	      repaintHeroText(parallaxText, scrollPosition);
+	      calculateOffset(parallaxBase, parallaxContainer);
+	    }, 16));
+
+	    var resizeListener = window.addEventListener('resize', (0, _debounce2.default)(function () {
+	      window.removeEventListener('scroll', scrollListener);
+	      window.removeEventListener('resize', resizeListener);
+	      teardownContainer(parallaxContainer);
+	      teardownBase(parallaxBase);
+	      teardownHeroContent(parallaxContent);
+	      teardownHeroText(parallaxText);
+	      initialize(parallaxBase);
+	    }, 100));
+
+	    (0, _dispatchEvent2.default)(window, 'scroll');
+	  }
+
+	  var parallaxBase = document.querySelector('.js-parallax');
+	  if (parallaxBase) {
+	    initialize(parallaxBase);
+	  }
+	};
+
+	var _throttle = __webpack_require__(20);
+
+	var _throttle2 = _interopRequireDefault(_throttle);
+
+	var _debounce = __webpack_require__(37);
+
+	var _debounce2 = _interopRequireDefault(_debounce);
+
+	var _dispatchEvent = __webpack_require__(22);
+
+	var _dispatchEvent2 = _interopRequireDefault(_dispatchEvent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 49 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1975,7 +2362,7 @@
 	};
 
 /***/ },
-/* 47 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -1995,7 +2382,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ },
-/* 48 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2064,7 +2451,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 49 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -2084,11 +2471,11 @@
 	  }
 	};
 
-	var _throttle = __webpack_require__(37);
+	var _throttle = __webpack_require__(20);
 
 	var _throttle2 = _interopRequireDefault(_throttle);
 
-	var _imagesready = __webpack_require__(51);
+	var _imagesready = __webpack_require__(54);
 
 	var _imagesready2 = _interopRequireDefault(_imagesready);
 
@@ -2274,7 +2661,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ },
-/* 50 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2342,14 +2729,14 @@
 
 	var _forEach2 = _interopRequireDefault(_forEach);
 
-	var _dataset = __webpack_require__(20);
+	var _dataset = __webpack_require__(21);
 
 	var _dataset2 = _interopRequireDefault(_dataset);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 51 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function($) {/* imagesready v0.2.2 - 2015-07-04T06:22:14.435Z - https://github.com/r-park/images-ready */
@@ -3017,7 +3404,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ },
-/* 52 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(5),
@@ -3030,14 +3417,14 @@
 
 
 /***/ },
-/* 53 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var hashClear = __webpack_require__(87),
-	    hashDelete = __webpack_require__(88),
-	    hashGet = __webpack_require__(89),
-	    hashHas = __webpack_require__(90),
-	    hashSet = __webpack_require__(91);
+	var hashClear = __webpack_require__(90),
+	    hashDelete = __webpack_require__(91),
+	    hashGet = __webpack_require__(92),
+	    hashHas = __webpack_require__(93),
+	    hashSet = __webpack_require__(94);
 
 	/**
 	 * Creates a hash object.
@@ -3068,7 +3455,7 @@
 
 
 /***/ },
-/* 54 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(5),
@@ -3081,7 +3468,7 @@
 
 
 /***/ },
-/* 55 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(5),
@@ -3094,12 +3481,12 @@
 
 
 /***/ },
-/* 56 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var MapCache = __webpack_require__(16),
-	    setCacheAdd = __webpack_require__(107),
-	    setCacheHas = __webpack_require__(108);
+	    setCacheAdd = __webpack_require__(110),
+	    setCacheHas = __webpack_require__(111);
 
 	/**
 	 *
@@ -3127,7 +3514,7 @@
 
 
 /***/ },
-/* 57 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var root = __webpack_require__(1);
@@ -3139,7 +3526,7 @@
 
 
 /***/ },
-/* 58 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(5),
@@ -3152,7 +3539,7 @@
 
 
 /***/ },
-/* 59 */
+/* 62 */
 /***/ function(module, exports) {
 
 	/**
@@ -3180,7 +3567,7 @@
 
 
 /***/ },
-/* 60 */
+/* 63 */
 /***/ function(module, exports) {
 
 	/**
@@ -3209,11 +3596,11 @@
 
 
 /***/ },
-/* 61 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseForOwn = __webpack_require__(63),
-	    createBaseEach = __webpack_require__(77);
+	var baseForOwn = __webpack_require__(66),
+	    createBaseEach = __webpack_require__(80);
 
 	/**
 	 * The base implementation of `_.forEach` without support for iteratee shorthands.
@@ -3229,10 +3616,10 @@
 
 
 /***/ },
-/* 62 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var createBaseFor = __webpack_require__(78);
+	var createBaseFor = __webpack_require__(81);
 
 	/**
 	 * The base implementation of `baseForOwn` which iterates over `object`
@@ -3251,10 +3638,10 @@
 
 
 /***/ },
-/* 63 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseFor = __webpack_require__(62),
+	var baseFor = __webpack_require__(65),
 	    keys = __webpack_require__(19);
 
 	/**
@@ -3273,7 +3660,7 @@
 
 
 /***/ },
-/* 64 */
+/* 67 */
 /***/ function(module, exports) {
 
 	/**
@@ -3292,17 +3679,17 @@
 
 
 /***/ },
-/* 65 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Stack = __webpack_require__(22),
-	    equalArrays = __webpack_require__(29),
-	    equalByTag = __webpack_require__(79),
-	    equalObjects = __webpack_require__(80),
-	    getTag = __webpack_require__(84),
+	var Stack = __webpack_require__(24),
+	    equalArrays = __webpack_require__(31),
+	    equalByTag = __webpack_require__(82),
+	    equalObjects = __webpack_require__(83),
+	    getTag = __webpack_require__(87),
 	    isArray = __webpack_require__(2),
-	    isHostObject = __webpack_require__(30),
-	    isTypedArray = __webpack_require__(122);
+	    isHostObject = __webpack_require__(32),
+	    isTypedArray = __webpack_require__(124);
 
 	/** Used to compose bitmasks for comparison styles. */
 	var PARTIAL_COMPARE_FLAG = 2;
@@ -3380,11 +3767,11 @@
 
 
 /***/ },
-/* 66 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Stack = __webpack_require__(22),
-	    baseIsEqual = __webpack_require__(26);
+	var Stack = __webpack_require__(24),
+	    baseIsEqual = __webpack_require__(28);
 
 	/** Used to compose bitmasks for comparison styles. */
 	var UNORDERED_COMPARE_FLAG = 1,
@@ -3448,14 +3835,14 @@
 
 
 /***/ },
-/* 67 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isFunction = __webpack_require__(18),
-	    isHostObject = __webpack_require__(30),
-	    isMasked = __webpack_require__(94),
+	    isHostObject = __webpack_require__(32),
+	    isMasked = __webpack_require__(97),
 	    isObject = __webpack_require__(4),
-	    toSource = __webpack_require__(34);
+	    toSource = __webpack_require__(36);
 
 	/**
 	 * Used to match `RegExp`
@@ -3501,14 +3888,14 @@
 
 
 /***/ },
-/* 68 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseMatches = __webpack_require__(70),
-	    baseMatchesProperty = __webpack_require__(71),
-	    identity = __webpack_require__(120),
+	var baseMatches = __webpack_require__(73),
+	    baseMatchesProperty = __webpack_require__(74),
+	    identity = __webpack_require__(122),
 	    isArray = __webpack_require__(2),
-	    property = __webpack_require__(125);
+	    property = __webpack_require__(127);
 
 	/**
 	 * The base implementation of `_.iteratee`.
@@ -3538,7 +3925,7 @@
 
 
 /***/ },
-/* 69 */
+/* 72 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -3560,12 +3947,12 @@
 
 
 /***/ },
-/* 70 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsMatch = __webpack_require__(66),
-	    getMatchData = __webpack_require__(82),
-	    matchesStrictComparable = __webpack_require__(33);
+	var baseIsMatch = __webpack_require__(69),
+	    getMatchData = __webpack_require__(85),
+	    matchesStrictComparable = __webpack_require__(35);
 
 	/**
 	 * The base implementation of `_.matches` which doesn't clone `source`.
@@ -3588,15 +3975,15 @@
 
 
 /***/ },
-/* 71 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsEqual = __webpack_require__(26),
-	    get = __webpack_require__(118),
-	    hasIn = __webpack_require__(119),
+	var baseIsEqual = __webpack_require__(28),
+	    get = __webpack_require__(120),
+	    hasIn = __webpack_require__(121),
 	    isKey = __webpack_require__(10),
-	    isStrictComparable = __webpack_require__(32),
-	    matchesStrictComparable = __webpack_require__(33),
+	    isStrictComparable = __webpack_require__(34),
+	    matchesStrictComparable = __webpack_require__(35),
 	    toKey = __webpack_require__(12);
 
 	/** Used to compose bitmasks for comparison styles. */
@@ -3627,10 +4014,10 @@
 
 
 /***/ },
-/* 72 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGet = __webpack_require__(24);
+	var baseGet = __webpack_require__(26);
 
 	/**
 	 * A specialized version of `baseProperty` which supports deep paths.
@@ -3649,7 +4036,7 @@
 
 
 /***/ },
-/* 73 */
+/* 76 */
 /***/ function(module, exports) {
 
 	/**
@@ -3675,10 +4062,10 @@
 
 
 /***/ },
-/* 74 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(23),
+	var Symbol = __webpack_require__(25),
 	    isSymbol = __webpack_require__(14);
 
 	/** Used as references for various `Number` constants. */
@@ -3712,7 +4099,7 @@
 
 
 /***/ },
-/* 75 */
+/* 78 */
 /***/ function(module, exports) {
 
 	/**
@@ -3730,7 +4117,7 @@
 
 
 /***/ },
-/* 76 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var root = __webpack_require__(1);
@@ -3742,7 +4129,7 @@
 
 
 /***/ },
-/* 77 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isArrayLike = __webpack_require__(17);
@@ -3780,7 +4167,7 @@
 
 
 /***/ },
-/* 78 */
+/* 81 */
 /***/ function(module, exports) {
 
 	/**
@@ -3811,14 +4198,14 @@
 
 
 /***/ },
-/* 79 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(23),
-	    Uint8Array = __webpack_require__(57),
-	    equalArrays = __webpack_require__(29),
-	    mapToArray = __webpack_require__(106),
-	    setToArray = __webpack_require__(109);
+	var Symbol = __webpack_require__(25),
+	    Uint8Array = __webpack_require__(60),
+	    equalArrays = __webpack_require__(31),
+	    mapToArray = __webpack_require__(109),
+	    setToArray = __webpack_require__(112);
 
 	/** Used to compose bitmasks for comparison styles. */
 	var UNORDERED_COMPARE_FLAG = 1,
@@ -3931,10 +4318,10 @@
 
 
 /***/ },
-/* 80 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseHas = __webpack_require__(25),
+	var baseHas = __webpack_require__(27),
 	    keys = __webpack_require__(19);
 
 	/** Used to compose bitmasks for comparison styles. */
@@ -4020,10 +4407,10 @@
 
 
 /***/ },
-/* 81 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseProperty = __webpack_require__(27);
+	var baseProperty = __webpack_require__(29);
 
 	/**
 	 * Gets the "length" property value of `object`.
@@ -4042,10 +4429,10 @@
 
 
 /***/ },
-/* 82 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isStrictComparable = __webpack_require__(32),
+	var isStrictComparable = __webpack_require__(34),
 	    keys = __webpack_require__(19);
 
 	/**
@@ -4072,7 +4459,7 @@
 
 
 /***/ },
-/* 83 */
+/* 86 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -4093,15 +4480,15 @@
 
 
 /***/ },
-/* 84 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var DataView = __webpack_require__(52),
-	    Map = __webpack_require__(21),
-	    Promise = __webpack_require__(54),
-	    Set = __webpack_require__(55),
-	    WeakMap = __webpack_require__(58),
-	    toSource = __webpack_require__(34);
+	var DataView = __webpack_require__(55),
+	    Map = __webpack_require__(23),
+	    Promise = __webpack_require__(57),
+	    Set = __webpack_require__(58),
+	    WeakMap = __webpack_require__(61),
+	    toSource = __webpack_require__(36);
 
 	/** `Object#toString` result references. */
 	var mapTag = '[object Map]',
@@ -4169,7 +4556,7 @@
 
 
 /***/ },
-/* 85 */
+/* 88 */
 /***/ function(module, exports) {
 
 	/**
@@ -4188,16 +4575,16 @@
 
 
 /***/ },
-/* 86 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var castPath = __webpack_require__(28),
-	    isArguments = __webpack_require__(35),
+	var castPath = __webpack_require__(30),
+	    isArguments = __webpack_require__(38),
 	    isArray = __webpack_require__(2),
-	    isIndex = __webpack_require__(31),
+	    isIndex = __webpack_require__(33),
 	    isKey = __webpack_require__(10),
 	    isLength = __webpack_require__(13),
-	    isString = __webpack_require__(36),
+	    isString = __webpack_require__(39),
 	    toKey = __webpack_require__(12);
 
 	/**
@@ -4235,7 +4622,7 @@
 
 
 /***/ },
-/* 87 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var nativeCreate = __webpack_require__(11);
@@ -4255,7 +4642,7 @@
 
 
 /***/ },
-/* 88 */
+/* 91 */
 /***/ function(module, exports) {
 
 	/**
@@ -4276,7 +4663,7 @@
 
 
 /***/ },
-/* 89 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var nativeCreate = __webpack_require__(11);
@@ -4312,7 +4699,7 @@
 
 
 /***/ },
-/* 90 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var nativeCreate = __webpack_require__(11);
@@ -4341,7 +4728,7 @@
 
 
 /***/ },
-/* 91 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var nativeCreate = __webpack_require__(11);
@@ -4369,14 +4756,14 @@
 
 
 /***/ },
-/* 92 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseTimes = __webpack_require__(73),
-	    isArguments = __webpack_require__(35),
+	var baseTimes = __webpack_require__(76),
+	    isArguments = __webpack_require__(38),
 	    isArray = __webpack_require__(2),
 	    isLength = __webpack_require__(13),
-	    isString = __webpack_require__(36);
+	    isString = __webpack_require__(39);
 
 	/**
 	 * Creates an array of index keys for `object` values of arrays,
@@ -4399,7 +4786,7 @@
 
 
 /***/ },
-/* 93 */
+/* 96 */
 /***/ function(module, exports) {
 
 	/**
@@ -4420,10 +4807,10 @@
 
 
 /***/ },
-/* 94 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var coreJsData = __webpack_require__(76);
+	var coreJsData = __webpack_require__(79);
 
 	/** Used to detect methods masquerading as native. */
 	var maskSrcKey = (function() {
@@ -4446,7 +4833,7 @@
 
 
 /***/ },
-/* 95 */
+/* 98 */
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -4470,7 +4857,7 @@
 
 
 /***/ },
-/* 96 */
+/* 99 */
 /***/ function(module, exports) {
 
 	/**
@@ -4488,7 +4875,7 @@
 
 
 /***/ },
-/* 97 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var assocIndexOf = __webpack_require__(8);
@@ -4528,7 +4915,7 @@
 
 
 /***/ },
-/* 98 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var assocIndexOf = __webpack_require__(8);
@@ -4553,7 +4940,7 @@
 
 
 /***/ },
-/* 99 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var assocIndexOf = __webpack_require__(8);
@@ -4575,7 +4962,7 @@
 
 
 /***/ },
-/* 100 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var assocIndexOf = __webpack_require__(8);
@@ -4606,12 +4993,12 @@
 
 
 /***/ },
-/* 101 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Hash = __webpack_require__(53),
+	var Hash = __webpack_require__(56),
 	    ListCache = __webpack_require__(7),
-	    Map = __webpack_require__(21);
+	    Map = __webpack_require__(23);
 
 	/**
 	 * Removes all key-value entries from the map.
@@ -4632,7 +5019,7 @@
 
 
 /***/ },
-/* 102 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getMapData = __webpack_require__(9);
@@ -4654,7 +5041,7 @@
 
 
 /***/ },
-/* 103 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getMapData = __webpack_require__(9);
@@ -4676,7 +5063,7 @@
 
 
 /***/ },
-/* 104 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getMapData = __webpack_require__(9);
@@ -4698,7 +5085,7 @@
 
 
 /***/ },
-/* 105 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getMapData = __webpack_require__(9);
@@ -4722,7 +5109,7 @@
 
 
 /***/ },
-/* 106 */
+/* 109 */
 /***/ function(module, exports) {
 
 	/**
@@ -4746,7 +5133,7 @@
 
 
 /***/ },
-/* 107 */
+/* 110 */
 /***/ function(module, exports) {
 
 	/** Used to stand-in for `undefined` hash values. */
@@ -4771,7 +5158,7 @@
 
 
 /***/ },
-/* 108 */
+/* 111 */
 /***/ function(module, exports) {
 
 	/**
@@ -4791,7 +5178,7 @@
 
 
 /***/ },
-/* 109 */
+/* 112 */
 /***/ function(module, exports) {
 
 	/**
@@ -4815,7 +5202,7 @@
 
 
 /***/ },
-/* 110 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ListCache = __webpack_require__(7);
@@ -4835,7 +5222,7 @@
 
 
 /***/ },
-/* 111 */
+/* 114 */
 /***/ function(module, exports) {
 
 	/**
@@ -4855,7 +5242,7 @@
 
 
 /***/ },
-/* 112 */
+/* 115 */
 /***/ function(module, exports) {
 
 	/**
@@ -4875,7 +5262,7 @@
 
 
 /***/ },
-/* 113 */
+/* 116 */
 /***/ function(module, exports) {
 
 	/**
@@ -4895,7 +5282,7 @@
 
 
 /***/ },
-/* 114 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ListCache = __webpack_require__(7),
@@ -4927,11 +5314,11 @@
 
 
 /***/ },
-/* 115 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var memoize = __webpack_require__(123),
-	    toString = __webpack_require__(127);
+	var memoize = __webpack_require__(125),
+	    toString = __webpack_require__(129);
 
 	/** Used to match property names within property paths. */
 	var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(\.|\[\])(?:\4|$))/g;
@@ -4958,194 +5345,7 @@
 
 
 /***/ },
-/* 116 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isObject = __webpack_require__(4),
-	    now = __webpack_require__(124),
-	    toNumber = __webpack_require__(126);
-
-	/** Used as the `TypeError` message for "Functions" methods. */
-	var FUNC_ERROR_TEXT = 'Expected a function';
-
-	/* Built-in method references for those with the same name as other `lodash` methods. */
-	var nativeMax = Math.max,
-	    nativeMin = Math.min;
-
-	/**
-	 * Creates a debounced function that delays invoking `func` until after `wait`
-	 * milliseconds have elapsed since the last time the debounced function was
-	 * invoked. The debounced function comes with a `cancel` method to cancel
-	 * delayed `func` invocations and a `flush` method to immediately invoke them.
-	 * Provide an options object to indicate whether `func` should be invoked on
-	 * the leading and/or trailing edge of the `wait` timeout. The `func` is invoked
-	 * with the last arguments provided to the debounced function. Subsequent calls
-	 * to the debounced function return the result of the last `func` invocation.
-	 *
-	 * **Note:** If `leading` and `trailing` options are `true`, `func` is invoked
-	 * on the trailing edge of the timeout only if the debounced function is
-	 * invoked more than once during the `wait` timeout.
-	 *
-	 * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
-	 * for details over the differences between `_.debounce` and `_.throttle`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.1.0
-	 * @category Function
-	 * @param {Function} func The function to debounce.
-	 * @param {number} [wait=0] The number of milliseconds to delay.
-	 * @param {Object} [options={}] The options object.
-	 * @param {boolean} [options.leading=false]
-	 *  Specify invoking on the leading edge of the timeout.
-	 * @param {number} [options.maxWait]
-	 *  The maximum time `func` is allowed to be delayed before it's invoked.
-	 * @param {boolean} [options.trailing=true]
-	 *  Specify invoking on the trailing edge of the timeout.
-	 * @returns {Function} Returns the new debounced function.
-	 * @example
-	 *
-	 * // Avoid costly calculations while the window size is in flux.
-	 * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
-	 *
-	 * // Invoke `sendMail` when clicked, debouncing subsequent calls.
-	 * jQuery(element).on('click', _.debounce(sendMail, 300, {
-	 *   'leading': true,
-	 *   'trailing': false
-	 * }));
-	 *
-	 * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
-	 * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
-	 * var source = new EventSource('/stream');
-	 * jQuery(source).on('message', debounced);
-	 *
-	 * // Cancel the trailing debounced invocation.
-	 * jQuery(window).on('popstate', debounced.cancel);
-	 */
-	function debounce(func, wait, options) {
-	  var lastArgs,
-	      lastThis,
-	      maxWait,
-	      result,
-	      timerId,
-	      lastCallTime,
-	      lastInvokeTime = 0,
-	      leading = false,
-	      maxing = false,
-	      trailing = true;
-
-	  if (typeof func != 'function') {
-	    throw new TypeError(FUNC_ERROR_TEXT);
-	  }
-	  wait = toNumber(wait) || 0;
-	  if (isObject(options)) {
-	    leading = !!options.leading;
-	    maxing = 'maxWait' in options;
-	    maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
-	    trailing = 'trailing' in options ? !!options.trailing : trailing;
-	  }
-
-	  function invokeFunc(time) {
-	    var args = lastArgs,
-	        thisArg = lastThis;
-
-	    lastArgs = lastThis = undefined;
-	    lastInvokeTime = time;
-	    result = func.apply(thisArg, args);
-	    return result;
-	  }
-
-	  function leadingEdge(time) {
-	    // Reset any `maxWait` timer.
-	    lastInvokeTime = time;
-	    // Start the timer for the trailing edge.
-	    timerId = setTimeout(timerExpired, wait);
-	    // Invoke the leading edge.
-	    return leading ? invokeFunc(time) : result;
-	  }
-
-	  function remainingWait(time) {
-	    var timeSinceLastCall = time - lastCallTime,
-	        timeSinceLastInvoke = time - lastInvokeTime,
-	        result = wait - timeSinceLastCall;
-
-	    return maxing ? nativeMin(result, maxWait - timeSinceLastInvoke) : result;
-	  }
-
-	  function shouldInvoke(time) {
-	    var timeSinceLastCall = time - lastCallTime,
-	        timeSinceLastInvoke = time - lastInvokeTime;
-
-	    // Either this is the first call, activity has stopped and we're at the
-	    // trailing edge, the system time has gone backwards and we're treating
-	    // it as the trailing edge, or we've hit the `maxWait` limit.
-	    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
-	      (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
-	  }
-
-	  function timerExpired() {
-	    var time = now();
-	    if (shouldInvoke(time)) {
-	      return trailingEdge(time);
-	    }
-	    // Restart the timer.
-	    timerId = setTimeout(timerExpired, remainingWait(time));
-	  }
-
-	  function trailingEdge(time) {
-	    timerId = undefined;
-
-	    // Only invoke if we have `lastArgs` which means `func` has been
-	    // debounced at least once.
-	    if (trailing && lastArgs) {
-	      return invokeFunc(time);
-	    }
-	    lastArgs = lastThis = undefined;
-	    return result;
-	  }
-
-	  function cancel() {
-	    lastInvokeTime = 0;
-	    lastArgs = lastCallTime = lastThis = timerId = undefined;
-	  }
-
-	  function flush() {
-	    return timerId === undefined ? result : trailingEdge(now());
-	  }
-
-	  function debounced() {
-	    var time = now(),
-	        isInvoking = shouldInvoke(time);
-
-	    lastArgs = arguments;
-	    lastThis = this;
-	    lastCallTime = time;
-
-	    if (isInvoking) {
-	      if (timerId === undefined) {
-	        return leadingEdge(lastCallTime);
-	      }
-	      if (maxing) {
-	        // Handle invocations in a tight loop.
-	        timerId = setTimeout(timerExpired, wait);
-	        return invokeFunc(lastCallTime);
-	      }
-	    }
-	    if (timerId === undefined) {
-	      timerId = setTimeout(timerExpired, wait);
-	    }
-	    return result;
-	  }
-	  debounced.cancel = cancel;
-	  debounced.flush = flush;
-	  return debounced;
-	}
-
-	module.exports = debounce;
-
-
-/***/ },
-/* 117 */
+/* 119 */
 /***/ function(module, exports) {
 
 	/**
@@ -5188,10 +5388,10 @@
 
 
 /***/ },
-/* 118 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGet = __webpack_require__(24);
+	var baseGet = __webpack_require__(26);
 
 	/**
 	 * Gets the value at `path` of `object`. If the resolved value is
@@ -5227,11 +5427,11 @@
 
 
 /***/ },
-/* 119 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseHasIn = __webpack_require__(64),
-	    hasPath = __webpack_require__(86);
+	var baseHasIn = __webpack_require__(67),
+	    hasPath = __webpack_require__(89);
 
 	/**
 	 * Checks if `path` is a direct or inherited property of `object`.
@@ -5267,7 +5467,7 @@
 
 
 /***/ },
-/* 120 */
+/* 122 */
 /***/ function(module, exports) {
 
 	/**
@@ -5294,7 +5494,7 @@
 
 
 /***/ },
-/* 121 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isArrayLike = __webpack_require__(17),
@@ -5333,7 +5533,7 @@
 
 
 /***/ },
-/* 122 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isLength = __webpack_require__(13),
@@ -5419,7 +5619,7 @@
 
 
 /***/ },
-/* 123 */
+/* 125 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var MapCache = __webpack_require__(16);
@@ -5498,7 +5698,7 @@
 
 
 /***/ },
-/* 124 */
+/* 126 */
 /***/ function(module, exports) {
 
 	/**
@@ -5525,11 +5725,11 @@
 
 
 /***/ },
-/* 125 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseProperty = __webpack_require__(27),
-	    basePropertyDeep = __webpack_require__(72),
+	var baseProperty = __webpack_require__(29),
+	    basePropertyDeep = __webpack_require__(75),
 	    isKey = __webpack_require__(10),
 	    toKey = __webpack_require__(12);
 
@@ -5563,7 +5763,7 @@
 
 
 /***/ },
-/* 126 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isFunction = __webpack_require__(18),
@@ -5636,10 +5836,10 @@
 
 
 /***/ },
-/* 127 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseToString = __webpack_require__(74);
+	var baseToString = __webpack_require__(77);
 
 	/**
 	 * Converts `value` to a string. An empty string is returned for `null`

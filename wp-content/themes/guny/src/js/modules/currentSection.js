@@ -4,6 +4,7 @@
 */
 import forEach from 'lodash/forEach';
 import throttle from 'lodash/throttle';
+import dispatchEvent from './dispatchEvent.js';
 
 export default function() {
   /**
@@ -83,15 +84,7 @@ export default function() {
         window.removeEventListener('scroll', scrollListener);
       }
     }, 100));
-    let event;
-    if (document.createEvent) {
-      event = new Event('resize');
-      window.dispatchEvent(event);
-    } else {
-      event = document.createEventObject();
-      event.eventType = "resize";
-      window.fireEvent("onresize", event);
-    }
+    dispatchEvent(window, 'resize');
   }
 
   const markers = document.querySelectorAll('.js-section');

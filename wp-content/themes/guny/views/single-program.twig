@@ -7,30 +7,32 @@
 {% endblock %}
 
 {% block content %}
-<header class="c-hero c-hero--large c-hero--long-text">
-  <div class="o-container">
-    <h1 class="c-hero__title--long">
-      {% if post.category %}
-      <span class="c-hero__sticker sticker">
-        <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{post.category.slug}}"></use></svg>
-      </span>
-      {% endif %}
-      {{post.title}}
-    </h1>
-    <p class="c-hero__tagline">
-      {{post.program_name}}{% if post.acronym %} ({{post.acronym}}){% endif %}
-      | {{post.government_agency}}
+<div class="js-parallax">
+  <header class="c-hero c-hero--large c-hero--long-text js-parallax-content">
+    <div class="o-container js-parallax-text">
+      <h1 class="c-hero__title--long">
+        {% if post.category %}
+        <span class="c-hero__sticker sticker">
+          <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{post.category.slug}}"></use></svg>
+        </span>
+        {% endif %}
+        {{post.title}}
+      </h1>
+      <p class="c-hero__tagline">
+        {{post.program_name}}{% if post.acronym %} ({{post.acronym}}){% endif %}
+        | {{post.government_agency}}
+      </p>
+      <p class="c-hero__tagline">
+      {% for term in post.terms('programs_cat') %}
+        <a href="/programs/?fwp_program_type={{term.slug}}" class="button--pill">{{term.name}}</a>
+      {% endfor %}
+      {% for term in post.terms('age_group') %}
+        <a href="/programs/?fwp_ages={{term.slug}}" class="button--pill button--pill--alt">{{term.name}}</a>
+      {% endfor %}
     </p>
-    <p class="c-hero__tagline">
-    {% for term in post.terms('programs_cat') %}
-      <a href="/programs/?fwp_program_type={{term.slug}}" class="button--pill">{{term.name}}</a>
-    {% endfor %}
-    {% for term in post.terms('age_group') %}
-      <a href="/programs/?fwp_ages={{term.slug}}" class="button--pill button--pill--alt">{{term.name}}</a>
-    {% endfor %}
-  </p>
-  </div>
-</header>
+    </div>
+  </header>
+</div> <!-- /.js-parallax -->
 <article class="o-container u-bottom-spacing-small js-sticky-container">
   <div class="o-article-sidebar">
     <div class="o-content-container--compact u-shift-up">

@@ -4,6 +4,7 @@
 */
 
 import throttle from 'lodash/throttle';
+import debounce from 'lodash/debounce';
 import imagesReady from 'imagesready/dist/imagesready.js';
 
 /**
@@ -120,14 +121,19 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
   /**
   * Turn on "sticky mode"
   *
-  * Watch for scroll and fix the sidebar
+  * Watch for scroll and fix the sidebar. Watch for sizes changes on #main
+  * (which may change if parallax is used) and adjust accordingly.
   */
   function stickyModeOn() {
     stickyMode = true;
 
     $(window).on('scroll.fixedSidebar', throttle(function() {
       toggleSticky();
-    }, 50)).trigger('scroll.fixedSidebar');
+    }, 16)).trigger('scroll.fixedSidebar');
+
+    $('#main').on('containerSizeChange.fixedSidebar', function(event) {
+      switchPoint -= event.originalEvent.detail;
+    });
   }
 
   /**
@@ -141,6 +147,7 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
       $elem.removeClass(settings.stickyClass);
     }
     $(window).off('scroll.fixedSidebar');
+    $('#main').off('containerSizeChange.fixedSidebar');
     stickyMode = false;
   }
 
@@ -169,9 +176,9 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
   * @param {object} options - Options. Will override module defaults when present
   */
   function initialize() {
-    $(window).on('resize.fixedSidebar', throttle(function() {
+    $(window).on('resize.fixedSidebar', debounce(function() {
       onResize();
-    }));
+    }, 100));
 
     imagesReady(document.body).then(function() {
       onResize();

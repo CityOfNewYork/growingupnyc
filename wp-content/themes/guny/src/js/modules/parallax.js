@@ -56,12 +56,24 @@ export default function() {
   }
 
   /**
-  * Calculate hero offset
+  * Calculate hero offset. Dispatch a custom event when padding changes to alert
+  * other modules that use vertical positioning in their calculations.
   * @param {object} elem - DOM node for the parallax element
   * @param {object} container - DOM node for the element's container
   */
   function calculateOffset(elem, container) {
+    console.log('calculating offset');
     const offsetHeight = elem.offsetHeight;
+    const currentPaddingHeight = parseInt(container.style.paddingTop, 10);
+    const sizeChange = isNaN(currentPaddingHeight) ? 0 : currentPaddingHeight - offsetHeight;
+    let sizeEvent;
+    if (typeof window.CustomEvent === 'function') {
+      sizeEvent = new CustomEvent('containerSizeChange', {detail: sizeChange});
+    } else {
+      sizeEvent = document.createEvent('CustomEvent');
+      sizeEvent.initCustomEvent('containerSizeChange', true, true, {detail: sizeChange});
+    }
+    container.dispatchEvent(sizeEvent);
     container.style.paddingTop = offsetHeight + 'px';
   }
 

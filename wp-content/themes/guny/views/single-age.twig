@@ -23,8 +23,8 @@
 
 {% block content %}
   <div class="js-parallax">
-    <header class="c-hero c-hero--large {{post.age_group|sanitize}}-background">
-      <div class="o-container js-parallax-content">
+    <header class="c-hero c-hero--large {{post.age_group|sanitize}}-background js-parallax-content">
+      <div class="o-container js-parallax-text">
         <h1 class="c-hero__title">
           <span class="c-hero__sticker sticker {{post.age_group|sanitize}}-background">
             <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{post.age_group|sanitize}}"></use></svg>

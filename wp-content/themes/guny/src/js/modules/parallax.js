@@ -62,7 +62,6 @@ export default function() {
   * @param {object} container - DOM node for the element's container
   */
   function calculateOffset(elem, container) {
-    console.log('calculating offset');
     const offsetHeight = elem.offsetHeight;
     const currentPaddingHeight = parseInt(container.style.paddingTop, 10);
     const sizeChange = isNaN(currentPaddingHeight) ? 0 : currentPaddingHeight - offsetHeight;
@@ -135,11 +134,12 @@ export default function() {
   * @param {object} parallaxBase - DOM element for the hero
   */
   function initialize(parallaxBase) {
+    const initialScrollPosition = scrollTop();
     const parallaxContainer = parallaxBase.parentElement;
     const parallaxContent = parallaxBase.querySelector('.js-parallax-content');
     const parallaxText = parallaxBase.querySelector('.js-parallax-text');
     const baseHeight = parallaxBase.offsetHeight;
-    const baseTop = parallaxBase.getBoundingClientRect().top;
+    const baseTop = parallaxBase.getBoundingClientRect().top + initialScrollPosition;
     initializeContainer(parallaxContainer);
     initializeBase(parallaxBase, baseTop);
 

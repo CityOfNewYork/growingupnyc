@@ -138,6 +138,16 @@
       </section>
       {% endif %}
 
+      {# Get Updates #}
+      <aside class="c-tip u-sm-gutter o-content-container">
+        <div class="c-tip__sticker sticker">
+          <svg class="icon--large" role="img" aria-hidden="true"><use xlink:href="#envelope-o"></use></svg>
+        </div>
+        <div class="c-tip__inner">
+          {% include 'partials/email-signup.twig' with {form_id:post.slug, full_width:true} %}
+        </div> <!-- /.c-tip__content -->
+      </aside>
+
       {# Milestones #}
       <section class="o-content-container--compact u-top-spacing u-bottom-spacing" id="section-milestones">
         <h2>Milestones</h2>

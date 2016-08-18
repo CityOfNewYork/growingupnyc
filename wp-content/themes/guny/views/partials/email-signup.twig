@@ -1,13 +1,13 @@
-<form action="http://growingupnyc-cityofny.bsd.net/page/s/website-signup" name="signup" id="{{form_id}}" class="signup-form bsdtools-signup" novalidate>
-  <h2>Get Updates</h2>
+<form action="http://growingupnyc-cityofny.bsd.net/page/s/website-signup" name="signup" id="{{form_id}}-signup" class="signup-form bsdtools-signup" novalidate>
+  <h2{% if full_width %} class="text-center"{% endif %}>Get Updates</h2>
   <div class="signup-form__error bsdtools-error"></div>
-  <div class="signup-form__input signup-form__input--long">
+  <div class="signup-form__input {% if full_width %}signup-form__input--full{% else %}signup-form__input--long{% endif %}">
     <label for="{{form_id}}-email" class="signup-form__label">
       <span class="signup-form__label-content" data-content="Email">Email</span>
     </label>
     <input name="email" id="{{form_id}}-email" type="email" class="form-field signup-form__field" required>
   </div> <!-- /.signup-form__input -->
-  <div class="signup-form__input signup-form__input--short">
+  <div class="signup-form__input {% if full_width %}signup-form__input--full{% else %}signup-form__input--short{%endif %}">
     <label for="{{form_id}}-zip" class="signup-form__label">
       <span class="signup-form__label-content" data-content="Zip code">Zip code</span>
     </label>

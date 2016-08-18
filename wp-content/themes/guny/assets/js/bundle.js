@@ -2975,7 +2975,6 @@
 
 	    // ideally the api returns informative errors, but in the case of failures, let's try to parse the error json, if any, and then make sure we have a standard response if all else fails
 	    function errorFilter(e) {
-	        console.log(e);
 	        var msg = 'No response from sever';
 	        if (e && e.responseJSON) {
 	            return e.responseJSON;
@@ -3003,7 +3002,6 @@
 
 	    function formSuccess(result) {
 	        //"this" is the jquery wrapped $form
-	        console.log('d', this.data());
 	        this.trigger('bsd-success', [result]);
 	        if (this.data('bsdsignup').no_redirect !== true && result.thanks_url) {
 	            wlocation.href = result.thanks_url;
@@ -3057,21 +3055,14 @@
 	                    context: $form, //set the value of "this" for all deferred functions
 	                    data: data,
 	                    beforeSend: function beforeSend(jqxhr, requestsettings) {
-	                        console.log('beforesend check ', jqxhr, requestsettings);
-	                        console.log(' url: ', requestsettings.url, ' xd?: ', requestsettings.crossDomain, ' cors?: ', $.support.cors, ' have oldiexdr support?: ', $.oldiexdr, ' oldiexdr and protocol match?: ', $.oldiexdr && parseURL(requestsettings.url).protocol === wlocation.protocol);
-	                        console.log('data', requestsettings.data);
 	                        if (ops.proxyall || requestsettings.crossDomain && !$.support.cors && !($.oldiexdr && parseURL(requestsettings.url).protocol === wlocation.protocol)) {
-	                            console.log('using proxy', ops.oldproxy);
 	                            if (ops.oldproxy || ops.proxyall) {
 	                                requestsettings.url = ops.oldproxy || ops.proxyall;
 	                                requestsettings.crossDomain = false;
 	                                requestsettings.data += '&purl=' + apiaction;
-	                                // console.log(function(){
-	                                //     window.alert('using proxy:'+ops.oldproxy+' proxying: '+apiaction);
-	                                // });
 	                            } else {
-	                                    return false; //request is cors but the browser can't handle that, so let the normal form behavior proceed
-	                                }
+	                                return false; //request is cors but the browser can't handle that, so let the normal form behavior proceed
+	                            }
 	                        }
 	                        e.preventDefault(); //cancel the native form submit behavior
 	                    }
@@ -3127,7 +3118,6 @@
 	                        }
 
 	                        $form.on('submit.bsdsignup', jsapiSubmit($form, action, ops));
-	                        console.log('init bsdSignup', { form: $form, interactive_validation: interactiveValidity, options: ops, action: ops.proxy || action });
 	                    }
 	                }
 	        });

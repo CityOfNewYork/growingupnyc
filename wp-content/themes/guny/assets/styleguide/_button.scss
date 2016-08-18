@@ -151,20 +151,34 @@
 //
 // Basic blue button used for links within a detail page
 //
+// .button--simple - Simple button
+// .button--simple--alt - Alternate, darker blue version
+//
 // markup:
-// <a class="button--simple">Button</a>
+// <a class="button--simple {$modifiers}">Button</a>
 // <button class="button--simple">Button</button>
 //
 // Styleguide 1.1.4
 .button--simple {
   @extend %button-base;
   background: $color-primary;
+  border: none;
   color: $color-text-invert;
 
   &:hover,
   &:focus {
     background: $color-secondary;
     color: $color-text-invert;
+    outline: none;
+  }
+}
+
+.button--simple--alt {
+  background: $color-secondary;
+
+  &:hover,
+  &:focus {
+    background: $very-dark-blue;
   }
 }
 

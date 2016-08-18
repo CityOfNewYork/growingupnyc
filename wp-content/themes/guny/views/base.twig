@@ -142,7 +142,9 @@
               {% endfor %}
             </ul>
           </nav>
-          {{footer_widgets}}
+          <div class="c-footer__signup">
+            {% include 'partials/email-signup.twig' with {form_id: 'footer-signup'} %}
+          </div> <!-- /.c-footer__signup -->
         </div> <!-- /.o-container -->
       </footer> <!-- /.c-footer -->
       {% if options.show_banner %}

@@ -9,6 +9,8 @@ import parallax from './modules/parallax.js';
 import staticColumn from './modules/staticColumn.js';
 import searchResultsHeader from './modules/searchResultsHeader.js';
 import alert from './modules/alert.js';
+import bsdtoolsSignup from './modules/bsdtools-signup.js';
+import formEffects from './modules/formEffects.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -32,6 +34,8 @@ function init() {
   parallax();
   stickyNav();
   currentSection();
+  bsdtoolsSignup();
+  formEffects();
 }
 
 ready(init);

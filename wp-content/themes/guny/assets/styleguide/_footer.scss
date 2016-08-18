@@ -4,7 +4,7 @@
 //
 // markup:
 // <footer class="c-footer">
-//   <div class="o-layout">
+//   <div class="o-container">
 //     <img class="c-footer__logo" alt="Growing Up NYC" src="/wp-content/themes/guny/assets/img/GrowingUpNYC-logo-white.gif">
 //     <nav class="c-footer__nav">
 //       <ul class="c-footer__column">
@@ -16,6 +16,9 @@
 //         <li class="c-footer__nav-item"><a class="c-footer__link" href="#">Item</a></li>
 //       </ul>
 //     </nav>
+//     <div class="c-footer__signup">
+//       <sg-insert>4.2</sg-insert>
+//     </div>
 //   </div>
 // </footer>
 //
@@ -69,5 +72,13 @@
   &:hover,
   &:focus {
     color: $color-secondary;
+  }
+}
+
+// Footer Signup Area
+.c-footer__signup {
+  @include media($bp-large) {
+    @include span-columns(4);
+    @include shift(2);
   }
 }

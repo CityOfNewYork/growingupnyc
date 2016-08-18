@@ -40,6 +40,12 @@ section.pseudo-class-focus {
 .button--simple.pseudo-class-focus {
   background: #0055b8;
   color: #fff;
+  outline: none;
+}
+
+.button--simple--alt.pseudo-class-hover,
+.button--simple--alt.pseudo-class-focus {
+  background: #00326d;
 }
 
 .button--text.pseudo-class-hover,
@@ -56,6 +62,14 @@ section.pseudo-class-focus {
 .form-field__icon--weak.pseudo-class-hover,
 .form-field__icon--weak.pseudo-class-focus {
   color: #333;
+}
+
+.checkbox__field.pseudo-class-checked + .checkbox__indicator {
+  color: #0055b8;
+}
+
+.checkbox__field.pseudo-class-focus + .checkbox__indicator {
+  border-color: #6a6a6a;
 }
 
 a.sticker.pseudo-class-hover,
@@ -153,6 +167,11 @@ a.pseudo-class-focus {
   position: absolute;
   right: -20px;
   top: 50%;
+}
+
+.signup-form__field.pseudo-class-focus {
+  border-color: #6a6a6a;
+  outline: none;
 }
 
 .c-tip__link.pseudo-class-hover,

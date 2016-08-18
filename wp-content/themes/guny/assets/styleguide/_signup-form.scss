@@ -1,0 +1,164 @@
+// Signup Form
+//
+// Small form designed to be displayed within a page, rather than on a page itself
+// Doesn't technically have to be used for email signups.
+//
+// markup:
+// <form class="signup-form">
+//   <div class="signup-form__error"><p>Error text for the form</p></div>
+//   <sg-insert>4.2.1</sg-insert>
+//   <fieldset class="signup-form__fieldset">
+//     <legend>Fieldset legend</legend>
+//     <span class="signup-form__checkbox">
+//       <sg-insert>4.1.2</sg-insert>
+//     </span>
+//   </fieldset>
+//   <button type="submit" class="signup-form__button button--simple button--simple--alt">Sign Up</button>
+// </form>
+//
+// Styleguide 4.2
+.signup-form {
+  @include font-size-small;
+  h2 {
+    margin-bottom: 0;
+  }
+}
+
+// Signup Form Error
+.signup-form__error {
+  p {
+    margin-top: rem-calc(20);
+  }
+}
+
+// Signup Form Input
+//
+// Wrapper around a text input and label
+//
+// .signup-form__input - Empty, unfocused input
+// .signup-form__input.is-filled - Focused state
+// .signup-form__input.signup-form__input--long - Longer input field
+// .signup-form__input.signup-form__input--short - Shorter input field
+// .signup-form__input.signup-form__input--full - Full-width input field
+//
+// markup:
+// <div class="{$modifiers}">
+//   <label for="email" class="signup-form__label">
+//     <span class="signup-form__label-content" data-content="Email">Email</span>
+//   </label>
+//   <input name="email" id="email" type="email" class="form-field signup-form__field">
+// </div>
+//
+// Styleguide 4.2.1
+.signup-form__input {
+  display: inline-block;
+  margin: rem-calc(24) 0 0;
+  position: relative;
+  z-index: 1;
+}
+
+.signup-form__input--long {
+  width: 100%;
+
+  @include media($bp-medium) {
+    width: rem-calc(240);
+  }
+}
+
+.signup-form__input--short {
+  width: 100%;
+  @include media($bp-medium) {
+    max-width: rem-calc(153);
+    width: calc(100% - 15.3125rem);
+  }
+}
+
+// Signup Form Field
+//
+// .is-error - Error state
+//
+// Text input field
+.signup-form__field {
+  border: 2px solid transparent;
+  width: 100%;
+
+  &:focus {
+    border-color: $dark-gray;
+    outline: none;
+  }
+
+  &.is-error {
+    border-color: $color-secondary;
+  }
+}
+
+// Signup Form Label
+.signup-form__label {
+  overflow: hidden;
+  padding: 0 rem-calc(15);
+  position: absolute;
+  width: 100%;
+}
+
+.no-csstransforms3d .signup-form__label {
+  bottom: rem-calc(10);
+}
+
+.csstransforms3d .signup-form__label {
+  bottom: 100%;
+  transform: translate3d(0, #{rem-calc(37)}, 0);
+  transition: transform 250ms ease-in-out;
+}
+
+.csstransforms3d .is-filled .signup-form__label {
+  transform: translate3d(0, 0, 0);
+}
+
+// Signup Form Label Content
+//
+// Inner content within a label. The data-content
+.signup-form__label-content {
+  color: $color-secondary;
+  display: block;
+  position: relative;
+  transition: transform 250ms ease-in-out;
+  width: 100%;
+
+  &:after {
+    bottom: 100%;
+    color: $color-text-invert;
+    content: attr(data-content);
+    font-family: $font-family-display;
+    @include font-size-x-small;
+    font-weight: $font-weight-extrablack;
+    left: 0;
+    position: absolute;
+    text-transform: uppercase;
+    width: 100%;
+  }
+}
+
+.csstransforms3d .is-filled .signup-form__label-content {
+  transform: translate3d(0, 100%, 0);
+}
+
+// Signup Form Fieldset
+.signup-form__fieldset {
+  margin-top: rem-calc(24);
+}
+
+// Signup Form Checkbox
+//
+// Wrapper around checkbox input, label, and hidden field (if its a Tools checkbox)
+.signup-form__checkbox {
+  display: inline-block;
+  line-height: rem-calc(20);
+  margin-right: rem-calc(20);
+  margin-top: rem-calc(10);
+  vertical-align: middle;
+}
+
+// Signup Form Button
+.signup-form__button {
+  margin-top: rem-calc(20);
+}

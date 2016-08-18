@@ -1,105 +1,3 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-/*better support for CORS on IE9 https://github.com/ebickle/snippets/blob/master/javascript/xdomainrequest/jquery.xdr-1.0.2.js*/
-
-(function ($) {
-    // The XDomainRequest objects will be stored in a global variable to prevent an
-    // IE bug that causes the requests to be garbage collected while they're in progress.
-    var xdrRequests = [];
-
-    function corsSupported() {
-        try {
-            return typeof XMLHttpRequest !== "undefined" && ("withCredentials" in new XMLHttpRequest());
-        }
-        catch (e) {
-            return false;
-        }
-    }
-
-    if (typeof XDomainRequest !== "undefined" && !corsSupported()) {
-        //console.log('transport added');
-        $.oldiexdr = true;//added so that other libraries can know this support has been added, geez!
-        $.ajaxTransport("+*", function (options, originalOptions, jqXHR) {
-            var xdr, completed;
-
-            function setCompletion() {
-                completed = true;
-
-                if (xdr) {
-                    // Remove from global variable.
-                    var arrayIndex = $.inArray(xdr, xdrRequests);
-                    if (arrayIndex >= 0) {
-                        xdrRequests.splice(arrayIndex, 1);
-                    }
-
-                    // Unhook event handlers.
-                    xdr.onload = null;
-                    xdr.onerror = null;
-                    xdr.ontimeout = null;
-                    xdr.onprogress = null;
-                }
-            }
-
-            if (options.async && options.crossDomain) {
-
-                return {
-
-                    send: function (headers, complete) {
-                        var timeout = options.xdrTimeout || 6e5; // 600 seconds by default.
-
-                        xdr = new XDomainRequest();
-                        xdr.timeout = timeout;
-                        xdr.open(options.type, options.url);
-
-                        // Listen to events.
-                        // All of the events must be non-null or random failures will occur.
-                        xdr.onload = function () {
-                            ///console.log('success',xdr.responseText);
-                            if (!completed) {
-                                setCompletion();
-                                complete(
-                                    200,
-                                    "OK",
-                                    typeof xdr.responseText === "string" ? {
-                                        text: xdr.responseText
-                                    } : undefined,
-                                    "Content-Type: " + xdr.contentType
-                                );
-                            }
-                        };
-                        xdr.onerror = function () {
-                            //console.log('error',xdr.responseText);
-                            if (!completed) {
-                                setCompletion();
-                                complete(500, "XDR Error");
-                            }
-                        };
-                        xdr.ontimeout = function () {
-                            if (!completed) {
-                                setCompletion();
-                                complete(500, "XDR Timeout");
-                            }
-                        };
-                        xdr.onprogress = function () { };
-
-                        // Send the request.
-                        xdr.send(((options.hasContent && options.data) || null));
-
-                        // Keep a reference to the XDomainRequest object around to avoid.
-                        // IE8's buggy garbage collector from destroying it.
-                        xdrRequests.push(xdr);
-                    },
-
-                    abort: function () {
-                        if (xdr && !completed) {
-                            setCompletion();
-                            xdr.abort();
-                        }
-                    }
-                };
-            }
-        });
-    }
-})(jQuery);
 /*lets define our scope*/
 (function($, wlocation, undefined){
 
@@ -173,8 +71,9 @@
 
     function formSuccess(result){
         //"this" is the jquery wrapped $form
+        console.log('d', this.data());
         this.trigger('bsd-success',[result]);
-        if(this.data('no_redirect')!==true && result.thanks_url){
+        if(this.data('bsdsignup').no_redirect!==true && result.thanks_url){
             wlocation.href = result.thanks_url;
         }
     }
@@ -183,6 +82,7 @@
         //"this" is the jquery wrapped $form
         var $form = this,
             funerror = false,
+            config = this.data('bsdsignup'),
             errorsAsObject = {};
         if(e && e.field_errors && e.field_errors.length){
             $.each(e.field_errors,function(i,err){
@@ -191,7 +91,7 @@
                 if(err.field==="submit-btn"){
                     e.message = err.message;
                 }
-                else if(errField && errField.setCustomValidity && interactiveValidity && !$form[0].noValidate && !$form.data('no_html5validate')){
+                else if(errField && errField.setCustomValidity && interactiveValidity && !$form[0].noValidate && !config.no_html5validate){
                     errField.setCustomValidity(err.message);//this sets an additional constraint beyond what the browser validated
                     recheckIfThisIsStillInvalid($errField,errField,err.message);//and since we don't know what it is, we at least check to make sure it's no longer what the server has already rejected
                     funerror= true;
@@ -212,9 +112,10 @@
     function jsapiSubmit($form, action, ops){
         return function(e){
             //we're going to use jQuery's ajax to actually check if a request is crossDomain or not, rather than using our own test. Then if it is, and the browser doesn't support that, we'll just cancel the request and let the form submit normally
+            var data = $form.serializeObject();
             if($form.data('isPaused')!==true){//allow a means to prevent submission entirely
-                var data = $form.serializeObject(),
-                    apiaction = action.replace(/\/page\/(signup|s)/,'/page/sapi'),
+                $form.data('isPaused', true);
+                var apiaction = action.replace(/\/page\/(signup|s)/,'/page/sapi'),
                     request = $.ajax({
                         url: apiaction,//where to post the form
                         type: 'POST',
@@ -256,11 +157,15 @@
                     $form.trigger('bsd-submit', data);
                     request
                         .then(successFilter, errorFilter)
+                        .always(function(){
+                            $form.data('isPaused', false);
+                        })
                         .done(formSuccess)
                         .fail(formFailure);
                 }
             }else{
                 e.preventDefault();//cancel the native form submit behavior
+                $form.trigger('bsd-ispaused', data);
             }
         };
     }
@@ -286,11 +191,12 @@
 
     /*create the plugin*/
     $.fn.bsdSignup = function(ops){
+        ops = ops||{};
         return this.each(function(){
             var $form = $(this),
                 action = $form.attr('action');//action or self (self is pretty unlikely here, but bwhatever)
             if(ops==="remove"){
-                $form.off('submit.bsdsignup').data('bsdsignup',null);//removes the plugin entirely
+                $form.off('submit.bsdsignup').removeData('bsdsignup isPaused');//removes the plugin entirely
             }else{
                 if($form.is('form') && action.indexOf('page/s')>-1){//only bother if key elements are present
                     if($form.data('bsdsourced')!==true && !ops.nosource){
@@ -298,11 +204,12 @@
                         normalizeSourceField($form, subsourceString, urlsubsource);
                         $form.data('bsdsourced', true);
                     }
-                    if($.isPlainObject(ops)){
-                        $form.data('bsdsignup',ops);
-                    }else{
-                        ops={};
+
+                    $form.data('bsdsignup',ops);
+                    if(ops.startPaused){
+                        $form.data('isPaused',true);
                     }
+                    
                     $form.on('submit.bsdsignup', jsapiSubmit($form, action, ops));
                     console.log('init bsdSignup',{form:$form, interactive_validation:interactiveValidity,options:ops,action:ops.proxy||action});
                 }
@@ -311,17 +218,3 @@
     };
 
 }(jQuery, window.location));
-},{}],2:[function(require,module,exports){
-(function (global){
-var $ = (typeof window !== "undefined" ? window['jQuery'] : typeof global !== "undefined" ? global['jQuery'] : null);
-var bsdSignup = require('./bsd-signup-jsapi-simple-oldie-dev.js');
-
-$(document).ready(function() {
-    $('.bsd-signup').bsdSignup({no_redirect:true})
-    .on('bsd-success', function() {
-        $('.bsd-signup').addClass('hide');
-        $('.bsd-signup').next('p').removeClass('hide');
-    });
-});
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./bsd-signup-jsapi-simple-oldie-dev.js":1}]},{},[2]);

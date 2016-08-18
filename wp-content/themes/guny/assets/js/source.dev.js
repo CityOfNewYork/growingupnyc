@@ -444,11 +444,11 @@ window.matchMedia || (window.matchMedia = function() {
 
 	'use strict';
 
-	var _globalSearch = __webpack_require__(45);
+	var _globalSearch = __webpack_require__(47);
 
 	var _globalSearch2 = _interopRequireDefault(_globalSearch);
 
-	var _toggleOpen = __webpack_require__(53);
+	var _toggleOpen = __webpack_require__(55);
 
 	var _toggleOpen2 = _interopRequireDefault(_toggleOpen);
 
@@ -456,37 +456,45 @@ window.matchMedia || (window.matchMedia = function() {
 
 	var _accordion2 = _interopRequireDefault(_accordion);
 
-	var _offcanvas = __webpack_require__(46);
+	var _offcanvas = __webpack_require__(48);
 
 	var _offcanvas2 = _interopRequireDefault(_offcanvas);
 
-	var _overlay = __webpack_require__(47);
+	var _overlay = __webpack_require__(49);
 
 	var _overlay2 = _interopRequireDefault(_overlay);
 
-	var _stickyNav = __webpack_require__(52);
+	var _stickyNav = __webpack_require__(54);
 
 	var _stickyNav2 = _interopRequireDefault(_stickyNav);
 
-	var _currentSection = __webpack_require__(43);
+	var _currentSection = __webpack_require__(44);
 
 	var _currentSection2 = _interopRequireDefault(_currentSection);
 
-	var _parallax = __webpack_require__(48);
+	var _parallax = __webpack_require__(50);
 
 	var _parallax2 = _interopRequireDefault(_parallax);
 
-	var _staticColumn = __webpack_require__(51);
+	var _staticColumn = __webpack_require__(53);
 
 	var _staticColumn2 = _interopRequireDefault(_staticColumn);
 
-	var _searchResultsHeader = __webpack_require__(50);
+	var _searchResultsHeader = __webpack_require__(52);
 
 	var _searchResultsHeader2 = _interopRequireDefault(_searchResultsHeader);
 
 	var _alert = __webpack_require__(41);
 
 	var _alert2 = _interopRequireDefault(_alert);
+
+	var _bsdtoolsSignup = __webpack_require__(42);
+
+	var _bsdtoolsSignup2 = _interopRequireDefault(_bsdtoolsSignup);
+
+	var _formEffects = __webpack_require__(45);
+
+	var _formEffects2 = _interopRequireDefault(_formEffects);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -512,6 +520,8 @@ window.matchMedia || (window.matchMedia = function() {
 	  (0, _parallax2.default)();
 	  (0, _stickyNav2.default)();
 	  (0, _currentSection2.default)();
+	  (0, _bsdtoolsSignup2.default)();
+	  (0, _formEffects2.default)();
 	}
 
 	ready(init);
@@ -523,7 +533,7 @@ window.matchMedia || (window.matchMedia = function() {
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {var checkGlobal = __webpack_require__(78);
+	/* WEBPACK VAR INJECTION */(function(global) {var checkGlobal = __webpack_require__(81);
 
 	/** Detect free variable `global` from Node.js. */
 	var freeGlobal = checkGlobal(typeof global == 'object' && global);
@@ -543,46 +553,12 @@ window.matchMedia || (window.matchMedia = function() {
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
-
-	/**
-	 * Checks if `value` is classified as an `Array` object.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.1.0
-	 * @type {Function}
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is correctly classified,
-	 *  else `false`.
-	 * @example
-	 *
-	 * _.isArray([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isArray(document.body.children);
-	 * // => false
-	 *
-	 * _.isArray('abc');
-	 * // => false
-	 *
-	 * _.isArray(_.noop);
-	 * // => false
-	 */
-	var isArray = Array.isArray;
-
-	module.exports = isArray;
-
-
-/***/ },
-/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayEach = __webpack_require__(62),
-	    baseEach = __webpack_require__(64),
-	    baseIteratee = __webpack_require__(71),
-	    isArray = __webpack_require__(2);
+	var arrayEach = __webpack_require__(65),
+	    baseEach = __webpack_require__(67),
+	    baseIteratee = __webpack_require__(74),
+	    isArray = __webpack_require__(3);
 
 	/**
 	 * Iterates over elements of `collection` and invokes `iteratee` for each element.
@@ -620,6 +596,40 @@ window.matchMedia || (window.matchMedia = function() {
 	}
 
 	module.exports = forEach;
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is classified as an `Array` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @type {Function}
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified,
+	 *  else `false`.
+	 * @example
+	 *
+	 * _.isArray([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArray(document.body.children);
+	 * // => false
+	 *
+	 * _.isArray('abc');
+	 * // => false
+	 *
+	 * _.isArray(_.noop);
+	 * // => false
+	 */
+	var isArray = Array.isArray;
+
+	module.exports = isArray;
 
 
 /***/ },
@@ -663,8 +673,8 @@ window.matchMedia || (window.matchMedia = function() {
 /* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsNative = __webpack_require__(70),
-	    getValue = __webpack_require__(88);
+	var baseIsNative = __webpack_require__(73),
+	    getValue = __webpack_require__(91);
 
 	/**
 	 * Gets the native function at `key` of `object`.
@@ -684,6 +694,12 @@ window.matchMedia || (window.matchMedia = function() {
 
 /***/ },
 /* 6 */
+/***/ function(module, exports) {
+
+	module.exports = jQuery;
+
+/***/ },
+/* 7 */
 /***/ function(module, exports) {
 
 	/**
@@ -718,14 +734,14 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var listCacheClear = __webpack_require__(99),
-	    listCacheDelete = __webpack_require__(100),
-	    listCacheGet = __webpack_require__(101),
-	    listCacheHas = __webpack_require__(102),
-	    listCacheSet = __webpack_require__(103);
+	var listCacheClear = __webpack_require__(102),
+	    listCacheDelete = __webpack_require__(103),
+	    listCacheGet = __webpack_require__(104),
+	    listCacheHas = __webpack_require__(105),
+	    listCacheSet = __webpack_require__(106);
 
 	/**
 	 * Creates an list cache object.
@@ -756,10 +772,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var eq = __webpack_require__(119);
+	var eq = __webpack_require__(122);
 
 	/**
 	 * Gets the index at which the `key` is found in `array` of key-value pairs.
@@ -783,10 +799,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isKeyable = __webpack_require__(96);
+	var isKeyable = __webpack_require__(99);
 
 	/**
 	 * Gets the data for `map`.
@@ -807,11 +823,11 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArray = __webpack_require__(2),
-	    isSymbol = __webpack_require__(14);
+	var isArray = __webpack_require__(3),
+	    isSymbol = __webpack_require__(15);
 
 	/** Used to match property names within property paths. */
 	var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
@@ -842,7 +858,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(5);
@@ -854,10 +870,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isSymbol = __webpack_require__(14);
+	var isSymbol = __webpack_require__(15);
 
 	/** Used as references for various `Number` constants. */
 	var INFINITY = 1 / 0;
@@ -881,7 +897,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	/** Used as references for various `Number` constants. */
@@ -923,10 +939,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObjectLike = __webpack_require__(6);
+	var isObjectLike = __webpack_require__(7);
 
 	/** `Object#toString` result references. */
 	var symbolTag = '[object Symbol]';
@@ -968,20 +984,36 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports) {
 
-	module.exports = jQuery;
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function (elem, eventType) {
+	  var event = void 0;
+	  if (document.createEvent) {
+	    event = new Event(eventType);
+	    elem.dispatchEvent(event);
+	  } else {
+	    event = document.createEventObject();
+	    event.eventType = eventType;
+	    elem.fireEvent('on' + eventType, event);
+	  }
+	};
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var mapCacheClear = __webpack_require__(104),
-	    mapCacheDelete = __webpack_require__(105),
-	    mapCacheGet = __webpack_require__(106),
-	    mapCacheHas = __webpack_require__(107),
-	    mapCacheSet = __webpack_require__(108);
+	var mapCacheClear = __webpack_require__(107),
+	    mapCacheDelete = __webpack_require__(108),
+	    mapCacheGet = __webpack_require__(109),
+	    mapCacheHas = __webpack_require__(110),
+	    mapCacheSet = __webpack_require__(111);
 
 	/**
 	 * Creates a map cache object to store key-value pairs.
@@ -1012,12 +1044,12 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isObject = __webpack_require__(4),
-	    now = __webpack_require__(126),
-	    toNumber = __webpack_require__(128);
+	    now = __webpack_require__(129),
+	    toNumber = __webpack_require__(131);
 
 	/** Used as the `TypeError` message for "Functions" methods. */
 	var FUNC_ERROR_TEXT = 'Expected a function';
@@ -1199,12 +1231,12 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getLength = __webpack_require__(84),
-	    isFunction = __webpack_require__(19),
-	    isLength = __webpack_require__(13);
+	var getLength = __webpack_require__(87),
+	    isFunction = __webpack_require__(20),
+	    isLength = __webpack_require__(14);
 
 	/**
 	 * Checks if `value` is array-like. A value is considered array-like if it's
@@ -1239,7 +1271,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isObject = __webpack_require__(4);
@@ -1288,15 +1320,15 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseHas = __webpack_require__(28),
-	    baseKeys = __webpack_require__(72),
-	    indexKeys = __webpack_require__(95),
-	    isArrayLike = __webpack_require__(18),
+	    baseKeys = __webpack_require__(75),
+	    indexKeys = __webpack_require__(98),
+	    isArrayLike = __webpack_require__(19),
 	    isIndex = __webpack_require__(34),
-	    isPrototype = __webpack_require__(98);
+	    isPrototype = __webpack_require__(101);
 
 	/**
 	 * Creates an array of the own enumerable property names of `object`.
@@ -1350,10 +1382,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var debounce = __webpack_require__(17),
+	var debounce = __webpack_require__(18),
 	    isObject = __webpack_require__(4);
 
 	/** Used as the `TypeError` message for "Functions" methods. */
@@ -1422,7 +1454,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1436,28 +1468,6 @@ window.matchMedia || (window.matchMedia = function() {
 	    return elem.getAttribute('data-' + attr);
 	  }
 	  return elem.dataset[attr];
-	};
-
-/***/ },
-/* 23 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	exports.default = function (elem, eventType) {
-	  var event = void 0;
-	  if (document.createEvent) {
-	    event = new Event(eventType);
-	    elem.dispatchEvent(event);
-	  } else {
-	    event = document.createEventObject();
-	    event.eventType = eventType;
-	    elem.fireEvent('on' + eventType, event);
-	  }
 	};
 
 /***/ },
@@ -1477,12 +1487,12 @@ window.matchMedia || (window.matchMedia = function() {
 /* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ListCache = __webpack_require__(7),
-	    stackClear = __webpack_require__(113),
-	    stackDelete = __webpack_require__(114),
-	    stackGet = __webpack_require__(115),
-	    stackHas = __webpack_require__(116),
-	    stackSet = __webpack_require__(117);
+	var ListCache = __webpack_require__(8),
+	    stackClear = __webpack_require__(116),
+	    stackDelete = __webpack_require__(117),
+	    stackGet = __webpack_require__(118),
+	    stackHas = __webpack_require__(119),
+	    stackSet = __webpack_require__(120);
 
 	/**
 	 * Creates a stack cache object to store key-value pairs.
@@ -1522,8 +1532,8 @@ window.matchMedia || (window.matchMedia = function() {
 /***/ function(module, exports, __webpack_require__) {
 
 	var castPath = __webpack_require__(31),
-	    isKey = __webpack_require__(10),
-	    toKey = __webpack_require__(12);
+	    isKey = __webpack_require__(11),
+	    toKey = __webpack_require__(13);
 
 	/**
 	 * The base implementation of `_.get` without support for default values.
@@ -1552,7 +1562,7 @@ window.matchMedia || (window.matchMedia = function() {
 /* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getPrototype = __webpack_require__(86);
+	var getPrototype = __webpack_require__(89);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -1584,9 +1594,9 @@ window.matchMedia || (window.matchMedia = function() {
 /* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsEqualDeep = __webpack_require__(68),
+	var baseIsEqualDeep = __webpack_require__(71),
 	    isObject = __webpack_require__(4),
-	    isObjectLike = __webpack_require__(6);
+	    isObjectLike = __webpack_require__(7);
 
 	/**
 	 * The base implementation of `_.isEqual` which supports partial comparisons
@@ -1640,8 +1650,8 @@ window.matchMedia || (window.matchMedia = function() {
 /* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArray = __webpack_require__(2),
-	    stringToPath = __webpack_require__(118);
+	var isArray = __webpack_require__(3),
+	    stringToPath = __webpack_require__(121);
 
 	/**
 	 * Casts `value` to a path array if it's not one.
@@ -1661,8 +1671,8 @@ window.matchMedia || (window.matchMedia = function() {
 /* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var SetCache = __webpack_require__(59),
-	    arraySome = __webpack_require__(63);
+	var SetCache = __webpack_require__(62),
+	    arraySome = __webpack_require__(66);
 
 	/** Used to compose bitmasks for comparison styles. */
 	var UNORDERED_COMPARE_FLAG = 1,
@@ -1878,7 +1888,7 @@ window.matchMedia || (window.matchMedia = function() {
 /* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArrayLikeObject = __webpack_require__(123);
+	var isArrayLikeObject = __webpack_require__(126);
 
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]';
@@ -1930,8 +1940,8 @@ window.matchMedia || (window.matchMedia = function() {
 /* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArray = __webpack_require__(2),
-	    isObjectLike = __webpack_require__(6);
+	var isArray = __webpack_require__(3),
+	    isObjectLike = __webpack_require__(7);
 
 	/** `Object#toString` result references. */
 	var stringTag = '[object String]';
@@ -2172,12 +2182,12 @@ window.matchMedia || (window.matchMedia = function() {
 	  }
 	};
 
-	var _forEach = __webpack_require__(3);
+	var _forEach = __webpack_require__(2);
 
 	var _forEach2 = _interopRequireDefault(_forEach);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
 /* 41 */
@@ -2266,23 +2276,23 @@ window.matchMedia || (window.matchMedia = function() {
 	  }
 	};
 
-	var _forEach = __webpack_require__(3);
+	var _forEach = __webpack_require__(2);
 
 	var _forEach2 = _interopRequireDefault(_forEach);
 
-	var _readCookie = __webpack_require__(49);
+	var _readCookie = __webpack_require__(51);
 
 	var _readCookie2 = _interopRequireDefault(_readCookie);
 
-	var _dataset = __webpack_require__(22);
+	var _dataset = __webpack_require__(23);
 
 	var _dataset2 = _interopRequireDefault(_dataset);
 
-	var _createCookie = __webpack_require__(42);
+	var _createCookie = __webpack_require__(43);
 
 	var _createCookie2 = _interopRequireDefault(_createCookie);
 
-	var _getDomain = __webpack_require__(44);
+	var _getDomain = __webpack_require__(46);
 
 	var _getDomain2 = _interopRequireDefault(_getDomain);
 
@@ -2290,6 +2300,114 @@ window.matchMedia || (window.matchMedia = function() {
 
 /***/ },
 /* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  var $signupForms = $('.bsdtools-signup');
+	  var errorMsg = 'Please enter your email, zip code, and select at least one age group to receive updates for.';
+
+	  /**
+	  * Validate form before unpausing
+	  * @param {object} event - jQuery event object
+	  * @param {object} formData - Serialized form data
+	  */
+	  function handleValidation(event, formData) {
+	    var noErrors = true;
+	    var $form = $(this);
+	    $form.find('.is-error').removeClass('is-error');
+	    $form.find('.bsdtools-error').html('');
+	    var $requiredFields = $form.find('[required]');
+
+	    /**
+	    * Validate each field. Required fields must be non-empty and contain the
+	    * right type of data.
+	    * @function
+	    */
+	    $requiredFields.each(function () {
+	      var fieldName = $(this).attr('name');
+	      if (typeof formData[fieldName] === 'undefined') {
+	        noErrors = false;
+	        $(this).addClass('is-error');
+	      } else {
+	        var fieldType = $(this).attr('type');
+	        var emregex = new RegExp("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", "i");
+	        var usregex = new RegExp(/^\d{5}(-\d{4})?$/i);
+	        if (fieldType === 'text' && formData[fieldName].trim() === '' || fieldType === 'email' && !emregex.test(formData[fieldName]) || fieldName === 'zip' && !usregex.test(formData[fieldName]) || fieldType === 'checkbox' && !formData[fieldName].length) {
+	          noErrors = false;
+	          $(this).addClass('is-error');
+	        }
+	      }
+	    });
+	    if (noErrors) {
+	      // Tools expects a hidden field for _all_ checkboxes, not just checked ones
+	      $form.find('[type="checkbox"]').each(function (index) {
+	        var checkboxValue = $(this).prop('checked') ? $(this).attr('value') : '';
+	        var checkboxName = $(this).attr('name');
+	        checkboxName = checkboxName.substring(2, checkboxName.length - 2);
+	        $form.append('<input type="hidden" name="' + checkboxName + '[' + index + ']" value="' + checkboxValue + '">');
+	      });
+	      $form.data('isPaused', false);
+	      $form.trigger('submit.bsdsignup');
+	    } else {
+	      $form.find('.bsdtools-error').html('<p>' + errorMsg + '</p>');
+	    }
+	  }
+
+	  /**
+	  * Handle errors returned by the BSD Tools API
+	  * @param {object} event - jQuery event object
+	  * @param {object} errorJSON - Original response from the Tools, with a cached
+	  * jQuery reference to the form field
+	  */
+	  function handleErrors(event, errorJSON) {
+	    var $form = $(this);
+	    if (errorJSON && errorJSON.field_errors) {
+	      /**
+	      * Add error styling to the field with an error
+	      * @function
+	      * @param {integer} index - Current position in the set of errors
+	      * @param {object} error - Error object
+	      */
+	      $.each(errorJSON.field_errors, function (index, error) {
+	        error.$field.addClass('is-error');
+	        $form.find('.bsdtools-error').html('<p>' + error.message + '</p>');
+	      });
+	    } else {
+	      $form.find('.bsdtools-error').html('<p>Your signup could not be completed.</p>');
+	    }
+	  }
+
+	  /**
+	  * Handle success response from the BSD Tools API
+	  */
+	  function handleSuccess() {
+	    $(this).html('<p>Thank you for signing up.</p>');
+	  }
+
+	  if ($signupForms.length) {
+	    /* eslint-disable camelcase */
+	    $signupForms.bsdSignup({
+	      no_redirect: true,
+	      startPaused: true
+	    }).on('bsd-ispaused', $.proxy(handleValidation, this)).on('bsd-error', $.proxy(handleErrors, this)).on('bsd-success', $.proxy(handleSuccess, this));
+	    /* eslint-enable camelcase */
+	  }
+	};
+
+	/**
+	* Validate a form and submit via the signup API
+	*/
+	__webpack_require__(56);
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+
+/***/ },
+/* 43 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2304,7 +2422,7 @@ window.matchMedia || (window.matchMedia = function() {
 	};
 
 /***/ },
-/* 43 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2401,22 +2519,73 @@ window.matchMedia || (window.matchMedia = function() {
 	  }
 	};
 
-	var _forEach = __webpack_require__(3);
+	var _forEach = __webpack_require__(2);
 
 	var _forEach2 = _interopRequireDefault(_forEach);
 
-	var _throttle = __webpack_require__(21);
+	var _throttle = __webpack_require__(22);
 
 	var _throttle2 = _interopRequireDefault(_throttle);
 
-	var _dispatchEvent = __webpack_require__(23);
+	var _dispatchEvent = __webpack_require__(16);
 
 	var _dispatchEvent2 = _interopRequireDefault(_dispatchEvent);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 44 */
+/* 45 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  /**
+	  * Add the filled class when input is focused
+	  * @param {object} event - The event object
+	  */
+	  function handleFocus(event) {
+	    var wrapperElem = event.target.parentNode;
+	    wrapperElem.classList.add('is-filled');
+	  }
+
+	  /**
+	  * Remove the filled class when input is blurred if it does not contain text
+	  * @param {object} event - The event object
+	  */
+	  function handleBlur(event) {
+	    if (event.target.value.trim() === '') {
+	      var wrapperElem = event.target.parentNode;
+	      wrapperElem.classList.remove('is-filled');
+	    }
+	  }
+
+	  var inputs = document.querySelectorAll('.signup-form__field');
+	  if (inputs.length) {
+	    (0, _forEach2.default)(inputs, function (inputElem) {
+	      inputElem.addEventListener('focus', handleFocus);
+	      inputElem.addEventListener('blur', handleBlur);
+	      (0, _dispatchEvent2.default)(inputElem, 'blur');
+	    });
+	  }
+	};
+
+	var _forEach = __webpack_require__(2);
+
+	var _forEach2 = _interopRequireDefault(_forEach);
+
+	var _dispatchEvent = __webpack_require__(16);
+
+	var _dispatchEvent2 = _interopRequireDefault(_dispatchEvent);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 46 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2444,7 +2613,7 @@ window.matchMedia || (window.matchMedia = function() {
 	};
 
 /***/ },
-/* 45 */
+/* 47 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2482,7 +2651,7 @@ window.matchMedia || (window.matchMedia = function() {
 	};
 
 /***/ },
-/* 46 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2516,14 +2685,14 @@ window.matchMedia || (window.matchMedia = function() {
 	  }
 	};
 
-	var _forEach = __webpack_require__(3);
+	var _forEach = __webpack_require__(2);
 
 	var _forEach2 = _interopRequireDefault(_forEach);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 47 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2560,14 +2729,14 @@ window.matchMedia || (window.matchMedia = function() {
 	  }
 	};
 
-	var _forEach = __webpack_require__(3);
+	var _forEach = __webpack_require__(2);
 
 	var _forEach2 = _interopRequireDefault(_forEach);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 48 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2743,22 +2912,22 @@ window.matchMedia || (window.matchMedia = function() {
 	  }
 	};
 
-	var _throttle = __webpack_require__(21);
+	var _throttle = __webpack_require__(22);
 
 	var _throttle2 = _interopRequireDefault(_throttle);
 
-	var _debounce = __webpack_require__(17);
+	var _debounce = __webpack_require__(18);
 
 	var _debounce2 = _interopRequireDefault(_debounce);
 
-	var _dispatchEvent = __webpack_require__(23);
+	var _dispatchEvent = __webpack_require__(16);
 
 	var _dispatchEvent2 = _interopRequireDefault(_dispatchEvent);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 49 */
+/* 51 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2772,7 +2941,7 @@ window.matchMedia || (window.matchMedia = function() {
 	};
 
 /***/ },
-/* 50 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -2789,10 +2958,10 @@ window.matchMedia || (window.matchMedia = function() {
 	    });
 	  }
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 51 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2854,14 +3023,14 @@ window.matchMedia || (window.matchMedia = function() {
 	  }
 	};
 
-	var _forEach = __webpack_require__(3);
+	var _forEach = __webpack_require__(2);
 
 	var _forEach2 = _interopRequireDefault(_forEach);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 52 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -2881,15 +3050,15 @@ window.matchMedia || (window.matchMedia = function() {
 	  }
 	};
 
-	var _throttle = __webpack_require__(21);
+	var _throttle = __webpack_require__(22);
 
 	var _throttle2 = _interopRequireDefault(_throttle);
 
-	var _debounce = __webpack_require__(17);
+	var _debounce = __webpack_require__(18);
 
 	var _debounce2 = _interopRequireDefault(_debounce);
 
-	var _imagesready = __webpack_require__(54);
+	var _imagesready = __webpack_require__(57);
 
 	var _imagesready2 = _interopRequireDefault(_imagesready);
 
@@ -3076,10 +3245,10 @@ window.matchMedia || (window.matchMedia = function() {
 	  * Sticky Nav module
 	  * @module modules/stickyNav
 	  */
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 53 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3143,18 +3312,229 @@ window.matchMedia || (window.matchMedia = function() {
 	  }
 	};
 
-	var _forEach = __webpack_require__(3);
+	var _forEach = __webpack_require__(2);
 
 	var _forEach2 = _interopRequireDefault(_forEach);
 
-	var _dataset = __webpack_require__(22);
+	var _dataset = __webpack_require__(23);
 
 	var _dataset2 = _interopRequireDefault(_dataset);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 54 */
+/* 56 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(jQuery) {'use strict';
+
+	/*lets define our scope*/
+	(function ($, wlocation, undefined) {
+
+	    //let's make it easy to jQuery's form array into a data object
+	    $.fn.serializeObject = function () {
+	        var o = {},
+	            a = this.serializeArray();
+	        $.each(a, function () {
+	            if (o[this.name] !== undefined) {
+	                if (!o[this.name].push) {
+	                    o[this.name] = [o[this.name]];
+	                }
+	                o[this.name].push(this.value || '');
+	            } else {
+	                o[this.name] = this.value || '';
+	            }
+	        });
+	        return o;
+	    };
+
+	    var interactiveValidity = 'reportValidity' in $('<form/>').get()[0],
+	        //check whether the browser supports interactive validation messages
+	    pluginname = 'bsdSignup',
+	        //the plugin we plan to create
+	    gup = function gup(name) {
+	        var gupregex = new RegExp("[\\?&]" + name.replace(/(\[|\])/g, "\\$1") + "=([^&#]*)"),
+	            results = gupregex.exec(wlocation.href);
+	        return results === null ? "" : results[1];
+	    },
+	        //allow us to get url parameters
+	    sourceString = 'source',
+	        subsourceString = 'subsource',
+	        urlsource = gup(sourceString) || gup('fb_ref'),
+	        //any source we can get from the url
+	    urlsubsource = gup(subsourceString); //any subsource we can get from the url
+
+	    function parseURL(url) {
+	        var p = document.createElement('a'); //create a special DOM node for testing
+	        p.href = url; //stick a link into it
+	        //p.pathname = p.pathname.replace(/(^\/?)/,"/");//IE fix
+	        return p; //return the DOM node's native concept of itself, which will expand any relative links into real ones
+	    }
+
+	    // ideally the api returns informative errors, but in the case of failures, let's try to parse the error json, if any, and then make sure we have a standard response if all else fails
+	    function errorFilter(e) {
+	        console.log(e);
+	        var msg = 'No response from sever';
+	        if (e && e.responseJSON) {
+	            return e.responseJSON;
+	        } else {
+	            try {
+	                return $.parseJSON(e.responseText);
+	            } catch (error) {
+	                return { status: 'fail', code: 503, message: msg, error: msg };
+	            }
+	        }
+	    }
+
+	    function successFilter(response) {
+	        return !response || response.status !== "success" ? $.Deferred().rejectWith(this, [response]) : response;
+	    }
+
+	    // allow any changes to a field that was invalid to clear that custom Error value
+	    function recheckIfThisIsStillInvalid($field, field, badinput) {
+	        $field.one('change keyup', function () {
+	            if ($field.val() !== badinput) {
+	                field.setCustomValidity(''); //we've now cleared the custom error
+	            }
+	        });
+	    }
+
+	    function formSuccess(result) {
+	        //"this" is the jquery wrapped $form
+	        console.log('d', this.data());
+	        this.trigger('bsd-success', [result]);
+	        if (this.data('bsdsignup').no_redirect !== true && result.thanks_url) {
+	            wlocation.href = result.thanks_url;
+	        }
+	    }
+
+	    function formFailure(e) {
+	        //"this" is the jquery wrapped $form
+	        var $form = this,
+	            funerror = false,
+	            config = this.data('bsdsignup'),
+	            errorsAsObject = {};
+	        if (e && e.field_errors && e.field_errors.length) {
+	            $.each(e.field_errors, function (i, err) {
+	                var $errField = $form.find('[name="' + err.field + '"]'),
+	                    errField = $errField.get()[0];
+	                if (err.field === "submit-btn") {
+	                    e.message = err.message;
+	                } else if (errField && errField.setCustomValidity && interactiveValidity && !$form[0].noValidate && !config.no_html5validate) {
+	                    errField.setCustomValidity(err.message); //this sets an additional constraint beyond what the browser validated
+	                    recheckIfThisIsStillInvalid($errField, errField, err.message); //and since we don't know what it is, we at least check to make sure it's no longer what the server has already rejected
+	                    funerror = true;
+	                }
+	                err.$field = $errField;
+	                errorsAsObject[err.field] = err.message;
+	                $errField.trigger('invalid', err.message); //and now let's trigger a real event that someone can use to populatre error classes
+	            });
+	            if (funerror && interactiveValidity) {
+	                //for this to work, triggering the native validation, we'd need to hit the submit button, not just do a $form.submit()
+	                $form.find('[type="submit"],[type="image"]').eq(0).click();
+	            }
+	        }
+	        $form.trigger('bsd-error', [e, errorsAsObject]);
+	    }
+
+	    //create a replacement for actually submitting the form directly
+	    function jsapiSubmit($form, action, ops) {
+	        return function (e) {
+	            //we're going to use jQuery's ajax to actually check if a request is crossDomain or not, rather than using our own test. Then if it is, and the browser doesn't support that, we'll just cancel the request and let the form submit normally
+	            var data = $form.serializeObject();
+	            if ($form.data('isPaused') !== true) {
+	                //allow a means to prevent submission entirely
+	                $form.data('isPaused', true);
+	                var apiaction = action.replace(/\/page\/(signup|s)/, '/page/sapi'),
+	                    request = $.ajax({
+	                    url: apiaction, //where to post the form
+	                    type: 'POST',
+	                    method: 'POST',
+	                    dataType: 'json', //no jsonp
+	                    timeout: ops.timeout || 3e4,
+	                    context: $form, //set the value of "this" for all deferred functions
+	                    data: data,
+	                    beforeSend: function beforeSend(jqxhr, requestsettings) {
+	                        console.log('beforesend check ', jqxhr, requestsettings);
+	                        console.log(' url: ', requestsettings.url, ' xd?: ', requestsettings.crossDomain, ' cors?: ', $.support.cors, ' have oldiexdr support?: ', $.oldiexdr, ' oldiexdr and protocol match?: ', $.oldiexdr && parseURL(requestsettings.url).protocol === wlocation.protocol);
+	                        console.log('data', requestsettings.data);
+	                        if (ops.proxyall || requestsettings.crossDomain && !$.support.cors && !($.oldiexdr && parseURL(requestsettings.url).protocol === wlocation.protocol)) {
+	                            console.log('using proxy', ops.oldproxy);
+	                            if (ops.oldproxy || ops.proxyall) {
+	                                requestsettings.url = ops.oldproxy || ops.proxyall;
+	                                requestsettings.crossDomain = false;
+	                                requestsettings.data += '&purl=' + apiaction;
+	                                // console.log(function(){
+	                                //     window.alert('using proxy:'+ops.oldproxy+' proxying: '+apiaction);
+	                                // });
+	                            } else {
+	                                    return false; //request is cors but the browser can't handle that, so let the normal form behavior proceed
+	                                }
+	                        }
+	                        e.preventDefault(); //cancel the native form submit behavior
+	                    }
+	                });
+
+	                //only add the handlers if the request actually happened
+	                if (request.statusText !== "canceled") {
+	                    $form.trigger('bsd-submit', data);
+	                    request.then(successFilter, errorFilter).always(function () {
+	                        $form.data('isPaused', false);
+	                    }).done(formSuccess).fail(formFailure);
+	                }
+	            } else {
+	                e.preventDefault(); //cancel the native form submit behavior
+	                $form.trigger('bsd-ispaused', data);
+	            }
+	        };
+	    }
+
+	    //handle making sure sources in the url end up in the form, like in a native tools signup form
+	    function normalizeSourceField($form, name, external) {
+	        var $field = $form.find('[name="' + name + '"]'),
+	            oldval;
+	        if (!$field.length) {
+	            $field = $('<input/>', { 'type': 'hidden', 'name': name }).appendTo($form);
+	        }
+	        if (external) {
+	            oldval = $field.val();
+	            $field.val((oldval !== "" ? oldval + ',' : '') + external);
+	        }
+	    }
+
+	    /*create the plugin*/
+	    $.fn.bsdSignup = function (ops) {
+	        ops = ops || {};
+	        return this.each(function () {
+	            var $form = $(this),
+	                action = $form.attr('action'); //action or self (self is pretty unlikely here, but bwhatever)
+	            if (ops === "remove") {
+	                $form.off('submit.bsdsignup').removeData('bsdsignup isPaused'); //removes the plugin entirely
+	            } else {
+	                    if ($form.is('form') && action.indexOf('page/s') > -1) {
+	                        //only bother if key elements are present
+	                        if ($form.data('bsdsourced') !== true && !ops.nosource) {
+	                            normalizeSourceField($form, sourceString, urlsource);
+	                            normalizeSourceField($form, subsourceString, urlsubsource);
+	                            $form.data('bsdsourced', true);
+	                        }
+
+	                        $form.data('bsdsignup', ops);
+	                        if (ops.startPaused) {
+	                            $form.data('isPaused', true);
+	                        }
+
+	                        $form.on('submit.bsdsignup', jsapiSubmit($form, action, ops));
+	                        console.log('init bsdSignup', { form: $form, interactive_validation: interactiveValidity, options: ops, action: ops.proxy || action });
+	                    }
+	                }
+	        });
+	    };
+	})(jQuery, window.location);
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+
+/***/ },
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function($) {/* imagesready v0.2.2 - 2015-07-04T06:22:14.435Z - https://github.com/r-park/images-ready */
@@ -3819,10 +4199,10 @@ window.matchMedia || (window.matchMedia = function() {
 	return imagesReady;
 	}));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
 
 /***/ },
-/* 55 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(5),
@@ -3835,14 +4215,14 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 56 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var hashClear = __webpack_require__(90),
-	    hashDelete = __webpack_require__(91),
-	    hashGet = __webpack_require__(92),
-	    hashHas = __webpack_require__(93),
-	    hashSet = __webpack_require__(94);
+	var hashClear = __webpack_require__(93),
+	    hashDelete = __webpack_require__(94),
+	    hashGet = __webpack_require__(95),
+	    hashHas = __webpack_require__(96),
+	    hashSet = __webpack_require__(97);
 
 	/**
 	 * Creates a hash object.
@@ -3873,7 +4253,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 57 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(5),
@@ -3886,7 +4266,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 58 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(5),
@@ -3899,12 +4279,12 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 59 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var MapCache = __webpack_require__(16),
-	    setCacheAdd = __webpack_require__(110),
-	    setCacheHas = __webpack_require__(111);
+	var MapCache = __webpack_require__(17),
+	    setCacheAdd = __webpack_require__(113),
+	    setCacheHas = __webpack_require__(114);
 
 	/**
 	 *
@@ -3932,7 +4312,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 60 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var root = __webpack_require__(1);
@@ -3944,7 +4324,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 61 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(5),
@@ -3957,7 +4337,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 62 */
+/* 65 */
 /***/ function(module, exports) {
 
 	/**
@@ -3985,7 +4365,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 63 */
+/* 66 */
 /***/ function(module, exports) {
 
 	/**
@@ -4014,11 +4394,11 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 64 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseForOwn = __webpack_require__(66),
-	    createBaseEach = __webpack_require__(80);
+	var baseForOwn = __webpack_require__(69),
+	    createBaseEach = __webpack_require__(83);
 
 	/**
 	 * The base implementation of `_.forEach` without support for iteratee shorthands.
@@ -4034,10 +4414,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 65 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var createBaseFor = __webpack_require__(81);
+	var createBaseFor = __webpack_require__(84);
 
 	/**
 	 * The base implementation of `baseForOwn` which iterates over `object`
@@ -4056,11 +4436,11 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 66 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseFor = __webpack_require__(65),
-	    keys = __webpack_require__(20);
+	var baseFor = __webpack_require__(68),
+	    keys = __webpack_require__(21);
 
 	/**
 	 * The base implementation of `_.forOwn` without support for iteratee shorthands.
@@ -4078,7 +4458,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 67 */
+/* 70 */
 /***/ function(module, exports) {
 
 	/**
@@ -4097,17 +4477,17 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 68 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Stack = __webpack_require__(25),
 	    equalArrays = __webpack_require__(32),
-	    equalByTag = __webpack_require__(82),
-	    equalObjects = __webpack_require__(83),
-	    getTag = __webpack_require__(87),
-	    isArray = __webpack_require__(2),
+	    equalByTag = __webpack_require__(85),
+	    equalObjects = __webpack_require__(86),
+	    getTag = __webpack_require__(90),
+	    isArray = __webpack_require__(3),
 	    isHostObject = __webpack_require__(33),
-	    isTypedArray = __webpack_require__(124);
+	    isTypedArray = __webpack_require__(127);
 
 	/** Used to compose bitmasks for comparison styles. */
 	var PARTIAL_COMPARE_FLAG = 2;
@@ -4185,7 +4565,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 69 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Stack = __webpack_require__(25),
@@ -4253,12 +4633,12 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 70 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(19),
+	var isFunction = __webpack_require__(20),
 	    isHostObject = __webpack_require__(33),
-	    isMasked = __webpack_require__(97),
+	    isMasked = __webpack_require__(100),
 	    isObject = __webpack_require__(4),
 	    toSource = __webpack_require__(37);
 
@@ -4306,14 +4686,14 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 71 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseMatches = __webpack_require__(73),
-	    baseMatchesProperty = __webpack_require__(74),
-	    identity = __webpack_require__(122),
-	    isArray = __webpack_require__(2),
-	    property = __webpack_require__(127);
+	var baseMatches = __webpack_require__(76),
+	    baseMatchesProperty = __webpack_require__(77),
+	    identity = __webpack_require__(125),
+	    isArray = __webpack_require__(3),
+	    property = __webpack_require__(130);
 
 	/**
 	 * The base implementation of `_.iteratee`.
@@ -4343,7 +4723,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 72 */
+/* 75 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -4365,11 +4745,11 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 73 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsMatch = __webpack_require__(69),
-	    getMatchData = __webpack_require__(85),
+	var baseIsMatch = __webpack_require__(72),
+	    getMatchData = __webpack_require__(88),
 	    matchesStrictComparable = __webpack_require__(36);
 
 	/**
@@ -4393,16 +4773,16 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 74 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseIsEqual = __webpack_require__(29),
-	    get = __webpack_require__(120),
-	    hasIn = __webpack_require__(121),
-	    isKey = __webpack_require__(10),
+	    get = __webpack_require__(123),
+	    hasIn = __webpack_require__(124),
+	    isKey = __webpack_require__(11),
 	    isStrictComparable = __webpack_require__(35),
 	    matchesStrictComparable = __webpack_require__(36),
-	    toKey = __webpack_require__(12);
+	    toKey = __webpack_require__(13);
 
 	/** Used to compose bitmasks for comparison styles. */
 	var UNORDERED_COMPARE_FLAG = 1,
@@ -4432,7 +4812,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 75 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseGet = __webpack_require__(27);
@@ -4454,7 +4834,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 76 */
+/* 79 */
 /***/ function(module, exports) {
 
 	/**
@@ -4480,11 +4860,11 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 77 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(26),
-	    isSymbol = __webpack_require__(14);
+	    isSymbol = __webpack_require__(15);
 
 	/** Used as references for various `Number` constants. */
 	var INFINITY = 1 / 0;
@@ -4517,7 +4897,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 78 */
+/* 81 */
 /***/ function(module, exports) {
 
 	/**
@@ -4535,7 +4915,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 79 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var root = __webpack_require__(1);
@@ -4547,10 +4927,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 80 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArrayLike = __webpack_require__(18);
+	var isArrayLike = __webpack_require__(19);
 
 	/**
 	 * Creates a `baseEach` or `baseEachRight` function.
@@ -4585,7 +4965,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 81 */
+/* 84 */
 /***/ function(module, exports) {
 
 	/**
@@ -4616,14 +4996,14 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 82 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(26),
-	    Uint8Array = __webpack_require__(60),
+	    Uint8Array = __webpack_require__(63),
 	    equalArrays = __webpack_require__(32),
-	    mapToArray = __webpack_require__(109),
-	    setToArray = __webpack_require__(112);
+	    mapToArray = __webpack_require__(112),
+	    setToArray = __webpack_require__(115);
 
 	/** Used to compose bitmasks for comparison styles. */
 	var UNORDERED_COMPARE_FLAG = 1,
@@ -4736,11 +5116,11 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 83 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseHas = __webpack_require__(28),
-	    keys = __webpack_require__(20);
+	    keys = __webpack_require__(21);
 
 	/** Used to compose bitmasks for comparison styles. */
 	var PARTIAL_COMPARE_FLAG = 2;
@@ -4825,7 +5205,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 84 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseProperty = __webpack_require__(30);
@@ -4847,11 +5227,11 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 85 */
+/* 88 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isStrictComparable = __webpack_require__(35),
-	    keys = __webpack_require__(20);
+	    keys = __webpack_require__(21);
 
 	/**
 	 * Gets the property names, values, and compare flags of `object`.
@@ -4877,7 +5257,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 86 */
+/* 89 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -4898,14 +5278,14 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 87 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var DataView = __webpack_require__(55),
+	var DataView = __webpack_require__(58),
 	    Map = __webpack_require__(24),
-	    Promise = __webpack_require__(57),
-	    Set = __webpack_require__(58),
-	    WeakMap = __webpack_require__(61),
+	    Promise = __webpack_require__(60),
+	    Set = __webpack_require__(61),
+	    WeakMap = __webpack_require__(64),
 	    toSource = __webpack_require__(37);
 
 	/** `Object#toString` result references. */
@@ -4974,7 +5354,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 88 */
+/* 91 */
 /***/ function(module, exports) {
 
 	/**
@@ -4993,17 +5373,17 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 89 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var castPath = __webpack_require__(31),
 	    isArguments = __webpack_require__(38),
-	    isArray = __webpack_require__(2),
+	    isArray = __webpack_require__(3),
 	    isIndex = __webpack_require__(34),
-	    isKey = __webpack_require__(10),
-	    isLength = __webpack_require__(13),
+	    isKey = __webpack_require__(11),
+	    isLength = __webpack_require__(14),
 	    isString = __webpack_require__(39),
-	    toKey = __webpack_require__(12);
+	    toKey = __webpack_require__(13);
 
 	/**
 	 * Checks if `path` exists on `object`.
@@ -5040,10 +5420,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 90 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var nativeCreate = __webpack_require__(11);
+	var nativeCreate = __webpack_require__(12);
 
 	/**
 	 * Removes all key-value entries from the hash.
@@ -5060,7 +5440,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 91 */
+/* 94 */
 /***/ function(module, exports) {
 
 	/**
@@ -5081,10 +5461,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 92 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var nativeCreate = __webpack_require__(11);
+	var nativeCreate = __webpack_require__(12);
 
 	/** Used to stand-in for `undefined` hash values. */
 	var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -5117,10 +5497,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 93 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var nativeCreate = __webpack_require__(11);
+	var nativeCreate = __webpack_require__(12);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -5146,10 +5526,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 94 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var nativeCreate = __webpack_require__(11);
+	var nativeCreate = __webpack_require__(12);
 
 	/** Used to stand-in for `undefined` hash values. */
 	var HASH_UNDEFINED = '__lodash_hash_undefined__';
@@ -5174,13 +5554,13 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 95 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseTimes = __webpack_require__(76),
+	var baseTimes = __webpack_require__(79),
 	    isArguments = __webpack_require__(38),
-	    isArray = __webpack_require__(2),
-	    isLength = __webpack_require__(13),
+	    isArray = __webpack_require__(3),
+	    isLength = __webpack_require__(14),
 	    isString = __webpack_require__(39);
 
 	/**
@@ -5204,7 +5584,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 96 */
+/* 99 */
 /***/ function(module, exports) {
 
 	/**
@@ -5225,10 +5605,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 97 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var coreJsData = __webpack_require__(79);
+	var coreJsData = __webpack_require__(82);
 
 	/** Used to detect methods masquerading as native. */
 	var maskSrcKey = (function() {
@@ -5251,7 +5631,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 98 */
+/* 101 */
 /***/ function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -5275,7 +5655,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 99 */
+/* 102 */
 /***/ function(module, exports) {
 
 	/**
@@ -5293,10 +5673,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 100 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assocIndexOf = __webpack_require__(8);
+	var assocIndexOf = __webpack_require__(9);
 
 	/** Used for built-in method references. */
 	var arrayProto = Array.prototype;
@@ -5333,10 +5713,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 101 */
+/* 104 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assocIndexOf = __webpack_require__(8);
+	var assocIndexOf = __webpack_require__(9);
 
 	/**
 	 * Gets the list cache value for `key`.
@@ -5358,10 +5738,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 102 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assocIndexOf = __webpack_require__(8);
+	var assocIndexOf = __webpack_require__(9);
 
 	/**
 	 * Checks if a list cache value for `key` exists.
@@ -5380,10 +5760,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 103 */
+/* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assocIndexOf = __webpack_require__(8);
+	var assocIndexOf = __webpack_require__(9);
 
 	/**
 	 * Sets the list cache `key` to `value`.
@@ -5411,11 +5791,11 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 104 */
+/* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Hash = __webpack_require__(56),
-	    ListCache = __webpack_require__(7),
+	var Hash = __webpack_require__(59),
+	    ListCache = __webpack_require__(8),
 	    Map = __webpack_require__(24);
 
 	/**
@@ -5437,10 +5817,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 105 */
+/* 108 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getMapData = __webpack_require__(9);
+	var getMapData = __webpack_require__(10);
 
 	/**
 	 * Removes `key` and its value from the map.
@@ -5459,10 +5839,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 106 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getMapData = __webpack_require__(9);
+	var getMapData = __webpack_require__(10);
 
 	/**
 	 * Gets the map value for `key`.
@@ -5481,10 +5861,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 107 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getMapData = __webpack_require__(9);
+	var getMapData = __webpack_require__(10);
 
 	/**
 	 * Checks if a map value for `key` exists.
@@ -5503,10 +5883,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 108 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getMapData = __webpack_require__(9);
+	var getMapData = __webpack_require__(10);
 
 	/**
 	 * Sets the map `key` to `value`.
@@ -5527,7 +5907,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 109 */
+/* 112 */
 /***/ function(module, exports) {
 
 	/**
@@ -5551,7 +5931,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 110 */
+/* 113 */
 /***/ function(module, exports) {
 
 	/** Used to stand-in for `undefined` hash values. */
@@ -5576,7 +5956,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 111 */
+/* 114 */
 /***/ function(module, exports) {
 
 	/**
@@ -5596,7 +5976,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 112 */
+/* 115 */
 /***/ function(module, exports) {
 
 	/**
@@ -5620,10 +6000,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 113 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ListCache = __webpack_require__(7);
+	var ListCache = __webpack_require__(8);
 
 	/**
 	 * Removes all key-value entries from the stack.
@@ -5640,7 +6020,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 114 */
+/* 117 */
 /***/ function(module, exports) {
 
 	/**
@@ -5660,7 +6040,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 115 */
+/* 118 */
 /***/ function(module, exports) {
 
 	/**
@@ -5680,7 +6060,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 116 */
+/* 119 */
 /***/ function(module, exports) {
 
 	/**
@@ -5700,11 +6080,11 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 117 */
+/* 120 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var ListCache = __webpack_require__(7),
-	    MapCache = __webpack_require__(16);
+	var ListCache = __webpack_require__(8),
+	    MapCache = __webpack_require__(17);
 
 	/** Used as the size to enable large array optimizations. */
 	var LARGE_ARRAY_SIZE = 200;
@@ -5732,11 +6112,11 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 118 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var memoize = __webpack_require__(125),
-	    toString = __webpack_require__(129);
+	var memoize = __webpack_require__(128),
+	    toString = __webpack_require__(132);
 
 	/** Used to match property names within property paths. */
 	var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(\.|\[\])(?:\4|$))/g;
@@ -5763,7 +6143,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 119 */
+/* 122 */
 /***/ function(module, exports) {
 
 	/**
@@ -5806,7 +6186,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 120 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseGet = __webpack_require__(27);
@@ -5845,11 +6225,11 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 121 */
+/* 124 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseHasIn = __webpack_require__(67),
-	    hasPath = __webpack_require__(89);
+	var baseHasIn = __webpack_require__(70),
+	    hasPath = __webpack_require__(92);
 
 	/**
 	 * Checks if `path` is a direct or inherited property of `object`.
@@ -5885,7 +6265,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 122 */
+/* 125 */
 /***/ function(module, exports) {
 
 	/**
@@ -5912,11 +6292,11 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 123 */
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArrayLike = __webpack_require__(18),
-	    isObjectLike = __webpack_require__(6);
+	var isArrayLike = __webpack_require__(19),
+	    isObjectLike = __webpack_require__(7);
 
 	/**
 	 * This method is like `_.isArrayLike` except that it also checks if `value`
@@ -5951,11 +6331,11 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 124 */
+/* 127 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isLength = __webpack_require__(13),
-	    isObjectLike = __webpack_require__(6);
+	var isLength = __webpack_require__(14),
+	    isObjectLike = __webpack_require__(7);
 
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]',
@@ -6037,10 +6417,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 125 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var MapCache = __webpack_require__(16);
+	var MapCache = __webpack_require__(17);
 
 	/** Used as the `TypeError` message for "Functions" methods. */
 	var FUNC_ERROR_TEXT = 'Expected a function';
@@ -6116,7 +6496,7 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 126 */
+/* 129 */
 /***/ function(module, exports) {
 
 	/**
@@ -6143,13 +6523,13 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 127 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseProperty = __webpack_require__(30),
-	    basePropertyDeep = __webpack_require__(75),
-	    isKey = __webpack_require__(10),
-	    toKey = __webpack_require__(12);
+	    basePropertyDeep = __webpack_require__(78),
+	    isKey = __webpack_require__(11),
+	    toKey = __webpack_require__(13);
 
 	/**
 	 * Creates a function that returns the value at `path` of a given object.
@@ -6181,12 +6561,12 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 128 */
+/* 131 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(19),
+	var isFunction = __webpack_require__(20),
 	    isObject = __webpack_require__(4),
-	    isSymbol = __webpack_require__(14);
+	    isSymbol = __webpack_require__(15);
 
 	/** Used as references for various `Number` constants. */
 	var NAN = 0 / 0;
@@ -6254,10 +6634,10 @@ window.matchMedia || (window.matchMedia = function() {
 
 
 /***/ },
-/* 129 */
+/* 132 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseToString = __webpack_require__(77);
+	var baseToString = __webpack_require__(80);
 
 	/**
 	 * Converts `value` to a string. An empty string is returned for `null`

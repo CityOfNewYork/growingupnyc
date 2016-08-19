@@ -27,22 +27,6 @@ while ( tribe_events_have_month_days() ) : tribe_events_the_month_day();
     foreach ($day['events']->posts as $post) {
       $passed_filtering = true;
 
-      if( $cat_id > 0) {
-        if( !has_term( $cat_id, 'tribe_events_cat', $post->ID ) ) {
-          $passed_filtering = false;
-        }
-      }
-      if( $age_id > 0) {
-        if(!has_term( $age_id, 'age_group', $post->ID)) {
-          $passed_filtering = false;
-        }
-      }
-      if( $borough_id > 0) {
-        if(!has_term( $borough_id, 'borough', $post->ID)) {
-          $passed_filtering = false;
-        }
-      }
-
       if($passed_filtering) {
         $event_posts[] = new GunyEvent($post);
       }

@@ -25,12 +25,7 @@ while ( tribe_events_have_month_days() ) : tribe_events_the_month_day();
     $event_posts = array();
 
     foreach ($day['events']->posts as $post) {
-      $passed_filtering = true;
-
-      if($passed_filtering) {
-        $event_posts[] = new GunyEvent($post);
-      }
-
+      $event_posts[] = new GunyEvent($post);
     }
 
     if(count($event_posts) > 0) {

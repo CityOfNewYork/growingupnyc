@@ -13,6 +13,7 @@ add_filter( 'query_vars', 'guny_add_query_vars' );
 
 /**
 * Intercept the Events Calendar query and add params
+* @param {WP_Query} $query - Original query object
 */
 function guny_events_get_posts( $query ) {
   if ( $query->tribe_is_event_query && $query->get( 'eventDisplay' ) === 'month' ) {

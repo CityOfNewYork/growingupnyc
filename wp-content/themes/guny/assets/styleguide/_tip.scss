@@ -3,15 +3,18 @@
 // markup:
 // <aside class="c-tip o-content-container">
 //   <div class="c-tip__sticker sticker" aria-hidden="true"><svg class="icon--large"><use xlink:href="assets/img/svg-sprite.svg#lightbulb"></use></svg></div>
-//   <p class="c-tip__content">Nullam quis risus eget urna mollis ornare vel eu leo. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-//   <footer class="c-tip__footer">
-//     <p>Nullam quis risus eget urna mollis</p>
-//     <p><a href="#" class="c-tip__link">Link text</a></p>
-//   </footer>
+//   <div class="c-tip__inner">
+//     <p class="c-tip__content">Nullam quis risus eget urna mollis ornare vel eu leo. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+//     <footer class="c-tip__footer">
+//       <p>Nullam quis risus eget urna mollis</p>
+//       <p><a href="#" class="c-tip__link">Link text</a></p>
+//     </footer>
+//   </div>
 // </aside>
 //
 // Styleguide 8
 .c-tip {
+  @include row;
   background: $color-primary;
   color: $color-text-invert;
   padding-top: rem-calc($sticker-size-mobile / 2);
@@ -34,6 +37,15 @@
   @include media($bp-large) {
     margin-left: rem-calc($sticker-size / -2);
     top: rem-calc($sticker-size / -2);
+  }
+}
+
+// Tip Inner Wrapper
+// Optiona. Used if you want to restrict the width of tip content
+.c-tip__inner {
+  @include media($bp-medium) {
+    @include span-columns(4 of 8);
+    @include shift(2 of 8);
   }
 }
 

@@ -1903,6 +1903,9 @@ ol.o-inline {
       max-width: 9.5625rem;
       width: calc(100% - 15.3125rem); } }
 
+.signup-form__input--full {
+  width: 100%; }
+
 .signup-form__field {
   border: 2px solid transparent;
   width: 100%; }
@@ -1967,11 +1970,16 @@ ol.o-inline {
   margin-top: 1.25rem; }
 
 .c-tip {
+  display: block;
   background: #2793e0;
   color: #fff;
   padding-top: 2.5rem;
   position: relative;
   margin-top: 3.75rem; }
+  .c-tip::after {
+    clear: both;
+    content: "";
+    display: block; }
   @media screen and (min-width: 1024px) {
     .c-tip {
       padding-top: 3.125rem;
@@ -1986,6 +1994,16 @@ ol.o-inline {
     .c-tip__sticker {
       margin-left: -3.125rem;
       top: -3.125rem; } }
+
+@media screen and (min-width: 700px) {
+  .c-tip__inner {
+    float: left;
+    display: block;
+    margin-right: 4.7619%;
+    width: 47.61905%;
+    margin-left: 26.19048%; }
+    .c-tip__inner:last-child {
+      margin-right: 0; } }
 
 .c-tip__content {
   font-family: "museo-sans-rounded", sans-serif;

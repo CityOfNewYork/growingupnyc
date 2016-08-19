@@ -7,6 +7,10 @@ if ( ! class_exists( 'Timber' ) ) {
 
 $context = Timber::get_context();
 
+//$context['prev_month_url'] = $tribe_ecp->getLink( 'month', $tribe_ecp->previousMonth( tribe_get_month_view_date() ), null ) . $query_string;
+//$context['next_month_url'] = $tribe_ecp->getLink( 'month', $tribe_ecp->nextMonth( tribe_get_month_view_date() ), null ) . $query_string;
+$context['current_month_text'] = tribe_get_current_month_text();
+
 // Get current filter selections
 $cat_id = get_query_var('cat_id');
 $age_id = get_query_var('age_id');

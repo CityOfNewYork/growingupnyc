@@ -12,27 +12,33 @@ $cat_id = get_query_var('cat_id');
 $age_id = get_query_var('age_id');
 $borough_id = get_query_var('borough_id');
 
-$context['prev_month_url'] = tribe_get_previous_month_link();
+$today = date_i18n( Tribe__Date_Utils::DBDATEFORMAT, strtotime( date( 'Y-m-d', current_time( 'timestamp' ) ) ) );
+$current_month_date = tribe_get_month_view_date();
+
+if ( $today < $current_month_date ) {
+  $context['prev_month_url'] = tribe_get_previous_month_link();
+}
 $context['next_month_url'] = tribe_get_next_month_link();
-$context['current_month_text'] = tribe_get_current_month_text();
+$context['current_month_text'] = date( 'F Y', strtotime( $current_month_date ) );
 
 // Group current view's events by day
 while ( tribe_events_have_month_days() ) : tribe_events_the_month_day();
   $day = tribe_events_get_current_month_day();
+  if ($day['date'] >= $today) {
+    if(!empty($day['events']->posts) && $day['month'] == 0) {
+      // Empty array
+      $event_posts = array();
 
-  if(!empty($day['events']->posts) && $day['month'] == 0) {
-    // Empty array
-    $event_posts = array();
+      foreach ($day['events']->posts as $post) {
+        $event_posts[] = new GunyEvent($post);
+      }
 
-    foreach ($day['events']->posts as $post) {
-      $event_posts[] = new GunyEvent($post);
-    }
-
-    if(count($event_posts) > 0) {
-      $context['event_list'][] = array(
-        'date_header' => date('l, F j', strtotime($day['date'])),
-        'posts' => $event_posts
-      );
+      if(count($event_posts) > 0) {
+        $context['event_list'][] = array(
+          'date_header' => date( 'l, F j', strtotime( $day['date'] ) ),
+          'posts' => $event_posts
+        );
+      }
     }
   }
 endwhile;

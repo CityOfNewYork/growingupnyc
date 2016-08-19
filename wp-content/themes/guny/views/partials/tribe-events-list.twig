@@ -1,12 +1,16 @@
 {# Pager #}
 <h2 class="arrow-pager">
+  {% if prev_month_url %}
   <a class="arrow-pager__arrow arrow-pager__arrow--left" href="{{prev_month_url}}" rel="prev">
     <svg role="img" class="icon--xsmall"><title>Previous Month</title><use xlink:href="#caret-left"></use></svg>
   </a>
+  {% endif %}
   {{current_month_text}}
+  {% if next_month_url %}
   <a class="arrow-pager__arrow arrow-pager__arrow--right" href="{{next_month_url}}" rel="next">
     <svg role="img" class="icon--xsmall"><title>Next Month</title><use xlink:href="#caret-right"></use></svg>
   </a>
+  {% endif %}
 </h2>
 
 {# Event List #}

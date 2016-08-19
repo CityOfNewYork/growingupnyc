@@ -7,14 +7,14 @@ if ( ! class_exists( 'Timber' ) ) {
 
 $context = Timber::get_context();
 
-//$context['prev_month_url'] = $tribe_ecp->getLink( 'month', $tribe_ecp->previousMonth( tribe_get_month_view_date() ), null ) . $query_string;
-//$context['next_month_url'] = $tribe_ecp->getLink( 'month', $tribe_ecp->nextMonth( tribe_get_month_view_date() ), null ) . $query_string;
-$context['current_month_text'] = tribe_get_current_month_text();
-
 // Get current filter selections
 $cat_id = get_query_var('cat_id');
 $age_id = get_query_var('age_id');
 $borough_id = get_query_var('borough_id');
+
+$context['prev_month_url'] = tribe_get_previous_month_link();
+$context['next_month_url'] = tribe_get_next_month_link();
+$context['current_month_text'] = tribe_get_current_month_text();
 
 // Group current view's events by day
 while ( tribe_events_have_month_days() ) : tribe_events_the_month_day();
@@ -64,12 +64,6 @@ if ($_SERVER['QUERY_STRING']) {
 } else {
   $query_string = '';
 }
-
-// Month pager variables
-$tribe_ecp = Tribe__Events__Main::instance();
-$context['prev_month_url'] = $tribe_ecp->getLink( 'month', $tribe_ecp->previousMonth( tribe_get_month_view_date() ), null ) . $query_string;
-$context['next_month_url'] = $tribe_ecp->getLink( 'month', $tribe_ecp->nextMonth( tribe_get_month_view_date() ), null ) . $query_string;
-$context['current_month_text'] = date('F Y', strtotime( tribe_get_month_view_date() ));
 
 // Event Category Filter
 $event_filter = Timber::get_terms('tribe_events_cat', array(

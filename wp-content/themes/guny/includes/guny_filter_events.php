@@ -16,7 +16,10 @@ add_filter( 'query_vars', 'guny_add_query_vars' );
 * @param {WP_Query} $query - Original query object
 */
 function guny_events_get_posts( $query ) {
-  if ( $query->tribe_is_event_query && $query->get( 'eventDisplay' ) === 'month' ) {
+  if ( $query->tribe_is_event_query &&
+    ( $query->get( 'eventDisplay' ) == 'month'
+      || $query->get( 'eventDisplay' ) == 'list' )
+  ) {
     $cat_id = $query->get( 'cat_id' );
     $age_id = $query->get( 'age_id' );
     $borough_id = $query->get( 'borough_id' );
@@ -46,5 +49,12 @@ function guny_events_get_posts( $query ) {
     }
     $query->set( 'tax_query', $tax_query );
   }
+  $today = tribe_beginning_of_day( date_i18n( Tribe__Date_Utils::DBDATETIMEFORMAT ) );
+  if ( $query->get( 'start_date') < $today ) {
+    $query->set( 'start_date', $today );
+  }
+  $end_date = new DateTime( $query->get( 'start_date' ) );
+  $end_date = new DateTime( $end_date->format('Y-m-t') );
+  $query->set( 'end_date', tribe_end_of_day( $end_date->format( Tribe__Date_Utils::DBDATETIMEFORMAT ) ) );
 }
-add_action( 'pre_get_posts', 'guny_events_get_posts', 50 );
+add_action( 'pre_get_posts', 'guny_events_get_posts', 60 );

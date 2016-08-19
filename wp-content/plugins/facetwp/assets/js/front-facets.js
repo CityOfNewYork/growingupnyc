@@ -124,7 +124,8 @@
     });
 
     $(document).on('facetwp-loaded', function() {
-        if (0 === $('.facetwp-type-date_range').length) {
+        var $dates = $('.facetwp-type-date_range .facetwp-date:not(.ready)');
+        if (0 === $dates.length) {
             return;
         }
 
@@ -150,7 +151,7 @@
             }
         };
 
-        $('.facetwp-type-date_range .facetwp-date').each(function() {
+        $dates.each(function() {
             var facet_name = $(this).closest('.facetwp-facet').attr('data-name');
             flatpickr_opts.altFormat = FWP.settings[facet_name].format;
 
@@ -158,6 +159,7 @@
                 'facet_name': facet_name
             });
             new Flatpickr(this, opts);
+            $(this).addClass('ready');
         });
     });
 
@@ -293,7 +295,7 @@
         var $lat = $('.facetwp-lat');
         var $lng = $('.facetwp-lng');
 
-        // Reset
+        // reset
         if ($this.hasClass('f-reset')) {
             $facet.find('.facetwp-lat').val('');
             $facet.find('.facetwp-lng').val('');

@@ -318,7 +318,7 @@ var FWP = FWP || {};
     FWP.render = function(response) {
 
         // Populate the template
-        if (! FWP.loaded && ! FWP.is_bfcache) {
+        if ('' === response.template) {
             var inject = false;
         }
         else if ('wp' == FWP.template) {

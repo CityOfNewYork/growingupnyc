@@ -114,3 +114,12 @@
     @include shift(2);
   }
 }
+
+// Footer of the footer component itself
+.c-footer__footer {
+  font-family: $font-family-display;
+  font-size: rem-calc(14);
+  font-weight: $font-weight-extrablack;
+  line-height: 1.2;
+  margin-top: 65px;
+}

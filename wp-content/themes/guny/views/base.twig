@@ -158,6 +158,9 @@
             {% include 'partials/email-signup.twig' with {form_id: 'footer'} %}
           </div> <!-- /.c-footer__signup -->
         </div> <!-- /.o-container -->
+        <div class="o-container c-footer__footer">
+          <p>&copy; {{now|date('Y')}} City of New York. All Rights Reserved.<br>NYC is a trademark and service mark of the City of New York</p>
+        </div>
       </footer> <!-- /.c-footer -->
       {% if options.show_banner %}
         <div class="c-alert js-alert" data-cookie="{{options.current_banner.slug}}" id="banner-{{options.current_banner.slug}}">

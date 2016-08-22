@@ -6,7 +6,7 @@
 // <footer class="c-footer">
 //   <div class="o-container">
 //     <img class="c-footer__logo" alt="Growing Up NYC" src="/wp-content/themes/guny/assets/img/GrowingUpNYC-logo-white.gif">
-//     <nav class="c-footer__nav">
+//     <nav class="c-footer__section">
 //       <ul class="c-footer__column">
 //         <li class="c-footer__nav-item"><a class="c-footer__link" href="#">Item</a></li>
 //         <li class="c-footer__nav-item"><a class="c-footer__link" href="#">Item</a></li>
@@ -29,31 +29,56 @@
   padding: 36px 0 60px;
 }
 
+.c-footer__logos {
+  @include row;
+}
+
 // Footer Logo
 .c-footer__logo {
-  @include span-columns(7);
-  @include omega;
+  @include span-columns(6);
+
+  + .c-footer__logo {
+    @include omega;
+  }
   @include media($bp-medium) {
-    @include span-columns(3);
-    max-width: rem-calc(250);
+    @include span-columns(4 of 12);
+
+    + .c-footer__logo {
+      @include shift(2);
+    }
+  }
+}
+
+.c-footer__logo img {
+  max-height: 77px;
+  max-width: 100%;
+
+  @include media($bp-medium) {
+    max-height: none;
+  }
+}
+
+// Footer Section
+.c-footer__section {
+  @include media($bp-large) {
+    @include span-columns(6);
   }
 }
 
 // Footer Navigation
 .c-footer__nav {
   @include row;
-  clear: left;
   line-height: 1.2;
-  padding-top: 28px;
+  padding-top: 35px;
 
   @include media($bp-large) {
-    @include span-columns(6);
+    padding-top: 40px;
   }
 }
 
 // Footer Navigation Column
 .c-footer__column {
-  @include span-columns(2 of 4);
+  @include span-columns(6 of 12);
   @include omega(even);
 }
 
@@ -77,7 +102,10 @@
 
 // Footer Signup Area
 .c-footer__signup {
+  margin-top: 80px;
+
   @include media($bp-large) {
+    margin-top: 0;
     @include span-columns(4);
     @include shift(2);
   }

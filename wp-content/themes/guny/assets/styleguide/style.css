@@ -1368,47 +1368,66 @@ ol.o-inline {
   color: #fff;
   padding: 36px 0 60px; }
 
+.c-footer__logos {
+  display: block; }
+  .c-footer__logos::after {
+    clear: both;
+    content: "";
+    display: block; }
+
 .c-footer__logo {
   float: left;
   display: block;
   margin-right: 3.125%;
-  width: 57.03125%;
-  margin-right: 0; }
+  width: 48.4375%; }
   .c-footer__logo:last-child {
+    margin-right: 0; }
+  .c-footer__logo + .c-footer__logo {
     margin-right: 0; }
   @media screen and (min-width: 700px) {
     .c-footer__logo {
       float: left;
       display: block;
       margin-right: 3.125%;
-      width: 22.65625%;
-      max-width: 15.625rem; }
+      width: 31.25%; }
       .c-footer__logo:last-child {
-        margin-right: 0; } }
+        margin-right: 0; }
+      .c-footer__logo + .c-footer__logo {
+        margin-left: 17.1875%; } }
+
+.c-footer__logo img {
+  max-height: 77px;
+  max-width: 100%; }
+  @media screen and (min-width: 700px) {
+    .c-footer__logo img {
+      max-height: none; } }
+
+@media screen and (min-width: 1024px) {
+  .c-footer__section {
+    float: left;
+    display: block;
+    margin-right: 3.125%;
+    width: 48.4375%; }
+    .c-footer__section:last-child {
+      margin-right: 0; } }
 
 .c-footer__nav {
   display: block;
-  clear: left;
   line-height: 1.2;
-  padding-top: 28px; }
+  padding-top: 35px; }
   .c-footer__nav::after {
     clear: both;
     content: "";
     display: block; }
   @media screen and (min-width: 1024px) {
     .c-footer__nav {
-      float: left;
-      display: block;
-      margin-right: 3.125%;
-      width: 48.4375%; }
-      .c-footer__nav:last-child {
-        margin-right: 0; } }
+      padding-top: 40px; } }
 
 .c-footer__column {
   float: left;
   display: block;
-  margin-right: 10%;
-  width: 45%; }
+  margin-right: 3.125%;
+  width: 48.4375%; }
   .c-footer__column:last-child {
     margin-right: 0; }
   .c-footer__column:nth-child(even) {
@@ -1425,15 +1444,18 @@ ol.o-inline {
   .c-footer__link:hover, .c-footer__link:focus {
     color: #0055b8; }
 
-@media screen and (min-width: 1024px) {
-  .c-footer__signup {
-    float: left;
-    display: block;
-    margin-right: 3.125%;
-    width: 31.25%;
-    margin-left: 17.1875%; }
-    .c-footer__signup:last-child {
-      margin-right: 0; } }
+.c-footer__signup {
+  margin-top: 80px; }
+  @media screen and (min-width: 1024px) {
+    .c-footer__signup {
+      margin-top: 0;
+      float: left;
+      display: block;
+      margin-right: 3.125%;
+      width: 31.25%;
+      margin-left: 17.1875%; }
+      .c-footer__signup:last-child {
+        margin-right: 0; } }
 
 .c-hero {
   background-position: top center;

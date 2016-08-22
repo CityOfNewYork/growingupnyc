@@ -128,20 +128,29 @@
 
       <footer class="c-footer" role="contentinfo">
         <div class="o-container">
-          <img class="c-footer__logo" alt="Growing Up NYC" src="{{theme.link}}/assets/img/GrowingUpNYC-logo-white.gif">
-          <nav role="navigation" class="c-footer__nav" aria-label="Secondary">
-            <ul class="c-footer__column">
-              <li class="c-footer__nav-item"><a class="c-footer__link" href="{{site.url}}">Home</a></li>
-              {% for menu_item in menu.get_items %}
-                <li class="c-footer__nav-item"><a class="c-footer__link" href="{{menu_item.link}}">{{menu_item.title}}</a></li>
-              {% endfor %}
-            </ul>
-            <ul class="c-footer__column">
-              {% for menu_item in footer_menu.get_items %}
-                <li class="c-footer__nav-item"><a class="c-footer__link" href="{{menu_item.link}}" target="_blank">{{menu_item.title}}</a></li>
-              {% endfor %}
-            </ul>
-          </nav>
+          <div class="c-footer__section">
+            <div class="c-footer__logos">
+              <figure class="c-footer__logo">
+                <img alt="Growing Up NYC" src="{{theme.link}}/assets/img/GrowingUpNYC-logo-white.svg">
+              </figure>
+              <figure class="c-footer__logo">
+                <img alt="NYC Children's Cabinet" src="{{theme.link}}/assets/img/NYC-childrens-cabinet.svg">
+              </figure>
+            </div>
+            <nav role="navigation" class="c-footer__nav" aria-label="Secondary">
+              <ul class="c-footer__column">
+                <li class="c-footer__nav-item"><a class="c-footer__link" href="{{site.url}}">Home</a></li>
+                {% for menu_item in menu.get_items %}
+                  <li class="c-footer__nav-item"><a class="c-footer__link" href="{{menu_item.link}}">{{menu_item.title}}</a></li>
+                {% endfor %}
+              </ul>
+              <ul class="c-footer__column">
+                {% for menu_item in footer_menu.get_items %}
+                  <li class="c-footer__nav-item"><a class="c-footer__link" href="{{menu_item.link}}" target="_blank">{{menu_item.title}}</a></li>
+                {% endfor %}
+              </ul>
+            </nav>
+          </div>
           <div class="c-footer__signup">
             {% include 'partials/email-signup.twig' with {form_id: 'footer'} %}
           </div> <!-- /.c-footer__signup -->

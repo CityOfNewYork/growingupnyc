@@ -6,7 +6,7 @@
 // markup:
 // <form class="signup-form">
 //   <div class="signup-form__error"><p>Error text for the form</p></div>
-//   <sg-insert>4.2.1</sg-insert>
+//   <sg-insert>4.2.1-3</sg-insert>
 //   <fieldset class="signup-form__fieldset">
 //     <legend>Fieldset legend</legend>
 //     <span class="signup-form__checkbox">
@@ -15,6 +15,11 @@
 //   </fieldset>
 //   <button type="submit" class="signup-form__button button--simple button--simple--alt">Sign Up</button>
 // </form>
+//
+// sg-wrapper:
+// <div style="background:#2793e0; padding:20px">
+//   <sg-wrapper-content/>
+// </div>
 //
 // Styleguide 4.2
 .signup-form {
@@ -108,13 +113,15 @@
   bottom: rem-calc(10);
 }
 
-.csstransforms3d .signup-form__label {
+.csstransforms3d .signup-form__label,
+.styleguide .signup-form__label {
   bottom: 100%;
   transform: translate3d(0, #{rem-calc(37)}, 0);
   transition: transform 250ms ease-in-out;
 }
 
-.csstransforms3d .is-filled .signup-form__label {
+.csstransforms3d .is-filled .signup-form__label,
+.styleguide .is-filled .signup-form__label {
   transform: translate3d(0, 0, 0);
 }
 
@@ -142,7 +149,8 @@
   }
 }
 
-.csstransforms3d .is-filled .signup-form__label-content {
+.csstransforms3d .is-filled .signup-form__label-content,
+.styleguide .is-filled .signup-form__label-content {
   transform: translate3d(0, 100%, 0);
 }
 

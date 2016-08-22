@@ -1366,7 +1366,16 @@ ol.o-inline {
 .c-footer {
   background: #2793e0;
   color: #fff;
-  padding: 36px 0 60px; }
+  padding: 60px 0; }
+
+@media screen and (min-width: 1024px) {
+  .c-footer__section {
+    float: left;
+    display: block;
+    margin-right: 3.125%;
+    width: 48.4375%; }
+    .c-footer__section:last-child {
+      margin-right: 0; } }
 
 .c-footer__logos {
   display: block; }
@@ -1402,15 +1411,6 @@ ol.o-inline {
     .c-footer__logo img {
       max-height: none; } }
 
-@media screen and (min-width: 1024px) {
-  .c-footer__section {
-    float: left;
-    display: block;
-    margin-right: 3.125%;
-    width: 48.4375%; }
-    .c-footer__section:last-child {
-      margin-right: 0; } }
-
 .c-footer__nav {
   display: block;
   line-height: 1.2;
@@ -1434,6 +1434,7 @@ ol.o-inline {
     margin-right: 0; }
 
 .c-footer__nav-item {
+  list-style: none;
   margin-bottom: 8px; }
 
 .c-footer__nav-item--spaced {
@@ -1956,12 +1957,14 @@ ol.o-inline {
 .no-csstransforms3d .signup-form__label {
   bottom: 0.625rem; }
 
-.csstransforms3d .signup-form__label {
+.csstransforms3d .signup-form__label,
+.styleguide .signup-form__label {
   bottom: 100%;
   transform: translate3d(0, 2.3125rem, 0);
   transition: transform 250ms ease-in-out; }
 
-.csstransforms3d .is-filled .signup-form__label {
+.csstransforms3d .is-filled .signup-form__label,
+.styleguide .is-filled .signup-form__label {
   transform: translate3d(0, 0, 0); }
 
 .signup-form__label-content {
@@ -1985,7 +1988,8 @@ ol.o-inline {
       .signup-form__label-content:after {
         font-size: 0.8125rem; } }
 
-.csstransforms3d .is-filled .signup-form__label-content {
+.csstransforms3d .is-filled .signup-form__label-content,
+.styleguide .is-filled .signup-form__label-content {
   transform: translate3d(0, 100%, 0); }
 
 .signup-form__fieldset {

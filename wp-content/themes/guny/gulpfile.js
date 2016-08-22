@@ -81,7 +81,7 @@ gulp.task('styles_dev', ['lint-css'], function() {
     .pipe(sass({includePaths: sassInclude}))
         .on('error', handleError)
         .on('error', notify.onError())
-    .pipe(autoprefixer(['last 2 versions', 'ie 9-11']))
+    .pipe(autoprefixer(['last 2 versions', 'ie 9-11', 'iOS 8']))
     //.pipe(minifycss())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./'))
@@ -98,7 +98,7 @@ gulp.task('styles', ['lint-css'], function() {
     .pipe(sass({includePaths: sassInclude}))
         .on('error', handleError)
         .on('error', notify.onError())
-    .pipe(autoprefixer(['last 2 versions', 'ie 9-11']))
+    .pipe(autoprefixer(['last 2 versions', 'ie 9-11', 'iOS 8']))
     .pipe(minifycss())
     .pipe(size({
       'showFiles': true

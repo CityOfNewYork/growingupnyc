@@ -1436,6 +1436,9 @@ ol.o-inline {
 .c-footer__nav-item {
   margin-bottom: 8px; }
 
+.c-footer__nav-item--spaced {
+  margin-top: 3em; }
+
 .c-footer__link {
   color: #fff;
   font-family: "museo-sans-rounded", sans-serif;

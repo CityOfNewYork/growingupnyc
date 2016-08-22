@@ -124,7 +124,8 @@ class GunySite extends TimberSite {
 
   function add_to_context ( $context ) {
     $context['menu'] = new TimberMenu('header-menu');
-    $context['footer_menu'] = new TimberMenu('footer-menu');
+    $context['footer_menu_left'] = new TimberMenu('footer-menu-left');
+    $context['footer_menu_right'] = new TimberMenu('footer-menu-right');
     $context['site'] = $this;
     $context['age_menu'] = Timber::get_terms('age_group', array(
       'orderby' => 'term_order',
@@ -176,7 +177,8 @@ class GunySite extends TimberSite {
     register_nav_menus(
       array(
         'header-menu' => __( 'Header Menu' ),
-        'footer-menu' => __( 'Footer Menu' )
+        'footer-menu-left' => __( 'Footer Menu (Left)' ),
+        'footer-menu-right' => __( 'Footer Menu (Right)' )
       )
     );
   }

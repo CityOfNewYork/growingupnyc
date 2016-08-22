@@ -70,7 +70,7 @@
 
 // Footer Logo Image
 .c-footer__logo img {
-  max-height: 77px;
+  max-height: rem-calc(77);
   max-width: 100%;
 
   @include media($bp-medium) {
@@ -135,7 +135,7 @@
 }
 
 .c-footer__nav-item--spaced {
-  margin-top: 3em;
+  margin-top: 54px;
 }
 
 // Footer Link

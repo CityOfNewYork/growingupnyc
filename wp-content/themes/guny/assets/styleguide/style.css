@@ -1405,7 +1405,7 @@ ol.o-inline {
         margin-left: 17.1875%; } }
 
 .c-footer__logo img {
-  max-height: 77px;
+  max-height: 4.8125rem;
   max-width: 100%; }
   @media screen and (min-width: 700px) {
     .c-footer__logo img {
@@ -1438,7 +1438,7 @@ ol.o-inline {
   margin-bottom: 8px; }
 
 .c-footer__nav-item--spaced {
-  margin-top: 3em; }
+  margin-top: 54px; }
 
 .c-footer__link {
   color: #fff;
@@ -1934,6 +1934,7 @@ ol.o-inline {
   @media screen and (min-width: 700px) {
     .signup-form__input--short {
       max-width: 9.5625rem;
+      min-width: 6.25rem;
       width: calc(100% - 15.3125rem); } }
 
 .signup-form__input--full {

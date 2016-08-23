@@ -1807,6 +1807,18 @@
 	  value: true
 	});
 
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; }; /**
+	                                                                                                                                                                                                                                                   * Alert Banner module
+	                                                                                                                                                                                                                                                   * @module modules/alert
+	                                                                                                                                                                                                                                                   * @see modules/toggleOpen
+	                                                                                                                                                                                                                                                   */
+
+	/**
+	 * Displays an alert banner.
+	 * @param {string} openClass - The class to toggle on if banner is visible
+	 */
+
+
 	exports.default = function (openClass) {
 	  if (!openClass) {
 	    openClass = 'is-open';
@@ -1873,7 +1885,8 @@
 	          * @param {object} event - The event object
 	          */
 	          alert.addEventListener('changeOpenState', function (event) {
-	            if (!event.detail) {
+	            // Because iOS safari inexplicably turns event.detail into an object
+	            if (typeof event.detail === 'boolean' && !event.detail || _typeof(event.detail) === 'object' && !event.detail.detail) {
 	              addAlertCookie(alert);
 	              removeAlertPadding(alertSibling);
 	            }

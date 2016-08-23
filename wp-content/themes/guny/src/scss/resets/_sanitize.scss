@@ -176,6 +176,11 @@ textarea,
 	touch-action: manipulation;
 }
 
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
 // specify the standard appearance of selects
 
 select {

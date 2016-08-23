@@ -189,10 +189,10 @@ class FacetWP_Facet_Guny {
     $output = '<div class="c-list-box__item">';
     $output .= '<h3 class="js-accordion__header c-list-box__heading" id="' . $facet['name'] . '-heading">' . $header . '</h3>';
     $output .= '<ol class="js-accordion__content c-list-box__content" id="' . $facet['name'] . '-panel">';
-    $output .= '<li class="c-list-box__subitem facetwp-item" role="button" data-value="">' . $label_any . '</li>';
+    $output .= '<li class="c-list-box__subitem facetwp-item" role="button" tab-index="0" data-value="">' . $label_any . '</li>';
     foreach( $values as $result ) {
       $selected = in_array( $result['facet_value'], $selected_values) ? 'true' : 'false';
-      $output .= '<li class="c-list-box__subitem facetwp-item" role="button" aria-selected="' . $selected . '" data-value="' . $result['facet_value'] . '">' . $result['facet_display_value'] . '</li>';
+      $output .= '<li class="c-list-box__subitem facetwp-item" role="button" tab-index="0" aria-selected="' . $selected . '" data-value="' . $result['facet_value'] . '">' . $result['facet_display_value'] . '</li>';
     }
     $output .= '</ol>';
     $output .= '</div>';

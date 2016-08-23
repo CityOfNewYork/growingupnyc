@@ -79,7 +79,10 @@ export default function(openClass) {
         * @param {object} event - The event object
         */
         alert.addEventListener('changeOpenState', function(event) {
-          if (!event.detail) {
+          // Because iOS safari inexplicably turns event.detail into an object
+          if ((typeof event.detail === 'boolean' && !event.detail) ||
+            (typeof event.detail === 'object' && !event.detail.detail)
+          ) {
             addAlertCookie(alert);
             removeAlertPadding(alertSibling);
           }

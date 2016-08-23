@@ -29,6 +29,7 @@
   position: fixed;
   text-align: center;
   width: 100%;
+  z-index: $z-index-alert;
 
   p + p {
     margin-top: 0;

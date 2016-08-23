@@ -1005,7 +1005,8 @@ ol.o-inline {
   padding: 10px 4px 0;
   position: fixed;
   text-align: center;
-  width: 100%; }
+  width: 100%;
+  z-index: 4; }
   .js .c-alert.is-open p + p {
     margin-top: 0; }
 

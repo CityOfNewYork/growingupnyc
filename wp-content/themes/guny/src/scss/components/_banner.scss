@@ -105,7 +105,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 .c-banner__link {
   color: $color-primary;
   font-family: $font-family-display;
-  @include font-size-small;
+  @include font-size(12, $font-size-small);
   font-weight: $font-weight-extrablack;
   position: relative;
   text-decoration: none;

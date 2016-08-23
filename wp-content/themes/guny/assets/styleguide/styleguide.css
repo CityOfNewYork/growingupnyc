@@ -139,6 +139,10 @@ textarea,
 [tabindex] {
   touch-action: manipulation; }
 
+button,
+[role="button"] {
+  cursor: pointer; }
+
 select {
   -moz-appearance: none;
   -webkit-appearance: none; }

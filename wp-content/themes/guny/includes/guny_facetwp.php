@@ -188,13 +188,13 @@ class FacetWP_Facet_Guny {
     }
     $output = '<div class="c-list-box__item">';
     $output .= '<h3 class="js-accordion__header c-list-box__heading" id="' . $facet['name'] . '-heading">' . $header . '</h3>';
-    $output .= '<ol class="js-accordion__content c-list-box__content" id="' . $facet['name'] . '-panel">';
-    $output .= '<li class="c-list-box__subitem facetwp-item" role="button" data-value="">' . $label_any . '</li>';
+    $output .= '<ul class="js-accordion__content c-list-box__content" id="' . $facet['name'] . '-panel">';
+    $output .= '<li><a href="#" class="c-list-box__subitem facetwp-item" data-value="">' . $label_any . '</button></li>';
     foreach( $values as $result ) {
       $selected = in_array( $result['facet_value'], $selected_values) ? 'true' : 'false';
-      $output .= '<li class="c-list-box__subitem facetwp-item" role="button" aria-selected="' . $selected . '" data-value="' . $result['facet_value'] . '">' . $result['facet_display_value'] . '</li>';
+      $output .= '<li><a href="#" class="c-list-box__subitem facetwp-item" aria-selected="' . $selected . '" data-value="' . $result['facet_value'] . '">' . $result['facet_display_value'] . '</button></li>';
     }
-    $output .= '</ol>';
+    $output .= '</ul>';
     $output .= '</div>';
     return $output;
   }
@@ -213,7 +213,8 @@ class FacetWP_Facet_Guny {
         window.reInitializeAccordion($('.facetwp-guny'));
       });
 
-      $(document).on('click', '.facetwp-type-guny .facetwp-item', function() {
+      $(document).on('click', '.facetwp-type-guny .facetwp-item', function(event) {
+        event.preventDefault();
         $(this).siblings('[aria-selected="true"]').attr('aria-selected', false);
         $(this).attr('aria-selected', true);
         FWP.autoload();

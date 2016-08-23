@@ -11,6 +11,7 @@ import searchResultsHeader from './modules/searchResultsHeader.js';
 import alert from './modules/alert.js';
 import bsdtoolsSignup from './modules/bsdtools-signup.js';
 import formEffects from './modules/formEffects.js';
+import facets from './modules/facets.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -29,6 +30,8 @@ function init() {
   overlay();
   // Search results page
   searchResultsHeader();
+  // FacetWP pages
+  facets();
   // Homepage
   staticColumn();
   parallax();

@@ -2099,7 +2099,14 @@ ol.o-inline {
     opacity: .2;
     vertical-align: middle; }
 
-/* No files to import found in vendor//* */
+.facetwp-is-loaded .facetwp-template {
+  opacity: 1;
+  transition: opacity .1s linear; }
+
+.facetwp-is-loading .facetwp-template {
+  opacity: .5;
+  transition: opacity .1s linear; }
+
 /**
 * Animations
 */

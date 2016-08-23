@@ -2008,7 +2008,7 @@
 	  * Handle success response from the BSD Tools API
 	  */
 	  function handleSuccess() {
-	    $(this).html('<p>Thank you for signing up.</p>');
+	    $(this).html('<p class="c-signup-form__success">Thank you for signing up.</p>');
 	  }
 
 	  if ($signupForms.length) {

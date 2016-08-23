@@ -2006,6 +2006,15 @@ ol.o-inline {
 .signup-form__button {
   margin-top: 1.25rem; }
 
+.c-signup-form__success {
+  font-family: "museo-sans-rounded", sans-serif;
+  font-size: 1.3125rem;
+  font-weight: 900;
+  text-align: center; }
+  @media screen and (min-width: 1024px) {
+    .c-signup-form__success {
+      font-size: 1.5rem; } }
+
 .c-tip {
   display: block;
   background: #2793e0;

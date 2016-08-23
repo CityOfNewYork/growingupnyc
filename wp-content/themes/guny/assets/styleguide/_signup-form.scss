@@ -176,3 +176,16 @@
 .signup-form__button {
   margin-top: rem-calc(20);
 }
+
+// Signup Form Success Message
+//
+// markup:
+// <p class="c-signup-form__success">Success message for the form</p>
+//
+// Styleguide 4.2.2
+.c-signup-form__success {
+  font-family: $font-family-display;
+  @include font-size(21, 24);
+  font-weight: $font-weight-extrablack;
+  text-align: center;
+}

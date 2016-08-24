@@ -17,6 +17,7 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
   // Module settings
   const settings = {
     stickyClass: 'is-sticky',
+    absoluteClass: 'is-stuck',
     largeBreakpoint: '1024px',
     articleClass: 'o-article--shift'
   };
@@ -24,6 +25,7 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
   // Globals
   let stickyMode = false; // Flag to tell if sidebar is in "sticky mode"
   let isSticky = false; // Whether the sidebar is sticky at this exact moment in time
+  let isAbsolute = false; // Whether the sidebar is absolutely positioned at the bottom
   let switchPoint = 0; // Point at which to switch to sticky mode
   let switchPointBottom = 0; // Point at which to "freeze" the sidebar so it doesn't overlap the footer
   let leftOffset = 0; // Amount sidebar should be set from the left side
@@ -43,7 +45,8 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
       // Check if the sidebar is already sticky
       if (!isSticky) {
         isSticky = true;
-        $elem.addClass(settings.stickyClass);
+        isAbsolute = false;
+        $elem.addClass(settings.stickyClass).removeClass(settings.absoluteClass);
         $elemArticle.addClass(settings.articleClass);
         updateDimensions();
       }
@@ -51,11 +54,9 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
       // Check if the sidebar has reached the bottom switch point
       if ($elem.offset().top + elemHeight > switchPointBottom) {
         isSticky = false;
-        $elem.removeClass(settings.stickyClass);
-        $elemArticle.removeClass(settings.articleClass);
+        isAbsolute = true;
+        $elem.addClass(settings.absoluteClass);
         updateDimensions();
-        $elem.css('top', 'auto');
-        $elem.css('bottom', $elemContainer.css('padding-bottom'));
       }
     } else if (isSticky) {
       isSticky = false;
@@ -81,6 +82,13 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
         top: '',
         bottom: ''
       });
+    } else if (isAbsolute && !forceClear) {
+      $elem.css({
+        left: $elemContainer.css('padding-left'),
+        width: elemWidth + 'px',
+        top: 'auto',
+        bottom: $elemContainer.css('padding-bottom')
+      });
     } else {
       $elem.css({
         left: '',
@@ -96,8 +104,9 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
   */
   function setOffsetValues() {
     $elem.css('visibility', 'hidden');
-    if (isSticky) {
-      $elem.removeClass(settings.stickyClass);
+    if (isSticky || isAbsolute) {
+      $elem.removeClass(`${settings.stickyClass} ${settings.absoluteClass}`);
+      $elemArticle.removeClass(settings.articleClass);
     }
     updateDimensions(true);
 
@@ -110,10 +119,13 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
     elemWidth = $elem.outerWidth();
     elemHeight = $elem.outerHeight();
 
-    if (isSticky) {
+    if (isSticky || isAbsolute) {
       updateDimensions();
       $elem.addClass(settings.stickyClass);
       $elemArticle.addClass(settings.articleClass);
+      if (isAbsolute) {
+        $elem.addClass(settings.absoluteClass);
+      }
     }
     $elem.css('visibility', '');
   }
@@ -129,7 +141,7 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
 
     $(window).on('scroll.fixedSidebar', throttle(function() {
       toggleSticky();
-    }, 16)).trigger('scroll.fixedSidebar');
+    }, 100)).trigger('scroll.fixedSidebar');
 
     $('#main').on('containerSizeChange.fixedSidebar', function(event) {
       switchPoint -= event.originalEvent.detail;

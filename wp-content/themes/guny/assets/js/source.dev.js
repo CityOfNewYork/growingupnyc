@@ -2964,9 +2964,10 @@ window.matchMedia || (window.matchMedia = function() {
 	        $elem.addClass(settings.absoluteClass);
 	        updateDimensions();
 	      }
-	    } else if (isSticky) {
+	    } else if (isSticky || isAbsolute) {
 	      isSticky = false;
-	      $elem.removeClass(settings.stickyClass);
+	      isAbsolute = false;
+	      $elem.removeClass(settings.stickyClass + ' ' + settings.absoluteClass);
 	      $elemArticle.removeClass(settings.articleClass);
 	      updateDimensions();
 	    }

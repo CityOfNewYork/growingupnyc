@@ -1957,6 +1957,9 @@ ol.o-inline {
 .no-csstransforms3d .signup-form__label {
   bottom: 0.625rem; }
 
+.no-csstransforms3d .is-filled .signup-form__label {
+  bottom: 100%; }
+
 .csstransforms3d .signup-form__label,
 .styleguide .signup-form__label {
   bottom: 100%;
@@ -1971,9 +1974,11 @@ ol.o-inline {
   color: #0055b8;
   display: block;
   position: relative;
-  transition: transform 250ms ease-in-out;
   width: 100%; }
-  .signup-form__label-content:after {
+
+.csstransforms3d .signup-form__label-content {
+  transition: transform 250ms ease-in-out; }
+  .csstransforms3d .signup-form__label-content:after {
     bottom: 100%;
     color: #fff;
     content: attr(data-content);
@@ -1985,8 +1990,18 @@ ol.o-inline {
     text-transform: uppercase;
     width: 100%; }
     @media screen and (min-width: 1024px) {
-      .signup-form__label-content:after {
+      .csstransforms3d .signup-form__label-content:after {
         font-size: 0.8125rem; } }
+
+.no-csstransforms3d .is-filled .signup-form__label-content {
+  color: #fff;
+  font-family: "museo-sans-rounded", sans-serif;
+  font-size: 0.71094rem;
+  font-weight: 900;
+  text-transform: uppercase; }
+  @media screen and (min-width: 1024px) {
+    .no-csstransforms3d .is-filled .signup-form__label-content {
+      font-size: 0.8125rem; } }
 
 .csstransforms3d .is-filled .signup-form__label-content,
 .styleguide .is-filled .signup-form__label-content {

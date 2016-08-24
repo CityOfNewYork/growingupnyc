@@ -12,7 +12,7 @@
   color: $white;
   display: block;
   font-family: $font-family-display;
-  @include font-size-x-small;
+  @include font-size(13, 11.375);
   height: rem-calc($sticker-size-mobile);
   text-align: center;
   text-decoration: none;

@@ -12,7 +12,7 @@
   border-radius: rem-calc(25);
   display: inline-block;
   font-family: $font-family-display;
-  font-size: rem-calc(18);
+  @include font-size-regular;
   font-weight: $font-weight-extrablack;
   line-height: 1;
   min-width: rem-calc(125);
@@ -121,7 +121,7 @@
   border: 0;
   border-radius: rem-calc(15);
   color: $color-text-invert;
-  font-size: rem-calc($font-size-x-small-mobile);
+  @include font-size($font-size-xx-small);
   margin: rem-calc(0 2 4 0);
   min-width: 0;
   padding: rem-calc(10 17);

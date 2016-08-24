@@ -62,7 +62,7 @@
 }
 
 .c-content-tout__link {
-  @include font-size($font-size-x-small-mobile, 14);
+  @include font-size-x-small;
   text-decoration: underline;
 
   &:hover,

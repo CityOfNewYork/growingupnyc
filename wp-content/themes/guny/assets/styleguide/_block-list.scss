@@ -33,7 +33,7 @@
 // Styleguide 3.2.1
 .c-block-list__heading {
   color: $very-dark-gray-transparent;
-  @include font-size($font-size-x-small, $font-size-small);
+  @include font-size-small;
   margin-bottom: rem-calc(-20);
   @include text-uppercase;
 }

@@ -93,16 +93,12 @@
 // Styleguide 5.2.2
 .c-card__title {
   font-family: $font-family-display;
-  font-size: rem-calc(20);
+  @include font-size-xx-large;
   font-weight: $font-weight-extrablack;
   line-height: 1.2;
   margin: rem-calc(0 0 5);
   order: 3;
   text-decoration: none;
-
-  @include media($bp-small) {
-    @include font-size(22, $font-size-x-large);
-  }
 
   a {
     text-decoration: inherit;
@@ -143,7 +139,7 @@
   color: $color-text-weak;
   font-family: $font-family-display;
   font-weight: $font-weight-extrablack;
-  font-size: rem-calc(15);
+  @include font-size(15);
   letter-spacing: .5px;
   margin: rem-calc(0 0 10);
   order: 4;
@@ -177,7 +173,7 @@
 //
 // Styleguide 5.2.5
 .c-card__body {
-  @include font-size(14, $font-size-small);
+  @include font-size-small;
   margin: rem-calc(0 0 5);
   order: 6;
 }
@@ -190,7 +186,7 @@
 // Styleguide 5.2.6
 .c-card__link {
   color: $color-text-weak;
-  font-size: rem-calc(14);
+  @include font-size(14);
   order: 7;
 
   a {

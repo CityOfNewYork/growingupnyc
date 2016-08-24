@@ -52,14 +52,14 @@
 // Tip Content
 .c-tip__content {
   font-family: $font-family-display;
-  @include font-size(21, 24);
+  @include font-size-x-large;
   font-weight: 900;
   line-height: 1.2;
 }
 
 // Tip Footer
 .c-tip__footer {
-  @include font-size(14, 16);
+  @include font-size-small;
   margin-top: 1em;
 
   p + p {

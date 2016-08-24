@@ -33,7 +33,7 @@ $indicator-size: 10px;
   color: $color-text-invert;
   display: block;
   font-family: $font-family-display;
-  @include font-size(21, 24);
+  @include font-size-x-large;
   font-weight: $font-weight-extrablack;
   padding: rem-calc(20);
   position: relative;

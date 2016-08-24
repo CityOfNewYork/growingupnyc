@@ -62,7 +62,7 @@
   border-radius: rem-calc(3);
   display: block;
   font-family: $font-family-display;
-  @include font-size(21, 24);
+  @include font-size-x-large;
   font-weight: $font-weight-extrablack;
   margin-bottom: 0;
   text-align: left;
@@ -130,11 +130,8 @@
 // Optional subtitle on a list box heading
 .c-list-box__subheading {
   display: block;
+  @include font-size-large;
   font-weight: $font-weight-medium;
-
-  @include media($bp-large) {
-    font-size: .875em;
-  }
 }
 
 .c-list-box--primary .c-list-box__subheading {
@@ -204,7 +201,7 @@
 .c-list-box--secondary .c-list-box__subitem,
 .c-list-box--quaternary .c-list-box__subitem {
   color: $color-text-invert;
-  font-size: rem-calc(16);
+  @include font-size-small;
   padding: rem-calc(16 28);
 }
 

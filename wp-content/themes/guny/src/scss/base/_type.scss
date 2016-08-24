@@ -26,11 +26,11 @@ h6 {
 }
 
 h1 {
-  @include font-size-xx-large;
+  @include font-size-xxx-large;
 }
 
 h2 {
-  @include font-size-x-large;
+  @include font-size-xx-large;
   margin: rem-calc(0 0 20);
   @include text-uppercase;
 }

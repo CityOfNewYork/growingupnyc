@@ -30,7 +30,7 @@
   border: 1px solid transparent;
   border-radius: rem-calc(3);
   color: $color-text;
-  font-size: rem-calc($font-size-regular);
+  @include font-size-small;
   font-weight: $font-weight-semibold;
   padding: rem-calc(10 15);
 }
@@ -39,12 +39,11 @@
 
 // Large
 .form-field--large {
-  font-size: rem-calc($font-size-x-large-mobile);
+  @include font-size-x-large;
   line-height: 1;
   padding: rem-calc(10 40 10 20);
 
   @include media($bp-medium) {
-    font-size: rem-calc($font-size-x-large);
     padding: rem-calc(20 60 20 25);
   }
 }

@@ -24,16 +24,21 @@
 //
 // Styleguide 7.1
 
-.arrow-pager {
+.c-arrow-pager {
   font-family: $font-family-display;
   font-weight: $font-weight-extrablack;
   @include font-size-x-large;
-  margin: rem-calc(0 0 35);
+  padding-top: 10px;
+  margin: 0 0 35px;
   text-align: center;
   @include text-uppercase;
+
+  @include media($bp-large) {
+    padding-top: 0;
+  }
 }
 
-.arrow-pager__arrow {
+.c-arrow-pager__arrow {
   color: $very-dark-gray-transparent;
   text-decoration: none;
 }

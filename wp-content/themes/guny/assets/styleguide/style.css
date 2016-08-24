@@ -1037,20 +1037,24 @@ ol.o-inline {
   .c-alert__button:hover, .c-alert__button:focus {
     color: #d9d9d9; }
 
-.arrow-pager {
+.c-arrow-pager {
   font-family: "museo-sans-rounded", sans-serif;
   font-weight: 900;
   font-size: 1.3125rem;
-  margin: 0 0 2.1875rem;
+  padding-top: 10px;
+  margin: 0 0 35px;
   text-align: center;
   letter-spacing: .5px;
   line-height: 1;
   text-transform: uppercase; }
   @media screen and (min-width: 1024px) {
-    .arrow-pager {
+    .c-arrow-pager {
       font-size: 1.5rem; } }
+  @media screen and (min-width: 1024px) {
+    .c-arrow-pager {
+      padding-top: 0; } }
 
-.arrow-pager__arrow {
+.c-arrow-pager__arrow {
   color: rgba(51, 51, 51, 0.5);
   text-decoration: none; }
 

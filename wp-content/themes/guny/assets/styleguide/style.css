@@ -994,6 +994,9 @@ ol.o-inline {
   position: fixed;
   top: 0; }
 
+.o-sticky-nav.is-stuck {
+  position: absolute; }
+
 .c-alert {
   display: none; }
 

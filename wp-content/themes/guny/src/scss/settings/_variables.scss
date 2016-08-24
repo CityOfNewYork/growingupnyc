@@ -108,7 +108,7 @@ $bp-large: new-breakpoint(min-width 1024px);
 $bp-xlarge: new-breakpoint(min-width 1200px);
 $breakpoint-font: $bp-large;
 
-$bp-mobile-only: new-breakpoint(max-width 701px);
+$bp-mobile-only: new-breakpoint(max-width 1023px);
 
 // Heights
 // =====================

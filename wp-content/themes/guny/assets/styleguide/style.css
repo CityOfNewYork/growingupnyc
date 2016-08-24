@@ -958,7 +958,7 @@ ol.o-inline {
 .o-static-column {
   margin-top: -12.5rem;
   padding-top: 12.5rem; }
-  @media screen and (min-width: 700px) {
+  @media screen and (min-width: 1024px) {
     .o-static-column {
       backface-visibility: hidden;
       height: 100vh;
@@ -970,7 +970,7 @@ ol.o-inline {
       top: 0;
       width: 60%; } }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1024px) {
   .js .o-static-column {
     position: fixed; }
     .js .o-static-column.is-not-sticky {
@@ -1824,29 +1824,18 @@ ol.o-inline {
 
 .c-side-hero__image {
   background: #2793e0 center center no-repeat;
-  background-size: cover; }
-
-.c-side-hero__image--desktop {
-  display: none; }
-  @media screen and (min-width: 700px) {
-    .c-side-hero__image--desktop {
-      display: block;
+  background-size: cover;
+  height: 53.3333333vw; }
+  @media screen and (min-width: 1024px) {
+    .c-side-hero__image {
       height: 100%; } }
-  .styleguide-example .c-side-hero__image--desktop {
+  .styleguide-example .c-side-hero__image {
     background-image: url(/wp-content/uploads/2016/07/hero-home.jpg); }
-
-.c-side-hero__image--mobile {
-  height: 12.5rem; }
-  @media screen and (min-width: 700px) {
-    .c-side-hero__image--mobile {
-      display: none; } }
-  .styleguide-example .c-side-hero__image--mobile {
-    background-image: url(/wp-content/uploads/2016/07/hero-mobile-700x0-c-default.jpg); }
 
 .c-side-hero__content {
   color: #fff;
   padding: 2.5rem 0.9375rem; }
-  @media screen and (max-width: 701px) {
+  @media screen and (max-width: 1023px) {
     .c-side-hero__content {
       background: #2793e0;
       position: relative;
@@ -1873,7 +1862,7 @@ ol.o-inline {
         right: 0;
         top: 0;
         width: 100%; } }
-  @media screen and (min-width: 700px) {
+  @media screen and (min-width: 1024px) {
     .c-side-hero__content {
       bottom: 0;
       left: 0;
@@ -1881,7 +1870,7 @@ ol.o-inline {
       position: absolute;
       width: 60%; } }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 1024px) {
   .js .c-side-hero__content {
     position: fixed; }
   .js .is-bottom .c-side-hero__content {
@@ -1898,7 +1887,7 @@ ol.o-inline {
   @media screen and (min-width: 1024px) {
     .c-side-hero__title {
       font-size: 1.5rem; } }
-  @media screen and (min-width: 700px) {
+  @media screen and (min-width: 1024px) {
     .c-side-hero__title {
       margin-bottom: 1.25rem;
       text-align: left; } }
@@ -2380,7 +2369,7 @@ a.pre-teen-secondary.is-active {
 /**
 * Conditional Display
 */
-@media screen and (max-width: 701px) {
+@media screen and (max-width: 1023px) {
   .mobile-hide {
     display: none !important; } }
 

@@ -1,11 +1,28 @@
 {% extends "base.twig" %}
 
+{% block head_extras %}
+<style>
+  .c-side-hero__image { background-image:url({{TimberImage(post.hero_mobile_image).src|resize(480, 0)}}) }
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .c-side-hero__image { background-image: url({{TimberImage(post.hero_mobile_image).src|resize(960,0)}}); }
+  }
+  @media (min-width:480px) {
+    .c-side-hero__image { background-image: url({{TimberImage(post.hero_mobile_image).src|resize(700,0)}}); }
+  }
+  @media (min-width:480px) and (-webkit-min-device-pixel-ratio: 2), (min-width:480px) and (min-resolution: 192dpi) {
+    .c-side-hero__image{ background-image: url({{TimberImage(post.hero_mobile_image).src|resize(1400,0)}}); }
+  }
+  @media (min-width:1024px) {
+    .c-side-hero__image { background-image:url({{post.thumbnail.src}}) }
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 
 {# Side Hero #}
 <section class="o-static-column o-static-column--left c-side-hero js-static">
-  <div class="c-side-hero__image c-side-hero__image--desktop" style="background-image:url({{post.thumbnail.src}})"></div>
-  <div class="c-side-hero__image c-side-hero__image--mobile" style="background-image:url({{TimberImage(post.hero_mobile_image).src|resize(700, 0)}})"></div>
+  <div class="c-side-hero__image"></div>
   <div class="c-side-hero__content">
     <h1 class="c-side-hero__title">
       {{post.get_field('hero_title_top')}}

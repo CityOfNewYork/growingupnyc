@@ -996,7 +996,7 @@ ol.o-inline {
 
 .o-sticky-nav.is-sticky {
   position: fixed;
-  top: 0; }
+  top: 20px; }
 
 .o-sticky-nav.is-stuck {
   position: absolute; }

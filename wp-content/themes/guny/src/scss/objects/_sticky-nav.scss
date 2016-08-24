@@ -5,7 +5,7 @@
 .o-sticky-nav {
   &.is-sticky {
     position: fixed;
-    top: 0;
+    top: 20px;
   }
   &.is-stuck {
     position: absolute;

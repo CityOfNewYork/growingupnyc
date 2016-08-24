@@ -824,7 +824,8 @@ ol.o-inline {
 .o-offcanvas {
   background: #333;
   min-height: 100%;
-  position: relative; }
+  position: relative;
+  z-index: 1; }
 
 .o-offcanvas__side {
   background: #fff;
@@ -848,16 +849,6 @@ ol.o-inline {
   transition: all .5s;
   visibility: hidden;
   z-index: 1; }
-  .js .o-offcanvas__side:after {
-    background: rgba(0, 0, 0, 0.4);
-    content: '';
-    height: 100%;
-    opacity: 1;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transition: opacity .5s;
-    width: 100%; }
   @media screen and (min-width: 1024px) {
     .js .o-offcanvas__side {
       padding-top: 60px; } }
@@ -866,7 +857,18 @@ ol.o-inline {
   overflow: auto;
   transition: transform .5s;
   visibility: visible;
-  z-index: 100; }
+  z-index: 101; }
+
+.js.csstransitions .o-offcanvas__side:after {
+  background: rgba(0, 0, 0, 0.4);
+  content: '';
+  height: 100%;
+  opacity: 1;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: opacity .5s;
+  width: 100%; }
 
 .js.csstransitions .is-open .o-offcanvas__side {
   z-index: 1; }

@@ -81,6 +81,9 @@ $link-transition: all ease-in-out .15s;
 
 // Z-Indexes
 // =====================
+$z-index-offcanvas-side: 101;
+$z-index-offcanvas-overlay: 100;
+$z-index-offcanvas-main: 99;
 $z-index-alert: 4;
 $z-index-header: 3;
 $z-index-search-overlay: 2;

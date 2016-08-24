@@ -175,6 +175,10 @@
 .c-list-box--primary .c-list-box__subitem {
   padding: rem-calc(3 20);
 
+  &:first-child {
+    padding-top: rem-calc(30);
+  }
+
   &:last-child {
     padding-bottom: rem-calc(30);
   }

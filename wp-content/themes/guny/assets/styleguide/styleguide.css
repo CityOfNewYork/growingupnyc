@@ -1716,6 +1716,8 @@ ol.o-inline {
 
 .c-list-box--primary .c-list-box__subitem {
   padding: 0.1875rem 1.25rem; }
+  .c-list-box--primary .c-list-box__subitem:first-child {
+    padding-top: 1.875rem; }
   .c-list-box--primary .c-list-box__subitem:last-child {
     padding-bottom: 1.875rem; }
   @media screen and (min-width: 1024px) {
@@ -2147,6 +2149,17 @@ ol.o-inline {
 .baby-background {
   background-color: #d8006d !important; }
 
+button.baby-background,
+a.baby-background {
+  transition: background-color 250ms linear; }
+  button.baby-background:hover, button.baby-background:focus, button.baby-background.is-active,
+  a.baby-background:hover,
+  a.baby-background:focus,
+  a.baby-background.is-active {
+    background-color: #7f1c4e !important;
+    border-color: #7f1c4e !important;
+    outline: none; }
+
 .baby-secondary {
   background-color: #7f1c4e !important;
   border-color: #7f1c4e !important; }
@@ -2173,6 +2186,17 @@ a.baby-secondary.is-active {
 
 .toddler-background {
   background-color: #ff6100 !important; }
+
+button.toddler-background,
+a.toddler-background {
+  transition: background-color 250ms linear; }
+  button.toddler-background:hover, button.toddler-background:focus, button.toddler-background.is-active,
+  a.toddler-background:hover,
+  a.toddler-background:focus,
+  a.toddler-background.is-active {
+    background-color: #fb0000 !important;
+    border-color: #fb0000 !important;
+    outline: none; }
 
 .toddler-secondary {
   background-color: #fb0000 !important;
@@ -2201,6 +2225,17 @@ a.toddler-secondary.is-active {
 .pre-schooler-background {
   background-color: #ff9d00 !important; }
 
+button.pre-schooler-background,
+a.pre-schooler-background {
+  transition: background-color 250ms linear; }
+  button.pre-schooler-background:hover, button.pre-schooler-background:focus, button.pre-schooler-background.is-active,
+  a.pre-schooler-background:hover,
+  a.pre-schooler-background:focus,
+  a.pre-schooler-background.is-active {
+    background-color: #ff6100 !important;
+    border-color: #ff6100 !important;
+    outline: none; }
+
 .pre-schooler-secondary {
   background-color: #ff6100 !important;
   border-color: #ff6100 !important; }
@@ -2228,6 +2263,17 @@ a.pre-schooler-secondary.is-active {
 .grade-schooler-background {
   background-color: #35c621 !important; }
 
+button.grade-schooler-background,
+a.grade-schooler-background {
+  transition: background-color 250ms linear; }
+  button.grade-schooler-background:hover, button.grade-schooler-background:focus, button.grade-schooler-background.is-active,
+  a.grade-schooler-background:hover,
+  a.grade-schooler-background:focus,
+  a.grade-schooler-background.is-active {
+    background-color: #1d5d11 !important;
+    border-color: #1d5d11 !important;
+    outline: none; }
+
 .grade-schooler-secondary {
   background-color: #1d5d11 !important;
   border-color: #1d5d11 !important; }
@@ -2254,6 +2300,17 @@ a.grade-schooler-secondary.is-active {
 
 .pre-teen-background {
   background-color: #0055b8 !important; }
+
+button.pre-teen-background,
+a.pre-teen-background {
+  transition: background-color 250ms linear; }
+  button.pre-teen-background:hover, button.pre-teen-background:focus, button.pre-teen-background.is-active,
+  a.pre-teen-background:hover,
+  a.pre-teen-background:focus,
+  a.pre-teen-background.is-active {
+    background-color: #00326d !important;
+    border-color: #00326d !important;
+    outline: none; }
 
 .pre-teen-secondary {
   background-color: #00326d !important;

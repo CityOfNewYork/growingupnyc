@@ -53,6 +53,10 @@ export default function() {
       event.preventDefault();
       $headerElem.trigger('changeState');
     });
+
+    $headerElem.on('mouseleave.accordion', function() {
+      $headerElem.blur();
+    });
   }
 
   /**
@@ -64,8 +68,10 @@ export default function() {
     $panelElem.attr('aria-hidden', !makeVisible);
     if (makeVisible) {
       $panelElem.css('height', $panelElem.data('height') + 'px');
+      $panelElem.find('a, button, [tabindex]').attr('tabindex', 0);
     } else {
       $panelElem.css('height', '');
+      $panelElem.find('a, button, [tabindex]').attr('tabindex', -1);
     }
   }
 

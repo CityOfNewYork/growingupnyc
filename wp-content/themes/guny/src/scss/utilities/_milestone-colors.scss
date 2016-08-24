@@ -5,6 +5,18 @@
   background-color: $color-baby !important;
 }
 
+button.baby-background,
+a.baby-background {
+  transition: background-color 250ms linear;
+  &:hover,
+  &:focus,
+  &.is-active {
+    background-color: $color-baby-secondary !important;
+    border-color: $color-baby-secondary !important;
+    outline: none;
+  }
+}
+
 .baby-secondary {
   background-color: $color-baby-secondary !important;
   border-color: $color-baby-secondary !important;
@@ -40,6 +52,18 @@ a.baby-secondary {
 
 .toddler-background {
   background-color: $color-toddler !important;
+}
+
+button.toddler-background,
+a.toddler-background {
+  transition: background-color 250ms linear;
+  &:hover,
+  &:focus,
+  &.is-active {
+    background-color: $color-toddler-secondary !important;
+    border-color: $color-toddler-secondary !important;
+    outline: none;
+  }
 }
 
 .toddler-secondary {
@@ -79,6 +103,18 @@ a.toddler-secondary {
   background-color: $color-pre-schooler !important;
 }
 
+button.pre-schooler-background,
+a.pre-schooler-background {
+  transition: background-color 250ms linear;
+  &:hover,
+  &:focus,
+  &.is-active {
+    background-color: $color-pre-schooler-secondary !important;
+    border-color: $color-pre-schooler-secondary !important;
+    outline: none;
+  }
+}
+
 .pre-schooler-secondary {
   background-color: $color-pre-schooler-secondary !important;
   border-color: $color-pre-schooler-secondary !important;
@@ -116,6 +152,18 @@ a.pre-schooler-secondary {
   background-color: $color-grade-schooler !important;
 }
 
+button.grade-schooler-background,
+a.grade-schooler-background {
+  transition: background-color 250ms linear;
+  &:hover,
+  &:focus,
+  &.is-active {
+    background-color: $color-grade-schooler-secondary !important;
+    border-color: $color-grade-schooler-secondary !important;
+    outline: none;
+  }
+}
+
 .grade-schooler-secondary {
   background-color: $color-grade-schooler-secondary !important;
   border-color: $color-grade-schooler-secondary !important;
@@ -151,6 +199,18 @@ a.grade-schooler-secondary {
 
 .pre-teen-background {
   background-color: $color-pre-teen !important;
+}
+
+button.pre-teen-background,
+a.pre-teen-background {
+  transition: background-color 250ms linear;
+  &:hover,
+  &:focus,
+  &.is-active {
+    background-color: $color-pre-teen-secondary !important;
+    border-color: $color-pre-teen-secondary !important;
+    outline: none;
+  }
 }
 
 .pre-teen-secondary {

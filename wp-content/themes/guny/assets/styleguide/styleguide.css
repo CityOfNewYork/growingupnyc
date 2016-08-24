@@ -1859,26 +1859,26 @@ ol.o-inline {
     width: 100%; } }
 
 .c-side-hero__title {
-  font-size: 1.5rem;
+  font-size: 1.3125rem;
   line-height: 1.2;
   position: relative;
   text-align: center;
   z-index: 1; }
   @media screen and (min-width: 1024px) {
     .c-side-hero__title {
-      font-size: 1.125rem; } }
+      font-size: 1.5rem; } }
   @media screen and (min-width: 1024px) {
     .c-side-hero__title {
       margin-bottom: 1.25rem;
       text-align: left; } }
 
 .c-side-hero__title__large {
-  font-size: 4.125rem;
+  font-size: 2.5rem;
   text-transform: uppercase;
   white-space: nowrap; }
   @media screen and (min-width: 1024px) {
     .c-side-hero__title__large {
-      font-size: 2.5rem; } }
+      font-size: 4.125rem; } }
   .c-side-hero__title__large .rotating-text__entry {
     display: block;
     width: 100%; }

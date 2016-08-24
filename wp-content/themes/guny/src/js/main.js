@@ -5,7 +5,6 @@ import offcanvas from './modules/offcanvas.js';
 import overlay from './modules/overlay.js';
 import stickyNav from './modules/stickyNav.js';
 import currentSection from './modules/currentSection.js';
-// import parallax from './modules/parallax.js';
 import staticColumn from './modules/staticColumn.js';
 import searchResultsHeader from './modules/searchResultsHeader.js';
 import alert from './modules/alert.js';
@@ -34,7 +33,6 @@ function init() {
   facets();
   // Homepage
   staticColumn();
-  // parallax();
   stickyNav();
   currentSection();
   bsdtoolsSignup();

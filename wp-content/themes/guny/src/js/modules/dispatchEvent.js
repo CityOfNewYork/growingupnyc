@@ -6,11 +6,11 @@
 export default function(elem, eventType) {
   let event;
   if (document.createEvent) {
-    event = new Event(eventType);
+    event = document.createEvent('HTMLEvents');
+    event.initEvent(eventType, true, true);
     elem.dispatchEvent(event);
   } else {
     event = document.createEventObject();
-    event.eventType = eventType;
     elem.fireEvent('on' + eventType, event);
   }
 }

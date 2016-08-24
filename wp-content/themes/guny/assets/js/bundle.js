@@ -100,9 +100,6 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// import parallax from './modules/parallax.js';
-
-
 	function ready(fn) {
 	  if (document.readyState === 'loading') {
 	    document.addEventListener('DOMContentLoaded', fn);
@@ -124,7 +121,6 @@
 	  (0, _facets2.default)();
 	  // Homepage
 	  (0, _staticColumn2.default)();
-	  // parallax();
 	  (0, _stickyNav2.default)();
 	  (0, _currentSection2.default)();
 	  (0, _bsdtoolsSignup2.default)();
@@ -809,11 +805,11 @@
 	exports.default = function (elem, eventType) {
 	  var event = void 0;
 	  if (document.createEvent) {
-	    event = new Event(eventType);
+	    event = document.createEvent('HTMLEvents');
+	    event.initEvent(eventType, true, true);
 	    elem.dispatchEvent(event);
 	  } else {
 	    event = document.createEventObject();
-	    event.eventType = eventType;
 	    elem.fireEvent('on' + eventType, event);
 	  }
 	};

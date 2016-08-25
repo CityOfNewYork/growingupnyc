@@ -1630,6 +1630,9 @@ ol.o-inline {
   display: block;
   padding: 0.375rem 0.25rem 0.125rem; }
 
+.c-list-box--tertiary {
+  padding: 0; }
+
 .c-list-box__item {
   display: block;
   color: #fff;

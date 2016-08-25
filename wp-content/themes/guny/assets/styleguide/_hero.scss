@@ -9,7 +9,7 @@
 // .c-hero - Standard size
 // .c-hero--large - Taller version
 // .c-hero--long-text - Version that allows for longer titles and taglines
-// .c-hero--light - Version with dark text on a light background
+// .c-hero--light - Version with dark text and no background image
 //
 // markup:
 // <header class="c-hero {$modifiers}" style="background:#333">
@@ -29,10 +29,17 @@
   background-size: contain;
   color: $color-text-invert;
   overflow: hidden;
-  padding: percentage(94/375) 0 rem-calc(65);
+  padding: percentage(94/375) 0 rem-calc(33);
   position: relative;
   text-align: center;
+}
 
+.c-hero--light {
+  color: $color-text;
+  padding: percentage(57/375) 0 rem-calc(65);
+}
+
+.c-hero {
   @include media($bp-medium) {
     background-size: cover;
     text-align: left;
@@ -58,10 +65,6 @@
 
 .c-hero--long-text {
   text-align: left;
-}
-
-.c-hero--light {
-  color: $color-text;
 }
 
 // Hero Background Variations

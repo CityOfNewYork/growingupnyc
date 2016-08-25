@@ -1123,7 +1123,7 @@ ol.o-inline {
 .c-banner__link {
   color: #2793e0;
   font-family: "museo-sans-rounded", sans-serif;
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
   font-weight: 900;
   position: relative;
   text-decoration: none;
@@ -1471,17 +1471,23 @@ ol.o-inline {
   background-size: contain;
   color: #fff;
   overflow: hidden;
-  padding: 25.06667% 0 4.0625rem;
+  padding: 25.06667% 0 2.0625rem;
   position: relative;
   text-align: center; }
-  @media screen and (min-width: 700px) {
-    .c-hero {
-      background-size: cover;
-      text-align: left;
-      padding: 5.75rem 2.5rem 5rem; } }
-  @media screen and (min-width: 1200px) {
-    .c-hero {
-      padding: 7.0625rem 5rem 3.75rem; } }
+
+.c-hero--light {
+  color: #333;
+  padding: 15.2% 0 4.0625rem; }
+
+@media screen and (min-width: 700px) {
+  .c-hero {
+    background-size: cover;
+    text-align: left;
+    padding: 5.75rem 2.5rem 5rem; } }
+
+@media screen and (min-width: 1200px) {
+  .c-hero {
+    padding: 7.0625rem 5rem 3.75rem; } }
 
 .c-hero--large {
   padding: 33.6% 0 4.0625rem; }
@@ -1494,9 +1500,6 @@ ol.o-inline {
 
 .c-hero--long-text {
   text-align: left; }
-
-.c-hero--light {
-  color: #333; }
 
 .c-hero--bg-primary {
   background: #2793e0; }

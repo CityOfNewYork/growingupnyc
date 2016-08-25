@@ -65,3 +65,9 @@
   @extend .icon--small;
   margin-top: rem-calc(-3);
 }
+
+.icon--caret--xxsmall {
+  @extend .icon--xxsmall;
+  margin-top: rem-calc(-3);
+  margin-right: rem-calc(-4);
+}

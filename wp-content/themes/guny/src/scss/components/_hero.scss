@@ -139,6 +139,9 @@
 
   @include media($bp-medium) {
     font-size: rem-calc($font-size-xx-large);
+  }
+
+  @include media($bp-large) {
     @include span-columns(6);
     @include omega;
   }
@@ -155,6 +158,9 @@
 
   @include media($bp-medium) {
     font-size: rem-calc($font-size-large);
+  }
+
+  @include media($bp-large) {
     @include span-columns(9);
     @include omega;
   }

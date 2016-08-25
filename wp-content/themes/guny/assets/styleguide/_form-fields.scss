@@ -35,12 +35,16 @@
   padding: rem-calc(10 15);
 }
 
+input[type="search"].form-field {
+  appearance: none;
+}
+
 // Size Variations
 
 // Large
 .form-field--large {
   @include font-size-x-large;
-  line-height: 1;
+  line-height: normal;
   padding: rem-calc(10 40 10 20);
 
   @include media($bp-medium) {
@@ -60,7 +64,7 @@
 }
 
 .form-field__icon {
-  display: inline-block;
+  display: block;
   color: $color-primary;
   cursor: pointer;
   height: rem-calc(20);
@@ -102,7 +106,7 @@
 // Large
 .form-field__icon--large {
   height: rem-calc(20);
-  margin-top: rem-calc(-10);
+  margin-top: rem-calc(-15);
   width: rem-calc(20);
 
   @include media($bp-medium) {

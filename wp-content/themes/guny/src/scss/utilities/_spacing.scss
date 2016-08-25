@@ -7,57 +7,57 @@
   margin-bottom: $outer-gutter;
 
   @include media($bp-small) {
-    margin-bottom: $outer-gutter-small;
+    margin-bottom: #{$outer-gutter-small}px;
   }
 
   @include media($bp-medium) {
-    margin-bottom: $outer-gutter-medium;
+    margin-bottom: #{$outer-gutter-medium}px;
   }
 
   @include media($bp-large) {
-    margin-bottom: $outer-gutter-large;
+    margin-bottom: #{$outer-gutter-large}px;
   }
 }
 
 // Extra top padding
 .u-top-spacing {
-  padding-top: rem-calc(45);
+  padding-top: 45px;
 
   @include media($bp-large) {
-    padding-top: rem-calc(60);
+    padding-top: 60px;
   }
 }
 
 .u-top-spacing-small {
-  padding-top: rem-calc(30);
+  padding-top: 30px;
 
   @include media($bp-small) {
-    padding-top: rem-calc(35);
+    padding-top: 35px;
   }
 
   @include media($bp-large) {
-    padding-top: rem-calc($outer-gutter-large);
+    padding-top: #{$outer-gutter-large}px;
   }
 }
 
 // Extra bottom padding
 .u-bottom-spacing {
-  padding-bottom: rem-calc(45);
+  padding-bottom: 45px;
 
   @include media($bp-large) {
-    padding-bottom: rem-calc(60);
+    padding-bottom: 60px;
   }
 }
 
 .u-bottom-spacing-small {
-  padding-bottom: rem-calc(30);
+  padding-bottom: 30px;
 
   @include media($bp-small) {
-    padding-bottom: rem-calc(35);
+    padding-bottom: 35px;
   }
 
   @include media($bp-large) {
-    padding-bottom: rem-calc($outer-gutter-large);
+    padding-bottom: #{$outer-gutter-large}px;
   }
 }
 

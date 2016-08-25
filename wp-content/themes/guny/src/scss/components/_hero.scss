@@ -83,8 +83,12 @@
   padding-top: rem-calc(35);
   text-transform: uppercase;
   // Set z-index for text to appear on top of bg image
-  position: relative;
   z-index: 1;
+}
+
+.c-hero__title,
+.c-hero__title--long {
+  position: relative;
 }
 
 .flexbox .c-hero__title,
@@ -99,10 +103,11 @@
 // Hero Sticker
 .c-hero__sticker {
   background-color: $color-secondary;
+  bottom: 100%;
   box-shadow: 0 2px 4px 0 $color-shadow;
   display: inline-block;
   left: 0;
-  top: rem-calc($sticker-size-mobile / -2);
+  //top: rem-calc($sticker-size-mobile / -2);
   position: absolute;
 
   @include media($bp-medium) {

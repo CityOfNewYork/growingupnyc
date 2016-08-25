@@ -1171,9 +1171,6 @@ ol.o-inline {
   line-height: 1;
   text-transform: uppercase; }
 
-.c-block-list__text {
-  margin-top: 1.875rem; }
-
 .c-block-list--shade .c-block-list__text {
   color: #6a6a6a; }
 

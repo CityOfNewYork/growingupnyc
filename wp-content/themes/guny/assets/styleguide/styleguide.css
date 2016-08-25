@@ -578,11 +578,18 @@ h4,
 h5,
 h6 {
   font-family: "museo-sans-rounded", sans-serif;
-  font-weight: 900;
+  font-weight: 900; }
+
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1.3; }
 
 h1 {
-  font-size: 2.5rem; }
+  font-size: 2.5rem;
+  line-height: 1.1; }
   @media screen and (min-width: 1024px) {
     h1 {
       font-size: 4.125rem; } }
@@ -1507,11 +1514,14 @@ ol.o-inline {
   line-height: 1;
   padding-top: 2.1875rem;
   text-transform: uppercase;
-  position: relative;
   z-index: 1; }
   @media screen and (min-width: 1024px) {
     .c-hero__title {
       font-size: 4.125rem; } }
+
+.c-hero__title,
+.c-hero__title--long {
+  position: relative; }
 
 @media screen and (min-width: 700px) {
   .flexbox .c-hero__title,
@@ -1522,10 +1532,10 @@ ol.o-inline {
 
 .c-hero__sticker {
   background-color: #0055b8;
+  bottom: 100%;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   display: inline-block;
   left: 0;
-  top: -2.5rem;
   position: absolute; }
   @media screen and (min-width: 700px) {
     .c-hero__sticker {

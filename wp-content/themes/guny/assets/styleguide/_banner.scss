@@ -33,7 +33,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   position: relative;
   z-index: $z-index-header;
 
-  @include media($bp-large) {
+  @include media($bp-medium) {
     height: $height-banner-large;
   }
 }
@@ -60,7 +60,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
     width: $width-banner-logo-small;
   }
 
-  @include media($bp-large) {
+  @include media($bp-medium) {
     height: $height-banner-logo-large;
     padding: 0 16px 20px 14px;
     width: $width-banner-logo-large;
@@ -91,7 +91,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   line-height: 1;
   padding-top: rem-calc(18);
 
-  @include media($bp-large) {
+  @include media($bp-medium) {
     padding-top: rem-calc(20);
   }
 }
@@ -105,7 +105,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 .c-banner__link {
   color: $color-primary;
   font-family: $font-family-display;
-  @include font-size($font-size-small, 13);
+  font-size: rem-calc(13);
   font-weight: $font-weight-extrablack;
   position: relative;
   text-decoration: none;
@@ -116,7 +116,8 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
     color: $color-secondary;
   }
 
-  @include media($breakpoint-font) {
+  @include media($bp-medium) {
+    font-size: rem-calc($font-size-small);
     letter-spacing: 1.1px;
   }
 }

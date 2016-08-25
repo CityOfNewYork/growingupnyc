@@ -1071,7 +1071,7 @@ ol.o-inline {
   height: 50px;
   position: relative;
   z-index: 3; }
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 700px) {
     .c-banner {
       height: 60px; } }
 
@@ -1095,7 +1095,7 @@ ol.o-inline {
     .c-banner__logo-wrapper {
       height: 80.0px;
       width: 100.0px; } }
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 700px) {
     .c-banner__logo-wrapper {
       height: 144px;
       padding: 0 16px 20px 14px;
@@ -1116,7 +1116,7 @@ ol.o-inline {
   float: right;
   line-height: 1;
   padding-top: 1.125rem; }
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 700px) {
     .c-banner__nav {
       padding-top: 1.25rem; } }
 
@@ -1130,13 +1130,11 @@ ol.o-inline {
   letter-spacing: .5px;
   line-height: 1;
   text-transform: uppercase; }
-  @media screen and (min-width: 1024px) {
-    .c-banner__link {
-      font-size: 1rem; } }
   .c-banner__link:hover, .c-banner__link:focus {
     color: #0055b8; }
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 700px) {
     .c-banner__link {
+      font-size: 1rem;
       letter-spacing: 1.1px; } }
 
 .c-banner__icon {

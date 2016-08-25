@@ -119,7 +119,7 @@
       <section class="c-block-list c-block-list--shade o-content-container" id="section-programs">
         <h2>Programs</h2>
         {% if post.programs_text %}
-          <p class="c-block-list__text">{{post.events_text}}</p>
+          <p class="c-block-list__text">{{post.programs_text}}</p>
         {% endif %}
         <div class="c-block-list__inner">
           {% for program in post.get_field('featured_programs') %}

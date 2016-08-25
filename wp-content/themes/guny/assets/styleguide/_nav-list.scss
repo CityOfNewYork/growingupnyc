@@ -43,6 +43,8 @@ $indicator-size: 10px;
   &:hover,
   &:focus,
   &.is-active {
+    background-color: $color-primary;
+    border-color: $color-primary;
     color: $color-text-invert;
   }
 
@@ -52,9 +54,6 @@ $indicator-size: 10px;
     &:hover,
     &:focus,
     &.is-active {
-      background-color: $color-primary;
-      border-color: $color-primary;
-
       &:after {
         content: '';
         display: block;

@@ -2058,41 +2058,47 @@ ol.o-inline {
 .c-tip__link:hover, .c-tip__link:focus {
   color: #d9d9d9; }
 
-.s-wysiwyg h3 {
-  margin-top: 1.875rem; }
-  @media screen and (min-width: 1024px) {
-    .s-wysiwyg h3 {
-      margin-top: 3.125rem; } }
-
-.s-wysiwyg ol {
-  padding-left: 1.875rem; }
-  @media screen and (min-width: 1024px) {
-    .s-wysiwyg ol {
-      padding-left: 3.125rem; } }
-
-.s-wysiwyg ol li {
-  padding: 0.625rem 0; }
-
-.s-wysiwyg ol,
-.s-wysiwyg ul {
-  margin-top: 0.9375rem; }
-
-.s-wysiwyg ul {
-  list-style: none;
-  padding-left: 0.625rem; }
-  @media screen and (min-width: 1024px) {
-    .s-wysiwyg ul {
-      padding-left: 1.875rem; } }
-
-.s-wysiwyg ul li {
-  padding: 0.9375rem 0 0.9375rem 1.6875rem;
-  text-indent: -1.6875rem; }
-  .s-wysiwyg ul li:before {
-    content: url(/wp-content/themes/guny/assets/img/check.svg);
-    margin-right: 0.75rem;
-    margin-top: 0.125rem;
-    opacity: .2;
-    vertical-align: middle; }
+.s-wysiwyg {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-word; }
+  @media screen and (min-width: 700px) {
+    .s-wysiwyg {
+      overflow-wrap: initial;
+      word-wrap: initial;
+      -ms-word-break: initial;
+      word-break: initial; } }
+  .s-wysiwyg h3 {
+    margin-top: 1.875rem; }
+    @media screen and (min-width: 1024px) {
+      .s-wysiwyg h3 {
+        margin-top: 3.125rem; } }
+  .s-wysiwyg ol {
+    padding-left: 1.875rem; }
+    @media screen and (min-width: 1024px) {
+      .s-wysiwyg ol {
+        padding-left: 3.125rem; } }
+  .s-wysiwyg ol li {
+    padding: 0.625rem 0; }
+  .s-wysiwyg ol,
+  .s-wysiwyg ul {
+    margin-top: 0.9375rem; }
+  .s-wysiwyg ul {
+    list-style: none;
+    padding-left: 0.625rem; }
+    @media screen and (min-width: 1024px) {
+      .s-wysiwyg ul {
+        padding-left: 1.875rem; } }
+  .s-wysiwyg ul li {
+    padding: 0.9375rem 0 0.9375rem 1.6875rem;
+    text-indent: -1.6875rem; }
+    .s-wysiwyg ul li:before {
+      content: url(/wp-content/themes/guny/assets/img/check.svg);
+      margin-right: 0.75rem;
+      margin-top: 0.125rem;
+      opacity: .2;
+      vertical-align: middle; }
 
 .facetwp-is-loaded .facetwp-template {
   opacity: 1;

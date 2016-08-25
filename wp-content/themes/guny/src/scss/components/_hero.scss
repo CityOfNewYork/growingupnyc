@@ -36,7 +36,7 @@
   @include media($bp-medium) {
     background-size: cover;
     text-align: left;
-    padding: rem-calc(72 40 80);
+    padding: rem-calc(92 40 80);
   }
 
   @include media($bp-xlarge) {

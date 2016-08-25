@@ -40,26 +40,31 @@ $indicator-size: 10px;
   text-decoration: none;
   @include text-uppercase;
 
-  @include media($bp-large) {
-    padding: rem-calc(28);
-  }
-
   &:hover,
   &:focus,
   &.is-active {
-    background-color: $color-primary;
-    border-color: $color-primary;
     color: $color-text-invert;
+  }
 
-    &:after {
-      content: '';
-      display: block;
-      border: $indicator-size solid transparent;
-      border-left-color: inherit;
-      margin-top: -#{$indicator-size};
-      position: absolute;
-      right: -#{$indicator-size * 2};
-      top: 50%;
+  @include media($bp-large) {
+    padding: rem-calc(28);
+
+    &:hover,
+    &:focus,
+    &.is-active {
+      background-color: $color-primary;
+      border-color: $color-primary;
+
+      &:after {
+        content: '';
+        display: block;
+        border: $indicator-size solid transparent;
+        border-left-color: inherit;
+        margin-top: -#{$indicator-size};
+        position: absolute;
+        right: -#{$indicator-size * 2};
+        top: 50%;
+      }
     }
   }
 }

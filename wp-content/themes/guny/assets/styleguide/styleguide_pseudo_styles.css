@@ -156,21 +156,7 @@ a.pseudo-class-focus {
 
 .c-nav-list__link.pseudo-class-hover,
 .c-nav-list__link.pseudo-class-focus {
-  background-color: #2793e0;
-  border-color: #2793e0;
   color: #fff;
-}
-
-.c-nav-list__link.pseudo-class-hover:after,
-.c-nav-list__link.pseudo-class-focus:after {
-  content: '';
-  display: block;
-  border: 10px solid transparent;
-  border-left-color: inherit;
-  margin-top: -10px;
-  position: absolute;
-  right: -20px;
-  top: 50%;
 }
 
 .signup-form__field.pseudo-class-focus {

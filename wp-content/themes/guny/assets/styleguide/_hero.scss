@@ -42,6 +42,7 @@
 
 .c-hero--light {
   color: $color-text;
+  text-align: left;
   padding: percentage(57/375) 0 rem-calc(65);
 
   @include media($bp-medium) {

@@ -1488,6 +1488,7 @@ ol.o-inline {
 
 .c-hero--light {
   color: #333;
+  text-align: left;
   padding: 15.2% 0 4.0625rem; }
   @media screen and (min-width: 700px) {
     .c-hero--light {

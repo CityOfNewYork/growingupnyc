@@ -189,7 +189,8 @@ class FacetWP_Facet_Guny {
     $output = '<div class="c-list-box__item">';
     $output .= '<h3 class="js-accordion__header c-list-box__heading" id="' . $facet['name'] . '-heading">' . $header . '</h3>';
     $output .= '<ul class="js-accordion__content c-list-box__content" id="' . $facet['name'] . '-panel">';
-    $output .= '<li><a href="#" class="c-list-box__subitem facetwp-item" data-value="">' . $label_any . '</a></li>';
+    $selected = empty($selected_values) ? 'true' : 'false';
+    $output .= '<li><a href="#" class="c-list-box__subitem facetwp-item" aria-selected="' . $selected . '" data-value="">' . $label_any . '</a></li>';
     foreach( $values as $result ) {
       $selected = in_array( $result['facet_value'], $selected_values) ? 'true' : 'false';
       $output .= '<li><a href="#" class="c-list-box__subitem facetwp-item" aria-selected="' . $selected . '" data-value="' . $result['facet_value'] . '">' . $result['facet_display_value'] . '</a></li>';
@@ -204,7 +205,8 @@ class FacetWP_Facet_Guny {
   <script>
   (function($) {
       wp.hooks.addAction('facetwp/refresh/guny', function($this, facet_name) {
-        var val = $this.find('.facetwp-item[aria-selected="true"]').data('value');
+        var val = $this.find('[aria-selected="true"]').data('value');
+        console.log(facet_name, val);
         FWP.facets[facet_name] = val ? [val] : [];
       });
 
@@ -213,11 +215,11 @@ class FacetWP_Facet_Guny {
         window.reInitializeAccordion($('.facetwp-guny'));
       });
 
-      $(document).on('click', '.facetwp-type-guny .facetwp-item', function(event) {
+      $(document).on('click.facetwp', '.facetwp-type-guny .facetwp-item', function(event) {
         event.preventDefault();
-        $(this).siblings('[aria-selected="true"]').attr('aria-selected', false);
+        $(this).closest('.facetwp-type-guny').find('[aria-selected="true"]').attr('aria-selected', false);
         $(this).attr('aria-selected', true);
-        FWP.autoload();
+        FWP.refresh();
       });
   })(jQuery);
   </script>

@@ -1474,16 +1474,18 @@ ol.o-inline {
   padding: 25.06667% 0 2.0625rem;
   position: relative;
   text-align: center; }
+  @media screen and (min-width: 700px) {
+    .c-hero {
+      background-size: cover;
+      text-align: left;
+      padding: 5.75rem 2.5rem 5rem; } }
 
 .c-hero--light {
   color: #333;
   padding: 15.2% 0 4.0625rem; }
-
-@media screen and (min-width: 700px) {
-  .c-hero {
-    background-size: cover;
-    text-align: left;
-    padding: 5.75rem 2.5rem 5rem; } }
+  @media screen and (min-width: 700px) {
+    .c-hero--light {
+      padding: 5.75rem 2.5rem 2.25rem; } }
 
 @media screen and (min-width: 1200px) {
   .c-hero {

@@ -32,20 +32,24 @@
   padding: percentage(94/375) 0 rem-calc(33);
   position: relative;
   text-align: center;
-}
 
-.c-hero--light {
-  color: $color-text;
-  padding: percentage(57/375) 0 rem-calc(65);
-}
-
-.c-hero {
   @include media($bp-medium) {
     background-size: cover;
     text-align: left;
     padding: rem-calc(92 40 80);
   }
+}
 
+.c-hero--light {
+  color: $color-text;
+  padding: percentage(57/375) 0 rem-calc(65);
+
+  @include media($bp-medium) {
+    padding: rem-calc(92 40 36);
+  }
+}
+
+.c-hero {
   @include media($bp-xlarge) {
     padding: rem-calc(113 80 60);
   }

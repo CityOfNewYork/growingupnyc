@@ -29,12 +29,12 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 .c-banner {
   background: $color-background;
   box-shadow: 0 2px 4px 0 $color-shadow;
-  height: $height-banner;
+  height: rem-calc($height-banner);
   position: relative;
   z-index: $z-index-header;
 
   @include media($bp-medium) {
-    height: $height-banner-large;
+    height: rem-calc($height-banner-large);
   }
 }
 
@@ -48,22 +48,22 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   background: $color-background;
   box-shadow: 0 0 4px 0 $color-shadow;
   display: block;
-  height: $height-banner-logo;
+  height: rem-calc($height-banner-logo);
   @include layout-inner-left-edge;
   padding: 0 5px 8px;
   position: absolute;
   top: 0;
-  width: $width-banner-logo;
+  width: rem-calc($width-banner-logo);
 
   @include media($bp-small) {
-    height: $height-banner-logo-small;
-    width: $width-banner-logo-small;
+    height: rem-calc($height-banner-logo-small);
+    width: rem-calc($width-banner-logo-small);
   }
 
   @include media($bp-medium) {
-    height: $height-banner-logo-large;
+    height: rem-calc($height-banner-logo-large);
     padding: 0 16px 20px 14px;
-    width: $width-banner-logo-large;
+    width: rem-calc($width-banner-logo-large);
   }
 }
 

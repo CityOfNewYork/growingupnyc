@@ -5,18 +5,18 @@
 // Outer Containers
 .o-container {
   @include outer-container;
-  padding-left: $outer-gutter;
-  padding-right: $outer-gutter;
+  padding-left: rem-calc($outer-gutter);
+  padding-right: rem-calc($outer-gutter);
   position: relative;
 
   @include media($bp-small) {
-    padding-left: $outer-gutter-small;
-    padding-right: $outer-gutter-small;
+    padding-left: rem-calc($outer-gutter-small);
+    padding-right: rem-calc($outer-gutter-small);
   }
 
   @include media($bp-large) {
-    padding-left: $outer-gutter-large;
-    padding-right: $outer-gutter-large;
+    padding-left: rem-calc($outer-gutter-large);
+    padding-right: rem-calc($outer-gutter-large);
   }
 }
 
@@ -26,12 +26,12 @@
 }
 
 .o-article-sidebar {
-  margin-left: -#{$outer-gutter};
-  margin-right: -#{$outer-gutter};
+  margin-left: -#{rem-calc($outer-gutter)};
+  margin-right: -#{rem-calc($outer-gutter)};
 
   @include media($bp-small) {
-    margin-left: -#{$outer-gutter-small};
-    margin-right: -#{$outer-gutter-small};
+    margin-left: -#{rem-calc($outer-gutter-small)};
+    margin-right: -#{rem-calc($outer-gutter-small)};
   }
 
   @include media($bp-large) {
@@ -42,12 +42,12 @@
 }
 
 .o-article {
-  margin-left: -#{$outer-gutter};
-  margin-right: -#{$outer-gutter};
+  margin-left: -#{rem-calc($outer-gutter)};
+  margin-right: -#{rem-calc($outer-gutter)};
 
   @include media($bp-small) {
-    margin-left: -#{$outer-gutter-small};
-    margin-right: -#{$outer-gutter-small};
+    margin-left: -#{rem-calc($outer-gutter-small)};
+    margin-right: -#{rem-calc($outer-gutter-small)};
   }
 
   @include media($bp-large) {

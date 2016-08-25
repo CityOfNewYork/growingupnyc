@@ -22,7 +22,7 @@ $transition-function: cubic-bezier(0, 1, .5, 1);
   // Transition Delay
   transition: transform 1s $transition-function, max-height $transition-function 1s 0s;
 
-  @include media($bp-large) {
+  @include media($bp-medium) {
     padding-top: rem-calc(110);
   }
 

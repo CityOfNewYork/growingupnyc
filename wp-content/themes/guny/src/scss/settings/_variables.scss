@@ -93,11 +93,11 @@ $column: 70px;
 $gutter: 40px;
 $grid-columns: 12;
 $max-width-med: 900px;
-$max-width: 1280px;
-$outer-gutter: 15px;
-$outer-gutter-small: 20px;
-$outer-gutter-medium: 30px;
-$outer-gutter-large: 40px;
+$max-width: 80em;
+$outer-gutter: 15;
+$outer-gutter-small: 20;
+$outer-gutter-medium: 30;
+$outer-gutter-large: 40;
 $horizontal-gutter: 20px;
 
 // Breakpoints
@@ -112,9 +112,9 @@ $bp-mobile-only: new-breakpoint(max-width 1023px);
 
 // Heights
 // =====================
-$height-banner: 50px;
-$height-banner-large: 60px;
-$height-banner-logo: 60px;
+$height-banner: 50;
+$height-banner-large: 60;
+$height-banner-logo: 60;
 
 // Widths
 // =====================

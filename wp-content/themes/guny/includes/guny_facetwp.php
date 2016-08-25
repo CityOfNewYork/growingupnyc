@@ -206,7 +206,6 @@ class FacetWP_Facet_Guny {
   (function($) {
       wp.hooks.addAction('facetwp/refresh/guny', function($this, facet_name) {
         var val = $this.find('[aria-selected="true"]').data('value');
-        console.log(facet_name, val);
         FWP.facets[facet_name] = val ? [val] : [];
       });
 

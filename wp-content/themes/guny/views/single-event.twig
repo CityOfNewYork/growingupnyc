@@ -26,7 +26,7 @@
       </dd>
       <dt class="c-details-list__term">Time</dt>
       <dd class="c-details-list__descr">
-        {% if post.all_day %}
+        {% if not post.all_day %}
           {{post.start_datetime|date('g:i A')}}
           {% if post.end_datetime != post.start_datetime %}
             - {{post.end_datetime|date('g:i A')}}

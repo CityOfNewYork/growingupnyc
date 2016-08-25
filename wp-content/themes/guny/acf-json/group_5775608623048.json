@@ -25,7 +25,7 @@
         },
         {
             "key": "field_57991cc96c5f4",
-            "label": "Social Milestones",
+            "label": "Social",
             "name": "social_milestones",
             "type": "repeater",
             "instructions": "",
@@ -67,7 +67,7 @@
         },
         {
             "key": "field_57991dac6c5f6",
-            "label": "Communication Milestones",
+            "label": "Communication",
             "name": "communication_milestones",
             "type": "repeater",
             "instructions": "",
@@ -109,7 +109,7 @@
         },
         {
             "key": "field_57991dca6c5f8",
-            "label": "Learning Milestones",
+            "label": "Learning",
             "name": "learning_milestones",
             "type": "repeater",
             "instructions": "",
@@ -151,7 +151,7 @@
         },
         {
             "key": "field_57991e1a6c5fa",
-            "label": "Movement Milestones",
+            "label": "Physical Development",
             "name": "movement_milestones",
             "type": "repeater",
             "instructions": "",
@@ -251,5 +251,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1470759826
+    "modified": 1472144876
 }

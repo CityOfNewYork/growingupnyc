@@ -14,8 +14,9 @@
 
 %column-base-2 {
   @extend %column-base;
+  padding-bottom: rem-calc(24);
 
-  @include media($bp-small) {
+  @include media($bp-medium) {
     margin-right: rem-calc(-4);
     padding: rem-calc(20);
     width: 50%;

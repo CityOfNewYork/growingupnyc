@@ -29,8 +29,7 @@
   display: flex;
   flex-flow: column;
   margin-right: rem-calc($sticker-size-mobile / 2);
-  padding: rem-calc(25 15);
-  padding-right: rem-calc(($sticker-size-mobile / 2) + 10);
+  padding: rem-calc(25 ($sticker-size-mobile / 2) + 10 25 21);
   position: relative;
 
   @include media($bp-large) {

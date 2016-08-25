@@ -1555,6 +1555,10 @@ ol.o-inline {
       position: static;
       width: 4.0625rem; } }
 
+@media screen and (min-width: 700px) {
+  .flexbox .c-hero__sticker {
+    flex-shrink: 0; } }
+
 .c-hero__tagline {
   font-family: "museo-sans-rounded", sans-serif;
   font-size: 1.64062rem;

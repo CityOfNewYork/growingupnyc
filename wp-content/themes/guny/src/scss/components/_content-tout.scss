@@ -62,11 +62,13 @@
 }
 
 .c-content-tout__link {
-  @include font-size-x-small;
+  @include font-size(14);
   text-decoration: underline;
 
-  &:hover,
-  &:focus {
-    color: $color-text;
+  a {
+    &:hover,
+    &:focus {
+      color: $color-text;
+    }
   }
 }

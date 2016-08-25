@@ -107,8 +107,8 @@ a.pseudo-class-focus {
   color: #333;
 }
 
-.c-content-tout__link.pseudo-class-hover,
-.c-content-tout__link.pseudo-class-focus {
+.c-content-tout__link a.pseudo-class-hover,
+.c-content-tout__link a.pseudo-class-focus {
   color: #333;
 }
 

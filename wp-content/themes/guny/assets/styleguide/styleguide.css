@@ -1333,9 +1333,9 @@ ol.o-inline {
         top: 3px; } }
 
 .c-content-tout__link {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   text-decoration: underline; }
-  .c-content-tout__link:hover, .c-content-tout__link:focus {
+  .c-content-tout__link a:hover, .c-content-tout__link a:focus {
     color: #333; }
 
 .c-details-list {

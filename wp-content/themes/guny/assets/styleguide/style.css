@@ -590,7 +590,7 @@ h6 {
 h1 {
   font-size: 2.5rem;
   line-height: 1.1; }
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 700px) {
     h1 {
       font-size: 4.125rem; } }
 
@@ -1510,7 +1510,7 @@ ol.o-inline {
   padding-top: 2.1875rem;
   text-transform: uppercase;
   z-index: 1; }
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 700px) {
     .c-hero__title {
       font-size: 4.125rem; } }
 
@@ -1887,7 +1887,7 @@ ol.o-inline {
   font-size: 2.5rem;
   text-transform: uppercase;
   white-space: nowrap; }
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: 700px) {
     .c-side-hero__title__large {
       font-size: 4.125rem; } }
   .c-side-hero__title__large .rotating-text__entry {

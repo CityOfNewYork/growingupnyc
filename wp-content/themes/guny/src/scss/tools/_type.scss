@@ -45,7 +45,11 @@
 }
 
 @mixin font-size-xxx-large {
-  @include font-size($font-size-xxx-large, $font-size-xxx-large-mobile);
+  font-size: rem-calc($font-size-xxx-large-mobile);
+
+  @include media($bp-medium) {
+    font-size: rem-calc($font-size-xxx-large);
+  }
 }
 
 @mixin text-uppercase {

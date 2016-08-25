@@ -24,9 +24,12 @@
     </p>
   {% endif %}
   {% endblock %}
+  {% block subtitle_block %}
   <div class="c-card__subtitle">
     {% block subtitle %}{% endblock %}
   </div>
+  {% endblock %}
+  {% block tags_block %}
   {% if post.terms %}
     <div class="c-card__tags">
     {% block tags %}
@@ -36,6 +39,7 @@
     {% endblock %}
     </div>
   {% endif %}
+  {% endblock %}
   <div class="c-card__body">
     {% block body %}
     {{post.post_excerpt ? post.post_excerpt : post.post_content|excerpt(15)}}

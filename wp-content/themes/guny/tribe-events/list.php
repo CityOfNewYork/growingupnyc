@@ -33,15 +33,19 @@ $context['event_list'] = $event_list;
 $cat_id = get_query_var('cat_id');
 $age_id = get_query_var('age_id');
 $borough_id = get_query_var('borough_id');
+$eventDate = get_query_var('eventDate');
 
-function addFilterArgs( $url ) {
+function addFilterArgs( $url, $preservePagination = false ) {
   global $cat_id;
   global $age_id;
   global $borough_id;
+  global $eventDate;
 
-  $query_args = array(
-    'tribe_paged' => false
-  );
+  $query_args = array();
+
+  if (!$preservePagination) {
+    $query_args['tribe_paged'] = false;
+  }
 
   if ($cat_id > 0) {
     $query_args['cat_id'] = $cat_id;
@@ -51,6 +55,9 @@ function addFilterArgs( $url ) {
   }
   if ($borough_id > 0) {
     $query_args['borough_id'] = $borough_id;
+  }
+  if ( !empty( $eventDate ) ) {
+    $query_args['eventDate'] = $eventDate;
   }
   return add_query_arg( $query_args, $url );
 }
@@ -133,10 +140,10 @@ $context['next_month_url'] = add_query_arg( array(
 ) );
 
 if ( tribe_has_previous_event() && (int) get_query_var('paged') >= 2 ) {
-  $context['prev_url'] = addFilterArgs( tribe_get_listview_prev_link() );
+  $context['prev_url'] = addFilterArgs( tribe_get_listview_prev_link(),  true );
 }
 if ( tribe_has_next_event() ) {
-  $context['next_url'] = addFilterArgs( tribe_get_listview_next_link() );
+  $context['next_url'] = addFilterArgs( tribe_get_listview_next_link(), true );
 }
 
 $templates = array( 'list-events.twig', 'index.twig' );

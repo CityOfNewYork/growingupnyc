@@ -58,17 +58,13 @@ class GunySite extends TimberSite {
       if ($featured_first) {
         $top_event_params = array(
           'posts_per_page' => $num_events,
+          'eventDisplay' => 'list',
           'meta_query' => array(
             'relation' => 'AND',
             array(
               'key'     => 'featured_event',
               'value'   => 'Yes',
               'compare' => 'LIKE'
-            ),
-            array(
-              'key'     => '_EventEndDate',
-              'value'   => current_time('mysql'),
-              'compare' => '>='
             )
           ),
         );
@@ -83,6 +79,7 @@ class GunySite extends TimberSite {
       if( $number_remaining > 0 ) {
         $top_remaining_params = array(
           'posts_per_page' => $number_remaining,
+          'eventDisplay' => 'list',
         );
         if ($featured_first) {
           $top_remaining_params['meta_query'] = array(
@@ -91,19 +88,6 @@ class GunySite extends TimberSite {
               'key'     => 'featured_event',
               'value'   => 'Yes',
               'compare' => 'NOT LIKE'
-            ),
-            array(
-              'key'     => '_EventEndDate',
-              'value'   => current_time('mysql'),
-              'compare' => '>='
-            )
-          );
-        } else {
-          $top_remaining_params['meta_query'] = array(
-            array(
-              'key'     => '_EventEndDate',
-              'value'   => current_time('mysql'),
-              'compare' => '>='
             )
           );
         }

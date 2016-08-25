@@ -185,6 +185,14 @@
             {% endfor %}
             </ul>
           </li>
+          <li class="c-list-box__item">
+            <h4 class="c-list-box__heading js-accordion__header {{post.age_group|sanitize}}-secondary" id="milestones-header-health">Health</h4>
+            <ul class="c-list-box__content js-accordion__content" id="milestones-panel-health">
+            {% for milestone in post.get_field('health_milestones') %}
+              <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
+            {% endfor %}
+            </ul>
+          </li>
           </ul>
           <h3>Act early by talking to your child&rsquo;s doctor if your child:</h3>
           <ul class="c-list-box c-list-box--tertiary">

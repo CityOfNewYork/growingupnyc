@@ -11,6 +11,9 @@ $today = date_i18n( Tribe__Date_Utils::DBDATEFORMAT, strtotime( date( 'Y-m-d', c
 $context['current_month_text'] = date_i18n( tribe_get_date_option( 'monthAndYearFormat', 'F Y' ), strtotime( $current_month ) );
 $context['current_month'] = $current_month;
 
+
+$context['next_month_text'] = tribe_get_next_month_text();
+
 $events = Timber::get_posts(false, 'GunyEvent');
 
 $event_list = array();

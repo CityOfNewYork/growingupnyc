@@ -83,7 +83,8 @@
     </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-sm-gutter -->
   {% else %}
     <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-sm-gutter">
-      <p class="type--no-results">Sorry, we couldn’t find anything matching your search. <a href="/events">Clear filters</a></p>
+      <p class="type--no-results">
+        No events found for those filter options. Check for similar events in <a href="{{next_month_url}}" rel="next">{{next_month_text}}</a> or <a href="/events">reset your filters</a>.</p>
     </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-sm-gutter -->
   {% endfor %}
 

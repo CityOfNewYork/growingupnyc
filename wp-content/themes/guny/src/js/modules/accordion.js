@@ -118,10 +118,15 @@ export default function() {
     $item.removeClass('is-expanded is-collapsed');
     if ($accordionContent.length && $accordionInitialHeader.length) {
       $item.addClass('o-accordion__item');
-      const $accordionHeader = convertHeaderToButton($accordionInitialHeader);
-      $accordionInitialHeader.replaceWith($accordionHeader);
-      initializeHeader($accordionHeader, $accordionContent);
-      initializePanel($accordionContent, $accordionHeader.get(0).id);
+      let $accordionHeader;
+      if ($accordionInitialHeader.get(0).tagName.toLowerCase() === 'button') {
+        $accordionHeader = $accordionInitialHeader;
+      } else {
+        $accordionHeader = convertHeaderToButton($accordionInitialHeader);
+        $accordionInitialHeader.replaceWith($accordionHeader);
+        initializeHeader($accordionHeader, $accordionContent);
+        initializePanel($accordionContent, $accordionHeader.get(0).id);
+      }
 
       /**
        * Custom event handler to toggle the accordion item open/closed

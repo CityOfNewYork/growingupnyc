@@ -1709,10 +1709,15 @@
 	    if ($accordionContent.length && $accordionInitialHeader.length) {
 	      (function () {
 	        $item.addClass('o-accordion__item');
-	        var $accordionHeader = convertHeaderToButton($accordionInitialHeader);
-	        $accordionInitialHeader.replaceWith($accordionHeader);
-	        initializeHeader($accordionHeader, $accordionContent);
-	        initializePanel($accordionContent, $accordionHeader.get(0).id);
+	        var $accordionHeader = void 0;
+	        if ($accordionInitialHeader.get(0).tagName.toLowerCase() === 'button') {
+	          $accordionHeader = $accordionInitialHeader;
+	        } else {
+	          $accordionHeader = convertHeaderToButton($accordionInitialHeader);
+	          $accordionInitialHeader.replaceWith($accordionHeader);
+	          initializeHeader($accordionHeader, $accordionContent);
+	          initializePanel($accordionContent, $accordionHeader.get(0).id);
+	        }
 
 	        /**
 	         * Custom event handler to toggle the accordion item open/closed

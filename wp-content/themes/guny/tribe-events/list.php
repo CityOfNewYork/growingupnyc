@@ -22,7 +22,6 @@ foreach ($events as $event) {
   if ( isset( $event->EventStartDate ) ) {
     $postTimestamp = strtotime( tribe_get_start_date( $event->ID, true, Tribe__Date_Utils::DBDATETIMEFORMAT ) );
     if ( $postTimestamp < $now ) {
-      echo date( 'l, F j', $postTimestamp );
       $postTimestamp = $now;
     }
     $postTimestamp = strtotime( date( Tribe__Date_Utils::DBDATEFORMAT, $postTimestamp ), $now );

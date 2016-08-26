@@ -15,6 +15,7 @@
   {% include "partials/event-date.twig" %}
 {% endblock %}
 
+
 {% block tags %}
   {% if is_archive %}
     {% set event_link %}{{current_url}}{% endset %}
@@ -22,11 +23,12 @@
     {% set event_link = '/events' %}
   {% endif %}
   {% for term in post.terms('tribe_events_cat') %}
-    <a href="{{event_link}}?cat_id={{term.id}}" class="button--pill">{{term.name}}</a>
+    <a href="{{event_link}}?cat_id={{term.id}}{% if current_month %}&amp;eventDate={{current_month}}{% endif %}" class="button--pill">{{term.name}}</a>
   {% endfor %}
   {% for term in post.terms('age_group') %}
-    <a href="{{event_link}}?age_id={{term.id}}" class="button--pill button--pill--alt">{{term.name}}</a>
+    <a href="{{event_link}}?age_id={{term.id}}{% if current_month %}&amp;eventDate={{current_month}}{% endif %}" class="button--pill button--pill--alt">{{term.name}}</a>
   {% endfor %}
+
 {% endblock %}
 
 {% block link %}

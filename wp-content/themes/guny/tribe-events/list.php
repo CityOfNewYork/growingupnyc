@@ -9,6 +9,7 @@ $tribe_ecp = Tribe__Events__Main::instance();
 $current_month = tribe_get_month_view_date();
 $today = date_i18n( Tribe__Date_Utils::DBDATEFORMAT, strtotime( date( 'Y-m-d', current_time( 'timestamp' ) ) ) );
 $context['current_month_text'] = date_i18n( tribe_get_date_option( 'monthAndYearFormat', 'F Y' ), strtotime( $current_month ) );
+$context['current_month'] = $current_month;
 
 $events = Timber::get_posts(false, 'GunyEvent');
 

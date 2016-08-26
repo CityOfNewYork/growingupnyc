@@ -92,10 +92,12 @@
 
 {% block after_list %}
   {{function('do_action', 'tribe_events_after_template')}}
-  {% if prev_url %}
-  <a href="{{prev_url}}" class="button--outline button--outline--gray alignleft">Previous</a>
-  {% endif %}
-  {% if next_url %}
-  <a href="{{next_url}}" class="button--outline button--outline--gray alignright">Next</a>
-  {% endif %}
+  <div class="o-content-container--compact">
+    {% if prev_url %}
+    <a href="{{prev_url}}" class="button--outline button--outline--gray alignleft">Previous</a>
+    {% endif %}
+    {% if next_url %}
+    <a href="{{next_url}}" class="button--outline button--outline--gray alignright">Next</a>
+    {% endif %}
+  </div>
 {% endblock %}

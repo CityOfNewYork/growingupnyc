@@ -239,3 +239,26 @@ function guny_facet_types( $facet_types ) {
     return $facet_types;
 }
 add_filter( 'facetwp_facet_types', 'guny_facet_types' );
+
+function guny_facetwp_sort_options( $options, $params ) {
+    unset( $options['title_asc'] );
+    unset( $options['title_desc'] );
+    unset( $options['date_asc'] );
+    unset( $options['date_desc'] );
+    unset( $options['distance'] );
+    $options['relevance'] = array(
+        'label' => 'Most Relevant',
+        'query_args' => array(
+            'orderby' => 'relevance',
+            'order' => 'DESC'
+        )
+    );
+    return $options;
+}
+add_filter( 'facetwp_sort_options', 'guny_facetwp_sort_options', 10, 2 );
+
+function guny_facet_render_params( $params ) {
+  $params['extras']['sort'] = 'relevance';
+  return $params;
+}
+add_filter( 'facetwp_render_params', 'guny_facet_render_params' );

@@ -154,8 +154,13 @@ a.pseudo-class-focus {
   background: #00326d;
 }
 
-.c-nav-list__link.pseudo-class-hover,
 .c-nav-list__link.pseudo-class-focus {
+  background-color: #2793e0;
+  border-color: #2793e0;
+  color: #fff;
+}
+
+.no-touchevents .c-nav-list__link.pseudo-class-hover {
   background-color: #2793e0;
   border-color: #2793e0;
   color: #fff;
@@ -171,49 +176,70 @@ a.pseudo-class-focus {
   color: #d9d9d9;
 }
 
-button.baby-background.pseudo-class-hover,
 button.baby-background.pseudo-class-focus,
-a.baby-background.pseudo-class-hover,
 a.baby-background.pseudo-class-focus {
   background-color: #7f1c4e !important;
   border-color: #7f1c4e !important;
   outline: none;
 }
 
-button.baby-secondary.pseudo-class-hover,
+.no-touchevents button.baby-background.pseudo-class-hover,
+.no-touchevents a.baby-background.pseudo-class-hover {
+  background-color: #7f1c4e !important;
+  border-color: #7f1c4e !important;
+  outline: none;
+}
+
 button.baby-secondary.pseudo-class-focus,
-a.baby-secondary.pseudo-class-hover,
 a.baby-secondary.pseudo-class-focus {
   background-color: #d8006d !important;
   border-color: #d8006d !important;
   outline: none;
 }
 
-button.toddler-background.pseudo-class-hover,
+.no-touchevents button.baby-secondary.pseudo-class-hover,
+.no-touchevents a.baby-secondary.pseudo-class-hover {
+  background-color: #d8006d !important;
+  border-color: #d8006d !important;
+}
+
 button.toddler-background.pseudo-class-focus,
-a.toddler-background.pseudo-class-hover,
 a.toddler-background.pseudo-class-focus {
   background-color: #fb0000 !important;
   border-color: #fb0000 !important;
   outline: none;
 }
 
-button.toddler-secondary.pseudo-class-hover,
+.no-touchevents button.toddler-background.pseudo-class-hover,
+.no-touchevents a.toddler-background.pseudo-class-hover {
+  background-color: #fb0000 !important;
+  border-color: #fb0000 !important;
+}
+
 button.toddler-secondary.pseudo-class-focus,
-a.toddler-secondary.pseudo-class-hover,
 a.toddler-secondary.pseudo-class-focus {
   background-color: #ff6100 !important;
   border-color: #ff6100 !important;
   outline: none;
 }
 
-button.pre-schooler-background.pseudo-class-hover,
+.no-touchevents button.toddler-secondary.pseudo-class-hover,
+.no-touchevents a.toddler-secondary.pseudo-class-hover {
+  background-color: #ff6100 !important;
+  border-color: #ff6100 !important;
+}
+
 button.pre-schooler-background.pseudo-class-focus,
-a.pre-schooler-background.pseudo-class-hover,
 a.pre-schooler-background.pseudo-class-focus {
   background-color: #ff6100 !important;
   border-color: #ff6100 !important;
   outline: none;
+}
+
+.no-touchevents button.pre-schooler-background.pseudo-class-hover,
+.no-touchevents a.pre-schooler-background.pseudo-class-hover {
+  background-color: #ff6100 !important;
+  border-color: #ff6100 !important;
 }
 
 button.pre-schooler-secondary.pseudo-class-hover,
@@ -225,39 +251,61 @@ a.pre-schooler-secondary.pseudo-class-focus {
   outline: none;
 }
 
-button.grade-schooler-background.pseudo-class-hover,
+.no-touchevents button.pre-schooler-secondary.pseudo-class-hover,
+.no-touchevents a.pre-schooler-secondary.pseudo-class-hover {
+  background-color: #ff9d00 !important;
+  border-color: #ff9d00 !important;
+}
+
 button.grade-schooler-background.pseudo-class-focus,
-a.grade-schooler-background.pseudo-class-hover,
 a.grade-schooler-background.pseudo-class-focus {
   background-color: #1d5d11 !important;
   border-color: #1d5d11 !important;
   outline: none;
 }
 
-button.grade-schooler-secondary.pseudo-class-hover,
+.no-touchevents button.grade-schooler-background.pseudo-class-hover,
+.no-touchevents a.grade-schooler-background.pseudo-class-hover {
+  background-color: #1d5d11 !important;
+  border-color: #1d5d11 !important;
+}
+
 button.grade-schooler-secondary.pseudo-class-focus,
-a.grade-schooler-secondary.pseudo-class-hover,
 a.grade-schooler-secondary.pseudo-class-focus {
   background-color: #35c621 !important;
   border-color: #35c621 !important;
   outline: none;
 }
 
-button.pre-teen-background.pseudo-class-hover,
+.no-touchevents button.grade-schooler-secondary.pseudo-class-hover,
+.no-touchevents a.grade-schooler-secondary.pseudo-class-hover {
+  background-color: #35c621 !important;
+  border-color: #35c621 !important;
+}
+
 button.pre-teen-background.pseudo-class-focus,
-a.pre-teen-background.pseudo-class-hover,
 a.pre-teen-background.pseudo-class-focus {
   background-color: #00326d !important;
   border-color: #00326d !important;
   outline: none;
 }
 
-button.pre-teen-secondary.pseudo-class-hover,
+.no-touchevents button.pre-teen-background.pseudo-class-hover,
+.no-touchevents a.pre-teen-background.pseudo-class-hover {
+  background-color: #00326d !important;
+  border-color: #00326d !important;
+}
+
 button.pre-teen-secondary.pseudo-class-focus,
-a.pre-teen-secondary.pseudo-class-hover,
 a.pre-teen-secondary.pseudo-class-focus {
   background-color: #0055b8 !important;
   outline: none;
+}
+
+.no-touchevents button.pre-teen-secondary.pseudo-class-hover,
+.no-touchevents a.pre-teen-secondary.pseudo-class-hover {
+  background-color: #0055b8 !important;
+  border-color: #0055b8 !important;
 }
 
 .show-for-keyboard.pseudo-class-focus {

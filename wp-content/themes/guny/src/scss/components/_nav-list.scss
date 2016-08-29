@@ -40,7 +40,6 @@ $indicator-size: 10px;
   text-decoration: none;
   @include text-uppercase;
 
-  &:hover,
   &:focus,
   &.is-active {
     background-color: $color-primary;
@@ -48,10 +47,17 @@ $indicator-size: 10px;
     color: $color-text-invert;
   }
 
+  .no-touchevents & {
+    &:hover {
+      background-color: $color-primary;
+      border-color: $color-primary;
+      color: $color-text-invert;
+    }
+  }
+
   @include media($bp-large) {
     padding: rem-calc(28);
 
-    &:hover,
     &:focus,
     &.is-active {
       &:after {
@@ -63,6 +69,21 @@ $indicator-size: 10px;
         position: absolute;
         right: -#{$indicator-size * 2};
         top: 50%;
+      }
+    }
+
+    .no-touchevents & {
+      &:hover {
+        &:after {
+          content: '';
+          display: block;
+          border: $indicator-size solid transparent;
+          border-left-color: inherit;
+          margin-top: -#{$indicator-size};
+          position: absolute;
+          right: -#{$indicator-size * 2};
+          top: 50%;
+        }
       }
     }
   }

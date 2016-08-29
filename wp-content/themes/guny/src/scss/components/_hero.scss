@@ -46,7 +46,11 @@
   padding: percentage(57/375) 0 rem-calc(65);
 
   @include media($bp-medium) {
-    padding: rem-calc(92 40 36);
+    padding: rem-calc(100 ($outer-gutter-medium - $outer-gutter-small) 36);
+  }
+
+  @include media($bp-large) {
+    padding: rem-calc(100 0 36);
   }
 }
 
@@ -54,6 +58,10 @@
   @include media($bp-xlarge) {
     padding: rem-calc(113 80 60);
   }
+}
+
+.c-hero--light {
+  padding: rem-calc(113 0 60);
 }
 
 .c-hero--large {

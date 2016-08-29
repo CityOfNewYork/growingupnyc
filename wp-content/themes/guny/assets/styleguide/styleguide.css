@@ -1494,11 +1494,17 @@ ol.o-inline {
   padding: 15.2% 0 4.0625rem; }
   @media screen and (min-width: 700px) {
     .c-hero--light {
-      padding: 5.75rem 2.5rem 2.25rem; } }
+      padding: 6.25rem 0.625rem 2.25rem; } }
+  @media screen and (min-width: 1024px) {
+    .c-hero--light {
+      padding: 6.25rem 0 2.25rem; } }
 
 @media screen and (min-width: 1200px) {
   .c-hero {
     padding: 7.0625rem 5rem 3.75rem; } }
+
+.c-hero--light {
+  padding: 7.0625rem 0 3.75rem; }
 
 .c-hero--large {
   padding: 33.6% 0 4.0625rem; }
@@ -2380,7 +2386,7 @@ a.pre-teen-secondary.is-active {
   margin-bottom: 20px; }
 
 .u-lg-gutter {
-  margin-bottom: 15; }
+  margin-bottom: 15px; }
   @media screen and (min-width: 375px) {
     .u-lg-gutter {
       margin-bottom: 20px; } }

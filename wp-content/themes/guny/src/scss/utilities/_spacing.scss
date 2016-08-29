@@ -4,7 +4,7 @@
 }
 
 .u-lg-gutter {
-  margin-bottom: $outer-gutter;
+  margin-bottom: #{$outer-gutter}px;
 
   @include media($bp-small) {
     margin-bottom: #{$outer-gutter-small}px;

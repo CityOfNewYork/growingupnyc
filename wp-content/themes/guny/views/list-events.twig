@@ -84,7 +84,7 @@
   {% else %}
     <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-sm-gutter">
       <p class="type--no-results">
-        No events found for those filter options. Check for similar events in <a href="{{next_month_url}}" rel="next">{{next_month_text}}</a> or <a href="/events">reset your filters</a>.</p>
+        No events found for those filter options. Check for similar events in <a href="{{next_month_url}}" rel="next">{{next_month_text}}</a> or <a href="{{event_link}}{% if current_month %}?eventDate={{current_month}}{% endif %}">reset your filters</a>.</p>
     </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-sm-gutter -->
   {% endfor %}
 

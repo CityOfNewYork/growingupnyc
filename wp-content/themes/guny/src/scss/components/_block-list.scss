@@ -65,7 +65,7 @@
   margin-top: rem-calc(35);
 
   @include media($bp-medium) {
-    margin-bottom: rem-calc(45);
+    margin-bottom: rem-calc(30);
     margin-top: rem-calc(30);
   }
 }

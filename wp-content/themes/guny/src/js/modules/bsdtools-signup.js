@@ -5,7 +5,7 @@ require('../vendor/bsd-signup-jsapi-simple-dev.js');
 
 export default function() {
   const $signupForms = $('.bsdtools-signup');
-  const errorMsg = 'Please enter your email, zip code, and select at least one age group to receive updates for.';
+  const errorMsg = 'Please enter your email and zip code and select at least one age group.';
 
   /**
   * Validate form before unpausing

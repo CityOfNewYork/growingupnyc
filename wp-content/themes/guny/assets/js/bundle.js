@@ -1937,7 +1937,7 @@
 
 	exports.default = function () {
 	  var $signupForms = $('.bsdtools-signup');
-	  var errorMsg = 'Please enter your email, zip code, and select at least one age group to receive updates for.';
+	  var errorMsg = 'Please enter your email and zip code and select at least one age group.';
 
 	  /**
 	  * Validate form before unpausing

@@ -472,7 +472,7 @@ input[type="search"].form-field {
   border-color: #6a6a6a; }
 
 .checkbox__field.is-error + .checkbox__indicator {
-  border-color: #0055b8; }
+  border-color: #d8006d; }
 
 .icon--large {
   height: 2.3125rem;
@@ -1968,7 +1968,7 @@ ol.o-inline {
     border-color: #6a6a6a;
     outline: none; }
   .signup-form__field.is-error {
-    border-color: #0055b8; }
+    border-color: #d8006d; }
 
 .signup-form__label {
   overflow: hidden;

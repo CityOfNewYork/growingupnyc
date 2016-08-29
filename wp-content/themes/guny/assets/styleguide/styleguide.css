@@ -1277,12 +1277,18 @@ ol.o-inline {
 
 .c-card__title {
   font-family: "museo-sans-rounded", sans-serif;
-  font-size: 1.875rem;
+  font-size: 1.375rem;
   font-weight: 900;
   line-height: 1.2;
   margin: 0 0 0.75rem;
   order: 3;
   text-decoration: none; }
+  @media screen and (min-width: 375px) {
+    .c-card__title {
+      font-size: 1.65rem; } }
+  @media screen and (min-width: 425px) {
+    .c-card__title {
+      font-size: 1.875rem; } }
   .c-card__title a {
     text-decoration: inherit; }
 

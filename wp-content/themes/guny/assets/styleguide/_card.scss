@@ -92,12 +92,20 @@
 // Styleguide 5.2.2
 .c-card__title {
   font-family: $font-family-display;
-  @include font-size-xx-large;
+  font-size: rem-calc(22);
   font-weight: $font-weight-extrablack;
   line-height: 1.2;
   margin: rem-calc(0 0 12);
   order: 3;
   text-decoration: none;
+
+  @include media($bp-small) {
+    font-size: 1.65rem;
+  }
+
+  @include media(425px) {
+    font-size: rem-calc($font-size-xx-large);
+  }
 
   a {
     text-decoration: inherit;

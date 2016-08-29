@@ -60,59 +60,61 @@
       </ol>
     </div> <!-- /.o-content-container-compact -->
   </div> <!-- /.o-article-sidebar -->
-  <div class="o-article o-content-container--compact js-sticky-article">
-  {% if post.summary %}
-    <section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" id="section-summary">
-      {{post.get_field('summary')}}
-    </section> <!-- /.o-content-container-text -->
-    <hr>
-  {% endif %}
-  {% if post.eligibility %}
-    <section class="o-content-container--text s-wysiwyg u-top-spacing-small u-bottom-spacing-small" id="section-eligibility">
-      <h2>Am I Eligible?</h2>
-      {{post.get_field('eligibility')}}
-    </section> <!-- /.o-content-container-text -->
-    <hr>
-  {% endif %}
-  {% if post.whats_needed or post.how_to_apply %}
-    <section id="section-application" class="u-top-spacing-small u-bottom-spacing-small">
-      {% if post.whats_needed %}
-      <div class="o-content-container--text s-wysiwyg{% if post.how_to_apply %} u-bottom-spacing-small{% endif %}">
-        <h2>What Will I Need to Apply?</h2>
-        {{post.get_field('whats_needed')}}
-      </div>
-      <hr>
+  <div class="o-article js-sticky-article">
+    <div class="o-content-container--compact">
+      {% if post.summary %}
+        <section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" id="section-summary">
+          {{post.get_field('summary')}}
+        </section> <!-- /.o-content-container-text -->
+        <hr>
       {% endif %}
-      {% if post.how_to_apply %}
-      <div class="o-content-container--text s-wysiwyg{% if post.whats_needed %} u-top-spacing-small{% endif %}">
-        <h2>I'm Ready to Apply</h2>
-        {{post.get_field('how_to_apply')}}
-      </div>
+      {% if post.eligibility %}
+        <section class="o-content-container--text s-wysiwyg u-top-spacing-small u-bottom-spacing-small" id="section-eligibility">
+          <h2>Am I Eligible?</h2>
+          {{post.get_field('eligibility')}}
+        </section> <!-- /.o-content-container-text -->
+        <hr>
       {% endif %}
-    </section> <!-- /.o-content-container-text -->
-    <hr>
-  {% endif %}
-  {% if post.get_help %}
-    <section id="section-help" class="u-top-spacing-small u-bottom-spacing-small o-content-container--text s-wysiwyg">
-      <h2>How Can I Get Help?</h2>
-      {{post.get_field('get_help')}}
-    </section> <!-- /.o-content-container-text -->
-  {% endif %}
-  {% if post.related_posts %}
-  <div class="o-content-container c-block-list c-block-list--shade">
-    <h2>Other {{post.category.name}} Programs</h2>
-    <div class="c-block-list__inner">
-      {% for program in post.related_posts %}
-        <div class="c-block-list__item">
-          {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] with {post: program} %}
-        </div> <!-- /.c-block-list__item -->
-      {% endfor %}
-    </div> <!-- /.c-block-list__inner -->
-    <div class="text-center">
-      <a href="/programs" class="button--outline button--outline--gray">See all programs</a>
+      {% if post.whats_needed or post.how_to_apply %}
+        <section id="section-application" class="u-top-spacing-small u-bottom-spacing-small">
+          {% if post.whats_needed %}
+          <div class="o-content-container--text s-wysiwyg{% if post.how_to_apply %} u-bottom-spacing-small{% endif %}">
+            <h2>What Will I Need to Apply?</h2>
+            {{post.get_field('whats_needed')}}
+          </div>
+          <hr>
+          {% endif %}
+          {% if post.how_to_apply %}
+          <div class="o-content-container--text s-wysiwyg{% if post.whats_needed %} u-top-spacing-small{% endif %}">
+            <h2>I'm Ready to Apply</h2>
+            {{post.get_field('how_to_apply')}}
+          </div>
+          {% endif %}
+        </section> <!-- /.o-content-container-text -->
+        <hr>
+      {% endif %}
+      {% if post.get_help %}
+        <section id="section-help" class="u-top-spacing-small u-bottom-spacing-small o-content-container--text s-wysiwyg">
+          <h2>How Can I Get Help?</h2>
+          {{post.get_field('get_help')}}
+        </section> <!-- /.o-content-container-text -->
+      {% endif %}
     </div>
-  </div>
-  {% endif %}
+    {% if post.related_posts %}
+    <div class="o-content-container c-block-list c-block-list--shade">
+      <h2>Other {{post.category.name}} Programs</h2>
+      <div class="c-block-list__inner">
+        {% for program in post.related_posts %}
+          <div class="c-block-list__item">
+            {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] with {post: program} %}
+          </div> <!-- /.c-block-list__item -->
+        {% endfor %}
+      </div> <!-- /.c-block-list__inner -->
+      <div class="text-center">
+        <a href="/programs" class="button--outline button--outline--gray">See all programs</a>
+      </div>
+    </div>
+    {% endif %}
   </div> <!-- /.o-article -->
 </article> <!-- /.o-container -->
 {% endblock %}

@@ -11,9 +11,6 @@ $today = date_i18n( Tribe__Date_Utils::DBDATEFORMAT, strtotime( date( 'Y-m-d', c
 $context['current_month_text'] = date_i18n( tribe_get_date_option( 'monthAndYearFormat', 'F Y' ), strtotime( $current_month ) );
 $context['current_month'] = $current_month;
 
-
-$context['next_month_text'] = tribe_get_next_month_text();
-
 $events = Timber::get_posts(false, 'GunyEvent');
 
 $event_list = array();
@@ -142,6 +139,12 @@ $context['next_month_url'] = add_query_arg( array(
   'eventDate' => $tribe_ecp->nextMonth( $current_month ),
   'tribe_paged' => false
 ) );
+$context['next_month_text'] = tribe_get_next_month_text();
+
+$context['reset_filters_url'] = tribe_get_events_link();
+if ( !empty( $eventDate ) ) {
+  $context['reset_filters_url'] = add_query_arg( 'eventDate', $eventDate, $context['reset_filters_url'] );
+}
 
 if ( tribe_has_previous_event() && (int) get_query_var('paged') >= 2 ) {
   $context['prev_url'] = addFilterArgs( tribe_get_listview_prev_link(),  true );

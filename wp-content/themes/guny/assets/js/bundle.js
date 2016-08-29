@@ -2276,7 +2276,9 @@
 	    var searchField = searchForm.querySelector('[name="s"]');
 	    if (searchField) {
 	      var searchTerm = searchField.value;
-	      searchTerm = searchTerm.replace(/\s+/g, '%20').toLowerCase();
+	      searchTerm = encodeURIComponent(searchTerm).replace(/[!'()*]/g, function (c) {
+	        return '%' + c.charCodeAt(0).toString(16);
+	      });
 	      window.location = window.location.origin + '/search?fwp_search=' + searchTerm;
 	    }
 	  }

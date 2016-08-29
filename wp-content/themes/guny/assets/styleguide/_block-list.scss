@@ -51,9 +51,14 @@
   text-decoration: none;
   text-transform: none;
 
-  &:hover,
   &:focus {
     color: $color-text;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $color-text;
+    }
   }
 }
 

@@ -145,9 +145,14 @@
   font-weight: $font-weight-extrablack;
   text-decoration: none;
 
-  &:hover,
   &:focus {
     color: $color-secondary;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $color-secondary;
+    }
   }
 }
 

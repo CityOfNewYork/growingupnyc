@@ -103,13 +103,22 @@
   }
 
   // :focus styling is necessary for keyboard users so that it's clear what item is currently selected
-  &:hover,
   &:focus {
     color: $color-secondary;
     outline: none;
 
     .icon {
       color: $color-text;
+    }
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $color-secondary;
+
+      .icon {
+        color: $color-text;
+      }
     }
   }
 }
@@ -200,9 +209,15 @@
 .c-list-box--secondary .c-list-box__subitem {
   @include text-uppercase;
 
-  &:hover,
   &:focus {
     background: $color-secondary;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $color-secondary;
+      color: inherit;
+    }
   }
 }
 
@@ -233,9 +248,15 @@
 }
 
 .c-list-box--quaternary .c-list-box__subitem {
-  &:hover,
   &:focus {
     background: $very-dark-blue;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $very-dark-blue;
+      color: inherit;
+    }
   }
 }
 

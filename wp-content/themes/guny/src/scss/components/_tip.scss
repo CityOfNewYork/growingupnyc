@@ -69,8 +69,13 @@
 
 // Tip Link
 .c-tip__link {
-  &:hover,
   &:focus {
     color: darken($color-text-invert, 15%);
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: darken($color-text-invert, 15%);
+    }
   }
 }

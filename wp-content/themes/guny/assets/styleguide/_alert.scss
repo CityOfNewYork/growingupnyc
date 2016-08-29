@@ -54,8 +54,13 @@
   right: 10px;
   top: 0;
 
-  &:hover,
   &:focus {
     color: darken($color-text-invert, 15%);
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: darken($color-text-invert, 15%);
+    }
   }
 }

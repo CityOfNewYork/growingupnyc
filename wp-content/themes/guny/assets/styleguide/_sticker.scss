@@ -31,8 +31,14 @@
 }
 
 a.sticker {
-  &:hover,
   &:focus {
+    background: $color-secondary;
+    color: $white;
+  }
+}
+
+.no-touchevents a.sticker {
+  &:hover {
     background: $color-secondary;
     color: $white;
   }

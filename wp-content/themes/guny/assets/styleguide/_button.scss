@@ -50,10 +50,16 @@
   letter-spacing: 1px;
   text-transform: uppercase;
 
-  &:hover,
   &:focus {
     background: transparent;
     color: $color-text-invert;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: transparent;
+      color: $color-text-invert;
+    }
   }
 }
 
@@ -84,10 +90,16 @@
     color: $color-text;
     opacity: .7;
 
-    &:hover,
     &:focus {
       color: $color-text;
       opacity: 1;
+    }
+
+    .no-touchevents & {
+      &:hover {
+        color: $color-text;
+        opacity: 1;
+      }
     }
   }
 
@@ -95,10 +107,16 @@
     border-color: $color-text-invert;
     color: $color-text-invert;
 
-    &:hover,
     &:focus {
       background: $color-text-invert;
       color: $color-primary;
+    }
+
+    .no-touchevents & {
+      &:hover {
+        background: $color-text-invert;
+        color: $color-primary;
+      }
     }
   }
 
@@ -127,10 +145,16 @@
   padding: rem-calc(10 17);
   @include text-uppercase;
 
-  &:hover,
   &:focus {
     background: $color-secondary;
     color: $color-text-invert;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $color-secondary;
+      color: $color-text-invert;
+    }
   }
 
   @include media($bp-small) {
@@ -141,9 +165,14 @@
 .button--pill--alt {
   background: $color-secondary;
 
-  &:hover,
   &:focus {
     background: $very-dark-blue;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $very-dark-blue;
+    }
   }
 }
 
@@ -165,20 +194,32 @@
   border: none;
   color: $color-text-invert;
 
-  &:hover,
   &:focus {
     background: $color-secondary;
     color: $color-text-invert;
     outline: none;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $color-secondary;
+      color: $color-text-invert;
+      outline: none;
+    }
   }
 }
 
 .button--simple--alt {
   background: $color-secondary;
 
-  &:hover,
   &:focus {
     background: $very-dark-blue;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $very-dark-blue;
+    }
   }
 }
 
@@ -202,9 +243,14 @@
   color: $color-primary;
   min-height: 0;
 
-  &:hover,
   &:focus {
     color: $color-secondary;
     outline: none;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $color-secondary;
+    }
   }
 }

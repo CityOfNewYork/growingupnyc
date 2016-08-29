@@ -78,9 +78,14 @@ input[type="search"].form-field {
     right: rem-calc(25);
   }
 
-  &:hover,
   &:focus {
     color: $color-secondary;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $color-secondary;
+    }
   }
 
   + .form-field__icon {
@@ -95,9 +100,14 @@ input[type="search"].form-field {
 .form-field__icon--weak {
   color: $color-text-weak;
 
-  &:hover,
   &:focus {
     color: $color-text;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $color-text;
+    }
   }
 }
 

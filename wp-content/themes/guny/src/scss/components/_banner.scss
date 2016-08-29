@@ -111,9 +111,14 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   text-decoration: none;
   @include text-uppercase;
 
-  &:hover,
   &:focus {
     color: $color-secondary;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $color-secondary;
+    }
   }
 
   @include media($bp-medium) {

@@ -52,10 +52,13 @@ a {
   color: inherit;
   text-decoration: underline;
 
-  &:hover,
   &:focus {
     color: $color-text-link;
   }
+}
+
+.no-touchevents a:hover {
+  color: $color-text-link;
 }
 
 a[href^="tel:"] {

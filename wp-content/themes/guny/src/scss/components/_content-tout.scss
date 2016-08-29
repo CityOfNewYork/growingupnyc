@@ -66,9 +66,16 @@
   text-decoration: underline;
 
   a {
-    &:hover,
     &:focus {
       color: $color-text;
+    }
+  }
+
+  .no-touchevents & {
+    a {
+      &:hover {
+        color: $color-text;
+      }
     }
   }
 }

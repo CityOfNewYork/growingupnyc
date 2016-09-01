@@ -223,7 +223,7 @@ msgstr ""
 msgid "Yearly on the same date"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1094
+#: src/Tribe/Recurrence/Meta.php:1151
 msgctxt "An unspecified end date"
 msgid "an unspecified date"
 msgstr ""
@@ -336,15 +336,15 @@ msgstr ""
 msgid "Could not process queue for event %1$d: %2$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:697 src/Tribe/Recurrence/Validator.php:100
+#: src/Tribe/Recurrence/Meta.php:749 src/Tribe/Recurrence/Validator.php:100
 msgid "Custom recurrences must have a type selected."
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:706 src/Tribe/Recurrence/Validator.php:109
+#: src/Tribe/Recurrence/Meta.php:758 src/Tribe/Recurrence/Validator.php:109
 msgid "Custom recurrences must have all data present."
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1021
+#: src/Tribe/Recurrence/Meta.php:1078
 msgctxt "Recurrence rule separator"
 msgid ",<br> and "
 msgstr ""
@@ -541,57 +541,57 @@ msgstr ""
 msgid "An event every %1$s year(s) in %2$s on %3$s that begins at %4$s and lasts %5$s day(s) and %6$s hour(s) with no end date"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1054
+#: src/Tribe/Recurrence/Meta.php:1111
 msgctxt "Joins the last item in a list of items (i.e. the \"and\" in Monday, Tuesday, and Wednesday)"
 msgid "and"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1055
+#: src/Tribe/Recurrence/Meta.php:1112
 msgctxt "Placeholder text for a day of the week (or days of the week) before the user has selected any"
 msgid "[day]"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1056
+#: src/Tribe/Recurrence/Meta.php:1113
 msgctxt "Placeholder text for a month (or months) before the user has selected any"
 msgid "[month]"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1057
+#: src/Tribe/Recurrence/Meta.php:1114
 msgctxt "Describes a day of the month (e.g. \"day 5\" or \"day 27\")"
 msgid "day %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1058
+#: src/Tribe/Recurrence/Meta.php:1115
 msgctxt "Used when displaying: \"the first Monday\" or \"the first day\""
 msgid "the first %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1059
+#: src/Tribe/Recurrence/Meta.php:1116
 msgctxt "Used when displaying: \"the second Monday\" or \"the second day\""
 msgid "the second %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1060
+#: src/Tribe/Recurrence/Meta.php:1117
 msgctxt "Used when displaying: \"the third Monday\" or \"the third day\""
 msgid "the third %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1061
+#: src/Tribe/Recurrence/Meta.php:1118
 msgctxt "Used when displaying: \"the fourth Monday\" or \"the fourth day\""
 msgid "the fourth %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1062
+#: src/Tribe/Recurrence/Meta.php:1119
 msgctxt "Used when displaying: \"the fifth Monday\" or \"the fifth day\""
 msgid "the fifth %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1063
+#: src/Tribe/Recurrence/Meta.php:1120
 msgctxt "Used when displaying: \"the last Monday\" or \"the last day\""
 msgid "the last %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1064
+#: src/Tribe/Recurrence/Meta.php:1121
 msgctxt "Used when displaying the word \"day\" in \"the last day\" or \"the first day\""
 msgid "day"
 msgstr ""
@@ -1023,7 +1023,7 @@ msgstr ""
 msgid "sec"
 msgstr "сек"
 
-#: src/Tribe/Recurrence/Meta.php:146
+#: src/Tribe/Recurrence/Meta.php:149
 msgid "Edit Series"
 msgstr ""
 
@@ -1031,7 +1031,7 @@ msgstr ""
 msgid "View More&hellip;"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:152
+#: src/Tribe/Recurrence/Meta.php:155
 msgid "Break from Series"
 msgstr ""
 
@@ -1039,11 +1039,11 @@ msgstr ""
 msgid "There are no upcoming %s at this time."
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:162
+#: src/Tribe/Recurrence/Meta.php:165
 msgid "Edit Future Events"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:184
+#: src/Tribe/Recurrence/Meta.php:187
 msgid "—"
 msgstr ""
 
@@ -1051,209 +1051,209 @@ msgstr ""
 msgid "No upcoming %s."
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:213
+#: src/Tribe/Recurrence/Meta.php:218
 msgid "Break this event out of its series and edit it independently"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:213
+#: src/Tribe/Recurrence/Meta.php:219
 msgid "Edit Single"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:215
+#: src/Tribe/Recurrence/Meta.php:224
 msgid "Split the series in two at this point, creating a new series out of this and all subsequent events"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:215
+#: src/Tribe/Recurrence/Meta.php:225
 msgid "Edit Upcoming"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:221
+#: src/Tribe/Recurrence/Meta.php:235
 msgid "Edit all events in this series"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:221
+#: src/Tribe/Recurrence/Meta.php:236
 msgid "Edit All"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:226
+#: src/Tribe/Recurrence/Meta.php:242
 msgid "Move all events in this series to the Trash"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:226
+#: src/Tribe/Recurrence/Meta.php:242
 msgid "Trash Series"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:229
+#: src/Tribe/Recurrence/Meta.php:245
 msgid "Delete all events in this series permanently"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:229
+#: src/Tribe/Recurrence/Meta.php:246
 msgid "Delete Series Permanently"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:235
+#: src/Tribe/Recurrence/Meta.php:253
 msgid "Restore all events in this series from the Trash"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:235
+#: src/Tribe/Recurrence/Meta.php:255
 msgid "Restore Series"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:717 src/Tribe/Recurrence/Validator.php:120
+#: src/Tribe/Recurrence/Meta.php:769 src/Tribe/Recurrence/Validator.php:120
 msgid "Monthly custom recurrences cannot have a dash set as the day to occur on."
 msgstr "Щомісячні користувальницькі рецидиви не може мати тире встановлений як день, щоб відбутися на."
 
-#: src/Tribe/Recurrence/Meta.php:726 src/Tribe/Recurrence/Validator.php:130
+#: src/Tribe/Recurrence/Meta.php:778 src/Tribe/Recurrence/Validator.php:130
 msgid "Yearly custom recurrences cannot have a dash set as the day to occur on."
 msgstr "Щорічні користувальницькі рецидиви не може мати тире встановлений як день, щоб відбутися на. "
 
-#: src/Tribe/Recurrence/Meta.php:1032 src/Tribe/Recurrence/Meta.php:1500
+#: src/Tribe/Recurrence/Meta.php:1089 src/Tribe/Recurrence/Meta.php:1546
 #: src/admin-views/recurrence/months.php:19
 #: src/admin-views/recurrence/years.php:95
 msgid "Monday"
 msgstr "Понеділок"
 
-#: src/Tribe/Recurrence/Meta.php:1033 src/Tribe/Recurrence/Meta.php:1501
+#: src/Tribe/Recurrence/Meta.php:1090 src/Tribe/Recurrence/Meta.php:1547
 #: src/admin-views/recurrence/months.php:20
 #: src/admin-views/recurrence/years.php:96
 msgid "Tuesday"
 msgstr "Вівторок"
 
-#: src/Tribe/Recurrence/Meta.php:1034 src/Tribe/Recurrence/Meta.php:1502
+#: src/Tribe/Recurrence/Meta.php:1091 src/Tribe/Recurrence/Meta.php:1548
 #: src/admin-views/recurrence/months.php:21
 #: src/admin-views/recurrence/years.php:97
 msgid "Wednesday"
 msgstr "Середа"
 
-#: src/Tribe/Recurrence/Meta.php:1035 src/Tribe/Recurrence/Meta.php:1503
+#: src/Tribe/Recurrence/Meta.php:1092 src/Tribe/Recurrence/Meta.php:1549
 #: src/admin-views/recurrence/months.php:22
 #: src/admin-views/recurrence/years.php:98
 msgid "Thursday"
 msgstr "Четвер"
 
-#: src/Tribe/Recurrence/Meta.php:1036 src/Tribe/Recurrence/Meta.php:1504
+#: src/Tribe/Recurrence/Meta.php:1093 src/Tribe/Recurrence/Meta.php:1550
 #: src/admin-views/recurrence/months.php:23
 #: src/admin-views/recurrence/years.php:99
 msgid "Friday"
 msgstr "П'ятниця"
 
-#: src/Tribe/Recurrence/Meta.php:1037 src/Tribe/Recurrence/Meta.php:1505
+#: src/Tribe/Recurrence/Meta.php:1094 src/Tribe/Recurrence/Meta.php:1551
 #: src/admin-views/recurrence/months.php:24
 #: src/admin-views/recurrence/years.php:100
 msgid "Saturday"
 msgstr "Субота"
 
-#: src/Tribe/Recurrence/Meta.php:1038 src/Tribe/Recurrence/Meta.php:1506
+#: src/Tribe/Recurrence/Meta.php:1095 src/Tribe/Recurrence/Meta.php:1552
 #: src/admin-views/recurrence/months.php:25
 #: src/admin-views/recurrence/years.php:101
 msgid "Sunday"
 msgstr "Неділя"
 
-#: src/Tribe/Recurrence/Meta.php:1513
+#: src/Tribe/Recurrence/Meta.php:1559
 msgid ", and"
 msgstr ", та"
 
-#: src/Tribe/Recurrence/Meta.php:1515
+#: src/Tribe/Recurrence/Meta.php:1561
 msgid "and"
 msgstr "та"
 
-#: src/Tribe/Recurrence/Meta.php:1517
+#: src/Tribe/Recurrence/Meta.php:1563
 msgid ","
 msgstr ","
 
-#: src/Tribe/Recurrence/Meta.php:1041 src/Tribe/Recurrence/Meta.php:1535
+#: src/Tribe/Recurrence/Meta.php:1098 src/Tribe/Recurrence/Meta.php:1581
 msgid "January"
 msgstr "Січень"
 
-#: src/Tribe/Recurrence/Meta.php:1042 src/Tribe/Recurrence/Meta.php:1536
+#: src/Tribe/Recurrence/Meta.php:1099 src/Tribe/Recurrence/Meta.php:1582
 msgid "February"
 msgstr "Лютий"
 
-#: src/Tribe/Recurrence/Meta.php:1043 src/Tribe/Recurrence/Meta.php:1537
+#: src/Tribe/Recurrence/Meta.php:1100 src/Tribe/Recurrence/Meta.php:1583
 msgid "March"
 msgstr "Березень"
 
-#: src/Tribe/Recurrence/Meta.php:1044 src/Tribe/Recurrence/Meta.php:1538
+#: src/Tribe/Recurrence/Meta.php:1101 src/Tribe/Recurrence/Meta.php:1584
 msgid "April"
 msgstr "Квітень"
 
-#: src/Tribe/Recurrence/Meta.php:1045 src/Tribe/Recurrence/Meta.php:1539
+#: src/Tribe/Recurrence/Meta.php:1102 src/Tribe/Recurrence/Meta.php:1585
 msgid "May"
 msgstr "Трав"
 
-#: src/Tribe/Recurrence/Meta.php:1046 src/Tribe/Recurrence/Meta.php:1540
+#: src/Tribe/Recurrence/Meta.php:1103 src/Tribe/Recurrence/Meta.php:1586
 msgid "June"
 msgstr "Червень"
 
-#: src/Tribe/Recurrence/Meta.php:1047 src/Tribe/Recurrence/Meta.php:1541
+#: src/Tribe/Recurrence/Meta.php:1104 src/Tribe/Recurrence/Meta.php:1587
 msgid "July"
 msgstr "Липень"
 
-#: src/Tribe/Recurrence/Meta.php:1048 src/Tribe/Recurrence/Meta.php:1542
+#: src/Tribe/Recurrence/Meta.php:1105 src/Tribe/Recurrence/Meta.php:1588
 msgid "August"
 msgstr "Серпень"
 
-#: src/Tribe/Recurrence/Meta.php:1049 src/Tribe/Recurrence/Meta.php:1543
+#: src/Tribe/Recurrence/Meta.php:1106 src/Tribe/Recurrence/Meta.php:1589
 msgid "September"
 msgstr "Вересень"
 
-#: src/Tribe/Recurrence/Meta.php:1050 src/Tribe/Recurrence/Meta.php:1544
+#: src/Tribe/Recurrence/Meta.php:1107 src/Tribe/Recurrence/Meta.php:1590
 msgid "October"
 msgstr "Жовтень"
 
-#: src/Tribe/Recurrence/Meta.php:1051 src/Tribe/Recurrence/Meta.php:1545
+#: src/Tribe/Recurrence/Meta.php:1108 src/Tribe/Recurrence/Meta.php:1591
 msgid "November"
 msgstr "Листопад"
 
-#: src/Tribe/Recurrence/Meta.php:1052 src/Tribe/Recurrence/Meta.php:1546
+#: src/Tribe/Recurrence/Meta.php:1109 src/Tribe/Recurrence/Meta.php:1592
 msgid "December"
 msgstr "Грудень"
 
-#: src/Tribe/Recurrence/Meta.php:1553
+#: src/Tribe/Recurrence/Meta.php:1599
 msgid ", and "
 msgstr ", та "
 
-#: src/Tribe/Recurrence/Meta.php:1555
+#: src/Tribe/Recurrence/Meta.php:1601
 msgid " and "
 msgstr " та "
 
-#: src/Tribe/Recurrence/Meta.php:1557
+#: src/Tribe/Recurrence/Meta.php:1603
 msgid ", "
 msgstr ", "
 
-#: src/Tribe/Recurrence/Meta.php:1583
+#: src/Tribe/Recurrence/Meta.php:1629
 msgid "Recurring event instances"
 msgstr "Повторювані випадки подій"
 
-#: src/Tribe/Recurrence/Meta.php:1584
+#: src/Tribe/Recurrence/Meta.php:1630
 msgid "Show only the first instance of each recurring event (only affects list-style views)."
 msgstr "Показати тільки перший примірник кожного повторюваного події (впливає тільки на вигляд список стилі)."
 
-#: src/Tribe/Recurrence/Meta.php:1590
+#: src/Tribe/Recurrence/Meta.php:1636
 msgid "Front-end recurring event instances toggle"
 msgstr "Фронтальний перемикач повторюваних подій"
 
-#: src/Tribe/Recurrence/Meta.php:1591
+#: src/Tribe/Recurrence/Meta.php:1637
 msgid "Allow users to decide whether to show all instances of a recurring event."
 msgstr "Дозволити користувачам вирішити, чи слід показати всі екземпляри повторюваного події."
 
-#: src/Tribe/Recurrence/Meta.php:1598
+#: src/Tribe/Recurrence/Meta.php:1644
 msgid "Clean up recurring events after"
 msgstr "Очищення повторювані події після"
 
-#: src/Tribe/Recurrence/Meta.php:1599
+#: src/Tribe/Recurrence/Meta.php:1645
 msgid "Automatically remove recurring event instances older than this"
 msgstr "Автоматичне видалення повторюваних примірників подій старше, ніж ця"
 
-#: src/Tribe/Recurrence/Meta.php:1606
+#: src/Tribe/Recurrence/Meta.php:1652
 msgid "Create recurring events in advance for"
 msgstr "Створити повторювану подію заздалегідь для"
 
-#: src/Tribe/Recurrence/Meta.php:1607
+#: src/Tribe/Recurrence/Meta.php:1653
 msgid "Recurring events will be created this far in advance"
 msgstr "Повторювані події будуть створені заздалегідь"
 
-#: src/Tribe/Recurrence/Meta.php:1628
+#: src/Tribe/Recurrence/Meta.php:1674
 msgid " months"
 msgstr "місяць"
 
@@ -1562,7 +1562,7 @@ msgstr "Назва"
 msgid "Yearly"
 msgstr "Щороку"
 
-#: src/Tribe/APM_Filters/APM_Filters.php:97 src/Tribe/Recurrence/Meta.php:174
+#: src/Tribe/APM_Filters/APM_Filters.php:97 src/Tribe/Recurrence/Meta.php:177
 msgid "Recurring"
 msgstr "Періодичне"
 
@@ -1617,7 +1617,7 @@ msgstr ""
 msgid "F"
 msgstr "П'ят"
 
-#: src/Tribe/APM_Filters/Recur_Filter.php:15 src/Tribe/Recurrence/Meta.php:182
+#: src/Tribe/APM_Filters/Recur_Filter.php:15 src/Tribe/Recurrence/Meta.php:185
 msgid "Yes"
 msgstr ""
 

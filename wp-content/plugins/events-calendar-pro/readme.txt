@@ -5,7 +5,7 @@ Tags: events, calendar, event, venue, organizer, dates, date, google maps, confe
 Donate link: http://m.tri.be/29
 Requires at least: 3.9
 Tested up to: 4.6
-Stable tag: 4.2.4
+Stable tag: 4.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -203,9 +203,14 @@ Our Premium Plugins:
 
 == Changelog ==
 
+= [4.2.5] 2016-08-31 =
+
+* Fix - Fixed an issue that would misplace recurrence exclusions when using UTC based timezones (A big thank you to @Ryan for getting this report to us via the support forums.)
+* Fix - Fixed recurring events misplacement or missing creation when using more than one recurrence pattern
+
 = [4.2.4] 2016-08-17 =
 
-Fix - PHP notice when importing events from iCal importer [64747]
+* Fix - PHP notice when importing events from iCal importer
 
 = [4.2.3] 2016-07-20 =
 

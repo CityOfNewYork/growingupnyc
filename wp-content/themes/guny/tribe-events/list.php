@@ -71,13 +71,13 @@ $event_filter = Timber::get_terms('tribe_events_cat', array(
   'hierarchical' => true,
 ) );
 foreach ($event_filter as $key => $value) {
-  $value->link = add_query_arg( 'cat_id', $value->ID );
+  $value->link = esc_url( add_query_arg( 'cat_id', $value->ID ) );
   $event_filter[$key] = $value;
 }
 $context['event_filter'] = $event_filter;
 $context['all_events'] = array(
   'name' => 'All Event Types',
-  'link' => remove_query_arg( 'cat_id' )
+  'link' => esc_url( remove_query_arg( 'cat_id' ) )
 );
 if ( $cat_id > 0 ) {
   $context['current_event_filter'] = Timber::get_term( $cat_id )->name;
@@ -93,13 +93,13 @@ $age_filter = Timber::get_terms('age_group', array(
   'orderby' => 'term_order'
 ) );
 foreach ($age_filter as $key => $value) {
-  $value->link = add_query_arg( 'age_id', $value->ID );
+  $value->link = esc_url( add_query_arg( 'age_id', $value->ID ) );
   $event_filter[$key] = $value;
 }
 $context['age_filter'] = $age_filter;
 $context['all_ages'] = array(
   'name' => 'All Ages',
-  'link' => remove_query_arg( 'age_id' )
+  'link' => esc_url( remove_query_arg( 'age_id' ) )
 );
 if ( $age_id > 0 ) {
   $context['current_age_filter'] = Timber::get_term( $age_id )->name;
@@ -115,13 +115,13 @@ $borough_filter = Timber::get_terms('borough', array(
   'hide_empty' => true
 ) );
 foreach ($borough_filter as $key => $value) {
-  $value->link = add_query_arg( 'borough_id', $value->ID );
+  $value->link = esc_url( add_query_arg( 'borough_id', $value->ID ) );
   $event_filter[$key] = $value;
 }
 $context['borough_filter'] = $borough_filter;
 $context['all_boroughs'] = array(
   'name' => 'All Boroughs',
-  'link' => remove_query_arg( 'borough_id' )
+  'link' => esc_url( remove_query_arg( 'borough_id' ) )
 );
 if ( $borough_id > 0 ) {
   $context['current_borough_filter'] = Timber::get_term( $borough_id )->name;
@@ -130,27 +130,27 @@ if ( $borough_id > 0 ) {
 }
 
 if ( $today < $current_month ) {
-  $context['prev_month_url'] = add_query_arg( array(
+  $context['prev_month_url'] = esc_url( add_query_arg( array(
     'eventDate' => $tribe_ecp->previousMonth( $current_month ),
     'tribe_paged' => false
-  ) );
+  ) ) );
 }
-$context['next_month_url'] = add_query_arg( array(
+$context['next_month_url'] = esc_url( add_query_arg( array(
   'eventDate' => $tribe_ecp->nextMonth( $current_month ),
   'tribe_paged' => false
-) );
+) ) );
 $context['next_month_text'] = tribe_get_next_month_text();
 
 $context['reset_filters_url'] = tribe_get_events_link();
 if ( !empty( $eventDate ) ) {
-  $context['reset_filters_url'] = add_query_arg( 'eventDate', $eventDate, $context['reset_filters_url'] );
+  $context['reset_filters_url'] = esc_url( add_query_arg( 'eventDate', $eventDate, $context['reset_filters_url'] ) );
 }
 
 if ( tribe_has_previous_event() && (int) get_query_var('paged') >= 2 ) {
-  $context['prev_url'] = addFilterArgs( tribe_get_listview_prev_link(),  true );
+  $context['prev_url'] = esc_url( addFilterArgs( tribe_get_listview_prev_link(),  true ) );
 }
 if ( tribe_has_next_event() ) {
-  $context['next_url'] = addFilterArgs( tribe_get_listview_next_link(), true );
+  $context['next_url'] = esc_url( addFilterArgs( tribe_get_listview_next_link(), true ) );
 }
 
 $templates = array( 'list-events.twig', 'index.twig' );

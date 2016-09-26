@@ -771,7 +771,8 @@ p + p {
   padding-top: 61.64384%;
   position: relative; }
 
-.o-flex-embed iframe {
+.o-flex-embed iframe,
+.o-flex-embed > div {
   height: 100%;
   left: 0;
   position: absolute;

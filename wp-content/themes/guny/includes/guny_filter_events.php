@@ -59,3 +59,10 @@ function guny_events_get_posts( $query ) {
   }
 }
 add_action( 'pre_get_posts', 'guny_events_get_posts', 60 );
+
+// Use the release, rather than experimental, version of Google Maps API
+// for event pages
+function guny_google_maps_api( $url ) {
+  return add_query_arg( 'v', 3, $url );
+}
+add_filter( 'tribe_events_google_maps_api', 'guny_google_maps_api' );

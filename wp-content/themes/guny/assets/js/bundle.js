@@ -1672,12 +1672,20 @@
 	   */
 	  function initializePanel($panelElem, labelledby) {
 	    $panelElem.addClass('o-accordion__content');
-	    $panelElem.data('height', $panelElem.height());
+	    calculatePanelHeight($panelElem);
 	    $panelElem.attr({
 	      'aria-hidden': true,
 	      'role': 'tabpanel',
 	      'aria-labelledby': labelledby
 	    });
+	  }
+
+	  /**
+	   * Set accordion panel height
+	   * @param {object} $panelElem - The accordion panel jQuery object
+	   */
+	  function calculatePanelHeight($panelElem) {
+	    $panelElem.data('height', $panelElem.height());
 	  }
 
 	  /**
@@ -1712,6 +1720,7 @@
 	        var $accordionHeader = void 0;
 	        if ($accordionInitialHeader.get(0).tagName.toLowerCase() === 'button') {
 	          $accordionHeader = $accordionInitialHeader;
+	          calculatePanelHeight($accordionContent);
 	        } else {
 	          $accordionHeader = convertHeaderToButton($accordionInitialHeader);
 	          $accordionInitialHeader.replaceWith($accordionHeader);
@@ -1792,6 +1801,15 @@
 	    $accordions.each(function () {
 	      var multiSelectable = $(this).data('multiselectable') || false;
 	      initialize($(this), multiSelectable);
+
+	      /**
+	       * Handle fontsActive events fired once Typekit reports that the fonts are active.
+	       * @see base.twig for the Typekit.load() function
+	       * @function
+	       */
+	      $(this).on('fontsActive', $.proxy(function () {
+	        reInitialize($(this));
+	      }, this));
 	    });
 	  }
 	};

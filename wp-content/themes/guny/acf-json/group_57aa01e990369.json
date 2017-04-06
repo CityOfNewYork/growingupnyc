@@ -1,0 +1,103 @@
+{
+    "key": "group_57aa01e990369",
+    "title": "Tip",
+    "fields": [
+        {
+            "key": "field_57aa022d48eca",
+            "label": "Tip Content",
+            "name": "tip",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": "br",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "key": "field_57aa025d48ecb",
+            "label": "Tip Action Heading",
+            "name": "tip_action_heading",
+            "type": "text",
+            "instructions": "Text displayed before the tip actions, i.e. \"Want more Talk to Your Baby tips?\"",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": "",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "key": "field_57aa02ab48ecc",
+            "label": "SMS Text",
+            "name": "sms_text",
+            "type": "text",
+            "instructions": "Instructions to get more information by text",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": "",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "key": "field_57aa02f948ecd",
+            "label": "Website Link",
+            "name": "website_link",
+            "type": "url",
+            "instructions": "URL to website where a user can find out more",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "age"
+            }
+        ]
+    ],
+    "menu_order": 3,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1470760047
+}

@@ -1,0 +1,129 @@
+// Site Variables
+//
+
+// Colors By Name
+// =====================
+$black: #000;
+$bright-blue: #2793e0;
+$bright-red: #fb0000;
+$dark-pink: #7f1c4e;
+$dark-gray: #6a6a6a;
+$dark-green: #1d5d11;
+$gray: #999;
+$pure-orange: #ff9d00;
+$strong-blue: #0055b8;
+$strong-lime-green: #35c621;
+$strong-pink: #d8006d;
+$very-dark-blue: #00326d;
+$very-dark-gray: #333;
+$very-dark-gray-transparent: rgba(51, 51, 51, .5);
+$very-light-gray: #eee;
+$vivid-orange: #ff6100;
+$white: #fff;
+
+// Colors By Usage
+// =====================
+$color-shadow: rgba(0, 0, 0, .2);
+$color-primary: $bright-blue;
+$color-secondary: $strong-blue;
+$color-background: $white;
+$color-background-shade: $very-light-gray;
+$color-text: $very-dark-gray;
+$color-text-invert: $white;
+$color-text-weak: $gray;
+$color-text-link: $color-primary;
+$color-background-footer: $color-primary;
+$color-error: $strong-pink;
+
+// Colors By Age Group
+// =====================
+$color-baby: $strong-pink;
+$color-baby-secondary: $dark-pink;
+$color-toddler: $vivid-orange;
+$color-toddler-secondary: $bright-red;
+$color-pre-schooler: $pure-orange;
+$color-pre-schooler-secondary: $vivid-orange;
+$color-grade-schooler: $strong-lime-green;
+$color-grade-schooler-secondary: $dark-green;
+$color-pre-teen: $strong-blue;
+$color-pre-teen-secondary: $very-dark-blue;
+
+// Font Families
+// =====================
+$font-family-text: 'open-sans', sans-serif;
+$font-family-display: 'museo-sans-rounded', sans-serif;
+
+// Font Weights
+// =====================
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-extrablack: 900;
+
+// Font Sizes
+// =====================
+$font-size-ratio: .875;
+$font-size-xx-small: 11;
+$font-size-x-small: 13;
+$font-size-small: 16;
+$font-size-regular: 18;
+$font-size-large: 21;
+$font-size-x-large: 24;
+$font-size-xx-large: 30;
+$font-size-xxx-large-mobile: 40;
+$font-size-xxx-large: 66;
+
+// transitions
+// =====================
+$button-transition: all ease-in-out .15s;
+$link-transition: all ease-in-out .15s;
+
+// Z-Indexes
+// =====================
+$z-index-offcanvas-side: 101;
+$z-index-offcanvas-overlay: 100;
+$z-index-offcanvas-main: 99;
+$z-index-alert: 4;
+$z-index-header: 3;
+$z-index-search-overlay: 2;
+$z-index-hero-title: 1;
+
+// Grid Settings
+// See http://thoughtbot.github.io/neat-docs/latest
+// =====================
+$column: 70px;
+$gutter: 40px;
+$grid-columns: 12;
+$max-width-med: 900px;
+$max-width: 80em;
+$outer-gutter: 15;
+$outer-gutter-small: 20;
+$outer-gutter-medium: 30;
+$outer-gutter-large: 40;
+$horizontal-gutter: 20px;
+
+// Breakpoints
+// =====================
+$bp-small: new-breakpoint(min-width 375px);
+$bp-medium: new-breakpoint(min-width 700px);
+$bp-large: new-breakpoint(min-width 1024px);
+$bp-xlarge: new-breakpoint(min-width 1200px);
+$breakpoint-font: $bp-large;
+
+$bp-mobile-only: new-breakpoint(max-width 1023px);
+
+// Heights
+// =====================
+$height-banner: 50;
+$height-banner-large: 60;
+$height-banner-logo: 60;
+
+// Widths
+// =====================
+$width-banner-logo: 75px;
+$width-offcanvas-side: 300px;
+$width-offcanvas-side-large: 350px;
+
+// General Sizes
+// =====================
+$sticker-size-mobile: 80;
+$sticker-size: 100;

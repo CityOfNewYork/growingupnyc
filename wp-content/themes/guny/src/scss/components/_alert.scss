@@ -1,0 +1,66 @@
+// Alert Banner
+//
+// markup:
+// <div class="c-alert is-open">
+//   <div class="c-alert__banner">
+//     <button type="button" class="c-alert__button"><svg role="img" class="icon--small"><title>Close</title><use xlink:href="assets/img/svg-sprite.svg#close"></use></svg></button>
+//     <div class="o-container">
+//       <p>Lorem ipsum set dolor amet</p>
+//     </div>
+//   </div>
+// </div>
+//
+// sg-wrapper:
+// <div style="transform:translateZ(0);min-height:200px">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 9
+.c-alert {
+  display: none;
+}
+
+.js .c-alert.is-open {
+  background: $white;
+  bottom: 0;
+  display: block;
+  left: 0;
+  padding: 0 4px;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  z-index: $z-index-alert;
+
+  p + p {
+    margin-top: 0;
+  }
+}
+
+// Inner banner content
+.c-alert__banner {
+  background: $very-dark-gray;
+  border-radius: 3px 3px 0 0;
+  color: $color-text-invert;
+  font-family: $font-family-display;
+  @include font-size-large;
+  font-weight: $font-weight-extrablack;
+  padding: 25px 0;
+}
+
+// Alert Banner Button
+.c-alert__button {
+  color: $color-text-invert;
+  position: absolute;
+  right: 10px;
+  top: 0;
+
+  &:focus {
+    color: darken($color-text-invert, 15%);
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: darken($color-text-invert, 15%);
+    }
+  }
+}

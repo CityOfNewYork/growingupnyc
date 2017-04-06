@@ -1,0 +1,120 @@
+{% extends "base.twig" %}
+
+{% block head_extras %}
+<style>
+  .c-hero { background-color: #469BFF; background-image: url(/wp-content/themes/guny/assets/img/hero-programs.svg); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="js-parallax">
+  <header class="c-hero c-hero--large c-hero--long-text js-parallax-content">
+    <div class="o-container js-parallax-text">
+      <h1 class="c-hero__title--long">
+        {% if post.category %}
+        <span class="c-hero__sticker sticker">
+          <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{post.category.slug}}"></use></svg>
+        </span>
+        {% endif %}
+        {{post.title}}
+      </h1>
+      <p class="c-hero__tagline">
+        {{post.program_name}}{% if post.acronym %} ({{post.acronym}}){% endif %}
+        | {{post.government_agency}}
+      </p>
+      <p class="c-hero__tagline">
+      {% for term in post.terms('programs_cat') %}
+        <a href="/programs/?fwp_program_type={{term.slug}}" class="button--pill">{{term.name}}</a>
+      {% endfor %}
+      {% for term in post.terms('age_group') %}
+        <a href="/programs/?fwp_ages={{term.slug}}" class="button--pill button--pill--alt">{{term.name}}</a>
+      {% endfor %}
+    </p>
+    </div>
+  </header>
+</div> <!-- /.js-parallax -->
+<article class="o-container u-bottom-spacing-small js-sticky-container">
+  <div class="o-article-sidebar">
+    <div class="o-content-container--compact u-shift-up">
+      <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
+        {% if post.summary %}
+        <li class="c-nav-list__item">
+          <a href="#section-summary" data-section="section-summary" class="js-section c-nav-list__link">Summary<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+        </li>
+        {% endif %}
+        {% if post.eligibility %}
+        <li class="c-nav-list__item">
+          <a href="#section-eligibility" data-section="section-eligibility" class="js-section c-nav-list__link">Eligibility<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+        </li>
+        {% endif %}
+        {% if post.whats_needed or post.how_to_apply %}
+        <li class="c-nav-list__item">
+          <a href="#section-application" data-section="section-application" class="js-section c-nav-list__link">Application<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+        </li>
+        {% endif %}
+        {% if post.get_help %}
+        <li class="c-nav-list__item">
+          <a href="#section-help" data-section="section-help" class="js-section c-nav-list__link">Help<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+        </li>
+        {% endif %}
+      </ol>
+    </div> <!-- /.o-content-container-compact -->
+  </div> <!-- /.o-article-sidebar -->
+  <div class="o-article js-sticky-article">
+    <div class="o-content-container--compact">
+      {% if post.summary %}
+        <section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" id="section-summary">
+          {{post.get_field('summary')}}
+        </section> <!-- /.o-content-container-text -->
+        <hr>
+      {% endif %}
+      {% if post.eligibility %}
+        <section class="o-content-container--text s-wysiwyg u-top-spacing-small u-bottom-spacing-small" id="section-eligibility">
+          <h2>Am I Eligible?</h2>
+          {{post.get_field('eligibility')}}
+        </section> <!-- /.o-content-container-text -->
+        <hr>
+      {% endif %}
+      {% if post.whats_needed or post.how_to_apply %}
+        <section id="section-application" class="u-top-spacing-small u-bottom-spacing-small">
+          {% if post.whats_needed %}
+          <div class="o-content-container--text s-wysiwyg{% if post.how_to_apply %} u-bottom-spacing-small{% endif %}">
+            <h2>What Will I Need to Apply?</h2>
+            {{post.get_field('whats_needed')}}
+          </div>
+          <hr>
+          {% endif %}
+          {% if post.how_to_apply %}
+          <div class="o-content-container--text s-wysiwyg{% if post.whats_needed %} u-top-spacing-small{% endif %}">
+            <h2>I'm Ready to Apply</h2>
+            {{post.get_field('how_to_apply')}}
+          </div>
+          {% endif %}
+        </section> <!-- /.o-content-container-text -->
+        <hr>
+      {% endif %}
+      {% if post.get_help %}
+        <section id="section-help" class="u-top-spacing-small u-bottom-spacing-small o-content-container--text s-wysiwyg">
+          <h2>How Can I Get Help?</h2>
+          {{post.get_field('get_help')}}
+        </section> <!-- /.o-content-container-text -->
+      {% endif %}
+    </div>
+    {% if post.related_posts %}
+    <div class="o-content-container c-block-list c-block-list--shade">
+      <h2>Other {{post.category.name}} Programs</h2>
+      <div class="c-block-list__inner">
+        {% for program in post.related_posts %}
+          <div class="c-block-list__item">
+            {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] with {post: program} %}
+          </div> <!-- /.c-block-list__item -->
+        {% endfor %}
+      </div> <!-- /.c-block-list__inner -->
+      <div class="text-center">
+        <a href="/programs" class="button--outline button--outline--gray">See all programs</a>
+      </div>
+    </div>
+    {% endif %}
+  </div> <!-- /.o-article -->
+</article> <!-- /.o-container -->
+{% endblock %}

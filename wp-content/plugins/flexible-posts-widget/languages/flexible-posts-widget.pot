@@ -1,0 +1,183 @@
+# Copyright (C) 2014 Flexible Posts Widget
+# This file is distributed under the same license as the Flexible Posts Widget package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Flexible Posts Widget 3.4\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/flexible-posts-widget\n"
+"POT-Creation-Date: 2014-10-29 20:24:59+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#. #-#-#-#-#  plugin.pot (Flexible Posts Widget 3.4)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: flexible-posts-widget.php:122
+msgid "Flexible Posts Widget"
+msgstr ""
+
+#: flexible-posts-widget.php:125
+msgid "Display posts as widget items."
+msgstr ""
+
+#: flexible-posts-widget.php:429
+msgid "Getting terms..."
+msgstr ""
+
+#: flexible-posts-widget.php:430 views/admin.php:50
+msgid "Select terms:"
+msgstr ""
+
+#: flexible-posts-widget.php:431 flexible-posts-widget.php:459
+#: views/admin.php:68
+msgid "No terms found."
+msgstr ""
+
+#: flexible-posts-widget.php:511
+msgid "Publish Date"
+msgstr ""
+
+#: flexible-posts-widget.php:512
+msgid "Modified Date"
+msgstr ""
+
+#: flexible-posts-widget.php:513
+msgid "Title"
+msgstr ""
+
+#: flexible-posts-widget.php:514
+msgid "Menu Order"
+msgstr ""
+
+#: flexible-posts-widget.php:515 views/admin.php:31
+msgid "Post ID"
+msgstr ""
+
+#: flexible-posts-widget.php:516
+msgid "Author"
+msgstr ""
+
+#: flexible-posts-widget.php:517
+msgid "Post Slug"
+msgstr ""
+
+#: flexible-posts-widget.php:518
+msgid "Comment Count"
+msgstr ""
+
+#: flexible-posts-widget.php:519
+msgid "Random"
+msgstr ""
+
+#: flexible-posts-widget.php:520
+msgid "Post ID Order"
+msgstr ""
+
+#: flexible-posts-widget.php:525
+msgid "Ascending"
+msgstr ""
+
+#: flexible-posts-widget.php:526
+msgid "Descending"
+msgstr ""
+
+#: views/admin.php:15
+msgid "Widget title:"
+msgstr ""
+
+#: views/admin.php:21
+msgid "Get posts by"
+msgstr ""
+
+#: views/admin.php:29
+msgid "Post Type"
+msgstr ""
+
+#: views/admin.php:30
+msgid "Taxonomy &amp; Term"
+msgstr ""
+
+#: views/admin.php:31
+msgid "ID"
+msgstr ""
+
+#: views/admin.php:40
+msgid "Select a taxonomy:"
+msgstr ""
+
+#: views/admin.php:42
+msgid "Ignore Taxonomy &amp; Term"
+msgstr ""
+
+#: views/admin.php:79
+msgid "Comma-separated list of post IDs:"
+msgstr ""
+
+#: views/admin.php:81
+msgid "Will override settings on the Post Type and Taxonomy &amp; Term tabs."
+msgstr ""
+
+#: views/admin.php:81
+msgid "See documentation."
+msgstr ""
+
+#: views/admin.php:92
+msgid "Display options"
+msgstr ""
+
+#: views/admin.php:95
+msgid "Ignore sticky posts?"
+msgstr ""
+
+#: views/admin.php:98
+msgid "Number of posts to show:"
+msgstr ""
+
+#: views/admin.php:102
+msgid "Number of posts to skip:"
+msgstr ""
+
+#: views/admin.php:106
+msgid "Order posts by:"
+msgstr ""
+
+#: views/admin.php:116
+msgid "Order:"
+msgstr ""
+
+#: views/admin.php:130
+msgid "Display thumbnails?"
+msgstr ""
+
+#: views/admin.php:133
+msgid "Select a thumbnail size to show:"
+msgstr ""
+
+#: views/admin.php:146
+msgid "Template filename:"
+msgstr ""
+
+#: views/widget.php:45
+msgid "No post found"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://wordpress.org/extend/plugins/flexible-posts-widget"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"An advanced posts display widget with many options: get posts by post type "
+"and taxonomy & term or by post ID; sorting & ordering; feature images; "
+"custom templates and more."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "dpe415"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://dpedesign.com"
+msgstr ""

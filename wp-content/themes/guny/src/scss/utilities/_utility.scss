@@ -1,0 +1,49 @@
+/**
+* Utility classes
+*/
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/**
+* Wordpress image alignment
+*/
+.alignright {
+  @include media($bp-small) {
+    float: right;
+  }
+}
+
+.alignleft {
+  @include media($bp-small) {
+    float: left;
+  }
+}
+
+.aligncenter {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/**
+* Text Alignment
+*/
+.text-center {
+  text-align: center;
+}
+
+/**
+* Conditional Display
+*/
+.mobile-hide {
+  @include media($bp-mobile-only) {
+    display: none !important;
+  }
+}
+
+.desktop-hide {
+  @include media($bp-medium) {
+    display: none !important;
+  }
+}

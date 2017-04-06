@@ -1,0 +1,22 @@
+.show-for-screen-reader {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute !important;
+  width: 1px;
+}
+
+.show-for-keyboard {
+  height: 1px;
+  left: -1000px;
+  overflow: hidden;
+  position: absolute;
+  top: auto;
+  width: 1px;
+
+  &:focus {
+    height: auto;
+    position: static;
+    width: auto;
+  }
+}

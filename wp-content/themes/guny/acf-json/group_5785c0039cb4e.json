@@ -1,0 +1,51 @@
+{
+    "key": "group_5785c0039cb4e",
+    "title": "Top Programs",
+    "fields": [
+        {
+            "key": "field_5785c013c15a0",
+            "label": "Programs",
+            "name": "programs",
+            "type": "relationship",
+            "instructions": "Select 3 Programs",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "program"
+            ],
+            "taxonomy": [
+
+            ],
+            "filters": [
+                "search"
+            ],
+            "elements": "",
+            "min": 3,
+            "max": 3,
+            "return_format": "object"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "widget",
+                "operator": "==",
+                "value": "top_programs_widget"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1468418902
+}

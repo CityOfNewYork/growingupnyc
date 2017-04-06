@@ -1,0 +1,59 @@
+// Mixins for font sizes and styles
+
+// Font Sizes
+// =====================
+@mixin font-size($large, $mobile: null) {
+  @if $mobile {
+    font-size: rem-calc($mobile);
+    @include media($breakpoint-font) {
+      font-size: rem-calc($large);
+    }
+  }
+  @else if $large > 16 {
+    font-size: rem-calc($large * $font-size-ratio);
+    @include media($breakpoint-font) {
+      font-size: rem-calc($large);
+    }
+  }
+  @else {
+    font-size: rem-calc($large);
+  }
+}
+
+@mixin font-size-x-small {
+  @include font-size($font-size-x-small);
+}
+
+@mixin font-size-small {
+  @include font-size($font-size-small);
+}
+
+@mixin font-size-regular {
+  @include font-size($font-size-regular);
+}
+
+@mixin font-size-large {
+  @include font-size($font-size-large);
+}
+
+@mixin font-size-x-large {
+  @include font-size($font-size-x-large);
+}
+
+@mixin font-size-xx-large {
+  font-size: rem-calc($font-size-xx-large);
+}
+
+@mixin font-size-xxx-large {
+  font-size: rem-calc($font-size-xxx-large-mobile);
+
+  @include media($bp-medium) {
+    font-size: rem-calc($font-size-xxx-large);
+  }
+}
+
+@mixin text-uppercase {
+  letter-spacing: .5px;
+  line-height: 1;
+  text-transform: uppercase;
+}

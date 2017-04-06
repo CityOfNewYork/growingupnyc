@@ -1,0 +1,45 @@
+{
+    "key": "group_57755fb614e05",
+    "title": "Events",
+    "fields": [
+        {
+            "key": "field_57755fc248ce0",
+            "label": "Events Text",
+            "name": "events_text",
+            "type": "textarea",
+            "instructions": "Optional text displayed above the related events",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": "wpautop",
+            "readonly": 0,
+            "disabled": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "age"
+            }
+        ]
+    ],
+    "menu_order": 2,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1469646065
+}

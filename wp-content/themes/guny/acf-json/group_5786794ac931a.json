@@ -1,0 +1,46 @@
+{
+    "key": "group_5786794ac931a",
+    "title": "Featured Event",
+    "fields": [
+        {
+            "key": "field_57867965e4502",
+            "label": "Is this a featured event?",
+            "name": "featured_event",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Yes": "Yes"
+            },
+            "default_value": [
+
+            ],
+            "layout": "vertical",
+            "toggle": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "tribe_events"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1468434385
+}

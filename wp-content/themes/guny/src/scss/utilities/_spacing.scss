@@ -1,0 +1,67 @@
+// Horizontal gutter
+.u-sm-gutter {
+  margin-bottom: $horizontal-gutter;
+}
+
+.u-lg-gutter {
+  margin-bottom: #{$outer-gutter}px;
+
+  @include media($bp-small) {
+    margin-bottom: #{$outer-gutter-small}px;
+  }
+
+  @include media($bp-medium) {
+    margin-bottom: #{$outer-gutter-medium}px;
+  }
+
+  @include media($bp-large) {
+    margin-bottom: #{$outer-gutter-large}px;
+  }
+}
+
+// Extra top padding
+.u-top-spacing {
+  padding-top: 45px;
+
+  @include media($bp-large) {
+    padding-top: 60px;
+  }
+}
+
+.u-top-spacing-small {
+  padding-top: 30px;
+
+  @include media($bp-small) {
+    padding-top: 35px;
+  }
+
+  @include media($bp-large) {
+    padding-top: #{$outer-gutter-large}px;
+  }
+}
+
+// Extra bottom padding
+.u-bottom-spacing {
+  padding-bottom: 45px;
+
+  @include media($bp-large) {
+    padding-bottom: 60px;
+  }
+}
+
+.u-bottom-spacing-small {
+  padding-bottom: 30px;
+
+  @include media($bp-small) {
+    padding-bottom: 35px;
+  }
+
+  @include media($bp-large) {
+    padding-bottom: #{$outer-gutter-large}px;
+  }
+}
+
+// Pull an element up to overlap with the one above it
+.u-shift-up {
+  margin-top: $horizontal-gutter * -2;
+}

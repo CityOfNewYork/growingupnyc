@@ -1,0 +1,76 @@
+// Layout patterns and containers
+//
+// Uses Neat for the grid mixins
+
+// Outer Containers
+.o-container {
+  @include outer-container;
+  padding-left: rem-calc($outer-gutter);
+  padding-right: rem-calc($outer-gutter);
+  position: relative;
+
+  @include media($bp-small) {
+    padding-left: rem-calc($outer-gutter-small);
+    padding-right: rem-calc($outer-gutter-small);
+  }
+
+  @include media($bp-large) {
+    padding-left: rem-calc($outer-gutter-large);
+    padding-right: rem-calc($outer-gutter-large);
+  }
+}
+
+.o-container-med {
+  @extend .o-container;
+  max-width: $max-width-med;
+}
+
+.o-article-sidebar {
+  margin-left: -#{rem-calc($outer-gutter)};
+  margin-right: -#{rem-calc($outer-gutter)};
+
+  @include media($bp-small) {
+    margin-left: -#{rem-calc($outer-gutter-small)};
+    margin-right: -#{rem-calc($outer-gutter-small)};
+  }
+
+  @include media($bp-large) {
+    margin-left: 0;
+    margin-right: 0;
+    @include span-columns(4);
+  }
+}
+
+.o-article {
+  margin-left: -#{rem-calc($outer-gutter)};
+  margin-right: -#{rem-calc($outer-gutter)};
+
+  @include media($bp-small) {
+    margin-left: -#{rem-calc($outer-gutter-small)};
+    margin-right: -#{rem-calc($outer-gutter-small)};
+  }
+
+  @include media($bp-large) {
+    margin-left: 0;
+    margin-right: 0;
+    @include span-columns(8);
+    @include omega;
+  }
+}
+
+.o-article--shift {
+  @include media($bp-large) {
+    @include shift(4);
+  }
+}
+
+.o-content-static--left {
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50%;
+}

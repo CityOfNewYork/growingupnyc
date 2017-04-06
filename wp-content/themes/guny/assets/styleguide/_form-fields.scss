@@ -1,0 +1,177 @@
+// Forms
+//
+// Styleguide 4
+
+// Basic Inputs
+//
+// Styleguide 4.1
+
+// Text Input Field
+//
+// Text input field. Border turns blue on focus.
+//
+// .form-field--large - Large input field
+// .form-field--full-width - Input field spans width of parent
+//
+// markup:
+// <input type="text" class="form-field {$modifiers}"
+//
+// sg-wrapper:
+// <div style="background:#333; padding:20px">
+//   <sg-wrapper-content/>
+// </div>
+//
+// Styleguide 4.1.1
+
+.form-field,
+.facetwp-search {
+  appearance: none;
+  background: $white;
+  border: 1px solid transparent;
+  border-radius: rem-calc(3);
+  color: $color-text;
+  @include font-size-small;
+  font-weight: $font-weight-semibold;
+  padding: rem-calc(10 15);
+}
+
+input[type="search"].form-field {
+  appearance: none;
+}
+
+// Size Variations
+
+// Large
+.form-field--large {
+  @include font-size-x-large;
+  line-height: normal;
+  padding: rem-calc(10 40 10 20);
+
+  @include media($bp-medium) {
+    padding: rem-calc(20 60 20 25);
+  }
+}
+
+.form-field--full-width {
+  width: 100%;
+}
+
+// Icons
+
+// Layout
+.form-field__icon-container {
+  position: relative;
+}
+
+.form-field__icon {
+  display: block;
+  color: $color-primary;
+  cursor: pointer;
+  height: rem-calc(20);
+  margin-top: rem-calc(-10);
+  position: absolute;
+  right: rem-calc(20);
+  top: 50%;
+  width: rem-calc(20);
+
+  @include media($bp-medium) {
+    right: rem-calc(25);
+  }
+
+  &:focus {
+    color: $color-secondary;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+
+  + .form-field__icon {
+    right: rem-calc(50);
+
+    @include media($bp-medium) {
+      right: rem-calc(55);
+    }
+  }
+}
+
+.form-field__icon--weak {
+  color: $color-text-weak;
+
+  &:focus {
+    color: $color-text;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $color-text;
+    }
+  }
+}
+
+// Icon Size Variations
+
+// Large
+.form-field__icon--large {
+  height: rem-calc(20);
+  margin-top: rem-calc(-15);
+  width: rem-calc(20);
+
+  @include media($bp-medium) {
+    height: rem-calc(30);
+    margin-top: rem-calc(-15);
+    width: rem-calc(30);
+
+    + .form-field__icon--large {
+      right: rem-calc(65);
+    }
+  }
+}
+
+// Checkbox Field
+//
+// Stylized checkbox field.
+//
+// markup:
+// <label class="checkbox">
+//   <input type="checkbox" class="checkbox__field">
+//   <svg class="checkbox__indicator"><use xlink:href="assets/img/svg-sprite.svg#check"></use></svg>
+//   Label
+// </label>
+//
+// Styleguide 4.1.2
+.checkbox {
+  cursor: pointer;
+  position: relative;
+}
+
+.checkbox__field {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+.checkbox__indicator {
+  background: $white;
+  border-radius: 3px;
+  border: 2px solid $white;
+  display: inline-block;
+  color: transparent;
+  height: rem-calc(20);
+  width: rem-calc(20);
+  vertical-align: middle;
+}
+
+.checkbox__field:checked + .checkbox__indicator {
+  color: $color-secondary;
+}
+
+.checkbox__field:focus + .checkbox__indicator {
+  border-color: $dark-gray;
+}
+
+.checkbox__field.is-error + .checkbox__indicator {
+  border-color: $color-error;
+}

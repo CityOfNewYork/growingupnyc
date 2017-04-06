@@ -1,0 +1,38 @@
+html,
+body {
+  height: 100%;
+}
+
+svg {
+  fill: currentColor;
+  height: 100%;
+  width: 100%;
+}
+
+*,
+*:after,
+*:before {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  transition: $link-transition;
+}
+
+#main {
+  position: relative;
+}
+
+hr {
+  background: $very-light-gray;
+  border-radius: 6.5px;
+  height: 2px;
+}
+
+main,
+section {
+  &:focus {
+    outline: none;
+  }
+}

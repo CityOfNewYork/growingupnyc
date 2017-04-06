@@ -1,0 +1,73 @@
+// Icons
+//
+// markup:
+// <svg role="img" {$modifiers}>
+//   <title>Descriptive title</title>
+//   <use xlink:href="#iconId"></use>
+// </svg>
+//
+// Not in styleguide because display is dependent on embedded SVG sprite
+
+.icon--large {
+  height: rem-calc(37);
+  width: rem-calc(37);
+
+  @include media($bp-large) {
+    height: rem-calc(50);
+    width: rem-calc(50);
+  }
+}
+
+.icon--medium {
+  height: rem-calc(37);
+  width: rem-calc(37);
+
+  @include media($bp-medium) {
+    height: rem-calc(35);
+    width: rem-calc(35);
+  }
+}
+
+.icon--small {
+  height: rem-calc(22);
+  width: rem-calc(22);
+}
+
+.icon--xsmall {
+  height: 1em;
+  width: 1em;
+  vertical-align: top;
+}
+
+.icon--xxsmall {
+  height: rem-calc(13);
+  position: relative;
+  top: rem-calc(3);
+  width: rem-calc(13);
+  vertical-align: top;
+
+  @include media($bp-small) {
+    height: rem-calc(15);
+    width: rem-calc(15);
+  }
+}
+
+.icon--nyc {
+  height: rem-calc(21);
+  margin: rem-calc(0 3);
+  position: relative;
+  top: rem-calc(-3);
+  width: rem-calc(63);
+}
+
+// Align the caret with the text it's next to
+.icon--caret {
+  @extend .icon--small;
+  margin-top: rem-calc(-3);
+}
+
+.icon--caret--xxsmall {
+  @extend .icon--xxsmall;
+  margin-top: rem-calc(-3);
+  margin-right: rem-calc(-4);
+}

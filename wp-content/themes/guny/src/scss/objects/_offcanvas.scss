@@ -1,0 +1,137 @@
+// Off-Canvas
+//
+// Layout object to reveal offcanvas content.
+// Content should only be hidden initially if JS is enabled.
+
+// Off-Canvas Wrapper
+.o-offcanvas {
+  background: $color-text;
+  min-height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+// Off-Canvas Side
+//
+// The content that is initially offcanvas and then revealed
+.o-offcanvas__side {
+  background: $color-background;
+  width: $width-offcanvas-side;
+
+  @include media($bp-large) {
+    width: $width-offcanvas-side-large;
+  }
+}
+
+.no-js .o-offcanvas__side {
+  @include media(600px) {
+    float: right;
+    height: 100%;
+  }
+}
+
+.js .o-offcanvas__side {
+  min-height: 100%;
+  overflow: hidden;
+  padding-top: 50px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: all .5s;
+  visibility: hidden;
+  z-index: 1;
+
+  @include media($bp-large) {
+    padding-top: 60px;
+  }
+}
+
+.js .is-open .o-offcanvas__side {
+  overflow: auto;
+  transition: transform .5s;
+  visibility: visible;
+  z-index: $z-index-offcanvas-side;
+}
+
+.js.csstransitions .o-offcanvas__side {
+  &:after {
+    background: rgba(0, 0, 0, .4);
+    content: '';
+    height: 100%;
+    opacity: 1;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: opacity .5s;
+    width: 100%;
+  }
+}
+
+.js.csstransitions .is-open .o-offcanvas__side {
+  z-index: 1;
+
+  &:after {
+    height: 0;
+    opacity: 0;
+    transition: opacity .5s, width .1s .5s, height .1s .5s;
+    width: 0;
+  }
+}
+
+// Off-Canvas Close Button
+//
+// Closes the offcanvas nav.
+.o-offcanvas__close {
+  position: absolute;
+  right: 25px;
+  top: 15px;
+}
+
+// Off-Canvas Main
+//
+// The content that slides over to make room for the offcanvas content
+.o-offcanvas__main {
+  background: $color-background;
+}
+
+.js .o-offcanvas__main {
+  backface-visibility: hidden;
+  height: 100%;
+  right: 0;
+  position: relative;
+  transition: right .5s;
+  z-index: $z-index-offcanvas-main;
+}
+
+.js .is-open .o-offcanvas__main {
+  position: fixed;
+  right: $width-offcanvas-side;
+  width: 100%;
+
+  @include media($bp-large) {
+    right: $width-offcanvas-side-large;
+  }
+}
+
+// Off-Canvas Overlay
+//
+// Overlay on main content when offcanvas content is visible
+.o-offcanvas__overlay {
+  background: rgba(0, 0, 0, .4);
+  display: block;
+  height: 0;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: opacity .5s, width .1s .5s, height .1s .5s;
+  width: 0;
+}
+
+.is-open .o-offcanvas__overlay {
+  height: 100%;
+  opacity: 1;
+  transition: opacity .5s;
+  width: 100%;
+  z-index: $z-index-offcanvas-overlay;
+}

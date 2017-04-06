@@ -1,0 +1,11 @@
+// Replace text with a background image
+//
+// @param {string} $image - Path to image that should replace text
+@mixin image-replace($image) {
+  background: url($image) no-repeat;
+  background-size: contain;
+  display: block;
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+}

@@ -26,7 +26,7 @@
 
 {% block post_list %}
 <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
-  {{posts}}
+  {{posts|print_r}}
 </section>
 {% endblock %}
 
@@ -34,5 +34,5 @@
 <div class="o-content-container--compact">
   {{pagination}}
 </div>
-<div class="salog"> Source file : list-program.twig</div>
+<div class="salog"> Source file : list-magazine.twig</div>
 {% endblock %}

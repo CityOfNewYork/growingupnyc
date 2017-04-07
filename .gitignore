@@ -1,3 +1,2 @@
 # Ignore paths that contain user-generated content.
 wp-admin/**
-wp-includes/**

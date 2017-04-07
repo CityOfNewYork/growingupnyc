@@ -52,8 +52,13 @@ if ( $post->post_type == 'age' ) {
   }
 }
 
+echo "Source file :  singular.php"; 
+// print_r ($post);
+
 $templates = array( 'single-' . $post->ID . '.twig', 'single-' . $post->post_type . '.twig', 'single.twig' );
 
 $context['post'] = $post;
+
+print_r($templates);
 
 Timber::render( $templates, $context );

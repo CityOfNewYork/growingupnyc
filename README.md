@@ -1,1 +1,175 @@
-# bsd-guny
+# Growing Up NYC
+
+**URL:** [https://growingupnyc.cityofnewyork.us/](https://growingupnyc.cityofnewyork.us/)
+
+**Staging URL:** [http://growingupnyc.staging.wpengine.com/](http://growingupnyc.staging.wpengine.com/)
+
+**Local URL:** http://guny.wp.local
+
+[**Style Guide**](http://growingupnyc.staging.wpengine.com/wp-content/themes/guny/assets/styleguide)
+
+---
+## Technical Details
+
+### CSS
+
+CSS files are generated from Sass files. Sass files are organized according to ITCSS principles so that generic, low-specificity selectors appear first in the compiled CSS
+file.
+
+#### Sass file structure
+
+- <kbd>/settings</kbd>: Global variables
+
+- <kbd>/tools</kbd>: Global mixins and functions
+
+- <kbd>/resets</kbd>: CSS resets/normalizers
+
+- <kbd>/base</kbd>: Unclassed HTML elements (generic headings, lists, links) and styles that apply to a single element only (buttons, icons).
+
+- <kbd>/objects</kbd>: Design patterns (think OOCSS). Classes prefixed with `o-`
+
+- <kbd>/components</kbd>: Styled pieces of UI. Classes prefixed with `c-`
+
+- <kbd>/scopes</kbd>: Style overrides scoped to a particular context. The primary
+use case for this is content that will be entered through the Wordpress WYSIWYG editor. Otherwise, this should be treated as an option of last resort.
+
+- <kbd>/utilities</kbd>: Single-responsibility (or close to single responsibility)
+helper classes. If you've been wanting to use !important, here's your chance.
+
+#### Units
+
+Use `rem` or `em` for any values that should scale in proportion to the user's browser font size. Use `px` for any values that will remain consistent. Widths of layout containers should generally be given in percents so that they will scale with the user's screen width.
+
+#### Grid
+
+The layout is designed on a 12-column grid using [Neat](http://neat.bourbon.io/).
+
+### Styleguide
+
+This project uses [SC5 Styleguide Generator](http://styleguide.sc5.io/) to generate a living styleguide. Style guide files are updated as part of the gulp watch and build tasks. You can view the styleguide at <kbd>/wp-content/themes/guny/assets/styleguide</kbd>.
+
+Any styles that should be included in the styleguide must be commented following
+the [KSS](http://warpspire.com/kss/) syntax. In general, this should include any
+Sass components (as described above) and potentially scopes.
+
+It is not necessary to separate list :hover and :focus states in the styleguide, but any variations based on CSS class should be documented and displayed using {$modifers}. (See https://github.com/kss-node/kss/blob/spec/SPEC.md for an example).
+
+### JavaScript
+
+This project uses Webpack to manage JavaScript modules. The source.dev.js and
+source.js files are automatically generated from the source JS files.
+
+#### JavaScript file structure
+- <kbd>/modules</kbd> - Individual CommonJS or ES6 modules
+- <kbd>/vendor</kbd> - Third-party plugins not installed with npm
+- <kbd>main.js</kbd> - Declares project requirements and initializes modules as
+needed. Most functionality will be written as a module rather than added directly
+to this file.
+
+#### JavaScript libraries
+
+jQuery and Modernizr are available globally and do not have to be required by a module. Modernizr is built via gulp-modernizr. [Lodash](https://lodash.com/) is installed via npm but does need to be imported. You should only import the method(s) you need.
+
+#### ES2015
+
+This project uses Babel to transpile JavaScript so that ES2015 features can (and should) be used where appropriate.
+
+### Structure
+
+<kbd>/wp-admin</kbd>: Wordpress core files. Do not make changes here. They will be overwritten when Wordpress updates.
+
+<kbd>/wp-content</kbd>: The directory for Wordpress themes, plugins, and uploads.
+
+- <kbd>/plugins</kbd>: Wordpress plugins. Any third-party and custom-plugins (other than the must-use plugins) will go in this directory.
+
+- <kbd>/themes</kbd>: Wordpress themes
+
+  - <kbd>/guny</kbd>: Custom theme for GUNY.
+
+    - <kbd>/assets</kbd>: Contains static assets for the site. Most of these are compiled from the src directory
+
+    - <kbd>/includes</kbd>: Theme functions, including custom shortcodes and modifications to the WYSWIYG editor
+
+    - <kbd>/src</kbd>: Contains SCSS, JavaScript, and image source files
+
+      - <kbd>/img</kbd>: Image sources. There is a Gulp task set up to minify images and copy them to the assets folder automaticallty
+
+      - <kbd>/js</kbd>: JavaScript source files
+
+        - <kbd>/modules</kbd>: JavaScript modules. These can be required by other modules that depend on them or by `main.js`
+
+        - <kbd>/vendor</kbd>: Third-party plugins. Only those files prepended with `_` will be included in the concatenate task. Other plugins can be required by a module or `main.js` where appropriate.
+
+        - <kbd>/main.js</kbd>: The main JavaScript file for the project.
+
+      - <kbd>/scss</kbd>: SCSS Stylesheets
+
+    - <kbd>/tribe-events</kbd>: PHP templates for pages generated by The Events Calendar plugin
+
+    - <kbd>/views</kbd>: Twig templates for front-end markup
+
+<kbd>/wp-includes</kbd>: More Wordpress core files. Do not make changes here. They will be overwritten when Wordpress updates.
+
+### Shortcodes
+Custom shortcodes are located in <kbd>/wp-content/themes/guny/includes/guny_shortcodes.php</kbd>.
+
+- `[nyc_logo]`: Inserts an NYC svg logo into the text
+- `[button url="" text=""]`: Inserts a link styled to look like a button
+
+--
+
+## Local Environment Configuration
+
+### Database
+To get a current snapshot of the database, log in to WP Engine and use the phpMyAdmin tool to download an SQL export.
+
+### wp-config
+After cloning the repo and downloading the database, save a copy of `wp-config-sample.php` as `wp-config.php`. (Don't delete the original!) Add the following lines to your wp-config file:
+```
+define('WP_DEBUG', true);
+define('WP_HOME', 'http://yourlocalurl');
+define('WP_SITEURL', 'http://yourlocalurl');
+```
+Add the database credentials to that file as well.
+
+### Development Dependencies
+
+- Node
+- Gulp
+- Browsersync
+- Sass
+
+Project-level development dependences can be found in the theme's `package.json` file.
+
+### Deploying
+To deploy, you will need to log into WP Engine and add your SSH public key under "Git Push". Once your key has been added, follow the instructions at https://wpengine.com/git/ to set up 'git remote' endpoints for staging and production. After your end points have been set up, you will deploy new code by pushing to the `staging` remote, i.e. `git push staging develop`, and then to the `production` remote.
+
+--
+
+## Workflow
+1. Create a new branch off of **master** for the feature you are working on. Small tweaks and typo fixes can be made directly in develop, but anything that has its own ticket should be created in a separate branch. (It may make sense to work on several closely related tickets in a single branch so long as they will be tested and deployed together.)
+2. Build the feature.
+3. Run `gulp build` to minify CSS and JS for production. Fix any linting errors that are flagged.
+4. Merge your changes into **develop**.
+```
+git checkout develop
+git pull origin develop
+git merge YOUR_FEATURE_BRANCH
+git push origin develop
+```
+5. Deploy develop to staging
+```
+git push staging develop
+```
+6. Once QA has verified the feature in staging, merge your feature branch into **master**.
+```
+git checkout master
+git pull origin master
+git merge YOUR_FEATURE_BRANCH
+git push origin master
+```
+7. Deploy master to production
+```
+git push production master
+```
+8. Once the ticket is resolved, delete your feature branch (if you pushed it to the GitHub repo).

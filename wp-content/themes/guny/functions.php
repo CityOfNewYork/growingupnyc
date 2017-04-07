@@ -411,6 +411,16 @@ function guny_disable_emojis_tinymce( $plugins ) {
   }
 }
 
+//Amalan New codes to test new content post type and microsite testing
+add_action( 'wp_print_styles', 'magazine_edition_styles' );
+function magazine_edition_styles() {
+  if ( is_post_type_archive( 'magazine_' ) || is_singular( 'magazine_' ) ) {
+    wp_dequeue_style( 'master' );
+    wp_enqueue_style( 'magazine', get_stylesheet_directory_uri() . '/magazine.css', null, '0.1' ); 
+  } 
+}
+//End of the codes Amalan
+
 // Customize TinyMCE settings
 require_once(get_template_directory() . '/includes/guny_editor_styles.php');
 

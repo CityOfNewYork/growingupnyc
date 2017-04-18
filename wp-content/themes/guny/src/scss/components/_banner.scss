@@ -3,9 +3,9 @@
 // Styleguide 2
 
 // Local Variables
-$height-banner-logo-small: $height-banner-logo * 1.3333333333;
+$height-banner-logo-small: $height-banner-logo * 1.33333;
 $height-banner-logo-large: $height-banner-logo * 2.4;
-$width-banner-logo-small: $width-banner-logo * 1.33333333333;
+$width-banner-logo-small: $width-banner-logo * 1.33333;
 $width-banner-logo-large: $width-banner-logo * 2.4;
 
 // Banner
@@ -49,7 +49,9 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   box-shadow: 0 0 4px 0 $color-shadow;
   display: block;
   height: rem-calc($height-banner-logo);
+
   @include layout-inner-left-edge;
+
   padding: 0 5px 8px;
   position: absolute;
   top: 0;
@@ -69,7 +71,8 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 
 // Banner Logo
 .c-banner__logo {
-  @include image-replace('/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_CMYK_Mobile_Final.png');
+  @include image-replace("/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_CMYK_Mobile_Final.png");
+
   background-position: center bottom;
   height: 100%;
   width: 100%;
@@ -109,6 +112,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   font-weight: $font-weight-extrablack;
   position: relative;
   text-decoration: none;
+
   @include text-uppercase;
 
   &:focus {
@@ -155,5 +159,17 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 
   .is-active & {
     opacity: 1;
+  }
+}
+
+//Language switcher
+.language_switcher {
+  text-align: right;
+  a {
+    font-weight: bold;
+    color: #2793e0;
+    &:hover {
+      color: #0055b8;
+    }
   }
 }

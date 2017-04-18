@@ -33,7 +33,7 @@
   {{function('wp_head')}}
   {% block head_extras %}{% endblock %}
 </head>
-
+{{top_widgets}}
 <body class="{{body_class}}" data-template="base.twig">
   {% include 'partials/svg-sprite.twig' %}
   <div class="o-offcanvas js-offcanvas" id="offcanvas-ages">

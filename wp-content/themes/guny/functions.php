@@ -444,3 +444,12 @@ require_once(get_template_directory() . '/includes/guny_filter_events.php');
 
 // Admin messages
 require_once(get_template_directory() . '/includes/guny_messages.php');
+
+register_sidebar( array(
+            'name' => 'Top Widget Area',
+            'id' => 'top_widget',
+            'before_widget' => '<div class="o-container language_switcher">',
+            'after_widget' => '</div>',
+            'before_title' => '<h2 class="rounded">',
+            'after_title' => '</h2>',
+        ) );

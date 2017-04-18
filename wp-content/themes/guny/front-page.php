@@ -11,4 +11,6 @@ $context['post'] = Timber::get_post();
 
 $templates = array( 'home.twig' );
 
+$context['top_widgets'] = Timber::get_widgets('top_widget');
+
 Timber::render( $templates, $context );

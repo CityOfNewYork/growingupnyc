@@ -1232,13 +1232,23 @@ ol.o-inline {
   .is-active .c-banner__icon__close {
     opacity: 1; }
 
-.language_switcher {
+.c-language_switcher {
   text-align: right; }
-  .language_switcher a {
-    font-weight: bold;
-    color: #2793e0; }
-    .language_switcher a:hover {
-      color: #0055b8; }
+  .c-language_switcher .wpml-ls-legacy-list-horizontal {
+    padding-right: 0; }
+    .c-language_switcher .wpml-ls-legacy-list-horizontal li {
+      margin-right: 0.3125rem; }
+      .c-language_switcher .wpml-ls-legacy-list-horizontal li:last-child {
+        margin-right: 0; }
+      .c-language_switcher .wpml-ls-legacy-list-horizontal li a {
+        font-weight: bold;
+        color: white;
+        border: 1px solid #2793e0;
+        border-radius: 0.125rem;
+        background: #2793e0; }
+        .c-language_switcher .wpml-ls-legacy-list-horizontal li a:hover {
+          background: #0055b8;
+          border-color: #0055b8; }
 
 .c-block-list--shade {
   background: #eee; }

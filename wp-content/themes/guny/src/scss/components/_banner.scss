@@ -163,13 +163,26 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 }
 
 //Language switcher
-.language_switcher {
+.c-language_switcher {
   text-align: right;
-  a {
-    font-weight: bold;
-    color: #2793e0;
-    &:hover {
-      color: #0055b8;
+  .wpml-ls-legacy-list-horizontal {
+    padding-right: 0;
+    li {
+      margin-right: rem-calc(5);
+      &:last-child {
+        margin-right: 0;
+      }
+      a {
+        font-weight: bold;
+        color: white;
+        border: 1px solid #2793e0;
+        border-radius: rem-calc(2);
+        background: #2793e0;
+        &:hover {
+          background: #0055b8;
+          border-color: #0055b8;
+        }
+      }
     }
   }
 }

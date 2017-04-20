@@ -175,12 +175,12 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
       a {
         font-weight: bold;
         color: white;
-        border: 1px solid #2793e0;
+        border: 1px solid $color-primary;
         border-radius: rem-calc(2);
-        background: #2793e0;
+        background: $color-primary;
         &:hover {
-          background: #0055b8;
-          border-color: #0055b8;
+          background: $color-secondary;
+          border-color: $color-secondary;
         }
       }
     }

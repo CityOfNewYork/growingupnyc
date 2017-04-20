@@ -368,6 +368,13 @@ section:focus {
   .no-touchevents .button--pill--alt:hover {
     background: #00326d; }
 
+.button--pill--es {
+  background: #7836b3; }
+  .button--pill--es:focus {
+    background: #5a145a; }
+  .no-touchevents .button--pill--es:hover {
+    background: #5a145a; }
+
 .button--simple {
   background: #2793e0;
   border: none;

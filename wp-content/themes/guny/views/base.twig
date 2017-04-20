@@ -66,7 +66,7 @@
                 {% for menu_item in menu.get_items %}
                   <li class="o-inline__item"><a href="{{menu_item.link}}" class="c-banner__link">{{menu_item.title}}</a></li>
                 {% endfor %}
-                <li class="o-inline__item"><a href="#ages" data-toggle="offcanvas-ages" class="c-banner__link">Ages</a></li>
+                <li class="o-inline__item"><a href="#ages" data-toggle="offcanvas-ages" class="c-banner__link">{{ __('Ages', 'GUNY-Primary-Menu') }}</a></li>
                 <li class="o-inline__item">
                   <a class="c-banner__link" href="#search" data-toggle="overlay-search">
                     <svg class="c-banner__icon c-banner__icon__search" role="img"><title>Search</title><use xlink:href="#search"></use></svg>
@@ -89,8 +89,8 @@
 
             <section class="o-col__divider c-block-list">
               <h2 class="c-block-list__heading">
-                Programs
-                <a class="c-block-list__link" href="{{site.url}}/programs">See all programs<svg role="img" class="icon--caret--xxsmall" aria-hidden="true"><use xlink:href="#caret-right"></use></svg></a>
+                {{ __('Programs', 'GUNY-W-Top-Programs') }}
+                <a class="c-block-list__link" href="{{site.url}}/programs">{{ __('See all programs', 'GUNY-W-Top-Programs') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="true"><use xlink:href="#caret-right"></use></svg></a>
               </h2> <!-- /.c-content-tout__heading -->
               <div class="c-block-list__inner o-row">
                 {{top_programs}}
@@ -99,8 +99,8 @@
 
             <section class="o-col__divider c-block-list">
               <h2 class="c-block-list__heading">
-                Events
-                <a class="c-block-list__link" href="{{site.url}}/events">See all events<svg role="img" class="icon--caret--xxsmall" aria-hidden="small"><use xlink:href="#caret-right"></use></svg></a>
+                {{ __('Events', 'GUNY-W-Top-Programs') }}
+                <a class="c-block-list__link" href="{{site.url}}/events">{{ __('See all events', 'GUNY-W-Top-Programs') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="small"><use xlink:href="#caret-right"></use></svg></a>
               </h2> <!-- /.c-content-tout__heading -->
               <div class="c-block-list__inner o-row">
               {% for post in top_events %}

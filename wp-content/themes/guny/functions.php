@@ -284,8 +284,9 @@ class GunyEvent extends TimberPost {
   public function start_date_formatted() {
     // TODO - format for user's timezone (possibly with JS)
     if (function_exists('tribe_get_start_date')) {
-      $today = date('Y-m-d');
-      $tomorrow = date('Y-m-d', strtotime('+24 hours'));
+      $date = new DateTime("now", new DateTimeZone('America/New_York'));
+      $today = $date->format('Y-m-d');
+      $tomorrow = $date->modify('+1 day')->format('Y-m-d');
       $start_time = date('Y-m-d', $this->start_datetime());
 
       if ($start_time == $today ) {
@@ -303,8 +304,9 @@ class GunyEvent extends TimberPost {
   public function end_date_formatted() {
     // TODO - format for user's timezone (possibly with JS)
     if (function_exists('tribe_get_end_date')) {
-      $today = date('Y-m-d');
-      $tomorrow = date('Y-m-d', strtotime('+24 hours'));
+      $date = new DateTime("now", new DateTimeZone('America/New_York'));
+      $today = $date->format('Y-m-d');
+      $tomorrow = $date->modify('+1 day')->format('Y-m-d');
       $end_time = date('Y-m-d', $this->end_datetime());
 
       if ($end_time == $today ) {

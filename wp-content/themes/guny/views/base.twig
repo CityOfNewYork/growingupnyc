@@ -145,7 +145,7 @@
             </div>
             <nav role="navigation" class="c-footer__nav" aria-label="Secondary">
               <ul class="c-footer__column">
-                <li class="c-footer__nav-item"><a class="c-footer__link" href="{{site.url}}">Home</a></li>
+                <li class="c-footer__nav-item"><a class="c-footer__link" href="{{site.url}}">{{ __('Home', 'GUNY-Footer') }}</a></li>
                 {% for menu_item in menu.get_items %}
                   <li class="c-footer__nav-item"><a class="c-footer__link" href="{{menu_item.link}}">{{menu_item.title}}</a></li>
                 {% endfor %}
@@ -191,4 +191,3 @@
   </script>
   <script type="text/javascript" src="//www1.nyc.gov/assets/home/js/webtrends/webtrends_v10.js"></script>
 </body>
-<div class="salog"> Source file : base.twig</div>

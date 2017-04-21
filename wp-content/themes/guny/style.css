@@ -369,11 +369,11 @@ section:focus {
     background: #00326d; }
 
 .button--pill--es {
-  background: #7836b3; }
+  background: #7735b2; }
   .button--pill--es:focus {
-    background: #5a145a; }
+    background: #3c036f; }
   .no-touchevents .button--pill--es:hover {
-    background: #5a145a; }
+    background: #3c036f; }
 
 .button--simple {
   background: #2793e0;
@@ -1702,7 +1702,7 @@ ol.o-inline {
 
 .c-hero__tagline {
   font-family: "museo-sans-rounded", sans-serif;
-  font-size: 1.64063rem;
+  font-size: 1.64062rem;
   font-weight: 900;
   line-height: 1.2;
   margin-top: 0.625rem;
@@ -2621,6 +2621,96 @@ a.pre-teen-secondary.is-active {
 
 .pre-teen-svg .stop2 {
   stop-color: #0055b8; }
+
+.teen-background {
+  background-color: #7735b2 !important; }
+
+button.teen-background,
+a.teen-background {
+  transition: background-color 250ms linear; }
+  button.teen-background:focus, button.teen-background.is-active,
+  a.teen-background:focus,
+  a.teen-background.is-active {
+    background-color: #3c036f !important;
+    border-color: #3c036f !important;
+    outline: none; }
+
+.no-touchevents button.teen-background:hover,
+.no-touchevents a.teen-background:hover {
+  background-color: #3c036f !important;
+  border-color: #3c036f !important; }
+
+.teen-secondary {
+  background-color: #3c036f !important;
+  border-color: #3c036f !important; }
+
+button.teen-secondary:focus, button.teen-secondary.is-active,
+a.teen-secondary:focus,
+a.teen-secondary.is-active {
+  background-color: #7735b2 !important;
+  outline: none; }
+
+.no-touchevents button.teen-secondary:hover,
+.no-touchevents a.teen-secondary:hover {
+  background-color: #7735b2 !important;
+  border-color: #7735b2 !important; }
+
+.teen-text {
+  color: #7735b2; }
+
+.teen-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/teen-gradient.png); }
+
+.teen-svg .stop1 {
+  stop-color: #3c036f; }
+
+.teen-svg .stop2 {
+  stop-color: #7735b2; }
+
+.young-adult-background {
+  background-color: #404657 !important; }
+
+button.young-adult-background,
+a.young-adult-background {
+  transition: background-color 250ms linear; }
+  button.young-adult-background:focus, button.young-adult-background.is-active,
+  a.young-adult-background:focus,
+  a.young-adult-background.is-active {
+    background-color: #2d333d !important;
+    border-color: #2d333d !important;
+    outline: none; }
+
+.no-touchevents button.young-adult-background:hover,
+.no-touchevents a.young-adult-background:hover {
+  background-color: #2d333d !important;
+  border-color: #2d333d !important; }
+
+.young-adult-secondary {
+  background-color: #2d333d !important;
+  border-color: #2d333d !important; }
+
+button.young-adult-secondary:focus, button.young-adult-secondary.is-active,
+a.young-adult-secondary:focus,
+a.young-adult-secondary.is-active {
+  background-color: #404657 !important;
+  outline: none; }
+
+.no-touchevents button.young-adult-secondary:hover,
+.no-touchevents a.young-adult-secondary:hover {
+  background-color: #404657 !important;
+  border-color: #404657 !important; }
+
+.young-adult-text {
+  color: #404657; }
+
+.young-adult-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/young-adult-gradient.png); }
+
+.teen-svg .stop1 {
+  stop-color: #3c036f; }
+
+.teen-svg .stop2 {
+  stop-color: #7735b2; }
 
 .u-sm-gutter {
   margin-bottom: 20px; }

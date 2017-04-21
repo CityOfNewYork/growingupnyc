@@ -20,8 +20,12 @@ $very-dark-gray-transparent: rgba(51, 51, 51, .5);
 $very-light-gray: #eee;
 $vivid-orange: #ff6100;
 $white: #fff;
-$purple: #7836b3;
-$dark-purple: #5a145a;
+$purple: #7735b2;
+$dark-purple: #3c036f;
+
+//Created gray colours as in the color palette
+$gray-1: #404657;
+$dark-gray-1: #2d333d;
 
 // Colors By Usage
 // =====================
@@ -49,11 +53,15 @@ $color-grade-schooler: $strong-lime-green;
 $color-grade-schooler-secondary: $dark-green;
 $color-pre-teen: $strong-blue;
 $color-pre-teen-secondary: $very-dark-blue;
+$color-teen: $purple;
+$color-teen-secondary: $dark-purple;
+$color-young-adult: $gray-1;
+$color-young-adult-secondary: $dark-gray-1;
 
 // Font Families
 // =====================
-$font-family-text: 'open-sans', sans-serif;
-$font-family-display: 'museo-sans-rounded', sans-serif;
+$font-family-text: "open-sans", sans-serif;
+$font-family-display: "museo-sans-rounded", sans-serif;
 
 // Font Weights
 // =====================

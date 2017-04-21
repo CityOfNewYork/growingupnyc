@@ -4,13 +4,13 @@
 <header class="c-hero c-hero--light">
   <div class="o-container">
     <h1>{{post.title}}</h1>
+        <!-- {{post|print_r}} -->
     <p class="c-hero__tagline">
     {% for term in post.terms('tribe_events_cat') %}
-      {% if term.slug == 'espanol' %}
-          <a href="/events/?cat_id={{term.ID}}" class="button--pill button--pill--es">{{term.name}}</a>
-      {% else %}
           <a href="/events/?cat_id={{term.ID}}" class="button--pill">{{term.name}}</a>
-      {% endif %}
+    {% endfor %}
+    {% for term in post.terms('language') %}
+          <a href="/events/?cat_id={{term.ID}}" class="button--pill button--pill--es">{{term.name}}</a>
     {% endfor %}
     {% for term in post.terms('age_group') %}
       <a href="/events/?age_id={{term.ID}}" class="button--pill button--pill--alt">{{term.name}}</a>

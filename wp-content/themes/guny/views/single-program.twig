@@ -102,7 +102,7 @@
     </div>
     {% if post.related_posts %}
     <div class="o-content-container c-block-list c-block-list--shade">
-      <h2>Other {{post.category.name}} Programs</h2>
+      <h2>{{ __('Other', 'GUNY-Single-Program') }} {{post.category.name}} {{ __('Programs', 'GUNY-Single-Program') }}</h2>
       <div class="c-block-list__inner">
         {% for program in post.related_posts %}
           <div class="c-block-list__item">

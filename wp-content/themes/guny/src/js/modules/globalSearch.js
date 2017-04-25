@@ -12,6 +12,10 @@ export default function() {
       searchTerm = encodeURIComponent(searchTerm).replace(/[!'()*]/g, function(c) {
         return '%' + c.charCodeAt(0).toString(16);
       });
+      // searchTerm = searchTerm.replace( /%22|"/g , '');
+      searchTerm = searchTerm.replace( /%22|"/g , function replacedoublecolan(x){
+        return '';
+      });
       window.location = window.location.origin + '/search?fwp_search=' + searchTerm;
     }
   }

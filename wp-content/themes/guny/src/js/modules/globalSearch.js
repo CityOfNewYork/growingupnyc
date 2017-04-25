@@ -13,7 +13,7 @@ export default function() {
         return '%' + c.charCodeAt(0).toString(16);
       });
       // searchTerm = searchTerm.replace( /%22|"/g , '');
-      searchTerm = searchTerm.replace( /%22|"/g , function replacedoublecolan(x){
+      searchTerm = searchTerm.replace( /%22|"/g , function replacedoublecolan(){
         return '';
       });
       window.location = window.location.origin + '/search?fwp_search=' + searchTerm;

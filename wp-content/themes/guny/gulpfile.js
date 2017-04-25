@@ -130,7 +130,7 @@ gulp.task('styles_rtl_dev', ['lint-css'], function() {
 // Script Linter
 gulp.task('lint', function() {
   return gulp.src([source + 'js/**/*.js', '!' + source + 'js/vendor/*.js'])
-    .pipe(eslint())
+    .pipe(eslint({fix:true}))
     .pipe(gif(!browserSync.active, eslint.failOnError()));
 });
 

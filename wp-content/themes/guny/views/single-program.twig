@@ -68,6 +68,12 @@
         </section> <!-- /.o-content-container-text -->
         <hr>
       {% endif %}
+      {% if post.heads_up %}
+        <section class="o-content-container--text s-wysiwyg u-bottom-spacing-small" id="section-headsup">
+          {{post.get_field('heads_up')}}
+        </section> <!-- /.o-content-container-text -->
+        <hr>
+      {% endif %}
       {% if post.eligibility %}
         <section class="o-content-container--text s-wysiwyg u-top-spacing-small u-bottom-spacing-small" id="section-eligibility">
           <h2>{{ __('Am I Eligible?', 'GUNY-Single-Program') }}</h2>

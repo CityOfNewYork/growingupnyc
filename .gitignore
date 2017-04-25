@@ -1,1 +1,2 @@
 # Ignore paths that contain user-generated content.
+wp-content/themes/guny/node_modules/**

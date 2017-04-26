@@ -3,7 +3,7 @@
 // Styleguide 2
 
 // Local Variables
-$height-banner-logo-small: $height-banner-logo * 1.33333;
+$height-banner-logo-small: $height-banner-logo * 1.66666;
 $height-banner-logo-large: $height-banner-logo * 2.4;
 $width-banner-logo-small: $width-banner-logo * 1.33333;
 $width-banner-logo-large: $width-banner-logo * 2.4;
@@ -49,12 +49,14 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   box-shadow: 0 0 4px 0 $color-shadow;
   display: block;
   height: rem-calc($height-banner-logo);
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
 
   @include layout-inner-left-edge;
 
   padding: 0 5px 8px;
   position: absolute;
-  top: 0;
+  top: rem-calc(-38);
   width: rem-calc($width-banner-logo);
 
   @include media($bp-small) {
@@ -76,6 +78,14 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   background-position: center bottom;
   height: 100%;
   width: 100%;
+
+  @include media($bp-small) {
+    background-position: center bottom rem-calc(-9);
+  }
+
+  @include media($bp-medium) {
+    background-position: center bottom;
+  }
 }
 
 // Banner Navigation
@@ -163,24 +173,40 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 }
 
 //Language switcher
-.c-language_switcher {
-  text-align: right;
-  .wpml-ls-legacy-list-horizontal {
-    padding-right: 0;
-    li {
-      margin-right: rem-calc(5);
-      &:last-child {
-        margin-right: 0;
-      }
-      a {
-        font-weight: bold;
-        color: white;
-        border: 1px solid $color-primary;
-        border-radius: rem-calc(2);
-        background: $color-primary;
-        &:hover {
-          background: $color-secondary;
-          border-color: $color-secondary;
+.c-language-switcher-wrapper {
+  border-bottom: 2px solid $very-light-gray;
+  .c-language__switcher {
+    text-align: right;
+    .wpml-ls-legacy-list-horizontal {
+      padding: 0 0 7px;
+      li {
+        margin-right: rem-calc(5);
+        &:last-child {
+          margin-right: 0;
+          a {
+            padding-right: 0;
+          }
+        }
+        a {
+          font-size: rem-calc(11);
+          color: $light-gray-1;
+          &:hover {
+            color: $color-primary;
+          }
+        }
+        &.wpml-ls-current-language {
+          a {
+            color: $color-primary;
+            &:before {
+              content: '\f00c';
+              font-family: FontAwesome;
+              font-style: normal;
+              font-weight: normal;
+              position: relative;
+              top: rem-calc(2);
+              margin-right: rem-calc(3);
+            }
+          }
         }
       }
     }

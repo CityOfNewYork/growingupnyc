@@ -1159,10 +1159,12 @@ ol.o-inline {
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
   display: block;
   height: 3.75rem;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
   left: 15;
   padding: 0 5px 8px;
   position: absolute;
-  top: 0;
+  top: -2.375rem;
   width: 4.6875rem; }
   @media screen and (min-width: 375px) {
     .c-banner__logo-wrapper {
@@ -1172,7 +1174,7 @@ ol.o-inline {
       left: 40; } }
   @media screen and (min-width: 375px) {
     .c-banner__logo-wrapper {
-      height: 4.99999rem;
+      height: 6.24998rem;
       width: 6.24998rem; } }
   @media screen and (min-width: 700px) {
     .c-banner__logo-wrapper {
@@ -1190,6 +1192,12 @@ ol.o-inline {
   background-position: center bottom;
   height: 100%;
   width: 100%; }
+  @media screen and (min-width: 375px) {
+    .c-banner__logo {
+      background-position: center bottom -0.5625rem; } }
+  @media screen and (min-width: 700px) {
+    .c-banner__logo {
+      background-position: center bottom; } }
 
 .c-banner__nav {
   float: right;
@@ -1239,23 +1247,33 @@ ol.o-inline {
   .is-active .c-banner__icon__close {
     opacity: 1; }
 
-.c-language_switcher {
-  text-align: right; }
-  .c-language_switcher .wpml-ls-legacy-list-horizontal {
-    padding-right: 0; }
-    .c-language_switcher .wpml-ls-legacy-list-horizontal li {
-      margin-right: 0.3125rem; }
-      .c-language_switcher .wpml-ls-legacy-list-horizontal li:last-child {
-        margin-right: 0; }
-      .c-language_switcher .wpml-ls-legacy-list-horizontal li a {
-        font-weight: bold;
-        color: white;
-        border: 1px solid #2793e0;
-        border-radius: 0.125rem;
-        background: #2793e0; }
-        .c-language_switcher .wpml-ls-legacy-list-horizontal li a:hover {
-          background: #0055b8;
-          border-color: #0055b8; }
+.c-language-switcher-wrapper {
+  border-bottom: 2px solid #eee; }
+  .c-language-switcher-wrapper .c-language__switcher {
+    text-align: right; }
+    .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal {
+      padding: 0 0 7px; }
+      .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li {
+        margin-right: 0.3125rem; }
+        .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li:last-child {
+          margin-right: 0; }
+          .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li:last-child a {
+            padding-right: 0; }
+        .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li a {
+          font-size: 0.6875rem;
+          color: rgba(45, 51, 61, 0.5); }
+          .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li a:hover {
+            color: #2793e0; }
+        .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li.wpml-ls-current-language a {
+          color: #2793e0; }
+          .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li.wpml-ls-current-language a:before {
+            content: '\f00c';
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: normal;
+            position: relative;
+            top: 0.125rem;
+            margin-right: 0.1875rem; }
 
 .c-block-list--shade {
   background: #eee; }

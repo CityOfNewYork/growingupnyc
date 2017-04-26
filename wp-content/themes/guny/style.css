@@ -1261,7 +1261,8 @@ ol.o-inline {
             padding-right: 0; }
         .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li a {
           font-size: 0.6875rem;
-          color: rgba(45, 51, 61, 0.5); }
+          color: rgba(45, 51, 61, 0.5);
+          padding: 5px 8px; }
           .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li a:hover {
             color: #2793e0; }
         .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li.wpml-ls-current-language a {

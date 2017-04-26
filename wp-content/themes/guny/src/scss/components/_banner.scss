@@ -190,6 +190,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
         a {
           font-size: rem-calc(11);
           color: $light-gray-1;
+          padding: 5px 8px;
           &:hover {
             color: $color-primary;
           }

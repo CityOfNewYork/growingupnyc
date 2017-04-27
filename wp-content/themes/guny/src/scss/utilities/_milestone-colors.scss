@@ -1,15 +1,12 @@
 // Utility classes for applying milestone-specific coloring to elements
 // Hover/focus styling is applied only to elements that are clickable (links and buttons)
 
-.baby-background,
-.baby-es-background {
+.baby-background {
   background-color: $color-baby !important;
 }
 
 button.baby-background,
-button.baby-es-background,
-a.baby-background,
-a.baby-es-background {
+a.baby-background {
   transition: background-color 250ms linear;
   &:focus,
   &.is-active {
@@ -20,9 +17,7 @@ a.baby-es-background {
 }
 
 .no-touchevents button.baby-background,
-.no-touchevents a.baby-background,
-.no-touchevents button.baby-es-background,
-.no-touchevents a.baby-es-background {
+.no-touchevents a.baby-background {
   transition: background-color 250ms linear;
   &:hover {
     background-color: $color-baby-secondary !important;
@@ -31,16 +26,13 @@ a.baby-es-background {
   }
 }
 
-.baby-secondary,
-.baby-es-secondary {
+.baby-secondary {
   background-color: $color-baby-secondary !important;
   border-color: $color-baby-secondary !important;
 }
 
 button.baby-secondary,
-a.baby-secondary,
-button.baby-es-secondary,
-a.baby-es-secondary {
+a.baby-secondary {
   &:focus,
   &.is-active {
     background-color: $color-baby !important;
@@ -50,22 +42,18 @@ a.baby-es-secondary {
 }
 
 .no-touchevents button.baby-secondary,
-.no-touchevents a.baby-secondary,
-.no-touchevents button.baby-es-secondary,
-.no-touchevents a.baby-es-secondary {
+.no-touchevents a.baby-secondary {
   &:hover {
     background-color: $color-baby !important;
     border-color: $color-baby !important;
   }
 }
 
-.baby-text,
-.baby-es-text {
+.baby-text {
   color: $color-baby;
 }
 
-.baby-svg,
-.baby-es-svg {
+.baby-svg {
   .stop1 {
     stop-color: $color-baby-secondary;
   }
@@ -74,20 +62,16 @@ a.baby-es-secondary {
   }
 }
 
-.baby-gradient,
-.baby-es-gradient {
+.baby-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/baby-gradient.png);
 }
 
-.toddler-background,
-.toddler-es-background {
+.toddler-background {
   background-color: $color-toddler !important;
 }
 
 button.toddler-background,
-a.toddler-background,
-button.toddler-es-background,
-a.toddler-es-background {
+a.toddler-background {
   transition: background-color 250ms linear;
   &:focus,
   &.is-active {
@@ -98,25 +82,20 @@ a.toddler-es-background {
 }
 
 .no-touchevents button.toddler-background,
-.no-touchevents a.toddler-background,
-.no-touchevents button.toddler-es-background,
-.no-touchevents a.toddler-es-background {
+.no-touchevents a.toddler-background {
   &:hover {
     background-color: $color-toddler-secondary !important;
     border-color: $color-toddler-secondary !important;
   }
 }
 
-.toddler-secondary,
-.toddler-es-secondary {
+.toddler-secondary {
   background-color: $color-toddler-secondary !important;
   border-color: $color-toddler-secondary !important;
 }
 
 button.toddler-secondary,
-a.toddler-secondary,
-button.toddler-es-secondary,
-a.toddler-es-secondary {
+a.toddler-secondary {
   &:focus,
   &.is-active {
     background-color: $color-toddler !important;
@@ -126,27 +105,22 @@ a.toddler-es-secondary {
 }
 
 .no-touchevents button.toddler-secondary,
-.no-touchevents a.toddler-secondary,
-.no-touchevents button.toddler-es-secondary,
-.no-touchevents a.toddler-es-secondary {
+.no-touchevents a.toddler-secondary {
   &:hover {
     background-color: $color-toddler !important;
     border-color: $color-toddler !important;
   }
 }
 
-.toddler-text,
-.toddler-es-text {
+.toddler-text {
   color: $color-toddler;
 }
 
-.toddler-gradient,
-.toddler-es-gradient {
+.toddler-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/toddler-gradient.png);
 }
 
-.toddler-svg,
-.toddler-es-svg {
+.toddler-svg {
   .stop1 {
     stop-color: $color-toddler-secondary;
   }
@@ -155,15 +129,12 @@ a.toddler-es-secondary {
   }
 }
 
-.pre-schooler-background,
-.pre-schooler-es-background {
+.pre-schooler-background {
   background-color: $color-pre-schooler !important;
 }
 
 button.pre-schooler-background,
-a.pre-schooler-background,
-button.pre-schooler-es-background,
-a.pre-schooler-es-background {
+a.pre-schooler-background {
   transition: background-color 250ms linear;
   &:focus,
   &.is-active {
@@ -174,25 +145,20 @@ a.pre-schooler-es-background {
 }
 
 .no-touchevents button.pre-schooler-background,
-.no-touchevents a.pre-schooler-background,
-.no-touchevents button.pre-schooler-es-background,
-.no-touchevents a.pre-schooler-es-background {
+.no-touchevents a.pre-schooler-background {
   &:hover {
     background-color: $color-pre-schooler-secondary !important;
     border-color: $color-pre-schooler-secondary !important;
   }
 }
 
-.pre-schooler-secondary,
-.pre-schooler-es-secondary {
+.pre-schooler-secondary {
   background-color: $color-pre-schooler-secondary !important;
   border-color: $color-pre-schooler-secondary !important;
 }
 
 button.pre-schooler-secondary,
-a.pre-schooler-secondary,
-button.pre-schooler-es-secondary,
-a.pre-schooler-es-secondary {
+a.pre-schooler-secondary {
   &:hover,
   &:focus,
   &.is-active {
@@ -203,27 +169,22 @@ a.pre-schooler-es-secondary {
 }
 
 .no-touchevents button.pre-schooler-secondary,
-.no-touchevents a.pre-schooler-secondary,
-.no-touchevents button.pre-schooler-es-secondary,
-.no-touchevents a.pre-schooler-es-secondary {
+.no-touchevents a.pre-schooler-secondary {
   &:hover {
     background-color: $color-pre-schooler !important;
     border-color: $color-pre-schooler !important;
   }
 }
 
-.pre-schooler-text,
-.pre-schooler-es-text {
+.pre-schooler-text {
   color: $color-pre-schooler;
 }
 
-.pre-schooler-gradient,
-.pre-schooler-es-gradient {
+.pre-schooler-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/pre-schooler-gradient.png);
 }
 
-.pre-schooler-svg,
-.pre-schooler-es-svg {
+.pre-schooler-svg {
   .stop1 {
     stop-color: $color-pre-schooler-secondary;
   }
@@ -232,15 +193,12 @@ a.pre-schooler-es-secondary {
   }
 }
 
-.grade-schooler-background,
-.grade-schooler-es-background {
+.grade-schooler-background {
   background-color: $color-grade-schooler !important;
 }
 
 button.grade-schooler-background,
-a.grade-schooler-background,
-button.grade-schooler-es-background,
-a.grade-schooler-es-background {
+a.grade-schooler-background {
   transition: background-color 250ms linear;
   &:focus,
   &.is-active {
@@ -251,25 +209,20 @@ a.grade-schooler-es-background {
 }
 
 .no-touchevents button.grade-schooler-background,
-.no-touchevents a.grade-schooler-background,
-.no-touchevents button.grade-schooler-es-background,
-.no-touchevents a.grade-schooler-es-background {
+.no-touchevents a.grade-schooler-background {
   &:hover {
     background-color: $color-grade-schooler-secondary !important;
     border-color: $color-grade-schooler-secondary !important;
   }
 }
 
-.grade-schooler-secondary,
-.grade-schooler-es-secondary {
+.grade-schooler-secondary {
   background-color: $color-grade-schooler-secondary !important;
   border-color: $color-grade-schooler-secondary !important;
 }
 
 button.grade-schooler-secondary,
-a.grade-schooler-secondary,
-button.grade-schooler-es-secondary,
-a.grade-schooler-es-secondary {
+a.grade-schooler-secondary {
   &:focus,
   &.is-active {
     background-color: $color-grade-schooler !important;
@@ -279,27 +232,22 @@ a.grade-schooler-es-secondary {
 }
 
 .no-touchevents button.grade-schooler-secondary,
-.no-touchevents a.grade-schooler-secondary,
-.no-touchevents button.grade-schooler-es-secondary,
-.no-touchevents a.grade-schooler-es-secondary {
+.no-touchevents a.grade-schooler-secondary {
   &:hover {
     background-color: $color-grade-schooler !important;
     border-color: $color-grade-schooler !important;
   }
 }
 
-.grade-schooler-text,
-.grade-schooler-es-text {
+.grade-schooler-text {
   color: $color-grade-schooler;
 }
 
-.grade-schooler-gradient,
-.grade-schooler-es-gradient {
+.grade-schooler-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/grade-schooler-gradient.png);
 }
 
-.grade-schooler-svg,
-.grade-schooler-es-svg {
+.grade-schooler-svg {
   .stop1 {
     stop-color: $color-grade-schooler-secondary;
   }
@@ -308,15 +256,12 @@ a.grade-schooler-es-secondary {
   }
 }
 
-.pre-teen-background,
-.pre-teen-es-background {
+.pre-teen-background {
   background-color: $color-pre-teen !important;
 }
 
 button.pre-teen-background,
-a.pre-teen-background,
-button.pre-teen-es-background,
-a.pre-teen-es-background {
+a.pre-teen-background {
   transition: background-color 250ms linear;
   &:focus,
   &.is-active {
@@ -327,25 +272,20 @@ a.pre-teen-es-background {
 }
 
 .no-touchevents button.pre-teen-background,
-.no-touchevents a.pre-teen-background,
-.no-touchevents button.pre-teen-es-background,
-.no-touchevents a.pre-teen-es-background {
+.no-touchevents a.pre-teen-background {
   &:hover {
     background-color: $color-pre-teen-secondary !important;
     border-color: $color-pre-teen-secondary !important;
   }
 }
 
-.pre-teen-secondary,
-.pre-teen-es-secondary {
+.pre-teen-secondary {
   background-color: $color-pre-teen-secondary !important;
   border-color: $color-pre-teen-secondary !important;
 }
 
 button.pre-teen-secondary,
-a.pre-teen-secondary,
-button.pre-teen-es-secondary,
-a.pre-teen-es-secondary {
+a.pre-teen-secondary {
   &:focus,
   &.is-active {
     background-color: $color-pre-teen !important;
@@ -354,27 +294,22 @@ a.pre-teen-es-secondary {
 }
 
 .no-touchevents button.pre-teen-secondary,
-.no-touchevents a.pre-teen-secondary,
-.no-touchevents button.pre-teen-es-secondary,
-.no-touchevents a.pre-teen-es-secondary {
+.no-touchevents a.pre-teen-secondary {
   &:hover {
     background-color: $color-pre-teen !important;
     border-color: $color-pre-teen !important;
   }
 }
 
-.pre-teen-text,
-.pre-teen-es-text {
+.pre-teen-text {
   color: $color-pre-teen;
 }
 
-.pre-teen-gradient,
-.pre-teen-es-gradient {
+.pre-teen-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/pre-teen-gradient.png);
 }
 
-.pre-teen-svg,
-.pre-teen-es-svg {
+.pre-teen-svg {
   .stop1 {
     stop-color: $color-pre-teen-secondary;
   }
@@ -383,15 +318,12 @@ a.pre-teen-es-secondary {
   }
 }
 
-.teen-background,
-.teen-es-background {
+.teen-background {
   background-color: $color-teen !important;
 }
 
 button.teen-background,
-a.teen-background,
-button.teen-es-background,
-a.teen-es-background {
+a.teen-background {
   transition: background-color 250ms linear;
   &:focus,
   &.is-active {
@@ -402,25 +334,20 @@ a.teen-es-background {
 }
 
 .no-touchevents button.teen-background,
-.no-touchevents a.teen-background,
-.no-touchevents button.teen-es-background,
-.no-touchevents a.teen-es-background {
+.no-touchevents a.teen-background {
   &:hover {
     background-color: $color-teen-secondary !important;
     border-color: $color-teen-secondary !important;
   }
 }
 
-.teen-secondary,
-.teen-es-secondary {
+.teen-secondary {
   background-color: $color-teen-secondary !important;
   border-color: $color-teen-secondary !important;
 }
 
 button.teen-secondary,
-a.teen-secondary,
-button.teen-es-secondary,
-a.teen-es-secondary {
+a.teen-secondary {
   &:focus,
   &.is-active {
     background-color: $color-teen !important;
@@ -429,27 +356,22 @@ a.teen-es-secondary {
 }
 
 .no-touchevents button.teen-secondary,
-.no-touchevents a.teen-secondary,
-.no-touchevents button.teen-es-secondary,
-.no-touchevents a.teen-es-secondary {
+.no-touchevents a.teen-secondary {
   &:hover {
     background-color: $color-teen !important;
     border-color: $color-teen !important;
   }
 }
 
-.teen-text,
-.teen-es-text {
+.teen-text {
   color: $color-teen;
 }
 
-.teen-gradient,
-.teen-es-gradient {
+.teen-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/teen-gradient.png);
 }
 
-.teen-svg,
-.teen-es-svg {
+.teen-svg {
   .stop1 {
     stop-color: $color-teen-secondary;
   }
@@ -458,15 +380,12 @@ a.teen-es-secondary {
   }
 }
 
-.young-adult-background,
-.young-adult-es-background {
+.young-adult-background {
   background-color: $color-young-adult !important;
 }
 
 button.young-adult-background,
-a.young-adult-background,
-button.young-adult-es-background,
-a.young-adult-es-background {
+a.young-adult-background {
   transition: background-color 250ms linear;
   &:focus,
   &.is-active {
@@ -477,25 +396,20 @@ a.young-adult-es-background {
 }
 
 .no-touchevents button.young-adult-background,
-.no-touchevents a.young-adult-background,
-.no-touchevents button.young-adult-es-background,
-.no-touchevents a.young-adult-es-background {
+.no-touchevents a.young-adult-background {
   &:hover {
     background-color: $color-young-adult-secondary !important;
     border-color: $color-young-adult-secondary !important;
   }
 }
 
-.young-adult-secondary,
-.young-adult-es-secondary {
+.young-adult-secondary {
   background-color: $color-young-adult-secondary !important;
   border-color: $color-young-adult-secondary !important;
 }
 
 button.young-adult-secondary,
-a.young-adult-secondary,
-button.young-adult-es-secondary,
-a.young-adult-es-secondary {
+a.young-adult-secondary {
   &:focus,
   &.is-active {
     background-color: $color-young-adult !important;
@@ -504,31 +418,26 @@ a.young-adult-es-secondary {
 }
 
 .no-touchevents button.young-adult-secondary,
-.no-touchevents a.young-adult-secondary,
-.no-touchevents button.young-adult-es-secondary,
-.no-touchevents a.young-adult-es-secondary {
+.no-touchevents a.young-adult-secondary {
   &:hover {
     background-color: $color-young-adult !important;
     border-color: $color-young-adult !important;
   }
 }
 
-.young-adult-text,
-.young-adult-es-text {
+.young-adult-text {
   color: $color-young-adult;
 }
 
-.young-adult-gradient,
-.young-adult-es-gradient {
+.young-adult-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/young-adult-gradient.png);
 }
 
-.young-adult-svg,
-.young-adult-es-svg {
+.teen-svg {
   .stop1 {
-    stop-color: $color-young-adult-secondary;
+    stop-color: $color-teen-secondary;
   }
   .stop2 {
-    stop-color: $color-young-adult;
+    stop-color: $color-teen;
   }
 }

@@ -1475,9 +1475,9 @@
 	      });
 	      if (searchTerm.indexOf('%22') > -1) {
 	        searchTerm = searchTerm.replace(/%22/g, '');
-	        window.location = window.location.origin + '/Smallaxe-Github/guny/search?fwp_search=' + searchTerm + '&exactsearch=true';
+	        searchTerm += '&exactsearch=true';
 	      }
-	      window.location = window.location.origin + '/Smallaxe-Github/guny/search?fwp_search=' + searchTerm;
+	      window.location = window.location.origin + '/search?fwp_search=' + searchTerm;
 	    }
 	  }
 
@@ -1620,7 +1620,7 @@
 	    });
 
 	    $(document).ajaxComplete(function () {
-	      if (getURLParameter("exactvalue")) {
+	      if (getURLParameter("exactsearch")) {
 	        var searchvalue = getURLParameter("fwp_search");
 	        $('.facetwp-search').val('"' + searchvalue + '"');
 	        window.history.pushState('object or string', 'Title', '/search/?fwp_search="' + searchvalue + '"');

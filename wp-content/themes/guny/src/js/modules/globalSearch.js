@@ -13,10 +13,10 @@ export default function() {
         return '%' + c.charCodeAt(0).toString(16);
       });
       if (searchTerm.indexOf('%22') > -1) {
-        searchTerm = searchTerm.replace( /%22/g , '');
-        window.location = window.location.origin + '/Smallaxe-Github/guny/search?fwp_search=' + searchTerm +'&exactsearch=true';
+        searchTerm = searchTerm.replace(/%22/g, '');
+        searchTerm += '&exactsearch=true';
       }
-      window.location = window.location.origin + '/Smallaxe-Github/guny/search?fwp_search=' + searchTerm;    
+      window.location = window.location.origin + '/search?fwp_search=' + searchTerm;   
     }
   }
 

@@ -14,7 +14,7 @@ export default function() {
     });
   
     $( document ).ajaxComplete(function() {
-      if(getURLParameter("exactvalue")){
+      if(getURLParameter("exactsearch")){
         var searchvalue = getURLParameter("fwp_search");
         $('.facetwp-search').val('"'+searchvalue+'"');
         window.history.pushState('object or string', 'Title', '/search/?fwp_search="'+searchvalue+'"' );

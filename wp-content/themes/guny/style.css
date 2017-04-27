@@ -1164,7 +1164,7 @@ ol.o-inline {
   left: 15;
   padding: 0 5px 8px;
   position: absolute;
-  top: -2.375rem;
+  top: -2.1875rem;
   width: 4.6875rem; }
   @media screen and (min-width: 375px) {
     .c-banner__logo-wrapper {
@@ -1179,7 +1179,7 @@ ol.o-inline {
   @media screen and (min-width: 700px) {
     .c-banner__logo-wrapper {
       height: 9rem;
-      padding: 0 16px 20px 14px;
+      padding: 0 16px 15px 14px;
       width: 11.25rem; } }
 
 .c-banner__logo {

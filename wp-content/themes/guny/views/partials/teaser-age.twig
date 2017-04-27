@@ -1,7 +1,7 @@
 {% extends "partials/teaser.twig" %}
 
 {% block sticker %}
-<div class="c-card__sticker {{post.age_group|sanitize}}-background sticker" aria-hidden="true">
+<div class="c-card__sticker {{post.age_group.slug|sanitize}}-background sticker" aria-hidden="true">
   <svg class="icon--large"><title>{{post.age_group}}</title><use xlink:href="#{{post.age_group|sanitize}}"></use></svg>
 </div>
 {% endblock %}
@@ -12,5 +12,4 @@
 
 {% block body %}
 {{post.post_excerpt ? post.post_excerpt : post.intro_content|excerpt(15)}}
-<div class="salog"> Source file : teaser-age.twig</div>
 {% endblock %}

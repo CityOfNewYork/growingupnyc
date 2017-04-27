@@ -1250,7 +1250,8 @@ ol.o-inline {
 .c-language-switcher-wrapper {
   border-bottom: 2px solid #eee; }
   .c-language-switcher-wrapper .c-language__switcher {
-    text-align: right; }
+    text-align: right;
+    z-index: 1; }
     .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal {
       padding: 0 0 7px; }
       .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li {

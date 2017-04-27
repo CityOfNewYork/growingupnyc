@@ -2879,6 +2879,330 @@ a.young-adult-es-secondary.is-active {
 .young-adult-es-svg .stop2 {
   stop-color: #404657; }
 
+.baby-background {
+  background-color: #d8006d !important; }
+
+button.baby-background,
+a.baby-background {
+  transition: background-color 250ms linear; }
+  button.baby-background:focus, button.baby-background.is-active,
+  a.baby-background:focus,
+  a.baby-background.is-active {
+    background-color: #7f1c4e !important;
+    border-color: #7f1c4e !important;
+    outline: none; }
+
+.no-touchevents button.baby-background,
+.no-touchevents a.baby-background {
+  transition: background-color 250ms linear; }
+  .no-touchevents button.baby-background:hover,
+  .no-touchevents a.baby-background:hover {
+    background-color: #7f1c4e !important;
+    border-color: #7f1c4e !important;
+    outline: none; }
+
+.baby-secondary {
+  background-color: #7f1c4e !important;
+  border-color: #7f1c4e !important; }
+
+button.baby-secondary:focus, button.baby-secondary.is-active,
+a.baby-secondary:focus,
+a.baby-secondary.is-active {
+  background-color: #d8006d !important;
+  border-color: #d8006d !important;
+  outline: none; }
+
+.no-touchevents button.baby-secondary:hover,
+.no-touchevents a.baby-secondary:hover {
+  background-color: #d8006d !important;
+  border-color: #d8006d !important; }
+
+.baby-text {
+  color: #d8006d; }
+
+.baby-svg .stop1 {
+  stop-color: #7f1c4e; }
+
+.baby-svg .stop2 {
+  stop-color: #d8006d; }
+
+.baby-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/baby-gradient.png); }
+
+.toddler-background {
+  background-color: #ff6100 !important; }
+
+button.toddler-background,
+a.toddler-background {
+  transition: background-color 250ms linear; }
+  button.toddler-background:focus, button.toddler-background.is-active,
+  a.toddler-background:focus,
+  a.toddler-background.is-active {
+    background-color: #fb0000 !important;
+    border-color: #fb0000 !important;
+    outline: none; }
+
+.no-touchevents button.toddler-background:hover,
+.no-touchevents a.toddler-background:hover {
+  background-color: #fb0000 !important;
+  border-color: #fb0000 !important; }
+
+.toddler-secondary {
+  background-color: #fb0000 !important;
+  border-color: #fb0000 !important; }
+
+button.toddler-secondary:focus, button.toddler-secondary.is-active,
+a.toddler-secondary:focus,
+a.toddler-secondary.is-active {
+  background-color: #ff6100 !important;
+  border-color: #ff6100 !important;
+  outline: none; }
+
+.no-touchevents button.toddler-secondary:hover,
+.no-touchevents a.toddler-secondary:hover {
+  background-color: #ff6100 !important;
+  border-color: #ff6100 !important; }
+
+.toddler-text {
+  color: #ff6100; }
+
+.toddler-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/toddler-gradient.png); }
+
+.toddler-svg .stop1 {
+  stop-color: #fb0000; }
+
+.toddler-svg .stop2 {
+  stop-color: #ff6100; }
+
+.pre-schooler-background {
+  background-color: #ff9d00 !important; }
+
+button.pre-schooler-background,
+a.pre-schooler-background {
+  transition: background-color 250ms linear; }
+  button.pre-schooler-background:focus, button.pre-schooler-background.is-active,
+  a.pre-schooler-background:focus,
+  a.pre-schooler-background.is-active {
+    background-color: #ff6100 !important;
+    border-color: #ff6100 !important;
+    outline: none; }
+
+.no-touchevents button.pre-schooler-background:hover,
+.no-touchevents a.pre-schooler-background:hover {
+  background-color: #ff6100 !important;
+  border-color: #ff6100 !important; }
+
+.pre-schooler-secondary {
+  background-color: #ff6100 !important;
+  border-color: #ff6100 !important; }
+
+button.pre-schooler-secondary:hover, button.pre-schooler-secondary:focus, button.pre-schooler-secondary.is-active,
+a.pre-schooler-secondary:hover,
+a.pre-schooler-secondary:focus,
+a.pre-schooler-secondary.is-active {
+  background-color: #ff9d00 !important;
+  border-color: #ff9d00 !important;
+  outline: none; }
+
+.no-touchevents button.pre-schooler-secondary:hover,
+.no-touchevents a.pre-schooler-secondary:hover {
+  background-color: #ff9d00 !important;
+  border-color: #ff9d00 !important; }
+
+.pre-schooler-text {
+  color: #ff9d00; }
+
+.pre-schooler-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/pre-schooler-gradient.png); }
+
+.pre-schooler-svg .stop1 {
+  stop-color: #ff6100; }
+
+.pre-schooler-svg .stop2 {
+  stop-color: #ff9d00; }
+
+.grade-schooler-background {
+  background-color: #35c621 !important; }
+
+button.grade-schooler-background,
+a.grade-schooler-background {
+  transition: background-color 250ms linear; }
+  button.grade-schooler-background:focus, button.grade-schooler-background.is-active,
+  a.grade-schooler-background:focus,
+  a.grade-schooler-background.is-active {
+    background-color: #1d5d11 !important;
+    border-color: #1d5d11 !important;
+    outline: none; }
+
+.no-touchevents button.grade-schooler-background:hover,
+.no-touchevents a.grade-schooler-background:hover {
+  background-color: #1d5d11 !important;
+  border-color: #1d5d11 !important; }
+
+.grade-schooler-secondary {
+  background-color: #1d5d11 !important;
+  border-color: #1d5d11 !important; }
+
+button.grade-schooler-secondary:focus, button.grade-schooler-secondary.is-active,
+a.grade-schooler-secondary:focus,
+a.grade-schooler-secondary.is-active {
+  background-color: #35c621 !important;
+  border-color: #35c621 !important;
+  outline: none; }
+
+.no-touchevents button.grade-schooler-secondary:hover,
+.no-touchevents a.grade-schooler-secondary:hover {
+  background-color: #35c621 !important;
+  border-color: #35c621 !important; }
+
+.grade-schooler-text {
+  color: #35c621; }
+
+.grade-schooler-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/grade-schooler-gradient.png); }
+
+.grade-schooler-svg .stop1 {
+  stop-color: #1d5d11; }
+
+.grade-schooler-svg .stop2 {
+  stop-color: #35c621; }
+
+.pre-teen-background {
+  background-color: #0055b8 !important; }
+
+button.pre-teen-background,
+a.pre-teen-background {
+  transition: background-color 250ms linear; }
+  button.pre-teen-background:focus, button.pre-teen-background.is-active,
+  a.pre-teen-background:focus,
+  a.pre-teen-background.is-active {
+    background-color: #00326d !important;
+    border-color: #00326d !important;
+    outline: none; }
+
+.no-touchevents button.pre-teen-background:hover,
+.no-touchevents a.pre-teen-background:hover {
+  background-color: #00326d !important;
+  border-color: #00326d !important; }
+
+.pre-teen-secondary {
+  background-color: #00326d !important;
+  border-color: #00326d !important; }
+
+button.pre-teen-secondary:focus, button.pre-teen-secondary.is-active,
+a.pre-teen-secondary:focus,
+a.pre-teen-secondary.is-active {
+  background-color: #0055b8 !important;
+  outline: none; }
+
+.no-touchevents button.pre-teen-secondary:hover,
+.no-touchevents a.pre-teen-secondary:hover {
+  background-color: #0055b8 !important;
+  border-color: #0055b8 !important; }
+
+.pre-teen-text {
+  color: #0055b8; }
+
+.pre-teen-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/pre-teen-gradient.png); }
+
+.pre-teen-svg .stop1 {
+  stop-color: #00326d; }
+
+.pre-teen-svg .stop2 {
+  stop-color: #0055b8; }
+
+.teen-background {
+  background-color: #7735b2 !important; }
+
+button.teen-background,
+a.teen-background {
+  transition: background-color 250ms linear; }
+  button.teen-background:focus, button.teen-background.is-active,
+  a.teen-background:focus,
+  a.teen-background.is-active {
+    background-color: #3c036f !important;
+    border-color: #3c036f !important;
+    outline: none; }
+
+.no-touchevents button.teen-background:hover,
+.no-touchevents a.teen-background:hover {
+  background-color: #3c036f !important;
+  border-color: #3c036f !important; }
+
+.teen-secondary {
+  background-color: #3c036f !important;
+  border-color: #3c036f !important; }
+
+button.teen-secondary:focus, button.teen-secondary.is-active,
+a.teen-secondary:focus,
+a.teen-secondary.is-active {
+  background-color: #7735b2 !important;
+  outline: none; }
+
+.no-touchevents button.teen-secondary:hover,
+.no-touchevents a.teen-secondary:hover {
+  background-color: #7735b2 !important;
+  border-color: #7735b2 !important; }
+
+.teen-text {
+  color: #7735b2; }
+
+.teen-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/teen-gradient.png); }
+
+.teen-svg .stop1 {
+  stop-color: #3c036f; }
+
+.teen-svg .stop2 {
+  stop-color: #7735b2; }
+
+.young-adult-background {
+  background-color: #404657 !important; }
+
+button.young-adult-background,
+a.young-adult-background {
+  transition: background-color 250ms linear; }
+  button.young-adult-background:focus, button.young-adult-background.is-active,
+  a.young-adult-background:focus,
+  a.young-adult-background.is-active {
+    background-color: #2d333d !important;
+    border-color: #2d333d !important;
+    outline: none; }
+
+.no-touchevents button.young-adult-background:hover,
+.no-touchevents a.young-adult-background:hover {
+  background-color: #2d333d !important;
+  border-color: #2d333d !important; }
+
+.young-adult-secondary {
+  background-color: #2d333d !important;
+  border-color: #2d333d !important; }
+
+button.young-adult-secondary:focus, button.young-adult-secondary.is-active,
+a.young-adult-secondary:focus,
+a.young-adult-secondary.is-active {
+  background-color: #404657 !important;
+  outline: none; }
+
+.no-touchevents button.young-adult-secondary:hover,
+.no-touchevents a.young-adult-secondary:hover {
+  background-color: #404657 !important;
+  border-color: #404657 !important; }
+
+.young-adult-text {
+  color: #404657; }
+
+.young-adult-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/young-adult-gradient.png); }
+
+.teen-svg .stop1 {
+  stop-color: #3c036f; }
+
+.teen-svg .stop2 {
+  stop-color: #7735b2; }
+
 .u-sm-gutter {
   margin-bottom: 20px; }
 

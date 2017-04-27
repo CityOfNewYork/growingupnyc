@@ -69,6 +69,10 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
     padding: 0 16px 15px 14px;
     width: rem-calc($width-banner-logo-large);
   }
+
+  @include media($bp-large) {
+    top: rem-calc(-38);
+  }
 }
 
 // Banner Logo

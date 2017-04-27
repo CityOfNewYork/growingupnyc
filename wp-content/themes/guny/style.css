@@ -1181,6 +1181,9 @@ ol.o-inline {
       height: 9rem;
       padding: 0 16px 15px 14px;
       width: 11.25rem; } }
+  @media screen and (min-width: 1024px) {
+    .c-banner__logo-wrapper {
+      top: -2.375rem; } }
 
 .c-banner__logo {
   background: url("/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_CMYK_Mobile_Final.png") no-repeat;

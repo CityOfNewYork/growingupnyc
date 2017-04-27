@@ -177,6 +177,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   border-bottom: 2px solid $very-light-gray;
   .c-language__switcher {
     text-align: right;
+    z-index: 1;
     .wpml-ls-legacy-list-horizontal {
       padding: 0 0 7px;
       li {

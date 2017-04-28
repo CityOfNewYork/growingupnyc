@@ -12,11 +12,12 @@ export default function() {
       searchTerm = encodeURIComponent(searchTerm).replace(/[!'()*]/g, function(c) {
         return '%' + c.charCodeAt(0).toString(16);
       });
-      if (searchTerm.indexOf('%22') > -1) {
-        searchTerm = searchTerm.replace(/%22/g, '');
+      if (searchTerm.indexOf('%22') > -1 || searchTerm.indexOf('"') > -1) {
+        searchTerm = searchTerm.replace(/%22|"/g, '');
         searchTerm += '&exactsearch=true';
       }
-      window.location = window.location.origin + '/search?fwp_search=' + searchTerm;   
+      searchTerm = encodeURIComponent(searchTerm);
+      window.location = window.location.origin + '/search?fwp_search=' + searchTerm;    
     }
   }
 

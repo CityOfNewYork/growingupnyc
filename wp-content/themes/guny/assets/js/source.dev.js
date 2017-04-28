@@ -1871,11 +1871,12 @@ if (objCtr.defineProperty) {
 	      searchTerm = encodeURIComponent(searchTerm).replace(/[!'()*]/g, function (c) {
 	        return '%' + c.charCodeAt(0).toString(16);
 	      });
-	      if (searchTerm.indexOf('%22') > -1) {
-	        searchTerm = searchTerm.replace(/%22/g, '');
+	      if (searchTerm.indexOf('%22') > -1 || searchTerm.indexOf('"') > -1) {
+	        searchTerm = searchTerm.replace(/%22|"/g, '');
 	        searchTerm += '&exactsearch=true';
 	      }
-	      window.location = window.location.origin + '/Smallaxe-Github/guny/search?fwp_search=' + searchTerm;
+	      searchTerm = encodeURIComponent(searchTerm);
+	      window.location = window.location.origin + '/search?fwp_search=' + searchTerm;
 	    }
 	  }
 
@@ -2018,10 +2019,12 @@ if (objCtr.defineProperty) {
 	    });
 
 	    $(document).ajaxComplete(function () {
-	      if (getURLParameter("exactsearch")) {
-	        var searchvalue = getURLParameter("fwp_search");
-	        $('.facetwp-search').val('"' + searchvalue + '"');
-	        window.history.pushState('object or string', 'Title', '/Smallaxe-Github/guny/search/?fwp_search="' + searchvalue + '"');
+	      var urlparameter = getURLParameter("fwp_search");
+	      if (urlparameter.indexOf("&exactsearch=true") !== -1) {
+	        urlparameter = urlparameter.replace("&exactsearch=true", '');
+	        urlparameter = '"' + urlparameter + '"';
+	        $('.facetwp-search').val(urlparameter);
+	        window.history.pushState('object or string', 'Title', '/search/?fwp_search=' + urlparameter);
 	      }
 	    });
 	  }

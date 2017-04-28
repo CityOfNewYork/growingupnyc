@@ -19,5 +19,3 @@ if ( count( $context['posts'] ) > 0 ) {
 }
 
 Timber::render( $templates, $context );
-
-echo "Content count : ".count( $context['posts'] );

@@ -27,5 +27,4 @@
 
 {% block body %}
 {{post.post_excerpt ? post.post_excerpt : post.summary|excerpt(15)}}
-  <div>Post id : {{post.id}}</div>
 {% endblock %}

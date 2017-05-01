@@ -9,10 +9,15 @@ export default function() {
     const searchField = searchForm.querySelector('[name="s"]');
     if (searchField) {
       let searchTerm = searchField.value;
-      searchTerm = encodeURIComponent(searchTerm).replace(/[!'()*]/g, function(c) {
+      searchTerm = searchTerm.replace(/[!'()*]/g, function(c) {
         return '%' + c.charCodeAt(0).toString(16);
       });
-      window.location = window.location.origin + '/search?fwp_search=' + searchTerm;
+      if (searchTerm.indexOf('%22') > -1 || searchTerm.indexOf('"') > -1) {
+        searchTerm = searchTerm.replace(/%22|"/g, '');
+        localStorage.setItem('exactsearch', true);
+      }
+      searchTerm = encodeURIComponent(searchTerm);
+      window.location = window.location.origin + '/search?fwp_search=' + searchTerm;    
     }
   }
 

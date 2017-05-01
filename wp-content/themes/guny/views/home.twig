@@ -43,13 +43,13 @@
   <ol class="js-accordion c-list-box c-list-box--primary" data-multiselectable="true">
     {% for age_group in age_menu %}
       <li class="c-list-box__item">
-        <h3 class="js-accordion__header c-list-box__heading {{age_group|sanitize}}-background" id="homepage-ages-heading-{{loop.index}}">
+        <h3 class="js-accordion__header c-list-box__heading {{age_group.slug|sanitize|replace({'-es':''})}}-background" id="homepage-ages-heading-{{loop.index}}">
           {{age_group.name}}
           <span class="c-list-box__subheading">{{age_group.description}}</span>
         </h3>
-        <ol class="js-accordion__content c-list-box__content {{age_group|sanitize}}-background" id="homepage-ages-panel-{{loop.index}}">
+        <ol class="js-accordion__content c-list-box__content {{age_group.slug|sanitize|replace({'-es':''})}}-background" id="homepage-ages-panel-{{loop.index}}">
           {% for post in age_group.posts('numberposts=-1&post_type=age&meta_key=numeric_age&orderby=meta_value_num&order=ASC') %}
-            <li class="c-list-box__subitem"><a href="{{post.link}}" class="button--full-width button--primary {{age_group|sanitize}}-text">{{post.title}}</a></li>
+            <li class="c-list-box__subitem"><a href="{{post.link}}" class="button--full-width button--primary {{age_group.slug|sanitize|replace({'-es':''})}}-text">{{post.title}}</a></li>
           {% endfor %}
         </ol>
       </li>
@@ -57,7 +57,7 @@
   </ol>
 
   <div class="c-block-list c-block-list--shade o-content-container">
-    <h2>Events</h2>
+    <h2>{{ __('Events', 'GUNY-Homepage') }}</h2>
     <div class="c-block-list__inner">
       {% for post in top_events %}
         <div class="c-block-list__item">
@@ -66,9 +66,8 @@
       {% endfor %}
     </div>
     <div class="text-center">
-      <a href="/events" class="button--outline button--outline--gray">See all events</a>
+      <a href="/events" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Homepage') }}</a>
     </div>
   </div> <!-- /.c-content-container.c-content-container--shade -->
 </section> <!-- /.o-scroll-column.o-scroll-column--right -->
-
 {% endblock %}

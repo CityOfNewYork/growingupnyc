@@ -10,7 +10,7 @@
           <a href="/events/?cat_id={{term.ID}}" class="button--pill">{{term.name}}</a>
     {% endfor %}
     {% for term in post.terms('language') %}
-          <a href="/events/?cat_id={{term.ID}}" class="button--pill button--pill--es">{{term.name}}</a>
+          <a href="/events/?lang_id={{term.ID}}" class="button--pill button--pill--es">{{term.name}}</a>
     {% endfor %}
     {% for term in post.terms('age_group') %}
       <a href="/events/?age_id={{term.ID}}" class="button--pill button--pill--alt">{{term.name}}</a>
@@ -113,4 +113,5 @@
     </div> <!-- /.o-content-container-text -->
   </article>
 </section> <!-- /.o-container.u-bottom-spacing -->
+<div class="salog"> Source file : single-event.twig</div>
 {% endblock %}

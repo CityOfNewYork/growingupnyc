@@ -26,7 +26,7 @@
           <a href="/events/?cat_id={{term.ID}}" class="button--pill">{{term.name}}</a>
     {% endfor %}
     {% for term in post.terms('language') %}
-          <a href="/events/?cat_id={{term.ID}}" class="button--pill button--pill--es">{{term.name}}</a>
+          <a href="/events/?lang_id={{term.ID}}" class="button--pill button--pill--es">{{term.name}}</a>
     {% endfor %}
   {% for term in post.terms('age_group') %}
     <a href="{{event_link}}?age_id={{term.id}}{% if current_month %}&amp;eventDate={{current_month}}{% endif %}" class="button--pill button--pill--alt">{{term.name}}</a>

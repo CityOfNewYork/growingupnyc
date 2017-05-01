@@ -156,6 +156,15 @@ class GunySite extends TimberSite {
       'before_widget' => '',
       'after_widget' => ''
     ));
+    register_sidebar( array(
+      'name' => 'Top Widget Area',
+      'id' => 'top_widget',
+      'before_widget' => '<div class="c-language-switcher-wrapper"><div class="o-container c-language__switcher">',
+      'after_widget' => '</div></div>',
+      'before_title' => '<h2 class="rounded">',
+      'after_title' => '</h2>',
+    ));
+
   }
 
   function add_menus() {
@@ -447,12 +456,3 @@ require_once(get_template_directory() . '/includes/guny_filter_events.php');
 
 // Admin messages
 require_once(get_template_directory() . '/includes/guny_messages.php');
-
-register_sidebar( array(
-            'name' => 'Top Widget Area',
-            'id' => 'top_widget',
-            'before_widget' => '<div class="c-language-switcher-wrapper"><div class="o-container c-language__switcher">',
-            'after_widget' => '</div></div>',
-            'before_title' => '<h2 class="rounded">',
-            'after_title' => '</h2>',
-        ) );

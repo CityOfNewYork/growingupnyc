@@ -53,7 +53,7 @@ function addFilterArgs( $url, $preservePagination = false ) {
   if ($cat_id > 0) {
     $query_args['cat_id'] = $cat_id;
   }
-  if ($cat_id > 0) {
+  if ($lang_id > 0) {
     $query_args['lang_id'] = $lang_id;
   }
   if ($age_id > 0) {
@@ -106,7 +106,7 @@ $context['all_languages'] = array(
   'name' => 'All Languages',
   'link' => esc_url( remove_query_arg( 'lang_id' ) )
 );
-if ( $language_id > 0 ) {
+if ( $lang_id > 0 ) {
   $context['current_language_filter'] = Timber::get_term( $lang_id )->name;
 } else {
   $context['current_language_filter'] = $context['all_languages']['name'];

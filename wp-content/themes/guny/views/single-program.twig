@@ -13,7 +13,7 @@
       <h1 class="c-hero__title--long">
         {% if post.category %}
         <span class="c-hero__sticker sticker">
-          <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{post.category.slug}}"></use></svg>
+          <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{post.category.slug|replace({'-es':''})}}"></use></svg>
         </span>
         {% endif %}
         {{post.title}}

@@ -89,7 +89,7 @@
       <hr>
 
       {# Section Two #}
-      <section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" id="section-two">
+      <section class="o-content-container--compact u-top-spacing u-bottom-spacing-small" id="section-two">
         {% for bottom in post.get_field('page_bottom') %}
           <h2 id="{{bottom.page_bottom_content_heading|lower|replace({' ':'-'})}}">{{bottom.page_bottom_content_heading}}</h2></a>
           {{bottom.page_bottom_content_text}}

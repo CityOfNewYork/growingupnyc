@@ -52,8 +52,14 @@ if ( $post->post_type == 'age' ) {
   }
 }
 
-$templates = array( 'single-' . $post->ID . '.twig', 'single-' . $post->post_type . '.twig', 'single.twig' );
+echo "Appearing in singular php file <br>";
 
+if($post->post_type == 'page' && strpos($post->post_name, 'microsite') !== false){
+  $templates = array( 'micro-site-homepage.twig' );
+}
+else{
+  $templates = array( 'single-' . $post->ID . '.twig', 'single-' . $post->post_type . '.twig', 'single.twig' );
+}
 $context['post'] = $post;
 
 Timber::render( $templates, $context );

@@ -3,7 +3,7 @@
 Plugin Name: ms-topics
 Version: 1.0
 Author: Smallaxe
-Description: Topics post types for Microsite
+Description: Topics posttypes for Microsite
 */
 
 function ms_topics_create() {

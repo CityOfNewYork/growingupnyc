@@ -424,8 +424,8 @@ function guny_disable_emojis_tinymce( $plugins ) {
 }
 
 //Amalan New codes to test new content post type and microsite testing
-add_action( 'wp_print_styles', 'magazine_edition_styles' );
-function magazine_edition_styles() {
+add_action( 'wp_print_styles', 'microsite_styles' );
+function microsite_styles() {
   if ( is_post_type_archive( 'magazine_' ) || is_singular( 'magazine_' ) ) {
     wp_dequeue_style( 'master' );
     wp_enqueue_style( 'magazine', get_stylesheet_directory_uri() . '/magazine.css', null, '0.1' ); 

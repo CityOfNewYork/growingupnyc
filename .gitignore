@@ -1,8 +1,3 @@
-# Ignore paths that contain user-generated content.
-wp-content/themes/guny/node_modules/**
-wp-content/languages/**
-wp-content/uploads/cache/**
-
 # WordPress #
 ############
 wp-config.php

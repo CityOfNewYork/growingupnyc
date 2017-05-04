@@ -1,0 +1,76 @@
+/*!
+Theme Name: Growing Up NYC
+Theme URI: http://www.bluestatedigital.com
+Author: Blue State Digital
+Author URI: http://www.bluestatedigital.com
+Description: Custom theme for GUNY override styles for Micro Site Topics
+*/
+html {
+  box-sizing: border-box; }
+
+*, *::after, *::before {
+  box-sizing: inherit; }
+
+/* stylelint-disable */
+/* stylelint-enable */
+.c-banner__link {
+  color: #999; }
+
+.c-banner__logo-wrapper {
+  top: 0; }
+
+.no-touchevents:hover {
+  color: #999; }
+
+.no-touchevents .c-banner__link:hover, .no-touchevents .c-banner__link:focus {
+  color: #2d333d; }
+
+.o-scroll-column--right {
+  background: #eee;
+  padding: 0.5rem 0; }
+
+.c-list-box {
+  margin: 0 2.8125rem; }
+
+.c-list-box__item {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  background: #fff;
+  color: #333;
+  padding: 2.5rem 2.8125rem;
+  margin: 0.5rem 0; }
+  .c-list-box__item:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-top: 0.4375rem solid #2d333d; }
+  .c-list-box__item .c-list-box__text {
+    display: inline-block;
+    margin-bottom: 1.875rem; }
+  .c-list-box__item .button--primary__curved {
+    color: #fff;
+    font-family: "museo-sans-rounded", sans-serif;
+    background: #2d333d;
+    font-size: 1.3125rem;
+    font-weight: 900;
+    border-radius: 2.1875rem;
+    border: none; }
+    @media screen and (min-width: 1024px) {
+      .c-list-box__item .button--primary__curved {
+        font-size: 1.5rem; } }
+  .c-list-box__item.topics__item:before {
+    border-color: #7735b2; }
+  .c-list-box__item.topics__item .button--primary__curved {
+    background: #7735b2; }
+  .c-list-box__item.inspiration__item:before {
+    border-color: #144f82; }
+  .c-list-box__item.inspiration__item .button--primary__curved {
+    background: #144f82; }
+
+.c-footer {
+  background: #2d333d; }
+
+/*# sourceMappingURL=topics.css.map */

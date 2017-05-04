@@ -1,0 +1,116 @@
+/*!
+Theme Name: Growing Up NYC
+Theme URI: http://www.bluestatedigital.com
+Author: Blue State Digital
+Author URI: http://www.bluestatedigital.com
+Description: Custom theme for GUNY override styles for Micro Site Topics
+*/
+
+// Settings (Global variables)
+// =====================
+@import "neat-helpers";
+@import "settings/*";
+
+// Tools (Default mixins and functions)
+// =====================
+@import "neat";
+@import "tools/unit";
+@import "tools/type";
+@import "tools/images";
+@import "tools/layout";
+@import "tools/splatter";
+
+// Header
+.c-banner__link {
+  color: $gray;
+}
+
+.c-banner__logo-wrapper {
+  top: 0;
+}
+
+.no-touchevents {
+  &:hover {
+    color: $gray;
+  }
+  .c-banner__link {
+    &:hover,
+    &:focus {
+      color: $dark-gray-1;
+    }
+  }
+}
+
+// List Box Heading
+//
+// Top level list item or section heading.
+// If used with the accordion pattern, this will be whatever the accordion drawer
+// heading is.
+//
+.o-scroll-column--right {
+  background: $color-background-shade;
+  padding: rem-calc(8 0);
+}
+
+.c-list-box {
+  margin: rem-calc(0 45);
+}
+
+.c-list-box__item {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  background: $white;
+  color: $very-dark-gray;
+  padding: rem-calc(40 45);
+  margin: rem-calc(8 0);
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-top: rem-calc(7) solid $dark-gray-1;
+  }
+
+  .c-list-box__text {
+    display: inline-block;
+    margin-bottom: rem-calc(30);
+  }
+
+  .button--primary__curved {
+    color: $white;
+    font-family: $font-family-display;
+    background: $dark-gray-1;
+    @include font-size-x-large;
+    font-weight: $font-weight-extrablack;
+    border-radius: rem-calc(35);
+    border: none;
+  }
+
+  //Colors of list box items
+  &.topics__item {
+    &:before {
+      border-color: $purple;
+    }
+
+    .button--primary__curved {
+      background: $purple;
+    }
+  }
+
+  &.inspiration__item {
+    &:before {
+      border-color: $dark-blue;
+    }
+
+    .button--primary__curved {
+      background: $dark-blue;
+    }
+  }
+}
+
+// Footer
+.c-footer {
+  background: $dark-gray-1;
+}

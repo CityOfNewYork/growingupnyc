@@ -52,7 +52,7 @@ if ( $post->post_type == 'age' ) {
   }
 }
 
-echo "Appearing in singular php file <br>";
+//echo "Appearing in singular php file <br>";
 
 if($post->post_type == 'page' && strpos($post->post_name, 'microsite') !== false){
   $templates = array( 'micro-site-homepage.twig' );

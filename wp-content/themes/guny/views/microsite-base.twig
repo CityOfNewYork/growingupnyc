@@ -57,7 +57,6 @@
     </nav>
 
     <div class="o-offcanvas__main">
-      {{top_widget}}
       {% block header %}
         <header class="c-banner">
           <div class="o-container">
@@ -161,9 +160,6 @@
               </ul>
             </nav>
           </div>
-          <div class="c-footer__signup">
-            {% include 'partials/email-signup.twig' with {form_id: 'footer'} %}
-          </div> <!-- /.c-footer__signup -->
         </div> <!-- /.o-container -->
         <div class="o-container">
           <div class="c-footer__footer">

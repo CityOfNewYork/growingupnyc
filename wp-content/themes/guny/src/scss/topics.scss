@@ -41,19 +41,30 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
   }
 }
 
+//Static Column Right
+.o-scroll-column--right {
+  background: $color-background-shade;
+  padding: rem-calc(8 0);
+}
+
 // List Box Heading
 //
 // Top level list item or section heading.
 // If used with the accordion pattern, this will be whatever the accordion drawer
 // heading is.
 //
-.o-scroll-column--right {
-  background: $color-background-shade;
-  padding: rem-calc(8 0);
-}
 
 .c-list-box {
-  margin: rem-calc(0 45);
+  padding-top: 0;
+  margin: rem-calc(0 15);
+
+  @include media($bp-medium) {
+    margin: rem-calc(0 30);
+  }
+
+  @include media($bp-xlarge) {
+    margin: rem-calc(0 45);
+  }
 }
 
 .c-list-box__item {
@@ -62,8 +73,17 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
   position: relative;
   background: $white;
   color: $very-dark-gray;
-  padding: rem-calc(40 45);
+  padding: rem-calc(30 25);
   margin: rem-calc(8 0);
+
+  @include media($bp-medium) {
+    padding: rem-calc(35 35);
+  }
+
+  @include media($bp-xlarge) {
+    padding: rem-calc(40 45);
+  }
+
   &:before {
     content: "";
     position: absolute;
@@ -75,7 +95,10 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
 
   .c-list-box__text {
     display: inline-block;
-    margin-bottom: rem-calc(30);
+    margin-bottom: rem-calc(25);
+    @include media($bp-medium) {
+      margin-bottom: rem-calc(33);
+    }
   }
 
   .button--primary__curved {
@@ -99,13 +122,23 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
     }
   }
 
-  &.inspiration__item {
+  &.inspirations__item {
     &:before {
       border-color: $dark-blue;
     }
 
     .button--primary__curved {
       background: $dark-blue;
+    }
+  }
+
+  &.trips__item {
+    &:before {
+      border-color: $green;
+    }
+
+    .button--primary__curved {
+      background: $green;
     }
   }
 }

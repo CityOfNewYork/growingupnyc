@@ -1,0 +1,13 @@
+{% extends "partials/teaser.twig" %}
+
+{% block sticker %}
+
+{% endblock %}
+
+{% block subtitle_block %}{% endblock %}
+
+{% block tags_block %}{% endblock %}
+
+{% block body %}
+{{post.post_excerpt ? post.post_excerpt : post.post_content|excerpt(15)}}
+{% endblock %}

@@ -1,5 +1,6 @@
 {% extends "microsite-base.twig" %}
 
+
 {% block head_extras %}
 <style>
   .c-side-hero__image { background-image:url({{TimberImage(post.hero_mobile_image).src|resize(480, 0)}}) }
@@ -16,6 +17,7 @@
     .c-side-hero__image { background-image:url({{post.thumbnail.src}}) }
   }
 </style>
+<link rel="stylesheet" href="{{theme.path}}/topics.css" type="text/css" media="screen">
 {% endblock %}
 
 {% block content %}
@@ -39,36 +41,14 @@
 </section> <!-- /.o-static-column.o-static-column--left -->
 
 <section class="o-scroll-column o-scroll-column--right">
-  {# Age/Milestone Picker #}
-  <ol class="js-accordion c-list-box c-list-box--primary" data-multiselectable="true">
-    {% for age_group in age_menu %}
-      <li class="c-list-box__item">
-        <h3 class="js-accordion__header c-list-box__heading {{age_group.slug|sanitize|replace({'-es':''})}}-background" id="homepage-ages-heading-{{loop.index}}">
-          {{age_group.name}}
-          <span class="c-list-box__subheading">{{age_group.description}}</span>
-        </h3>
-        <ol class="js-accordion__content c-list-box__content {{age_group.slug|sanitize|replace({'-es':''})}}-background" id="homepage-ages-panel-{{loop.index}}">
-          {% for post in age_group.posts('numberposts=-1&post_type=age&meta_key=numeric_age&orderby=meta_value_num&order=ASC') %}
-            <li class="c-list-box__subitem"><a href="{{post.link}}" class="button--full-width button--primary {{age_group.slug|sanitize|replace({'-es':''})}}-text">{{post.title}}</a></li>
-          {% endfor %}
-        </ol>
-      </li>
-    {% endfor %}
-  </ol>
-
-  <div class="c-block-list c-block-list--shade o-content-container">
-    <h2>{{ __('Events', 'GUNY-Homepage') }}</h2>
-    <div class="c-block-list__inner">
-      {% for post in top_events %}
-        <div class="c-block-list__item">
-          {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
-        </div> <!-- /.c-block-list__item -->
-      {% endfor %}
+  {# Homepage Categories #}
+  {% for top in post.get_field('homepage_categories') %}
+    <div class="c-list-box">
+      <div class="c-list-box__item {{top.button_text|lower}}__item">
+        <span class="c-list-box__text">{{top.excerpt}}</span>
+        <a class="button--full-width button--primary button--primary__curved" href="{{top.button_link}}">{{top.button_text}}</a>
+      </div>
     </div>
-    <div class="text-center">
-      <a href="/events" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Homepage') }}</a>
-    </div>
-  </div> <!-- /.c-content-container.c-content-container--shade -->
+  {% endfor %}
 </section> <!-- /.o-scroll-column.o-scroll-column--right -->
-<div>Appearing in the new homepage file</div>
 {% endblock %}

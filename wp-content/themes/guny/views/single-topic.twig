@@ -67,10 +67,10 @@
     </div> <!-- /.o-article-sidebar -->
 
     <div class="o-article js-sticky-article">
-
+{#       {% flush %}
+      {{post|print_r}} #}
       {# Introduction #}
       <section class="o-content-container--compact u-top-spacing u-bottom-spacing" id="section-introduction">
-        {# {{post|print_r}} #}
         {{post.intro__overview}}
         <br><br>
       </section>
@@ -87,6 +87,18 @@
         {% endfor %}
       </section>
       <hr>
+
+      {# Section Inspirations #}
+      {% if post.topic_group %}
+        <li class="c-nav-list__item">
+          {% for inspiration in post.get_field('topic_group_post') %}
+            {% set inspiration = TimberPost(inspiration) %}
+            <div class="c-block-list__item">
+              {% include ['partials/teaser-'~inspiration.post_type~'.twig', 'partials/teaser.twig'] with {post: inspiration, is_first: loop.first, age_group: post.title} %}
+            </div>
+          {% endfor %}
+        </li>
+      {% endif %}
 
       {# Section Two #}
       <section class="o-content-container--compact u-top-spacing u-bottom-spacing-small" id="section-two">
@@ -118,4 +130,5 @@
       {% endif %} 
     </div> <!-- /.o-article -->
   </article>
+  <div>Appearing in single topic file.</div>
 {% endblock %}

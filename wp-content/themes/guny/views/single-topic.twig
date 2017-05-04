@@ -46,7 +46,7 @@
 
     <div class="o-article-sidebar">
         {# <h1>If works</h1> #}
-      {% if post.section_selection == "Yes" %}
+      {% if post.sections_selector == "Yes" %}
 
       {# Anchor Links #}
       <div class="o-content-container--compact u-shift-up">
@@ -84,14 +84,15 @@
           {# {{top.page_top_content_heading}} #}
           {{top.page_top_content_text}}
           {# <h1>Loop</h1> -  {{ loop.index }} #}
+          <br><br>
         {% endfor %}
       </section>
       <hr>
 
       {# Section Inspirations #}
-      {% if post.topic_group %}
+      {% if post.inspiration_posts %}
         <li class="c-nav-list__item">
-          {% for inspiration in post.get_field('topic_group_post') %}
+          {% for inspiration in post.get_field('inspiration_posts') %}
             {% set inspiration = TimberPost(inspiration) %}
             <div class="c-block-list__item">
               {% include ['partials/teaser-'~inspiration.post_type~'.twig', 'partials/teaser.twig'] with {post: inspiration, is_first: loop.first, age_group: post.title} %}

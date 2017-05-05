@@ -104,6 +104,9 @@ html {
     .c-list-box-topics__item.trips__item .button--primary__curved:hover {
       background: #999; }
 
+.c-details-list-ms__descr li {
+  margin-left: 1.375rem; }
+
 .c-footer {
   background: #2d333d; }
 

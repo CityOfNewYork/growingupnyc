@@ -164,6 +164,13 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
   }
 }
 
+//Detail Page
+.c-details-list-ms__descr {
+  li {
+    margin-left: rem-calc(22);
+  }
+}
+
 // Footer
 .c-footer {
   background: $dark-gray-1;

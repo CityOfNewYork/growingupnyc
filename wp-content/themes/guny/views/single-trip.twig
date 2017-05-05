@@ -16,10 +16,18 @@
 <section class="o-container u-bottom-spacing">
   <aside class="o-article-sidebar o-content-container--compact u-lg-gutter">
     <dl class="c-details-list">
-      <dt class="c-details-list__term c-details-list__descr">{{post.website_details}}</dt>
-      <dt class="c-details-list__term c-details-list__descr">{{post.hours_details}}</dt>
-      <dt class="c-details-list__term c-details-list__descr">{{post.cost_details}}</dt>
-      <dt class="c-details-list__term c-details-list__descr">{{post.getting_there}}</dt>
+      <dt class="c-details-list__term">{{ __('Website', 'GUNY-Single-Trip') }}</dt>
+      <dd class="c-details-list__descr">{{post.website_details}}</dd>
+
+      <dt class="c-details-list__term">{{ __('Hours', 'GUNY-Single-Trip') }}</dt>
+      <dd class="c-details-list__descr">{{post.hours_details}}</dd>
+
+      <dt class="c-details-list__term">{{ __('Cost', 'GUNY-Single-Trip') }}</dt>
+      <dd class="c-details-list__descr">{{post.cost_details}}</dd>
+
+      <dt class="c-details-list__term">{{ __('Getting There', 'GUNY-Single-Trip') }}</dt>
+      <dd class="c-details-list__descr">{{post.getting_there}}</dd>
+
     </dl>
   </aside>
   <article class="o-article o-content-container--compact">

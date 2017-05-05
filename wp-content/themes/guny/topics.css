@@ -18,6 +18,12 @@ html {
 
 .c-banner__logo-wrapper {
   top: 0; }
+  @media screen and (min-width: 375px) {
+    .c-banner__logo-wrapper {
+      height: 5rem; } }
+  @media screen and (min-width: 700px) {
+    .c-banner__logo-wrapper {
+      height: 9rem; } }
 
 .no-touchevents:hover {
   color: #999; }

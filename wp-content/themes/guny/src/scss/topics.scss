@@ -25,8 +25,16 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
   color: $gray;
 }
 
+// Banner Logo Wrapper
 .c-banner__logo-wrapper {
   top: 0;
+  @include media($bp-small) {
+    height: rem-calc(80);
+  }
+
+  @include media($bp-medium) {
+    height: rem-calc(144);
+  }
 }
 
 .no-touchevents {

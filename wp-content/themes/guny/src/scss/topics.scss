@@ -54,7 +54,7 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
 // heading is.
 //
 
-.c-list-box {
+.c-list-box-topics {
   padding-top: 0;
   margin: rem-calc(0 15);
 
@@ -67,7 +67,7 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
   }
 }
 
-.c-list-box__item {
+.c-list-box-topics__item {
   display: inline-block;
   width: 100%;
   position: relative;
@@ -93,7 +93,7 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
     border-top: rem-calc(7) solid $dark-gray-1;
   }
 
-  .c-list-box__text {
+  .c-list-box-topics__text {
     display: inline-block;
     margin-bottom: rem-calc(25);
     @include media($bp-medium) {
@@ -109,6 +109,10 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
     font-weight: $font-weight-extrablack;
     border-radius: rem-calc(35);
     border: none;
+
+    &:hover {
+      background: $gray;
+    }
   }
 
   //Colors of list box items
@@ -119,6 +123,9 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
 
     .button--primary__curved {
       background: $purple;
+      &:hover {
+        background: $gray;
+      }
     }
   }
 
@@ -129,6 +136,9 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
 
     .button--primary__curved {
       background: $dark-blue;
+      &:hover {
+        background: $gray;
+      }
     }
   }
 
@@ -139,6 +149,9 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
 
     .button--primary__curved {
       background: $green;
+      &:hover {
+        background: $gray;
+      }
     }
   }
 }

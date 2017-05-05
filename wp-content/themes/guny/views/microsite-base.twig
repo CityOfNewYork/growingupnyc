@@ -64,7 +64,7 @@
             <a href="{{site.url}}" class="c-banner__logo-wrapper"><span class="c-banner__logo">{{site.name}}</span></a>
             <nav class="c-banner__nav" role="navigation" aria-label="Primary">
               <ul class="o-inline">
-                {% for menu_item in menu.get_items %}
+                {% for menu_item in ms_menu.get_items %}
                   <li class="o-inline__item"><a href="{{menu_item.link}}" class="c-banner__link">{{menu_item.title}}</a></li>
                 {% endfor %}
                 <li class="o-inline__item"><a href="#ages" data-toggle="offcanvas-ages" class="c-banner__link">{{ __('Ages', 'GUNY-Primary-Menu') }}</a></li>

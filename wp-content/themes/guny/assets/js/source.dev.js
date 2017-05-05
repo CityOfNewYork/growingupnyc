@@ -1877,7 +1877,7 @@ if (objCtr.defineProperty) {
 	        // searchTerm += '&exactsearch=true';
 	      }
 	      searchTerm = encodeURIComponent(searchTerm);
-	      window.location = window.location.origin + '/Smallaxe-Github/guny/search?fwp_search=' + searchTerm;
+	      window.location = window.location.origin + '/guny/search?fwp_search=' + searchTerm;
 	    }
 	  }
 

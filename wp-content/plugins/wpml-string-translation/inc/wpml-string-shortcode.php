@@ -4,10 +4,9 @@ add_shortcode('wpml-string', 'wpml_string_shortcode');
 
 function wpml_string_shortcode($atts, $value) {
     global $wpdb;
-    
-    extract(
-        shortcode_atts( array(), $atts )
-    );
+
+	$atts = shortcode_atts( array(), $atts );
+
     if (!isset($atts['context'])) {
         $atts['context'] = 'wpml-shortcode';
     }

@@ -108,6 +108,7 @@ class GunySite extends TimberSite {
 
   function add_to_context ( $context ) {
     $context['menu'] = new TimberMenu('header-menu');
+    $context['ms_menu'] = new TimberMenu('ms-header-menu');
     $context['footer_menu_left'] = new TimberMenu('footer-menu-left');
     $context['footer_menu_right'] = new TimberMenu('footer-menu-right');
     $context['site'] = $this;
@@ -137,7 +138,7 @@ class GunySite extends TimberSite {
       wp_deregister_script('jquery');
       wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/assets/js/modernizr.js', array(), '3.0.0', false );
       wp_enqueue_script( 'jquery', get_template_directory_uri() . '/src/js/vendor/jquery.js', array(), '2.1.14', false );
-      wp_enqueue_script( 'site-js', get_template_directory_uri() . '/assets/js/source.js', array(), '1.0.0', true );
+      wp_enqueue_script( 'site-js', get_template_directory_uri() . '/assets/js/source.dev.js', array(), '1.0.0', true );
     }
   }
 
@@ -171,6 +172,7 @@ class GunySite extends TimberSite {
     register_nav_menus(
       array(
         'header-menu' => __( 'Header Menu' ),
+        'ms-header-menu' => __( 'MS Header Menu' ),
         'footer-menu-left' => __( 'Footer Menu (Left)' ),
         'footer-menu-right' => __( 'Footer Menu (Right)' )
       )

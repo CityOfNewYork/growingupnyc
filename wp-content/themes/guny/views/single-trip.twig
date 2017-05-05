@@ -1,0 +1,41 @@
+{% extends "base.twig" %}
+
+{% block content %}
+<header class="c-hero c-hero--light">
+  <div class="o-container">
+    <h1>{{post.title}}</h1>
+        {# {{post|print_r}} #}
+    <p class="c-hero__tagline">
+    {% for term in post.terms('trip_group') %}
+          <a href="" class="button--pill button--pill--es">{{term.name}}</a>
+    {% endfor %}
+    </p>
+  </div> <!-- /.o-container -->
+</header>
+
+<section class="o-container u-bottom-spacing">
+  <aside class="o-article-sidebar o-content-container--compact u-lg-gutter">
+    <dl class="c-details-list">
+      <dt class="c-details-list__term c-details-list__descr">{{post.website_details}}</dt>
+      <dt class="c-details-list__term c-details-list__descr">{{post.hours_details}}</dt>
+      <dt class="c-details-list__term c-details-list__descr">{{post.cost_details}}</dt>
+      <dt class="c-details-list__term c-details-list__descr">{{post.getting_there}}</dt>
+    </dl>
+  </aside>
+  <article class="o-article o-content-container--compact">
+    <div class="o-content-container--text s-wysiwyg">
+      {% if post.intoduction %}
+          {{post.intoduction}}
+      {% endif %}
+      <div class="page-content">
+        {% for top in post.get_field('page_top') %}
+          {{top.page_top_content}}
+        {% endfor %}
+      </div>
+      <div class="location-detaisl">
+        {{post.location_details}}
+      </div>
+    </div> <!-- /.o-content-container-text -->
+  </article>
+</section> <!-- /.o-container.u-bottom-spacing -->
+{% endblock %}

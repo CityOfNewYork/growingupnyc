@@ -1,10 +1,9 @@
-{% extends "base.twig" %}
+{% extends "microsite-base.twig" %}
 
 {% block content %}
 <header class="c-hero c-hero--light">
   <div class="o-container">
     <h1>{{post.title}}</h1>
-        {# {{post|print_r}} #}
     <p class="c-hero__tagline">
     {% for term in post.terms('trip_group') %}
           <a href="" class="button--pill button--pill--es">{{term.name}}</a>

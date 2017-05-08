@@ -138,6 +138,7 @@ class GunySite extends TimberSite {
       wp_deregister_script('jquery');
       wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/assets/js/modernizr.js', array(), '3.0.0', false );
       wp_enqueue_script( 'jquery', get_template_directory_uri() . '/src/js/vendor/jquery.js', array(), '2.1.14', false );
+      wp_enqueue_script( 'owl-js', get_template_directory_uri() . '/src/js/vendor/owl.carousel.min.js', array(), '2.2.1', true );
       wp_enqueue_script( 'site-js', get_template_directory_uri() . '/assets/js/source.dev.js', array(), '1.0.0', true );
     }
   }

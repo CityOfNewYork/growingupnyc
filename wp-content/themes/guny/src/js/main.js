@@ -11,6 +11,7 @@ import alert from './modules/alert.js';
 import bsdtoolsSignup from './modules/bsdtools-signup.js';
 import formEffects from './modules/formEffects.js';
 import facets from './modules/facets.js';
+import owlSettings from './modules/owlSettings.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -37,6 +38,7 @@ function init() {
   currentSection();
   bsdtoolsSignup();
   formEffects();
+  owlSettings();
 }
 
 ready(init);

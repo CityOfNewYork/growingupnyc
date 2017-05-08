@@ -3,7 +3,7 @@ Theme Name: Growing Up NYC
 Theme URI: http://www.bluestatedigital.com
 Author: Blue State Digital
 Author URI: http://www.bluestatedigital.com
-Description: Custom theme for GUNY override styles for Micro Site Topics
+Description: Custom theme for GUNY override styles for Micro Site
 */
 html {
   box-sizing: border-box; }
@@ -15,6 +15,14 @@ html {
 /* stylelint-enable */
 .c-banner__link {
   color: #999; }
+
+.c-hero-ms--light {
+  color: #333;
+  text-align: left;
+  padding: 8% 0 3.75rem; }
+  @media screen and (min-width: 700px) {
+    .c-hero-ms--light {
+      padding: 2.5rem 0 5rem; } }
 
 .c-banner__logo-wrapper {
   top: 0; }
@@ -35,17 +43,17 @@ html {
   background: #eee;
   padding: 0.5rem 0; }
 
-.c-list-box-topics {
+.c-list-box-ms {
   padding-top: 0;
   margin: 0 0.9375rem; }
   @media screen and (min-width: 700px) {
-    .c-list-box-topics {
+    .c-list-box-ms {
       margin: 0 1.875rem; } }
   @media screen and (min-width: 1200px) {
-    .c-list-box-topics {
+    .c-list-box-ms {
       margin: 0 2.8125rem; } }
 
-.c-list-box-topics__item {
+.c-list-box-ms__item {
   display: inline-block;
   width: 100%;
   position: relative;
@@ -54,25 +62,25 @@ html {
   padding: 1.875rem 1.5625rem;
   margin: 0.5rem 0; }
   @media screen and (min-width: 700px) {
-    .c-list-box-topics__item {
+    .c-list-box-ms__item {
       padding: 2.1875rem 2.1875rem; } }
   @media screen and (min-width: 1200px) {
-    .c-list-box-topics__item {
+    .c-list-box-ms__item {
       padding: 2.5rem 2.8125rem; } }
-  .c-list-box-topics__item:before {
+  .c-list-box-ms__item:before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     border-top: 0.4375rem solid #2d333d; }
-  .c-list-box-topics__item .c-list-box-topics__text {
+  .c-list-box-ms__item .c-list-box-ms__text {
     display: inline-block;
     margin-bottom: 1.5625rem; }
     @media screen and (min-width: 700px) {
-      .c-list-box-topics__item .c-list-box-topics__text {
+      .c-list-box-ms__item .c-list-box-ms__text {
         margin-bottom: 2.0625rem; } }
-  .c-list-box-topics__item .button--primary__curved {
+  .c-list-box-ms__item .button--primary__curved {
     color: #fff;
     font-family: "museo-sans-rounded", sans-serif;
     background: #2d333d;
@@ -81,33 +89,53 @@ html {
     border-radius: 2.1875rem;
     border: none; }
     @media screen and (min-width: 1024px) {
-      .c-list-box-topics__item .button--primary__curved {
+      .c-list-box-ms__item .button--primary__curved {
         font-size: 1.5rem; } }
-    .c-list-box-topics__item .button--primary__curved:hover {
+    .c-list-box-ms__item .button--primary__curved:hover {
       background: #999; }
-  .c-list-box-topics__item.topics__item:before {
+  .c-list-box-ms__item.topics__item:before {
     border-color: #7735b2; }
-  .c-list-box-topics__item.topics__item .button--primary__curved {
+  .c-list-box-ms__item.topics__item .button--primary__curved {
     background: #7735b2; }
-    .c-list-box-topics__item.topics__item .button--primary__curved:hover {
+    .c-list-box-ms__item.topics__item .button--primary__curved:hover {
       background: #999; }
-  .c-list-box-topics__item.inspirations__item:before {
+  .c-list-box-ms__item.inspirations__item:before {
     border-color: #144f82; }
-  .c-list-box-topics__item.inspirations__item .button--primary__curved {
+  .c-list-box-ms__item.inspirations__item .button--primary__curved {
     background: #144f82; }
-    .c-list-box-topics__item.inspirations__item .button--primary__curved:hover {
+    .c-list-box-ms__item.inspirations__item .button--primary__curved:hover {
       background: #999; }
-  .c-list-box-topics__item.trips__item:before {
+  .c-list-box-ms__item.trips__item:before {
     border-color: #00965c; }
-  .c-list-box-topics__item.trips__item .button--primary__curved {
+  .c-list-box-ms__item.trips__item .button--primary__curved {
     background: #00965c; }
-    .c-list-box-topics__item.trips__item .button--primary__curved:hover {
+    .c-list-box-ms__item.trips__item .button--primary__curved:hover {
       background: #999; }
 
 .c-details-list-ms__descr li {
   margin-left: 1.375rem; }
 
+.carousel-ms,
+.carousel-ms .owl-stage-outer,
+.carousel-ms .owl-stage,
+.carousel-ms .owl-item,
+.carousel-ms .owl-bg {
+  height: 360px; }
+
+.carousel-ms .owl-dots {
+  position: absolute;
+  width: 100%;
+  bottom: 0.625rem; }
+  .carousel-ms .owl-dots .owl-dot span {
+    width: 12px;
+    height: 12px;
+    margin: 5px;
+    background: #fff; }
+  .carousel-ms .owl-dots .owl-dot.active span {
+    background: #fff;
+    opacity: .6; }
+
 .c-footer {
   background: #2d333d; }
 
-/*# sourceMappingURL=topics.css.map */
+/*# sourceMappingURL=microsite.css.map */

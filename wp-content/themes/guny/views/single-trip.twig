@@ -1,18 +1,25 @@
 {% extends "microsite-base.twig" %}
 
 {% block content %}
-<header class="c-hero c-hero--light">
+
+<div id="owl-demo" class="owl-carousel owl-theme carousel-ms">
+  {% for image in post.get_field('slider') %}
+    <div class="owl-bg" style="background: url({{image.url}}) center center no-repeat; background-size: cover;"></div>
+  {% endfor %}
+</div>
+
+<header class="c-hero c-hero--light c-hero-ms--light">
   <div class="o-container">
     <h1>{{post.title}}</h1>
     <p class="c-hero__tagline">
     {% for term in post.terms('trip_group') %}
-          <a href="" class="button--pill button--pill--es">{{term.name}}</a>
+      <a href="" class="button--pill button--pill--es">{{term.name}}</a>
     {% endfor %}
     </p>
   </div> <!-- /.o-container -->
 </header>
 
-<section class="o-container u-bottom-spacing">
+<section class="o-container u-bottom-spacing">  
   <aside class="o-article-sidebar o-content-container--compact u-lg-gutter">
     <dl class="c-details-list c-details-list-ms">
       <dt class="c-details-list__term c-details-list-ms__term">{{ __('Website', 'GUNY-Single-Trip') }}</dt>

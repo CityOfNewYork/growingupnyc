@@ -1,6 +1,7 @@
 {% extends "microsite-base.twig" %}
 
 {% block content %}
+  {# {{post|print_r}} #}
 <header class="c-hero c-hero--light">
   <div class="o-container">
     <h1>{{post.title}}</h1>
@@ -39,10 +40,16 @@
           {{top.page_top_content}}
         {% endfor %}
       </div>
-      <div class="location-detaisl">
+      <div class="location-details">
         {{post.location_details}}
+      </div>
+      <div class="acf-map">
+        {% if post.map %}
+          <div class="marker" data-lat="{{post.map.lat}}" data-lng="{{post.map.lng}}"></div>
+        {% endif %}   
       </div>
     </div> <!-- /.o-content-container-text -->
   </article>
+
 </section> <!-- /.o-container.u-bottom-spacing -->
 {% endblock %}

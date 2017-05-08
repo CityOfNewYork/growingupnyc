@@ -24,18 +24,12 @@
 {# Side Hero #}
 <section class="o-static-column o-static-column--left c-side-hero js-static">
   <div class="c-side-hero__image"></div>
-  <div class="c-side-hero__content">
-    <h1 class="c-side-hero__title">
-      {{post.get_field('hero_title_top')}}
-{#       <div class="c-side-hero__title__large rotating-text">
-        {% for text in post.get_field('hero_rotating_text_repeater') %}
-          <span class="rotating-text__entry">
-            {{text.hero_rotating_text}}
-          </span>
-        {% endfor %}
-      </div> #} <!-- /.c-side-hero__title__large -->
+  <div class="c-side-hero__content c-side-hero-ms__content">
+    <h1>
+      {{post.homepage_heading}}
     </h1>
-{#     <a href="{{post.hero_button_url}}" class="button--outline button--outline--white mobile-hide">{{post.hero_button_text}}</a> #}
+    <h2 class="c-side-hero__title">{{post.homepage_subheading}}</h2>
+    {# <a href="{{post.hero_button_url}}" class="button--outline button--outline--white mobile-hide">{{post.hero_button_text}}</a> #}
   </div> <!--/.c-side-hero__content -->
 </section> <!-- /.o-static-column.o-static-column--left -->
 

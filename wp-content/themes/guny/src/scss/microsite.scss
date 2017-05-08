@@ -18,7 +18,10 @@ Description: Custom theme for GUNY override styles for Micro Site
 @import "tools/type";
 @import "tools/images";
 @import "tools/layout";
-@import "tools/splatter";
+
+// Microsite (Partials)
+// =====================
+@import "microsite/*";
 
 // Header
 .c-banner__link {
@@ -33,6 +36,29 @@ Description: Custom theme for GUNY override styles for Micro Site
 
   @include media($bp-medium) {
     padding: rem-calc(40 0 80);
+  }
+}
+
+//Side Hero
+.c-side-hero-ms__content {
+  color: $very-dark-gray;
+  padding: rem-calc(40 15);
+  text-align: center;
+
+  @include media($bp-mobile-only) {
+    background: $very-light-gray-1;
+    @include splatter(top, left);
+    @include splatter(bottom, right);
+  }
+
+  @include media($bp-large) {
+    color: $white;
+    bottom: 0;
+    left: 0;
+    padding: rem-calc(60);
+    position: absolute;
+    width: 60%;
+    text-align: left;
   }
 }
 

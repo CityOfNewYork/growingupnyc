@@ -139,6 +139,8 @@ class GunySite extends TimberSite {
       wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/assets/js/modernizr.js', array(), '3.0.0', false );
       wp_enqueue_script( 'jquery', get_template_directory_uri() . '/src/js/vendor/jquery.js', array(), '2.1.14', false );
       wp_enqueue_script( 'site-js', get_template_directory_uri() . '/assets/js/source.dev.js', array(), '1.0.0', true );
+      wp_enqueue_script( 'google-map', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDrvNnQZBiASAH3JI7LNFewrX9jeYZlMWo', array(), '3', true );
+      wp_enqueue_script( 'google-map-init', get_template_directory_uri() . '/library/js/google-maps.js', array('google-map', 'jquery'), '0.1', true );
     }
   }
 
@@ -434,21 +436,11 @@ function microsite_styles() {
   } 
 }
 
-function google_map_theme_add_scripts() {
-  // wp_enqueue_script( 'google-map', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDrvNnQZBiASAH3JI7LNFewrX9jeYZlMWo', array(), '3', true );
-  wp_enqueue_script( 'google-map-init', get_template_directory_uri() . '/library/js/google-maps.js', array('google-map', 'jquery'), '0.1', true );
+function my_acf_google_map_api( $api ){
+  $api['key'] = 'AIzaSyDrvNnQZBiASAH3JI7LNFewrX9jeYZlMWo';
+  return $api;
 }
-
-add_action( 'wp_enqueue_scripts', 'google_map_theme_add_scripts' );
-
-// function my_acf_google_map_api( $api ){
-  
-//   $api['key'] = 'AIzaSyDrvNnQZBiASAH3JI7LNFewrX9jeYZlMWo';
-  
-//   return $api;
-  
-// }
-// add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
+add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 //End of the codes Amalan
 
 // Customize TinyMCE settings

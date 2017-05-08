@@ -127,9 +127,9 @@ gulp.task('styles_rtl_dev', ['lint-css'], function() {
     .pipe(browserSync.stream({match: '**/*.css'}));
 });
 
-gulp.task('styles_topics_dev', ['lint-css'], function() {
+gulp.task('styles_microsite_dev', ['lint-css'], function() {
     return gulp.src([
-      source+'scss/topics.scss'
+      source+'scss/microsite.scss'
     ])
     .pipe(cssGlobbing({
       extensions: ['.scss']
@@ -302,7 +302,7 @@ gulp.task('default', function() {
     gulp.watch(source+'scss/**/*.scss', ['styles_rtl_dev']);
 
     // Watch .scss Micro Site files
-    gulp.watch(source+'scss/**/*.scss', ['styles_topics_dev']);
+    gulp.watch(source+'scss/**/*.scss', ['styles_microsite_dev']);
 
     // Watch .js files
     gulp.watch(source+'js/**/*.js', ['scripts']);

@@ -136,13 +136,6 @@
                 "operator": "==",
                 "value": "front_page"
             }
-        ],
-        [
-            {
-                "param": "page",
-                "operator": "==",
-                "value": "5712"
-            }
         ]
     ],
     "menu_order": 0,
@@ -155,5 +148,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1493890977
+    "modified": 1494239690
 }

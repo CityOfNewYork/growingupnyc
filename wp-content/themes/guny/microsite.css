@@ -1,0 +1,182 @@
+/*!
+Theme Name: Growing Up NYC
+Theme URI: http://www.bluestatedigital.com
+Author: Blue State Digital
+Author URI: http://www.bluestatedigital.com
+Description: Custom theme for GUNY override styles for Micro Site
+*/
+html {
+  box-sizing: border-box; }
+
+*, *::after, *::before {
+  box-sizing: inherit; }
+
+/* stylelint-disable */
+/* stylelint-enable */
+.c-banner__link {
+  color: #999; }
+
+.c-hero-ms--light {
+  color: #333;
+  text-align: left;
+  padding: 8% 0 3.75rem; }
+  @media screen and (min-width: 700px) {
+    .c-hero-ms--light {
+      padding: 2.5rem 0 5rem; } }
+
+.c-side-hero-ms__content {
+  color: #333;
+  padding: 2.5rem 0.9375rem;
+  text-align: center; }
+  @media screen and (max-width: 1023px) {
+    .c-side-hero-ms__content {
+      background: #e0e0e0;
+      position: relative;
+      position: relative; }
+      .c-side-hero-ms__content:before {
+        content: '';
+        background: url(assets/img/splatter-top-left-gray.png) top left no-repeat;
+        bottom: 0;
+        display: block;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100%; }
+      .c-side-hero-ms__content:after {
+        content: '';
+        background: url(assets/img/splatter-bottom-right-gray.png) bottom right no-repeat;
+        bottom: 0;
+        display: block;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100%; } }
+  @media screen and (min-width: 1024px) {
+    .c-side-hero-ms__content {
+      color: #fff;
+      bottom: 0;
+      left: 0;
+      padding: 3.75rem;
+      position: absolute;
+      width: 60%;
+      text-align: left; } }
+
+.c-banner__logo-wrapper {
+  top: 0; }
+  @media screen and (min-width: 375px) {
+    .c-banner__logo-wrapper {
+      height: 5rem; } }
+  @media screen and (min-width: 700px) {
+    .c-banner__logo-wrapper {
+      height: 9rem; } }
+
+.no-touchevents:hover {
+  color: #999; }
+
+.no-touchevents .c-banner__link:hover, .no-touchevents .c-banner__link:focus {
+  color: #2d333d; }
+
+.o-scroll-column--right {
+  background: #eee;
+  padding: 0.5rem 0; }
+
+.c-list-box-ms {
+  padding-top: 0;
+  margin: 0 0.9375rem; }
+  @media screen and (min-width: 700px) {
+    .c-list-box-ms {
+      margin: 0 1.875rem; } }
+  @media screen and (min-width: 1200px) {
+    .c-list-box-ms {
+      margin: 0 2.8125rem; } }
+
+.c-list-box-ms__item {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  background: #fff;
+  color: #333;
+  padding: 1.875rem 1.5625rem;
+  margin: 0.5rem 0; }
+  @media screen and (min-width: 700px) {
+    .c-list-box-ms__item {
+      padding: 2.1875rem 2.1875rem; } }
+  @media screen and (min-width: 1200px) {
+    .c-list-box-ms__item {
+      padding: 2.5rem 2.8125rem; } }
+  .c-list-box-ms__item:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-top: 0.4375rem solid #2d333d; }
+  .c-list-box-ms__item .c-list-box-ms__text {
+    display: inline-block;
+    margin-bottom: 1.5625rem; }
+    @media screen and (min-width: 700px) {
+      .c-list-box-ms__item .c-list-box-ms__text {
+        margin-bottom: 2.0625rem; } }
+  .c-list-box-ms__item .button--primary__curved {
+    color: #fff;
+    font-family: "museo-sans-rounded", sans-serif;
+    background: #2d333d;
+    font-size: 1.3125rem;
+    font-weight: 900;
+    border-radius: 2.1875rem;
+    border: none; }
+    @media screen and (min-width: 1024px) {
+      .c-list-box-ms__item .button--primary__curved {
+        font-size: 1.5rem; } }
+    .c-list-box-ms__item .button--primary__curved:hover {
+      background: #999; }
+  .c-list-box-ms__item.topics__item:before {
+    border-color: #7735b2; }
+  .c-list-box-ms__item.topics__item .button--primary__curved {
+    background: #7735b2; }
+    .c-list-box-ms__item.topics__item .button--primary__curved:hover {
+      background: #999; }
+  .c-list-box-ms__item.inspirations__item:before {
+    border-color: #144f82; }
+  .c-list-box-ms__item.inspirations__item .button--primary__curved {
+    background: #144f82; }
+    .c-list-box-ms__item.inspirations__item .button--primary__curved:hover {
+      background: #999; }
+  .c-list-box-ms__item.trips__item:before {
+    border-color: #00965c; }
+  .c-list-box-ms__item.trips__item .button--primary__curved {
+    background: #00965c; }
+    .c-list-box-ms__item.trips__item .button--primary__curved:hover {
+      background: #999; }
+
+.c-details-list-ms__descr li {
+  margin-left: 1.375rem; }
+
+.carousel-ms,
+.carousel-ms .owl-stage-outer,
+.carousel-ms .owl-stage,
+.carousel-ms .owl-item,
+.carousel-ms .owl-bg {
+  height: 360px; }
+
+.carousel-ms .owl-dots {
+  position: absolute;
+  width: 100%;
+  bottom: 0.625rem; }
+  .carousel-ms .owl-dots .owl-dot span {
+    width: 12px;
+    height: 12px;
+    margin: 5px;
+    background: #fff; }
+  .carousel-ms .owl-dots .owl-dot.active span {
+    background: #fff;
+    opacity: .6; }
+
+.c-footer {
+  background: #2d333d; }
+
+/*# sourceMappingURL=microsite.css.map */

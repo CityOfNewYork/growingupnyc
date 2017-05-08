@@ -3,7 +3,7 @@ Theme Name: Growing Up NYC
 Theme URI: http://www.bluestatedigital.com
 Author: Blue State Digital
 Author URI: http://www.bluestatedigital.com
-Description: Custom theme for GUNY override styles for Micro Site Topics
+Description: Custom theme for GUNY override styles for Micro Site
 */
 
 // Settings (Global variables)
@@ -18,11 +18,48 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
 @import "tools/type";
 @import "tools/images";
 @import "tools/layout";
-@import "tools/splatter";
+
+// Microsite (Partials)
+// =====================
+@import "microsite/*";
 
 // Header
 .c-banner__link {
   color: $gray;
+}
+
+// Hero
+.c-hero-ms--light {
+  color: $color-text;
+  text-align: left;
+  padding: percentage(30/375) 0 rem-calc(60);
+
+  @include media($bp-medium) {
+    padding: rem-calc(40 0 80);
+  }
+}
+
+//Side Hero
+.c-side-hero-ms__content {
+  color: $very-dark-gray;
+  padding: rem-calc(40 15);
+  text-align: center;
+
+  @include media($bp-mobile-only) {
+    background: $very-light-gray-1;
+    @include splatter(top, left);
+    @include splatter(bottom, right);
+  }
+
+  @include media($bp-large) {
+    color: $white;
+    bottom: 0;
+    left: 0;
+    padding: rem-calc(60);
+    position: absolute;
+    width: 60%;
+    text-align: left;
+  }
 }
 
 // Banner Logo Wrapper
@@ -62,7 +99,7 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
 // heading is.
 //
 
-.c-list-box-topics {
+.c-list-box-ms {
   padding-top: 0;
   margin: rem-calc(0 15);
 
@@ -75,7 +112,7 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
   }
 }
 
-.c-list-box-topics__item {
+.c-list-box-ms__item {
   display: inline-block;
   width: 100%;
   position: relative;
@@ -101,7 +138,7 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
     border-top: rem-calc(7) solid $dark-gray-1;
   }
 
-  .c-list-box-topics__text {
+  .c-list-box-ms__text {
     display: inline-block;
     margin-bottom: rem-calc(25);
     @include media($bp-medium) {
@@ -159,6 +196,46 @@ Description: Custom theme for GUNY override styles for Micro Site Topics
       background: $green;
       &:hover {
         background: $gray;
+      }
+    }
+  }
+}
+
+//Detail Page
+.c-details-list-ms__descr {
+  li {
+    margin-left: rem-calc(22);
+  }
+}
+
+//Owl Carousel
+.carousel-ms {
+  &,
+  .owl-stage-outer,
+  .owl-stage,
+  .owl-item,
+  .owl-bg {
+    height: 360px;
+  }
+
+  .owl-dots {
+    position: absolute;
+    width: 100%;
+    bottom: rem-calc(10);
+
+    .owl-dot {
+      span {
+        width: 12px;
+        height: 12px;
+        margin: 5px;
+        background: $white;
+      }
+
+      &.active {
+        span {
+          background: $white;
+          opacity: .6;
+        }
       }
     }
   }

@@ -2563,18 +2563,18 @@ a.grade-schooler-background {
   button.grade-schooler-background:focus, button.grade-schooler-background.is-active,
   a.grade-schooler-background:focus,
   a.grade-schooler-background.is-active {
-    background-color: #1d5d11 !important;
-    border-color: #1d5d11 !important;
+    background-color: #007145 !important;
+    border-color: #007145 !important;
     outline: none; }
 
 .no-touchevents button.grade-schooler-background:hover,
 .no-touchevents a.grade-schooler-background:hover {
-  background-color: #1d5d11 !important;
-  border-color: #1d5d11 !important; }
+  background-color: #007145 !important;
+  border-color: #007145 !important; }
 
 .grade-schooler-secondary {
-  background-color: #1d5d11 !important;
-  border-color: #1d5d11 !important; }
+  background-color: #007145 !important;
+  border-color: #007145 !important; }
 
 button.grade-schooler-secondary:focus, button.grade-schooler-secondary.is-active,
 a.grade-schooler-secondary:focus,
@@ -2595,7 +2595,7 @@ a.grade-schooler-secondary.is-active {
   background-image: url(/wp-content/themes/guny/assets/img/grade-schooler-gradient.png); }
 
 .grade-schooler-svg .stop1 {
-  stop-color: #1d5d11; }
+  stop-color: #007145; }
 
 .grade-schooler-svg .stop2 {
   stop-color: #35c621; }

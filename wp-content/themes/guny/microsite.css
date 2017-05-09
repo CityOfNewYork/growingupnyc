@@ -179,4 +179,12 @@ html {
 .c-footer {
   background: #2d333d; }
 
+.button--pill--trip {
+  background: #00965c; }
+  .button--pill--trip:hover {
+    background: #007145; }
+
+.no-touchevents .button--pill--trip:hover {
+  background: #007145; }
+
 /*# sourceMappingURL=microsite.css.map */

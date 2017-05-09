@@ -21,7 +21,10 @@ Description: Custom theme for GUNY override styles for Micro Site
 
 // Microsite (Partials)
 // =====================
-@import "microsite/*";
+@import "microsite/splatter";
+
+//Common styles for Micro Site
+//
 
 // Header
 .c-banner__link {
@@ -245,3 +248,6 @@ Description: Custom theme for GUNY override styles for Micro Site
 .c-footer {
   background: $dark-gray-1;
 }
+
+// Trips page styles
+@import "microsite/trips";

@@ -1,0 +1,14 @@
+// Micro Site Trips page styles
+
+.button--pill--trip {
+  background: $green;
+  &:hover {
+    background: $dark-green;
+  }
+}
+
+.no-touchevents .button--pill--trip {
+  &:hover {
+    background: $dark-green;
+  }
+}

@@ -1,5 +1,6 @@
 // Micro Site Trips page styles
 
+//Button Pill
 .button--pill--trip {
   background: $green;
   &:hover {
@@ -11,4 +12,12 @@
   &:hover {
     background: $dark-green;
   }
+}
+
+//Google Map [ACF] styles
+.acf-map {
+  float: left;
+  width: 100%;
+  height: 400px;
+  margin: rem-calc(20 0);
 }

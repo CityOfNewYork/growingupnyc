@@ -28,7 +28,19 @@ Description: Custom theme for GUNY override styles for Micro Site
 
 // Header
 .c-banner__link {
-  color: $gray;
+  color: $gray-1;
+}
+
+.no-touchevents {
+  &:hover {
+    color: $gray;
+  }
+  .c-banner__link {
+    &:hover,
+    &:focus {
+      color: $dark-gray-1;
+    }
+  }
 }
 
 // Hero
@@ -74,18 +86,6 @@ Description: Custom theme for GUNY override styles for Micro Site
 
   @include media($bp-medium) {
     height: rem-calc(144);
-  }
-}
-
-.no-touchevents {
-  &:hover {
-    color: $gray;
-  }
-  .c-banner__link {
-    &:hover,
-    &:focus {
-      color: $dark-gray-1;
-    }
   }
 }
 
@@ -159,7 +159,7 @@ Description: Custom theme for GUNY override styles for Micro Site
     border: none;
 
     &:hover {
-      background: $gray;
+      background: $black;
     }
   }
 
@@ -172,7 +172,7 @@ Description: Custom theme for GUNY override styles for Micro Site
     .button--primary__curved {
       background: $purple;
       &:hover {
-        background: $gray;
+        background: $dark-purple;
       }
     }
   }
@@ -185,7 +185,7 @@ Description: Custom theme for GUNY override styles for Micro Site
     .button--primary__curved {
       background: $dark-blue;
       &:hover {
-        background: $gray;
+        background: $very-dark-blue;
       }
     }
   }
@@ -198,7 +198,7 @@ Description: Custom theme for GUNY override styles for Micro Site
     .button--primary__curved {
       background: $green;
       &:hover {
-        background: $gray;
+        background: $dark-green;
       }
     }
   }
@@ -208,8 +208,18 @@ Description: Custom theme for GUNY override styles for Micro Site
 .c-details-list-ms__descr {
   ul {
     margin-top: rem-calc(18);
+    list-style: none;
+
     li {
-      list-style: none;
+      padding: rem-calc(0 0 0 27);
+      text-indent: rem-calc(-27);
+      &:before {
+        content: url(/wp-content/themes/guny/assets/img/check.svg);
+        margin-right: rem-calc(12);
+        margin-top: rem-calc(2);
+        opacity: .2;
+        vertical-align: middle;
+      }
     }
   }
 }

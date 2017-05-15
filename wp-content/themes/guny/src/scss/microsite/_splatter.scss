@@ -7,7 +7,7 @@
   @if $v-alignment == 'top' {
     &:before {
       content: '';
-      background: url(assets/img/splatter-#{$v-alignment}-#{$h-alignment}-gray.png) $v-alignment $h-alignment no-repeat;
+      background: url(assets/img/splatter-#{$v-alignment}-#{$h-alignment}-ms.png) $v-alignment $h-alignment no-repeat;
       bottom: 0;
       display: block;
       height: 100%;
@@ -21,7 +21,7 @@
   @else {
     &:after {
       content: '';
-      background: url(assets/img/splatter-#{$v-alignment}-#{$h-alignment}-gray.png) $v-alignment $h-alignment no-repeat;
+      background: url(assets/img/splatter-#{$v-alignment}-#{$h-alignment}-ms.png) $v-alignment $h-alignment no-repeat;
       bottom: 0;
       display: block;
       height: 100%;

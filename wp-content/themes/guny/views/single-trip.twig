@@ -50,6 +50,7 @@
       <div class="location-details">
         <h3>{{ __('Location Details', 'GUNY-Single-Trip') }}</h3>
         {{post.location_details}}
+        <a href="https://www.google.com/maps/place/{{post.map.address}}" target="_blank">Get directions to the location</a>
       </div>
       <div class="acf-map">
         {% if post.map %}

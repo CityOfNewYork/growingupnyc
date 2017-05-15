@@ -47,8 +47,14 @@
           {{top.page_top_content}}
         {% endfor %}
       </div>
-      <div class="location-detaisl">
+      <div class="location-details">
+        <h3>{{ __('Location Details', 'GUNY-Single-Trip') }}</h3>
         {{post.location_details}}
+      </div>
+      <div class="acf-map">
+        {% if post.map %}
+          <div class="marker" data-lat="{{post.map.lat}}" data-lng="{{post.map.lng}}"></div>
+        {% endif %}   
       </div>
     </div> <!-- /.o-content-container-text -->
   </article>

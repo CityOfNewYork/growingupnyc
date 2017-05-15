@@ -35,10 +35,10 @@ Description: Custom theme for GUNY override styles for Micro Site
 .c-hero-ms--light {
   color: $color-text;
   text-align: left;
-  padding: percentage(30/375) 0 rem-calc(60);
+  padding: percentage(13/375) 0 rem-calc(35);
 
   @include media($bp-medium) {
-    padding: rem-calc(40 0 80);
+    padding: rem-calc(30 0 78);
   }
 }
 
@@ -206,8 +206,11 @@ Description: Custom theme for GUNY override styles for Micro Site
 
 //Detail Page
 .c-details-list-ms__descr {
-  li {
-    margin-left: rem-calc(22);
+  ul {
+    margin-top: rem-calc(18);
+    li {
+      list-style: none;
+    }
   }
 }
 

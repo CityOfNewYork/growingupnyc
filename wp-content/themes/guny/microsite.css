@@ -14,7 +14,13 @@ html {
 /* stylelint-disable */
 /* stylelint-enable */
 .c-banner__link {
+  color: #404657; }
+
+.no-touchevents:hover {
   color: #999; }
+
+.no-touchevents .c-banner__link:hover, .no-touchevents .c-banner__link:focus {
+  color: #2d333d; }
 
 .c-hero-ms--light {
   color: #333;
@@ -74,12 +80,6 @@ html {
     .c-banner__logo-wrapper {
       height: 9rem; } }
 
-.no-touchevents:hover {
-  color: #999; }
-
-.no-touchevents .c-banner__link:hover, .no-touchevents .c-banner__link:focus {
-  color: #2d333d; }
-
 .o-scroll-column--right {
   background: #eee;
   padding: 0.5rem 0; }
@@ -133,30 +133,38 @@ html {
       .c-list-box-ms__item .button--primary__curved {
         font-size: 1.5rem; } }
     .c-list-box-ms__item .button--primary__curved:hover {
-      background: #999; }
+      background: #000; }
   .c-list-box-ms__item.topics__item:before {
     border-color: #7735b2; }
   .c-list-box-ms__item.topics__item .button--primary__curved {
     background: #7735b2; }
     .c-list-box-ms__item.topics__item .button--primary__curved:hover {
-      background: #999; }
+      background: #3c036f; }
   .c-list-box-ms__item.inspirations__item:before {
     border-color: #144f82; }
   .c-list-box-ms__item.inspirations__item .button--primary__curved {
     background: #144f82; }
     .c-list-box-ms__item.inspirations__item .button--primary__curved:hover {
-      background: #999; }
+      background: #00326d; }
   .c-list-box-ms__item.trips__item:before {
     border-color: #00965c; }
   .c-list-box-ms__item.trips__item .button--primary__curved {
     background: #00965c; }
     .c-list-box-ms__item.trips__item .button--primary__curved:hover {
-      background: #999; }
+      background: #007145; }
 
 .c-details-list-ms__descr ul {
-  margin-top: 1.125rem; }
+  margin-top: 1.125rem;
+  list-style: none; }
   .c-details-list-ms__descr ul li {
-    list-style: none; }
+    padding: 0 0 0 1.6875rem;
+    text-indent: -1.6875rem; }
+    .c-details-list-ms__descr ul li:before {
+      content: url(/wp-content/themes/guny/assets/img/check.svg);
+      margin-right: 0.75rem;
+      margin-top: 0.125rem;
+      opacity: .2;
+      vertical-align: middle; }
 
 .carousel-ms,
 .carousel-ms .owl-stage-outer,
@@ -196,18 +204,13 @@ html {
   background: #007145; }
 
 .s-wysiwyg h3 {
-  margin: 0.875rem 0 0; }
+  margin: 1.875rem 0 0; }
 
 .s-wysiwyg ul {
-  list-style: none;
   padding-left: 0;
   margin-top: 0; }
   .s-wysiwyg ul li {
-    text-indent: 0;
-    padding-left: 1.125rem;
     padding-bottom: 0; }
-    .s-wysiwyg ul li:before {
-      content: none; }
 
 .acf-map {
   float: left;

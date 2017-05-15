@@ -3,6 +3,46 @@
     "title": "microsite home",
     "fields": [
         {
+            "key": "field_5919739720ac7",
+            "label": "Hero Rotating Text",
+            "name": "hero_rotating_text_repeater",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 4,
+            "max": 4,
+            "layout": "table",
+            "button_label": "Add Row",
+            "sub_fields": [
+                {
+                    "key": "field_591974a0ce10e",
+                    "label": "Text",
+                    "name": "hero_rotating_text",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                }
+            ]
+        },
+        {
             "key": "field_590af7bd16dcb",
             "label": "homepage categories",
             "name": "homepage_categories",
@@ -141,5 +181,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1494239653
+    "modified": 1494840515
 }

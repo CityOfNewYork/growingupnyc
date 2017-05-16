@@ -43,6 +43,18 @@ Description: Custom theme for GUNY override styles for Micro Site
   }
 }
 
+// Banner Logo Wrapper
+.c-banner__logo-wrapper {
+  top: 0;
+  @include media($bp-small) {
+    height: rem-calc(80);
+  }
+
+  @include media($bp-medium) {
+    height: rem-calc(144);
+  }
+}
+
 // Hero
 .c-side-hero-ms {
   border-left: none;
@@ -80,15 +92,31 @@ Description: Custom theme for GUNY override styles for Micro Site
   }
 }
 
-// Banner Logo Wrapper
-.c-banner__logo-wrapper {
-  top: 0;
-  @include media($bp-small) {
-    height: rem-calc(80);
+//WYSIWYG Style overrides
+.s-wysiwyg {
+  h3 {
+    margin: rem-calc(15 0 5);
+  }
+  ul {
+    padding-left: 0;
+    margin-top: 0;
+
+    li {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.c-page__content {
+  h2 {
+    margin-top: rem-calc(20);
+    &:first-child {
+      margin-top: 0;
+    }
   }
 
-  @include media($bp-medium) {
-    height: rem-calc(144);
+  p {
+    margin-bottom: rem-calc(15);
   }
 }
 

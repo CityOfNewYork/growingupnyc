@@ -19,8 +19,22 @@
   </div> <!-- /.o-container -->
 </header>
 
-<section class="o-container u-bottom-spacing">  
-  <aside class="o-article-sidebar o-content-container--compact u-lg-gutter">
+<section class="o-container u-bottom-spacing">
+  <article class="o-article o-article-ms o-content-container--compact">
+    <div class="o-content-container--text s-wysiwyg">
+      <div class="c-page__intro">
+        {% if post.intoduction %}
+          {{post.intoduction}}
+        {% endif %}
+      </div>
+      <div class="c-page__content">
+        {% for top in post.get_field('page_top') %}
+          {{top.page_top_content}}
+        {% endfor %}
+      </div>      
+    </div> <!-- /.o-content-container-text -->
+  </article>
+  <aside class="o-article-sidebar o-article-ms-sidebar o-content-container--compact u-lg-gutter">
     <dl class="c-details-list c-details-list-ms">
       <dt class="c-details-list__term c-details-list-ms__term">{{ __('Website', 'GUNY-Single-Trip') }}</dt>
       <dd class="c-details-list__descr c-details-list-ms__descr">{{post.website_details}}</dd>
@@ -35,18 +49,8 @@
       <dd class="c-details-list__descr c-details-list-ms__descr">{{post.getting_there}}</dd>
     </dl>
   </aside>
-  <article class="o-article o-content-container--compact">
+  <article class="o-article o-article-ms o-content-container--compact">
     <div class="o-content-container--text s-wysiwyg">
-      <div class="c-page__intro">
-        {% if post.intoduction %}
-          {{post.intoduction}}
-        {% endif %}
-      </div>
-      <div class="c-page__content">
-        {% for top in post.get_field('page_top') %}
-          {{top.page_top_content}}
-        {% endfor %}
-      </div>
       <div class="c-page__location--details">
         <h3>{{ __('Location Details', 'GUNY-Single-Trip') }}</h3>
         {{post.location_details}}

@@ -223,7 +223,7 @@ html {
 .no-touchevents .button--pill--trip:hover {
   background: #007145; }
 
-.c-page__acf--map {
+.acf-map {
   float: left;
   width: 100%;
   height: 400px;

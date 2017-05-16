@@ -1,12 +1,12 @@
 // Micro Site Trips page styles
 
 //Page Intro
-.page-intro {
+.c-page__intro {
   margin-bottom: rem-calc(30);
 }
 
 //Location Details
-.location-details {
+.c-page__location--details {
   @include media($bp-large) {
     margin-top: rem-calc(70);
   }
@@ -42,7 +42,7 @@
 }
 
 //Google Map [ACF] styles
-.acf-map {
+.c-page__acf--map {
   float: left;
   width: 100%;
   height: 400px;

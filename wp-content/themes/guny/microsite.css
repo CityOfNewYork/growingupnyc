@@ -191,11 +191,11 @@ html {
 .c-footer {
   background: #2d333d; }
 
-.page-intro {
+.c-page__intro {
   margin-bottom: 1.875rem; }
 
 @media screen and (min-width: 1024px) {
-  .location-details {
+  .c-page__location--details {
     margin-top: 4.375rem; } }
 
 .button--pill--trip {
@@ -215,7 +215,7 @@ html {
   .s-wysiwyg ul li {
     padding-bottom: 0; }
 
-.acf-map {
+.c-page__acf--map {
   float: left;
   width: 100%;
   height: 400px;

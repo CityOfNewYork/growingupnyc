@@ -37,22 +37,22 @@
   </aside>
   <article class="o-article o-content-container--compact">
     <div class="o-content-container--text s-wysiwyg">
-      <div class="page-intro">
+      <div class="c-page__intro">
         {% if post.intoduction %}
           {{post.intoduction}}
         {% endif %}
       </div>
-      <div class="page-content">
+      <div class="c-page__content">
         {% for top in post.get_field('page_top') %}
           {{top.page_top_content}}
         {% endfor %}
       </div>
-      <div class="location-details">
+      <div class="c-page__location--details">
         <h3>{{ __('Location Details', 'GUNY-Single-Trip') }}</h3>
         {{post.location_details}}
         <a href="https://www.google.com/maps/place/{{post.map.address}}" target="_blank">Get directions to the location</a>
       </div>
-      <div class="acf-map">
+      <div class="c-page__acf--map">
         {% if post.map %}
           <div class="marker" data-lat="{{post.map.lat}}" data-lng="{{post.map.lng}}"></div>
         {% endif %}   

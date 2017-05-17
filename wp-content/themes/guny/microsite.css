@@ -22,6 +22,19 @@ html {
 .no-touchevents .c-banner__link:hover, .no-touchevents .c-banner__link:focus {
   color: #2d333d; }
 
+.o-inline__item {
+  display: inline-block;
+  margin-left: 0.5rem;
+  margin-right: -4px; }
+  .o-inline__item:first-child {
+    margin-left: 0; }
+  @media screen and (min-width: 375px) {
+    .o-inline__item {
+      margin-left: 1rem; } }
+  @media screen and (min-width: 1024px) {
+    .o-inline__item {
+      margin-left: 3.5rem; } }
+
 .c-banner__logo-wrapper {
   top: 0; }
   @media screen and (min-width: 375px) {
@@ -30,6 +43,22 @@ html {
   @media screen and (min-width: 700px) {
     .c-banner__logo-wrapper {
       height: 9rem; } }
+  .c-banner__logo-wrapper .c-banner-ms__logo {
+    background: url("http://localhost/guny-repo/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_MS.png") no-repeat;
+    background-size: contain;
+    display: block;
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    background-position: center bottom;
+    height: 100%;
+    width: 100%; }
+    @media screen and (min-width: 375px) {
+      .c-banner__logo-wrapper .c-banner-ms__logo {
+        background-position: center bottom 0.3125rem; } }
+    @media screen and (min-width: 700px) {
+      .c-banner__logo-wrapper .c-banner-ms__logo {
+        background-position: center bottom 0.6875rem; } }
 
 .c-side-hero-ms {
   border-left: none; }
@@ -44,7 +73,7 @@ html {
 
 .c-side-hero-ms__content {
   color: #fff;
-  padding: 2.5rem 0.9375rem;
+  padding: 2.5rem 0.9375rem 1.875rem;
   text-align: center; }
   @media screen and (max-width: 1023px) {
     .c-side-hero-ms__content {
@@ -190,7 +219,14 @@ html {
 .carousel-ms .owl-stage,
 .carousel-ms .owl-item,
 .carousel-ms .owl-bg {
-  height: 360px; }
+  height: 190px; }
+  @media screen and (min-width: 700px) {
+    .carousel-ms,
+    .carousel-ms .owl-stage-outer,
+    .carousel-ms .owl-stage,
+    .carousel-ms .owl-item,
+    .carousel-ms .owl-bg {
+      height: 360px; } }
 
 .carousel-ms .owl-dots {
   position: absolute;
@@ -200,10 +236,11 @@ html {
     width: 12px;
     height: 12px;
     margin: 5px;
-    background: #fff; }
-  .carousel-ms .owl-dots .owl-dot.active span {
     background: #fff;
     opacity: .6; }
+  .carousel-ms .owl-dots .owl-dot.active span {
+    background: #fff;
+    opacity: 1; }
 
 .c-footer {
   background: #2d333d; }

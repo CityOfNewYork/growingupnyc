@@ -24,7 +24,6 @@ Description: Custom theme for GUNY override styles for Micro Site
 @import "microsite/splatter";
 
 //Common styles for Micro Site
-//
 
 // Header
 .c-banner__link {
@@ -43,6 +42,25 @@ Description: Custom theme for GUNY override styles for Micro Site
   }
 }
 
+// Inline list item
+.o-inline__item {
+  display: inline-block;
+  margin-left: rem-calc(8);
+  margin-right: -4px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  @include media($bp-small) {
+    margin-left: rem-calc(16);
+  }
+
+  @include media($bp-large) {
+    margin-left: rem-calc(56);
+  }
+}
+
 // Banner Logo Wrapper
 .c-banner__logo-wrapper {
   top: 0;
@@ -52,6 +70,22 @@ Description: Custom theme for GUNY override styles for Micro Site
 
   @include media($bp-medium) {
     height: rem-calc(144);
+  }
+
+  .c-banner-ms__logo {
+    @include image-replace("http://localhost/guny-repo/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_MS.png");
+
+    background-position: center bottom;
+    height: 100%;
+    width: 100%;
+
+    @include media($bp-small) {
+      background-position: center bottom rem-calc(5);
+    }
+
+    @include media($bp-medium) {
+      background-position: center bottom rem-calc(11);
+    }
   }
 }
 
@@ -73,7 +107,7 @@ Description: Custom theme for GUNY override styles for Micro Site
 //Side Hero
 .c-side-hero-ms__content {
   color: $white;
-  padding: rem-calc(40 15);
+  padding: rem-calc(40 15 30);
   text-align: center;
 
   @include media($bp-mobile-only) {
@@ -262,7 +296,10 @@ Description: Custom theme for GUNY override styles for Micro Site
   .owl-stage,
   .owl-item,
   .owl-bg {
-    height: 360px;
+    height: 190px;
+    @include media($bp-medium) {
+      height: 360px;
+    }
   }
 
   .owl-dots {
@@ -276,12 +313,13 @@ Description: Custom theme for GUNY override styles for Micro Site
         height: 12px;
         margin: 5px;
         background: $white;
+        opacity: .6;
       }
 
       &.active {
         span {
           background: $white;
-          opacity: .6;
+          opacity: 1;
         }
       }
     }

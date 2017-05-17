@@ -54,6 +54,15 @@ function ms_trips_create() {
       'hierarchical' => true
     )
   );
+
+  register_taxonomy(
+    'trips_cat',
+    'trip',
+    array(
+      'label' => __( 'Trip Categories' ),
+      'hierarchical' => true
+    )
+  );
 }
 
 add_action( 'init', 'ms_trips_create' );

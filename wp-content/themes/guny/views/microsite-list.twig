@@ -1,0 +1,25 @@
+{% extends "microsite-base.twig" %}
+
+{% block content %}
+  {% block hero %}
+  {% endblock %}
+  <section class="o-container u-bottom-spacing u-top-spacing-small">
+    <div class="o-article-sidebar o-content-container--compact u-lg-gutter">
+      {% block list_sidebar %}
+      {% endblock %}
+    </div>
+    <div class="o-article">
+      {% block before_list %}
+      {% endblock %}
+      {% block post_list %}
+        {% for post in posts %}
+          {{post|print_r}}
+          {# {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %} #}
+        {% endfor %}
+      {% endblock %}
+      {% block after_list %}
+      {% endblock %}
+    </div> <!-- /.o-article -->
+  </section> <!-- /.o-layout--large -->
+  <div>Appearing in microsite list twig</div>
+{% endblock %}

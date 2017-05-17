@@ -32,7 +32,7 @@ function ms_trips_create() {
     'menu_position' => 24,
     'menu_icon' => 'dashicons-groups',
     'supports' => array( 'title', 'excerpt', 'thumbnail'),
-    'taxonomies' => array( 'post_tag', 'category' ),  
+    // 'taxonomies' => array( 'post_tag', 'category' ),  
     'exclude_from_search' => false,
     'capability_type' => 'post',
     'rewrite' => array(
@@ -49,6 +49,32 @@ function ms_trips_create() {
       'label' => __( 'Trip Groups' ),
       'rewrite' => array(
         'slug' => 'trip-group',
+        'with_front' => false
+      ),
+      'hierarchical' => true
+    )
+  );
+
+  register_taxonomy(
+    'trip_category',
+    array('trip',),
+    array(
+      'label' => __( 'Trip Category' ),
+      'rewrite' => array(
+        'slug' => 'trip-category',
+        'with_front' => false
+      ),
+      'hierarchical' => true
+    )
+  );
+
+  register_taxonomy(
+    'trip_location',
+    array('trip',),
+    array(
+      'label' => __( 'Trip Location' ),
+      'rewrite' => array(
+        'slug' => 'trip-location',
         'with_front' => false
       ),
       'hierarchical' => true

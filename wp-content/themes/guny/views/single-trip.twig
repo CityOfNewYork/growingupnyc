@@ -15,6 +15,12 @@
     {% for term in post.terms('trip_group') %}
       <a href="" class="button--pill button--pill--trip">{{term.name}}</a>
     {% endfor %}
+    {% for term in post.terms('trip_category') %}
+      <a href="" class="button--pill button--pill--trip">{{term.name}}</a>
+    {% endfor %}
+    {% for term in post.terms('trip_location') %}
+      <a href="" class="button--pill button--pill--trip">{{term.name}}</a>
+    {% endfor %}
     </p>
   </div> <!-- /.o-container -->
 </header>

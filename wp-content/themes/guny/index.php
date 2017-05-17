@@ -13,7 +13,6 @@ if ( ! class_exists( 'Timber' ) ) {
 $context = Timber::get_context();
 $context['posts'] = Timber::get_posts();
 $templates = array( 'list.twig' );
-echo "inside index.php";
 if ( count( $context['posts'] ) > 0 ) {
   $post_type = $context['posts'][0]->post_type;
   array_unshift( $templates, "list-$post_type.twig" );

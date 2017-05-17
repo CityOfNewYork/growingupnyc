@@ -32,11 +32,10 @@ function ms_trips_create() {
     'menu_position' => 24,
     'menu_icon' => 'dashicons-groups',
     'supports' => array( 'title', 'excerpt', 'thumbnail'),
-    'taxonomies' => array( 'post_tag', 'category' ),  
     'exclude_from_search' => false,
     'capability_type' => 'post',
     'rewrite' => array(
-        'slug' => 'trip',
+        'slug' => 'trips',
         'with_front' => false
       ),
     )

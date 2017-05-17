@@ -18,40 +18,14 @@
 {% endblock %}
 
 {% block list_sidebar %}
-  <div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
-    <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{current_trip_filter}}</h3>
-      <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
-        <li><a href="{{all_events.link}}" class="c-list-box__subitem">{{all_trips.name}}</a></li>
-      {% for trip_type in trip_filter %}
-        <li><a href="{{event_type.link}}" class="c-list-box__subitem">{{trip_type.name}}</a></li>
-      {% endfor %}
-      </ul>
-    </div>
-    <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{current_age_filter}}</h3>
-      <ul class="js-accordion__content c-list-box__content" id="age-filter-panel">
-        <li><a href="{{all_ages.link}}" class="c-list-box__subitem">{{all_ages.name}}</a></li>
-        {% for age in age_filter %}
-          <li><a href="{{age.link}}" class="c-list-box__subitem">{{age.name}}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
-    <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="borough-filter-heading">{{current_borough_filter}}</h3>
-      <ul class="js-accordion__content c-list-box__content" id="borough-filter-panel">
-        <li><a href="{{all_boroughs.link}}" class="c-list-box__subitem">{{all_boroughs.name}}</a></li>
-        {% for borough in borough_filter %}
-          <li><a href="{{borough.link}}" class="c-list-box__subitem">{{borough.name}}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
-  </div>
+<ol class="c-list-box c-list-box--quaternary facetwp-guny" data-multiselectable="false">
+  {{facet_trip_type}}
+  {{facet_ages}}
+</ol>
 {% endblock %}
 
 {% block post_list %}
 <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
-  <div>Appearing in List trip file</div>
   {{posts}}
 </section>
 {% endblock %}
@@ -60,4 +34,5 @@
 <div class="o-content-container--compact">
   {{pagination}}
 </div>
+<div>SALOG : list trip twig</div>
 {% endblock %}

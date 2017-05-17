@@ -73,7 +73,7 @@ Description: Custom theme for GUNY override styles for Micro Site
   }
 
   .c-banner-ms__logo {
-    @include image-replace("http://localhost/guny-repo/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_MS.png");
+    @include image-replace("/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_MS.png");
 
     background-position: center bottom;
     height: 100%;

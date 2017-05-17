@@ -44,7 +44,7 @@ html {
     .c-banner__logo-wrapper {
       height: 9rem; } }
   .c-banner__logo-wrapper .c-banner-ms__logo {
-    background: url("http://localhost/guny-repo/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_MS.png") no-repeat;
+    background: url("/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_MS.png") no-repeat;
     background-size: contain;
     display: block;
     overflow: hidden;

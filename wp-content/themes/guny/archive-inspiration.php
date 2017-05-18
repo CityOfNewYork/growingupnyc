@@ -11,9 +11,9 @@ if ( ! class_exists( 'Timber' ) ) {
   return;
 }
 $context = Timber::get_context();
-$context['posts'] = facetwp_display('template', 'trips');
+$context['posts'] = facetwp_display('template', 'inspirations');
 $context['pagination'] = facetwp_display('pager');
-$context['facet_trip_type'] = facetwp_display( 'facet', 'trip_type' );
+$context['facet_inspiration_type'] = facetwp_display( 'facet', 'inspiration_type' );
 $context['facet_ages'] = facetwp_display( 'facet', 'ages' );
-$templates = array( 'list-trip.twig', 'microsite-list.twig' );
+$templates = array( 'list-inspiration.twig', 'microsite-list.twig' );
 Timber::render( $templates, $context );

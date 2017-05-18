@@ -169,16 +169,6 @@
           </div>
         </div>
       </footer> <!-- /.c-footer -->
-      {% if options.show_banner %}
-        <div class="c-alert js-alert" data-cookie="{{options.current_banner.slug}}" id="banner-{{options.current_banner.slug}}">
-          <button type="button" class="c-alert__button" data-toggle="banner-{{options.current_banner.slug}}"><svg role="img" class="icon--small"><title>Close</title><use xlink:href="#close"></use></svg></button>
-          <div class="c-alert__banner">
-            <div class="o-container">
-              {{options.current_banner.get_field('banner_content')}}
-            </div>
-          </div>
-        </div>
-      {% endif %}
       <a class="o-offcanvas__overlay" data-toggle="offcanvas-ages" aria-hidden="true"></a>
     </div> <!-- /.o-offcanvas__main -->
   </div> <!-- /.o-offcanvas -->

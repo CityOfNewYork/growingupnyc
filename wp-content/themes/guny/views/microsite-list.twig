@@ -13,8 +13,7 @@
       {% endblock %}
       {% block post_list %}
         {% for post in posts %}
-          {{post.post_type}}
-          {# {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %} #}
+          {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
         {% endfor %}
       {% endblock %}
       {% block after_list %}

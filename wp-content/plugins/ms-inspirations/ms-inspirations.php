@@ -36,7 +36,7 @@ function ms_inspirations_create() {
     'exclude_from_search' => false,
     'capability_type' => 'post',
     'rewrite' => array(
-        'slug' => 'inspiration',
+        'slug' => 'inspirations',
         'with_front' => false
       ),
     )

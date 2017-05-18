@@ -31,7 +31,7 @@ function ms_topics_create() {
       'supports' => array( 'title', 'excerpt' ),
       'has_archive' => false,
       'rewrite' => array(
-        'slug' => 'topic',
+        'slug' => 'topics',
         'with_front' => false
       )
     )

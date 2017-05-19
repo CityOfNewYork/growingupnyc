@@ -141,19 +141,6 @@ Description: Custom theme for GUNY override styles for Micro Site
   }
 }
 
-.c-page__content {
-  h2 {
-    margin-top: rem-calc(20);
-    &:first-child {
-      margin-top: 0;
-    }
-  }
-
-  p {
-    margin-bottom: rem-calc(15);
-  }
-}
-
 //Static Column Right
 .o-scroll-column--right {
   background: $color-background-shade;
@@ -333,3 +320,6 @@ Description: Custom theme for GUNY override styles for Micro Site
 
 // Trips page styles
 @import "microsite/trips";
+
+// Trips page styles
+@import "microsite/topics";

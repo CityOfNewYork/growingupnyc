@@ -1,0 +1,56 @@
+// Micro Site Topics page styles
+
+//Hero
+.c-hero-topics {
+  background-color: $purple;
+  background-position: top center;
+  background-repeat: no-repeat;
+  padding: percentage(126/375) 0 rem-calc(65);
+
+  @include media($bp-medium) {
+    padding: rem-calc(165 40 80);
+  }
+
+  @include media($bp-xlarge) {
+    padding: rem-calc(250 80 80);
+    background-position: bottom rem-calc(-150) center;
+  }
+}
+
+.c-hero-topics__tagline {
+  @include media($bp-large) {
+    font-size: rem-calc(21px);
+  }
+}
+
+//Article Content
+.o-article-ms {
+  h2 {
+    margin-top: rem-calc(20);
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+// Navigation List Link
+.c-nav-list-topics {
+  .c-nav-list__link {
+    background-color: $dark-purple;
+    border-color: $purple;
+
+    &:hover,
+    &:focus {
+      background-color: $purple;
+      border-color: $purple;
+    }
+  }
+}
+
+//Tips
+.c-tip-topics {
+  &,
+  .c-tip__sticker {
+    background: $dark-purple;
+  }
+}

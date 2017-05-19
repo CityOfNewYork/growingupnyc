@@ -1,0 +1,104 @@
+{
+    "key": "group_591d8a964529f",
+    "title": "Tip",
+    "fields": [
+        {
+            "key": "field_591d8ac366775",
+            "label": "Tip Content",
+            "name": "tip",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": "br"
+        },
+        {
+            "key": "field_591d8aed66776",
+            "label": "Tip Action Heading",
+            "name": "tip_action_heading",
+            "type": "text",
+            "instructions": "Text displayed before the tip actions, i.e. \"Want more Talk to Your Baby tips?\"",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_591d8b0066777",
+            "label": "SMS Text",
+            "name": "sms_text",
+            "type": "text",
+            "instructions": "Instructions to get more information by text",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_591d8b1f66778",
+            "label": "Website Link",
+            "name": "website_link",
+            "type": "url",
+            "instructions": "URL to website where a user can find out more",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "age"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "topic"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1495108436
+}

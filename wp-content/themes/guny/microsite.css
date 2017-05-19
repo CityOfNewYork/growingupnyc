@@ -120,14 +120,6 @@ html {
   .s-wysiwyg ul li {
     padding-bottom: 0; }
 
-.c-page__content h2 {
-  margin-top: 1.25rem; }
-  .c-page__content h2:first-child {
-    margin-top: 0; }
-
-.c-page__content p {
-  margin-bottom: 0.9375rem; }
-
 .o-scroll-column--right {
   background: #eee;
   padding: 0.5rem 0; }
@@ -255,7 +247,15 @@ html {
 .button--pill--trip {
   background: #00965c; }
   .button--pill--trip:hover {
-    background: #007145; }
+    background: #20bf65; }
+
+.c-page__content h2 {
+  margin-top: 1.25rem; }
+  .c-page__content h2:first-child {
+    margin-top: 0; }
+
+.c-page__content p {
+  margin-bottom: 0.9375rem; }
 
 .no-touchevents .button--pill--trip:hover {
   background: #007145; }
@@ -271,5 +271,38 @@ html {
 
 .o-article-ms-sidebar {
   float: left; }
+
+.c-hero-topics {
+  background-color: #7735b2;
+  background-position: top center;
+  background-repeat: no-repeat;
+  padding: 33.6% 0 4.0625rem; }
+  @media screen and (min-width: 700px) {
+    .c-hero-topics {
+      padding: 10.3125rem 2.5rem 5rem; } }
+  @media screen and (min-width: 1200px) {
+    .c-hero-topics {
+      padding: 15.625rem 5rem 5rem;
+      background-position: bottom -9.375rem center; } }
+
+@media screen and (min-width: 1024px) {
+  .c-hero-topics__tagline {
+    font-size: 1.3125rem; } }
+
+.o-article-ms h2 {
+  margin-top: 1.25rem; }
+  .o-article-ms h2:first-child {
+    margin-top: 0; }
+
+.c-nav-list-topics .c-nav-list__link {
+  background-color: #3c036f;
+  border-color: #7735b2; }
+  .c-nav-list-topics .c-nav-list__link:hover, .c-nav-list-topics .c-nav-list__link:focus {
+    background-color: #7735b2;
+    border-color: #7735b2; }
+
+.c-tip-topics,
+.c-tip-topics .c-tip__sticker {
+  background: #3c036f; }
 
 /*# sourceMappingURL=microsite.css.map */

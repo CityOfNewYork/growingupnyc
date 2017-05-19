@@ -16,7 +16,21 @@
 .button--pill--trip {
   background: $green;
   &:hover {
-    background: $dark-green;
+    background: $light-green;
+  }
+}
+
+//WYSIWYG Style overrides
+.c-page__content {
+  h2 {
+    margin-top: rem-calc(20);
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  p {
+    margin-bottom: rem-calc(15);
   }
 }
 

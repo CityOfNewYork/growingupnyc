@@ -2,7 +2,7 @@
 
 {% block head_extras %}
 <style>
-  .c-hero-topics {background-image: url(/wp-content/themes/guny/assets/img/hero-topics-splatter.svg);}
+  .c-hero-topics {background-image: url(http://localhost/guny-repo/wp-content/themes/guny/assets/img/hero-topics-splatter.svg);}
 </style>
 {% endblock %}
 
@@ -66,7 +66,7 @@
       <section class="o-content-container--compact u-top-spacing u-bottom-spacing" id="section-one">
         {% for top in post.get_field('page_top') %}
           {# {{top|print_r}} #}
-          <h2 id="{{top.page_top_content_heading|lower|replace({' ':'-'})}}">{{top.page_top_content_heading}}</h2></a>
+          <h2 id="{{top.page_top_content_heading|lower|replace({' ':'-'})}}">{{top.page_top_content_heading}}</h2>
           {# {{top.page_top_content_heading}} #}
           {{top.page_top_content_text}}
           {# <h1>Loop</h1> -  {{ loop.index }} #}
@@ -74,17 +74,17 @@
       </section>
       <hr>
 
-      {# Section Inspirations #}
-      {% if post.inspiration_posts %}
-        <li class="c-nav-list__item">
-          {% for inspiration in post.get_field('inspiration_posts') %}
-            {% set inspiration = TimberPost(inspiration) %}
-            <div class="c-block-list__item">
-              {% include ['partials/teaser-'~inspiration.post_type~'.twig', 'partials/teaser.twig'] with {post: inspiration, is_first: loop.first, age_group: post.title} %}
-            </div>
-          {% endfor %}
-        </li>
+      {% if post.talk_to_a_counselor %}
+        <section id="section-chat-a-counselor" class="o-content-container--compact u-top-spacing u-bottom-spacing s-wysiwyg">
+          <h2>{{ __('Did you know you can text, chat online, or talk to a counselor for free?', 'GUNY-Single-Topic') }}</h2>
+          {{post.get_field('talk_to_a_counselor')}}
+          <div class="c-do-list">
+            {{post.get_field('do_list')}}
+          </div>
+          <a class="button--primary button--primary__curved button--primary__purple" href="{{post.get_field('button')}}">Learn more about NYC Well</a>
+        </section> <!-- /.o-content-container-text -->
       {% endif %}
+      <hr>
 
       {# Section Two #}
       <section class="o-content-container--compact u-top-spacing u-bottom-spacing-small" id="section-two">
@@ -101,6 +101,17 @@
           <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#lightbulb"></use></svg>
         </div>
         <p class="c-tip__content">{{post.tip}}</p>
+
+        <div class="sms-form-wrapper">
+          <div class="signup-form__input signup-form__input--long sms-form__input--long">
+            <label for="phone" class="signup-form__label sms-form__label">
+              <span class="signup-form__label-content sms-form__label-content" data-content="Phone Number">Phone Number</span>
+            </label>
+            <input name="phone" id="phone" type="tel" class="form-field signup-form__field sms-form__field" required="">
+          </div>
+          <button type="submit" class="button--primary button--primary__curved button--primary__purple">Send</button>
+        </div>
+
         <footer class="c-tip__footer">
           {% if post.tip_action_heading %}
             <p>{{post.tip_action_heading}}</p>
@@ -108,7 +119,7 @@
               <p>
                 {{post.sms_text}}{% if post.sms_text and post.website_link %}, or{% endif %}
                 {% if post.website_link %}<a href="{{post.website_link}}" class="c-tip__link" target="_blank">find out more here</a>{% endif %}.
-              </p>
+              </p>              
             {% endif %}
           {% endif %}
         </footer>

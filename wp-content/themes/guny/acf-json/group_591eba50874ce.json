@@ -1,11 +1,118 @@
 {
-    "key": "group_591d4460d7afe",
-    "title": "Topics",
+    "key": "group_591eba50874ce",
+    "title": "Inspirations",
     "fields": [
         {
-            "key": "field_591d447addbec",
-            "label": "Sub Heading",
-            "name": "sub_heading",
+            "key": "field_591ebb1d5be04",
+            "label": "Hero Banner",
+            "name": "hero_banner",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_5922a5a345bd4",
+            "label": "Name",
+            "name": "prof_name",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5922dfce331e0",
+            "label": "Profile Image",
+            "name": "prof_img",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": 300,
+            "max_height": 300,
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_5922a666cba0f",
+            "label": "Age",
+            "name": "prof_age",
+            "type": "number",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5922a6b4cba10",
+            "label": "Country",
+            "name": "prof_country",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "country",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5922a8c8aae1f",
+            "label": "City\/State",
+            "name": "prof_citystate",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -22,31 +129,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_591d44caddbee",
-            "label": "Sections Selector",
-            "name": "sections_selector",
-            "type": "radio",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "Yes": "Yes",
-                "No": "No"
-            },
-            "allow_null": 0,
-            "other_choice": 0,
-            "save_other_choice": 0,
-            "default_value": "",
-            "layout": "vertical",
-            "return_format": "value"
-        },
-        {
-            "key": "field_591d4558ddbef",
+            "key": "field_591ebdd65be07",
             "label": "Intro \/ Overview",
             "name": "intro__overview",
             "type": "wysiwyg",
@@ -64,7 +147,7 @@
             "media_upload": 1
         },
         {
-            "key": "field_591d4579ddbf0",
+            "key": "field_591ebdf35be08",
             "label": "Page Top",
             "name": "page_top",
             "type": "flexible_content",
@@ -81,13 +164,13 @@
             "max": "",
             "layouts": [
                 {
-                    "key": "591d458f24937",
+                    "key": "591ebe08562cf",
                     "name": "page_top_content",
                     "label": "Page Top Content",
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_591d45a7ddbf1",
+                            "key": "field_591ebe1b5be09",
                             "label": "Page Top Content Heading",
                             "name": "page_top_content_heading",
                             "type": "text",
@@ -106,7 +189,7 @@
                             "maxlength": ""
                         },
                         {
-                            "key": "field_591d45c1ddbf2",
+                            "key": "field_591ebe385be0a",
                             "label": "Page Top Content Text",
                             "name": "page_top_content_text",
                             "type": "wysiwyg",
@@ -130,59 +213,7 @@
             ]
         },
         {
-            "key": "field_591ee5d496062",
-            "label": "Talk to a Counselor",
-            "name": "talk_to_a_counselor",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 0
-        },
-        {
-            "key": "field_591ee91a0bbef",
-            "label": "Talk to a counselor do list",
-            "name": "do_list",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1
-        },
-        {
-            "key": "field_591eec9488e02",
-            "label": "Button",
-            "name": "button",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_591d45efddbf3",
+            "key": "field_591ebe6b5be0b",
             "label": "Page Bottom",
             "name": "page_bottom",
             "type": "flexible_content",
@@ -199,13 +230,13 @@
             "max": "",
             "layouts": [
                 {
-                    "key": "591d460245685",
+                    "key": "591ebe7b0c135",
                     "name": "page_bottom_content",
                     "label": "Page Bottom Content",
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_591d461cddbf4",
+                            "key": "field_591ebed25be0c",
                             "label": "Page Bottom Content Heading",
                             "name": "page_bottom_content_heading",
                             "type": "text",
@@ -224,7 +255,7 @@
                             "maxlength": ""
                         },
                         {
-                            "key": "field_591d462fddbf5",
+                            "key": "field_591ebee35be0d",
                             "label": "Page Bottom Content Text",
                             "name": "page_bottom_content_text",
                             "type": "wysiwyg",
@@ -246,6 +277,28 @@
                     "max": ""
                 }
             ]
+        },
+        {
+            "key": "field_591ebf1f5be0e",
+            "label": "Inspiration Posts",
+            "name": "inspiration_posts",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "inspiration"
+            ],
+            "taxonomy": [],
+            "allow_null": 1,
+            "multiple": 1,
+            "return_format": "object",
+            "ui": 1
         }
     ],
     "location": [
@@ -253,7 +306,7 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "topic"
+                "value": "inspiration"
             }
         ]
     ],
@@ -265,5 +318,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1495439616
+    "modified": 1495458153
 }

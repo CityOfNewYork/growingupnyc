@@ -417,13 +417,13 @@ html {
     .c-card__sticker {
       left: -3.125rem; } }
 
-.button--primary__purple {
+.button--primary__blue {
   background: #144f82;
   color: #fff;
   border-color: #144f82;
   text-transform: none; }
 
-.no-touchevents .button--primary__purple:hover, .no-touchevents .button--primary__purple:focus {
+.no-touchevents .button--primary__blue:hover, .no-touchevents .button--primary__blue:focus {
   background: #0b2c49;
   border-color: #0b2c49; }
 

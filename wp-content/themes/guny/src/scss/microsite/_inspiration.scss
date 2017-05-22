@@ -83,14 +83,14 @@
 }
 
 //Curved blue button
-.button--primary__purple {
+.button--primary__blue {
   background: $dark-blue;
   color: $white;
   border-color: $dark-blue;
   text-transform: none;
 }
 
-.no-touchevents .button--primary__purple {
+.no-touchevents .button--primary__blue {
   &:hover,
   &:focus {
     background: $very-dark-blue-1;

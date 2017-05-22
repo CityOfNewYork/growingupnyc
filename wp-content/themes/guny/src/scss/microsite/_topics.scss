@@ -54,3 +54,69 @@
     background: $dark-purple;
   }
 }
+
+//Do List
+.c-do-list {
+  margin: rem-calc(30px) 0;
+  background: $very-light-gray;
+  padding: rem-calc(30px);
+
+  a {
+    &:hover,
+    &:focus {
+      color: $purple;
+    }
+  }
+}
+
+//Curved purple button
+.button--primary__purple {
+  background: $purple;
+  color: $white;
+  border-color: $purple;
+  text-transform: none;
+}
+
+.no-touchevents .button--primary__purple {
+  &:hover,
+  &:focus {
+    background: $light-purple;
+    border-color: $light-purple;
+  }
+}
+
+//SMS form
+.sms-form-wrapper {
+  text-align: center;
+}
+
+.sms-form__input--long {
+  width: 100%;
+  text-align: left;
+  font-size: rem-calc(15);
+  margin-right: rem-calc(10);
+
+  @include media($bp-medium) {
+    width: rem-calc(240);
+  }
+
+  @include media($bp-xlarge) {
+    width: rem-calc(400);
+  }
+}
+
+.csstransforms3d .sms-form__label,
+.styleguide .sms-form__label {
+  bottom: 100%;
+  transform: translate3d(0, #{rem-calc(35)}, 0);
+  transition: transform 250ms ease-in-out;
+}
+
+.csstransforms3d .is-filled .sms-form__label,
+.styleguide .is-filled .sms-form__label {
+  transform: translate3d(0, 0, 0);
+}
+
+.signup-form__label-content {
+  color: $purple;
+}

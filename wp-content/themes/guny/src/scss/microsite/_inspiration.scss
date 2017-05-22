@@ -1,0 +1,99 @@
+// Micro Site Inspiration page styles
+
+//Sidebar styles
+.c-prof-name {
+  padding-top: rem-calc(15px);
+  padding-bottom: rem-calc(5px);
+  h2 {
+    font-size: rem-calc(40px);
+    text-transform: none;
+    margin-bottom: 0;
+  }
+}
+
+.c-prof-country {
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
+}
+
+.c-prof-intro {
+  border-top: 2px solid $white;
+  padding-top: rem-calc(15px);
+}
+
+//Content Styles
+.s-wysiwyg {
+  .c-other-inspirations {
+    background: $very-light-gray;
+    padding: rem-calc(40px);
+
+    .c-card__title {
+      margin-top: 0;
+    }
+
+    .c-card__body {
+      p {
+        margin-bottom: rem-calc(30);
+      }
+    }
+
+    .c-card__subtitle {
+      display: none;
+    }
+
+    .c-card__sticker {
+      background-size: 140% !important;
+    }
+  }
+
+  .c-other-inspirations__title {
+    margin: rem-calc(0 0 15px);
+  }
+}
+
+.c-card {
+  background: $color-background;
+  display: flex;
+  flex-flow: column;
+  margin-left: rem-calc($sticker-size-mobile / 2);
+  margin-right: 0;
+  padding: rem-calc(25 21 25 ($sticker-size-mobile / 2) + 10);
+  position: relative;
+  margin-bottom: rem-calc(20);
+  @include media($bp-large) {
+    margin-left: rem-calc($sticker-size / 2);
+    padding: rem-calc(30);
+    padding-left: rem-calc(($sticker-size / 2) + 20);
+  }
+}
+
+.c-card__sticker {
+  order: 1;
+  position: absolute;
+  left: rem-calc(-$sticker-size-mobile / 2);
+  top: rem-calc(10);
+
+  .event-day {
+    display: none;
+  }
+
+  @include media($bp-large) {
+    left: rem-calc(-$sticker-size / 2);
+  }
+}
+
+//Curved blue button
+.button--primary__purple {
+  background: $dark-blue;
+  color: $white;
+  border-color: $dark-blue;
+  text-transform: none;
+}
+
+.no-touchevents .button--primary__purple {
+  &:hover,
+  &:focus {
+    background: $very-dark-blue-1;
+    border-color: $very-dark-blue-1;
+  }
+}

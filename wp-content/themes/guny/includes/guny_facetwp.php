@@ -173,6 +173,7 @@ class FacetWP_Facet_Guny {
   }
 
   function render( $params ) {
+    $url=strtok($_SERVER["HTTP_REFERER"],'?'); 
     $facet = $params['facet'];
     $label_any = empty( $facet['label_any'] ) ? __( 'Any', 'fwp' ) : $facet['label_any'];
     $label_any = facetwp_i18n( $label_any );
@@ -190,10 +191,10 @@ class FacetWP_Facet_Guny {
     $output .= '<h3 class="js-accordion__header c-list-box__heading" id="' . $facet['name'] . '-heading">' . $header . '</h3>';
     $output .= '<ul class="js-accordion__content c-list-box__content" id="' . $facet['name'] . '-panel">';
     $selected = empty($selected_values) ? 'true' : 'false';
-    $output .= '<li><a href="#" class="c-list-box__subitem facetwp-item" aria-selected="' . $selected . '" data-value="">' . $label_any . '</a></li>';
+    $output .= '<li><a href="'.$url.'" class="c-list-box__subitem" data-value="">' . $label_any . '</a></li>';
     foreach( $values as $result ) {
       $selected = in_array( $result['facet_value'], $selected_values) ? 'true' : 'false';
-      $output .= '<li><a href="#" class="c-list-box__subitem facetwp-item" aria-selected="' . $selected . '" data-value="' . $result['facet_value'] . '">' . $result['facet_display_value'] . '</a></li>';
+      $output .= '<li><a href="'.$url.'?'.$facet['name'].'='.$result['facet_value'].'" class="c-list-box__subitem" aria-selected="' . $selected . '" data-value="' . $result['facet_value'] . '">' . $result['facet_display_value'] . '</a></li>';
     }
     $output .= '</ul>';
     $output .= '</div>';

@@ -51,6 +51,34 @@ function ms_trips_create() {
       'hierarchical' => true
     )
   );
+
+  
+  register_taxonomy(
+    'trip_category',
+    array('trip',),
+    array(
+      'label' => __( 'Trip Category' ),
+      'rewrite' => array(
+        'slug' => 'trip-category',
+        'with_front' => false
+      ),
+      'hierarchical' => true
+    )
+  );
+
+  register_taxonomy(
+    'trip_location',
+    array('trip',),
+    array(
+      'label' => __( 'Trip Location' ),
+      'rewrite' => array(
+        'slug' => 'trip-location',
+        'with_front' => false
+      ),
+      'hierarchical' => true
+    )
+  );
+
 }
 
 add_action( 'init', 'ms_trips_create' );

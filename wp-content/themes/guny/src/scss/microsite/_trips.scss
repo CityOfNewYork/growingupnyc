@@ -1,5 +1,71 @@
 // Micro Site Trips page styles
 
+//Landing page
+//Hero
+.c-hero-ms__trips {
+  background-color: $green;
+}
+
+//Sidebar list
+.c-list-box-trips {
+  padding: 0;
+  .c-list-box__heading {
+    background: $green;
+  }
+  .c-list-box__content {
+    background: $dark-green;
+  }
+}
+
+.c-block-list-trips {
+  .c-card__title {
+    a {
+      text-decoration: underline;
+      &:hover,
+      &:focus {
+        color: $green;
+      }
+    }
+  }
+
+  .c-card__subtitle {
+    display: none;
+  }
+
+  .button--pill {
+    &:first-child {
+      background: $green;
+    }
+    background: $very-dark-green;
+  }
+
+  .c-card__sticker {
+    background: $green;
+  }
+}
+
+.no-touchevents .c-block-list-trips .button--pill {
+  &:first-child {
+    &:hover,
+    &:focus {
+      background: $light-green;
+    }
+  }
+
+  &:hover,
+  &:focus {
+    background: $green;
+  }
+}
+
+.no-touchevents .c-list-box-trips .c-list-box__subitem {
+  &:hover,
+  &:focus {
+    background: $very-dark-green;
+  }
+}
+
+//Detail page
 //Page Intro
 .c-page__intro {
   margin-bottom: rem-calc(30);
@@ -20,6 +86,13 @@
   }
 }
 
+.no-touchevents .button--pill--trip {
+  &:hover,
+  &:focus {
+    background: $dark-green;
+  }
+}
+
 //WYSIWYG Style overrides
 .c-page__content {
   h2 {
@@ -31,12 +104,6 @@
 
   p {
     margin-bottom: rem-calc(15);
-  }
-}
-
-.no-touchevents .button--pill--trip {
-  &:hover {
-    background: $dark-green;
   }
 }
 

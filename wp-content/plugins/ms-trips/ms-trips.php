@@ -40,12 +40,12 @@ function ms_trips_create() {
   );
 
 	register_taxonomy(
-    'trip_group',
+    'free_day_trip',
     array('trip',),
     array(
-      'label' => __( 'Trip Groups' ),
+      'label' => __( 'Free day trip' ),
       'rewrite' => array(
-        'slug' => 'trip-group',
+        'slug' => 'free-day-trip',
         'with_front' => false
       ),
       'hierarchical' => true
@@ -54,30 +54,30 @@ function ms_trips_create() {
 
   
   register_taxonomy(
-    'trip_category',
+    'free_this_week',
     array('trip',),
     array(
-      'label' => __( 'Trip Category' ),
+      'label' => __( 'Free this week' ),
       'rewrite' => array(
-        'slug' => 'trip-category',
+        'slug' => 'free-this-week',
         'with_front' => false
       ),
       'hierarchical' => true
     )
   );
 
-  register_taxonomy(
-    'trip_location',
-    array('trip',),
-    array(
-      'label' => __( 'Trip Location' ),
-      'rewrite' => array(
-        'slug' => 'trip-location',
-        'with_front' => false
-      ),
-      'hierarchical' => true
-    )
-  );
+  // register_taxonomy(
+  //   'trip_location',
+  //   array('trip',),
+  //   array(
+  //     'label' => __( 'Trip Location' ),
+  //     'rewrite' => array(
+  //       'slug' => 'trip-location',
+  //       'with_front' => false
+  //     ),
+  //     'hierarchical' => true
+  //   )
+  // );
 
 }
 

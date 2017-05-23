@@ -25,21 +25,22 @@
 {% endblock %}
 
 {% block post_list %}
-  {% if weekposts %}
-    <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
-      {{weekposts}}
-    </section>
-  {% endif %}
   {% if dayposts %}
     <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
       {{dayposts}}
     </section>
   {% endif %}
+
+  {% if weekposts %}
+    <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
+      {{weekposts}}
+    </section>
+  {% endif %}
 {% endblock %}
 
 
-{% block after_list %}
+{# {% block after_list %}
 <div class="o-content-container--compact">
   {{pagination}}
 </div>
-{% endblock %}
+{% endblock %} #}

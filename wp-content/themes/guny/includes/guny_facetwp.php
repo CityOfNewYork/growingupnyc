@@ -31,6 +31,7 @@ add_filter( 'facetwp_facet_html', 'guny_facetwp_facet_html', 10, 2 );
 * Custom HTML for the pager
 */
 function guny_facetwp_pager_html( $output, $params ) {
+  $url=strtok($_SERVER["HTTP_REFERER"],'?').'?'.strtok('&');
   $page = (int) $params['page'];
   $per_page = (int) $params['per_page'];
   $total_rows = (int) $params['total_rows'];
@@ -40,10 +41,10 @@ function guny_facetwp_pager_html( $output, $params ) {
     return $output;
   }
   if ( 1 <= ( $page - 1 ) ) {
-    $output .= '<button class="facetwp-page button--outline button--outline--gray alignleft" data-page="' . ($page - 1) . '">Previous</button>';
+    $output .= '<a class="button--outline button--outline--gray alignleft" href="'.$url.'&fwp_paged='.($page - 1) . '">Previous</button>';
   }
   if ( $total_pages >= ( $page + 1 ) ) {
-    $output .= '<button class="facetwp-page button--outline button--outline--gray alignright" data-page="' . ($page + 1) . '">Next</button>';
+    $output .= '<a class="button--outline button--outline--gray alignright" href="'.$url.'&fwp_paged='.($page + 1) . '">Next</button>';
   }
   return $output;
 }

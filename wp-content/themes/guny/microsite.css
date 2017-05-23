@@ -60,6 +60,12 @@ html {
       .c-banner__logo-wrapper .c-banner-ms__logo {
         background-position: center bottom 0.6875rem; } }
 
+.c-hero-ms {
+  padding: 33.6% 0 4.0625rem; }
+  @media screen and (min-width: 700px) {
+    .c-hero-ms {
+      padding: 10.5rem 2.5rem 5rem; } }
+
 .c-side-hero-ms {
   border-left: none; }
 
@@ -268,6 +274,41 @@ html {
 .c-footer {
   background: #2d333d; }
 
+.c-hero-ms__trips {
+  background-color: #00965c; }
+
+.c-list-box-trips {
+  padding: 0; }
+  .c-list-box-trips .c-list-box__heading {
+    background: #00965c; }
+  .c-list-box-trips .c-list-box__content {
+    background: #007145; }
+
+.c-block-list-trips .c-card__title a {
+  text-decoration: underline; }
+  .c-block-list-trips .c-card__title a:hover, .c-block-list-trips .c-card__title a:focus {
+    color: #00965c; }
+
+.c-block-list-trips .c-card__subtitle {
+  display: none; }
+
+.c-block-list-trips .button--pill {
+  background: #005e4c; }
+  .c-block-list-trips .button--pill:first-child {
+    background: #00965c; }
+
+.c-block-list-trips .c-card__sticker {
+  background: #00965c; }
+
+.no-touchevents .c-block-list-trips .button--pill:first-child:hover, .no-touchevents .c-block-list-trips .button--pill:first-child:focus {
+  background: #20bf65; }
+
+.no-touchevents .c-block-list-trips .button--pill:hover, .no-touchevents .c-block-list-trips .button--pill:focus {
+  background: #00965c; }
+
+.no-touchevents .c-list-box-trips .c-list-box__subitem:hover, .no-touchevents .c-list-box-trips .c-list-box__subitem:focus {
+  background: #005e4c; }
+
 .c-page__intro {
   margin-bottom: 1.875rem; }
 
@@ -280,6 +321,9 @@ html {
   .button--pill--trip:hover {
     background: #20bf65; }
 
+.no-touchevents .button--pill--trip:hover, .no-touchevents .button--pill--trip:focus {
+  background: #007145; }
+
 .c-page__content h2 {
   margin-top: 1.25rem; }
   .c-page__content h2:first-child {
@@ -287,9 +331,6 @@ html {
 
 .c-page__content p {
   margin-bottom: 0.9375rem; }
-
-.no-touchevents .button--pill--trip:hover {
-  background: #007145; }
 
 .acf-map {
   float: left;
@@ -303,6 +344,71 @@ html {
 .o-article-trip-sidebar {
   float: left; }
 
+.c-hero-ms__topics {
+  background-color: #00965c; }
+
+.c-list-box-topics {
+  padding: 0; }
+  .c-list-box-topics .c-list-box__heading,
+  .c-list-box-topics .c-list-box__content {
+    background: #31035a; }
+  .c-list-box-topics .c-list-box__content li {
+    display: block;
+    padding: 0.1875rem 1.25rem; }
+    .c-list-box-topics .c-list-box__content li:first-child {
+      padding-top: 0.3125rem; }
+    .c-list-box-topics .c-list-box__content li:last-child {
+      padding-bottom: 0.3125rem; }
+    @media screen and (min-width: 1024px) {
+      .c-list-box-topics .c-list-box__content li {
+        padding: 0.1875rem 1.5625rem; }
+        .c-list-box-topics .c-list-box__content li:last-child {
+          padding-bottom: 1.875rem; } }
+    .c-list-box-topics .c-list-box__content li .c-list-box__subitem {
+      border: 2px solid #fff;
+      border-radius: 1.5625rem;
+      display: inline-block;
+      font-family: "museo-sans-rounded", sans-serif;
+      font-size: 0.98438rem;
+      font-weight: 900;
+      line-height: 1;
+      min-width: 100%;
+      padding: 0.875rem 1.875rem;
+      text-align: center;
+      text-decoration: none;
+      transition: all ease-in-out 0.15s; }
+      @media screen and (min-width: 1024px) {
+        .c-list-box-topics .c-list-box__content li .c-list-box__subitem {
+          font-size: 1.125rem; } }
+      .c-list-box-topics .c-list-box__content li .c-list-box__subitem:hover, .c-list-box-topics .c-list-box__content li .c-list-box__subitem:focus {
+        background: #fff;
+        color: #31035a; }
+
+.c-block-list-topics .c-card__title a {
+  text-decoration: underline; }
+  .c-block-list-topics .c-card__title a:hover, .c-block-list-topics .c-card__title a:focus {
+    color: #7735b2; }
+
+.c-block-list-topics .c-card__subtitle {
+  display: none; }
+
+.c-block-list-topics .button--pill {
+  background: #3c036f; }
+  .c-block-list-topics .button--pill:first-child {
+    background: #7735b2; }
+
+.c-block-list-topics .c-card__sticker {
+  background: #7735b2; }
+
+.no-touchevents .c-block-list-topics .button--pill:first-child:hover, .no-touchevents .c-block-list-topics .button--pill:first-child:focus {
+  background: #b35eff; }
+
+.no-touchevents .c-block-list-topics .button--pill:hover, .no-touchevents .c-block-list-topics .button--pill:focus {
+  background: #7735b2; }
+
+.no-touchevents .c-list-box-topics .c-list-box__subitem:hover, .no-touchevents .c-list-box-topics .c-list-box__subitem:focus {
+  background: #005e4c; }
+
 .c-hero-topics {
   background-color: #7735b2;
   background-position: top center;
@@ -310,7 +416,7 @@ html {
   padding: 33.6% 0 4.0625rem; }
   @media screen and (min-width: 700px) {
     .c-hero-topics {
-      padding: 10.3125rem 2.5rem 5rem; } }
+      padding: 10.5rem 2.5rem 5rem; } }
   @media screen and (min-width: 1200px) {
     .c-hero-topics {
       padding: 15.625rem 5rem 5rem;
@@ -355,6 +461,11 @@ html {
 
 .sms-form-wrapper {
   text-align: center; }
+  .sms-form-wrapper button {
+    margin-top: 1.25rem; }
+    @media screen and (min-width: 700px) {
+      .sms-form-wrapper button {
+        margin-top: 0; } }
 
 .sms-form__input--long {
   width: 100%;

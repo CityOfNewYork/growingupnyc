@@ -1,5 +1,112 @@
 // Micro Site Topics page styles
 
+//Landing page
+//Hero
+.c-hero-ms__topics {
+  background-color: $green;
+}
+
+//Sidebar list
+.c-list-box-topics {
+  padding: 0;
+  .c-list-box__heading,
+  .c-list-box__content {
+    background: $purple-60;
+  }
+
+  .c-list-box__content {
+    li {
+      display: block;
+      padding: rem-calc(3 20);
+
+      &:first-child {
+        padding-top: rem-calc(5);
+      }
+
+      &:last-child {
+        padding-bottom: rem-calc(5);
+      }
+
+      @include media($bp-large) {
+        padding: rem-calc(3 25);
+
+        &:last-child {
+          padding-bottom: rem-calc(30);
+        }
+      }
+
+      .c-list-box__subitem {
+        border: 2px solid $color-text-invert;
+        border-radius: rem-calc(25);
+        display: inline-block;
+        font-family: $font-family-display;
+        @include font-size-regular;
+        font-weight: $font-weight-extrablack;
+        line-height: 1;
+        min-width: 100%;
+        padding: rem-calc(14 30);
+        text-align: center;
+        text-decoration: none;
+        transition: $button-transition;
+
+        &:hover,
+        &:focus {
+          background: $white;
+          color: $purple-60;
+        }
+      }
+    }
+  }
+}
+
+.c-block-list-topics {
+  .c-card__title {
+    a {
+      text-decoration: underline;
+      &:hover,
+      &:focus {
+        color: $purple;
+      }
+    }
+  }
+
+  .c-card__subtitle {
+    display: none;
+  }
+
+  .button--pill {
+    &:first-child {
+      background: $purple;
+    }
+    background: $dark-purple;
+  }
+
+  .c-card__sticker {
+    background: $purple;
+  }
+}
+
+.no-touchevents .c-block-list-topics .button--pill {
+  &:first-child {
+    &:hover,
+    &:focus {
+      background: $light-purple;
+    }
+  }
+
+  &:hover,
+  &:focus {
+    background: $purple;
+  }
+}
+
+.no-touchevents .c-list-box-topics .c-list-box__subitem {
+  &:hover,
+  &:focus {
+    background: $very-dark-green;
+  }
+}
+
 //Hero
 .c-hero-topics {
   background-color: $purple;
@@ -8,7 +115,7 @@
   padding: percentage(126/375) 0 rem-calc(65);
 
   @include media($bp-medium) {
-    padding: rem-calc(165 40 80);
+    padding: rem-calc(168 40 80);
   }
 
   @include media($bp-xlarge) {
@@ -88,6 +195,13 @@
 //SMS form
 .sms-form-wrapper {
   text-align: center;
+
+  button {
+    margin-top: rem-calc(20);
+    @include media($bp-medium) {
+      margin-top: 0;
+    }
+  }
 }
 
 .sms-form__input--long {

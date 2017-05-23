@@ -213,72 +213,6 @@
             ]
         },
         {
-            "key": "field_591ebe6b5be0b",
-            "label": "Page Bottom",
-            "name": "page_bottom",
-            "type": "flexible_content",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "button_label": "Add Row",
-            "min": "",
-            "max": "",
-            "layouts": [
-                {
-                    "key": "591ebe7b0c135",
-                    "name": "page_bottom_content",
-                    "label": "Page Bottom Content",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_591ebed25be0c",
-                            "label": "Page Bottom Content Heading",
-                            "name": "page_bottom_content_heading",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
-                        },
-                        {
-                            "key": "field_591ebee35be0d",
-                            "label": "Page Bottom Content Text",
-                            "name": "page_bottom_content_text",
-                            "type": "wysiwyg",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "tabs": "all",
-                            "toolbar": "full",
-                            "media_upload": 1
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                }
-            ]
-        },
-        {
             "key": "field_591ebf1f5be0e",
             "label": "Inspiration Posts",
             "name": "inspiration_posts",
@@ -318,5 +252,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1495458153
+    "modified": 1495523300
 }

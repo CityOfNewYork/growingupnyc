@@ -3,7 +3,7 @@
 {% block classes %}{{is_first ? "c-card--hero #{age_group.slug|sanitize|replace({'-es':''})}-gradient"}}{% endblock %}
 
 {% block sticker %}
-  {% set category = post.terms('trip_group')|first %}
+  {% set category = post.terms('trip_type')|first %}
   {% if category %}
     <div class="c-card__sticker sticker" aria-hidden="true">
       <svg class="icon--large"><title>{{category.name}}</title><use xlink:href="#{{category.slug|replace({'-es':''})}}"></use></svg>

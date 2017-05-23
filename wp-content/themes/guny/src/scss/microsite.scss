@@ -90,6 +90,14 @@ Description: Custom theme for GUNY override styles for Micro Site
 }
 
 // Hero
+.c-hero-ms {
+  padding: percentage(126/375) 0 rem-calc(65);
+
+  @include media($bp-medium) {
+    padding: rem-calc(168 40 80);
+  }
+}
+
 .c-side-hero-ms {
   border-left: none;
 }

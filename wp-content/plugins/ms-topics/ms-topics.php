@@ -25,13 +25,13 @@ function ms_topics_create() {
         'insert_into_item' => 'Insert into topic',
         'uploaded_to_this_item' => 'Uploaded to this topic'
       ),
+      'has_archive' => true,
       'public' => true,
-      'menu_position' => 24,
+      'menu_position' => 27,
       'menu_icon' => 'dashicons-groups',
-      'supports' => array( 'title', 'excerpt' ),
-      'has_archive' => false,
+      'supports' => array( 'title', 'excerpt' , 'thumbnail' ),
       'rewrite' => array(
-        'slug' => 'topic',
+        'slug' => 'topics',
         'with_front' => false
       )
     )

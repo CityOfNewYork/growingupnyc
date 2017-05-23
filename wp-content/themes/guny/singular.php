@@ -61,5 +61,4 @@ else{
   $templates = array( 'single-' . $post->ID . '.twig', 'single-' . $post->post_type . '.twig', 'single.twig' );
 }
 $context['post'] = $post;
-
 Timber::render( $templates, $context );

@@ -24,19 +24,16 @@ function ms_inspirations_create() {
       'menu_name' => 'Inspirations',
     );
 
-      //register post type
   register_post_type( 'inspiration', array(
     'labels' => $labels,
     'has_archive' => true,
     'public' => true,
-    'menu_position' => 24,
+    'menu_position' => 26,
     'menu_icon' => 'dashicons-groups',
-    'supports' => array( 'title', 'editor', 'excerpt', 'custom-fields', 'thumbnail','page-attributes' ),
-    'taxonomies' => array( 'post_tag', 'category' ),  
+    'supports' => array( 'title', 'excerpt', 'thumbnail'),
     'exclude_from_search' => false,
-    'capability_type' => 'post',
     'rewrite' => array(
-        'slug' => 'inspiration',
+        'slug' => 'inspirations',
         'with_front' => false
       ),
     )

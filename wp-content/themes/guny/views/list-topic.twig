@@ -1,4 +1,4 @@
-{% extends "list.twig" %}
+{% extends "microsite-list.twig" %}
 
 {% block head_extras %}
 <style>
@@ -10,8 +10,8 @@
 <div class="js-parallax">
   <header class="c-hero js-parallax-content">
     <div class="o-container js-parallax-text">
-      <h1 class="c-hero__title">{{options.program_landing_title}}</h1>
-      <p class="c-hero__tagline">{{options.program_landing_tagline}}</p>
+      <h1 class="c-hero__title">{{options.topic_landing_title}}</h1>
+      <p class="c-hero__tagline">{{options.topic_landing_tagline}}</p>
     </div>
   </header>
 </div>
@@ -19,14 +19,13 @@
 
 {% block list_sidebar %}
 <ol class="c-list-box c-list-box--quaternary facetwp-guny" data-multiselectable="false">
-  {{facet_program_type}}
-  {{facet_ages}}
+  {{facet_topic_type}}
+  {# {{facet_ages}} #}
 </ol>
 {% endblock %}
 
 {% block post_list %}
 <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
-  <div>Appearing in list program</div>
   {{posts}}
 </section>
 {% endblock %}

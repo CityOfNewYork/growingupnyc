@@ -1,15 +1,27 @@
 {% extends "partials/teaser.twig" %}
 
+{% block classes %}{{is_first ? "c-card--hero #{age_group.slug|sanitize|replace({'-es':''})}-gradient"}}{% endblock %}
+
 {% block sticker %}
-<div class="c-card__sticker {{post.topic_group.slug|sanitize}}-background sticker" aria-hidden="true">
-  <svg class="icon--large"><title>{{post.topic_group}}</title><use xlink:href="#{{post.topic_group.slug|sanitize|replace({'es-':''}) }}"></use></svg>
-</div>
+  {% set category = post.terms('trip_group')|first %}
+  {% if category %}
+    <div class="c-card__sticker sticker" aria-hidden="true">
+      <svg class="icon--large"><title>{{category.name}}</title><use xlink:href="#{{category.slug|replace({'-es':''})}}"></use></svg>
+    </div>
+  {% endif %}
 {% endblock %}
 
-{% block subtitle_block %}{% endblock %}
+{% block subtitle %}
+  <p><strong>{{post.program_name}}{% if post.acronym %} ({{post.acronym}}){% endif %}</strong></p>
+  <p>{{post.government_agency}}</p>
+{% endblock %}
 
-{% block tags_block %}{% endblock %}
+{% block tags %}
+  {% for term in post.terms('trip_group') %}
+    <a href="/trips/?fwp_trip_type={{term.slug}}" class="button--pill">{{term.name}}</a>
+  {% endfor %}
+{% endblock %}
 
 {% block body %}
-{{post.post_excerpt ? post.post_excerpt : post.intro_content|excerpt(15)}}
+{{post.post_excerpt ? post.post_excerpt : post.summary|excerpt(15)}}
 {% endblock %}

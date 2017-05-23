@@ -51,7 +51,7 @@
   }
 }
 
-.c-card {
+.c-card-invert {
   background: $color-background;
   display: flex;
   flex-flow: column;
@@ -65,20 +65,20 @@
     padding: rem-calc(30);
     padding-left: rem-calc(($sticker-size / 2) + 20);
   }
-}
 
-.c-card__sticker {
-  order: 1;
-  position: absolute;
-  left: rem-calc(-$sticker-size-mobile / 2);
-  top: rem-calc(10);
+  .c-card__sticker {
+    order: 1;
+    position: absolute;
+    left: rem-calc(-$sticker-size-mobile / 2);
+    top: rem-calc(10);
 
-  .event-day {
-    display: none;
-  }
+    .event-day {
+      display: none;
+    }
 
-  @include media($bp-large) {
-    left: rem-calc(-$sticker-size / 2);
+    @include media($bp-large) {
+      left: rem-calc(-$sticker-size / 2);
+    }
   }
 }
 

@@ -313,6 +313,40 @@ Description: Custom theme for GUNY override styles for Micro Site
   }
 }
 
+//Card Invert
+//This is created for inspiration page other inspirations section
+//Added this as a common class for the micro site
+.c-card-invert {
+  background: $color-background;
+  display: flex;
+  flex-flow: column;
+  margin-left: rem-calc($sticker-size-mobile / 2);
+  margin-right: 0;
+  padding: rem-calc(25 21 25 ($sticker-size-mobile / 2) + 10);
+  position: relative;
+  margin-bottom: rem-calc(20);
+  @include media($bp-large) {
+    margin-left: rem-calc($sticker-size / 2);
+    padding: rem-calc(30);
+    padding-left: rem-calc(($sticker-size / 2) + 20);
+  }
+
+  .c-card__sticker {
+    order: 1;
+    position: absolute;
+    left: rem-calc(-$sticker-size-mobile / 2);
+    top: rem-calc(10);
+
+    .event-day {
+      display: none;
+    }
+
+    @include media($bp-large) {
+      left: rem-calc(-$sticker-size / 2);
+    }
+  }
+}
+
 // Footer
 .c-footer {
   background: $dark-gray-1;

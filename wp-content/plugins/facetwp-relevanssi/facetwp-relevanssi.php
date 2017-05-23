@@ -1,16 +1,14 @@
 <?php
 /*
 Plugin Name: FacetWP - Relevanssi integration
-Plugin URI: https://facetwp.com/
 Description: Relevanssi integration for FacetWP
-Version: 0.5
+Version: 0.5.1
 Author: FacetWP, LLC
+Author URI: https://facetwp.com/
 GitHub URI: facetwp/facetwp-relevanssi
 */
 
 defined( 'ABSPATH' ) or exit;
-
-include( dirname( __FILE__ ) . '/github-updater.php' );
 
 class FacetWP_Relevanssi
 {
@@ -36,9 +34,7 @@ class FacetWP_Relevanssi
     function search_args( $args, $class ) {
 
         if ( $class->is_search ) {
-            if ( !empty( $args['s'] ) ) {
-              $this->search_terms = $args['s'];
-            }
+            $this->search_terms = $args['s'];
             unset( $args['s'] );
 
             $args['suppress_filters'] = true;
@@ -61,15 +57,10 @@ class FacetWP_Relevanssi
             return $post_ids;
         }
 
-        $query = (object) array(
-            'is_admin' => false,
-            'query_vars' => array(
-                's' => $this->search_terms,
-                'paged' => 1,
-                'posts_per_page' => -1
-            )
-        );
-
+        $query = new WP_Query();
+        $query->set( 's', $this->search_terms );
+        $query->set( 'paged', 1 );
+        $query->set( 'posts_per_page', -1 );
         relevanssi_do_query( $query );
 
         $intersected_ids = array();
@@ -91,7 +82,6 @@ class FacetWP_Relevanssi
     function search_facet( $return, $params ) {
         $facet = $params['facet'];
         $selected_values = $params['selected_values'];
-
         $selected_values = is_array( $selected_values ) ? $selected_values[0] : $selected_values;
 
         if ( 'search' == $facet['type'] && 'relevanssi' == $facet['search_engine'] ) {
@@ -99,15 +89,10 @@ class FacetWP_Relevanssi
                 return 'continue';
             }
 
-            $query = (object) array(
-                'is_admin' => false,
-                'query_vars' => array(
-                    's' => $selected_values,
-                    'paged' => 1,
-                    'posts_per_page' => -1
-                )
-            );
-
+            $query = new WP_Query();
+            $query->set( 's', $selected_values );
+            $query->set( 'paged', 1 );
+            $query->set( 'posts_per_page', -1 );
             relevanssi_do_query( $query );
 
             $matches = array();

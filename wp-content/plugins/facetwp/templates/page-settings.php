@@ -33,6 +33,17 @@ foreach ( $post_types as $type ) {
     $builder_post_types[ $type->name ] = $type->labels->name;
 }
 
+// Clone facet settings HTML
+$facet_clone = array();
+foreach ( $facet_types as $name => $class ) {
+    $facet_clone[ $name ] = __( 'This facet type has no additional settings.', 'fwp' );
+    if ( method_exists( $class, 'settings_html' ) ) {
+        ob_start();
+        $class->settings_html();
+        $facet_clone[ $name ] = ob_get_clean();
+    }
+}
+
 // Activation status
 $message = __( 'Not yet activated', 'fwp' );
 $activation = get_option( 'facetwp_activation' );
@@ -47,9 +58,11 @@ if ( ! empty( $activation ) ) {
     }
 }
 
+// Settings
+$settings = FWP()->helper->settings;
+
 // Export feature
 $export = array();
-$settings = FWP()->helper->settings;
 
 foreach ( $settings['facets'] as $facet ) {
     $export['facet-' . $facet['name']] = 'Facet - ' . $facet['label'];
@@ -75,7 +88,9 @@ foreach ( $facet_types as $class ) {
 <script src="<?php echo FACETWP_URL; ?>/assets/js/admin.js?ver=<?php echo FACETWP_VERSION; ?>"></script>
 <script>
 FWP.i18n = <?php echo json_encode( $i18n ); ?>;
-
+FWP.nonce = '<?php echo wp_create_nonce( 'fwp_admin_nonce' ); ?>';
+FWP.settings = <?php echo json_encode( $settings ); ?>;
+FWP.clone = <?php echo json_encode( $facet_clone ); ?>;
 FWP.builder = {
     post_types: <?php echo json_encode( $builder_post_types ); ?>,
     taxonomies: <?php echo json_encode( $builder_taxonomies ); ?>
@@ -104,12 +119,10 @@ FWP.builder = {
 
     <div class="facetwp-region facetwp-region-welcome about-wrap">
         <h1><?php _e( 'Welcome to FacetWP', 'fwp' ); ?> <span class="version"><?php echo FACETWP_VERSION; ?></span></h1>
-        <div class="about-text">Thank you for choosing FacetWP. Check out our intro screencast.</div>
-        <iframe src="https://player.vimeo.com/video/162724676?title=0&byline=0&portrait=0" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        <p>
-            <a class="button" href="https://facetwp.com/documentation/facet-configuration/" target="_blank">Learn more about facets</a>
-            <a class="button" href="https://facetwp.com/documentation/template-configuration/" target="_blank">Learn more about templates</a>
-        </p>
+        <div class="about-text">Thank you for choosing FacetWP. Check out our intro video.</div>
+        <a href="https://facetwp.com/documentation/getting-started/" target="_blank">
+            <img src="https://i.imgur.com/U4ko9Eh.png" width="575" height="323" />
+        </a>
     </div>
 
     <!-- Facets tab -->
@@ -154,6 +167,9 @@ FWP.builder = {
         </div>
 
         <div class="facetwp-content-wrap">
+            <div class="facetwp-alert">
+                Did you know there's <a href="https://facetwp.com/documentation/template-configuration/" target="_blank">another way</a> to setup templates?
+            </div>
             <ul class="facetwp-cards"></ul>
             <div class="facetwp-content"></div>
         </div>
@@ -164,6 +180,13 @@ FWP.builder = {
     <div class="facetwp-region facetwp-region-settings">
         <div class="flexbox">
             <div class="left-side">
+                <div class="facetwp-settings-nav">
+                    <a data-tab="general">General</a>
+                    <?php if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) : ?>
+                    <a data-tab="woocommerce">WooCommerce</a>
+                    <?php endif; ?>
+                    <a data-tab="backup">Backup</a>
+                </div>
             </div>
             <div class="right-side">
                 <a class="button-primary facetwp-save"><?php _e( 'Save Changes', 'fwp' ); ?></a>
@@ -171,63 +194,146 @@ FWP.builder = {
         </div>
 
         <div class="facetwp-content-wrap">
-            <table>
-                <tr>
-                    <td style="width:175px"><?php _e( 'License Key', 'fwp' ); ?></td>
-                    <td>
-                        <input type="text" class="facetwp-license" style="width:280px" value="<?php echo get_option( 'facetwp_license' ); ?>" />
-                        <input type="button" class="button facetwp-activate" value="<?php _e( 'Activate', 'fwp' ); ?>" />
-                        <div class="facetwp-activation-status field-notes"><?php echo $message; ?></div>
-                    </td>
-                </tr>
-            </table>
 
             <!-- General settings -->
 
-            <table>
-                <tr>
-                    <td style="width:175px; vertical-align:top">
-                        <?php _e( 'Separators', 'fwp' ); ?>
-                    </td>
-                    <td>
-                        <?php _e( 'Thousands', 'fwp' ); ?>
-                        <input type="text" style="width:50px" class="facetwp-setting" data-name="thousands_separator" />
-                        <?php _e( 'Decimal', 'fwp' ); ?>
-                        <input type="text" style="width:50px" class="facetwp-setting" data-name="decimal_separator" />
-                    </td>
-                </tr>
-            </table>
+            <div class="facetwp-settings-section" data-tab="general">
+                <table>
+                    <tr>
+                        <td><?php _e( 'License Key', 'fwp' ); ?></td>
+                        <td>
+                            <input type="text" class="facetwp-license" style="width:300px" value="<?php echo get_option( 'facetwp_license' ); ?>" />
+                            <input type="button" class="button button-small facetwp-activate" value="<?php _e( 'Activate', 'fwp' ); ?>" />
+                            <div class="facetwp-activation-status field-notes"><?php echo $message; ?></div>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <?php _e( 'Google Maps API Key', 'fwp' ); ?>
+                            <div class="facetwp-tooltip">
+                                <span class="icon-question">?</span>
+                                <div class="facetwp-tooltip-content">
+                                    An API key is required for Proximity facets
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <input type="text" class="facetwp-setting" data-name="gmaps_api_key" style="width:300px" />
+                            <a href="https://developers.google.com/maps/documentation/javascript/get-api-key#step-1-get-an-api-key-from-the-google-api-console" target="_blank">Get an API key</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?php _e( 'Separators', 'fwp' ); ?>
+                        </td>
+                        <td>
+                            34
+                            <input type="text" style="width:20px" class="facetwp-setting" data-name="thousands_separator" />
+                            567
+                            <input type="text" style="width:20px" class="facetwp-setting" data-name="decimal_separator" />
+                            89
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?php _e( 'Loading Animation', 'fwp' ); ?>
+                        </td>
+                        <td>
+                            <select class="facetwp-setting slim" data-name="loading_animation">
+                                <option value=""><?php _e( 'Spin', 'fwp' ); ?></option>
+                                <option value="fade"><?php _e( 'Fade', 'fwp' ); ?></option>
+                                <option value="none"><?php _e( 'None', 'fwp' ); ?></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?php _e( 'Debug Mode', 'fwp' ); ?>
+                        </td>
+                        <td>
+                            <select class="facetwp-setting slim" data-name="debug_mode">
+                                <option value="off"><?php _e( 'Off', 'fwp' ); ?></option>
+                                <option value="on"><?php _e( 'On', 'fwp' ); ?></option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-            <!-- Migration -->
+            <!-- WooCommerce settings -->
 
-            <table>
-                <tr>
-                    <td style="width:175px; vertical-align:top">
-                        <?php _e( 'Export', 'fwp' ); ?>
-                    </td>
-                    <td valign="top">
-                        <select class="export-items" multiple="multiple" style="width:250px; height:100px">
-                            <?php foreach ( $export as $val => $label ) : ?>
-                            <option value="<?php echo $val; ?>"><?php echo $label; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <a class="button export-submit"><?php _e( 'Export', 'fwp' ); ?></a>
-                    </td>
-                </tr>
-            </table>
+            <div class="facetwp-settings-section" data-tab="woocommerce">
+                <table>
+                    <tr>
+                        <td style="width:240px">
+                            <?php _e( 'Support product variations?', 'fwp' ); ?>
+                            <div class="facetwp-tooltip">
+                                <span class="icon-question">?</span>
+                                <div class="facetwp-tooltip-content">
+                                    Enable if your store uses variable products.
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <select class="facetwp-setting slim" data-name="wc_enable_variations">
+                                <option value="no"><?php _e( 'No', 'fwp' ); ?></option>
+                                <option value="yes"><?php _e( 'Yes', 'fwp' ); ?></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:240px">
+                            <?php _e( 'Include all products?', 'fwp' ); ?>
+                            <div class="facetwp-tooltip">
+                                <span class="icon-question">?</span>
+                                <div class="facetwp-tooltip-content">
+                                    Show facet choices for out-of-stock products?
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <select class="facetwp-setting slim" data-name="wc_index_all">
+                                <option value="no"><?php _e( 'No', 'fwp' ); ?></option>
+                                <option value="yes"><?php _e( 'Yes', 'fwp' ); ?></option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-            <table>
-                <tr>
-                    <td style="width:175px; vertical-align:top">
-                        <?php _e( 'Import', 'fwp' ); ?>
-                    </td>
-                    <td>
-                        <div><textarea class="import-code" placeholder="<?php _e( 'Paste the import code here', 'fwp' ); ?>"></textarea></div>
-                        <div><input type="checkbox" class="import-overwrite" /> <?php _e( 'Overwrite existing items?', 'fwp' ); ?></div>
-                        <div style="margin-top:5px"><a class="button import-submit"><?php _e( 'Import', 'fwp' ); ?></a></div>
-                    </td>
-                </tr>
-            </table>
+            <!-- Backup settings -->
+
+            <div class="facetwp-settings-section" data-tab="backup">
+                <table>
+                    <tr>
+                        <td>
+                            <?php _e( 'Export', 'fwp' ); ?>
+                        </td>
+                        <td valign="top">
+                            <select class="export-items" multiple="multiple" style="width:250px; height:100px">
+                                <?php foreach ( $export as $val => $label ) : ?>
+                                <option value="<?php echo $val; ?>"><?php echo $label; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <a class="button export-submit"><?php _e( 'Export', 'fwp' ); ?></a>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <td>
+                            <?php _e( 'Import', 'fwp' ); ?>
+                        </td>
+                        <td>
+                            <div><textarea class="import-code" placeholder="<?php _e( 'Paste the import code here', 'fwp' ); ?>"></textarea></div>
+                            <div><input type="checkbox" class="import-overwrite" /> <?php _e( 'Overwrite existing items?', 'fwp' ); ?></div>
+                            <div style="margin-top:5px"><a class="button import-submit"><?php _e( 'Import', 'fwp' ); ?></a></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -240,22 +346,6 @@ FWP.builder = {
     </div>
 
     <!-- Hidden: clone settings -->
-
-<?php
-$settings = array();
-foreach ( $facet_types as $name => $class ) {
-    $settings[ $name ] = __( 'This facet type has no additional settings.', 'fwp' );
-    if ( method_exists( $class, 'settings_html' ) ) {
-        ob_start();
-        $class->settings_html();
-        $settings[ $name ] = ob_get_clean();
-    }
-}
-?>
-
-<script>
-var FWP_Clone = <?php echo json_encode( $settings ); ?>
-</script>
 
     <div class="hidden clone-facet">
         <div class="facetwp-row">
@@ -298,7 +388,7 @@ var FWP_Clone = <?php echo json_encode( $settings ); ?>
                     </td>
                 </tr>
             </table>
-            <h3><?php _e( 'Other settings', 'fwp' ); ?></h3>
+            <hr />
             <table class="facet-fields"></table>
         </div>
     </div>

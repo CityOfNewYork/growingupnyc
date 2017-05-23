@@ -10,8 +10,7 @@ class FacetWP_Updater
         $this->slug = 'facetwp';
         $this->version = FACETWP_VERSION;
         $this->license = get_option( 'facetwp_license' );
-
-        add_action( 'init', array( $this, 'init' ) );
+        $this->init();
     }
 
 
@@ -39,6 +38,7 @@ class FacetWP_Updater
                 'slug'      => $this->slug,
                 'license'   => $this->license,
                 'host'      => FWP()->helper->get_http_host(),
+                'php_v'     => phpversion(),
             )
         ) );
 
@@ -78,6 +78,15 @@ class FacetWP_Updater
 
                 // Trigger update notification
                 if ( version_compare( $this->version, $response->version, '<' ) ) {
+
+                    // Populate the "download_link" property
+                    $transient = get_site_transient( 'update_plugins' );
+                    if ( is_object( $transient ) && isset( $transient->response['facetwp/index.php'] ) ) {
+                        if ( ! empty( $transient->response['facetwp/index.php']->package ) ) {
+                            $response->download_link = $transient->response['facetwp/index.php']->package;
+                        }
+                    }
+
                     return $response;
                 }
             }

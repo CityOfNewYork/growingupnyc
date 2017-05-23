@@ -25,9 +25,16 @@
 {% endblock %}
 
 {% block post_list %}
-  {% for post in posts %}
-    {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
-  {% endfor %}
+  {% if weekposts %}
+    <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
+      {{weekposts}}
+    </section>
+  {% endif %}
+  {% if dayposts %}
+    <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
+      {{dayposts}}
+    </section>
+  {% endif %}
 {% endblock %}
 
 

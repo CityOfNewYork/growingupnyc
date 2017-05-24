@@ -11,9 +11,7 @@
   {% endif %}
 {% endblock %}
 
-{% block subtitle %}
-  <p><strong>{{post.program_name}}{% if post.acronym %} ({{post.acronym}}){% endif %}</strong></p>
-  <p>{{post.government_agency}}</p>
+{% block subtitle_block %}
 {% endblock %}
 
 {% block tags %}
@@ -30,4 +28,9 @@
 
 {% block body %}
 {{post.post_excerpt ? post.post_excerpt : post.summary|excerpt(15)}}
+{# {{post|print_r}} #}
+{% endblock %}
+
+{% block link %}
+  <a href="https://www.google.com/maps/place/{{post.map.address}}" target="_blank">{{post.map.address}}</a>
 {% endblock %}

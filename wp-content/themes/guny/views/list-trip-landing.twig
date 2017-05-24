@@ -27,13 +27,17 @@
 {% block post_list %}
   {% if dayposts %}
     <section class="c-block-list c-block-list-trips c-block-list-trips__day c-block-list--shade o-content-container u-sm-gutter">
+      Free Day Trips
       {{dayposts}}
+      <a href='#'>See All Free Day Trips</a>
     </section>
   {% endif %}
 
   {% if weekposts %}
     <section class="c-block-list c-block-list-trips c-block-list-trips__week c-block-list--shade o-content-container u-sm-gutter">
+      Free this week
       {{weekposts}}
+      <a href='#'>See All Free This Week</a>
     </section>
   {% endif %}
 {% endblock %}

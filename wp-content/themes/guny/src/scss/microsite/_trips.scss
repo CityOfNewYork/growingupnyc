@@ -58,6 +58,14 @@
   .c-block-list-trips__title {
     margin-bottom: 0;
   }
+
+  .c-card__link {
+    &:hover {
+      svg {
+        fill: $very-dark-gray;
+      }
+    }
+  }
 }
 
 .no-touchevents .c-block-list-ms__trips .button--pill {

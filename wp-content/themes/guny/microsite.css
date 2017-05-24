@@ -307,6 +307,9 @@ html {
 .c-block-list-ms__trips .c-block-list-trips__title {
   margin-bottom: 0; }
 
+.c-block-list-ms__trips .c-card__link:hover svg {
+  fill: #333; }
+
 .no-touchevents .c-block-list-ms__trips .button--pill:first-child:hover, .no-touchevents .c-block-list-ms__trips .button--pill:first-child:focus {
   background: #20bf65; }
 

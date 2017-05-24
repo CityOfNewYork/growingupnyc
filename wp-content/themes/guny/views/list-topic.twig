@@ -20,14 +20,19 @@
 {% block list_sidebar %}
 <ol class="c-list-box c-list-box-topics c-list-box--quaternary facetwp-guny" data-multiselectable="false">
   {{facet_topic_type}}
-  {# {{facet_ages}} #}
+  {{facet_becoming_an_adult}}
+  {{facet_counseling}}
+  {{facet_going_to_school}}
+  {{facet_staying_healthy}}
+  {{facet_working}}
+  {{facet_budget_finance}}
 </ol>
 {% endblock %}
 
 {% block post_list %}
-<section class="c-block-list c-block-list-topics c-block-list--shade o-content-container u-sm-gutter">
-  {{posts}}
-</section>
+  <section class="c-block-list c-block-list-topics c-block-list--shade o-content-container u-sm-gutter">
+    {{posts}}
+  </section>
 {% endblock %}
 
 {% block after_list %}

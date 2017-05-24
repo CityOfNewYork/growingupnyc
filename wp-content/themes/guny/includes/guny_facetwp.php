@@ -195,7 +195,7 @@ class FacetWP_Facet_Guny {
     $output .= '<li><a href="'.$url.'" class="c-list-box__subitem" data-value="">' . $label_any . '</a></li>';
     foreach( $values as $result ) {
       $selected = in_array( $result['facet_value'], $selected_values) ? 'true' : 'false';
-      $output .= '<li><a href="'.$url.'?'.$facet['name'].'='.$result['facet_value'].'" class="c-list-box__subitem" aria-selected="' . $selected . '" data-value="' . $result['facet_value'] . '">' . $result['facet_display_value'] . '</a></li>';
+      $output .= '<li><a href="'.$url.'?'.$facet['name'].'='.$result['facet_value'].'" class="c-list-box__subitem '.$facet['value'].'" aria-selected="' . $selected . '" data-value="' . $result['facet_value'] . '">' . $result['facet_display_value'] . '</a></li>';
     }
     $output .= '</ul>';
     $output .= '</div>';

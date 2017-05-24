@@ -12,10 +12,6 @@ export default function() {
       searchTerm = searchTerm.replace(/[!'()*]/g, function(c) {
         return '%' + c.charCodeAt(0).toString(16);
       });
-      if (searchTerm.indexOf('%22') > -1 || searchTerm.indexOf('"') > -1) {
-        searchTerm = searchTerm.replace(/%22|"/g, '');
-        localStorage.setItem('exactsearch', true);
-      }
       searchTerm = encodeURIComponent(searchTerm);
       window.location = window.location.origin + '/search?fwp_search=' + searchTerm;    
     }

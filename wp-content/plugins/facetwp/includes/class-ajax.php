@@ -145,6 +145,7 @@ class FacetWP_Ajax
         );
 
         foreach ( $this->url_vars as $key => $val ) {
+            $val =  stripslashes($val); 
             if ( 'paged' == $key ) {
                 $params['paged'] = $val;
             }

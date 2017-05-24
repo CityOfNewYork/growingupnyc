@@ -149,6 +149,16 @@ Description: Custom theme for GUNY override styles for Micro Site
   }
 }
 
+//Article Content
+.o-article-ms {
+  h2 {
+    margin-top: rem-calc(20);
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
 //Static Column Right
 .o-scroll-column--right {
   background: $color-background-shade;
@@ -351,6 +361,15 @@ Description: Custom theme for GUNY override styles for Micro Site
 
     @include media($bp-large) {
       left: rem-calc(-$sticker-size / 2);
+    }
+  }
+}
+
+//Hide list item call Espanol
+.o-article-sidebar {
+  .c-list-box__content {
+    li.espanol {
+      display: none;
     }
   }
 }

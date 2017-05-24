@@ -1876,12 +1876,8 @@ if (objCtr.defineProperty) {
 	      searchTerm = searchTerm.replace(/[!'()*]/g, function (c) {
 	        return '%' + c.charCodeAt(0).toString(16);
 	      });
-	      // if (searchTerm.indexOf('%22') > -1 || searchTerm.indexOf('"') > -1) {
-	      //   searchTerm = searchTerm.replace(/%22|"/g, '');
-	      //   localStorage.setItem('exactsearch', true);
-	      // }
 	      searchTerm = encodeURIComponent(searchTerm);
-	      window.location = window.location.origin + '/guny/search?fwp_search=' + searchTerm;
+	      window.location = window.location.origin + '/search?fwp_search=' + searchTerm;
 	    }
 	  }
 
@@ -2037,25 +2033,11 @@ if (objCtr.defineProperty) {
 	});
 
 	exports.default = function () {
-	  function getURLParameter(name) {
-	    return decodeURIComponent((new RegExp('[?|&]' + name + '=([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
-	  }
-
 	  if (typeof window.FWP !== 'undefined' && $('body').hasClass('page-template-template-search')) {
 	    $('.facetwp-facet-search').on('click', '.facetwp-searchbtn', function (event) {
 	      event.preventDefault();
 	      window.FWP.autoload();
 	    });
-
-	    // $(document).ajaxComplete(function () {
-	    //   var urlparameter = getURLParameter("fwp_search");
-	    //   if (urlparameter.indexOf("&exactsearch=true") !== -1) {
-	    //     urlparameter = urlparameter.replace("&exactsearch=true", '');
-	    //     urlparameter = '"' + urlparameter + '"';
-	    //     $('.facetwp-search').val(urlparameter);
-	    //     window.history.pushState('object or string', 'Title', '/search/?fwp_search=' + urlparameter);
-	    //   }
-	    // });
 	  }
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))

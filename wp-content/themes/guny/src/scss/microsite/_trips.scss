@@ -66,19 +66,45 @@
       }
     }
   }
+
+  &.c-block-list-ms__trips--week {
+    .button--pill {
+      &:first-child {
+        background: $very-dark-green;
+      }
+      background: $green;
+    }
+  }
 }
 
-.no-touchevents .c-block-list-ms__trips .button--pill {
-  &:first-child {
+.no-touchevents .c-block-list-ms__trips {
+  .button--pill {
+    &:first-child {
+      &:hover,
+      &:focus {
+        background: $light-green;
+      }
+    }
+
     &:hover,
     &:focus {
-      background: $light-green;
+      background: $green;
     }
   }
 
-  &:hover,
-  &:focus {
-    background: $green;
+  &.c-block-list-ms__trips--week {
+    .button--pill {
+      &:first-child {
+        &:hover,
+        &:focus {
+          background: $green;
+        }
+      }
+      &:hover,
+      &:focus {
+        background: $light-green;
+      }
+    }
   }
 }
 

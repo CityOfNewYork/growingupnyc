@@ -277,36 +277,43 @@ html {
 .c-hero-ms__trips {
   background-color: #00965c; }
 
-.c-list-box-trips {
+.c-list-box-ms__trips {
   padding: 0; }
-  .c-list-box-trips .c-list-box__heading {
+  .c-list-box-ms__trips .c-list-box__heading {
     background: #00965c; }
-  .c-list-box-trips .c-list-box__content {
+  .c-list-box-ms__trips .c-list-box__content {
     background: #007145; }
 
-.c-block-list-trips .c-card__title a {
+.c-nav-list-ms__trips .c-nav-list__item .c-nav-list__link {
+  background: #00965c;
+  border-color: #00965c; }
+  .c-nav-list-ms__trips .c-nav-list__item .c-nav-list__link:hover, .c-nav-list-ms__trips .c-nav-list__item .c-nav-list__link:focus, .c-nav-list-ms__trips .c-nav-list__item .c-nav-list__link.is-active {
+    background: #007145;
+    border-color: #007145; }
+
+.c-block-list-ms__trips .c-card__title a {
   text-decoration: underline; }
-  .c-block-list-trips .c-card__title a:hover, .c-block-list-trips .c-card__title a:focus {
+  .c-block-list-ms__trips .c-card__title a:hover, .c-block-list-ms__trips .c-card__title a:focus {
     color: #00965c; }
 
-.c-block-list-trips .c-card__subtitle {
-  display: none; }
-
-.c-block-list-trips .button--pill {
+.c-block-list-ms__trips .button--pill {
   background: #005e4c; }
-  .c-block-list-trips .button--pill:first-child {
+  .c-block-list-ms__trips .button--pill:first-child {
     background: #00965c; }
 
-.c-block-list-trips .c-card__sticker {
+.c-block-list-ms__trips .c-card__sticker {
   background: #00965c; }
 
-.no-touchevents .c-block-list-trips .button--pill:first-child:hover, .no-touchevents .c-block-list-trips .button--pill:first-child:focus {
+.c-block-list-ms__trips .c-block-list-trips__title {
+  margin-bottom: 0; }
+
+.no-touchevents .c-block-list-ms__trips .button--pill:first-child:hover, .no-touchevents .c-block-list-ms__trips .button--pill:first-child:focus {
   background: #20bf65; }
 
-.no-touchevents .c-block-list-trips .button--pill:hover, .no-touchevents .c-block-list-trips .button--pill:focus {
+.no-touchevents .c-block-list-ms__trips .button--pill:hover, .no-touchevents .c-block-list-ms__trips .button--pill:focus {
   background: #00965c; }
 
-.no-touchevents .c-list-box-trips .c-list-box__subitem:hover, .no-touchevents .c-list-box-trips .c-list-box__subitem:focus {
+.no-touchevents .c-list-box-ms__trips .c-list-box__subitem:hover, .no-touchevents .c-list-box-ms__trips .c-list-box__subitem:focus {
   background: #005e4c; }
 
 .c-page__intro {

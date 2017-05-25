@@ -250,8 +250,12 @@
   }
 }
 
+.c-hero-ms__topics__title,
 .c-hero-ms__topics__tagline {
   text-align: left;
+}
+
+.c-hero-ms__topics__tagline {
   @include media($bp-large) {
     font-size: rem-calc(21px);
   }

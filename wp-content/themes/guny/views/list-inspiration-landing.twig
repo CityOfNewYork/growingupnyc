@@ -17,10 +17,21 @@
 </div>
 {% endblock %}
 
+{% block classes %}
+js-sticky-container
+{% endblock %}
+
 {% block list_sidebar %}
-<ol class="c-list-box c-block-list-inspiration c-list-box--quaternary facetwp-guny" data-multiselectable="false">
-  {{facet_inspiration_type}}
-</ol>
+<div class="o-content-container--compact">
+  <ol class="c-nav-list c-nav-list-ms c-nav-list-ms__trips js-sticky js-section-set o-sticky-nav">
+    <li class="c-nav-list__item">
+      <a href="#free-day-trips" data-section="free-day-trips" class="js-section c-nav-list__link">Featured Inspiration<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+    </li>
+    <li class="c-nav-list__item">
+      <a href="#free-this-week" data-section="free-this-week" class="js-section c-nav-list__link">Other Inspirations<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+    </li>
+  </ol>
+</div> <!-- /.o-content-container-compact -->
 {% endblock %}
 
 {% block post_list %}

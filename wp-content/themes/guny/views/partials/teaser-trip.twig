@@ -15,15 +15,16 @@
 {% endblock %}
 
 {% block tags %}
-  {% for term in post.terms('trip_free_day_trip') %}
-    <a href="/trip-free-day-trip/{{term.slug}}" class="button--pill">{{term.name}}</a>
-  {% endfor %}
-  {% for term in post.terms('trip_free_this_week') %}
-    <a href="/trip-free-this-week/{{term.slug}}" class="button--pill">{{term.name}}</a>
-  {% endfor %}
   {% for term in post.terms('trip_type') %}
     <a href="/trip-type/{{term.slug}}" class="button--pill">{{term.name}}</a>
   {% endfor %}
+  {% for term in post.terms('trip_free_day_trip') %}
+    <a href="/trip-type/free-day-trip/?fwp_trip_free_day_trip={{term.slug}}" class="button--pill">{{term.name}}</a>
+  {% endfor %}
+  {% for term in post.terms('trip_free_this_week') %}
+    <a href="/trip-type/free-this-week/?fwp_trip_free_this_week={{term.slug}}" class="button--pill">{{term.name}}</a>
+  {% endfor %}
+  
 {% endblock %}
 
 {% block body %}

@@ -365,15 +365,6 @@ Description: Custom theme for GUNY override styles for Micro Site
   }
 }
 
-//Hide list item call Espanol
-.o-article-sidebar {
-  .c-list-box__content {
-    li.espanol {
-      display: none;
-    }
-  }
-}
-
 // Footer
 .c-footer {
   background: $dark-gray-1;

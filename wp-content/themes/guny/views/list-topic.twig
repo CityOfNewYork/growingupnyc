@@ -2,13 +2,13 @@
 
 {% block head_extras %}
 <style>
-  .c-hero-ms__topics { background-color: #7735b2; background-image: url(http://localhost/guny-repo/wp-content/themes/guny/assets/img/hero-topics-landing.svg); }
+  .c-hero-ms__topics { background-color: #7735b2; background-image: url(/wp-content/themes/guny/assets/img/hero-topics-landing.svg); }
 </style>
 {% endblock %}
 
 {% block hero %}
 <div class="js-parallax">
-  <header class="c-hero c-hero-ms c-hero-ms__topics js-parallax-content">
+  <header class="c-hero c-hero-ms c-hero-ms__topics c-hero-ms__topics--landing js-parallax-content">
     <div class="o-container js-parallax-text">
       <h1 class="c-hero__title">{{options.topic_landing_title}}</h1>
       <p class="c-hero__tagline">{{options.topic_landing_tagline}}</p>

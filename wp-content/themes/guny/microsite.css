@@ -496,6 +496,12 @@ html {
       padding: 15.625rem 5rem 5rem;
       background-position: bottom -9.375rem center; } }
 
+.c-hero-ms__topics--landing {
+  padding: 33.6% 0 4.0625rem; }
+  @media screen and (min-width: 700px) {
+    .c-hero-ms__topics--landing {
+      padding: 10.5rem 2.5rem 5rem; } }
+
 .c-hero-ms__topics__tagline {
   text-align: left; }
   @media screen and (min-width: 1024px) {

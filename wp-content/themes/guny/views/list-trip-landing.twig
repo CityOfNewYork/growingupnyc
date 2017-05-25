@@ -38,34 +38,40 @@ js-sticky-container
 {% endblock %}
 
 {% block post_list %}
-  {% if dayposts %}
     <section id="free-day-trips" class="c-block-list c-block-list-ms__trips c-block-list-ms__trips--day c-block-list--shade o-content-container u-sm-gutter">
       <h3 class="c-block-list-trips__title">Free Day Trips</h3>
       <div class="c-block-list__inner">
-        {{dayposts}}        
+        {% for post in free_day_trip %}
+          {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+        {% endfor %}      
       </div>
       <div class="text-center">
         <a class="button--outline button--outline--gray" href="https://growingupnyc.cityofnewyork.us/programs/talk-text-or-chat-mental-health-services/">See All Free Day Trips</a>
       </div>
     </section>
-  {% endif %}
 
-  {% if weekposts %}
     <section id="free-this-week" class="c-block-list c-block-list-ms__trips c-block-list-ms__trips--week c-block-list--shade o-content-container u-sm-gutter">
       <h3 class="c-block-list-trips__title">Free this week</h3>
       <div class="c-block-list__inner">
-        {{weekposts}}        
+        {% for post in free_this_week_trip %}
+          {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+        {% endfor %} 
       </div>
       <div class="text-center">
         <a class="button--outline button--outline--gray" href="https://growingupnyc.cityofnewyork.us/programs/talk-text-or-chat-mental-health-services/">See All Free This Week</a>
       </div>
     </section>
-  {% endif %}
+
+    <section id="events" class="c-block-list c-block-list-ms__trips c-block-list-ms__trips--week c-block-list--shade o-content-container u-sm-gutter">
+      <h3 class="c-block-list-trips__title">Events</h3>
+      <div class="c-block-list__inner">
+        {% for post in upcoming_events %}
+          {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+        {% endfor %} 
+      </div>
+      <div class="text-center">
+        <a class="button--outline button--outline--gray" href="https://growingupnyc.cityofnewyork.us/programs/talk-text-or-chat-mental-health-services/">See All Free Events</a>
+      </div>
+    </section>
+
 {% endblock %}
-
-
-{# {% block after_list %}
-<div class="o-content-container--compact">
-  {{pagination}}
-</div>
-{% endblock %} #}

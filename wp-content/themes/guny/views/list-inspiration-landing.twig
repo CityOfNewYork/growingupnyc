@@ -35,12 +35,10 @@ js-sticky-container
 {% endblock %}
 
 {% block post_list %}
-
-<section class="c-block-list c-block-list-inspiration c-block-list--shade o-content-container u-sm-gutter">
+  
   {% for post in featuredposts %}
     {% include ['partials/teaser-featured-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
   {% endfor %}
-</section>
 
 <section class="c-block-list c-block-list-inspiration c-block-list--shade o-content-container u-sm-gutter">
   {% for post in posts %}

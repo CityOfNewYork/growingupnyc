@@ -203,6 +203,7 @@ class FacetWP_Facet_Guny {
   }
 
   function render( $params ) {
+    $url=strtok($_SERVER["HTTP_REFERER"],'?'); 
     $facet = $params['facet'];
     $label_any = empty( $facet['label_any'] ) ? __( 'Any', 'fwp' ) : $facet['label_any'];
     $label_any = facetwp_i18n( $label_any );

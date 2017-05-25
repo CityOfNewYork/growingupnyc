@@ -589,20 +589,25 @@ html {
   border-top: 2px solid #fff;
   padding-top: 0.9375rem; }
 
-.s-wysiwyg .c-other-inspirations {
+.s-wysiwyg .c-other-inspirations,
+.c-other-inspirations {
   background: #eee;
   padding: 2.5rem; }
-  .s-wysiwyg .c-other-inspirations .c-card__title {
+  .s-wysiwyg .c-other-inspirations .c-card__title,
+  .c-other-inspirations .c-card__title {
     margin-top: 0; }
-  .s-wysiwyg .c-other-inspirations .c-card__body p {
+  .s-wysiwyg .c-other-inspirations .c-card__body p,
+  .c-other-inspirations .c-card__body p {
     margin-bottom: 1.875rem; }
-  .s-wysiwyg .c-other-inspirations .c-card__subtitle {
+  .s-wysiwyg .c-other-inspirations .c-card__subtitle,
+  .c-other-inspirations .c-card__subtitle {
     display: none; }
-  .s-wysiwyg .c-other-inspirations .c-card__sticker {
+  .s-wysiwyg .c-other-inspirations .c-card__sticker,
+  .c-other-inspirations .c-card__sticker {
     background-size: 140% !important; }
-
-.s-wysiwyg .c-other-inspirations__title {
-  margin: 0 0 0.9375rem; }
+  .s-wysiwyg .c-other-inspirations .c-other-inspirations__title,
+  .c-other-inspirations .c-other-inspirations__title {
+    margin: 0 0 0.9375rem; }
 
 .c-card-invert {
   background: #fff;

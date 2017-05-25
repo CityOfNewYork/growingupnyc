@@ -22,28 +22,27 @@
 }
 
 //Content Styles
-.s-wysiwyg {
-  .c-other-inspirations {
-    background: $very-light-gray;
-    padding: rem-calc(40px);
+.s-wysiwyg .c-other-inspirations,
+.c-other-inspirations {
+  background: $very-light-gray;
+  padding: rem-calc(40px);
 
-    .c-card__title {
-      margin-top: 0;
-    }
+  .c-card__title {
+    margin-top: 0;
+  }
 
-    .c-card__body {
-      p {
-        margin-bottom: rem-calc(30);
-      }
+  .c-card__body {
+    p {
+      margin-bottom: rem-calc(30);
     }
+  }
 
-    .c-card__subtitle {
-      display: none;
-    }
+  .c-card__subtitle {
+    display: none;
+  }
 
-    .c-card__sticker {
-      background-size: 140% !important;
-    }
+  .c-card__sticker {
+    background-size: 140% !important;
   }
 
   .c-other-inspirations__title {

@@ -45,17 +45,9 @@ $free_day_trip = array(
 $context['free_day_trip'] = Timber::get_posts( $free_day_trip );
 
 //Events
-$events = array(
-'post_type' => 'event',
-'posts_per_page' => 1,
-'orderby' => array(
-    'date' => 'DESC'
-));
-$context['events'] = Timber::get_posts( $events );
-
-$templates = array( 'list-trip-landing.twig', 'microsite-list.twig' );
-
 $upcoming_events = GunySite::get_featured_events( 1, null , true );
 $context['upcoming_events'] = $upcoming_events;
+
+$templates = array( 'list-trip-landing.twig', 'microsite-list.twig' );
 
 Timber::render( $templates, $context );

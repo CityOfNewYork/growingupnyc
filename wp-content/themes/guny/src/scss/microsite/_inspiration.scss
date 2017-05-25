@@ -82,6 +82,68 @@
   }
 }
 
+//Landing Page
+//Intro on the top
+.c-card-inspiration__profile {
+  margin-right: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-left: 0;
+  padding-right: 0;
+
+  h2 {
+    text-transform: none;
+    margin-bottom: rem-calc(5);
+    &.c-intro__subheading {
+      margin-bottom: 0;
+    }
+  }
+
+  padding-left: rem-calc($outer-gutter-small);
+  padding-right: rem-calc($outer-gutter-small);
+
+  @include media($bp-medium) {
+    padding-left: rem-calc($outer-gutter-medium);
+    padding-right: rem-calc($outer-gutter-medium);
+  }
+
+  @include media($bp-large) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.c-nav-list-ms__inspiration {
+  .c-nav-list__item {
+    .c-nav-list__link {
+      background: $dark-blue;
+      border-color: $dark-blue;
+
+      &:hover,
+      &:focus,
+      &.is-active {
+        background: $very-dark-blue-1;
+        border-color: $very-dark-blue-1;
+      }
+    }
+  }
+}
+
+//Intro image
+.c-intro__img {
+  overflow: hidden;
+  width: 100%;
+  height: rem-calc(200px);
+  margin: rem-calc(30 0 40);
+  @include media($bp-large) {
+    height: rem-calc(440px);
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
 //Curved blue button
 .button--primary__blue {
   background: $dark-blue;

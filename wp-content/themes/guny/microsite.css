@@ -635,6 +635,46 @@ html {
       .c-card-invert .c-card__sticker {
         left: -3.125rem; } }
 
+.c-card-inspiration__profile {
+  margin-right: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-left: 0;
+  padding-right: 0;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem; }
+  .c-card-inspiration__profile h2 {
+    text-transform: none;
+    margin-bottom: 0.3125rem; }
+    .c-card-inspiration__profile h2.c-intro__subheading {
+      margin-bottom: 0; }
+  @media screen and (min-width: 700px) {
+    .c-card-inspiration__profile {
+      padding-left: 1.875rem;
+      padding-right: 1.875rem; } }
+  @media screen and (min-width: 1024px) {
+    .c-card-inspiration__profile {
+      padding-left: 0;
+      padding-right: 0; } }
+
+.c-nav-list-ms__inspiration .c-nav-list__item .c-nav-list__link {
+  background: #144f82;
+  border-color: #144f82; }
+  .c-nav-list-ms__inspiration .c-nav-list__item .c-nav-list__link:hover, .c-nav-list-ms__inspiration .c-nav-list__item .c-nav-list__link:focus, .c-nav-list-ms__inspiration .c-nav-list__item .c-nav-list__link.is-active {
+    background: #0b2c49;
+    border-color: #0b2c49; }
+
+.c-intro__img {
+  overflow: hidden;
+  width: 100%;
+  height: 12.5rem;
+  margin: 1.875rem 0 2.5rem; }
+  @media screen and (min-width: 1024px) {
+    .c-intro__img {
+      height: 27.5rem; } }
+  .c-intro__img img {
+    max-width: 100%; }
+
 .button--primary__blue {
   background: #144f82;
   color: #fff;

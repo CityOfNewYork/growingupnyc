@@ -251,6 +251,7 @@
 }
 
 .c-hero-ms__topics__tagline {
+  text-align: left;
   @include media($bp-large) {
     font-size: rem-calc(21px);
   }

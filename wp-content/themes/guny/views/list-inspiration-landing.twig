@@ -1,0 +1,45 @@
+{% extends "microsite-list.twig" %}
+
+{% block head_extras %}
+<style>
+  .c-hero-ms__inspiration { background-color: #144f82; background-image: url(http://localhost/guny-repo/wp-content/themes/guny/assets/img/hero-inspiration-landing.svg); }
+</style>
+{% endblock %}
+
+{% block hero %}
+<div class="js-parallax">
+  <header class="c-hero c-hero-ms c-hero-ms__inspiration js-parallax-content">
+    <div class="o-container js-parallax-text">
+      <h1 class="c-hero__title">{{options.inspiration_landing_title}}</h1>
+      <p class="c-hero__tagline">{{options.inspiration_landing_tagline}}</p>
+    </div>
+  </header>
+</div>
+{% endblock %}
+
+{% block list_sidebar %}
+<ol class="c-list-box c-block-list-inspiration c-list-box--quaternary facetwp-guny" data-multiselectable="false">
+  {{facet_inspiration_type}}
+</ol>
+{% endblock %}
+
+{% block post_list %}
+
+<section class="c-block-list c-block-list-inspiration c-block-list--shade o-content-container u-sm-gutter">
+  {% for post in featuredposts %}
+    {% include ['partials/teaser-featured-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+  {% endfor %}
+</section>
+
+<section class="c-block-list c-block-list-inspiration c-block-list--shade o-content-container u-sm-gutter">
+  {% for post in posts %}
+    {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+  {% endfor %}
+</section>
+{% endblock %}
+
+{% block after_list %}
+<div class="o-content-container--compact">
+  {{pagination}}
+</div>
+{% endblock %}

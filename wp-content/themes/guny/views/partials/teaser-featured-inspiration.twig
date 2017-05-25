@@ -1,0 +1,25 @@
+{% extends "partials/teaser.twig" %}
+
+{% block classes %} c-card-invert {{is_first}}{% endblock %}
+
+{% block title %}
+    <a href="{{post.link}}" title="{{post.title}}" rel="bookmark">
+        {{post.prof_name}}, {{post.prof_age}}
+    </a>
+{% endblock %}
+
+{% block sticker %}
+ {% set category = post.terms('inspiration_group')|first %}
+   <div class="c-card__sticker sticker" aria-hidden="true" style="background: url({{post.get_field('prof_img').url}}) center center no-repeat;"></div>
+{% endblock %}
+
+{% block tags %}
+ {% for term in post.terms('inspiration_group') %}
+   <a href="/inspirations/?fwp_inspiration_type={{term.slug}}" class="button--pill">{{term.name}}</a>
+ {% endfor %}
+{% endblock %}
+
+{% block body %}
+{{post.intro__overview}}
+<a class="button--primary button--primary__curved button--primary__blue" href="{{post.get_field('button')}}">Read More</a>
+{% endblock %}

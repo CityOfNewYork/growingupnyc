@@ -20,5 +20,5 @@
 
 {% block body %}
 {{post.intro__overview}}
-<a class="button--primary button--primary__curved button--primary__blue" href="{{post.get_field('button')}}">Read More</a>
+<a href="{{post.link}}" class="button--primary button--primary__curved button--primary__blue" href="{{post.get_field('button')}}">Read More</a>
 {% endblock %}

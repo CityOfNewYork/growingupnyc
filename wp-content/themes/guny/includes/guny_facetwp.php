@@ -14,7 +14,7 @@ if ( ! function_exists('add_facet_to_url')) {
     if(isset($url[1])){
       $newparameters = '';
       $querystrings = explode("&", $url[1]);
-      //Breaking the section
+      //Breaking the section 1
       foreach ($querystrings as $key => $querystring) {
         $queryparameter = explode("=", $querystring);
         if('fwp_'.$facetname == $queryparameter[0]){
@@ -31,12 +31,14 @@ if ( ! function_exists('add_facet_to_url')) {
         }
         $alreadyset = false;    
       }
+      //End of section one
       if(!$changed){
         if(!is_null($facetvalue)){
           $newparameters[$key+1] = implode('=', array('fwp_'.$facetname,$facetvalue));
         }
       }
       $newquerystring = implode('&', $newparameters);
+      //section two
       if(!is_null($newquerystring))
       {
         $newurl = $url[0].'?'.$newquerystring;        

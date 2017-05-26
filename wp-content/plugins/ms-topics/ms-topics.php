@@ -49,6 +49,19 @@ function ms_topics_create() {
       'hierarchical' => true
     )
   );
+
+  register_taxonomy(
+    'other_category',
+    array('program'),
+    array(
+      'label' => __( 'Other Category' ),
+      'rewrite' => array(
+        'slug' => 'other-category',
+        'with_front' => false
+      ),
+      'hierarchical' => true
+    )
+  );
 }
 
 add_action( 'init', 'ms_topics_create' );

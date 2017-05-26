@@ -12,13 +12,9 @@ if ( ! class_exists( 'Timber' ) ) {
 }
 $context = Timber::get_context();
 $context['posts'] = facetwp_display('template', 'topics');
-$context['pagination'] = facetwp_display('pager');
-$context['facet_topic_type'] = facetwp_display( 'facet', 'topic_type' );
-$context['facet_becoming_an_adult'] = facetwp_display( 'facet', 'becoming_an_adult' );
-$context['facet_counseling'] = facetwp_display( 'facet', 'counseling' );
-$context['facet_going_to_school'] = facetwp_display( 'facet', 'going_to_school' );
-$context['facet_staying_healthy'] = facetwp_display( 'facet', 'staying_healthy' );
-$context['facet_working'] = facetwp_display( 'facet', 'working' );
-$context['facet_budget_finance'] = facetwp_display( 'facet', 'budget_finance' );
+$context['topic_menu'] = Timber::get_terms('topic_group', array(
+  'orderby' => 'term_order',
+  'hide_empty' => false,
+));
 $templates = array( 'list-topic.twig', 'microsite-list.twig' );
 Timber::render( $templates, $context );

@@ -1966,6 +1966,9 @@ ol.o-inline {
   border-radius: 3px;
   padding: 0.3125rem 0; }
 
+.o-article-sidebar .c-list-box__content li.espanol {
+  display: none; }
+
 .c-nav-list {
   display: block; }
 

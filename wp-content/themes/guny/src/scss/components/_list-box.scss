@@ -265,3 +265,12 @@
   border-radius: 3px;
   padding: rem-calc(5 0);
 }
+
+//Hide list item call Espanol
+.o-article-sidebar {
+  .c-list-box__content {
+    li.espanol {
+      display: none;
+    }
+  }
+}

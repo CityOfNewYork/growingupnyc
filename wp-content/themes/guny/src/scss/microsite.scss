@@ -149,6 +149,16 @@ Description: Custom theme for GUNY override styles for Micro Site
   }
 }
 
+//Article Content
+.o-article-ms {
+  h2 {
+    margin-top: rem-calc(20);
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
 //Static Column Right
 .o-scroll-column--right {
   background: $color-background-shade;

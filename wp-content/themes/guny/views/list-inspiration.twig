@@ -2,13 +2,13 @@
 
 {% block head_extras %}
 <style>
-  .c-hero { background-color: #2793E0; background-image: url(/wp-content/themes/guny/assets/img/hero-program-landing.svg); }
+  .c-hero-ms__inspiration { background-color: #144f82; background-image: url(/wp-content/themes/guny/assets/img/hero-inspiration-landing.svg); }
 </style>
 {% endblock %}
 
 {% block hero %}
 <div class="js-parallax">
-  <header class="c-hero js-parallax-content">
+  <header class="c-hero c-hero-ms c-hero-ms__inspiration js-parallax-content">
     <div class="o-container js-parallax-text">
       <h1 class="c-hero__title">{{options.inspiration_landing_title}}</h1>
       <p class="c-hero__tagline">{{options.inspiration_landing_tagline}}</p>
@@ -18,14 +18,14 @@
 {% endblock %}
 
 {% block list_sidebar %}
-<ol class="c-list-box c-list-box--quaternary facetwp-guny" data-multiselectable="false">
+<ol class="c-list-box c-block-list-inspiration c-list-box--quaternary facetwp-guny" data-multiselectable="false">
   {{facet_inspiration_type}}
   {# {{facet_ages}} #}
 </ol>
 {% endblock %}
 
 {% block post_list %}
-<section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
+<section class="c-block-list c-block-list-inspiration c-block-list--shade o-content-container u-sm-gutter">
   {{posts}}
 </section>
 {% endblock %}

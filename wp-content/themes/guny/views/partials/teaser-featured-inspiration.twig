@@ -1,0 +1,34 @@
+{% extends "partials/teaser.twig" %}
+
+{% block classes %} c-card-inspiration__profile u-bottom-spacing-small{{is_first}}{% endblock %}
+
+{% block title %}
+    <h2>{{post.prof_name}}, {{post.prof_age}}</h2>
+    <h3>{{post.prof_country}}, {{post.prof_citystate}}</h3>
+{% endblock %}
+
+{% block sticker %}
+ {% set category = post.terms('inspiration_group')|first %}
+{% endblock %}
+
+{% block subtitle_block %}
+{% endblock %}
+{% block tags_block %}
+{% endblock %}
+
+{% block body %}
+{{post.intro__overview}}
+
+<section class="c-intro__img" style="background:url({{post.get_field('hero_banner').url}}) no-repeat center center; background-size: cover;"></section>
+<hr>
+
+{% for top in post.get_field('page_top') %}
+<section class="u-top-spacing-small u-bottom-spacing-small">
+	<h2 class="c-intro__subheading u-lg-gutter u-bottom-spacing-small" id="{{top.page_top_content_heading|lower|replace({' ':'-'})}}">{{top.page_top_content_heading}}</h2>
+	<div class="u-bottom-spacing-small">
+		{{top.page_top_content_text}}
+	</div>
+ 	<a href="{{post.link}}" class="button--primary button--primary__curved button--primary__blue" href="{{post.get_field('button')}}">Read the full interview</a>
+</section>
+{% endfor %}
+{% endblock %}

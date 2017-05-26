@@ -7,7 +7,7 @@
 }
 
 //Sidebar list
-.c-list-box-trips {
+.c-list-box-ms__trips {
   padding: 0;
   .c-list-box__heading {
     background: $green;
@@ -17,7 +17,23 @@
   }
 }
 
-.c-block-list-trips {
+.c-nav-list-ms__trips {
+  .c-nav-list__item {
+    .c-nav-list__link {
+      background: $green;
+      border-color: $green;
+
+      &:hover,
+      &:focus,
+      &.is-active {
+        background: $dark-green;
+        border-color: $dark-green;
+      }
+    }
+  }
+}
+
+.c-block-list-ms__trips {
   .c-card__title {
     a {
       text-decoration: underline;
@@ -26,10 +42,6 @@
         color: $green;
       }
     }
-  }
-
-  .c-card__subtitle {
-    display: none;
   }
 
   .button--pill {
@@ -42,23 +54,61 @@
   .c-card__sticker {
     background: $green;
   }
-}
 
-.no-touchevents .c-block-list-trips .button--pill {
-  &:first-child {
-    &:hover,
-    &:focus {
-      background: $light-green;
+  .c-block-list-trips__title {
+    margin-bottom: 0;
+  }
+
+  .c-card__link {
+    &:hover {
+      svg {
+        fill: $very-dark-gray;
+      }
     }
   }
 
-  &:hover,
-  &:focus {
-    background: $green;
+  &.c-block-list-ms__trips--week {
+    .button--pill {
+      &:first-child {
+        background: $very-dark-green;
+      }
+      background: $green;
+    }
   }
 }
 
-.no-touchevents .c-list-box-trips .c-list-box__subitem {
+.no-touchevents .c-block-list-ms__trips {
+  .button--pill {
+    &:first-child {
+      &:hover,
+      &:focus {
+        background: $light-green;
+      }
+    }
+
+    &:hover,
+    &:focus {
+      background: $green;
+    }
+  }
+
+  &.c-block-list-ms__trips--week {
+    .button--pill {
+      &:first-child {
+        &:hover,
+        &:focus {
+          background: $green;
+        }
+      }
+      &:hover,
+      &:focus {
+        background: $light-green;
+      }
+    }
+  }
+}
+
+.no-touchevents .c-list-box-ms__trips .c-list-box__subitem {
   &:hover,
   &:focus {
     background: $very-dark-green;

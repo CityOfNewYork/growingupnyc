@@ -2,21 +2,21 @@
 
 {% block head_extras %}
 <style>
-  .c-hero-topics {background-image: url(http://localhost/guny-repo/wp-content/themes/guny/assets/img/hero-topics-splatter.svg);}
+  .c-hero-ms__topics {background-image: url(/wp-content/themes/guny/assets/img/hero-topics-splatter.svg);}
 </style>
 {% endblock %}
 
 {% block content %}
   <div class="js-parallax">
-    <header class="c-hero c-hero-topics c-hero--large js-parallax-content">
+    <header class="c-hero c-hero-ms__topics c-hero--large js-parallax-content">
       <div class="o-container js-parallax-text">
-        <h1 class="c-hero__title">
+        <h1 class="c-hero__title c-hero-ms__topics__title">
           {#<span class="c-hero__sticker sticker {{post.age_group.slug|sanitize|replace({'-es':''})}}-background">
             <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{post.age_group.slug|sanitize|replace({'-es':''})|replace({'-es':''})}}"></use></svg>
           </span>#}
           {{post.title}}
         </h1>
-        <p class="c-hero__tagline c-hero-topics__tagline">{{post.sub_heading}}</p>
+        <p class="c-hero__tagline c-hero-ms__topics__tagline">{{post.sub_heading}}</p>
       </div>
       {#<svg class="c-hero__frill {{post.age_group.slug|sanitize|replace({'-es':''})}}-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 404 359" >
         <title>Paint Splatter</title>
@@ -37,15 +37,15 @@
 
       {# Anchor Links #}
       <div class="o-content-container--compact u-shift-up">
-        <ol class="c-nav-list c-nav-list-topics js-sticky js-section-set o-sticky-nav">
+        <ol class="c-nav-list c-nav-list-ms__topics js-sticky js-section-set o-sticky-nav">
           {% for top in post.get_field('page_top') %}
             <li class="c-nav-list__item">
-              <a href="#{{top.page_top_content_heading|lower|replace({' ':'-'})}}" data-section="{{top.page_top_content_heading}}" class="js-section c-nav-list__link {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">{{top.page_top_content_heading}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+              <a href="#{{top.page_top_content_heading|lower|replace({' ':'-'})}}" data-section="{{top.page_top_content_heading}}" class="js-section c-nav-list__link">{{top.page_top_content_heading}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
             </li>
           {% endfor %}
           {% for bottom in post.get_field('page_bottom') %}
             <li class="c-nav-list__item">
-              <a href="#{{bottom.page_bottom_content_heading|lower|replace({' ':'-'})}}" data-section="{{bottom.page_bottom_content_heading}}" class="js-section c-nav-list__link {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">{{bottom.page_bottom_content_heading}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+              <a href="#{{bottom.page_bottom_content_heading|lower|replace({' ':'-'})}}" data-section="{{bottom.page_bottom_content_heading}}" class="js-section c-nav-list__link">{{bottom.page_bottom_content_heading}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
             </li>
           {% endfor %}
         </ol>
@@ -76,7 +76,7 @@
 
       {% if post.talk_to_a_counselor %}
         <section id="section-chat-a-counselor" class="o-content-container--compact u-top-spacing u-bottom-spacing s-wysiwyg">
-          <h2>{{ __('Did you know you can text, chat online, or talk to a counselor for free?', 'GUNY-Single-Topic') }}</h2>
+          <h2 class="c-ttc-title">{{ __('Did you know you can text, chat online, or talk to a counselor for free?', 'GUNY-Single-Topic') }}</h2>
           {{post.get_field('talk_to_a_counselor')}}
           <div class="c-do-list">
             {{post.get_field('do_list')}}
@@ -96,8 +96,8 @@
 
       {# Tip #}
       {% if post.tip %}
-      <aside class="c-tip c-tip-topics u-sm-gutter {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary o-content-container">
-        <div class="c-tip__sticker sticker {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">
+      <aside class="c-tip c-tip-ms__topics u-sm-gutter o-content-container">
+        <div class="c-tip__sticker sticker">
           <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#lightbulb"></use></svg>
         </div>
         <p class="c-tip__content">{{post.tip}}</p>

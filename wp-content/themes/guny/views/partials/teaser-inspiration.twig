@@ -13,13 +13,12 @@
    <div class="c-card__sticker sticker" aria-hidden="true" style="background: url({{post.get_field('prof_img').url}}) center center no-repeat;"></div>
 {% endblock %}
 
-{% block tags %}
- {% for term in post.terms('inspiration_group') %}
-   <a href="/inspirations/?fwp_inspiration_type={{term.slug}}" class="button--pill">{{term.name}}</a>
- {% endfor %}
+{% block subtitle_block %}
+{% endblock %}
+{% block tags_block %}
 {% endblock %}
 
 {% block body %}
 {{post.intro__overview}}
-<a class="button--primary button--primary__curved button--primary__blue" href="{{post.get_field('button')}}">Read More</a>
+<a href="{{post.link}}" class="button--primary button--primary__curved button--primary__blue" href="{{post.get_field('button')}}">Read More</a>
 {% endblock %}

@@ -2,10 +2,61 @@
 /**
 * Modifications to Facet WP
 */
-
+// unset($array['key-here']);
 /**
 * Custom HTML for the search facet
 */
+if ( ! function_exists('add_facet_to_url')) {
+  function add_facet_to_url ($facetname , $facetvalue , $currenturl){
+    $changed = false;
+    $alreadyset = false;
+    $url = explode("?", $currenturl);
+    if(isset($url[1])){
+      $newparameters = '';
+      $querystrings = explode("&", $url[1]);
+      //Breaking the section
+      foreach ($querystrings as $key => $querystring) {
+        $queryparameter = explode("=", $querystring);
+        if('fwp_'.$facetname == $queryparameter[0]){
+          if(!is_null($facetvalue)){
+            $queryparameter[1] = $facetvalue;
+            $changed = true;
+          }
+          else{
+            $alreadyset = true;
+          }
+        }
+        if(!$alreadyset){
+          $newparameters[$key] = implode('=', $queryparameter);
+        }
+        $alreadyset = false;    
+      }
+      if(!$changed){
+        if(!is_null($facetvalue)){
+          $newparameters[$key+1] = implode('=', array('fwp_'.$facetname,$facetvalue));
+        }
+      }
+      $newquerystring = implode('&', $newparameters);
+      if(!is_null($newquerystring))
+      {
+        $newurl = $url[0].'?'.$newquerystring;        
+      }
+      else{
+        $newurl = $url[0];
+      }
+    }
+    elseif(is_null($facetvalue)){
+      $newurl = $url[0];
+    }
+    else{
+      $newurl = $url[0].'?fwp_'.$facetname.'='.$facetvalue;
+    }
+    return $newurl;
+  }
+}
+
+
+
 function guny_facetwp_facet_html( $output, $params ) {
   if ($params['facet']['type'] == 'search') {
     $output = '';
@@ -133,7 +184,6 @@ class FacetWP_Facet_Guny {
 </script>
 <?php
   }
-
   function settings_html() {
 ?>
   <tr>
@@ -192,16 +242,15 @@ class FacetWP_Facet_Guny {
     $output .= '<h3 class="js-accordion__header c-list-box__heading" id="' . $facet['name'] . '-heading">' . $header . '</h3>';
     $output .= '<ul class="js-accordion__content c-list-box__content" id="' . $facet['name'] . '-panel">';
     $selected = empty($selected_values) ? 'true' : 'false';
-    $output .= '<li><a href="'.$url.'" class="c-list-box__subitem" data-value="">' . $label_any . '</a></li>';
+    $output .= '<li><a href="'.add_facet_to_url($facet['name'],null,$_SERVER["HTTP_REFERER"]).'" class="c-list-box__subitem" data-value="">' . $label_any . '</a></li>';
     foreach( $values as $result ) {
       $selected = in_array( $result['facet_value'], $selected_values) ? 'true' : 'false';
-      $output .= '<li><a href="'.$url.'?'.$facet['name'].'='.$result['facet_value'].'" class="c-list-box__subitem" aria-selected="' . $selected . '" data-value="' . $result['facet_value'] . '">' . $result['facet_display_value'] . '</a></li>';
+      $output .= '<li><a href="'.add_facet_to_url($facet['name'],$result['facet_value'],$_SERVER["HTTP_REFERER"]).'" class="c-list-box__subitem '.$result['facet_value'].'" aria-selected="' . $selected . '" data-value="' . $result['facet_value'] . '">' . $result['facet_display_value'] . '</a></li>';
     }
     $output .= '</ul>';
     $output .= '</div>';
     return $output;
   }
-
   function front_scripts() {
 ?>
   <script>

@@ -42,7 +42,9 @@ js-sticky-container
       <h3 class="c-block-list-trips__title">Free Day Trips</h3>
       <div class="c-block-list__inner">
         {% for post in free_day_trip %}
-          {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+          <div class="c-block-list__item">
+            {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+          </div>
         {% endfor %}      
       </div>
       <div class="text-center">
@@ -54,7 +56,9 @@ js-sticky-container
       <h3 class="c-block-list-trips__title">Free this week</h3>
       <div class="c-block-list__inner">
         {% for post in free_this_week_trip %}
-          {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+          <div class="c-block-list__item">
+            {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+          </div>         
         {% endfor %} 
       </div>
       <div class="text-center">
@@ -66,7 +70,9 @@ js-sticky-container
       <h3 class="c-block-list-trips__title">Events</h3>
       <div class="c-block-list__inner">
         {% for post in upcoming_events %}
-          {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+          <div class="c-block-list__item">
+            {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+          </div>          
         {% endfor %} 
       </div>
       <div class="text-center">

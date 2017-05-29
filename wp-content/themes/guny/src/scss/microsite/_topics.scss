@@ -212,7 +212,11 @@
   }
 
   .c-block-list__item {
-    padding: rem-calc(13 0);
+    padding: rem-calc(10 0);
+
+    @include media($bp-medium) {
+      padding: rem-calc(13 0);
+    }
   }
 
   .c-block-list-ms__topics--title {

@@ -25,6 +25,14 @@ Description: Custom theme for GUNY override styles for Micro Site
 
 //Common styles for Micro Site
 
+//Button
+button {
+  &:hover,
+  &:focus {
+    outline: none;
+  }
+}
+
 // Header
 .c-banner__link {
   color: $gray-1;

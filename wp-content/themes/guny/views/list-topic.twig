@@ -33,7 +33,7 @@
   {% endfor %} 
   </ol> #}
 
-  <ol class="js-accordion c-list-box c-list-box--primary" data-multiselectable="true">
+  <ol class="js-accordion c-list-box c-list-box-ms__topics c-list-box--primary" data-multiselectable="true">
     {% for topic_group in topic_menu %}
       <li class="c-list-box__item">
         <h3 class="js-accordion__header c-list-box__heading {{topic_group.slug|sanitize|replace({'-es':''})}}-background" id="homepage-ages-heading-{{loop.index}}">

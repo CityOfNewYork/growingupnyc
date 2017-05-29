@@ -15,7 +15,7 @@ $context = Timber::get_context();
 //Freethis week trips
 $free_this_week_trip = array(
 'post_type' => 'trip',
-'posts_per_page' => 1,
+'posts_per_page' => 3,
 'tax_query' => array(
   array(
     'taxonomy' => 'trip_type',
@@ -31,7 +31,7 @@ $context['free_this_week_trip'] = Timber::get_posts( $free_this_week_trip );
 //Free day trips
 $free_day_trip = array(
 'post_type' => 'trip',
-'posts_per_page' => 1,
+'posts_per_page' => 3,
 'tax_query' => array(
   array(
     'taxonomy' => 'trip_type',
@@ -45,7 +45,7 @@ $free_day_trip = array(
 $context['free_day_trip'] = Timber::get_posts( $free_day_trip );
 
 //Events
-$upcoming_events = GunySite::get_featured_events( 1, null , true );
+$upcoming_events = GunySite::get_featured_events( 3, null , true );
 $context['upcoming_events'] = $upcoming_events;
 
 $templates = array( 'list-trip-landing.twig', 'microsite-list.twig' );

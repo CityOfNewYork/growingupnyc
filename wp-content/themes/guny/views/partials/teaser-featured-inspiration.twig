@@ -22,9 +22,9 @@
 <section class="c-intro__img" style="background:url({{post.get_field('hero_banner').url}}) no-repeat center center; background-size: cover;"></section>
 <hr>
 <h2 class="c-intro__subheading u-top-spacing" id="{{post.get_field('page_top_heading')|replace({' ':'-'})}}">{{post.get_field('page_top_heading')}}</h2>
-<section class="u-top-spacing-small">
+<section class="c-inspiration-qa__wrapper u-top-spacing-small">
 {% for top in post.get_field('page_top') | slice(0,2) %}
-	<div class="u-bottom-spacing-small c-inspiration_qa">
+	<div class="c-inspiration_qa">
 		{{top.question_and_answer}}
 	</div>
 {% endfor %}

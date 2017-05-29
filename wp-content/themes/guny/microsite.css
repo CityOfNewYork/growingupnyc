@@ -624,6 +624,13 @@ button:hover, button:focus {
   .s-wysiwyg .c-other-inspirations .c-other-inspirations__title,
   .c-other-inspirations .c-other-inspirations__title {
     margin: 0 0 0.9375rem; }
+  .s-wysiwyg .c-other-inspirations .button--primary__blue,
+  .c-other-inspirations .button--primary__blue {
+    padding: 0.875rem 1.25rem; }
+    @media screen and (min-width: 1024px) {
+      .s-wysiwyg .c-other-inspirations .button--primary__blue,
+      .c-other-inspirations .button--primary__blue {
+        padding: 0.875rem 1.875rem; } }
 
 .c-card-invert {
   background: #fff;
@@ -633,7 +640,7 @@ button:hover, button:focus {
   -webkit-flex-flow: column;
       -ms-flex-flow: column;
           flex-flow: column;
-  margin-left: 2.5rem;
+  margin-left: 1.81818rem;
   margin-right: 0;
   padding: 1.5625rem 1.3125rem 1.5625rem 3.125rem;
   position: relative;
@@ -697,8 +704,16 @@ button:hover, button:focus {
   .c-intro__img img {
     max-width: 100%; }
 
-.c-inspiration_qa h3 {
-  margin-bottom: 0.3125rem; }
+.c-inspiration-qa__wrapper .button--primary__blue {
+  margin-top: 1.875rem; }
+
+.c-inspiration_qa {
+  padding-bottom: 1.875rem; }
+  .c-inspiration_qa:last-of-type {
+    padding-bottom: 0; }
+  .c-inspiration_qa h3 {
+    margin-top: 0;
+    margin-bottom: 0.3125rem; }
 
 .button--primary__blue {
   background: #144f82;

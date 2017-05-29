@@ -55,7 +55,9 @@
     <h3 class="c-block-list-ms__topics--title">{{options.topic_landing_subheading}}</h3>
     <div class="c-block-list-ms__topics--text">{{options.topic_landing_intro__overview}}</div>
     {% for post in posts %}
-      {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+      <div class="c-block-list__item">
+        {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+      </div>
     {% endfor %}  
   </section>
 {% endblock %}

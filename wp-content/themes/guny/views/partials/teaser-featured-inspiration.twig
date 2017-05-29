@@ -21,14 +21,13 @@
 
 <section class="c-intro__img" style="background:url({{post.get_field('hero_banner').url}}) no-repeat center center; background-size: cover;"></section>
 <hr>
-
-{% for top in post.get_field('page_top') %}
+<h2 class="c-intro__subheading u-lg-gutter u-bottom-spacing-small" id="{{post.get_field('page_top_heading')|lower|replace({' ':'-'})}}">{{post.get_field('page_top_heading')}}</h2>
 <section class="u-top-spacing-small u-bottom-spacing-small">
-	<h2 class="c-intro__subheading u-lg-gutter u-bottom-spacing-small" id="{{top.page_top_content_heading|lower|replace({' ':'-'})}}">{{top.page_top_content_heading}}</h2>
+{% for top in post.get_field('page_top') | slice(0,2) %}
 	<div class="u-bottom-spacing-small">
-		{{top.page_top_content_text}}
+		{{top.question_and_answer}}
 	</div>
+{% endfor %}
  	<a href="{{post.link}}" class="button--primary button--primary__curved button--primary__blue" href="{{post.get_field('button')}}">Read the full interview</a>
 </section>
-{% endfor %}
 {% endblock %}

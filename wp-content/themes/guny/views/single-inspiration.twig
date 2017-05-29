@@ -38,7 +38,9 @@
         <section class="o-content-container--compact c-page-top-content u-bottom-spacing" id="section-one">
           <h2 class="u-lg-gutter" id="{{post.get_field('page_top_heading')|lower|replace({' ':'-'})}}">{{post.get_field('page_top_heading')}}</h2>
           {% for top in post.get_field('page_top') %}
-            {{top.question_and_answer}}
+            <div class="c-inspiration_qa">
+              {{top.question_and_answer}}
+            </div>
           {% endfor %}
         </section>
         {# Section Inspirations #}

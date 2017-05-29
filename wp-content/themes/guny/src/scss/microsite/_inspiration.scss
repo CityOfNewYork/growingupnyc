@@ -49,13 +49,20 @@
   .c-other-inspirations__title {
     margin: rem-calc(0 0 15px);
   }
+
+  .button--primary__blue {
+    padding: rem-calc(14 20);
+    @include media($bp-large) {
+      padding: rem-calc(14 30);
+    }
+  }
 }
 
 .c-card-invert {
   background: $color-background;
   display: flex;
   flex-flow: column;
-  margin-left: rem-calc($sticker-size-mobile / 2);
+  margin-left: rem-calc($sticker-size-mobile / 2.75);
   margin-right: 0;
   padding: rem-calc(25 21 25 ($sticker-size-mobile / 2) + 10);
   position: relative;
@@ -148,8 +155,19 @@
 }
 
 //Q & A section
+.c-inspiration-qa__wrapper {
+  .button--primary__blue {
+    margin-top: rem-calc(30);
+  }
+}
+
 .c-inspiration_qa {
+  padding-bottom: rem-calc(30);
+  &:last-of-type {
+    padding-bottom: 0;
+  }
   h3 {
+    margin-top: 0;
     margin-bottom: rem-calc(5);
   }
 }

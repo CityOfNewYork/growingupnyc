@@ -15,6 +15,7 @@
   }
 
   .c-list-box__content {
+    margin-top: rem-calc(-2);
     li {
       display: block;
       padding: rem-calc(3 20);
@@ -35,24 +36,28 @@
         }
       }
 
-      .c-list-box__subitem {
-        border: 2px solid $color-text-invert;
-        border-radius: rem-calc(25);
-        display: inline-block;
-        font-family: $font-family-display;
-        @include font-size-regular;
-        font-weight: $font-weight-extrablack;
-        line-height: 1;
-        min-width: 100%;
-        padding: rem-calc(14 30);
-        text-align: center;
-        text-decoration: none;
-        transition: $button-transition;
+      &.c-list-box__subitem {
+        a {
+          border: 2px solid $color-text-invert;
+          border-radius: rem-calc(25);
+          display: inline-block;
+          font-family: $font-family-display;
+          @include font-size-regular;
+          font-weight: $font-weight-extrablack;
+          line-height: 1;
+          min-width: 100%;
+          padding: rem-calc(14 30);
+          text-align: center;
+          text-decoration: none;
+          transition: $button-transition;
+          background: transparent;
+          color: $white;
 
-        &:hover,
-        &:focus {
-          background: $white;
-          color: $purple-60;
+          &:hover,
+          &:focus {
+            background: $white;
+            color: $purple-60;
+          }
         }
       }
     }
@@ -67,11 +72,13 @@
 
       .c-list-box__content {
         li {
-          .c-list-box__subitem {
-            &:hover,
-            &:focus {
-              background: $white;
-              color: $purple-50;
+          &.c-list-box__subitem {
+            a {
+              &:hover,
+              &:focus {
+                background: $white;
+                color: $purple-50;
+              }
             }
           }
         }
@@ -85,11 +92,13 @@
 
       .c-list-box__content {
         li {
-          .c-list-box__subitem {
-            &:hover,
-            &:focus {
-              background: $white;
-              color: $purple-40;
+          &.c-list-box__subitem {
+            a {
+              &:hover,
+              &:focus {
+                background: $white;
+                color: $purple-40;
+              }
             }
           }
         }
@@ -103,11 +112,13 @@
 
       .c-list-box__content {
         li {
-          .c-list-box__subitem {
-            &:hover,
-            &:focus {
-              background: $white;
-              color: $purple-30;
+          &.c-list-box__subitem {
+            a {
+              &:hover,
+              &:focus {
+                background: $white;
+                color: $purple-30;
+              }
             }
           }
         }
@@ -121,11 +132,13 @@
 
       .c-list-box__content {
         li {
-          .c-list-box__subitem {
-            &:hover,
-            &:focus {
-              background: $white;
-              color: $purple;
+          &.c-list-box__subitem {
+            a {
+              &:hover,
+              &:focus {
+                background: $white;
+                color: $purple;
+              }
             }
           }
         }
@@ -139,11 +152,13 @@
 
       .c-list-box__content {
         li {
-          .c-list-box__subitem {
-            &:hover,
-            &:focus {
-              background: $white;
-              color: $purple-20;
+          &.c-list-box__subitem {
+            a {
+              &:hover,
+              &:focus {
+                background: $white;
+                color: $purple-20;
+              }
             }
           }
         }
@@ -157,15 +172,26 @@
 
       .c-list-box__content {
         li {
-          .c-list-box__subitem {
-            &:hover,
-            &:focus {
-              background: $white;
-              color: $purple-10;
+          &.c-list-box__subitem {
+            a {
+              &:hover,
+              &:focus {
+                background: $white;
+                color: $purple-10;
+              }
             }
           }
         }
       }
+    }
+  }
+}
+
+.no-touchevents .c-list-box-ms__topics .c-list-box__subitem {
+  a {
+    &:hover,
+    &:focus {
+      background: $white;
     }
   }
 }
@@ -221,13 +247,6 @@
   &:hover,
   &:focus {
     background: $purple;
-  }
-}
-
-.no-touchevents .c-list-box-ms__topics .c-list-box__subitem {
-  &:hover,
-  &:focus {
-    background: $white;
   }
 }
 

@@ -36,12 +36,11 @@
         
         {# Section One - Q & A #}
         <section class="o-content-container--compact c-page-top-content u-bottom-spacing" id="section-one">
+          <h2 class="u-lg-gutter" id="{{post.get_field('page_top_heading')|lower|replace({' ':'-'})}}">{{post.get_field('page_top_heading')}}</h2>
           {% for top in post.get_field('page_top') %}
-            <h2 class="u-lg-gutter" id="{{top.page_top_content_heading|lower|replace({' ':'-'})}}">{{top.page_top_content_heading}}</h2>
-            {{top.page_top_content_text}}
+            {{top.question_and_answer}}
           {% endfor %}
         </section>
-
         {# Section Inspirations #}
         {% if post.inspiration_posts %}
         <section class="c-other-inspirations">

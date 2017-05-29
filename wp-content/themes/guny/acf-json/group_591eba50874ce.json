@@ -148,6 +148,25 @@
         },
         {
             "key": "field_591ebdf35be08",
+            "label": "Page Top heading",
+            "name": "page_top_heading",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_592bb4bd37d4f",
             "label": "Page Top",
             "name": "page_top",
             "type": "flexible_content",
@@ -170,28 +189,9 @@
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_591ebe1b5be09",
-                            "label": "Page Top Content Heading",
-                            "name": "page_top_content_heading",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 1,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
-                        },
-                        {
-                            "key": "field_591ebe385be0a",
-                            "label": "Page Top Content Text",
-                            "name": "page_top_content_text",
+                            "key": "field_592bb4bd37d51",
+                            "label": "question and answer",
+                            "name": "question_and_answer",
                             "type": "wysiwyg",
                             "instructions": "",
                             "required": 1,
@@ -252,5 +252,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1495523300
+    "modified": 1496039233
 }

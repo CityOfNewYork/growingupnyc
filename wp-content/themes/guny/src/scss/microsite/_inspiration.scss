@@ -25,10 +25,11 @@
 .s-wysiwyg .c-other-inspirations,
 .c-other-inspirations {
   background: $very-light-gray;
-  padding: rem-calc(40px);
+  padding: rem-calc(30px);
 
   .c-card__title {
     margin-top: 0;
+    margin-bottom: rem-calc(5);
   }
 
   .c-card__body {
@@ -91,7 +92,6 @@
   padding-right: 0;
 
   h2 {
-    text-transform: none;
     margin-bottom: rem-calc(5);
     &.c-intro__subheading {
       margin-bottom: 0;
@@ -109,6 +109,10 @@
   @include media($bp-large) {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .c-card__body {
+    margin-bottom: 0;
   }
 }
 
@@ -133,13 +137,20 @@
   overflow: hidden;
   width: 100%;
   height: rem-calc(200px);
-  margin: rem-calc(30 0 40);
+  margin: rem-calc(30 0 60);
   @include media($bp-large) {
     height: rem-calc(440px);
   }
 
   img {
     max-width: 100%;
+  }
+}
+
+//Q & A section
+.c-inspiration_qa {
+  h3 {
+    margin-bottom: rem-calc(5);
   }
 }
 

@@ -1,6 +1,6 @@
 {% extends "partials/teaser.twig" %}
 
-{% block classes %} c-card-inspiration__profile u-bottom-spacing-small{{is_first}}{% endblock %}
+{% block classes %} c-card-inspiration__profile u-bottom-spacing{{is_first}}{% endblock %}
 
 {% block title %}
     <h2>{{post.prof_name}}, {{post.prof_age}}</h2>
@@ -21,10 +21,10 @@
 
 <section class="c-intro__img" style="background:url({{post.get_field('hero_banner').url}}) no-repeat center center; background-size: cover;"></section>
 <hr>
-<h2 class="c-intro__subheading u-lg-gutter u-bottom-spacing-small" id="{{post.get_field('page_top_heading')|lower|replace({' ':'-'})}}">{{post.get_field('page_top_heading')}}</h2>
-<section class="u-top-spacing-small u-bottom-spacing-small">
+<h2 class="c-intro__subheading u-top-spacing" id="{{post.get_field('page_top_heading')|replace({' ':'-'})}}">{{post.get_field('page_top_heading')}}</h2>
+<section class="u-top-spacing-small">
 {% for top in post.get_field('page_top') | slice(0,2) %}
-	<div class="u-bottom-spacing-small">
+	<div class="u-bottom-spacing-small c-inspiration_qa">
 		{{top.question_and_answer}}
 	</div>
 {% endfor %}

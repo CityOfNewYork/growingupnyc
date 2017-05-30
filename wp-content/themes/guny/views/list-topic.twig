@@ -18,21 +18,6 @@
 {% endblock %}
 
 {% block list_sidebar %}
-{#   <ol class="c-list-box c-list-box-ms__topics">
-  {% for topic_group in topic_menu %}
-    <li class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading {{topic_group.slug|sanitize|replace({'-es':''})}}-background" id="homepage-ages-heading-{{loop.index}}">
-        {{topic_group.name}}
-      </h3>
-      <ol class="js-accordion__content c-list-box__content {{topic_group.slug|sanitize|replace({'-es':''})}}-background" id="homepage-ages-panel-{{loop.index}}">
-        {% for post in topic_group.posts('numberposts=-1&post_type=topic') %}
-          <li class="c-list-box__subitem"><a href="{{post.link}}" class="button--full-width button--primary {{topic_group.slug|sanitize|replace({'-es':''})}}-text">{{post.title}}</a></li>
-        {% endfor %}
-      </ol>
-    </li>
-  {% endfor %} 
-  </ol> #}
-
   <ol class="js-accordion c-list-box c-list-box-ms__topics c-list-box--primary" data-multiselectable="true">
       <li class="c-list-box__item">
         <h3 class="js-accordion__header c-list-box__heading">Resources FOR...</h3>

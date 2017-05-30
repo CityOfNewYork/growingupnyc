@@ -187,3 +187,11 @@
     border-color: $very-dark-blue-1;
   }
 }
+
+//CTA Button full width
+.button--inspiration__cta {
+  width: 100%;
+  @include media($bp-medium) {
+    width: auto;
+  }
+}

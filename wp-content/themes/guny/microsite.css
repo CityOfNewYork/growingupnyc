@@ -728,4 +728,10 @@ button:hover, button:focus {
   background: #0b2c49;
   border-color: #0b2c49; }
 
+.button--inspiration__cta {
+  width: 100%; }
+  @media screen and (min-width: 700px) {
+    .button--inspiration__cta {
+      width: auto; } }
+
 /*# sourceMappingURL=microsite.css.map */

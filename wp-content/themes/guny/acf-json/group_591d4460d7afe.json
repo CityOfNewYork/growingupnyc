@@ -167,8 +167,8 @@
         },
         {
             "key": "field_591eec9488e02",
-            "label": "Button",
-            "name": "button",
+            "label": "CTA Button",
+            "name": "cta_button",
             "type": "url",
             "instructions": "",
             "required": 0,
@@ -303,5 +303,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1495635171
+    "modified": 1496126976
 }

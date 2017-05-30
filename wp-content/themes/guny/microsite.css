@@ -591,6 +591,9 @@ button:hover, button:focus {
 .signup-form__label-content {
   color: #7735b2; }
 
+.c-hero-inspiration {
+  background-size: cover; }
+
 .c-prof-name {
   padding-top: 0.9375rem;
   padding-bottom: 0.3125rem; }

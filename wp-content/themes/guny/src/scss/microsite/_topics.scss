@@ -53,10 +53,16 @@
           background: transparent;
           color: $white;
 
-          &:hover,
           &:focus {
             background: $white;
             color: $purple-60;
+          }
+
+          .no-touchevents & {
+            &:hover {
+              background: $white;
+              color: $purple-60;
+            }
           }
         }
       }
@@ -74,10 +80,15 @@
         li {
           &.c-list-box__subitem {
             a {
-              &:hover,
               &:focus {
                 background: $white;
                 color: $purple-50;
+              }
+              .no-touchevents & {
+                &:hover {
+                  background: $white;
+                  color: $purple-50;
+                }
               }
             }
           }
@@ -94,10 +105,15 @@
         li {
           &.c-list-box__subitem {
             a {
-              &:hover,
               &:focus {
                 background: $white;
                 color: $purple-40;
+              }
+              .no-touchevents & {
+                &:hover {
+                  background: $white;
+                  color: $purple-40;
+                }
               }
             }
           }
@@ -114,10 +130,15 @@
         li {
           &.c-list-box__subitem {
             a {
-              &:hover,
               &:focus {
                 background: $white;
                 color: $purple-30;
+              }
+              .no-touchevents & {
+                &:hover {
+                  background: $white;
+                  color: $purple-30;
+                }
               }
             }
           }
@@ -134,10 +155,15 @@
         li {
           &.c-list-box__subitem {
             a {
-              &:hover,
               &:focus {
                 background: $white;
                 color: $purple;
+              }
+              .no-touchevents & {
+                &:hover {
+                  background: $white;
+                  color: $purple;
+                }
               }
             }
           }
@@ -154,10 +180,15 @@
         li {
           &.c-list-box__subitem {
             a {
-              &:hover,
               &:focus {
                 background: $white;
                 color: $purple-20;
+              }
+              .no-touchevents & {
+                &:hover {
+                  background: $white;
+                  color: $purple-20;
+                }
               }
             }
           }
@@ -174,24 +205,20 @@
         li {
           &.c-list-box__subitem {
             a {
-              &:hover,
               &:focus {
                 background: $white;
                 color: $purple-10;
+              }
+              .no-touchevents & {
+                &:hover {
+                  background: $white;
+                  color: $purple-10;
+                }
               }
             }
           }
         }
       }
-    }
-  }
-}
-
-.no-touchevents .c-list-box-ms__topics .c-list-box__subitem {
-  a {
-    &:hover,
-    &:focus {
-      background: $white;
     }
   }
 }
@@ -231,25 +258,29 @@
   .button--pill {
     &:first-child {
       background: $purple;
+      &:focus {
+        background: $light-purple;
+      }
+      .no-touchevents & {
+        &:hover {
+          background: $light-purple;
+        }
+      }
     }
     background: $dark-purple;
+
+    &:focus {
+      background: $purple;
+    }
+
+    .no-touchevents & {
+      &:hover {
+        background: $purple;
+      }
+    }
   }
 
   .c-card__sticker {
-    background: $purple;
-  }
-}
-
-.no-touchevents .c-block-list-ms__topics .button--pill {
-  &:first-child {
-    &:hover,
-    &:focus {
-      background: $light-purple;
-    }
-  }
-
-  &:hover,
-  &:focus {
     background: $purple;
   }
 }
@@ -298,10 +329,16 @@
     background-color: $dark-purple;
     border-color: $purple;
 
-    &:hover,
     &:focus {
       background-color: $purple;
       border-color: $purple;
+    }
+
+    .no-touchevents & {
+      &:hover {
+        background-color: $purple;
+        border-color: $purple;
+      }
     }
   }
 }
@@ -325,9 +362,14 @@
   padding: rem-calc(30px);
 
   a {
-    &:hover,
     &:focus {
       color: $purple;
+    }
+
+    .no-touchevents & {
+      &:hover {
+        color: $purple;
+      }
     }
   }
 }
@@ -342,13 +384,16 @@
   color: $white;
   border-color: $purple;
   text-transform: none;
-}
-
-.no-touchevents .button--primary__purple {
-  &:hover,
   &:focus {
     background: $light-purple;
     border-color: $light-purple;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $light-purple;
+      border-color: $light-purple;
+    }
   }
 }
 

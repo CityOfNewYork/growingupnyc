@@ -134,11 +134,17 @@
       background: $dark-blue;
       border-color: $dark-blue;
 
-      &:hover,
       &:focus,
       &.is-active {
         background: $very-dark-blue-1;
         border-color: $very-dark-blue-1;
+      }
+
+      .no-touchevents & {
+        &:hover {
+          background: $very-dark-blue-1;
+          border-color: $very-dark-blue-1;
+        }
       }
     }
   }
@@ -183,13 +189,17 @@
   color: $white;
   border-color: $dark-blue;
   text-transform: none;
-}
 
-.no-touchevents .button--primary__blue {
-  &:hover,
   &:focus {
     background: $very-dark-blue-1;
     border-color: $very-dark-blue-1;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $very-dark-blue-1;
+      border-color: $very-dark-blue-1;
+    }
   }
 }
 

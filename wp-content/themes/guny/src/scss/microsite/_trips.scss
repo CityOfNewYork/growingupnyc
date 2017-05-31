@@ -193,10 +193,14 @@
 
 //Article Content
 .o-article-trip {
-  float: right;
+  @include media($bp-large) {
+    float: right;
+  }
 }
 
 //Article Sidebar
 .o-article-trip-sidebar {
-  float: left;
+  @include media($bp-large) {
+    float: left;
+  }
 }

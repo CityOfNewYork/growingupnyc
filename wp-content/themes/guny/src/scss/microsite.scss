@@ -36,15 +36,12 @@ button {
 // Header
 .c-banner__link {
   color: $gray-1;
-}
-
-.no-touchevents {
-  &:hover {
-    color: $gray;
+  &:focus {
+    color: $dark-gray-1;
   }
-  .c-banner__link {
-    &:hover,
-    &:focus {
+
+  .no-touchevents & {
+    &:hover {
       color: $dark-gray-1;
     }
   }
@@ -235,9 +232,14 @@ button {
     font-weight: $font-weight-extrablack;
     border-radius: rem-calc(35);
     border: none;
-
-    &:hover {
+    &:focus {
       background: $black;
+    }
+
+    .no-touchevents & {
+      &:hover {
+        background: $black;
+      }
     }
   }
 
@@ -249,8 +251,14 @@ button {
 
     .button--primary__curved {
       background: $purple;
-      &:hover {
+      &:focus {
         background: $dark-purple;
+      }
+
+      .no-touchevents & {
+        &:hover {
+          background: $dark-purple;
+        }
       }
     }
   }
@@ -262,8 +270,14 @@ button {
 
     .button--primary__curved {
       background: $dark-blue;
-      &:hover {
+      &:focus {
         background: $very-dark-blue;
+      }
+
+      .no-touchevents & {
+        &:hover {
+          background: $very-dark-blue;
+        }
       }
     }
   }
@@ -275,8 +289,14 @@ button {
 
     .button--primary__curved {
       background: $green;
-      &:hover {
+      &:focus {
         background: $dark-green;
+      }
+
+      .no-touchevents & {
+        &:hover {
+          color: $dark-green;
+        }
       }
     }
   }

@@ -15,6 +15,18 @@
   .c-list-box__content {
     background: $dark-green;
   }
+
+  .c-list-box__subitem {
+    &:focus {
+      background: $very-dark-green;
+    }
+
+    .no-touchevents & {
+      &:hover {
+        background: $very-dark-green;
+      }
+    }
+  }
 }
 
 .c-nav-list-ms__trips {
@@ -23,11 +35,17 @@
       background: $green;
       border-color: $green;
 
-      &:hover,
       &:focus,
       &.is-active {
         background: $dark-green;
         border-color: $dark-green;
+      }
+
+      .no-touchevents & {
+        &:hover {
+          background: $dark-green;
+          border-color: $dark-green;
+        }
       }
     }
   }
@@ -37,9 +55,14 @@
   .c-card__title {
     a {
       text-decoration: underline;
-      &:hover,
       &:focus {
         color: $green;
+      }
+
+      .no-touchevents & {
+        &:hover {
+          color: $green;
+        }
       }
     }
   }
@@ -47,8 +70,27 @@
   .button--pill {
     &:first-child {
       background: $green;
+      &:focus {
+        background: $light-green;
+      }
+
+      .no-touchevents & {
+        &:hover {
+          background: $light-green;
+        }
+      }
     }
     background: $very-dark-green;
+
+    &:focus {
+      background: $green;
+    }
+
+    .no-touchevents & {
+      &:hover {
+        background: $green;
+      }
+    }
   }
 
   .c-card__sticker {
@@ -71,47 +113,28 @@
     .button--pill {
       &:first-child {
         background: $very-dark-green;
-      }
-      background: $green;
-    }
-  }
-}
-
-.no-touchevents .c-block-list-ms__trips {
-  .button--pill {
-    &:first-child {
-      &:hover,
-      &:focus {
-        background: $light-green;
-      }
-    }
-
-    &:hover,
-    &:focus {
-      background: $green;
-    }
-  }
-
-  &.c-block-list-ms__trips--week {
-    .button--pill {
-      &:first-child {
-        &:hover,
         &:focus {
           background: $green;
         }
+
+        .no-touchevents & {
+          &:hover {
+            background: $green;
+          }
+        }
       }
-      &:hover,
+      background: $green;
+
       &:focus {
         background: $light-green;
       }
-    }
-  }
-}
 
-.no-touchevents .c-list-box-ms__trips .c-list-box__subitem {
-  &:hover,
-  &:focus {
-    background: $very-dark-green;
+      .no-touchevents & {
+        &:hover {
+          background: $light-green;
+        }
+      }
+    }
   }
 }
 
@@ -129,19 +152,19 @@
 }
 
 //Button Pill
-.button--pill--trip {
-  background: $green;
-  &:hover {
-    background: $light-green;
-  }
-}
+// .button--pill--trip {
+//   background: $green;
+//   &:hover {
+//     background: $light-green;
+//   }
+// }
 
-.no-touchevents .button--pill--trip {
-  &:hover,
-  &:focus {
-    background: $dark-green;
-  }
-}
+// .no-touchevents .button--pill--trip {
+//   &:hover,
+//   &:focus {
+//     background: $dark-green;
+//   }
+// }
 
 //WYSIWYG Style overrides
 .c-page__content {

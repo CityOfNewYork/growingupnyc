@@ -87,7 +87,7 @@ button:hover, button:focus {
       font-size: 4.125rem; } }
   @media screen and (min-width: 1024px) {
     .c-side-hero-ms__title .c-side-hero__title__large {
-      font-size: 3.375rem; } }
+      font-size: 3.125rem; } }
   @media screen and (min-width: 1200px) {
     .c-side-hero-ms__title .c-side-hero__title__large {
       font-size: 2.5rem; } }

@@ -78,6 +78,26 @@ button:hover, button:focus {
     .c-hero-ms--light {
       padding: 1.875rem 0 4.875rem; } }
 
+.c-side-hero-ms__title .c-side-hero__title__large {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  white-space: nowrap; }
+  @media screen and (min-width: 700px) {
+    .c-side-hero-ms__title .c-side-hero__title__large {
+      font-size: 4.125rem; } }
+  @media screen and (min-width: 1024px) {
+    .c-side-hero-ms__title .c-side-hero__title__large {
+      font-size: 3.375rem; } }
+  @media screen and (min-width: 1200px) {
+    .c-side-hero-ms__title .c-side-hero__title__large {
+      font-size: 2.5rem; } }
+  @media screen and (min-width: 1200px) and (min-width: 700px) {
+    .c-side-hero-ms__title .c-side-hero__title__large {
+      font-size: 4.125rem; } }
+  .c-side-hero-ms__title .c-side-hero__title__large .rotating-text__entry {
+    display: block;
+    width: 100%; }
+
 .c-side-hero-ms__content {
   color: #fff;
   padding: 2.5rem 0.9375rem 1.875rem;

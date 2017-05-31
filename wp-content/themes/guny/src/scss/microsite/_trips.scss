@@ -152,19 +152,22 @@
 }
 
 //Button Pill
-// .button--pill--trip {
-//   background: $green;
-//   &:hover {
-//     background: $light-green;
-//   }
-// }
+.button--pill--trip {
+  background: $green;
+  &:hover {
+    background: $light-green;
+  }
 
-// .no-touchevents .button--pill--trip {
-//   &:hover,
-//   &:focus {
-//     background: $dark-green;
-//   }
-// }
+  &:focus {
+    background: $dark-green;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $dark-green;
+    }
+  }
+}
 
 //WYSIWYG Style overrides
 .c-page__content {

@@ -361,6 +361,15 @@ button:hover, button:focus {
   .c-page__location--details {
     margin-top: 4.375rem; } }
 
+.button--pill--trip {
+  background: #00965c; }
+  .button--pill--trip:hover {
+    background: #20bf65; }
+  .button--pill--trip:focus {
+    background: #007145; }
+  .no-touchevents .button--pill--trip:hover {
+    background: #007145; }
+
 .c-page__content h2 {
   margin-top: 1.25rem; }
   .c-page__content h2:first-child {

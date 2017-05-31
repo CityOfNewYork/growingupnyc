@@ -12,13 +12,13 @@
   <div class="o-container">
     <h1>{{post.title}}</h1>
     <p class="c-hero__tagline">
-    {% for term in post.terms('trip_group') %}
+    {% for term in post.terms('trip_type') %}
       <a href="" class="button--pill button--pill--trip">{{term.name}}</a>
     {% endfor %}
-    {% for term in post.terms('trip_category') %}
+    {% for term in post.terms('trip_free_day_trip') %}
       <a href="" class="button--pill button--pill--trip">{{term.name}}</a>
     {% endfor %}
-    {% for term in post.terms('trip_location') %}
+    {% for term in post.terms('trip_free_this_week') %}
       <a href="" class="button--pill button--pill--trip">{{term.name}}</a>
     {% endfor %}
     </p>

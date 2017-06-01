@@ -83,13 +83,6 @@
                 "operator": "==",
                 "value": "age"
             }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "topic"
-            }
         ]
     ],
     "menu_order": 0,
@@ -100,5 +93,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1495108436
+    "modified": 1496303315
 }

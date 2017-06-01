@@ -3,8 +3,8 @@
 {% block classes %} c-card-inspiration__profile u-bottom-spacing{{is_first}}{% endblock %}
 
 {% block title %}
-    <h2>{{post.prof_name}}, {{post.prof_age}}</h2>
-    <h3>{{post.prof_country}}, {{post.prof_citystate}}</h3>
+    {# <h2>{{post.prof_name}}, {{post.prof_age}}</h2>
+    <h3>{{post.prof_country}}, {{post.prof_citystate}}</h3> #}
 {% endblock %}
 
 {% block sticker %}
@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block body %}
-{{post.intro__overview}}
+{# {{post.intro__overview}} #}
 
 <section class="c-intro__img" style="background:url({{post.get_field('hero_banner').url}}) no-repeat center center; background-size: cover;"></section>
 <hr>

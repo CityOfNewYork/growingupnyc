@@ -47,54 +47,56 @@
     <div class="o-article o-article-ms js-sticky-article">
       <hr>
 
-      {# Section One #}
-      
+      {# Section One #}      
         {% for top in post.get_field('page_top') %}
-          <section class="o-content-container--compact u-top-spacing u-bottom-spacing" id="section-one">
-          <h2 id="{{top.page_top_content_heading|lower|replace({' ':'-'})}}">{{top.page_top_content_heading}}</h2>
-          {{top.page_top_content_text}}
-          {% if top.page_top_to_do_list %}
-            <div class="c-do-list">{{top.page_top_to_do_list}}</div>
-          {% endif %}
-          {% if top.cta_button %}
-            <a class="button--primary button--primary__curved button--primary__purple button--inspiration__cta" href="{{post.get_field('cta_button')}}">Learn more about NYC Well</a>
-          {% endif %}
+          <section class="o-content-container--compact u-top-spacing u-bottom-spacing">
+            <h2 id="{{top.page_top_content_heading|lower|replace({' ':'-'})}}">{{top.page_top_content_heading}}</h2>
+            {{top.page_top_content_text}}
           </section>
           <hr>
-        {% endfor %}
-      
-      
-      {# Tip #}
-      {% if post.tip %}
-      <aside class="c-tip c-tip-ms__topics u-sm-gutter o-content-container">
-        <div class="c-tip__sticker sticker">
-          <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#lightbulb"></use></svg>
-        </div>
-        <p class="c-tip__content">{{post.tip}}</p>
-
-        <div class="sms-form-wrapper">
-          <div class="signup-form__input signup-form__input--long sms-form__input--long">
-            <label for="phone" class="signup-form__label sms-form__label">
-              <span class="signup-form__label-content sms-form__label-content" data-content="Phone Number">Phone Number</span>
-            </label>
-            <input name="phone" id="phone" type="tel" class="form-field signup-form__field sms-form__field" required="">
-          </div>
-          <button type="submit" class="button--primary button--primary__curved button--primary__purple">Send</button>
-        </div>
-
-        <footer class="c-tip__footer">
-          {% if post.tip_action_heading %}
-            <p>{{post.tip_action_heading}}</p>
-            {% if post.sms_text or post.website_link %}
-              <p>
-                {{post.sms_text}}{% if post.sms_text and post.website_link %}, or{% endif %}
-                {% if post.website_link %}<a href="{{post.website_link}}" class="c-tip__link" target="_blank">find out more here</a>{% endif %}.
-              </p>              
-            {% endif %}
+          {# Gray Section #}
+          {% if top.page_top_gray_inset_heading %}
+            <section class="o-content-container--compact u-top-spacing u-bottom-spacing">
+              <h2>{{top.page_top_gray_inset_heading}}</h2>
+              {% if top.page_top_gray_inset_area %}
+                <div class="c-do-list">              
+                  {{top.page_top_gray_inset_area}}
+                </div>
+              {% endif %}
+              {# URL and the buttons #}
+              {% if top.cta_button_url %}
+                <a class="button--primary button--primary__curved button--primary__purple button--inspiration__cta" href="{{top.cta_button_url}}">{{top.cta_button_text}}</a>
+              {% endif %}
+            </section><hr>
           {% endif %}
-        </footer>
-      </aside>
-      {% endif %} 
+          {# Tip section #}
+          {% if top.tip_title %}
+            <aside class="c-tip c-tip-ms__topics u-sm-gutter o-content-container">
+              <div class="c-tip__sticker sticker">
+                <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#lightbulb"></use></svg>
+              </div>
+              <p class="c-tip__content">{{top.tip_title}}</p>
+              <p class="c-tip__content">{{top.tips}}</p>
+            </aside>
+          {% endif %}
+
+          {# Section Inspirations #}
+        {% if top.inspiration_tout %}
+        <section class="c-other-inspirations">
+          <h3 class="c-other-inspirations__title">Other Inspirations</h3>
+          <li class="c-nav-list__item">
+            {% for inspiration in top.inspiration_tout %}
+              {% set inspiration = TimberPost(inspiration) %}
+              <div class="c-block-list__item">
+                {% include ['partials/teaser-'~inspiration.post_type~'.twig', 'partials/teaser.twig'] with {post: inspiration, is_first: loop.first, age_group: post.title} %}                
+              </div>
+            {% endfor %}
+          </li>
+        </section>
+        {% endif %}
+
+
+        {% endfor %}
     </div> <!-- /.o-article -->
   </article>
 {% endblock %}

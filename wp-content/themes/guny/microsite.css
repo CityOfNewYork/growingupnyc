@@ -216,13 +216,13 @@ button:hover, button:focus {
       background: #3c036f; }
     .no-touchevents .c-list-box-ms__item.topics__item .button--primary__curved:hover {
       background: #3c036f; }
-  .c-list-box-ms__item.inspirations__item:before {
+  .c-list-box-ms__item.inspiration__item:before {
     border-color: #144f82; }
-  .c-list-box-ms__item.inspirations__item .button--primary__curved {
+  .c-list-box-ms__item.inspiration__item .button--primary__curved {
     background: #144f82; }
-    .c-list-box-ms__item.inspirations__item .button--primary__curved:focus {
+    .c-list-box-ms__item.inspiration__item .button--primary__curved:focus {
       background: #00326d; }
-    .no-touchevents .c-list-box-ms__item.inspirations__item .button--primary__curved:hover {
+    .no-touchevents .c-list-box-ms__item.inspiration__item .button--primary__curved:hover {
       background: #00326d; }
   .c-list-box-ms__item.trips__item:before {
     border-color: #00965c; }
@@ -231,7 +231,7 @@ button:hover, button:focus {
     .c-list-box-ms__item.trips__item .button--primary__curved:focus {
       background: #007145; }
     .no-touchevents .c-list-box-ms__item.trips__item .button--primary__curved:hover {
-      color: #007145; }
+      background: #007145; }
 
 .c-details-list-ms__descr ul {
   margin-top: 1.125rem;

@@ -282,7 +282,7 @@ button {
     }
   }
 
-  &.inspirations__item {
+  &.inspiration__item {
     &:before {
       border-color: $dark-blue;
     }
@@ -314,7 +314,7 @@ button {
 
       .no-touchevents & {
         &:hover {
-          color: $dark-green;
+          background: $dark-green;
         }
       }
     }

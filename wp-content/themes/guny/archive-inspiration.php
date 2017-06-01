@@ -30,6 +30,14 @@ $context['featuredposts'] = Timber::get_posts( $featuredposts );
 $posts = array(
 'post_type' => 'inspiration',
 'posts_per_page' => 2,
+'tax_query' => array(
+  array(
+    'taxonomy' => 'inspiration_group',
+    'field' => 'slug',
+    'terms' => 'featured-inspiration',
+    'operator' => 'NOT IN',
+  ),
+),
 'orderby' => array(
     'date' => 'DESC'
 ));

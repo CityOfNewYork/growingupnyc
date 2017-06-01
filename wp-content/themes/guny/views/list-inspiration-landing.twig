@@ -41,8 +41,11 @@ js-sticky-container
 {% endfor %}
 
 <section id="other-inspirations" class="c-block-list c-other-inspirations c-block-list--shade o-content-container u-sm-gutter">
+  <h3 class="c-other-inspirations__title">Other Inspirations</h3>
   {% for post in posts %}
-    {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+    <div class="c-block-list__item">
+      {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+    </div>
   {% endfor %}
 </section>
 {% endblock %}

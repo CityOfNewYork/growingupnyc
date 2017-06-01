@@ -1,8 +1,16 @@
 <div class="c-card {% block classes %}{% endblock %}">
   {% block sticker %}
-  <div class="c-card__sticker sticker" aria-hidden="true">
-    {% block sticker_content %}{% endblock %}
-  </div>
+    {% if post.post_type == 'tribe_events' %}
+      <a href="{{post.link}}">  
+        <div class="c-card__sticker sticker" aria-hidden="true">
+          {% block sticker_content %}{% endblock %}
+        </div>
+      </a>
+    {% else %}
+      <div class="c-card__sticker sticker" aria-hidden="true">
+        {% block sticker_content %}{% endblock %}
+      </div>
+    {% endif %}
   {% endblock %}
   <h3 class="c-card__title">
     {% block title %}

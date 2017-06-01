@@ -22,67 +22,6 @@
             "maxlength": ""
         },
         {
-            "key": "field_591d44caddbee",
-            "label": "Sections Selector",
-            "name": "sections_selector",
-            "type": "radio",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "Yes": "Yes",
-                "No": "No"
-            },
-            "allow_null": 0,
-            "other_choice": 0,
-            "save_other_choice": 0,
-            "default_value": "",
-            "layout": "vertical",
-            "return_format": "value"
-        },
-        {
-            "key": "field_592e68744842b",
-            "label": "Intro Overview Heading",
-            "name": "intro_overview_heading",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_591d4558ddbef",
-            "label": "Intro \/ Overview",
-            "name": "intro__overview",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1
-        },
-        {
             "key": "field_591d4579ddbf0",
             "label": "Page Top",
             "name": "page_top",
@@ -141,130 +80,11 @@
                             "tabs": "all",
                             "toolbar": "full",
                             "media_upload": 1
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
-                }
-            ]
-        },
-        {
-            "key": "field_592e71452a7d6",
-            "label": "Talk to a Counselor Heading",
-            "name": "talk_to_a_counselor_heading",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_591ee5d496062",
-            "label": "Talk to a Counselor",
-            "name": "talk_to_a_counselor",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 0
-        },
-        {
-            "key": "field_591ee91a0bbef",
-            "label": "Talk to a counselor do list",
-            "name": "do_list",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1
-        },
-        {
-            "key": "field_591eec9488e02",
-            "label": "CTA Button",
-            "name": "cta_button",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_591d45efddbf3",
-            "label": "Page Bottom",
-            "name": "page_bottom",
-            "type": "flexible_content",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "button_label": "Add Row",
-            "min": "",
-            "max": "",
-            "layouts": [
-                {
-                    "key": "591d460245685",
-                    "name": "page_bottom_content",
-                    "label": "Page Bottom Content",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_591d461cddbf4",
-                            "label": "Page Bottom Content Heading",
-                            "name": "page_bottom_content_heading",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
                         },
                         {
-                            "key": "field_591d462fddbf5",
-                            "label": "Page Bottom Content Text",
-                            "name": "page_bottom_content_text",
+                            "key": "field_592f95df51023",
+                            "label": "Page top To do list",
+                            "name": "page_top_to_do_list",
                             "type": "wysiwyg",
                             "instructions": "",
                             "required": 0,
@@ -278,50 +98,28 @@
                             "tabs": "all",
                             "toolbar": "full",
                             "media_upload": 1
+                        },
+                        {
+                            "key": "field_592f960151024",
+                            "label": "CTA Button",
+                            "name": "cta_button",
+                            "type": "url",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": ""
                         }
                     ],
                     "min": "",
                     "max": ""
                 }
             ]
-        },
-        {
-            "key": "field_5925947e1563a",
-            "label": "Program Name",
-            "name": "program_name",
-            "type": "text",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5925948e1563b",
-            "label": "Government Agency",
-            "name": "government_agency",
-            "type": "text",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
         }
     ],
     "location": [
@@ -341,5 +139,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1496216148
+    "modified": 1496290940
 }

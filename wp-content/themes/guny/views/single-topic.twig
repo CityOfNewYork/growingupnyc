@@ -32,72 +32,38 @@
   </div> <!-- /.js-parallax -->
   <article class="o-container js-sticky-container">
     <div class="o-article-sidebar">
-        {# <h1>If works</h1> #}
-      {% if post.sections_selector == "Yes" %}
-
       {# Anchor Links #}
       <div class="o-content-container--compact u-shift-up">
         <ol class="c-nav-list c-nav-list-ms__topics js-sticky js-section-set o-sticky-nav">
-          {# For Intro Overview section #}
-          <li class="c-nav-list__item">
-            <a href="#{{post.intro_overview_heading|lower|replace({' ':'-'})}}" data-section="{{post.intro_overview_heading}}" class="js-section c-nav-list__link">{{post.intro_overview_heading}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
-          </li>
           {% for top in post.get_field('page_top') %}
             <li class="c-nav-list__item">
               <a href="#{{top.page_top_content_heading|lower|replace({' ':'-'})}}" data-section="{{top.page_top_content_heading}}" class="js-section c-nav-list__link">{{top.page_top_content_heading}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
             </li>
           {% endfor %}
-          {# Talk to counsler heading #}
-          <li class="c-nav-list__item">
-            <a href="#{{post.talk_to_a_counselor_heading|lower|replace({' ':'-'})}}" data-section="{{post.talk_to_a_counselor_heading}}" class="js-section c-nav-list__link">{{post.talk_to_a_counselor_heading}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
-          </li>
-          {% for bottom in post.get_field('page_bottom') %}
-            <li class="c-nav-list__item">
-              <a href="#{{bottom.page_bottom_content_heading|lower|replace({' ':'-'})}}" data-section="{{bottom.page_bottom_content_heading}}" class="js-section c-nav-list__link">{{bottom.page_bottom_content_heading}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
-            </li>
-          {% endfor %}
         </ol>
       </div> <!-- /.o-content-container-compact -->
-      {% endif %}
     </div> <!-- /.o-article-sidebar -->
 
     <div class="o-article o-article-ms js-sticky-article">
-      <section class="o-content-container--compact u-top-spacing u-bottom-spacing" id="section-introduction">
-        <h2 id="{{post.intro_overview_heading|lower|replace({' ':'-'})}}">{{post.intro_overview_heading}}</h2>
-        {{post.intro__overview}}
-      </section>
       <hr>
 
       {# Section One #}
-      <section class="o-content-container--compact u-top-spacing u-bottom-spacing" id="section-one">
+      
         {% for top in post.get_field('page_top') %}
+          <section class="o-content-container--compact u-top-spacing u-bottom-spacing" id="section-one">
           <h2 id="{{top.page_top_content_heading|lower|replace({' ':'-'})}}">{{top.page_top_content_heading}}</h2>
           {{top.page_top_content_text}}
+          {% if top.page_top_to_do_list %}
+            <div class="c-do-list">{{top.page_top_to_do_list}}</div>
+          {% endif %}
+          {% if top.cta_button %}
+            <a class="button--primary button--primary__curved button--primary__purple button--inspiration__cta" href="{{post.get_field('cta_button')}}">Learn more about NYC Well</a>
+          {% endif %}
+          </section>
+          <hr>
         {% endfor %}
-      </section>
-      <hr>
-
-      {% if post.talk_to_a_counselor %}
-        <section id="section-chat-a-counselor" class="o-content-container--compact u-top-spacing u-bottom-spacing s-wysiwyg">
-          {# <h2 class="c-ttc-title">{{ __('Did you know you can text, chat online, or talk to a counselor for free?', 'GUNY-Single-Topic') }}</h2> #}
-          <h2 id="{{post.talk_to_a_counselor_heading|lower|replace({' ':'-'})}}" class="c-ttc-title">{{post.talk_to_a_counselor_heading}}</h2>
-          {{post.get_field('talk_to_a_counselor')}}
-          <div class="c-do-list">
-            {{post.get_field('do_list')}}
-          </div>
-          <a class="button--primary button--primary__curved button--primary__purple button--inspiration__cta" href="{{post.get_field('cta_button')}}">Learn more about NYC Well</a>
-        </section> <!-- /.o-content-container-text -->
-      {% endif %}
-      <hr>
-
-      {# Section Two #}
-      <section class="o-content-container--compact u-top-spacing u-bottom-spacing-small" id="section-two">
-        {% for bottom in post.get_field('page_bottom') %}
-          <h2 id="{{bottom.page_bottom_content_heading|lower|replace({' ':'-'})}}">{{bottom.page_bottom_content_heading}}</h2></a>
-          {{bottom.page_bottom_content_text}}
-        {% endfor %}
-      </section>
-
+      
+      
       {# Tip #}
       {% if post.tip %}
       <aside class="c-tip c-tip-ms__topics u-sm-gutter o-content-container">

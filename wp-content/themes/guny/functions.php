@@ -176,8 +176,8 @@ class GunySite extends TimberSite {
     register_nav_menus(
       array(
         'header-menu' => __( 'Header Menu' ),
-        'ms-header-menu' => __( 'MS Footer Menu (Right)' ),
-        'ms-footer-menu-right' => __( 'MS Header Menu' ),
+        'ms-header-menu' => __( 'MS Header Menu' ),
+        'ms-footer-menu-right' => __( 'MS Footer Menu (Right)' ),
         'footer-menu-left' => __( 'Footer Menu (Left)' ),
         'footer-menu-right' => __( 'Footer Menu (Right)' )
       )

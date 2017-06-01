@@ -141,7 +141,7 @@
             <nav role="navigation" class="c-footer__nav" aria-label="Secondary">
               <ul class="c-footer__column">
                 <li class="c-footer__nav-item"><a class="c-footer__link" href="{{site.url}}">{{ __('Home', 'GUNY-Footer') }}</a></li>
-                {% for menu_item in menu.get_items %}
+                {% for menu_item in ms_menu.get_items %}
                   <li class="c-footer__nav-item"><a class="c-footer__link" href="{{menu_item.link}}">{{menu_item.title}}</a></li>
                 {% endfor %}
                 {% for menu_item in footer_menu_left.get_items %}

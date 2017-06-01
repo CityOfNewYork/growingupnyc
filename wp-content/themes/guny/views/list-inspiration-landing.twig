@@ -30,6 +30,13 @@ js-sticky-container
       <a href="#other-inspirations" data-section="other-inspirations" class="js-section c-nav-list__link">Other Inspirations<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
     </li>
   </ol>
+  {% for post in featuredposts %}
+    <dl class="c-details-list c-details-list-ms">
+        <dd class="c-details-list__descr c-details-list-ms__descr c-prof-name"><h2>{{post.prof_name}}, {{post.prof_age}}</h2></dd>
+        <dd class="c-details-list__descr c-details-list-ms__descr c-prof-country">{{post.prof_country}}, {{post.prof_citystate}}</dd>
+        <dd class="c-details-list__descr c-details-list-ms__descr c-prof-intro">{{post.intro__overview}}</dd>
+    </dl>
+  {% endfor %}
 {% endblock %}
 
 {% block post_list %}

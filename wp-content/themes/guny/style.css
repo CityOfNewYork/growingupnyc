@@ -1366,7 +1366,7 @@ ol.o-inline {
   -webkit-order: 3;
       -ms-flex-order: 3;
           order: 3;
-  text-decoration: none; }
+  text-decoration: underline; }
   @media screen and (min-width: 375px) {
     .c-card__title {
       font-size: 1.65rem; } }
@@ -1725,7 +1725,7 @@ ol.o-inline {
 
 .c-hero__tagline {
   font-family: "museo-sans-rounded", sans-serif;
-  font-size: 1.64062rem;
+  font-size: 1.64063rem;
   font-weight: 900;
   line-height: 1.2;
   margin-top: 0.625rem;

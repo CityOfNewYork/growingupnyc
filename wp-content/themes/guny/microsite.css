@@ -692,7 +692,7 @@ button:hover, button:focus {
     display: none; }
   .s-wysiwyg .c-other-inspirations .c-card__sticker,
   .c-other-inspirations .c-card__sticker {
-    background-size: 140% !important; }
+    background-size: cover !important; }
   .s-wysiwyg .c-other-inspirations .c-other-inspirations__title,
   .c-other-inspirations .c-other-inspirations__title {
     margin: 0 0 0.9375rem; }

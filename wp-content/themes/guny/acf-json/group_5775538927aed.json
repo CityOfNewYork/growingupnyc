@@ -84,8 +84,46 @@
             "media_upload": 0
         },
         {
+            "key": "field_591030b724fcc",
+            "label": "Heads Up",
+            "name": "heads_up",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": "wpautop"
+        },
+        {
+            "key": "field_592fc042225cc",
+            "label": "Am I Eligible? - Heading",
+            "name": "eligibility_heading",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Am I Eligible?",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_577553edd207f",
-            "label": "Am I Eligible?",
+            "label": "Am I Eligible? - Body",
             "name": "eligibility",
             "type": "wysiwyg",
             "instructions": "",
@@ -102,8 +140,27 @@
             "media_upload": 0
         },
         {
+            "key": "field_592fc7f8c1784",
+            "label": "What Will I Need to Apply? - Heading",
+            "name": "whats_needed_copy_heading",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "What Will I Need to Apply?",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_57a39e841892b",
-            "label": "What Will I Need to Apply?",
+            "label": "What Will I Need to Apply? - Body",
             "name": "whats_needed",
             "type": "wysiwyg",
             "instructions": "",
@@ -120,8 +177,27 @@
             "media_upload": 0
         },
         {
+            "key": "field_592fc9064dca2",
+            "label": "How To Apply - Heading",
+            "name": "how_to_apply_heading",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "I'm Ready To Apply",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_57755401d2080",
-            "label": "How To Apply",
+            "label": "How To Apply - Body",
             "name": "how_to_apply",
             "type": "wysiwyg",
             "instructions": "",
@@ -138,8 +214,27 @@
             "media_upload": 0
         },
         {
+            "key": "field_592fc9294dca3",
+            "label": "How Can I Get Help? - Heading",
+            "name": "get_help_heading",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "How Can I Get Help?",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_57a3ab25c6eaa",
-            "label": "How Can I Get Help?",
+            "label": "How Can I Get Help? - Body",
             "name": "get_help",
             "type": "wysiwyg",
             "instructions": "",
@@ -173,5 +268,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1470344006
+    "modified": 1496304021
 }

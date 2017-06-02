@@ -374,9 +374,6 @@ button:hover, button:focus {
   .no-touchevents .c-block-list-ms__trips.c-block-list-ms__trips--week .button--pill:hover {
     background: #20bf65; }
 
-.c-page__intro {
-  margin-bottom: 1.875rem; }
-
 @media screen and (min-width: 1024px) {
   .c-page__location--details {
     margin-top: 4.375rem; } }
@@ -407,6 +404,14 @@ button:hover, button:focus {
 @media screen and (min-width: 1024px) {
   .o-article-trip {
     float: right; } }
+
+.o-article-trip .c-page__intro,
+.o-article-trip .c-page__content {
+  margin-bottom: 1.875rem; }
+
+@media screen and (min-width: 1024px) {
+  .o-article-trip .c-page__content {
+    margin-bottom: 0; } }
 
 @media screen and (min-width: 1024px) {
   .o-article-trip-sidebar {

@@ -138,12 +138,6 @@
   }
 }
 
-//Detail page
-//Page Intro
-.c-page__intro {
-  margin-bottom: rem-calc(30);
-}
-
 //Location Details
 .c-page__location--details {
   @include media($bp-large) {
@@ -195,6 +189,19 @@
 .o-article-trip {
   @include media($bp-large) {
     float: right;
+  }
+
+  //Detail page
+  //Page Intro
+  .c-page__intro,
+  .c-page__content {
+    margin-bottom: rem-calc(30);
+  }
+
+  .c-page__content {
+    @include media($bp-large) {
+      margin-bottom: 0;
+    }
   }
 }
 

@@ -660,21 +660,33 @@ button:hover, button:focus {
 .c-hero-inspiration {
   background-size: cover; }
 
-.c-prof-name {
-  padding-top: 0.9375rem;
-  padding-bottom: 0.3125rem; }
-  .c-prof-name h2 {
-    font-size: 2.5rem;
-    text-transform: none;
-    margin-bottom: 0; }
-
-.c-prof-country {
-  font-family: "museo-sans-rounded", sans-serif;
-  font-weight: 900; }
-
-.c-prof-intro {
-  border-top: 2px solid #fff;
-  padding-top: 0.9375rem; }
+.c-details-list-ms__inspiration {
+  background: transparent;
+  padding-top: 0;
+  padding-bottom: 0; }
+  .c-details-list-ms__inspiration .c-details-list-ms__descr {
+    padding-left: 0;
+    padding-right: 0; }
+    @media screen and (min-width: 1024px) {
+      .c-details-list-ms__inspiration .c-details-list-ms__descr {
+        background: #eee;
+        padding: 0 1.875rem 1.0625rem; } }
+    .c-details-list-ms__inspiration .c-details-list-ms__descr.c-prof-name {
+      padding-top: 0;
+      padding-bottom: 0.3125rem; }
+      @media screen and (min-width: 1024px) {
+        .c-details-list-ms__inspiration .c-details-list-ms__descr.c-prof-name {
+          padding-top: 0.9375rem; } }
+      .c-details-list-ms__inspiration .c-details-list-ms__descr.c-prof-name h2 {
+        font-size: 2.5rem;
+        text-transform: none;
+        margin-bottom: 0; }
+    .c-details-list-ms__inspiration .c-details-list-ms__descr.c-prof-country {
+      font-family: "museo-sans-rounded", sans-serif;
+      font-weight: 900; }
+    .c-details-list-ms__inspiration .c-details-list-ms__descr.c-prof-intro {
+      border-top: 2px solid #fff;
+      padding-top: 0.9375rem; }
 
 .s-wysiwyg .c-other-inspirations,
 .c-other-inspirations {
@@ -755,6 +767,8 @@ button:hover, button:focus {
     .c-card-inspiration__profile {
       padding-left: 0;
       padding-right: 0; } }
+  .c-card-inspiration__profile .c-card__title {
+    display: none; }
   .c-card-inspiration__profile .c-card__body {
     margin-bottom: 0; }
 
@@ -772,7 +786,7 @@ button:hover, button:focus {
   overflow: hidden;
   width: 100%;
   height: 12.5rem;
-  margin: 1.875rem 0 3.75rem; }
+  margin: 0 0 3.75rem; }
   @media screen and (min-width: 1024px) {
     .c-intro__img {
       height: 27.5rem; } }

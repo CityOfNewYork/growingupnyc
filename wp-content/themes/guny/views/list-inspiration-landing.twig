@@ -22,22 +22,21 @@ js-sticky-container
 {% endblock %}
 
 {% block list_sidebar %}
-  <ol class="c-nav-list c-nav-list-ms c-nav-list-ms__inspiration js-sticky js-section-set o-sticky-nav">
-    {# <li class="c-nav-list__item">
+  {#<ol class="c-nav-list c-nav-list-ms c-nav-list-ms__inspiration js-sticky js-section-set o-sticky-nav">
+     <li class="c-nav-list__item">
       <a href="#featured-inspiration" data-section="featured-inspiration" class="js-section c-nav-list__link">Featured Inspiration<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
     </li>
     <li class="c-nav-list__item">
       <a href="#other-inspirations" data-section="other-inspirations" class="js-section c-nav-list__link">Other Inspirations<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
-    </li> #}
-    {% for post in featuredposts %}
-    <dl class="c-details-list c-details-list-ms">
+    </li>
+  </ol>#}
+  {% for post in featuredposts %}
+    <dl class="c-details-list c-details-list-ms c-details-list-ms__inspiration">
         <dd class="c-details-list__descr c-details-list-ms__descr c-prof-name"><h2>{{post.prof_name}}, {{post.prof_age}}</h2></dd>
         <dd class="c-details-list__descr c-details-list-ms__descr c-prof-country">{{post.prof_country}}, {{post.prof_citystate}}</dd>
         <dd class="c-details-list__descr c-details-list-ms__descr c-prof-intro">{{post.intro__overview}}</dd>
     </dl>
   {% endfor %}
-  </ol>
-  
 {% endblock %}
 
 {% block post_list %}

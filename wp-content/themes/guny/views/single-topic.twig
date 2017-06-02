@@ -56,18 +56,19 @@
           <hr>
           {# Gray Section #}
           {% if top.page_top_gray_inset_heading %}
-            <section class="o-content-container--compact u-top-spacing u-bottom-spacing">
+            <section class="o-content-container--compact u-top-spacing">
               <h2>{{top.page_top_gray_inset_heading}}</h2>
               {% if top.page_top_gray_inset_area %}
                 <div class="c-do-list">              
                   {{top.page_top_gray_inset_area}}
                 </div>
               {% endif %}
-              {# URL and the buttons #}
-              {% if top.cta_button_url %}
-                <a class="button--primary button--primary__curved button--primary__purple button--inspiration__cta" href="{{top.cta_button_url}}">{{top.cta_button_text}}</a>
-              {% endif %}
-            </section><hr>
+            </section>
+            {# URL and the buttons #}
+            {% if top.cta_button_url %}
+              <a class="button--primary button--primary__curved button--primary__purple button--inspiration__cta" href="{{top.cta_button_url}}">{{top.cta_button_text}}</a>
+            {% endif %}
+              <hr>
           {% endif %}
           {# Tip section #}
           {% if top.tip_title %}

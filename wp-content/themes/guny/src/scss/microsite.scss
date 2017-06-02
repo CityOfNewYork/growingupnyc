@@ -412,6 +412,10 @@ button {
   }
 }
 
+.c-card__title {
+  text-decoration: none;
+}
+
 // Footer
 .c-footer {
   background: $dark-gray-1;

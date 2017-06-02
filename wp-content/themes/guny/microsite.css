@@ -305,6 +305,9 @@ button:hover, button:focus {
       .c-card-invert .c-card__sticker {
         left: -3.125rem; } }
 
+.c-card__title {
+  text-decoration: none; }
+
 .c-footer {
   background: #2d333d; }
 

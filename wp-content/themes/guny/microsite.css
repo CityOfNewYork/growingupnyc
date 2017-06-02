@@ -683,10 +683,18 @@ button:hover, button:focus {
         margin-bottom: 0; }
     .c-details-list-ms__inspiration .c-details-list-ms__descr.c-prof-country {
       font-family: "museo-sans-rounded", sans-serif;
-      font-weight: 900; }
+      font-weight: 900;
+      padding: 0; }
+      @media screen and (min-width: 1024px) {
+        .c-details-list-ms__inspiration .c-details-list-ms__descr.c-prof-country {
+          padding: 0 1.875rem 1.0625rem; } }
     .c-details-list-ms__inspiration .c-details-list-ms__descr.c-prof-intro {
+      display: none;
       border-top: 2px solid #fff;
       padding-top: 0.9375rem; }
+      @media screen and (min-width: 1024px) {
+        .c-details-list-ms__inspiration .c-details-list-ms__descr.c-prof-intro {
+          display: block; } }
 
 .s-wysiwyg .c-other-inspirations,
 .c-other-inspirations {
@@ -786,12 +794,19 @@ button:hover, button:focus {
   overflow: hidden;
   width: 100%;
   height: 12.5rem;
-  margin: 0 0 3.75rem; }
+  margin: 0 0 1.875rem; }
   @media screen and (min-width: 1024px) {
     .c-intro__img {
-      height: 27.5rem; } }
+      height: 27.5rem;
+      margin: 0 0 3.75rem; } }
   .c-intro__img img {
     max-width: 100%; }
+
+.c-featured-intro {
+  margin: 0 0 3.125rem; }
+  @media screen and (min-width: 1024px) {
+    .c-featured-intro {
+      display: none; } }
 
 .c-inspiration-qa__wrapper .button--primary__blue {
   margin-top: 1.875rem; }

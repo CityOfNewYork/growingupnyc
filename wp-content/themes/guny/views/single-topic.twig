@@ -49,7 +49,7 @@
 
       {# Section One #}      
         {% for top in post.get_field('page_top') %}
-          <section class="o-content-container--compact u-top-spacing u-bottom-spacing">
+          <section class="o-content-container--compact u-top-spacing u-bottom-spacing s-wysiwyg">
             <h2 id="{{top.page_top_content_heading|lower|replace({' ':'-'})}}">{{top.page_top_content_heading}}</h2>
             {{top.page_top_content_text}}
           </section>

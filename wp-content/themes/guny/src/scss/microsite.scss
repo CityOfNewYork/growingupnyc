@@ -66,6 +66,13 @@ button {
   }
 }
 
+// Show mobile only
+.mobile-only {
+  @include media($bp-large) {
+    display: none;
+  }
+}
+
 // Banner Logo Wrapper
 .c-banner__logo-wrapper {
   top: 0;

@@ -21,8 +21,8 @@
 {% block content %}
   <header class="c-hero c-hero-inspiration c-hero--large"></header>
   <section class="o-container u-bottom-spacing u-top-spacing">
-    <aside class="o-article-sidebar o-article-ms-sidebar o-content-container--compact u-lg-gutter">
-      <dl class="c-details-list c-details-list-ms c-details-list-ms__inspiration">
+    <aside class="o-article-sidebar o-article-ms-sidebar o-content-container--compact u-bottom-spacing">
+      <dl class="c-details-list c-details-list-ms c-details-list-ms__inspiration c-details-list-ms__inspiration--detail">
         <dd class="c-details-list__descr c-details-list-ms__descr c-prof-name"><h2>{{post.prof_name}}, {{post.prof_age}}</h2></dd>
         {#<dt class="c-details-list__term c-details-list-ms__term">{{ __('Cost', 'GUNY-Single-Inspiration') }}</dt>#}
 
@@ -31,11 +31,11 @@
         <dd class="c-details-list__descr c-details-list-ms__descr c-prof-intro">{{post.intro__overview}}</dd>
       </dl>
     </aside>
-    <article class="o-article o-article-ms o-content-container--compact">
+    <hr class="mobile-only">
+    <article class="o-article o-article-ms o-article-ms__inspiration--detail o-content-container--compact">
       <div class="o-content-container--text s-wysiwyg">
-        
         {# Section One - Q & A #}
-        <section class="o-content-container--compact c-page-top-content u-bottom-spacing" id="section-one">
+        <section class="c-page-top-content u-bottom-spacing" id="section-one">
           <h2 class="u-lg-gutter" id="{{post.get_field('page_top_heading')|lower|replace({' ':'-'})}}">{{post.get_field('page_top_heading')}}</h2>
           {% for top in post.get_field('page_top') %}
             <div class="c-inspiration_qa">
@@ -43,6 +43,7 @@
             </div>
           {% endfor %}
         </section>
+
         {# Section Inspirations #}
         {% if post.inspiration_posts %}
         <section class="c-other-inspirations">

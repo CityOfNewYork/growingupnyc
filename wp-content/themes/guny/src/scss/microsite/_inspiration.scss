@@ -46,10 +46,29 @@
       display: none;
       border-top: 2px solid $white;
       padding-top: rem-calc(15px);
+      padding-bottom: 0;
       @include media($bp-large) {
         display: block;
+        padding-bottom: rem-calc(15px);
       }
     }
+  }
+}
+
+//Detail page side bar
+.c-details-list-ms__inspiration--detail {
+  .c-details-list-ms__descr {
+    &.c-prof-intro {
+      display: block;
+    }
+  }
+}
+
+//Detail page content section
+.o-article-ms__inspiration--detail {
+  padding-top: rem-calc(45);
+  @include media($bp-large) {
+    padding-top: 0;
   }
 }
 

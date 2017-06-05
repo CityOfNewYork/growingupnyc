@@ -36,6 +36,10 @@ button:hover, button:focus {
     .o-inline__item {
       margin-left: 3.5rem; } }
 
+@media screen and (min-width: 1024px) {
+  .mobile-only {
+    display: none; } }
+
 .c-banner__logo-wrapper {
   top: 0; }
   @media screen and (min-width: 375px) {
@@ -699,10 +703,21 @@ button:hover, button:focus {
     .c-details-list-ms__inspiration .c-details-list-ms__descr.c-prof-intro {
       display: none;
       border-top: 2px solid #fff;
-      padding-top: 0.9375rem; }
+      padding-top: 0.9375rem;
+      padding-bottom: 0; }
       @media screen and (min-width: 1024px) {
         .c-details-list-ms__inspiration .c-details-list-ms__descr.c-prof-intro {
-          display: block; } }
+          display: block;
+          padding-bottom: 0.9375rem; } }
+
+.c-details-list-ms__inspiration--detail .c-details-list-ms__descr.c-prof-intro {
+  display: block; }
+
+.o-article-ms__inspiration--detail {
+  padding-top: 2.8125rem; }
+  @media screen and (min-width: 1024px) {
+    .o-article-ms__inspiration--detail {
+      padding-top: 0; } }
 
 .s-wysiwyg .c-other-inspirations,
 .c-other-inspirations {

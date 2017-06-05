@@ -61,7 +61,11 @@
 
   .c-card__title {
     margin-top: 0;
-    margin-bottom: rem-calc(5);
+    margin-bottom: rem-calc(8);
+
+    a {
+      text-decoration: none;
+    }
   }
 
   .c-card__body {

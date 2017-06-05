@@ -711,7 +711,10 @@ button:hover, button:focus {
   .s-wysiwyg .c-other-inspirations .c-card__title,
   .c-other-inspirations .c-card__title {
     margin-top: 0;
-    margin-bottom: 0.3125rem; }
+    margin-bottom: 0.5rem; }
+    .s-wysiwyg .c-other-inspirations .c-card__title a,
+    .c-other-inspirations .c-card__title a {
+      text-decoration: none; }
   .s-wysiwyg .c-other-inspirations .c-card__body p,
   .c-other-inspirations .c-card__body p {
     margin-bottom: 1.875rem; }

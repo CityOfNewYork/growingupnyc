@@ -2414,6 +2414,13 @@ ol.o-inline {
   100% {
     opacity: 0; } }
 
+@media (orientation: landscape) {
+  html.ipad.ios7 > body {
+    bottom: 0;
+    width: 100%;
+    height: 672px !important;
+    overflow: auto; } }
+
 .baby-background {
   background-color: #d8006d !important; }
 

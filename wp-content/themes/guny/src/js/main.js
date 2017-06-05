@@ -12,6 +12,7 @@ import bsdtoolsSignup from './modules/bsdtools-signup.js';
 import formEffects from './modules/formEffects.js';
 import facets from './modules/facets.js';
 import owlSettings from './modules/owlSettings.js';
+import iOS7Hack from './modules/iOS7Hack.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -39,6 +40,7 @@ function init() {
   bsdtoolsSignup();
   formEffects();
   owlSettings();
+  iOS7Hack();
 }
 
 ready(init);

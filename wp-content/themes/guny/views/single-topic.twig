@@ -46,7 +46,6 @@
 
     <div class="o-article o-article-ms js-sticky-article">
       <hr>
-
       {# Section One #}      
         {% for top in post.get_field('page_top') %}
           <section class="o-content-container--compact u-top-spacing u-bottom-spacing s-wysiwyg">
@@ -79,27 +78,27 @@
               <p class="c-tip__content">{{top.tip_title}}</p>
               <p class="c-tip__content">{{top.tips}}</p>
 
-              <div id="share-by-text" class="sms-form-wrapper share-form hidden">
-                <form method="post" action="{{ shareAction }}" class="js-share-form" novalidate>
-                  <input type="hidden" name="action" value="sms_send">
-                  <input type="hidden" name="url" value="{{ shareUrl }}">
-                  <input type="hidden" name="sharetext" value="{{post.get_field('sms_intro_text')}}">
-                  <input type="hidden" name="hash" value="{{ shareHash }}">
+              {% if options.enable_sms == "Yes" %}
+                <div id="share-by-text" class="sms-form-wrapper share-form hidden">
+                  <form method="post" action="{{ shareAction }}" class="js-share-form" novalidate>
+                    <input type="hidden" name="action" value="sms_send">
+                    <input type="hidden" name="url" value="{{ shareUrl }}">
+                    <input type="hidden" name="sharetext" value="{{post.get_field('sms_intro_text')}}">
+                    <input type="hidden" name="hash" value="{{ shareHash }}">
                   
-                  <div class="signup-form__input signup-form__input--long sms-form__input--long">
-                  <label for="phone" class="signup-form__label sms-form__label">
-                    <span class="signup-form__label-content sms-form__label-content" data-content="Phone Number">Phone Number</span>
-                  </label>
-                  <input type="tel" name="to" class="form-field signup-form__field sms-form__field" required>
+                    <div class="signup-form__input signup-form__input--long sms-form__input--long">
+                      <label for="phone" class="signup-form__label sms-form__label">
+                      <span class="signup-form__label-content sms-form__label-content" data-content="Phone Number">Phone Number</span>
+                      </label>
+                      <input type="tel" name="to" class="form-field signup-form__field sms-form__field" required>
+                    </div>
+                    <button type="submit" class="button--primary button--primary__curved button--primary__purple">{{__('Send', 'accessnyc-program-detail')}}</button>
+                    <div class="success-message">{{__('Sent!', 'accessnyc-program-detail')}}</div>
+                  </form>
                 </div>
-                <button type="submit" class="button--primary button--primary__curved button--primary__purple">{{__('Send', 'accessnyc-program-detail')}}</button>
-                <div class="success-message">{{__('Sent!', 'accessnyc-program-detail')}}</div>
-                </form>
-              </div>
-
+              {% endif %}
             </aside>
           {% endif %}
-
           {# Section Inspirations #}
         {% if top.inspiration_tout %}
         <section class="c-other-inspirations u-lg-gutter">
@@ -115,7 +114,6 @@
         <hr>
         {% endif %}
         {% endfor %}
-
     </div> <!-- /.o-article -->
   </article>
 {% endblock %}

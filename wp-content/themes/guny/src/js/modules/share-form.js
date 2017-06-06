@@ -148,9 +148,9 @@ class ShareForm {
    * @return {this} ShareForm - shareform
    */
   _showError(msg) {
-    const $error = $(document.createElement('div'));
-    $error.addClass(ShareForm.CssClass.ERROR_MSG).text(Utility.localize(msg));
-    $(this._el).addClass(ShareForm.CssClass.ERROR).append($error);
+    const $msgdiv = $(document.createElement('div'));
+    $msgdiv.addClass(ShareForm.CssClass.ERROR_MSG).text(Utility.localize(msg));
+    $(this._el).addClass(ShareForm.CssClass.ERROR).append($msgdiv);
     return this;
   }
 
@@ -162,9 +162,9 @@ class ShareForm {
   _showSuccess(msg) {
     // $(this._el).addClass(ShareForm.CssClass.SUCCESS);
 
-    const $success = $(document.createElement('div'));
-    $success.addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
-    $(this._el).addClass(ShareForm.CssClass.SUCCESS).append($success);
+    const $msgdiv = $(document.createElement('div'));
+    $msgdiv.addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
+    $(this._el).addClass(ShareForm.CssClass.SUCCESS).append($msgdiv);
     return this;
   }
 

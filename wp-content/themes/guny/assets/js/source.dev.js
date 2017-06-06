@@ -2270,9 +2270,9 @@ if (objCtr.defineProperty) {
 	  }, {
 	    key: '_showError',
 	    value: function _showError(msg) {
-	      var $error = (0, _jquery2.default)(document.createElement('div'));
-	      $error.addClass(ShareForm.CssClass.ERROR_MSG).text(_utility2.default.localize(msg));
-	      (0, _jquery2.default)(this._el).addClass(ShareForm.CssClass.ERROR).append($error);
+	      var $msgdiv = (0, _jquery2.default)(document.createElement('div'));
+	      $msgdiv.addClass(ShareForm.CssClass.ERROR_MSG).text(_utility2.default.localize(msg));
+	      (0, _jquery2.default)(this._el).addClass(ShareForm.CssClass.ERROR).append($msgdiv);
 	      return this;
 	    }
 
@@ -2287,9 +2287,9 @@ if (objCtr.defineProperty) {
 	    value: function _showSuccess(msg) {
 	      // $(this._el).addClass(ShareForm.CssClass.SUCCESS);
 
-	      var $success = (0, _jquery2.default)(document.createElement('div'));
-	      $success.addClass(ShareForm.CssClass.SUCCESS_MSG).text(_utility2.default.localize(msg));
-	      (0, _jquery2.default)(this._el).addClass(ShareForm.CssClass.SUCCESS).append($success);
+	      var $msgdiv = (0, _jquery2.default)(document.createElement('div'));
+	      $msgdiv.addClass(ShareForm.CssClass.SUCCESS_MSG).text(_utility2.default.localize(msg));
+	      (0, _jquery2.default)(this._el).addClass(ShareForm.CssClass.SUCCESS).append($msgdiv);
 	      return this;
 	    }
 

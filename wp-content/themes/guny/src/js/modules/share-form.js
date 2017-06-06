@@ -156,10 +156,15 @@ class ShareForm {
 
   /**
    * Adds a "success" class.
+   * @param {string} msg - Error message to display.
    * @return {this} ShareForm
    */
-  _showSuccess() {
-    $(this._el).addClass(ShareForm.CssClass.SUCCESS);
+  _showSuccess(msg) {
+    // $(this._el).addClass(ShareForm.CssClass.SUCCESS);
+
+    const $success = $(document.createElement('div'));
+    $success.addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
+    $(this._el).addClass(ShareForm.CssClass.SUCCESS).append($success);
     return this;
   }
 
@@ -173,7 +178,7 @@ class ShareForm {
     $(this._el).find('input').prop('disabled', true);
     return $.post($(this._el).attr('action'), payload).done(response => {
       if (response.success) {
-        this._showSuccess();
+        this._showSuccess(ShareForm.Message.SUCCESS);
         this._isDisabled = true;
         $(this._el).one('keyup', 'input', () => {
           $(this._el).removeClass(ShareForm.CssClass.SUCCESS);
@@ -213,7 +218,8 @@ ShareForm.Message = {
   EMAIL: 'ERROR_EMAIL',
   PHONE: 'Invalid Mobile Number',
   REQUIRED: 'ERROR_REQUIRED',
-  SERVER: 'ERROR_SERVER'
+  SERVER: 'ERROR_SERVER',
+  SUCCESS: 'Successfully Sent Text Message'
 };
 
 export default ShareForm;

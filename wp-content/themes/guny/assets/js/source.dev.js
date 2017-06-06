@@ -2278,13 +2278,18 @@ if (objCtr.defineProperty) {
 
 	    /**
 	     * Adds a "success" class.
+	     * @param {string} msg - Error message to display.
 	     * @return {this} ShareForm
 	     */
 
 	  }, {
 	    key: '_showSuccess',
-	    value: function _showSuccess() {
-	      (0, _jquery2.default)(this._el).addClass(ShareForm.CssClass.SUCCESS);
+	    value: function _showSuccess(msg) {
+	      // $(this._el).addClass(ShareForm.CssClass.SUCCESS);
+
+	      var $success = (0, _jquery2.default)(document.createElement('div'));
+	      $success.addClass(ShareForm.CssClass.SUCCESS_MSG).text(_utility2.default.localize(msg));
+	      (0, _jquery2.default)(this._el).addClass(ShareForm.CssClass.SUCCESS).append($success);
 	      return this;
 	    }
 
@@ -2303,7 +2308,7 @@ if (objCtr.defineProperty) {
 	      (0, _jquery2.default)(this._el).find('input').prop('disabled', true);
 	      return _jquery2.default.post((0, _jquery2.default)(this._el).attr('action'), payload).done(function (response) {
 	        if (response.success) {
-	          _this2._showSuccess();
+	          _this2._showSuccess(ShareForm.Message.SUCCESS);
 	          _this2._isDisabled = true;
 	          (0, _jquery2.default)(_this2._el).one('keyup', 'input', function () {
 	            (0, _jquery2.default)(_this2._el).removeClass(ShareForm.CssClass.SUCCESS);
@@ -2348,7 +2353,8 @@ if (objCtr.defineProperty) {
 	  EMAIL: 'ERROR_EMAIL',
 	  PHONE: 'Invalid Mobile Number',
 	  REQUIRED: 'ERROR_REQUIRED',
-	  SERVER: 'ERROR_SERVER'
+	  SERVER: 'ERROR_SERVER',
+	  SUCCESS: 'Successfully Sent Text Message'
 	};
 
 	exports.default = ShareForm;

@@ -95,9 +95,51 @@
         </section>
         <hr>
         {% endif %}
-
-
         {% endfor %}
+
+        {# This needs to be visible only if the admin has added the sms option on #}
+        {# <div class="program-detail-status-button">
+          <div id="share-by-text" class="share-form hidden">
+            <form method="post" action="{{ shareAction }}" class="js-share-form" novalidate>
+              <input type="hidden" name="action" value="sms_send">
+              <input type="hidden" name="url" value="{{ shareUrl }}">
+              <input type="hidden" name="sharetext" value="{{post.get_field('sms_intro_text')}}">
+              <input type="hidden" name="hash" value="{{ shareHash }}">
+              <div class="share-form-controls">
+                <input type="tel" name="to" placeholder="{{__('Telephone number', 'accessnyc-program-detail')}}" required>
+                <button type="submit" class="btn btn-primary btn-small btn-submit">{{__('Send', 'accessnyc-program-detail')}}</button>
+                <div class="success-message">{{__('Sent!', 'accessnyc-program-detail')}}</div>
+              </div>
+            </form>
+          </div>
+        </div> #}
+          
+<aside class="c-tip c-tip-ms__topics u-sm-gutter o-content-container">
+  <div class="c-tip__sticker sticker">
+    <svg class="icon--large" role="img"><title>Tip</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-outlined"></use></svg>
+  </div>
+  <p class="c-tip__content">Send yourself an SMS message to remember this page</p>
+
+  <div id="share-by-text" class="sms-form-wrapper share-form hidden">
+    <form method="post" action="{{ shareAction }}" class="js-share-form" novalidate>
+      <input type="hidden" name="action" value="sms_send">
+      <input type="hidden" name="url" value="{{ shareUrl }}">
+      <input type="hidden" name="sharetext" value="{{post.get_field('sms_intro_text')}}">
+      <input type="hidden" name="hash" value="{{ shareHash }}">
+      
+      <div class="signup-form__input signup-form__input--long sms-form__input--long">
+      <label for="phone" class="signup-form__label sms-form__label">
+        <span class="signup-form__label-content sms-form__label-content" data-content="Phone Number">Phone Number</span>
+      </label>
+      <input type="tel" name="to" class="form-field signup-form__field sms-form__field" required>
+    </div>
+    <button type="submit" class="button--primary button--primary__curved button--primary__purple">{{__('Send', 'accessnyc-program-detail')}}</button>
+    <div class="success-message">{{__('Sent!', 'accessnyc-program-detail')}}</div>
+    </form>
+  </div>
+  <footer class="c-tip__footer"></footer>
+</aside>
+
     </div> <!-- /.o-article -->
   </article>
 {% endblock %}

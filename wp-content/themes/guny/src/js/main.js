@@ -12,6 +12,7 @@ import bsdtoolsSignup from './modules/bsdtools-signup.js';
 import formEffects from './modules/formEffects.js';
 import facets from './modules/facets.js';
 import owlSettings from './modules/owlSettings.js';
+import ShareForm from './modules/share-form.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -45,3 +46,13 @@ ready(init);
 
 // Make certain functions available globally
 window.accordion = accordion;
+
+(function(window, $) {
+  'use strict';
+  // Initialize share by email/sms forms.
+  console.log("i'm apearing here");
+  $(`.${ShareForm.CssClass.FORM}`).each((i, el) => {
+    const shareForm = new ShareForm(el);
+    shareForm.init();
+  });
+})(window, jQuery);

@@ -5,7 +5,7 @@
 
 export default function() {
   if (navigator.userAgent.match(/iPad;.*CPU.*OS 7_\d/i)) {
-	  $('.c-side-hero').height(window.innerHeight);
-	  window.scrollTo(0, 0);
-	}
+    $('.c-side-hero').height(window.innerHeight);
+    window.scrollTo(0, 0);
+  }
 }

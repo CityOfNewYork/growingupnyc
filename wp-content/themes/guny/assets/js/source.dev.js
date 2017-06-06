@@ -448,7 +448,7 @@ if (objCtr.defineProperty) {
 
 	var _globalSearch2 = _interopRequireDefault(_globalSearch);
 
-	var _toggleOpen = __webpack_require__(34);
+	var _toggleOpen = __webpack_require__(35);
 
 	var _toggleOpen2 = _interopRequireDefault(_toggleOpen);
 
@@ -464,7 +464,7 @@ if (objCtr.defineProperty) {
 
 	var _overlay2 = _interopRequireDefault(_overlay);
 
-	var _stickyNav = __webpack_require__(33);
+	var _stickyNav = __webpack_require__(34);
 
 	var _stickyNav2 = _interopRequireDefault(_stickyNav);
 
@@ -472,7 +472,7 @@ if (objCtr.defineProperty) {
 
 	var _currentSection2 = _interopRequireDefault(_currentSection);
 
-	var _staticColumn = __webpack_require__(32);
+	var _staticColumn = __webpack_require__(33);
 
 	var _staticColumn2 = _interopRequireDefault(_staticColumn);
 
@@ -500,15 +500,13 @@ if (objCtr.defineProperty) {
 
 	var _owlSettings2 = _interopRequireDefault(_owlSettings);
 
-<<<<<<< HEAD
 	var _iOS7Hack = __webpack_require__(26);
 
 	var _iOS7Hack2 = _interopRequireDefault(_iOS7Hack);
-=======
-	var _shareForm = __webpack_require__(31);
+
+	var _shareForm = __webpack_require__(32);
 
 	var _shareForm2 = _interopRequireDefault(_shareForm);
->>>>>>> amalan/gnY-426
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -568,15 +566,9 @@ if (objCtr.defineProperty) {
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-	var arrayEach = __webpack_require__(37),
-	    baseEach = __webpack_require__(39),
-	    castFunction = __webpack_require__(47),
-=======
-	var arrayEach = __webpack_require__(38),
-	    baseEach = __webpack_require__(40),
-	    castFunction = __webpack_require__(48),
->>>>>>> amalan/gnY-426
+	var arrayEach = __webpack_require__(39),
+	    baseEach = __webpack_require__(41),
+	    castFunction = __webpack_require__(49),
 	    isArray = __webpack_require__(12);
 
 	/**
@@ -622,13 +614,8 @@ if (objCtr.defineProperty) {
 /***/ (function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(9),
-<<<<<<< HEAD
-	    getRawTag = __webpack_require__(50),
-	    objectToString = __webpack_require__(55);
-=======
-	    getRawTag = __webpack_require__(51),
-	    objectToString = __webpack_require__(56);
->>>>>>> amalan/gnY-426
+	    getRawTag = __webpack_require__(52),
+	    objectToString = __webpack_require__(57);
 
 	/** `Object#toString` result references. */
 	var nullTag = '[object Null]',
@@ -810,13 +797,8 @@ if (objCtr.defineProperty) {
 /***/ (function(module, exports, __webpack_require__) {
 
 	var isObject = __webpack_require__(4),
-<<<<<<< HEAD
-	    now = __webpack_require__(64),
-	    toNumber = __webpack_require__(66);
-=======
-	    now = __webpack_require__(65),
-	    toNumber = __webpack_require__(67);
->>>>>>> amalan/gnY-426
+	    now = __webpack_require__(66),
+	    toNumber = __webpack_require__(68);
 
 	/** Error message constants. */
 	var FUNC_ERROR_TEXT = 'Expected a function';
@@ -1040,11 +1022,7 @@ if (objCtr.defineProperty) {
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-	var isFunction = __webpack_require__(60),
-=======
-	var isFunction = __webpack_require__(61),
->>>>>>> amalan/gnY-426
+	var isFunction = __webpack_require__(62),
 	    isLength = __webpack_require__(14);
 
 	/**
@@ -1670,7 +1648,7 @@ if (objCtr.defineProperty) {
 	/**
 	* Validate a form and submit via the signup API
 	*/
-	__webpack_require__(35);
+	__webpack_require__(36);
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
@@ -1949,14 +1927,14 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-			value: true
+	  value: true
 	});
 
 	exports.default = function () {
-			if (navigator.userAgent.match(/iPad;.*CPU.*OS 7_\d/i)) {
-					$('.c-side-hero').height(window.innerHeight);
-					window.scrollTo(0, 0);
-			}
+	  if (navigator.userAgent.match(/iPad;.*CPU.*OS 7_\d/i)) {
+	    $('.c-side-hero').height(window.innerHeight);
+	    window.scrollTo(0, 0);
+	  }
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
@@ -2120,7 +2098,7 @@ if (objCtr.defineProperty) {
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _utility = __webpack_require__(36);
+	var _utility = __webpack_require__(37);
 
 	var _utility2 = _interopRequireDefault(_utility);
 
@@ -2376,7 +2354,7 @@ if (objCtr.defineProperty) {
 	exports.default = ShareForm;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2445,7 +2423,7 @@ if (objCtr.defineProperty) {
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -2473,11 +2451,7 @@ if (objCtr.defineProperty) {
 
 	var _debounce2 = _interopRequireDefault(_debounce);
 
-<<<<<<< HEAD
-	var _imagesready = __webpack_require__(36);
-=======
-	var _imagesready = __webpack_require__(37);
->>>>>>> amalan/gnY-426
+	var _imagesready = __webpack_require__(38);
 
 	var _imagesready2 = _interopRequireDefault(_imagesready);
 
@@ -2680,7 +2654,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2738,7 +2712,7 @@ if (objCtr.defineProperty) {
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {'use strict';
@@ -2939,7 +2913,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* eslint-env browser */
@@ -2951,7 +2925,7 @@ if (objCtr.defineProperty) {
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _underscore = __webpack_require__(68);
+	var _underscore = __webpack_require__(69);
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
@@ -3073,7 +3047,7 @@ if (objCtr.defineProperty) {
 	exports.default = Utility;
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function($) {/* imagesready v0.2.2 - 2015-07-04T06:22:14.435Z - https://github.com/r-park/images-ready */
@@ -3741,11 +3715,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-<<<<<<< HEAD
-/* 37 */
-=======
-/* 38 */
->>>>>>> amalan/gnY-426
+/* 39 */
 /***/ (function(module, exports) {
 
 	/**
@@ -3773,27 +3743,15 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseTimes = __webpack_require__(45),
-	    isArguments = __webpack_require__(58),
+	var baseTimes = __webpack_require__(47),
+	    isArguments = __webpack_require__(60),
 	    isArray = __webpack_require__(12),
-	    isBuffer = __webpack_require__(59),
-	    isIndex = __webpack_require__(51),
-	    isTypedArray = __webpack_require__(62);
-=======
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var baseTimes = __webpack_require__(46),
-	    isArguments = __webpack_require__(59),
-	    isArray = __webpack_require__(12),
-	    isBuffer = __webpack_require__(60),
-	    isIndex = __webpack_require__(52),
-	    isTypedArray = __webpack_require__(63);
->>>>>>> amalan/gnY-426
+	    isBuffer = __webpack_require__(61),
+	    isIndex = __webpack_require__(53),
+	    isTypedArray = __webpack_require__(64);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -3840,19 +3798,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 39 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseForOwn = __webpack_require__(41),
-	    createBaseEach = __webpack_require__(48);
-=======
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var baseForOwn = __webpack_require__(42),
-	    createBaseEach = __webpack_require__(49);
->>>>>>> amalan/gnY-426
+	var baseForOwn = __webpack_require__(43),
+	    createBaseEach = __webpack_require__(50);
 
 	/**
 	 * The base implementation of `_.forEach` without support for iteratee shorthands.
@@ -3868,17 +3818,10 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 40 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var createBaseFor = __webpack_require__(49);
-=======
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var createBaseFor = __webpack_require__(50);
->>>>>>> amalan/gnY-426
+	var createBaseFor = __webpack_require__(51);
 
 	/**
 	 * The base implementation of `baseForOwn` which iterates over `object`
@@ -3897,19 +3840,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 41 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseFor = __webpack_require__(40),
-	    keys = __webpack_require__(63);
-=======
-/* 42 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var baseFor = __webpack_require__(41),
-	    keys = __webpack_require__(64);
->>>>>>> amalan/gnY-426
+	var baseFor = __webpack_require__(42),
+	    keys = __webpack_require__(65);
 
 	/**
 	 * The base implementation of `_.forOwn` without support for iteratee shorthands.
@@ -3927,11 +3862,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 42 */
-=======
-/* 43 */
->>>>>>> amalan/gnY-426
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(3),
@@ -3955,11 +3886,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 43 */
-=======
-/* 44 */
->>>>>>> amalan/gnY-426
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(3),
@@ -4025,19 +3952,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var isPrototype = __webpack_require__(52),
-	    nativeKeys = __webpack_require__(53);
-=======
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var isPrototype = __webpack_require__(53),
-	    nativeKeys = __webpack_require__(54);
->>>>>>> amalan/gnY-426
+	var isPrototype = __webpack_require__(54),
+	    nativeKeys = __webpack_require__(55);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -4069,11 +3988,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 45 */
-=======
-/* 46 */
->>>>>>> amalan/gnY-426
+/* 47 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4099,11 +4014,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 46 */
-=======
-/* 47 */
->>>>>>> amalan/gnY-426
+/* 48 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4123,17 +4034,10 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var identity = __webpack_require__(57);
-=======
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var identity = __webpack_require__(58);
->>>>>>> amalan/gnY-426
+	var identity = __webpack_require__(59);
 
 	/**
 	 * Casts `value` to `identity` if it's not a function.
@@ -4150,11 +4054,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 48 */
-=======
-/* 49 */
->>>>>>> amalan/gnY-426
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var isArrayLike = __webpack_require__(13);
@@ -4192,11 +4092,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 49 */
-=======
-/* 50 */
->>>>>>> amalan/gnY-426
+/* 51 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4227,11 +4123,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 50 */
-=======
-/* 51 */
->>>>>>> amalan/gnY-426
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(9);
@@ -4283,11 +4175,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 51 */
-=======
-/* 52 */
->>>>>>> amalan/gnY-426
+/* 53 */
 /***/ (function(module, exports) {
 
 	/** Used as references for various `Number` constants. */
@@ -4315,11 +4203,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 52 */
-=======
-/* 53 */
->>>>>>> amalan/gnY-426
+/* 54 */
 /***/ (function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -4343,17 +4227,10 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var overArg = __webpack_require__(56);
-=======
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var overArg = __webpack_require__(57);
->>>>>>> amalan/gnY-426
+	var overArg = __webpack_require__(58);
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
 	var nativeKeys = overArg(Object.keys, Object);
@@ -4362,11 +4239,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 54 */
-=======
-/* 55 */
->>>>>>> amalan/gnY-426
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(10);
@@ -4395,11 +4268,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)(module)))
 
 /***/ }),
-<<<<<<< HEAD
-/* 55 */
-=======
-/* 56 */
->>>>>>> amalan/gnY-426
+/* 57 */
 /***/ (function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -4427,11 +4296,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 56 */
-=======
-/* 57 */
->>>>>>> amalan/gnY-426
+/* 58 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4452,11 +4317,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 57 */
-=======
-/* 58 */
->>>>>>> amalan/gnY-426
+/* 59 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4483,17 +4344,10 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseIsArguments = __webpack_require__(42),
-=======
-/* 59 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var baseIsArguments = __webpack_require__(43),
->>>>>>> amalan/gnY-426
+	var baseIsArguments = __webpack_require__(44),
 	    isObjectLike = __webpack_require__(5);
 
 	/** Used for built-in method references. */
@@ -4532,19 +4386,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(6),
-	    stubFalse = __webpack_require__(65);
-=======
-/* 60 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(6),
-	    stubFalse = __webpack_require__(66);
->>>>>>> amalan/gnY-426
+	    stubFalse = __webpack_require__(67);
 
 	/** Detect free variable `exports`. */
 	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -4585,11 +4431,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)(module)))
 
 /***/ }),
-<<<<<<< HEAD
-/* 60 */
-=======
-/* 61 */
->>>>>>> amalan/gnY-426
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(3),
@@ -4632,11 +4474,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 61 */
-=======
-/* 62 */
->>>>>>> amalan/gnY-426
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(3),
@@ -4671,21 +4509,12 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 62 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseIsTypedArray = __webpack_require__(43),
-	    baseUnary = __webpack_require__(46),
-	    nodeUtil = __webpack_require__(54);
-=======
-/* 63 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var baseIsTypedArray = __webpack_require__(44),
-	    baseUnary = __webpack_require__(47),
-	    nodeUtil = __webpack_require__(55);
->>>>>>> amalan/gnY-426
+	var baseIsTypedArray = __webpack_require__(45),
+	    baseUnary = __webpack_require__(48),
+	    nodeUtil = __webpack_require__(56);
 
 	/* Node.js helper references. */
 	var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -4713,19 +4542,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 63 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var arrayLikeKeys = __webpack_require__(38),
-	    baseKeys = __webpack_require__(44),
-=======
-/* 64 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var arrayLikeKeys = __webpack_require__(39),
-	    baseKeys = __webpack_require__(45),
->>>>>>> amalan/gnY-426
+	var arrayLikeKeys = __webpack_require__(40),
+	    baseKeys = __webpack_require__(46),
 	    isArrayLike = __webpack_require__(13);
 
 	/**
@@ -4764,11 +4585,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 64 */
-=======
-/* 65 */
->>>>>>> amalan/gnY-426
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var root = __webpack_require__(6);
@@ -4797,11 +4614,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 65 */
-=======
-/* 66 */
->>>>>>> amalan/gnY-426
+/* 67 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4825,19 +4638,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-<<<<<<< HEAD
-/* 66 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var isObject = __webpack_require__(4),
-	    isSymbol = __webpack_require__(61);
-=======
-/* 67 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var isObject = __webpack_require__(4),
-	    isSymbol = __webpack_require__(62);
->>>>>>> amalan/gnY-426
+	    isSymbol = __webpack_require__(63);
 
 	/** Used as references for various `Number` constants. */
 	var NAN = 0 / 0;
@@ -4905,7 +4710,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.7.0

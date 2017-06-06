@@ -81,7 +81,7 @@ class ContactMe {
 	private function shorten( $url ) {
 		$encoded = urlencode($url);
 
-		$bitly = wp_remote_get("https://api-ssl.bitly.com/v3/shorten?access_token=906008b32bb224a6ec492f55a01ee9a7862275db&longUrl=".$encoded);
+		$bitly = wp_remote_get("https://api-ssl.bitly.com/v3/shorten?access_token=7ecdfdecd508c3049e1c8b2c1fd8f29a220343e&longUrl=".$encoded);
 		if ( is_wp_error($bitly) ) {
 			return $url;
 		}

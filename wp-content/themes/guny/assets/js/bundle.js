@@ -150,7 +150,6 @@
 	  'use strict';
 	  // Initialize share by email/sms forms.
 
-	  console.log("i'm apearing here");
 	  $('.' + _shareForm2.default.CssClass.FORM).each(function (i, el) {
 	    var shareForm = new _shareForm2.default(el);
 	    shareForm.init();

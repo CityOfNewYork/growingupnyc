@@ -11,7 +11,6 @@ if ( ! class_exists( 'Timber' ) ) {
 }
 
 $context = Timber::get_context();
-// $context['posts'] = facetwp_display('template', 'trips');
 //Freethis week trips
 $free_this_week_trip = array(
 'post_type' => 'trip',
@@ -45,8 +44,29 @@ $free_day_trip = array(
 $context['free_day_trip'] = Timber::get_posts( $free_day_trip );
 
 //Events
-$upcoming_events = GunySite::get_featured_events( 3, null , true );
+$taxquery = array(
+   array(
+    'taxonomy' => 'age_group',
+    'field' => 'slug',
+    'terms' => array('teen' , 'young-adult'),
+  )
+);
+$upcoming_events = GunySite::get_featured_events( 3 , $taxquery , true );
 $context['upcoming_events'] = $upcoming_events;
+
+// $upcoming_events = array(
+//   'post_type' => 'tribe_events',
+//   'posts_per_page' => 1,
+//   'tax_query' => array(
+//     array(
+//       'taxonomy' => 'age_group',
+//       'field' => 'slug',
+//       'terms' => array('teen' , 'young-adult'),
+//     ),
+//   ),
+// );
+// $context['upcoming_events'] = Timber::get_posts( $upcoming_events ) ;
+
 
 $templates = array( 'list-trip-landing.twig', 'microsite-list.twig' );
 

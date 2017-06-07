@@ -83,12 +83,9 @@ button:hover, button:focus {
       padding: 1.875rem 0 4.875rem; } }
 
 .c-side-hero-ms__title .c-side-hero__title__large {
-  font-size: 2.5rem;
+  font-size: 1.875rem;
   text-transform: uppercase;
   white-space: nowrap; }
-  @media screen and (min-width: 700px) {
-    .c-side-hero-ms__title .c-side-hero__title__large {
-      font-size: 4.125rem; } }
   @media screen and (min-width: 1024px) {
     .c-side-hero-ms__title .c-side-hero__title__large {
       font-size: 3.125rem; } }

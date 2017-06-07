@@ -76,7 +76,8 @@ $event_filter = Timber::get_terms('tribe_events_cat', array(
   'hierarchical' => true,
 ) );
 foreach ($event_filter as $key => $value) {
-  $value->link = esc_url( add_query_arg( 'cat_id', $value->ID ) );
+  // $value->link = esc_url( add_query_arg( 'cat_id', $value->ID ) );
+  $value->link = esc_url( add_query_arg( 'cat_id', icl_object_id($value->ID, 'tribe_events_cat', false , 'en') ) );
   $event_filter[$key] = $value;
 }
 $context['event_filter'] = $event_filter;
@@ -120,7 +121,9 @@ $age_filter = Timber::get_terms('age_group', array(
   'orderby' => 'term_order'
 ) );
 foreach ($age_filter as $key => $value) {
-  $value->link = esc_url( add_query_arg( 'age_id', $value->ID ) );
+  // $value->link = esc_url( add_query_arg( 'age_id', $value->ID ) );
+  $value->link = esc_url( add_query_arg( 'age_id', icl_object_id($value->ID, 'age_group', false , 'en') ) );
+  
   $event_filter[$key] = $value;
 }
 $context['age_filter'] = $age_filter;
@@ -142,7 +145,8 @@ $borough_filter = Timber::get_terms('borough', array(
   'hide_empty' => true
 ) );
 foreach ($borough_filter as $key => $value) {
-  $value->link = esc_url( add_query_arg( 'borough_id', $value->ID ) );
+  // $value->link = esc_url( add_query_arg( 'borough_id', $value->ID ) );
+  $value->link = esc_url( add_query_arg( 'borough_id', icl_object_id($value->ID, 'borough', false , 'en') ) );
   $event_filter[$key] = $value;
 }
 $context['borough_filter'] = $borough_filter;

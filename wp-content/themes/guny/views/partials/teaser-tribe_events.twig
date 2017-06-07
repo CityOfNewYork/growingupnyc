@@ -17,7 +17,11 @@
 
 
 {% block tags %}
-    {% set event_link = '/events' %}
+    {% if is_archive %}
+      {% set event_link %}{{current_url}}{% endset %}
+    {% else %}
+      {% set event_link = '/events' %}
+    {% endif %}
     {% for term in post.terms('tribe_events_cat') %}
       {% if term.slug == 'espanol' %}
           <a href="/events/?cat_id={{term.ID}}" class="button--pill button--pill--es">{{term.name}}</a>

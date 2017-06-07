@@ -2289,6 +2289,35 @@ ol.o-inline {
 .no-touchevents .c-tip__link:hover {
   color: #d9d9d9; }
 
+.s-wysiwyg table {
+  font-size: 16;
+  margin-bottom: 2.5rem;
+  max-width: 100%;
+  text-align: right; }
+  @media screen and (min-width: 700px) {
+    .s-wysiwyg table {
+      font-size: 18; } }
+
+.s-wysiwyg thead {
+  border-bottom: 1px solid #333;
+  color: #184e9e; }
+  .s-wysiwyg thead tr {
+    background-color: none; }
+
+.s-wysiwyg tbody tr:nth-child(odd) {
+  background-color: #eee; }
+
+.s-wysiwyg th {
+  vertical-align: top; }
+
+.s-wysiwyg th,
+.s-wysiwyg td {
+  padding: 0.625rem; }
+  @media screen and (min-width: 700px) {
+    .s-wysiwyg th,
+    .s-wysiwyg td {
+      padding: 0.625rem 2.5rem; } }
+
 .s-wysiwyg {
   overflow-wrap: break-word;
   word-wrap: break-word;

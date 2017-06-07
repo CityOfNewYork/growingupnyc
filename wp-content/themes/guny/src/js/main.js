@@ -52,7 +52,6 @@ window.accordion = accordion;
 (function(window, $) {
   'use strict';
   // Initialize share by email/sms forms.
-  console.log("i'm apearing here");
   $(`.${ShareForm.CssClass.FORM}`).each((i, el) => {
     const shareForm = new ShareForm(el);
     shareForm.init();

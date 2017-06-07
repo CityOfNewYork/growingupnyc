@@ -30,7 +30,7 @@
       {% endif %}
     {% endfor %}
   {% for term in post.terms('age_group') %}
-    <a href="{{event_link}}?age_id={{term.id}}{% if current_month %}&amp;eventDate={{current_month}}{% endif %}" class="button--pill button--pill--alt">{{term.name}}</a>
+    <a href="{{event_link}}?age_id={% do action('get_term_id', term.ID) %}{% if current_month %}&amp;eventDate={{current_month}}{% endif %}" class="button--pill button--pill--alt">{{term.name}}</a>
   {% endfor %}
 
 {% endblock %}

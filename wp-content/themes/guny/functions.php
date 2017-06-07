@@ -439,6 +439,11 @@ function microsite_styles() {
   } 
 }
 
+add_action('get_term_id', 'get_actual_term_id');
+function get_actual_term_id($translatedid){
+  echo icl_object_id($translatedid, 'tribe_events_cat', false , 'en');
+}
+
 function my_acf_google_map_api( $api ){
   $api['key'] = 'AIzaSyDrvNnQZBiASAH3JI7LNFewrX9jeYZlMWo';
   return $api;

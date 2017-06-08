@@ -184,6 +184,9 @@ if ( tribe_has_next_event() ) {
   $context['next_url'] = esc_url( addFilterArgs( tribe_get_listview_next_link(), true ) );
 }
 
+//Adding the language
+$context['language'] = ICL_LANGUAGE_CODE;
+
 $templates = array( 'list-events.twig', 'index.twig' );
 
 $context['top_widgets'] = Timber::get_widgets('top_widget');

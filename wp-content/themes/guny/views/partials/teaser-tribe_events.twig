@@ -19,6 +19,8 @@
 {% block tags %}
     {% if is_archive %}
       {% set event_link %}{{current_url}}{% endset %}
+    {% elseif language == 'es' %}
+      {% set event_link = '/es/events' %}
     {% else %}
       {% set event_link = '/events' %}
     {% endif %}

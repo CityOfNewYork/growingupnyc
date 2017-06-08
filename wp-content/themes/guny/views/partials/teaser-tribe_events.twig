@@ -24,9 +24,9 @@
     {% endif %}
     {% for term in post.terms('tribe_events_cat') %}
       {% if term.slug == 'espanol' %}
-          <a href="/events/?cat_id={{term.ID}}" class="button--pill button--pill--es">{{term.name}}</a>
+          <a href="{{event_link}}?cat_id={{term.ID}}" class="button--pill button--pill--es">{{term.name}}</a>
       {% else %}
-          <a href="/events/?cat_id={{term.ID}}" class="button--pill">{{term.name}}</a>
+          <a href="{{event_link}}?cat_id={{term.ID}}" class="button--pill">{{term.name}}</a>
       {% endif %}
     {% endfor %}
   {% for term in post.terms('age_group') %}

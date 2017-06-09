@@ -2307,7 +2307,7 @@ ol.o-inline {
     background-color: transparent; }
 
 .s-wysiwyg tbody tr:nth-child(odd) {
-  background-color: #eee; }
+  background-color: #eef3f7; }
 
 .s-wysiwyg th {
   vertical-align: top; }

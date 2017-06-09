@@ -2292,19 +2292,19 @@ ol.o-inline {
   color: #d9d9d9; }
 
 .s-wysiwyg table {
-  font-size: 16;
+  font-size: 1rem;
   margin-bottom: 2.5rem;
   max-width: 100%;
   text-align: right; }
   @media screen and (min-width: 700px) {
     .s-wysiwyg table {
-      font-size: 18; } }
+      font-size: 1.125rem; } }
 
 .s-wysiwyg thead {
   border-bottom: 1px solid #333;
   color: #184e9e; }
   .s-wysiwyg thead tr {
-    background-color: none; }
+    background-color: transparent; }
 
 .s-wysiwyg tbody tr:nth-child(odd) {
   background-color: #eee; }
@@ -2314,7 +2314,8 @@ ol.o-inline {
 
 .s-wysiwyg th,
 .s-wysiwyg td {
-  padding: 0.625rem; }
+  padding: 0.625rem;
+  word-break: normal; }
   @media screen and (min-width: 700px) {
     .s-wysiwyg th,
     .s-wysiwyg td {

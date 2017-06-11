@@ -39,22 +39,23 @@
       <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
         {% if post.summary %}
         <li class="c-nav-list__item">
-          <a href="#section-summary" data-section="section-summary" class="js-section c-nav-list__link">{{ __('Summary', 'GUNY-Single-Program') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+          <a href="#section-summary" data-section="section-summary" class="js-section c-nav-list__link">
+            {{post.get_field('jump_nav_heading_-_summary')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
         </li>
         {% endif %}
         {% if post.eligibility %}
         <li class="c-nav-list__item">
-          <a href="#section-eligibility" data-section="section-eligibility" class="js-section c-nav-list__link">{{ __('Eligibility', 'GUNY-Single-Program') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+          <a href="#section-eligibility" data-section="section-eligibility" class="js-section c-nav-list__link">{{post.get_field('jump_nav_heading_-_eligibility')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
         </li>
         {% endif %}
         {% if post.whats_needed or post.how_to_apply %}
         <li class="c-nav-list__item">
-          <a href="#section-application" data-section="section-application" class="js-section c-nav-list__link">{{ __('Application', 'GUNY-Single-Program') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+          <a href="#section-application" data-section="section-application" class="js-section c-nav-list__link">{{post.get_field('jump_nav_heading_-_application')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
         </li>
         {% endif %}
         {% if post.get_help %}
         <li class="c-nav-list__item">
-          <a href="#section-help" data-section="section-help" class="js-section c-nav-list__link">{{ __('Help', 'GUNY-Single-Program') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+          <a href="#section-help" data-section="section-help" class="js-section c-nav-list__link">{{post.get_field('jump_nav_heading_-_help')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
         </li>
         {% endif %}
       </ol>

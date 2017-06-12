@@ -53,9 +53,6 @@ function addFilterArgs( $url, $preservePagination = false ) {
   if ($cat_id > 0) {
     $query_args['cat_id'] = $cat_id;
   }
-  if ($lang_id > 0) {
-    $query_args['lang_id'] = $lang_id;
-  }
   if ($age_id > 0) {
     $query_args['age_id'] = $age_id;
   }
@@ -77,7 +74,6 @@ $event_filter = Timber::get_terms('tribe_events_cat', array(
 ) );
 
 foreach ($event_filter as $key => $value) {
-  // $value->link = esc_url( add_query_arg( 'cat_id', $value->ID ) );
   $value->link = esc_url( add_query_arg( 'cat_id', icl_object_id($value->ID, 'tribe_events_cat', false , 'en') ) );
   $event_filter[$key] = $value;
 }
@@ -87,32 +83,10 @@ $context['all_events'] = array(
   'link' => esc_url( remove_query_arg( 'cat_id' ) )
 );
 if ( $cat_id > 0 ) {
-  $context['current_event_filter'] = Timber::get_term( $cat_id )->name;
+  $context['current_event_filter'] = get_term( $cat_id )->name;
 } else {
   $context['current_event_filter'] = $context['all_events']['name'];
 }
-
-// Language Category Filter
-// $language_filter = Timber::get_terms('language', array(
-//   'orderby' => 'NAME',
-//   'hide_empty' => true,
-//   'depth' => 1,
-//   'hierarchical' => true,
-// ) );
-// foreach ($language_filter as $key => $value) {
-//   $value->link = esc_url( add_query_arg( 'lang_id', $value->ID ) );
-//   $event_filter[$key] = $value;
-// }
-// $context['language_filter'] = $language_filter;
-// $context['all_languages'] = array(
-//   'name' => 'All Languages',
-//   'link' => esc_url( remove_query_arg( 'lang_id' ) )
-// );
-// if ( $lang_id > 0 ) {
-//   $context['current_language_filter'] = Timber::get_term( $lang_id )->name;
-// } else {
-//   $context['current_language_filter'] = $context['all_languages']['name'];
-// }
 
 // Age Group Filter
 $age_filter = Timber::get_terms('age_group', array(
@@ -122,9 +96,7 @@ $age_filter = Timber::get_terms('age_group', array(
   'orderby' => 'term_order'
 ) );
 foreach ($age_filter as $key => $value) {
-  // $value->link = esc_url( add_query_arg( 'age_id', $value->ID ) );
   $value->link = esc_url( add_query_arg( 'age_id', icl_object_id($value->ID, 'age_group', false , 'en') ) );
-  
   $event_filter[$key] = $value;
 }
 $context['age_filter'] = $age_filter;
@@ -133,7 +105,7 @@ $context['all_ages'] = array(
   'link' => esc_url( remove_query_arg( 'age_id' ) )
 );
 if ( $age_id > 0 ) {
-  $context['current_age_filter'] = Timber::get_term( $age_id )->name;
+  $context['current_age_filter'] = get_term( $age_id )->name;
 } else {
   $context['current_age_filter'] = $context['all_ages']['name'];
 }
@@ -156,7 +128,7 @@ $context['all_boroughs'] = array(
   'link' => esc_url( remove_query_arg( 'borough_id' ) )
 );
 if ( $borough_id > 0 ) {
-  $context['current_borough_filter'] = Timber::get_term( $borough_id )->name;
+  $context['current_borough_filter'] = get_term( $borough_id )->name;
 } else {
   $context['current_borough_filter'] = $context['all_boroughs']['name'];
 }

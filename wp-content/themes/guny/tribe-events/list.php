@@ -71,10 +71,11 @@ function addFilterArgs( $url, $preservePagination = false ) {
 // Event Category Filter
 $event_filter = Timber::get_terms('tribe_events_cat', array(
   'orderby' => 'NAME',
-  'hide_empty' => true,
+  'hide_empty' => false,
   'depth' => 1,
   'hierarchical' => true,
 ) );
+
 foreach ($event_filter as $key => $value) {
   // $value->link = esc_url( add_query_arg( 'cat_id', $value->ID ) );
   $value->link = esc_url( add_query_arg( 'cat_id', icl_object_id($value->ID, 'tribe_events_cat', false , 'en') ) );
@@ -92,26 +93,26 @@ if ( $cat_id > 0 ) {
 }
 
 // Language Category Filter
-$language_filter = Timber::get_terms('language', array(
-  'orderby' => 'NAME',
-  'hide_empty' => true,
-  'depth' => 1,
-  'hierarchical' => true,
-) );
-foreach ($language_filter as $key => $value) {
-  $value->link = esc_url( add_query_arg( 'lang_id', $value->ID ) );
-  $event_filter[$key] = $value;
-}
-$context['language_filter'] = $language_filter;
-$context['all_languages'] = array(
-  'name' => 'All Languages',
-  'link' => esc_url( remove_query_arg( 'lang_id' ) )
-);
-if ( $lang_id > 0 ) {
-  $context['current_language_filter'] = Timber::get_term( $lang_id )->name;
-} else {
-  $context['current_language_filter'] = $context['all_languages']['name'];
-}
+// $language_filter = Timber::get_terms('language', array(
+//   'orderby' => 'NAME',
+//   'hide_empty' => true,
+//   'depth' => 1,
+//   'hierarchical' => true,
+// ) );
+// foreach ($language_filter as $key => $value) {
+//   $value->link = esc_url( add_query_arg( 'lang_id', $value->ID ) );
+//   $event_filter[$key] = $value;
+// }
+// $context['language_filter'] = $language_filter;
+// $context['all_languages'] = array(
+//   'name' => 'All Languages',
+//   'link' => esc_url( remove_query_arg( 'lang_id' ) )
+// );
+// if ( $lang_id > 0 ) {
+//   $context['current_language_filter'] = Timber::get_term( $lang_id )->name;
+// } else {
+//   $context['current_language_filter'] = $context['all_languages']['name'];
+// }
 
 // Age Group Filter
 $age_filter = Timber::get_terms('age_group', array(
@@ -142,7 +143,7 @@ $borough_filter = Timber::get_terms('borough', array(
   'hierarchical' => true,
   'depth' => 1,
   'orderby' => 'NAME',
-  'hide_empty' => true
+  'hide_empty' => false
 ) );
 foreach ($borough_filter as $key => $value) {
   // $value->link = esc_url( add_query_arg( 'borough_id', $value->ID ) );

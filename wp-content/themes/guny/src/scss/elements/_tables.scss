@@ -1,11 +1,11 @@
 .s-wysiwyg {
   table {
-    font-size: $font-size-small;
+    font-size: rem-calc(16px);
     margin-bottom: rem-calc(40px);
     max-width: 100%;
     text-align: right;
     @include media($bp-medium) {
-      font-size: $font-size-regular;
+      font-size: rem-calc(18px);
     }
   }
 
@@ -14,14 +14,14 @@
     color: $blue;
 
     tr {
-      background-color: none;
+      background-color: transparent;
     }
   }
 
   tbody {
     tr {
       &:nth-child(odd) {
-        background-color: $very-light-gray;
+        background-color: $light-blue;
       }
     }
   }
@@ -33,6 +33,7 @@
   th,
   td {
     padding: rem-calc(10px);
+    word-break: normal;
     @include media($bp-medium) {
       padding: rem-calc(10px 40px);
     }

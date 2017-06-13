@@ -43,7 +43,7 @@ function add_settings_page() {
 }
 function settings_content(){ ?>
 <div class="wrap">
-	<h1>GrowingUpNYC Settings</h1>
+	<h1>GrowingUpNYCSms Settings</h1>
 
 	<form method="post" action="options.php">
 		<?php

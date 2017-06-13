@@ -34,8 +34,8 @@ add_filter( 'plugin_action_links_'.plugin_basename( __FILE__ ), '\SMNYC\settings
 add_action( 'admin_menu', '\SMNYC\add_settings_page' );
 function add_settings_page() {
 	add_options_page(
-		'SendMeNYC Settings',
-		'SendMeNYC',
+		'GrowingUpNYC Settings',
+		'GrowingUpNYC',
 		'manage_options',
 		'smnyc_config',
 		'\SMNYC\settings_content'
@@ -43,7 +43,7 @@ function add_settings_page() {
 }
 function settings_content(){ ?>
 <div class="wrap">
-	<h1>SendMeNYC Settings</h1>
+	<h1>GrowingUpNYC Settings</h1>
 
 	<form method="post" action="options.php">
 		<?php

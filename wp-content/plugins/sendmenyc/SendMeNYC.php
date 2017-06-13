@@ -34,8 +34,8 @@ add_filter( 'plugin_action_links_'.plugin_basename( __FILE__ ), '\SMNYC\settings
 add_action( 'admin_menu', '\SMNYC\add_settings_page' );
 function add_settings_page() {
 	add_options_page(
-		'GrowingUpNYC Settings',
-		'GrowingUpNYC',
+		'GrowingUpNYCSms Settings',
+		'GrowingUpNYCSms',
 		'manage_options',
 		'smnyc_config',
 		'\SMNYC\settings_content'

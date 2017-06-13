@@ -163,10 +163,6 @@ button {
     width: 100%;
     text-align: left;
   }
-
-  @include media($bp-xlarge) {
-    width: 65%;
-  }
 }
 
 //WYSIWYG Style overrides

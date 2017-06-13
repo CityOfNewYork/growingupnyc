@@ -138,9 +138,6 @@ button:hover, button:focus {
       position: absolute;
       width: 100%;
       text-align: left; } }
-  @media screen and (min-width: 1200px) {
-    .c-side-hero-ms__content {
-      width: 65%; } }
 
 .s-wysiwyg h3 {
   margin: 0.9375rem 0 0.3125rem; }

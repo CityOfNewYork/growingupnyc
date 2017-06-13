@@ -160,8 +160,12 @@ button {
     left: 0;
     padding: rem-calc(60);
     position: absolute;
-    width: 65%;
+    width: 100%;
     text-align: left;
+  }
+
+  @include media($bp-xlarge) {
+    width: 65%;
   }
 }
 

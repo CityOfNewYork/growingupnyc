@@ -1727,7 +1727,7 @@ ol.o-inline {
 
 .c-hero__tagline {
   font-family: "museo-sans-rounded", sans-serif;
-  font-size: 1.64062rem;
+  font-size: 1.64063rem;
   font-weight: 900;
   line-height: 1.2;
   margin-top: 0.625rem;
@@ -2077,7 +2077,7 @@ ol.o-inline {
       left: 0;
       padding: 3.75rem;
       position: absolute;
-      width: 60%; } }
+      width: 100%; } }
 
 @media screen and (min-width: 1024px) {
   .js .c-side-hero__content {

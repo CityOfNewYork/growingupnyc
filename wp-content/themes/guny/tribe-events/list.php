@@ -160,6 +160,16 @@ if ( tribe_has_next_event() ) {
 //Adding the language
 $context['language'] = ICL_LANGUAGE_CODE;
 
+//Including the language switcher manually
+$context['custom_switcher'] = '<div class="c-language-switcher-wrapper"><div class="o-container c-language__switcher">
+<div class="wpml-ls-sidebars-top_widget wpml-ls wpml-ls-legacy-list-horizontal">
+  <ul><li class="wpml-ls-slot-top_widget wpml-ls-item wpml-ls-item-en wpml-ls-current-language wpml-ls-first-item wpml-ls-item-legacy-list-horizontal">
+        <a href="http://localhost:8080/guny/events/"><span class="wpml-ls-native">English</span></a>
+      </li><li class="wpml-ls-slot-top_widget wpml-ls-item wpml-ls-item-es wpml-ls-last-item wpml-ls-item-legacy-list-horizontal">
+        <a href="http://localhost:8080/guny/es/"><span class="wpml-ls-native">Español</span></a>
+      </li></ul>
+</div></div></div>';
+
 $templates = array( 'list-events.twig', 'index.twig' );
 
 $context['top_widgets'] = Timber::get_widgets('top_widget');

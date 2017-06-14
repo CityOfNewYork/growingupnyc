@@ -20,8 +20,7 @@ $context['post'] = $post;
 
 //Inject custom language context manually in Events
 global $wp;
-$current_url = add_query_arg( $wp->query_string, '', home_url( $wp->request ) );
-echo $current_url;
+$postlink = add_query_arg(array(),$wp->request);
 
 $languagearray = array("en" => "English" , "es" => "Español");	
 $output = '';
@@ -35,7 +34,12 @@ foreach ($languagearray as $key => $value) {
 		$output .= ' wpml-ls-current-language';
 	}
 	$output .= ' wpml-ls-item-legacy-list-horizontal">';
-	$output .=	'<a href="http://localhost:8080/guny/events/"><span class="wpml-ls-native">'.$value.'</span></a>';
+	if($key == 'en'){
+		$output .=	'<a href="'.home_url().'/'.$postlink.'"><span class="wpml-ls-native">'.$value.'</span></a>';
+	}
+	else{
+		$output .=	'<a href="'.home_url().'/'.$key.'/'.$postlink.'"><span class="wpml-ls-native">'.$value.'</span></a>';
+	}
   $output .= '</li>';
 }
 $output .= 			'</ul>';

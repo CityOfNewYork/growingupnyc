@@ -161,14 +161,35 @@ if ( tribe_has_next_event() ) {
 $context['language'] = ICL_LANGUAGE_CODE;
 
 //Including the language switcher manually
-$context['custom_switcher'] = '<div class="c-language-switcher-wrapper"><div class="o-container c-language__switcher">
-<div class="wpml-ls-sidebars-top_widget wpml-ls wpml-ls-legacy-list-horizontal">
-  <ul><li class="wpml-ls-slot-top_widget wpml-ls-item wpml-ls-item-en wpml-ls-current-language wpml-ls-first-item wpml-ls-item-legacy-list-horizontal">
-        <a href="http://localhost:8080/guny/events/"><span class="wpml-ls-native">English</span></a>
-      </li><li class="wpml-ls-slot-top_widget wpml-ls-item wpml-ls-item-es wpml-ls-last-item wpml-ls-item-legacy-list-horizontal">
-        <a href="http://localhost:8080/guny/es/"><span class="wpml-ls-native">Español</span></a>
-      </li></ul>
-</div></div></div>';
+global $wp;
+$postlink = add_query_arg(array(),$wp->request);
+
+$languagearray = array("en" => "English" , "es" => "Español");  
+$output = '';
+$output .= '<div class="c-language-switcher-wrapper">';
+$output .=  '<div class="o-container c-language__switcher">';
+$output .=    '<div class="wpml-ls-sidebars-top_widget wpml-ls wpml-ls-legacy-list-horizontal">';
+$output .=      '<ul>';
+foreach ($languagearray as $key => $value) {
+  $output .= '<li class="wpml-ls-slot-top_widget wpml-ls-item wpml-ls-item-'.$key; 
+  if($key == ICL_LANGUAGE_CODE){
+    $output .= ' wpml-ls-current-language';
+  }
+  $output .= ' wpml-ls-item-legacy-list-horizontal">';
+  if($key == 'en'){
+    $output .=  '<a href="'.home_url().'/'.$postlink.'"><span class="wpml-ls-native">'.$value.'</span></a>';
+  }
+  else{
+    $output .=  '<a href="'.home_url().'/'.$key.'/'.$postlink.'"><span class="wpml-ls-native">'.$value.'</span></a>';
+  }
+  $output .= '</li>';
+}
+$output .=      '</ul>';
+$output .=    '</div>';
+$output .=  '</div>';
+$output .= '</div>';
+
+$context['custom_switcher'] = $output;
 
 $templates = array( 'list-events.twig', 'index.twig' );
 

@@ -35,10 +35,10 @@ foreach ($languagearray as $key => $value) {
 	}
 	$output .= ' wpml-ls-item-legacy-list-horizontal">';
 	if($key == 'en'){
-		$output .=	'<a href="'.home_url().'/'.$postlink.'"><span class="wpml-ls-native">'.$value.'</span></a>';
+		$output .=	'<a href="'.site_url().'/'.$postlink.'"><span class="wpml-ls-native">'.$value.'</span></a>';
 	}
 	else{
-		$output .=	'<a href="'.home_url().'/'.$key.'/'.$postlink.'"><span class="wpml-ls-native">'.$value.'</span></a>';
+		$output .=	'<a href="'.site_url().'/'.$key.'/'.$postlink.'"><span class="wpml-ls-native">'.$value.'</span></a>';
 	}
   $output .= '</li>';
 }

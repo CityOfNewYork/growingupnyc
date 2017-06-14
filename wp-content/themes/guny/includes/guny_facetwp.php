@@ -97,6 +97,8 @@ if ( ! function_exists('add_facet_pagers')) {
     $urlqueries = get_url_query_parameters($url);
     $urlqueries = update_url_pagers($urlqueries , $pagenumber);
     $finalurl = generate_new_url($mainurl , $urlqueries);
+    //Serach value must be without +
+    $finalurl = str_replace("+","%20",$finalurl);
     return $finalurl;
   }
 }

@@ -17,6 +17,10 @@
 </div>
 {% endblock %}
 
+{% block classes %}
+o-container-ms__topics
+{% endblock %}
+
 {% block list_sidebar %}
   <ol class="js-accordion c-list-box c-list-box-ms__topics c-list-box--primary" data-multiselectable="true">
     {% for topic_group in topic_menu %}

@@ -7,6 +7,21 @@
 }
 
 //Sidebar list
+.o-container-ms__topics {
+  .o-article-sidebar {
+    @include media($bp-large) {
+      @include span-columns(8);
+    }
+  }
+
+  .o-article {
+    @include media($bp-large) {
+      @include span-columns(4);
+      @include omega;
+    }
+  }
+}
+
 .c-list-box-ms__topics {
   padding: 0;
   .c-list-box__heading,
@@ -224,6 +239,17 @@
 }
 
 .c-block-list-ms__topics {
+  padding: rem-calc(30 $outer-gutter 35);
+
+  @include media($bp-small) {
+    padding: rem-calc(35 $outer-gutter-small 40);
+  }
+
+  @include media($bp-medium) {
+    padding-left: rem-calc($outer-gutter-medium);
+    padding-right: rem-calc($outer-gutter-medium);
+  }
+
   p {
     font-size: rem-calc(16);
   }
@@ -280,8 +306,20 @@
     }
   }
 
+  .c-card {
+    @include media($bp-large) {
+      margin-right: rem-calc($sticker-size-mobile / 2);
+    }
+  }
+
   .c-card__sticker {
     background: $purple;
+    @include media($bp-large) {
+      height: rem-calc($sticker-size-mobile);
+      width: rem-calc($sticker-size-mobile);
+      line-height: rem-calc($sticker-size-mobile);
+      right: rem-calc(-$sticker-size-mobile / 2);
+    }
   }
 }
 

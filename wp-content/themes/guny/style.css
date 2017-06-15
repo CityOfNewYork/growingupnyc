@@ -271,8 +271,6 @@ svg {
 
 a {
   transition: all ease-in-out 0.15s; }
-  a[href^="tel:"] {
-    text-decoration: underline; }
 
 #main {
   position: relative; }
@@ -677,7 +675,7 @@ a {
   color: #2793e0; }
 
 a[href^="tel:"] {
-  text-decoration: none; }
+  text-decoration: underline; }
 
 strong {
   font-weight: 700; }

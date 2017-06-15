@@ -271,6 +271,8 @@ svg {
 
 a {
   transition: all ease-in-out 0.15s; }
+  a[href^="tel:"] {
+    text-decoration: underline; }
 
 #main {
   position: relative; }

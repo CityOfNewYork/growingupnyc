@@ -18,6 +18,9 @@ svg {
 
 a {
   transition: $link-transition;
+  &[href^="tel:"] {
+    text-decoration: underline;
+  }
 }
 
 #main {

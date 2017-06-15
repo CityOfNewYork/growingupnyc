@@ -25,7 +25,7 @@
   <div class="c-side-hero__image"></div>
   <div class="c-side-hero__content">
     <h1 class="c-side-hero__title">
-      {{post.c('hero_title_top')}}
+      {{post.get_field('hero_title_top')}}
       <div class="c-side-hero__title__large rotating-text">
         {% for text in post.get_field('hero_rotating_text_repeater') %}
           <span class="rotating-text__entry">

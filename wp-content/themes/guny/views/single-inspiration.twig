@@ -47,7 +47,7 @@
         {# Section Inspirations #}
         {% if post.inspiration_posts %}
         <section class="c-other-inspirations">
-          <h3 class="c-other-inspirations__title">Other Inspirations</h3>
+          <h3 class="c-other-inspirations__title">{{post.other_inspirations_title}}</h3>
           <li class="c-nav-list__item">
             {% for inspiration in post.get_field('inspiration_posts') %}
               {% set inspiration = TimberPost(inspiration) %}

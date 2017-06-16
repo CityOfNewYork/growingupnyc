@@ -1080,12 +1080,16 @@ ol.o-inline {
   .o-scroll-column--right {
     margin-left: 60%; } }
 
-.o-sticky-nav.is-sticky {
-  position: fixed;
-  top: 20px; }
-
-.o-sticky-nav.is-stuck {
-  position: absolute; }
+.o-sticky-nav {
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden; }
+  .o-sticky-nav.is-sticky {
+    position: fixed;
+    top: 20px; }
+  .o-sticky-nav.is-stuck {
+    position: absolute; }
 
 .c-alert {
   display: none; }

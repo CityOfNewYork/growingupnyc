@@ -64,12 +64,4 @@ $context['post'] = $post;
 $context['shareAction'] = admin_url( 'admin-ajax.php' );
 $context['shareUrl'] = \SMNYC\get_current_url();
 $context['shareHash'] = \SMNYC\hash($context['shareUrl']);
-
-$context['capcha'] = gglcptch_display();
-                
-// if( function_exists( 'gglcptch_display' ) ) { 
-//   echo gglcptch_display(); 
-//   echo "appearing here";
-// } 
-
 Timber::render( $templates, $context );

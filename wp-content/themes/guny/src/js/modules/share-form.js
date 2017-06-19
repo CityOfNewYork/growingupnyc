@@ -2,6 +2,7 @@
 'use strict';
 
 import $ from 'jquery';
+import Cookies from 'js-cookie';
 import Utility from '../vendor/utility.js';
 
 /**
@@ -51,37 +52,23 @@ class ShareForm {
 
     $(this._el).on('submit', e => {
       e.preventDefault();
-      this._validate();
-      // if (!this._recaptchaRequired) {
-      //   this._submit();
-      // } else {
-      //   console.log("capcha required");
-      //   $(e.currentTarget).closest(`.${Screener.CssClass.STEP}`)
-      //     .find(`.${Screener.CssClass.ERROR_MSG}`).remove();
-      //   if (this._recaptchaVerified) {
-      //     this._submit();
-      //   } else {
-      //     console.log("This is the error of capcha");
-      //     this._showError($('#screener-recaptcha')[0],
-      //         Screener.ErrorMessage.REQUIRED);
-      //   }
-      // }
       if (this._recaptchaRequired) {
-        // $(e.currentTarget).closest(`.${Screener.CssClass.STEP}`)
-        //   .find(`.${Screener.CssClass.ERROR_MSG}`).remove();
         if (this._recaptchaVerified) {
-          this._submit();
+          this._validate();
+          if (this._isValid && !this._isBusy && !this._isDisabled) {
+            this._submit();
+          }
         } else {
-          console.log("This is the error of capcha");
-          // this._showError($('#screener-recaptcha')[0],
-          // Screener.ErrorMessage.REQUIRED);
+          $(this._el).find(`.${ShareForm.CssClass.ERROR_MSG}`).remove();
+          this._showError(ShareForm.Message.RECAPTCHA);
         }
       } else {
-        this._submit();
+        this._validate();
+        if (this._isValid && !this._isBusy && !this._isDisabled) {
+          this._submit();
+        }
       }
-      // if (this._isValid && !this._isBusy && !this._isDisabled) {
-      //   this._submit();
-      // }
+      
     });
 
     this._initialized = true;
@@ -90,14 +77,14 @@ class ShareForm {
     // // Determine whether or not to initialize ReCAPTCHA. This should be
     // // initialized only on every 10th view which is determined via an
     // // incrementing cookie.
-    // let viewCount = Cookies.get('screenerViews') ?
-    //     parseInt(Cookies.get('screenerViews'), 10) : 1;
-    // if (viewCount >= 10) {
+    let viewCount = Cookies.get('screenerViews') ?
+        parseInt(Cookies.get('screenerViews'), 5) : 1;
+    if (viewCount >= 5) {
       this._initRecaptcha();
-    //   viewCount = 0;
-    // }
-    // // `2/1440` sets the cookie to expire after two minutes.
-    // Cookies.set('screenerViews', ++viewCount, {expires: (2/1440)});
+      viewCount = 0;
+    }
+    // `2/1440` sets the cookie to expire after two minutes.
+    Cookies.set('screenerViews', ++viewCount, {expires: (2/1440)});
 
     return this;
   }
@@ -115,10 +102,6 @@ class ShareForm {
     // Clear any existing error messages.
     $(this._el).find(`.${ShareForm.CssClass.ERROR_MSG}`).remove();
 
-    // if ($email.length) {
-    //   validity = this._validateRequired($email[0]) &&
-    //       this._validateEmail($email[0]);
-    // }
     if ($tel.length) {
       validity = this._validatePhoneNumber($tel[0]);
     }
@@ -129,28 +112,6 @@ class ShareForm {
     }
     return this;
   }
-
-  /**
-   * For a given input, checks to see if its value is a valid email. If not,
-   * displays an error message and sets an error class on the element.
-   * @param {HTMLElement} input - The html form element for the component.
-   * @return {boolean} - Valid email.
-   */
-  // _validateEmail(input) {
-  //   if (!$(input).val()) {
-  //     return false;
-  //   }
-  //   else if (!(Utility.isValidEmail($(input).val()))) {
-  //     this._showError(ShareForm.Message.EMAIL);
-  //     $(input).one('keyup', e => {
-  //       this._validate();
-  //     });
-  //     return false;
-  //   } else {
-  //     return true;
-  //   }
-  // }
-
 
   /**
    * For a given input, checks to see if its value is a valid Phonenumber. If not,
@@ -259,7 +220,7 @@ class ShareForm {
 
     window.screenerCallback = () => {
       window.grecaptcha.render(document.getElementById('screener-recaptcha'), {
-        // 'sitekey': Utility.CONFIG.GRECAPTCHA_SITE_KEY,
+
         // 'sitekey' : '6LcvtSUUAAAAAOZScvRIIHDTyHVIe5o6Y-u5d9gb',
         'sitekey' : '6LcAACYUAAAAAPmtvQvBwK89imM3QfotJFHfSm8C',
         'callback': 'screenerRecaptcha',
@@ -306,7 +267,8 @@ ShareForm.Message = {
   PHONE: 'Invalid Mobile Number',
   REQUIRED: 'ERROR_REQUIRED',
   SERVER: 'ERROR_SERVER',
-  SUCCESS: 'Successfully Sent Text Message'
+  SUCCESS: 'Successfully Sent Text Message',
+  RECAPTCHA : 'Please fill the reCAPTCHA'
 };
 
 export default ShareForm;

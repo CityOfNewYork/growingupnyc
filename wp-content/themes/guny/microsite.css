@@ -876,4 +876,14 @@ button:hover, button:focus {
     .button--inspiration__cta {
       width: auto; } }
 
+.c-footer__link {
+  color: #fff;
+  font-family: "museo-sans-rounded", sans-serif;
+  font-weight: 900;
+  text-decoration: none; }
+  .c-footer__link:focus {
+    color: #838a97; }
+  .no-touchevents .c-footer__link:hover {
+    color: #838a97; }
+
 /*# sourceMappingURL=microsite.css.map */

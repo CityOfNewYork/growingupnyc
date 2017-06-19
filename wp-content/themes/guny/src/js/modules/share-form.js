@@ -31,6 +31,12 @@ class ShareForm {
 
     /** @private {boolean} Whether this component has been initialized. */
     this._initialized = false;
+
+    /** @private {boolean} Whether the google reCAPTCHA widget is required. */
+    this._recaptchaRequired = false;
+
+    /** @private {boolean} Whether the google reCAPTCHA widget has passed. */
+    this._recaptchaVerified = false;
   }
 
   /**
@@ -46,12 +52,52 @@ class ShareForm {
     $(this._el).on('submit', e => {
       e.preventDefault();
       this._validate();
-      if (this._isValid && !this._isBusy && !this._isDisabled) {
+      // if (!this._recaptchaRequired) {
+      //   this._submit();
+      // } else {
+      //   console.log("capcha required");
+      //   $(e.currentTarget).closest(`.${Screener.CssClass.STEP}`)
+      //     .find(`.${Screener.CssClass.ERROR_MSG}`).remove();
+      //   if (this._recaptchaVerified) {
+      //     this._submit();
+      //   } else {
+      //     console.log("This is the error of capcha");
+      //     this._showError($('#screener-recaptcha')[0],
+      //         Screener.ErrorMessage.REQUIRED);
+      //   }
+      // }
+      if (this._recaptchaRequired) {
+        // $(e.currentTarget).closest(`.${Screener.CssClass.STEP}`)
+        //   .find(`.${Screener.CssClass.ERROR_MSG}`).remove();
+        if (this._recaptchaVerified) {
+          this._submit();
+        } else {
+          console.log("This is the error of capcha");
+          // this._showError($('#screener-recaptcha')[0],
+          // Screener.ErrorMessage.REQUIRED);
+        }
+      } else {
         this._submit();
       }
+      // if (this._isValid && !this._isBusy && !this._isDisabled) {
+      //   this._submit();
+      // }
     });
 
     this._initialized = true;
+
+
+    // // Determine whether or not to initialize ReCAPTCHA. This should be
+    // // initialized only on every 10th view which is determined via an
+    // // incrementing cookie.
+    // let viewCount = Cookies.get('screenerViews') ?
+    //     parseInt(Cookies.get('screenerViews'), 10) : 1;
+    // if (viewCount >= 10) {
+      this._initRecaptcha();
+    //   viewCount = 0;
+    // }
+    // // `2/1440` sets the cookie to expire after two minutes.
+    // Cookies.set('screenerViews', ++viewCount, {expires: (2/1440)});
 
     return this;
   }
@@ -194,6 +240,47 @@ class ShareForm {
       $(this._el).find('input').prop('disabled', false);
       this._isBusy = false;
     });
+  }
+
+  /**
+   * Asynchronously loads the Google recaptcha script and sets callbacks for
+   * load, success, and expiration.
+   * @private
+   * @return {this} Screener
+   */
+  _initRecaptcha() {
+    const $script = $(document.createElement('script'));
+    $script.attr('src',
+        'https://www.google.com/recaptcha/api.js' +
+        '?onload=screenerCallback&render=explicit').prop({
+      async: true,
+      defer: true
+    });
+
+    window.screenerCallback = () => {
+      window.grecaptcha.render(document.getElementById('screener-recaptcha'), {
+        // 'sitekey': Utility.CONFIG.GRECAPTCHA_SITE_KEY,
+        // 'sitekey' : '6LcvtSUUAAAAAOZScvRIIHDTyHVIe5o6Y-u5d9gb',
+        'sitekey' : '6LcAACYUAAAAAPmtvQvBwK89imM3QfotJFHfSm8C',
+        'callback': 'screenerRecaptcha',
+        'expired-callback': 'screenerRecaptchaReset'
+      });
+      // $('#screener-recaptcha-container').removeClass(Screener.CssClass.HIDDEN);
+      this._recaptchaRequired = true;
+    };
+
+    window.screenerRecaptcha = () => {
+      this._recaptchaVerified = true;
+      // this._removeError(document.getElementById('screener-recaptcha'));
+    };
+
+    window.screenerRecaptchaReset = () => {
+      this._recaptchaVerified = false;
+    };
+
+    this._recaptchaRequired = true;
+    $('head').append($script);
+    return this;
   }
 }
 

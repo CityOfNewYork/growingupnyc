@@ -1,9 +1,9 @@
 {% extends "microsite-base.twig" %}
 
 {% block head_extras %}
-<style>
-  .c-hero-ms__topics {background-image: url(/wp-content/themes/guny/assets/img/hero-topics-splatter.svg);}
-</style>
+  <style>
+    .c-hero-ms__topics {background-image: url(/wp-content/themes/guny/assets/img/hero-topics-splatter.svg);}
+  </style>
 {% endblock %}
 
 {% block content %}
@@ -47,85 +47,85 @@
     <div class="o-article o-article-ms js-sticky-article">
       <hr>
       {# Section One #}      
-        {% for top in post.get_field('page_top') %}
-          <section class="o-content-container--compact u-top-spacing u-bottom-spacing s-wysiwyg">
-            <h2 id="{{top.page_top_content_heading|lower|replace({' ':'-'})}}">{{top.page_top_content_heading}}</h2>
-            {{top.page_top_content_text}}
-          </section>
-          <hr>
-          {# Gray Section #}
-            <section class="o-content-container--compact u-top-spacing s-wysiwyg">
-              <h2>{{top.page_top_gray_inset_heading}}</h2>
-              {% if top.page_top_gray_inset_area %}
-                <div class="c-do-list">              
-                  {{top.page_top_gray_inset_area}}
-                </div>
-              {% endif %}
-            </section>
-            {# URL and the buttons #}
-            {% if top.cta_button_url %}
-              <div class="o-content-container--compact u-bottom-spacing">
-                <a class="button--primary button--primary__curved button--primary__purple button--inspiration__cta" href="{{top.cta_button_url}}">{{top.cta_button_text}}</a>
-              </div>
-            {% endif %}
-              <hr>
-          {# Tip section #}
-          {% if top.tip_title %}
-            <aside class="c-tip c-tip-ms__topics u-sm-gutter o-content-container">
-              <div class="c-tip__sticker sticker">
-                <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#lightbulb"></use></svg>
-              </div>
-              <p class="c-tip__content">{{top.tip_title}}</p>
-              <p class="c-tip__content">{{top.tips}}</p>
-            </aside>
-          {% endif %}
-          {# Section Inspirations #}
-        {% if top.inspiration_tout %}
-        <section class="c-other-inspirations u-lg-gutter">
-          <li class="c-nav-list__item">
-            {% for inspiration in top.inspiration_tout %}
-              {% set inspiration = TimberPost(inspiration) %}
-              <div class="c-block-list__item">
-                {% include ['partials/teaser-'~inspiration.post_type~'.twig', 'partials/teaser.twig'] with {post: inspiration, is_first: loop.first, age_group: post.title} %}                
-              </div>
-            {% endfor %}
-          </li>
+      {% for top in post.get_field('page_top') %}
+        <section class="o-content-container--compact u-top-spacing u-bottom-spacing s-wysiwyg">
+          <h2 id="{{top.page_top_content_heading|lower|replace({' ':'-'})}}">{{top.page_top_content_heading}}</h2>
+          {{top.page_top_content_text}}
         </section>
         <hr>
+        {# Gray Section #}
+        <section class="o-content-container--compact u-top-spacing s-wysiwyg">
+          <h2>{{top.page_top_gray_inset_heading}}</h2>
+          {% if top.page_top_gray_inset_area %}
+            <div class="c-do-list">              
+              {{top.page_top_gray_inset_area}}
+            </div>
+          {% endif %}
+        </section>
+        {# URL and the buttons #}
+        {% if top.cta_button_url %}
+          <div class="o-content-container--compact u-bottom-spacing">
+            <a class="button--primary button--primary__curved button--primary__purple button--inspiration__cta" href="{{top.cta_button_url}}">{{top.cta_button_text}}</a>
+          </div>
         {% endif %}
+        <hr>
+        {# Tip section #}
+        {% if top.tip_title %}
+          <aside class="c-tip c-tip-ms__topics u-sm-gutter o-content-container">
+            <div class="c-tip__sticker sticker">
+              <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#lightbulb"></use></svg>
+            </div>
+            <p class="c-tip__content">{{top.tip_title}}</p>
+            <p class="c-tip__content">{{top.tips}}</p>
+          </aside>
+        {% endif %}
+        {# Section Inspirations #}
+        {% if top.inspiration_tout %}
+          <section class="c-other-inspirations u-lg-gutter">
+            <li class="c-nav-list__item">
+              {% for inspiration in top.inspiration_tout %}
+                {% set inspiration = TimberPost(inspiration) %}
+                  <div class="c-block-list__item">
+                    {% include ['partials/teaser-'~inspiration.post_type~'.twig', 'partials/teaser.twig'] with {post: inspiration, is_first: loop.first, age_group: post.title} %}                
+                  </div>
+                {% endfor %}
+              </li>
+            </section>
+            <hr>
+          {% endif %}
         {% endfor %}
 
-  {% if options.enable_sms == "Yes" %}
-        <aside class="c-tip c-tip-ms__topics u-sm-gutter o-content-container">
-  <div class="c-tip__sticker sticker">
-    <svg class="icon--large" role="img"><title>Tip</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-outlined"></use></svg>
-  </div>
-  <p class="c-tip__content">Send yourself an SMS message to remember this page</p>
+        {% if options.enable_sms == "Yes" %}
+          <aside class="c-tip c-tip-ms__topics u-sm-gutter o-content-container">
+            <div class="c-tip__sticker sticker">
+              <svg class="icon--large" role="img"><title>Tip</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-outlined"></use></svg>
+            </div>
+            <p class="c-tip__content">Send yourself an SMS message to remember this page</p>
 
-                <div id="share-by-text" class="sms-form-wrapper share-form hidden">
-                  <form method="post" action="{{ shareAction }}" class="js-share-form" novalidate>
-                    <input type="hidden" name="action" value="sms_send">
-                    <input type="hidden" name="url" value="{{ shareUrl }}">
-                    <input type="hidden" name="sharetext" value="{{post.get_field('sms_intro_text')}}">
-                    <input type="hidden" name="hash" value="{{ shareHash }}">
-                  
-                    <div class="signup-form__input signup-form__input--long sms-form__input--long">
-                      <label for="phone" class="signup-form__label sms-form__label">
-                      <span class="signup-form__label-content sms-form__label-content" data-content="Phone Number">Phone Number</span>
-                      </label>
-                      <input type="tel" id="phone" name="to" class="form-field signup-form__field sms-form__field" required>
-                    </div>
-                    <button type="submit" class="button--primary button--primary__curved button--primary__purple">{{__('Send', 'accessnyc-program-detail')}}</button>
-                    {# <div class="success-message">{{__('Sent!', 'accessnyc-program-detail')}}</div> #}
-                  </form>
+            <div id="share-by-text" class="sms-form-wrapper share-form hidden">
+              <form method="post" action="{{ shareAction }}" class="js-share-form" novalidate>
+                <input type="hidden" name="action" value="sms_send">
+                <input type="hidden" name="url" value="{{ shareUrl }}">
+                <input type="hidden" name="sharetext" value="{{post.get_field('sms_intro_text')}}">
+                <input type="hidden" name="hash" value="{{ shareHash }}">
+
+                <div class="signup-form__input signup-form__input--long sms-form__input--long">
+                  <label for="phone" class="signup-form__label sms-form__label">
+                    <span class="signup-form__label-content sms-form__label-content" data-content="Phone Number">Phone Number</span>
+                  </label>
+                  <input type="tel" id="phone" name="to" class="form-field signup-form__field sms-form__field" required>
                 </div>
-              
-<footer class="c-tip__footer"></footer>
-</aside>
-{% endif %}
-    </div> <!-- /.o-article -->
-  </article>
-{% endblock %}
+                <button type="submit" class="button--primary button--primary__curved button--primary__purple">{{__('Send', 'accessnyc-program-detail')}}</button>
+                {{capcha}}
+              </form>
+            </div>
+
+            <footer class="c-tip__footer"></footer>
+          </aside>
+        {% endif %}
+      </div> <!-- /.o-article -->
+    </article>
+  {% endblock %}
 
 
 

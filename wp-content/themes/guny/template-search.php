@@ -15,4 +15,6 @@ $context['pagination'] = facetwp_display('pager');
 //$context['did_you_mean'] = relevanssi_didyoumean(get_search_query(), '', '');
 $templates = array( 'search.twig', 'index.twig' );
 
+
+print_r(facetwp_display('template', 'default'));
 Timber::render( $templates, $context );

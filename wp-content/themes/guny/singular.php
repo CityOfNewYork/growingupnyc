@@ -64,6 +64,4 @@ $context['post'] = $post;
 $context['shareAction'] = admin_url( 'admin-ajax.php' );
 $context['shareUrl'] = \SMNYC\get_current_url();
 $context['shareHash'] = \SMNYC\hash($context['shareUrl']);
-
-
 Timber::render( $templates, $context );

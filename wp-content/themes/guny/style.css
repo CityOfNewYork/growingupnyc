@@ -2328,7 +2328,7 @@ ol.o-inline {
 .s-wysiwyg {
   overflow-wrap: break-word;
   word-wrap: break-word;
-  -ms-word-break: break-all;
+  -ms-word-break: normal;
   word-break: break-word; }
   @media screen and (min-width: 700px) {
     .s-wysiwyg {
@@ -2362,7 +2362,7 @@ ol.o-inline {
     text-indent: -1.6875rem; }
     .s-wysiwyg ul li:before {
       content: url(/wp-content/themes/guny/assets/img/check.svg);
-      margin-right: 0.75rem;
+      margin-right: 0.55rem;
       margin-top: 0.125rem;
       opacity: .2;
       vertical-align: middle; }

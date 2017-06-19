@@ -361,6 +361,29 @@
   }
 }
 
+//Content
+.o-article-ms__topics {
+  .u-top-spacing {
+    padding-top: 25px;
+
+    @include media($bp-large) {
+      padding-top: 40px;
+    }
+  }
+
+  .u-bottom-spacing {
+    padding-bottom: 25px;
+
+    @include media($bp-large) {
+      padding-bottom: 40px;
+    }
+  }
+
+  h2 {
+    padding-top: 20px;
+  }
+}
+
 // Navigation List Link
 .c-nav-list-ms__topics {
   .c-nav-list__link {

@@ -221,8 +221,9 @@ class ShareForm {
     window.screenerCallback = () => {
       window.grecaptcha.render(document.getElementById('screener-recaptcha'), {
 
-        // 'sitekey' : '6LcvtSUUAAAAAOZScvRIIHDTyHVIe5o6Y-u5d9gb',
-        'sitekey' : '6LcAACYUAAAAAPmtvQvBwK89imM3QfotJFHfSm8C',
+        'sitekey' : '6LcvtSUUAAAAAOZScvRIIHDTyHVIe5o6Y-u5d9gb',
+        //Below is localhost key
+        // 'sitekey' : '6LcAACYUAAAAAPmtvQvBwK89imM3QfotJFHfSm8C',
         'callback': 'screenerRecaptcha',
         'expired-callback': 'screenerRecaptchaReset'
       });

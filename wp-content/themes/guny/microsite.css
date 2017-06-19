@@ -291,22 +291,39 @@ button:hover, button:focus {
     background: #00965c; }
   .c-list-box-ms__trips .c-list-box__content {
     background: #007145; }
+  .c-list-box-ms__trips .c-list-box__subitem:focus {
+    background: #005e4c; }
+  .no-touchevents .c-list-box-ms__trips .c-list-box__subitem:hover {
+    background: #005e4c; }
 
 .c-nav-list-ms__trips .c-nav-list__item .c-nav-list__link {
   background: #00965c;
   border-color: #00965c; }
-  .c-nav-list-ms__trips .c-nav-list__item .c-nav-list__link:hover, .c-nav-list-ms__trips .c-nav-list__item .c-nav-list__link:focus, .c-nav-list-ms__trips .c-nav-list__item .c-nav-list__link.is-active {
+  .c-nav-list-ms__trips .c-nav-list__item .c-nav-list__link:focus, .c-nav-list-ms__trips .c-nav-list__item .c-nav-list__link.is-active {
+    background: #007145;
+    border-color: #007145; }
+  .no-touchevents .c-nav-list-ms__trips .c-nav-list__item .c-nav-list__link:hover {
     background: #007145;
     border-color: #007145; }
 
 .c-block-list-ms__trips .c-card__title a {
   text-decoration: underline; }
-  .c-block-list-ms__trips .c-card__title a:hover, .c-block-list-ms__trips .c-card__title a:focus {
+  .c-block-list-ms__trips .c-card__title a:focus {
+    color: #00965c; }
+  .no-touchevents .c-block-list-ms__trips .c-card__title a:hover {
     color: #00965c; }
 
 .c-block-list-ms__trips .button--pill {
   background: #005e4c; }
   .c-block-list-ms__trips .button--pill:first-child {
+    background: #00965c; }
+    .c-block-list-ms__trips .button--pill:first-child:focus {
+      background: #20bf65; }
+    .no-touchevents .c-block-list-ms__trips .button--pill:first-child:hover {
+      background: #20bf65; }
+  .c-block-list-ms__trips .button--pill:focus {
+    background: #00965c; }
+  .no-touchevents .c-block-list-ms__trips .button--pill:hover {
     background: #00965c; }
 
 .c-block-list-ms__trips .c-card__sticker {
@@ -322,24 +339,14 @@ button:hover, button:focus {
   background: #00965c; }
   .c-block-list-ms__trips.c-block-list-ms__trips--week .button--pill:first-child {
     background: #005e4c; }
-
-.no-touchevents .c-block-list-ms__trips .button--pill:first-child:hover, .no-touchevents .c-block-list-ms__trips .button--pill:first-child:focus {
-  background: #20bf65; }
-
-.no-touchevents .c-block-list-ms__trips .button--pill:hover, .no-touchevents .c-block-list-ms__trips .button--pill:focus {
-  background: #00965c; }
-
-.no-touchevents .c-block-list-ms__trips.c-block-list-ms__trips--week .button--pill:first-child:hover, .no-touchevents .c-block-list-ms__trips.c-block-list-ms__trips--week .button--pill:first-child:focus {
-  background: #00965c; }
-
-.no-touchevents .c-block-list-ms__trips.c-block-list-ms__trips--week .button--pill:hover, .no-touchevents .c-block-list-ms__trips.c-block-list-ms__trips--week .button--pill:focus {
-  background: #20bf65; }
-
-.no-touchevents .c-list-box-ms__trips .c-list-box__subitem:hover, .no-touchevents .c-list-box-ms__trips .c-list-box__subitem:focus {
-  background: #005e4c; }
-
-.c-page__intro {
-  margin-bottom: 1.875rem; }
+    .c-block-list-ms__trips.c-block-list-ms__trips--week .button--pill:first-child:focus {
+      background: #00965c; }
+    .no-touchevents .c-block-list-ms__trips.c-block-list-ms__trips--week .button--pill:first-child:hover {
+      background: #00965c; }
+  .c-block-list-ms__trips.c-block-list-ms__trips--week .button--pill:focus {
+    background: #20bf65; }
+  .no-touchevents .c-block-list-ms__trips.c-block-list-ms__trips--week .button--pill:hover {
+    background: #20bf65; }
 
 @media screen and (min-width: 1024px) {
   .c-page__location--details {
@@ -349,9 +356,10 @@ button:hover, button:focus {
   background: #00965c; }
   .button--pill--trip:hover {
     background: #20bf65; }
-
-.no-touchevents .button--pill--trip:hover, .no-touchevents .button--pill--trip:focus {
-  background: #007145; }
+  .button--pill--trip:focus {
+    background: #007145; }
+  .no-touchevents .button--pill--trip:hover {
+    background: #007145; }
 
 .c-page__content h2 {
   margin-top: 1.25rem; }
@@ -367,11 +375,21 @@ button:hover, button:focus {
   height: 400px;
   margin: 2.5rem 0; }
 
-.o-article-trip {
-  float: right; }
+@media screen and (min-width: 1024px) {
+  .o-article-trip {
+    float: right; } }
 
-.o-article-trip-sidebar {
-  float: left; }
+.o-article-trip .c-page__intro,
+.o-article-trip .c-page__content {
+  margin-bottom: 1.875rem; }
+
+@media screen and (min-width: 1024px) {
+  .o-article-trip .c-page__content {
+    margin-bottom: 0; } }
+
+@media screen and (min-width: 1024px) {
+  .o-article-trip-sidebar {
+    float: left; } }
 
 .c-hero-ms__topics {
   background-color: #00965c; }
@@ -698,10 +716,21 @@ button:hover, button:focus {
     .c-details-list-ms__inspiration .c-details-list-ms__descr.c-prof-intro {
       display: none;
       border-top: 2px solid #fff;
-      padding-top: 0.9375rem; }
+      padding-top: 0.9375rem;
+      padding-bottom: 0; }
       @media screen and (min-width: 1024px) {
         .c-details-list-ms__inspiration .c-details-list-ms__descr.c-prof-intro {
-          display: block; } }
+          display: block;
+          padding-bottom: 0.9375rem; } }
+
+.c-details-list-ms__inspiration--detail .c-details-list-ms__descr.c-prof-intro {
+  display: block; }
+
+.o-article-ms__inspiration--detail {
+  padding-top: 2.8125rem; }
+  @media screen and (min-width: 1024px) {
+    .o-article-ms__inspiration--detail {
+      padding-top: 0; } }
 
 .s-wysiwyg .c-other-inspirations,
 .c-other-inspirations {
@@ -710,7 +739,10 @@ button:hover, button:focus {
   .s-wysiwyg .c-other-inspirations .c-card__title,
   .c-other-inspirations .c-card__title {
     margin-top: 0;
-    margin-bottom: 0.3125rem; }
+    margin-bottom: 0.5rem; }
+    .s-wysiwyg .c-other-inspirations .c-card__title a,
+    .c-other-inspirations .c-card__title a {
+      text-decoration: none; }
   .s-wysiwyg .c-other-inspirations .c-card__body p,
   .c-other-inspirations .c-card__body p {
     margin-bottom: 1.875rem; }

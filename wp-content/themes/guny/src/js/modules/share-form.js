@@ -75,10 +75,9 @@ class ShareForm {
       let viewCount = Cookies.get('screenerViews') ?
         parseInt(Cookies.get('screenerViews'), 10) : 1;
       if (viewCount >= 5) {
+        $(this._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
         this._initRecaptcha();
-        // viewCount = 0;
       }
-      console.log(viewCount);
       // `2/1440` sets the cookie to expire after two minutes.
       Cookies.set('screenerViews', ++viewCount, {expires: (2/1440)});
       
@@ -90,8 +89,9 @@ class ShareForm {
     let viewCount = Cookies.get('screenerViews') ?
       parseInt(Cookies.get('screenerViews'), 10) : 1;
     if (viewCount >= 5) {
+      // $(this._el).parents('.c-tip-ms__topics').css({"background": "#88F078"});
+      $(this._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
       this._initRecaptcha();
-      // viewCount = 0;
     }
     console.log(viewCount);
     this._initialized = true;

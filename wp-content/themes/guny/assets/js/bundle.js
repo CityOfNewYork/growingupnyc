@@ -1789,11 +1789,12 @@
 	      // // Determine whether or not to initialize ReCAPTCHA. This should be
 	      // // initialized only on every 10th view which is determined via an
 	      // // incrementing cookie.
-	      var viewCount = _jsCookie2.default.get('screenerViews') ? parseInt(_jsCookie2.default.get('screenerViews'), 5) : 1;
+	      var viewCount = _jsCookie2.default.get('screenerViews') ? parseInt(_jsCookie2.default.get('screenerViews'), 10) : 1;
 	      if (viewCount >= 5) {
 	        this._initRecaptcha();
 	        viewCount = 0;
 	      }
+	      console.log(viewCount);
 	      // `2/1440` sets the cookie to expire after two minutes.
 	      _jsCookie2.default.set('screenerViews', ++viewCount, { expires: 2 / 1440 });
 
@@ -1956,7 +1957,7 @@
 	        window.grecaptcha.render(document.getElementById('screener-recaptcha'), {
 
 	          'sitekey': '6LcvtSUUAAAAAOZScvRIIHDTyHVIe5o6Y-u5d9gb',
-	          //Below is localhost key
+	          //Below is the local host key
 	          // 'sitekey' : '6LcAACYUAAAAAPmtvQvBwK89imM3QfotJFHfSm8C',
 	          'callback': 'screenerRecaptcha',
 	          'expired-callback': 'screenerRecaptchaReset'

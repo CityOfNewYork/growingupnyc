@@ -153,10 +153,15 @@ button {
 
     li {
       padding-bottom: 0;
+      &:before {
+        position: relative;
+        top: -4px;
+        opacity: 1;
+        content: url(/wp-content/themes/guny/assets/img/circle.svg);
+      }
     }
   }
 }
-
 //Article Content
 .o-article-ms {
   h2 {
@@ -376,6 +381,24 @@ button {
 // Footer
 .c-footer {
   background: $dark-gray-1;
+}
+
+// Footer Link
+.c-footer__link {
+  color: $color-text-invert;
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
+  text-decoration: none;
+
+  &:focus {
+    color: $gray-2;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $gray-2;
+    }
+  }
 }
 
 // Trips page styles

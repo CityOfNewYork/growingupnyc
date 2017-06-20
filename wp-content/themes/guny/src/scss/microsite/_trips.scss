@@ -102,6 +102,7 @@
   }
 
   .c-card__link {
+    margin-top: rem-calc(10);
     &:hover {
       svg {
         fill: $very-dark-gray;

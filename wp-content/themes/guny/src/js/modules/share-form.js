@@ -68,25 +68,23 @@ class ShareForm {
           this._submit();
         }
       }
+
+      // // Determine whether or not to initialize ReCAPTCHA. This should be
+      // // initialized only on every 10th view which is determined via an
+      // // incrementing cookie.
+      let viewCount = Cookies.get('screenerViews') ?
+        parseInt(Cookies.get('screenerViews'), 10) : 1;
+      if (viewCount >= 5) {
+        this._initRecaptcha();
+        viewCount = 0;
+      }
+      console.log(viewCount);
+      // `2/1440` sets the cookie to expire after two minutes.
+      Cookies.set('screenerViews', ++viewCount, {expires: (2/1440)});
       
     });
 
     this._initialized = true;
-
-
-    // // Determine whether or not to initialize ReCAPTCHA. This should be
-    // // initialized only on every 10th view which is determined via an
-    // // incrementing cookie.
-    let viewCount = Cookies.get('screenerViews') ?
-        parseInt(Cookies.get('screenerViews'), 10) : 1;
-    if (viewCount >= 5) {
-      this._initRecaptcha();
-      viewCount = 0;
-    }
-    console.log(viewCount);
-    // `2/1440` sets the cookie to expire after two minutes.
-    Cookies.set('screenerViews', ++viewCount, {expires: (2/1440)});
-
     return this;
   }
 

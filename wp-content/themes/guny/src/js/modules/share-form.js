@@ -68,24 +68,33 @@ class ShareForm {
           this._submit();
         }
       }
+
+      // // Determine whether or not to initialize ReCAPTCHA. This should be
+      // // initialized only on every 10th view which is determined via an
+      // // incrementing cookie.
+      let viewCount = Cookies.get('screenerViews') ?
+        parseInt(Cookies.get('screenerViews'), 10) : 1;
+      if (viewCount >= 5) {
+        this._initRecaptcha();
+        // viewCount = 0;
+      }
+      console.log(viewCount);
+      // `2/1440` sets the cookie to expire after two minutes.
+      Cookies.set('screenerViews', ++viewCount, {expires: (2/1440)});
       
     });
-
-    this._initialized = true;
-
 
     // // Determine whether or not to initialize ReCAPTCHA. This should be
     // // initialized only on every 10th view which is determined via an
     // // incrementing cookie.
     let viewCount = Cookies.get('screenerViews') ?
-        parseInt(Cookies.get('screenerViews'), 5) : 1;
+      parseInt(Cookies.get('screenerViews'), 10) : 1;
     if (viewCount >= 5) {
       this._initRecaptcha();
-      viewCount = 0;
+      // viewCount = 0;
     }
-    // `2/1440` sets the cookie to expire after two minutes.
-    Cookies.set('screenerViews', ++viewCount, {expires: (2/1440)});
-
+    console.log(viewCount);
+    this._initialized = true;
     return this;
   }
 
@@ -222,7 +231,7 @@ class ShareForm {
       window.grecaptcha.render(document.getElementById('screener-recaptcha'), {
 
         'sitekey' : '6LcvtSUUAAAAAOZScvRIIHDTyHVIe5o6Y-u5d9gb',
-        //Below is localhost key
+        //Below is the local host key
         // 'sitekey' : '6LcAACYUAAAAAPmtvQvBwK89imM3QfotJFHfSm8C',
         'callback': 'screenerRecaptcha',
         'expired-callback': 'screenerRecaptchaReset'

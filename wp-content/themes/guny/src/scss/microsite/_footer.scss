@@ -1,0 +1,48 @@
+// Footer
+//
+// Global site footer
+//
+// markup:
+// <footer class="c-footer">
+//   <div class="o-container">
+//     <div class="c-footer__section">
+//       <sg-insert>2.2.1</sg-insert>
+//       <sg-insert>2.2.2</sg-insert>
+//     </div>
+//     <div class="c-footer__signup">
+//       <sg-insert>4.2</sg-insert>
+//     </div>
+//   </div>
+//   <sg-insert>2.2.4</sg-insert>
+// </footer>
+
+// Footer Navigation Item
+//
+// .c-footer__nav-item - Regular navigation item
+// .c-footer__nav-item--spaced - Navigation item with additional top margin
+//
+// markup:
+// <li class=".c-footer__nav-item {$modifiers}"><a class="c-footer__link" href="#">Item</a></li>
+//
+// sg-wrapper:
+// <ul style="background:#333">
+//   <sg-wrapper-content/>
+// </ul>
+
+// Footer Link
+.c-footer__link {
+  color: $color-text-invert;
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
+  text-decoration: none;
+
+  &:focus {
+    color: $gray-2;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $gray-2;
+    }
+  }
+}

@@ -433,6 +433,8 @@ button:hover, button:focus {
   .c-list-box-ms__topics .c-list-box__heading,
   .c-list-box-ms__topics .c-list-box__content {
     background: #31035a; }
+  .c-list-box-ms__topics .c-list-box__item .c-list-box__heading {
+    text-transform: none; }
   .c-list-box-ms__topics .c-list-box__content {
     margin-top: -0.125rem; }
     .c-list-box-ms__topics .c-list-box__content li {

@@ -154,58 +154,79 @@
         </div>
         <h3>What most {{post.milestones_heading}} do at this age:</h3>
         <ul class="js-accordion c-list-box c-list-box--tertiary u-sm-gutter">
-          <li class="c-list-box__item">
-            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-social">{{ __('Social', 'GUNY-Single-Age') }}</h4>
-            <ul class="c-list-box__content js-accordion__content" id="milestones-panel-social">
-            {% for milestone in post.get_field('social_milestones') %}
-              <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
-            {% endfor %}
-            </ul>
-          </li>
-          <li class="c-list-box__item">
-            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-language">{{ __('Communication', 'GUNY-Single-Age') }}</h4>
-            <ul class="c-list-box__content js-accordion__content" id="milestones-panel-language">
-            {% for milestone in post.get_field('communication_milestones') %}
-              <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
-            {% endfor %}
-            </ul>
-          </li>
-          <li class="c-list-box__item">
-            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-cognitive">{{ __('Learning', 'GUNY-Single-Age') }}</h4>
-            <ul class="c-list-box__content js-accordion__content" id="milestones-panel-cognitive">
-            {% for milestone in post.get_field('learning_milestones') %}
-              <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
-            {% endfor %}
-            </ul>
-          </li>
-          <li class="c-list-box__item">
-            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-movement">{{ __('Physical Development', 'GUNY-Single-Age') }}</h4>
-            <ul class="c-list-box__content js-accordion__content" id="milestones-panel-movement">
-            {% for milestone in post.get_field('movement_milestones') %}
-              <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
-            {% endfor %}
-            </ul>
-          </li>
-          <li class="c-list-box__item">
-            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-health">{{ __('Health', 'GUNY-Single-Age') }}</h4>
-            <ul class="c-list-box__content js-accordion__content" id="milestones-panel-health">
-            {% for milestone in post.get_field('health_milestones') %}
-              <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
-            {% endfor %}
-            </ul>
-          </li>
-          </ul>
-          <h3>{{post.warning_header}}</h3>
-          <ul class="c-list-box c-list-box--tertiary">
+          
+          {% if post.social_milestones %}
             <li class="c-list-box__item">
-              <div class="c-list-box__border {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary"></div>
-              <ul class="c-list-box__content">
-                {% for warning_sign in post.get_field('warning_signs') %}
-                  <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#close"></use></svg>{{warning_sign.warning_sign}}</li>
-                {% endfor %}
+              <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-social">{{ __('Social', 'GUNY-Single-Age') }}</h4>
+              <ul class="c-list-box__content js-accordion__content" id="milestones-panel-social">
+              {% for milestone in post.get_field('social_milestones') %}
+                <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
+              {% endfor %}
               </ul>
             </li>
+          {% endif %}
+
+          {% if post.communication_milestones %}
+            <li class="c-list-box__item">
+              <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-language">{{ __('Communication', 'GUNY-Single-Age') }}</h4>
+              <ul class="c-list-box__content js-accordion__content" id="milestones-panel-language">
+              {% for milestone in post.get_field('communication_milestones') %}
+                <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
+              {% endfor %}
+              </ul>
+            </li>
+          {% endif %}
+          
+          {% if post.learning_milestones %}
+            <li class="c-list-box__item">
+              <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-cognitive">{{ __('Learning', 'GUNY-Single-Age') }}</h4>
+              <ul class="c-list-box__content js-accordion__content" id="milestones-panel-cognitive">
+              {% for milestone in post.get_field('learning_milestones') %}
+                <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
+              {% endfor %}
+              </ul>
+            </li>
+          {% endif %}
+          
+
+          {% if post.movement_milestones %}
+            <li class="c-list-box__item">
+              <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-movement">{{ __('Physical Development', 'GUNY-Single-Age') }}</h4>
+              <ul class="c-list-box__content js-accordion__content" id="milestones-panel-movement">
+              {% for milestone in post.get_field('movement_milestones') %}
+                <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
+              {% endfor %}
+              </ul>
+            </li>
+          {% endif %}
+          
+          {% if post.health_milestones %}
+            <li class="c-list-box__item">
+              <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-health">{{ __('Health', 'GUNY-Single-Age') }}</h4>
+              <ul class="c-list-box__content js-accordion__content" id="milestones-panel-health">
+              {% for milestone in post.get_field('health_milestones') %}
+                <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
+              {% endfor %}
+              </ul>
+            </li>
+          {% endif %}
           </ul>
+
+  
+          <h3>{{post.warning_header}}</h3>
+          {% if post.warning_signs %}
+            <ul class="c-list-box c-list-box--tertiary">
+              <li class="c-list-box__item">
+                <div class="c-list-box__border {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary"></div>
+                <ul class="c-list-box__content">
+                  {% for warning_sign in post.get_field('warning_signs') %}
+                    <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#close"></use></svg>{{warning_sign.warning_sign}}</li>
+                  {% endfor %}
+                </ul>
+              </li>
+            </ul>
+          {% endif %}
+          
         </section>
     </div> <!-- /.o-article -->
   </article>

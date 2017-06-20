@@ -347,8 +347,10 @@ button:hover, button:focus {
 .c-block-list-ms__trips .c-block-list-trips__title {
   margin-bottom: 0; }
 
-.c-block-list-ms__trips .c-card__link:hover svg {
-  fill: #333; }
+.c-block-list-ms__trips .c-card__link {
+  margin-top: 0.625rem; }
+  .c-block-list-ms__trips .c-card__link:hover svg {
+    fill: #333; }
 
 .c-block-list-ms__trips.c-block-list-ms__trips--week .button--pill {
   background: #00965c; }

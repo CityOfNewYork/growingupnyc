@@ -756,7 +756,8 @@ button:hover, button:focus {
   .s-wysiwyg .c-other-inspirations .c-card__title,
   .c-other-inspirations .c-card__title {
     margin-top: 0;
-    margin-bottom: 0.5rem; }
+    margin-bottom: 0.5rem;
+    text-decoration: none; }
     .s-wysiwyg .c-other-inspirations .c-card__title a,
     .c-other-inspirations .c-card__title a {
       text-decoration: none; }

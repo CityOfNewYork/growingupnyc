@@ -128,6 +128,11 @@ button:hover, button:focus {
   margin-top: 0; }
   .s-wysiwyg ul li {
     padding-bottom: 0; }
+    .s-wysiwyg ul li:before {
+      position: relative;
+      top: -4px;
+      opacity: 1;
+      content: url(/wp-content/themes/guny/assets/img/circle.svg); }
 
 .o-article-ms h2 {
   margin-top: 1.25rem; }
@@ -282,6 +287,16 @@ button:hover, button:focus {
 .c-footer {
   background: #2d333d; }
 
+.c-footer__link {
+  color: #fff;
+  font-family: "museo-sans-rounded", sans-serif;
+  font-weight: 900;
+  text-decoration: none; }
+  .c-footer__link:focus {
+    color: #838a97; }
+  .no-touchevents .c-footer__link:hover {
+    color: #838a97; }
+
 .c-hero-ms__trips {
   background-color: #00965c; }
 
@@ -332,8 +347,10 @@ button:hover, button:focus {
 .c-block-list-ms__trips .c-block-list-trips__title {
   margin-bottom: 0; }
 
-.c-block-list-ms__trips .c-card__link:hover svg {
-  fill: #333; }
+.c-block-list-ms__trips .c-card__link {
+  margin-top: 0.625rem; }
+  .c-block-list-ms__trips .c-card__link:hover svg {
+    fill: #333; }
 
 .c-block-list-ms__trips.c-block-list-ms__trips--week .button--pill {
   background: #00965c; }
@@ -418,6 +435,8 @@ button:hover, button:focus {
   .c-list-box-ms__topics .c-list-box__heading,
   .c-list-box-ms__topics .c-list-box__content {
     background: #31035a; }
+  .c-list-box-ms__topics .c-list-box__item .c-list-box__heading {
+    text-transform: none; }
   .c-list-box-ms__topics .c-list-box__content {
     margin-top: -0.125rem; }
     .c-list-box-ms__topics .c-list-box__content li {
@@ -739,7 +758,8 @@ button:hover, button:focus {
   .s-wysiwyg .c-other-inspirations .c-card__title,
   .c-other-inspirations .c-card__title {
     margin-top: 0;
-    margin-bottom: 0.5rem; }
+    margin-bottom: 0.5rem;
+    text-decoration: none; }
     .s-wysiwyg .c-other-inspirations .c-card__title a,
     .c-other-inspirations .c-card__title a {
       text-decoration: none; }

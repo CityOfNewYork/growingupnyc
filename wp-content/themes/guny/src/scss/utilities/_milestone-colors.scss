@@ -289,6 +289,7 @@ a.pre-teen-secondary {
   &:focus,
   &.is-active {
     background-color: $color-pre-teen !important;
+    border-color: $color-pre-teen !important;
     outline: none;
   }
 }
@@ -351,6 +352,7 @@ a.teen-secondary {
   &:focus,
   &.is-active {
     background-color: $color-teen !important;
+    border-color: $color-teen !important;
     outline: none;
   }
 }
@@ -413,6 +415,7 @@ a.young-adult-secondary {
   &:focus,
   &.is-active {
     background-color: $color-young-adult !important;
+    border-color: $color-young-adult !important;
     outline: none;
   }
 }

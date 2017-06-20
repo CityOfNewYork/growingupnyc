@@ -29,6 +29,12 @@
     background: $purple-60;
   }
 
+  .c-list-box__item {
+    .c-list-box__heading {
+      text-transform: none;
+    }
+  }
+
   .c-list-box__content {
     margin-top: rem-calc(-2);
     li {

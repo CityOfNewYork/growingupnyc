@@ -128,6 +128,11 @@ button:hover, button:focus {
   margin-top: 0; }
   .s-wysiwyg ul li {
     padding-bottom: 0; }
+    .s-wysiwyg ul li:before {
+      position: relative;
+      top: -4px;
+      opacity: 1;
+      content: url(/wp-content/themes/guny/assets/img/circle.svg); }
 
 .o-article-ms h2 {
   margin-top: 1.25rem; }
@@ -281,6 +286,16 @@ button:hover, button:focus {
 
 .c-footer {
   background: #2d333d; }
+
+.c-footer__link {
+  color: #fff;
+  font-family: "museo-sans-rounded", sans-serif;
+  font-weight: 900;
+  text-decoration: none; }
+  .c-footer__link:focus {
+    color: #838a97; }
+  .no-touchevents .c-footer__link:hover {
+    color: #838a97; }
 
 .c-hero-ms__trips {
   background-color: #00965c; }

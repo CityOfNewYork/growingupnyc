@@ -1788,10 +1788,9 @@
 	        // // incrementing cookie.
 	        var viewCount = _jsCookie2.default.get('screenerViews') ? parseInt(_jsCookie2.default.get('screenerViews'), 10) : 1;
 	        if (viewCount >= 5) {
+	          (0, _jquery2.default)(_this._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
 	          _this._initRecaptcha();
-	          // viewCount = 0;
 	        }
-	        console.log(viewCount);
 	        // `2/1440` sets the cookie to expire after two minutes.
 	        _jsCookie2.default.set('screenerViews', ++viewCount, { expires: 2 / 1440 });
 	      });
@@ -1801,8 +1800,9 @@
 	      // // incrementing cookie.
 	      var viewCount = _jsCookie2.default.get('screenerViews') ? parseInt(_jsCookie2.default.get('screenerViews'), 10) : 1;
 	      if (viewCount >= 5) {
+	        // $(this._el).parents('.c-tip-ms__topics').css({"background": "#88F078"});
+	        (0, _jquery2.default)(this._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
 	        this._initRecaptcha();
-	        // viewCount = 0;
 	      }
 	      console.log(viewCount);
 	      this._initialized = true;

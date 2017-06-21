@@ -38,6 +38,9 @@ class ShareForm {
 
     /** @private {boolean} Whether the google reCAPTCHA widget has passed. */
     this._recaptchaVerified = false;
+
+    /** @private {boolean} Whether the google reCAPTCHA widget is initilaised. */
+    this._recaptchainit = false;
   }
 
   /**
@@ -57,6 +60,7 @@ class ShareForm {
           this._validate();
           if (this._isValid && !this._isBusy && !this._isDisabled) {
             this._submit();
+            window.grecaptcha.reset();
           }
         } else {
           $(this._el).find(`.${ShareForm.CssClass.ERROR_MSG}`).remove();
@@ -74,11 +78,11 @@ class ShareForm {
       // // incrementing cookie.
       let viewCount = Cookies.get('screenerViews') ?
         parseInt(Cookies.get('screenerViews'), 10) : 1;
-      if (viewCount >= 5) {
+      if (viewCount >= 5 && !this._recaptchainit) {
         $(this._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
         this._initRecaptcha();
+        this._recaptchainit = true;
       }
-      // `2/1440` sets the cookie to expire after two minutes.
       Cookies.set('screenerViews', ++viewCount, {expires: (2/1440)});
       
     });
@@ -88,12 +92,11 @@ class ShareForm {
     // // incrementing cookie.
     let viewCount = Cookies.get('screenerViews') ?
       parseInt(Cookies.get('screenerViews'), 10) : 1;
-    if (viewCount >= 5) {
-      // $(this._el).parents('.c-tip-ms__topics').css({"background": "#88F078"});
+    if (viewCount >= 5 && !this._recaptchainit ) {
       $(this._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
       this._initRecaptcha();
+      this._recaptchainit = true;
     }
-    console.log(viewCount);
     this._initialized = true;
     return this;
   }
@@ -105,9 +108,7 @@ class ShareForm {
    */
   _validate() {
     let validity = true;
-    // const $email = $(this._el).find('input[type="email"]');
     const $tel = $(this._el).find('input[type="tel"]');
-
     // Clear any existing error messages.
     $(this._el).find(`.${ShareForm.CssClass.ERROR_MSG}`).remove();
 
@@ -149,13 +150,11 @@ class ShareForm {
     if ($(input).val()) {
       return true;
     } 
-    // else {
-      this._showError(ShareForm.Message.REQUIRED);
-      $(input).one('keyup', function(){
-        this._validate();
-      });
-      return false;
-    // }
+    this._showError(ShareForm.Message.REQUIRED);
+    $(input).one('keyup', function(){
+      this._validate();
+    });
+    return false;
   }
 
   /**
@@ -164,9 +163,6 @@ class ShareForm {
    * @return {this} ShareForm - shareform
    */
   _showError(msg) {
-    // const $msgdiv = $(document.createElement('div'));
-    // $msgdiv.addClass(ShareForm.CssClass.ERROR_MSG).text(Utility.localize(msg));
-    // $(this._el).addClass(ShareForm.CssClass.ERROR).append($msgdiv);
     $('#sms-form-msg').addClass(ShareForm.CssClass.ERROR).text(Utility.localize(msg));
     return this;
   }
@@ -177,14 +173,8 @@ class ShareForm {
    * @return {this} ShareForm
    */
   _showSuccess(msg) {
-    // $(this._el).addClass(ShareForm.CssClass.SUCCESS);
-
-    // const $msgdiv = $(document.createElement('div'));
-    // $msgdiv.addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
-    // $(this._el).addClass(ShareForm.CssClass.SUCCESS).append($msgdiv);
-
-    // $('#sms-form-msg').addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
-    $('#phone').val(Utility.localize(msg));
+    $('#phone').val('');
+    $('#phone').attr("placeholder", Utility.localize(msg));
     $('#smsbutton').text("Send Another");
     return this;
   }
@@ -199,6 +189,7 @@ class ShareForm {
     $(this._el).find('input').prop('disabled', true);
     return $.post($(this._el).attr('action'), payload).done(response => {
       if (response.success) {
+        this._el.reset();
         this._showSuccess(ShareForm.Message.SUCCESS);
         this._isDisabled = true;
         $(this._el).one('keyup', 'input', () => {
@@ -206,7 +197,6 @@ class ShareForm {
           this._isDisabled = false;
         });
       } else {
-        // this._showError(ShareForm.Message.SERVER);
         this._showError(JSON.stringify(response.message));
       }
     }).fail(function() {
@@ -235,20 +225,16 @@ class ShareForm {
     window.screenerCallback = () => {
       window.grecaptcha.render(document.getElementById('screener-recaptcha'), {
         'sitekey' : '6LekICYUAAAAAOR2uZ0ajyWt9XxDuspHPUAkRzAB',
-        //Below is th local host key
-        //'sitekey' : '6LcvtSUUAAAAAOZScvRIIHDTyHVIe5o6Y-u5d9gb',
         //Below is the local host key
         // 'sitekey' : '6LcAACYUAAAAAPmtvQvBwK89imM3QfotJFHfSm8C',
         'callback': 'screenerRecaptcha',
         'expired-callback': 'screenerRecaptchaReset'
       });
-      // $('#screener-recaptcha-container').removeClass(Screener.CssClass.HIDDEN);
       this._recaptchaRequired = true;
     };
 
     window.screenerRecaptcha = () => {
       this._recaptchaVerified = true;
-      // this._removeError(document.getElementById('screener-recaptcha'));
     };
 
     window.screenerRecaptchaReset = () => {

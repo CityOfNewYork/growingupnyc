@@ -2332,9 +2332,10 @@ if (objCtr.defineProperty) {
 	  }, {
 	    key: '_showError',
 	    value: function _showError(msg) {
-	      var $msgdiv = (0, _jquery2.default)(document.createElement('div'));
-	      $msgdiv.addClass(ShareForm.CssClass.ERROR_MSG).text(_utility2.default.localize(msg));
-	      (0, _jquery2.default)(this._el).addClass(ShareForm.CssClass.ERROR).append($msgdiv);
+	      // const $msgdiv = $(document.createElement('div'));
+	      // $msgdiv.addClass(ShareForm.CssClass.ERROR_MSG).text(Utility.localize(msg));
+	      // $(this._el).addClass(ShareForm.CssClass.ERROR).append($msgdiv);
+	      (0, _jquery2.default)('#sms-form-msg').addClass(ShareForm.CssClass.ERROR).text(_utility2.default.localize(msg));
 	      return this;
 	    }
 
@@ -2349,9 +2350,11 @@ if (objCtr.defineProperty) {
 	    value: function _showSuccess(msg) {
 	      // $(this._el).addClass(ShareForm.CssClass.SUCCESS);
 
-	      var $msgdiv = (0, _jquery2.default)(document.createElement('div'));
-	      $msgdiv.addClass(ShareForm.CssClass.SUCCESS_MSG).text(_utility2.default.localize(msg));
-	      (0, _jquery2.default)(this._el).addClass(ShareForm.CssClass.SUCCESS).append($msgdiv);
+	      // const $msgdiv = $(document.createElement('div'));
+	      // $msgdiv.addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
+	      // $(this._el).addClass(ShareForm.CssClass.SUCCESS).append($msgdiv);
+
+	      (0, _jquery2.default)('#sms-form-msg').addClass(ShareForm.CssClass.SUCCESS_MSG).text(_utility2.default.localize(msg));
 	      return this;
 	    }
 
@@ -2408,8 +2411,9 @@ if (objCtr.defineProperty) {
 
 	      window.screenerCallback = function () {
 	        window.grecaptcha.render(document.getElementById('screener-recaptcha'), {
-
-	          'sitekey': '6LcvtSUUAAAAAOZScvRIIHDTyHVIe5o6Y-u5d9gb',
+	          'sitekey': '6LekICYUAAAAAOR2uZ0ajyWt9XxDuspHPUAkRzAB',
+	          //Below is th local host key
+	          //'sitekey' : '6LcvtSUUAAAAAOZScvRIIHDTyHVIe5o6Y-u5d9gb',
 	          //Below is the local host key
 	          // 'sitekey' : '6LcAACYUAAAAAPmtvQvBwK89imM3QfotJFHfSm8C',
 	          'callback': 'screenerRecaptcha',

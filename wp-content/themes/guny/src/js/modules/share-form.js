@@ -61,6 +61,7 @@ class ShareForm {
           if (this._isValid && !this._isBusy && !this._isDisabled) {
             this._submit();
             window.grecaptcha.reset();
+            this._recaptchaVerified = false;
           }
         } else {
           $(this._el).find(`.${ShareForm.CssClass.ERROR_MSG}`).remove();
@@ -173,7 +174,6 @@ class ShareForm {
    * @return {this} ShareForm
    */
   _showSuccess(msg) {
-    $('#phone').val('');
     $('#phone').attr("placeholder", Utility.localize(msg));
     $('#smsbutton').text("Send Another");
     return this;

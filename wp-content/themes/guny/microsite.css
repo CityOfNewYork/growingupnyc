@@ -649,17 +649,10 @@ button:hover, button:focus {
 .error-message {
   margin-top: 0.9375rem; }
 
-.g-recaptcha > div {
-  width: 100% !important;
-  text-align: left; }
-  @media screen and (min-width: 700px) {
-    .g-recaptcha > div {
-      width: 15rem !important; } }
-  @media screen and (min-width: 1200px) {
-    .g-recaptcha > div {
-      width: 25rem !important; } }
-  .g-recaptcha > div > div > iframe {
-    width: 380px; }
+.g-recaptcha {
+  -webkit-transform-origin: left top;
+      -ms-transform-origin: left top;
+          transform-origin: left top; }
 
 .c-do-list {
   margin: 1.875rem 0;

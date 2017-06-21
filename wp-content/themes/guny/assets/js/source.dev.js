@@ -444,11 +444,11 @@ if (objCtr.defineProperty) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {'use strict';
 
-	var _globalSearch = __webpack_require__(25);
+	var _globalSearch = __webpack_require__(26);
 
 	var _globalSearch2 = _interopRequireDefault(_globalSearch);
 
-	var _toggleOpen = __webpack_require__(35);
+	var _toggleOpen = __webpack_require__(36);
 
 	var _toggleOpen2 = _interopRequireDefault(_toggleOpen);
 
@@ -456,27 +456,27 @@ if (objCtr.defineProperty) {
 
 	var _accordion2 = _interopRequireDefault(_accordion);
 
-	var _offcanvas = __webpack_require__(27);
+	var _offcanvas = __webpack_require__(28);
 
 	var _offcanvas2 = _interopRequireDefault(_offcanvas);
 
-	var _overlay = __webpack_require__(28);
+	var _overlay = __webpack_require__(29);
 
 	var _overlay2 = _interopRequireDefault(_overlay);
 
-	var _stickyNav = __webpack_require__(34);
+	var _stickyNav = __webpack_require__(35);
 
 	var _stickyNav2 = _interopRequireDefault(_stickyNav);
 
-	var _currentSection = __webpack_require__(21);
+	var _currentSection = __webpack_require__(22);
 
 	var _currentSection2 = _interopRequireDefault(_currentSection);
 
-	var _staticColumn = __webpack_require__(33);
+	var _staticColumn = __webpack_require__(34);
 
 	var _staticColumn2 = _interopRequireDefault(_staticColumn);
 
-	var _searchResultsHeader = __webpack_require__(31);
+	var _searchResultsHeader = __webpack_require__(32);
 
 	var _searchResultsHeader2 = _interopRequireDefault(_searchResultsHeader);
 
@@ -488,25 +488,29 @@ if (objCtr.defineProperty) {
 
 	var _bsdtoolsSignup2 = _interopRequireDefault(_bsdtoolsSignup);
 
-	var _formEffects = __webpack_require__(23);
+	var _formEffects = __webpack_require__(24);
 
 	var _formEffects2 = _interopRequireDefault(_formEffects);
 
-	var _facets = __webpack_require__(22);
+	var _facets = __webpack_require__(23);
 
 	var _facets2 = _interopRequireDefault(_facets);
 
-	var _owlSettings = __webpack_require__(29);
+	var _owlSettings = __webpack_require__(30);
 
 	var _owlSettings2 = _interopRequireDefault(_owlSettings);
 
-	var _iOS7Hack = __webpack_require__(26);
+	var _iOS7Hack = __webpack_require__(27);
 
 	var _iOS7Hack2 = _interopRequireDefault(_iOS7Hack);
 
-	var _shareForm = __webpack_require__(32);
+	var _shareForm = __webpack_require__(33);
 
 	var _shareForm2 = _interopRequireDefault(_shareForm);
+
+	var _captchaResize = __webpack_require__(20);
+
+	var _captchaResize2 = _interopRequireDefault(_captchaResize);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -537,6 +541,7 @@ if (objCtr.defineProperty) {
 	  (0, _formEffects2.default)();
 	  (0, _owlSettings2.default)();
 	  (0, _iOS7Hack2.default)();
+	  (0, _captchaResize2.default)();
 	}
 
 	ready(init);
@@ -565,9 +570,9 @@ if (objCtr.defineProperty) {
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var arrayEach = __webpack_require__(40),
-	    baseEach = __webpack_require__(42),
-	    castFunction = __webpack_require__(50),
+	var arrayEach = __webpack_require__(41),
+	    baseEach = __webpack_require__(43),
+	    castFunction = __webpack_require__(51),
 	    isArray = __webpack_require__(12);
 
 	/**
@@ -613,8 +618,8 @@ if (objCtr.defineProperty) {
 /***/ (function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(9),
-	    getRawTag = __webpack_require__(53),
-	    objectToString = __webpack_require__(58);
+	    getRawTag = __webpack_require__(54),
+	    objectToString = __webpack_require__(59);
 
 	/** `Object#toString` result references. */
 	var nullTag = '[object Null]',
@@ -796,8 +801,8 @@ if (objCtr.defineProperty) {
 /***/ (function(module, exports, __webpack_require__) {
 
 	var isObject = __webpack_require__(4),
-	    now = __webpack_require__(67),
-	    toNumber = __webpack_require__(69);
+	    now = __webpack_require__(68),
+	    toNumber = __webpack_require__(70);
 
 	/** Error message constants. */
 	var FUNC_ERROR_TEXT = 'Expected a function';
@@ -1021,7 +1026,7 @@ if (objCtr.defineProperty) {
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(63),
+	var isFunction = __webpack_require__(64),
 	    isLength = __webpack_require__(14);
 
 	/**
@@ -1524,7 +1529,7 @@ if (objCtr.defineProperty) {
 
 	var _forEach2 = _interopRequireDefault(_forEach);
 
-	var _readCookie = __webpack_require__(30);
+	var _readCookie = __webpack_require__(31);
 
 	var _readCookie2 = _interopRequireDefault(_readCookie);
 
@@ -1532,11 +1537,11 @@ if (objCtr.defineProperty) {
 
 	var _dataset2 = _interopRequireDefault(_dataset);
 
-	var _createCookie = __webpack_require__(20);
+	var _createCookie = __webpack_require__(21);
 
 	var _createCookie2 = _interopRequireDefault(_createCookie);
 
-	var _getDomain = __webpack_require__(24);
+	var _getDomain = __webpack_require__(25);
 
 	var _getDomain2 = _interopRequireDefault(_getDomain);
 
@@ -1647,11 +1652,52 @@ if (objCtr.defineProperty) {
 	/**
 	* Validate a form and submit via the signup API
 	*/
-	__webpack_require__(36);
+	__webpack_require__(37);
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 /* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function (elementWidth) {
+	  function scaleCaptcha() {
+	    // Width of the reCAPTCHA element, in pixels
+	    var reCaptchaWidth = 304;
+	    // Get the containing element's width
+	    var containerWidth = $('.sms-form-wrapper').width();
+
+	    // Only scale the reCAPTCHA if it won't fit
+	    // inside the container
+	    if (reCaptchaWidth > containerWidth) {
+	      // Calculate the scale
+	      var captchaScale = containerWidth / reCaptchaWidth;
+	      // Apply the transformation
+	      $('.g-recaptcha').css({
+	        'transform': 'scale(' + captchaScale + ')'
+	      });
+	    }
+	  }
+
+	  $(function () {
+	    // Initialize scaling
+	    scaleCaptcha();
+	    console.log("Resize");
+
+	    // Update scaling on window resize
+	    // Uses jQuery throttle plugin to limit strain on the browser
+	    $(window).resize($.throttle(100, scaleCaptcha));
+	  });
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 21 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -1666,7 +1712,7 @@ if (objCtr.defineProperty) {
 	};
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1778,7 +1824,7 @@ if (objCtr.defineProperty) {
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -1800,7 +1846,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1851,7 +1897,7 @@ if (objCtr.defineProperty) {
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1879,7 +1925,7 @@ if (objCtr.defineProperty) {
 	};
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1920,7 +1966,7 @@ if (objCtr.defineProperty) {
 	};
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -1938,7 +1984,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1979,7 +2025,7 @@ if (objCtr.defineProperty) {
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2023,7 +2069,7 @@ if (objCtr.defineProperty) {
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -2047,7 +2093,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -2061,7 +2107,7 @@ if (objCtr.defineProperty) {
 	};
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -2081,7 +2127,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* eslint-env browser */
@@ -2097,11 +2143,11 @@ if (objCtr.defineProperty) {
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _jsCookie = __webpack_require__(39);
+	var _jsCookie = __webpack_require__(40);
 
 	var _jsCookie2 = _interopRequireDefault(_jsCookie);
 
-	var _utility = __webpack_require__(37);
+	var _utility = __webpack_require__(38);
 
 	var _utility2 = _interopRequireDefault(_utility);
 
@@ -2421,7 +2467,7 @@ if (objCtr.defineProperty) {
 	exports.default = ShareForm;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2490,7 +2536,7 @@ if (objCtr.defineProperty) {
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -2518,7 +2564,7 @@ if (objCtr.defineProperty) {
 
 	var _debounce2 = _interopRequireDefault(_debounce);
 
-	var _imagesready = __webpack_require__(38);
+	var _imagesready = __webpack_require__(39);
 
 	var _imagesready2 = _interopRequireDefault(_imagesready);
 
@@ -2721,7 +2767,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2779,7 +2825,7 @@ if (objCtr.defineProperty) {
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {'use strict';
@@ -2980,7 +3026,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* eslint-env browser */
@@ -2992,7 +3038,7 @@ if (objCtr.defineProperty) {
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _underscore = __webpack_require__(70);
+	var _underscore = __webpack_require__(71);
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
@@ -3114,7 +3160,7 @@ if (objCtr.defineProperty) {
 	exports.default = Utility;
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function($) {/* imagesready v0.2.2 - 2015-07-04T06:22:14.435Z - https://github.com/r-park/images-ready */
@@ -3782,7 +3828,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -3953,7 +3999,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports) {
 
 	/**
@@ -3981,15 +4027,15 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseTimes = __webpack_require__(48),
-	    isArguments = __webpack_require__(61),
+	var baseTimes = __webpack_require__(49),
+	    isArguments = __webpack_require__(62),
 	    isArray = __webpack_require__(12),
-	    isBuffer = __webpack_require__(62),
-	    isIndex = __webpack_require__(54),
-	    isTypedArray = __webpack_require__(65);
+	    isBuffer = __webpack_require__(63),
+	    isIndex = __webpack_require__(55),
+	    isTypedArray = __webpack_require__(66);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -4036,11 +4082,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseForOwn = __webpack_require__(44),
-	    createBaseEach = __webpack_require__(51);
+	var baseForOwn = __webpack_require__(45),
+	    createBaseEach = __webpack_require__(52);
 
 	/**
 	 * The base implementation of `_.forEach` without support for iteratee shorthands.
@@ -4056,10 +4102,10 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var createBaseFor = __webpack_require__(52);
+	var createBaseFor = __webpack_require__(53);
 
 	/**
 	 * The base implementation of `baseForOwn` which iterates over `object`
@@ -4078,11 +4124,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseFor = __webpack_require__(43),
-	    keys = __webpack_require__(66);
+	var baseFor = __webpack_require__(44),
+	    keys = __webpack_require__(67);
 
 	/**
 	 * The base implementation of `_.forOwn` without support for iteratee shorthands.
@@ -4100,7 +4146,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(3),
@@ -4124,7 +4170,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(3),
@@ -4190,11 +4236,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var isPrototype = __webpack_require__(55),
-	    nativeKeys = __webpack_require__(56);
+	var isPrototype = __webpack_require__(56),
+	    nativeKeys = __webpack_require__(57);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -4226,7 +4272,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4252,7 +4298,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4272,10 +4318,10 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var identity = __webpack_require__(60);
+	var identity = __webpack_require__(61);
 
 	/**
 	 * Casts `value` to `identity` if it's not a function.
@@ -4292,7 +4338,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var isArrayLike = __webpack_require__(13);
@@ -4330,7 +4376,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4361,7 +4407,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var Symbol = __webpack_require__(9);
@@ -4413,7 +4459,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports) {
 
 	/** Used as references for various `Number` constants. */
@@ -4441,7 +4487,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -4465,10 +4511,10 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var overArg = __webpack_require__(59);
+	var overArg = __webpack_require__(60);
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
 	var nativeKeys = overArg(Object.keys, Object);
@@ -4477,7 +4523,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(10);
@@ -4506,7 +4552,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)(module)))
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -4534,7 +4580,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4555,7 +4601,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4582,10 +4628,10 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseIsArguments = __webpack_require__(45),
+	var baseIsArguments = __webpack_require__(46),
 	    isObjectLike = __webpack_require__(5);
 
 	/** Used for built-in method references. */
@@ -4624,11 +4670,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(6),
-	    stubFalse = __webpack_require__(68);
+	    stubFalse = __webpack_require__(69);
 
 	/** Detect free variable `exports`. */
 	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -4669,7 +4715,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)(module)))
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(3),
@@ -4712,7 +4758,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(3),
@@ -4747,12 +4793,12 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseIsTypedArray = __webpack_require__(46),
-	    baseUnary = __webpack_require__(49),
-	    nodeUtil = __webpack_require__(57);
+	var baseIsTypedArray = __webpack_require__(47),
+	    baseUnary = __webpack_require__(50),
+	    nodeUtil = __webpack_require__(58);
 
 	/* Node.js helper references. */
 	var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -4780,11 +4826,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var arrayLikeKeys = __webpack_require__(41),
-	    baseKeys = __webpack_require__(47),
+	var arrayLikeKeys = __webpack_require__(42),
+	    baseKeys = __webpack_require__(48),
 	    isArrayLike = __webpack_require__(13);
 
 	/**
@@ -4823,7 +4869,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var root = __webpack_require__(6);
@@ -4852,7 +4898,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4876,11 +4922,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var isObject = __webpack_require__(4),
-	    isSymbol = __webpack_require__(64);
+	    isSymbol = __webpack_require__(65);
 
 	/** Used as references for various `Number` constants. */
 	var NAN = 0 / 0;
@@ -4948,7 +4994,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.7.0

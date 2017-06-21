@@ -29,12 +29,6 @@
     background: $purple-60;
   }
 
-  .c-list-box__item {
-    .c-list-box__heading {
-      text-transform: none;
-    }
-  }
-
   .c-list-box__content {
     margin-top: rem-calc(-2);
     li {
@@ -73,6 +67,7 @@
           transition: $button-transition;
           background: transparent;
           color: $white;
+          text-transform: none;
 
           &:focus {
             background: $white;
@@ -412,6 +407,7 @@
 
 //Tips
 .c-tip-ms__topics {
+  text-align: center;
   &,
   .c-tip__sticker {
     background: $dark-purple;
@@ -419,6 +415,37 @@
 
   .c-tip__content {
     text-align: center;
+  }
+}
+
+//Recaptcha
+.recaptcha-js {
+  background: $light-purple-1;
+
+  .c-tip__sticker {
+    background: $light-purple-1;
+  }
+}
+
+.g-recaptcha,
+.error-message {
+  margin-top: rem-calc(15);
+}
+
+.g-recaptcha > div {
+  width: 100% !important;
+  text-align: left;
+
+  @include media($bp-medium) {
+    width: rem-calc(240) !important;
+  }
+
+  @include media($bp-xlarge) {
+    width: rem-calc(400) !important;
+  }
+
+  > div > iframe {
+    width: 380px;
   }
 }
 
@@ -466,7 +493,8 @@
 
 //SMS form
 .sms-form-wrapper {
-  text-align: center;
+  display: inline-block;
+  max-width: 568px;
 
   button {
     margin-top: rem-calc(20);

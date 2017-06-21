@@ -435,8 +435,6 @@ button:hover, button:focus {
   .c-list-box-ms__topics .c-list-box__heading,
   .c-list-box-ms__topics .c-list-box__content {
     background: #31035a; }
-  .c-list-box-ms__topics .c-list-box__item .c-list-box__heading {
-    text-transform: none; }
   .c-list-box-ms__topics .c-list-box__content {
     margin-top: -0.125rem; }
     .c-list-box-ms__topics .c-list-box__content li {
@@ -465,7 +463,8 @@ button:hover, button:focus {
         text-decoration: none;
         transition: all ease-in-out 0.15s;
         background: transparent;
-        color: #fff; }
+        color: #fff;
+        text-transform: none; }
         @media screen and (min-width: 1024px) {
           .c-list-box-ms__topics .c-list-box__content li.c-list-box__subitem a {
             font-size: 1.125rem; } }
@@ -633,12 +632,34 @@ button:hover, button:focus {
     background-color: #7735b2;
     border-color: #7735b2; }
 
-.c-tip-ms__topics,
-.c-tip-ms__topics .c-tip__sticker {
-  background: #3c036f; }
-
-.c-tip-ms__topics .c-tip__content {
+.c-tip-ms__topics {
   text-align: center; }
+  .c-tip-ms__topics,
+  .c-tip-ms__topics .c-tip__sticker {
+    background: #3c036f; }
+  .c-tip-ms__topics .c-tip__content {
+    text-align: center; }
+
+.recaptcha-js {
+  background: #8865a7; }
+  .recaptcha-js .c-tip__sticker {
+    background: #8865a7; }
+
+.g-recaptcha,
+.error-message {
+  margin-top: 0.9375rem; }
+
+.g-recaptcha > div {
+  width: 100% !important;
+  text-align: left; }
+  @media screen and (min-width: 700px) {
+    .g-recaptcha > div {
+      width: 15rem !important; } }
+  @media screen and (min-width: 1200px) {
+    .g-recaptcha > div {
+      width: 25rem !important; } }
+  .g-recaptcha > div > div > iframe {
+    width: 380px; }
 
 .c-do-list {
   margin: 1.875rem 0;
@@ -665,7 +686,8 @@ button:hover, button:focus {
     border-color: #b35eff; }
 
 .sms-form-wrapper {
-  text-align: center; }
+  display: inline-block;
+  max-width: 568px; }
   .sms-form-wrapper button {
     margin-top: 1.25rem; }
     @media screen and (min-width: 700px) {
@@ -895,15 +917,5 @@ button:hover, button:focus {
   @media screen and (min-width: 700px) {
     .button--inspiration__cta {
       width: auto; } }
-
-.c-footer__link {
-  color: #fff;
-  font-family: "museo-sans-rounded", sans-serif;
-  font-weight: 900;
-  text-decoration: none; }
-  .c-footer__link:focus {
-    color: #838a97; }
-  .no-touchevents .c-footer__link:hover {
-    color: #838a97; }
 
 /*# sourceMappingURL=microsite.css.map */

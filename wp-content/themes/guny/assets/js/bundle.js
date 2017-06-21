@@ -1268,7 +1268,7 @@
 	});
 
 	exports.default = function () {
-	  function scaleCaptcha(elementWidth) {
+	  function scaleCaptcha() {
 	    // Width of the reCAPTCHA element, in pixels
 	    var reCaptchaWidth = 304;
 	    // Get the containing element's width
@@ -1281,7 +1281,7 @@
 	      var captchaScale = containerWidth / reCaptchaWidth;
 	      // Apply the transformation
 	      $('.g-recaptcha').css({
-	        'transform': 'scale(' + captchaScale + ')'
+	        transform: 'scale(' + captchaScale + ')'
 	      });
 	    }
 	  }

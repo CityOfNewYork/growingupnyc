@@ -137,7 +137,7 @@ button {
     left: 0;
     padding: rem-calc(60);
     position: absolute;
-    width: 60%;
+    width: 100%;
     text-align: left;
   }
 }
@@ -409,6 +409,3 @@ button {
 
 // Inspiration page styles
 @import "microsite/inspiration";
-
-// Footer
-@import "microsite/footer";

@@ -183,7 +183,9 @@ class ShareForm {
     // $msgdiv.addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
     // $(this._el).addClass(ShareForm.CssClass.SUCCESS).append($msgdiv);
 
-    $('#sms-form-msg').addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
+    // $('#sms-form-msg').addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
+    $('#phone').val(Utility.localize(msg));
+    $('#smsbutton').text("Send Another");
     return this;
   }
 
@@ -281,7 +283,7 @@ ShareForm.Message = {
   PHONE: 'Invalid Mobile Number',
   REQUIRED: 'ERROR_REQUIRED',
   SERVER: 'ERROR_SERVER',
-  SUCCESS: 'Successfully Sent Text Message',
+  SUCCESS: 'Message sent!',
   RECAPTCHA : 'Please fill the reCAPTCHA'
 };
 

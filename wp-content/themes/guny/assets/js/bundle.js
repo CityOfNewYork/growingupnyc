@@ -1794,6 +1794,9 @@
 
 	    /** @private {boolean} Whether the google reCAPTCHA widget has passed. */
 	    this._recaptchaVerified = false;
+
+	    /** @private {boolean} Whether the google reCAPTCHA widget is initilaised. */
+	    this._recaptchainit = false;
 	  }
 
 	  /**
@@ -1819,6 +1822,8 @@
 	            _this._validate();
 	            if (_this._isValid && !_this._isBusy && !_this._isDisabled) {
 	              _this._submit();
+	              window.grecaptcha.reset();
+	              _this._recaptchaVerified = false;
 	            }
 	          } else {
 	            (0, _jquery2.default)(_this._el).find('.' + ShareForm.CssClass.ERROR_MSG).remove();
@@ -1835,11 +1840,11 @@
 	        // // initialized only on every 10th view which is determined via an
 	        // // incrementing cookie.
 	        var viewCount = _jsCookie2.default.get('screenerViews') ? parseInt(_jsCookie2.default.get('screenerViews'), 10) : 1;
-	        if (viewCount >= 5) {
+	        if (viewCount >= 5 && !_this._recaptchainit) {
 	          (0, _jquery2.default)(_this._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
 	          _this._initRecaptcha();
+	          _this._recaptchainit = true;
 	        }
-	        // `2/1440` sets the cookie to expire after two minutes.
 	        _jsCookie2.default.set('screenerViews', ++viewCount, { expires: 2 / 1440 });
 	      });
 
@@ -1847,12 +1852,11 @@
 	      // // initialized only on every 10th view which is determined via an
 	      // // incrementing cookie.
 	      var viewCount = _jsCookie2.default.get('screenerViews') ? parseInt(_jsCookie2.default.get('screenerViews'), 10) : 1;
-	      if (viewCount >= 5) {
-	        // $(this._el).parents('.c-tip-ms__topics').css({"background": "#88F078"});
+	      if (viewCount >= 5 && !this._recaptchainit) {
 	        (0, _jquery2.default)(this._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
 	        this._initRecaptcha();
+	        this._recaptchainit = true;
 	      }
-	      console.log(viewCount);
 	      this._initialized = true;
 	      return this;
 	    }
@@ -1867,9 +1871,7 @@
 	    key: '_validate',
 	    value: function _validate() {
 	      var validity = true;
-	      // const $email = $(this._el).find('input[type="email"]');
 	      var $tel = (0, _jquery2.default)(this._el).find('input[type="tel"]');
-
 	      // Clear any existing error messages.
 	      (0, _jquery2.default)(this._el).find('.' + ShareForm.CssClass.ERROR_MSG).remove();
 
@@ -1917,13 +1919,11 @@
 	      if ((0, _jquery2.default)(input).val()) {
 	        return true;
 	      }
-	      // else {
 	      this._showError(ShareForm.Message.REQUIRED);
 	      (0, _jquery2.default)(input).one('keyup', function () {
 	        this._validate();
 	      });
 	      return false;
-	      // }
 	    }
 
 	    /**
@@ -1935,9 +1935,6 @@
 	  }, {
 	    key: '_showError',
 	    value: function _showError(msg) {
-	      // const $msgdiv = $(document.createElement('div'));
-	      // $msgdiv.addClass(ShareForm.CssClass.ERROR_MSG).text(Utility.localize(msg));
-	      // $(this._el).addClass(ShareForm.CssClass.ERROR).append($msgdiv);
 	      (0, _jquery2.default)('#sms-form-msg').addClass(ShareForm.CssClass.ERROR).text(_utility2.default.localize(msg));
 	      return this;
 	    }
@@ -1951,14 +1948,7 @@
 	  }, {
 	    key: '_showSuccess',
 	    value: function _showSuccess(msg) {
-	      // $(this._el).addClass(ShareForm.CssClass.SUCCESS);
-
-	      // const $msgdiv = $(document.createElement('div'));
-	      // $msgdiv.addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
-	      // $(this._el).addClass(ShareForm.CssClass.SUCCESS).append($msgdiv);
-
-	      // $('#sms-form-msg').addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
-	      (0, _jquery2.default)('#phone').val(_utility2.default.localize(msg));
+	      (0, _jquery2.default)('#phone').attr("placeholder", _utility2.default.localize(msg));
 	      (0, _jquery2.default)('#smsbutton').text("Send Another");
 	      return this;
 	    }
@@ -1978,6 +1968,7 @@
 	      (0, _jquery2.default)(this._el).find('input').prop('disabled', true);
 	      return _jquery2.default.post((0, _jquery2.default)(this._el).attr('action'), payload).done(function (response) {
 	        if (response.success) {
+	          _this2._el.reset();
 	          _this2._showSuccess(ShareForm.Message.SUCCESS);
 	          _this2._isDisabled = true;
 	          (0, _jquery2.default)(_this2._el).one('keyup', 'input', function () {
@@ -1985,7 +1976,6 @@
 	            _this2._isDisabled = false;
 	          });
 	        } else {
-	          // this._showError(ShareForm.Message.SERVER);
 	          _this2._showError(JSON.stringify(response.message));
 	        }
 	      }).fail(function () {
@@ -2017,20 +2007,16 @@
 	      window.screenerCallback = function () {
 	        window.grecaptcha.render(document.getElementById('screener-recaptcha'), {
 	          'sitekey': '6LekICYUAAAAAOR2uZ0ajyWt9XxDuspHPUAkRzAB',
-	          //Below is th local host key
-	          //'sitekey' : '6LcvtSUUAAAAAOZScvRIIHDTyHVIe5o6Y-u5d9gb',
 	          //Below is the local host key
 	          // 'sitekey' : '6LcAACYUAAAAAPmtvQvBwK89imM3QfotJFHfSm8C',
 	          'callback': 'screenerRecaptcha',
 	          'expired-callback': 'screenerRecaptchaReset'
 	        });
-	        // $('#screener-recaptcha-container').removeClass(Screener.CssClass.HIDDEN);
 	        _this3._recaptchaRequired = true;
 	      };
 
 	      window.screenerRecaptcha = function () {
 	        _this3._recaptchaVerified = true;
-	        // this._removeError(document.getElementById('screener-recaptcha'));
 	      };
 
 	      window.screenerRecaptchaReset = function () {

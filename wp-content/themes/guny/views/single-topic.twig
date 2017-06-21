@@ -59,15 +59,14 @@
           {% if top.page_top_gray_inset_area %}
             <div class="c-do-list">              
               {{top.page_top_gray_inset_area}}
+
+              {# URL and the buttons #}
+              {% if top.cta_button_url %}
+                <a class="button--primary button--primary__curved button--primary__purple button--topics__cta" href="{{top.cta_button_url}}">{{top.cta_button_text}}</a>
+              {% endif %}
             </div>
           {% endif %}
-        </section>
-        {# URL and the buttons #}
-        {% if top.cta_button_url %}
-          <div class="o-content-container--compact u-bottom-spacing">
-            <a class="button--primary button--primary__curved button--primary__purple button--inspiration__cta" href="{{top.cta_button_url}}">{{top.cta_button_text}}</a>
-          </div>
-        {% endif %}
+        </section>        
         <hr>
         {# Tip section #}
         {% if top.tip_title %}
@@ -116,8 +115,8 @@
                   <input type="tel" id="phone" name="to" class="form-field signup-form__field sms-form__field" required>
                 </div>
                 <button type="submit" class="button--primary button--primary__curved button--primary__purple">{{__('Send', 'accessnyc-program-detail')}}</button>
-                <div id="screener-recaptcha"></div>
-                <div>{{options.disclaimer_text}}</div>
+                <div class="g-recaptcha" id="screener-recaptcha"></div>
+                <div class="c-disclaimer-text">{{options.disclaimer_text}}</div>
               </form>
             </div>
 

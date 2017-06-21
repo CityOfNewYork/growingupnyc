@@ -1267,8 +1267,8 @@
 	  value: true
 	});
 
-	exports.default = function (elementWidth) {
-	  function scaleCaptcha() {
+	exports.default = function () {
+	  function scaleCaptcha(elementWidth) {
 	    // Width of the reCAPTCHA element, in pixels
 	    var reCaptchaWidth = 304;
 	    // Get the containing element's width
@@ -1289,11 +1289,12 @@
 	  $(function () {
 	    // Initialize scaling
 	    scaleCaptcha();
-	    console.log("Resize");
+	  });
 
+	  $(window).resize(function () {
 	    // Update scaling on window resize
 	    // Uses jQuery throttle plugin to limit strain on the browser
-	    $(window).resize($.throttle(100, scaleCaptcha));
+	    scaleCaptcha();
 	  });
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))

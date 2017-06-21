@@ -652,16 +652,23 @@ button:hover, button:focus {
 .g-recaptcha {
   -webkit-transform-origin: left top;
       -ms-transform-origin: left top;
-          transform-origin: left top; }
+          transform-origin: left top;
+  margin-bottom: 0.9375rem; }
 
 .c-do-list {
   margin: 1.875rem 0;
   background: #eee;
   padding: 1.875rem; }
-  .c-do-list a:focus {
-    color: #7735b2; }
-  .no-touchevents .c-do-list a:hover {
-    color: #7735b2; }
+  .c-do-list a.button--topics__cta {
+    margin-top: 1.5625rem; }
+    .c-do-list a.button--topics__cta:focus {
+      color: #7735b2; }
+    .no-touchevents .c-do-list a.button--topics__cta:hover {
+      color: #fff; }
+
+.c-disclaimer-text {
+  font-size: 0.75rem;
+  text-align: left; }
 
 .c-ttc-title {
   text-transform: none; }
@@ -679,8 +686,10 @@ button:hover, button:focus {
     border-color: #b35eff; }
 
 .sms-form-wrapper {
-  display: inline-block;
   max-width: 568px; }
+  @media screen and (min-width: 700px) {
+    .sms-form-wrapper {
+      display: inline-block; } }
   .sms-form-wrapper button {
     margin-top: 1.25rem; }
     @media screen and (min-width: 700px) {

@@ -25,6 +25,24 @@
             "default_value": "",
             "layout": "vertical",
             "return_format": "value"
+        },
+        {
+            "key": "field_594913a6a916d",
+            "label": "Disclaimer text",
+            "name": "disclaimer_text",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1
         }
     ],
     "location": [
@@ -44,5 +62,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1496748630
+    "modified": 1497961673
 }

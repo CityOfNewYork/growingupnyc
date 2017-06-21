@@ -1153,7 +1153,7 @@ ol.o-inline {
 .c-banner {
   background: #fff;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-  height: 3.125rem;
+  height: auto;
   position: relative;
   z-index: 3; }
   @media screen and (min-width: 700px) {
@@ -1211,10 +1211,31 @@ ol.o-inline {
 .c-banner__nav {
   float: right;
   line-height: 1;
-  padding-top: 1.125rem; }
+  padding-top: 1.125rem;
+  padding-bottom: 1.125rem;
+  max-width: 65%; }
+  .c-banner__nav li {
+    margin-left: 0;
+    margin-right: -8px;
+    margin-right: 0.75rem; }
+    .c-banner__nav li:last-child {
+      margin-right: 0; }
+    .c-banner__nav li a {
+      padding: 0.1875rem 0;
+      display: inline-block; }
   @media screen and (min-width: 700px) {
     .c-banner__nav {
-      padding-top: 1.25rem; } }
+      padding-top: 1.25rem; }
+      .c-banner__nav li {
+        margin-right: 0; }
+        .c-banner__nav li:first-child {
+          margin-left: 0; } }
+    @media screen and (min-width: 700px) and (min-width: 375px) {
+      .c-banner__nav li {
+        margin-left: 1rem; } }
+    @media screen and (min-width: 700px) and (min-width: 1024px) {
+      .c-banner__nav li {
+        margin-left: 3.5rem; } }
 
 .c-banner__link {
   color: #2793e0;
@@ -2672,6 +2693,7 @@ button.pre-teen-secondary:focus, button.pre-teen-secondary.is-active,
 a.pre-teen-secondary:focus,
 a.pre-teen-secondary.is-active {
   background-color: #0055b8 !important;
+  border-color: #0055b8 !important;
   outline: none; }
 
 .no-touchevents button.pre-teen-secondary:hover,
@@ -2717,6 +2739,7 @@ button.teen-secondary:focus, button.teen-secondary.is-active,
 a.teen-secondary:focus,
 a.teen-secondary.is-active {
   background-color: #7735b2 !important;
+  border-color: #7735b2 !important;
   outline: none; }
 
 .no-touchevents button.teen-secondary:hover,
@@ -2762,6 +2785,7 @@ button.young-adult-secondary:focus, button.young-adult-secondary.is-active,
 a.young-adult-secondary:focus,
 a.young-adult-secondary.is-active {
   background-color: #404657 !important;
+  border-color: #404657 !important;
   outline: none; }
 
 .no-touchevents button.young-adult-secondary:hover,

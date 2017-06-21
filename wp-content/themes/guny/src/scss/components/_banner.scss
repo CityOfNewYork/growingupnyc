@@ -29,7 +29,8 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 .c-banner {
   background: $color-background;
   box-shadow: 0 2px 4px 0 $color-shadow;
-  height: rem-calc($height-banner);
+  //height: rem-calc($height-banner);
+  height: auto;
   position: relative;
   z-index: $z-index-header;
 
@@ -107,9 +108,39 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   float: right;
   line-height: 1;
   padding-top: rem-calc(18);
+  padding-bottom: rem-calc(18);
+  max-width: 65%;
 
+  li {
+    margin-left: 0;
+    margin-right: -8px;
+    margin-right: rem-calc(12);
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    a {
+      padding: rem-calc(3 0);
+      display: inline-block;
+    }
+  }
   @include media($bp-medium) {
     padding-top: rem-calc(20);
+
+    li {
+      margin-right: 0;
+
+      &:first-child {
+        margin-left: 0;
+      }
+      @include media($bp-small) {
+        margin-left: rem-calc(16);
+      }
+      @include media($bp-large) {
+        margin-left: rem-calc(56);
+      }
+    }
   }
 }
 

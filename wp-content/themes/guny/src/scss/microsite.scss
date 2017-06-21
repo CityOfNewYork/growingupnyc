@@ -69,6 +69,13 @@ button {
   }
 }
 
+// Show mobile only
+.mobile-only {
+  @include media($bp-large) {
+    display: none;
+  }
+}
+
 // Banner Logo Wrapper
 .c-banner__logo-wrapper {
   top: 0;
@@ -120,6 +127,25 @@ button {
   }
 }
 
+.c-side-hero-ms__title .c-side-hero__title__large {
+  @include font-size-xx-large;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  @include media($bp-large) {
+    font-size: rem-calc(50);
+  }
+
+  @include media($bp-xlarge) {
+    @include font-size-xxx-large;
+  }
+
+  .rotating-text__entry {
+    display: block;
+    width: 100%;
+  }
+}
+
 //Side Hero
 .c-side-hero-ms__content {
   color: $white;
@@ -162,6 +188,7 @@ button {
     }
   }
 }
+
 //Article Content
 .o-article-ms {
   h2 {

@@ -1678,20 +1678,21 @@
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	exports.default = function () {
-	    var owl = $('.owl-carousel');
-	    owl.owlCarousel({
-	        items: 1,
-	        loop: true,
-	        margin: 0,
-	        dots: true,
-	        autoplay: true,
-	        autoplayTimeout: 5000,
-	        autoplayHoverPause: true
-	    });
+	  var owl = $('.owl-carousel');
+	  owl.owlCarousel({
+	    animateIn: 'fadeIn',
+	    items: 1,
+	    loop: true,
+	    margin: 0,
+	    dots: true,
+	    autoplay: true,
+	    autoplayTimeout: 5000,
+	    autoplayHoverPause: true
+	  });
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
@@ -1956,7 +1957,9 @@
 	      // $msgdiv.addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
 	      // $(this._el).addClass(ShareForm.CssClass.SUCCESS).append($msgdiv);
 
-	      (0, _jquery2.default)('#sms-form-msg').addClass(ShareForm.CssClass.SUCCESS_MSG).text(_utility2.default.localize(msg));
+	      // $('#sms-form-msg').addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
+	      (0, _jquery2.default)('#phone').val(_utility2.default.localize(msg));
+	      (0, _jquery2.default)('#smsbutton').text("Send Another");
 	      return this;
 	    }
 
@@ -2067,7 +2070,7 @@
 	  PHONE: 'Invalid Mobile Number',
 	  REQUIRED: 'ERROR_REQUIRED',
 	  SERVER: 'ERROR_SERVER',
-	  SUCCESS: 'Successfully Sent Text Message',
+	  SUCCESS: 'Message sent!',
 	  RECAPTCHA: 'Please fill the reCAPTCHA'
 	};
 

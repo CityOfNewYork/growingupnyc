@@ -164,9 +164,10 @@ class ShareForm {
    * @return {this} ShareForm - shareform
    */
   _showError(msg) {
-    const $msgdiv = $(document.createElement('div'));
-    $msgdiv.addClass(ShareForm.CssClass.ERROR_MSG).text(Utility.localize(msg));
-    $(this._el).addClass(ShareForm.CssClass.ERROR).append($msgdiv);
+    // const $msgdiv = $(document.createElement('div'));
+    // $msgdiv.addClass(ShareForm.CssClass.ERROR_MSG).text(Utility.localize(msg));
+    // $(this._el).addClass(ShareForm.CssClass.ERROR).append($msgdiv);
+    $('#sms-form-msg').addClass(ShareForm.CssClass.ERROR).text(Utility.localize(msg));
     return this;
   }
 
@@ -178,9 +179,11 @@ class ShareForm {
   _showSuccess(msg) {
     // $(this._el).addClass(ShareForm.CssClass.SUCCESS);
 
-    const $msgdiv = $(document.createElement('div'));
-    $msgdiv.addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
-    $(this._el).addClass(ShareForm.CssClass.SUCCESS).append($msgdiv);
+    // const $msgdiv = $(document.createElement('div'));
+    // $msgdiv.addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
+    // $(this._el).addClass(ShareForm.CssClass.SUCCESS).append($msgdiv);
+
+    $('#sms-form-msg').addClass(ShareForm.CssClass.SUCCESS_MSG).text(Utility.localize(msg));
     return this;
   }
 
@@ -229,8 +232,9 @@ class ShareForm {
 
     window.screenerCallback = () => {
       window.grecaptcha.render(document.getElementById('screener-recaptcha'), {
-
-        'sitekey' : '6LcvtSUUAAAAAOZScvRIIHDTyHVIe5o6Y-u5d9gb',
+        'sitekey' : '6LekICYUAAAAAOR2uZ0ajyWt9XxDuspHPUAkRzAB',
+        //Below is th local host key
+        //'sitekey' : '6LcvtSUUAAAAAOZScvRIIHDTyHVIe5o6Y-u5d9gb',
         //Below is the local host key
         // 'sitekey' : '6LcAACYUAAAAAPmtvQvBwK89imM3QfotJFHfSm8C',
         'callback': 'screenerRecaptcha',

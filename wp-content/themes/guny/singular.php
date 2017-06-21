@@ -64,4 +64,14 @@ $context['post'] = $post;
 $context['shareAction'] = admin_url( 'admin-ajax.php' );
 $context['shareUrl'] = \SMNYC\get_current_url();
 $context['shareHash'] = \SMNYC\hash($context['shareUrl']);
+
+//Ages events and language code fixes
+// echo ICL_LANGUAGE_CODE ;
+$url = '/';
+if(ICL_LANGUAGE_CODE != 'en'){
+  $url = $url.ICL_LANGUAGE_CODE.'/';
+}
+$context['eventslink'] = $url.'events';
+$context['programslink'] = $url.'programs';
+
 Timber::render( $templates, $context );

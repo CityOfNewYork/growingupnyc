@@ -418,6 +418,7 @@
   }
 }
 
+//SMS Form
 //Recaptcha
 .recaptcha-js {
   background: $light-purple-1;
@@ -427,26 +428,31 @@
   }
 }
 
+//Succes
+.succes-js {
+  max-width: 610px;
+}
+
 .g-recaptcha,
-.error-message {
+.error-message,
+.c-validation {
   margin-top: rem-calc(15);
 }
 
-.g-recaptcha > div {
-  width: 100% !important;
+.g-recaptcha {
+  transform-origin: left top;
+  margin-bottom: rem-calc(15);
+}
+
+//Validation
+.c-validation {
+  font-size: rem-calc(16);
+}
+
+//Disclaimer Text
+.c-disclaimer-text {
+  font-size: rem-calc(12);
   text-align: left;
-
-  @include media($bp-medium) {
-    width: rem-calc(240) !important;
-  }
-
-  @include media($bp-xlarge) {
-    width: rem-calc(400) !important;
-  }
-
-  > div > iframe {
-    width: 380px;
-  }
 }
 
 //Do List
@@ -455,14 +461,15 @@
   background: $very-light-gray;
   padding: rem-calc(30px);
 
-  a {
+  a.button--topics__cta {
+    margin-top: rem-calc(25);
     &:focus {
       color: $purple;
     }
 
     .no-touchevents & {
       &:hover {
-        color: $purple;
+        color: $white;
       }
     }
   }

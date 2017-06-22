@@ -86,6 +86,11 @@ class ShareForm {
       }
       Cookies.set('screenerViews', ++viewCount, {expires: (2/1440)});
       
+      $("#phone").focusout(function(){
+        $(this).removeAttr('placeholder');
+      });
+
+
     });
 
     // // Determine whether or not to initialize ReCAPTCHA. This should be

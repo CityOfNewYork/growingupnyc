@@ -614,12 +614,13 @@ button:hover, button:focus {
     background-color: #7735b2;
     border-color: #7735b2; }
 
-.c-tip-ms__topics,
-.c-tip-ms__topics .c-tip__sticker {
-  background: #3c036f; }
-
-.c-tip-ms__topics .c-tip__content {
+.c-tip-ms__topics {
   text-align: center; }
+  .c-tip-ms__topics,
+  .c-tip-ms__topics .c-tip__sticker {
+    background: #3c036f; }
+  .c-tip-ms__topics .c-tip__content {
+    text-align: center; }
 
 .c-do-list {
   margin: 1.875rem 0;
@@ -646,7 +647,8 @@ button:hover, button:focus {
     border-color: #b35eff; }
 
 .sms-form-wrapper {
-  text-align: center; }
+  display: inline-block;
+  max-width: 568px; }
   .sms-form-wrapper button {
     margin-top: 1.25rem; }
     @media screen and (min-width: 700px) {
@@ -665,22 +667,34 @@ button:hover, button:focus {
     .sms-form__input--long {
       width: 25rem; } }
 
-.csstransforms3d .sms-form__label,
-.styleguide .sms-form__label {
-  bottom: 100%;
-  -webkit-transform: translate3d(0, 2.1875rem, 0);
-          transform: translate3d(0, 2.1875rem, 0);
-  transition: -webkit-transform 250ms ease-in-out;
-  transition: transform 250ms ease-in-out;
-  transition: transform 250ms ease-in-out, -webkit-transform 250ms ease-in-out; }
+.recaptcha-js {
+  background: #8865a7; }
+  .recaptcha-js .c-tip__sticker {
+    background: #8865a7; }
 
-.csstransforms3d .is-filled .sms-form__label,
-.styleguide .is-filled .sms-form__label {
-  -webkit-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0); }
+.success-js .sms-form-wrapper {
+  max-width: 610px; }
+
+.g-recaptcha,
+.error-message,
+.c-validation {
+  margin-top: 0.9375rem; }
+
+.g-recaptcha {
+  -webkit-transform-origin: left top;
+      -ms-transform-origin: left top;
+          transform-origin: left top;
+  margin-bottom: 0.9375rem; }
 
 .signup-form__label-content {
   color: #7735b2; }
+
+.c-validation {
+  font-size: 1rem; }
+
+.c-disclaimer-text {
+  font-size: 0.75rem;
+  text-align: left; }
 
 .c-hero-inspiration {
   background-size: cover; }

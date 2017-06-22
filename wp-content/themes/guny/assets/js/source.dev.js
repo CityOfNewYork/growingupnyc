@@ -2348,6 +2348,7 @@ if (objCtr.defineProperty) {
 	    value: function _showSuccess(msg) {
 	      (0, _jquery2.default)('#phone').attr("placeholder", _utility2.default.localize(msg));
 	      (0, _jquery2.default)('#smsbutton').text("Send Another");
+	      (0, _jquery2.default)('#sms-form-msg').addClass(ShareForm.CssClass.SUCCESS).text('');
 	      (0, _jquery2.default)(this._el).parents('.c-tip-ms__topics').removeClass('success-js');
 	      (0, _jquery2.default)(this._el).parents('.c-tip-ms__topics').addClass('success-js');
 	      return this;

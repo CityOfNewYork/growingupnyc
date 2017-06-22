@@ -10,13 +10,13 @@
 .o-container-ms__topics {
   .o-article-sidebar {
     @include media($bp-large) {
-      @include span-columns(8);
+      @include span-columns(6);
     }
   }
 
   .o-article {
     @include media($bp-large) {
-      @include span-columns(4);
+      @include span-columns(6);
       @include omega;
     }
   }

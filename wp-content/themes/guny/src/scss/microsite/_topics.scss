@@ -423,14 +423,15 @@
   background: $very-light-gray;
   padding: rem-calc(30px);
 
-  a {
+  a.button--topics__cta {
+    margin-top: rem-calc(25);
     &:focus {
       color: $purple;
     }
 
     .no-touchevents & {
       &:hover {
-        color: $purple;
+        color: $white;
       }
     }
   }

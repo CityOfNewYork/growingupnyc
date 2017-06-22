@@ -176,6 +176,7 @@ class ShareForm {
   _showSuccess(msg) {
     $('#phone').attr("placeholder", Utility.localize(msg));
     $('#smsbutton').text("Send Another");
+    $('#sms-form-msg').addClass(ShareForm.CssClass.SUCCESS).text('');
     $(this._el).parents('.c-tip-ms__topics').removeClass('success-js');
     $(this._el).parents('.c-tip-ms__topics').addClass('success-js');
     return this;

@@ -40,14 +40,14 @@
       }
 
       &:last-child {
-        padding-bottom: rem-calc(5);
+        padding-bottom: rem-calc(20);
       }
 
       @include media($bp-large) {
         padding: rem-calc(3 25);
 
         &:last-child {
-          padding-bottom: rem-calc(30);
+          padding-bottom: rem-calc(40);
         }
       }
 

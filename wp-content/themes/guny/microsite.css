@@ -464,12 +464,12 @@ button:hover, button:focus {
       .c-list-box-ms__topics .c-list-box__content li:first-child {
         padding-top: 0.3125rem; }
       .c-list-box-ms__topics .c-list-box__content li:last-child {
-        padding-bottom: 0.3125rem; }
+        padding-bottom: 1.25rem; }
       @media screen and (min-width: 1024px) {
         .c-list-box-ms__topics .c-list-box__content li {
           padding: 0.1875rem 1.5625rem; }
           .c-list-box-ms__topics .c-list-box__content li:last-child {
-            padding-bottom: 1.875rem; } }
+            padding-bottom: 2.5rem; } }
       .c-list-box-ms__topics .c-list-box__content li.c-list-box__subitem a {
         border: 2px solid #fff;
         border-radius: 1.5625rem;

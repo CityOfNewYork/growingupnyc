@@ -389,7 +389,7 @@
 .c-nav-list-ms__topics {
   .c-nav-list__link {
     background-color: $dark-purple;
-    border-color: $purple;
+    border-color: $dark-purple;
 
     &:focus {
       background-color: $purple;
@@ -401,6 +401,11 @@
         background-color: $purple;
         border-color: $purple;
       }
+    }
+
+    &.is-active {
+      background-color: $purple;
+      border-color: $purple;
     }
   }
 }

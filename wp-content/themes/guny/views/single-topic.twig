@@ -37,7 +37,7 @@
         <ol class="c-nav-list c-nav-list-ms__topics js-sticky js-section-set o-sticky-nav">
           {% for top in post.get_field('page_top') %}
             <li class="c-nav-list__item">
-              <a href="#{{top.page_top_content_heading|lower|replace({' ':'-'})}}" data-section="{{top.page_top_content_heading}}" class="js-section c-nav-list__link">{{top.page_top_content_heading}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+              <a href="#{{top.page_top_content_heading|lower|replace({' ':'-'})}}" data-section="{{top.page_top_content_heading|lower|replace({' ':'-'})}}" class="js-section c-nav-list__link">{{top.page_top_content_heading}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
             </li>
           {% endfor %}
         </ol>
@@ -48,8 +48,8 @@
       <hr>
       {# Section One #}      
       {% for top in post.get_field('page_top') %}
-        <section class="o-content-container--compact u-top-spacing u-bottom-spacing s-wysiwyg">
-          <h2 id="{{top.page_top_content_heading|lower|replace({' ':'-'})}}">{{top.page_top_content_heading}}</h2>
+        <section id="{{top.page_top_content_heading|lower|replace({' ':'-'})}}" class="o-content-container--compact u-top-spacing u-bottom-spacing s-wysiwyg">
+          <h2>{{top.page_top_content_heading}}</h2>
           {{top.page_top_content_text}}
         </section>
         <hr>
@@ -66,7 +66,7 @@
               {% endif %}
             </div>
           {% endif %}
-        </section>        
+        </section>
         <hr>
         {# Tip section #}
         {% if top.tip_title %}

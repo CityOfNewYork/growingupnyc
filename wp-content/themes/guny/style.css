@@ -1225,7 +1225,8 @@ ol.o-inline {
       display: inline-block; }
   @media screen and (min-width: 700px) {
     .c-banner__nav {
-      padding-top: 1.25rem; }
+      padding-top: 1.25rem;
+      padding-bottom: 0; }
       .c-banner__nav li {
         margin-right: 0; }
         .c-banner__nav li:first-child {

@@ -127,6 +127,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   }
   @include media($bp-medium) {
     padding-top: rem-calc(20);
+    padding-bottom: 0;
 
     li {
       margin-right: 0;

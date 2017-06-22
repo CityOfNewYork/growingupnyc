@@ -661,25 +661,6 @@ button:hover, button:focus {
   .c-tip-ms__topics .c-tip__content {
     text-align: center; }
 
-.recaptcha-js {
-  background: #8865a7; }
-  .recaptcha-js .c-tip__sticker {
-    background: #8865a7; }
-
-.success-js {
-  max-width: 610px; }
-
-.g-recaptcha,
-.error-message,
-.c-validation {
-  margin-top: 0.9375rem; }
-
-.g-recaptcha {
-  -webkit-transform-origin: left top;
-      -ms-transform-origin: left top;
-          transform-origin: left top;
-  margin-bottom: 0.9375rem; }
-
 .c-validation {
   font-size: 1rem; }
 
@@ -733,6 +714,25 @@ button:hover, button:focus {
   @media screen and (min-width: 1200px) {
     .sms-form__input--long {
       width: 25rem; } }
+
+.recaptcha-js {
+  background: #8865a7; }
+  .recaptcha-js .c-tip__sticker {
+    background: #8865a7; }
+
+.success-js .sms-form-wrapper {
+  max-width: 610px; }
+
+.g-recaptcha,
+.error-message,
+.c-validation {
+  margin-top: 0.9375rem; }
+
+.g-recaptcha {
+  -webkit-transform-origin: left top;
+      -ms-transform-origin: left top;
+          transform-origin: left top;
+  margin-bottom: 0.9375rem; }
 
 .csstransforms3d .sms-form__label,
 .styleguide .sms-form__label {

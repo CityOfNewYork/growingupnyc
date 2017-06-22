@@ -418,32 +418,6 @@
   }
 }
 
-//SMS Form
-//Recaptcha
-.recaptcha-js {
-  background: $light-purple-1;
-
-  .c-tip__sticker {
-    background: $light-purple-1;
-  }
-}
-
-//Succes
-.success-js {
-  max-width: 610px;
-}
-
-.g-recaptcha,
-.error-message,
-.c-validation {
-  margin-top: rem-calc(15);
-}
-
-.g-recaptcha {
-  transform-origin: left top;
-  margin-bottom: rem-calc(15);
-}
-
 //Validation
 .c-validation {
   font-size: rem-calc(16);
@@ -524,6 +498,31 @@
   @include media($bp-xlarge) {
     width: rem-calc(400);
   }
+}
+
+//Recaptcha
+.recaptcha-js {
+  background: $light-purple-1;
+
+  .c-tip__sticker {
+    background: $light-purple-1;
+  }
+}
+
+//Succes
+.success-js .sms-form-wrapper {
+  max-width: 610px;
+}
+
+.g-recaptcha,
+.error-message,
+.c-validation {
+  margin-top: rem-calc(15);
+}
+
+.g-recaptcha {
+  transform-origin: left top;
+  margin-bottom: rem-calc(15);
 }
 
 .csstransforms3d .sms-form__label,

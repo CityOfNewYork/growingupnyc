@@ -45,17 +45,14 @@
     </div> <!-- /.o-article-sidebar -->
 
     <div class="o-article o-article-ms o-article-ms__topics js-sticky-article">
-      <hr>
       {# Section One #}      
       {% for top in post.get_field('page_top') %}
         <section id="{{top.page_top_content_heading|lower|replace({' ':'-'})}}" class="o-content-container--compact u-top-spacing u-bottom-spacing s-wysiwyg">
           <h2>{{top.page_top_content_heading}}</h2>
           {{top.page_top_content_text}}
         </section>
-        <hr>
         {# Gray Section #}
         <section class="o-content-container--compact u-top-spacing s-wysiwyg">
-          <h2>{{top.page_top_gray_inset_heading}}</h2>
           {% if top.page_top_gray_inset_area %}
             <div class="c-do-list">              
               {{top.page_top_gray_inset_area}}
@@ -66,8 +63,7 @@
               {% endif %}
             </div>
           {% endif %}
-        </section>
-        <hr>
+        </section>    
         {# Tip section #}
         {% if top.tip_title %}
           <aside class="c-tip c-tip-ms__topics u-sm-gutter o-content-container">
@@ -90,8 +86,8 @@
                 {% endfor %}
               </li>
             </section>
-            <hr>
           {% endif %}
+          <hr>
         {% endfor %}
 
         {% if options.enable_sms == "Yes" %}
@@ -120,7 +116,6 @@
                 <div class="c-disclaimer-text">{{options.disclaimer_text}}</div>
               </form>
             </div>
-
             <footer class="c-tip__footer"></footer>
           </aside>
         {% endif %}

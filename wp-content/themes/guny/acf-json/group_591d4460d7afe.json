@@ -46,7 +46,7 @@
                     "sub_fields": [
                         {
                             "key": "field_591d45a7ddbf1",
-                            "label": "Page Top Content Heading",
+                            "label": "Section Heading",
                             "name": "page_top_content_heading",
                             "type": "text",
                             "instructions": "",
@@ -65,11 +65,11 @@
                         },
                         {
                             "key": "field_591d45c1ddbf2",
-                            "label": "Page Top Content Text",
+                            "label": "Section Body",
                             "name": "page_top_content_text",
                             "type": "wysiwyg",
                             "instructions": "",
-                            "required": 1,
+                            "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
                                 "width": "",
@@ -82,27 +82,8 @@
                             "media_upload": 1
                         },
                         {
-                            "key": "field_592fca3ebc737",
-                            "label": "Page top Gray inset Heading",
-                            "name": "page_top_gray_inset_heading",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "maxlength": "",
-                            "rows": "",
-                            "new_lines": "wpautop"
-                        },
-                        {
                             "key": "field_592f95df51023",
-                            "label": "Page top Gray inset Area",
+                            "label": "Grey Call Out Box",
                             "name": "page_top_gray_inset_area",
                             "type": "wysiwyg",
                             "instructions": "",
@@ -191,24 +172,6 @@
                             "media_upload": 1
                         },
                         {
-                            "key": "field_592fc765593ee",
-                            "label": "Tip Body",
-                            "name": "tip_body",
-                            "type": "wysiwyg",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "tabs": "all",
-                            "toolbar": "full",
-                            "media_upload": 1
-                        },
-                        {
                             "key": "field_592fc774593ef",
                             "label": "Inspiration Tout",
                             "name": "inspiration_tout",
@@ -254,5 +217,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1496304560
+    "modified": 1498121656
 }

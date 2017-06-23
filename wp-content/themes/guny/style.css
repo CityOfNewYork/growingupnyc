@@ -2135,7 +2135,7 @@ ol.o-inline {
     .c-side-hero__title__large {
       font-size: 4.125rem; } }
   .c-side-hero__title__large .rotating-text__entry {
-    display: block;
+    display: none;
     width: 100%; }
 
 .signup-form {
@@ -2403,17 +2403,17 @@ ol.o-inline {
 .rotating-text {
   position: relative; }
 
-.rotating-text__entry {
-  display: none; }
-  .rotating-text__entry:nth-child(2) {
-    -webkit-animation-delay: 2.5s;
-            animation-delay: 2.5s; }
-  .rotating-text__entry:nth-child(3) {
-    -webkit-animation-delay: 5s;
-            animation-delay: 5s; }
-  .rotating-text__entry:nth-child(4) {
-    -webkit-animation-delay: 7.5s;
-            animation-delay: 7.5s; }
+.rotating-text__entry:nth-child(2) {
+  -webkit-animation-delay: 2.5s;
+          animation-delay: 2.5s; }
+
+.rotating-text__entry:nth-child(3) {
+  -webkit-animation-delay: 5s;
+          animation-delay: 5s; }
+
+.rotating-text__entry:nth-child(4) {
+  -webkit-animation-delay: 7.5s;
+          animation-delay: 7.5s; }
 
 /*FadeIn Animation*/
 @-webkit-keyframes fadeEffect {

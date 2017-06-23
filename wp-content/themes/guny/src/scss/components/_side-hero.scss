@@ -106,7 +106,8 @@
   white-space: nowrap;
 
   .rotating-text__entry {
-    display: block;
+    //display: block;
+    display: none;
     width: 100%;
   }
 }

@@ -2221,6 +2221,7 @@ if (objCtr.defineProperty) {
 	            if (_this._isValid && !_this._isBusy && !_this._isDisabled) {
 	              _this._submit();
 	              window.grecaptcha.reset();
+	              (0, _jquery2.default)(_this._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
 	              _this._recaptchaVerified = false;
 	            }
 	          } else {
@@ -2244,6 +2245,10 @@ if (objCtr.defineProperty) {
 	          _this._recaptchainit = true;
 	        }
 	        _jsCookie2.default.set('screenerViews', ++viewCount, { expires: 2 / 1440 });
+
+	        (0, _jquery2.default)("#phone").focusout(function () {
+	          (0, _jquery2.default)(this).removeAttr('placeholder');
+	        });
 	      });
 
 	      // // Determine whether or not to initialize ReCAPTCHA. This should be
@@ -2418,10 +2423,12 @@ if (objCtr.defineProperty) {
 
 	      window.screenerRecaptcha = function () {
 	        _this3._recaptchaVerified = true;
+	        (0, _jquery2.default)(_this3._el).parents('.c-tip-ms__topics').removeClass('recaptcha-js');
 	      };
 
 	      window.screenerRecaptchaReset = function () {
 	        _this3._recaptchaVerified = false;
+	        (0, _jquery2.default)(_this3._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
 	      };
 
 	      this._recaptchaRequired = true;

@@ -15,6 +15,7 @@ import owlSettings from './modules/owlSettings.js';
 import iOS7Hack from './modules/iOS7Hack.js';
 import ShareForm from './modules/share-form.js';
 import captchaResize from './modules/captchaResize.js';
+import rotatingTextAnimation from './modules/rotatingTextAnimation.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -44,6 +45,7 @@ function init() {
   owlSettings();
   iOS7Hack();
   captchaResize();
+  rotatingTextAnimation();
 }
 
 ready(init);

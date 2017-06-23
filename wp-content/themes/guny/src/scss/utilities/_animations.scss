@@ -6,19 +6,20 @@
 .rotating-text {
   position: relative;
 
-  &:before {
-    content: ' ';
-    display: block;
-    height: 1em;
-  }
+  // &:before {
+  //   content: ' ';
+  //   display: block;
+  //   height: 1em;
+  // }
 }
 
 .rotating-text__entry {
-  animation: fadeEffect 10s linear infinite 0s;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
+  //animation: fadeEffect 10s linear infinite 0s;
+  // opacity: 0;
+  // overflow: hidden;
+  // position: absolute;
+  // top: 0;
+  display: none;
 
   &:nth-child(2) {
     animation-delay: 2.5s;

@@ -61,6 +61,7 @@ class ShareForm {
           if (this._isValid && !this._isBusy && !this._isDisabled) {
             this._submit();
             window.grecaptcha.reset();
+            $(this._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
             this._recaptchaVerified = false;
           }
         } else {
@@ -243,10 +244,12 @@ class ShareForm {
 
     window.screenerRecaptcha = () => {
       this._recaptchaVerified = true;
+      $(this._el).parents('.c-tip-ms__topics').removeClass('recaptcha-js');
     };
 
     window.screenerRecaptchaReset = () => {
       this._recaptchaVerified = false;
+      $(this._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
     };
 
     this._recaptchaRequired = true;

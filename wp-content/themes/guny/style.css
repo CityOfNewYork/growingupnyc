@@ -2402,18 +2402,9 @@ ol.o-inline {
 */
 .rotating-text {
   position: relative; }
-  .rotating-text:before {
-    content: ' ';
-    display: block;
-    height: 1em; }
 
 .rotating-text__entry {
-  -webkit-animation: fadeEffect 10s linear infinite 0s;
-          animation: fadeEffect 10s linear infinite 0s;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  top: 0; }
+  display: none; }
   .rotating-text__entry:nth-child(2) {
     -webkit-animation-delay: 2.5s;
             animation-delay: 2.5s; }

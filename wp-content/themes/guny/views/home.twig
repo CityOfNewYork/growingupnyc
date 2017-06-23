@@ -30,8 +30,9 @@
         {% for text in post.get_field('hero_rotating_text_repeater') %}
           <span class="rotating-text__entry">
             {{text.hero_rotating_text}}
-          </span>
+          </span>          
         {% endfor %}
+        <span id="rotate"></span>
       </div> <!-- /.c-side-hero__title__large -->
     </h1>
     <a href="{{post.get_field('hero_button_url')}}" class="button--outline button--outline--white mobile-hide">{{post.get_field('hero_button_text')}}</a>

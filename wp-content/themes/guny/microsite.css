@@ -413,10 +413,6 @@ button:hover, button:focus {
   height: 400px;
   margin: 2.5rem 0; }
 
-@media screen and (min-width: 1024px) {
-  .o-article-trip {
-    float: right; } }
-
 .o-article-trip .c-page__intro,
 .o-article-trip .c-page__content {
   margin-bottom: 1.875rem; }
@@ -425,9 +421,8 @@ button:hover, button:focus {
   .o-article-trip .c-page__content {
     margin-bottom: 0; } }
 
-@media screen and (min-width: 1024px) {
-  .o-article-trip-sidebar {
-    float: left; } }
+.o-article-trip-sidebar {
+  float: right; }
 
 .c-hero-ms__topics {
   background-color: #00965c; }

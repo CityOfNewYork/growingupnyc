@@ -107,7 +107,7 @@
 
   .rotating-text__entry {
     //display: block;
-    display: none;
+    display: none !important;
     width: 100%;
   }
 }

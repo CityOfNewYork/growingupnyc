@@ -16,6 +16,7 @@ import iOS7Hack from './modules/iOS7Hack.js';
 import ShareForm from './modules/share-form.js';
 import captchaResize from './modules/captchaResize.js';
 import rotatingTextAnimation from './modules/rotatingTextAnimation.js';
+import sectionHighlighter from './modules/sectionHighlighter.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -39,13 +40,14 @@ function init() {
   // Homepage
   staticColumn();
   stickyNav();
-  currentSection();
+  //currentSection();
   bsdtoolsSignup();
   formEffects();
   owlSettings();
   iOS7Hack();
   captchaResize();
   rotatingTextAnimation();
+  sectionHighlighter();
 }
 
 ready(init);

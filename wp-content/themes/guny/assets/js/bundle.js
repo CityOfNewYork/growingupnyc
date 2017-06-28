@@ -1774,46 +1774,48 @@
 	/* WEBPACK VAR INJECTION */(function($) {"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	exports.default = function () {
-	    $(document).ready(function () {
+	  var $navigationLinks = $('.js-section-set > li > a');
+	  var $sections = $("section");
+	  var $sectionsReversed = $($("section").get().reverse());
+	  var sectionIdTonavigationLink = {};
+	  //var eTop = $('#free-day-trips').offset().top;
 
-	        var $navigationLinks = $('.js-section-set > li > a');
-	        var $sections = $("section");
-	        var $sectionsReversed = $($("section").get().reverse());
-	        var sectionIdTonavigationLink = {};
+	  $sections.each(function () {
+	    sectionIdTonavigationLink[$(this).attr('id')] = $('.js-section-set > li > a[href=\\#' + $(this).attr('id') + ']');
+	  });
 
-	        $sections.each(function () {
-	            sectionIdTonavigationLink[$(this).attr('id')] = $('.js-section-set > li > a[href=\\#' + $(this).attr('id') + ']');
-	        });
+	  function optimized() {
+	    var scrollPosition = $(window).scrollTop();
 
-	        function optimized() {
-	            var scrollPosition = $(window).scrollTop();
+	    $sectionsReversed.each(function () {
+	      var currentSection = $(this);
+	      var sectionTop = currentSection.offset().top;
 
-	            $sectionsReversed.each(function () {
-	                var currentSection = $(this);
-	                var sectionTop = currentSection.offset().top;
+	      // if(currentSection.is('section:first-child') && sectionTop > scrollPosition){
+	      //   console.log('scrollPosition', scrollPosition);
+	      //   console.log('sectionTop', sectionTop);
+	      // }
 
-	                if (scrollPosition >= sectionTop) {
-	                    var id = currentSection.attr('id');
-	                    var $navigationLink = sectionIdTonavigationLink[id];
-	                    if (!$navigationLink.hasClass('is-active')) {
-	                        $navigationLinks.removeClass('is-active');
-	                        $navigationLink.addClass('is-active');
-	                    }
-	                    return false;
-	                }
-	            });
+	      if (scrollPosition >= sectionTop || currentSection.is('section:first-child') && sectionTop > scrollPosition) {
+	        var id = currentSection.attr('id');
+	        var $navigationLink = sectionIdTonavigationLink[id];
+	        if (!$navigationLink.hasClass('is-active') || !$('section').hasClass('o-content-container--compact')) {
+	          $navigationLinks.removeClass('is-active');
+	          $navigationLink.addClass('is-active');
 	        }
-
-	        optimized();
-	        $(window).scroll(function () {
-	            //test[$("input[name='test']:checked").val()].measureTime();
-	            optimized();
-	        });
+	        return false;
+	      }
 	    });
+	  }
+
+	  optimized();
+	  $(window).scroll(function () {
+	    optimized();
+	  });
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 

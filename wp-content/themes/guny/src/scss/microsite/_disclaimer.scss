@@ -8,3 +8,16 @@
     height: 360px;
   }
 }
+
+// Hero Title
+//
+// .c-hero__title--long - Variation for longer titles. Matches h1 styling
+//
+.c-hero__title {
+  @include font-size-xxx-large;
+  line-height: 1;
+  padding-top: rem-calc(($sticker-size-mobile / 2) + 3);
+  text-transform: uppercase;
+  // Set z-index for text to appear on top of bg image
+  z-index: 1;
+}

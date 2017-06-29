@@ -950,4 +950,14 @@ button:hover, button:focus {
     .c-hero-ms__disclaimer {
       height: 360px; } }
 
+.c-hero__title {
+  font-size: 2.5rem;
+  line-height: 1;
+  padding-top: 2.6875rem;
+  text-transform: uppercase;
+  z-index: 1; }
+  @media screen and (min-width: 700px) {
+    .c-hero__title {
+      font-size: 4.125rem; } }
+
 /*# sourceMappingURL=microsite.css.map */

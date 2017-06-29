@@ -62,8 +62,7 @@ $context['post'] = $post;
 
 //New codes by amalan for sms intergration 
 $context['shareAction'] = admin_url( 'admin-ajax.php' );
-$context['shareHash'] = \SMNYC\hash($context['shareUrl']);
-$context['shareHash'] = \SMNYC\hash($post->permalink);
+$context['shareHash'] = \SMNYC\hash($post->link);
 
 $url = '/';
 if(ICL_LANGUAGE_CODE != 'en'){
@@ -71,5 +70,4 @@ if(ICL_LANGUAGE_CODE != 'en'){
 }
 $context['eventslink'] = $url.'events';
 $context['programslink'] = $url.'programs';
-
 Timber::render( $templates, $context );

@@ -55,6 +55,9 @@ if ( $post->post_type == 'age' ) {
 if($post->post_type == 'page' && strpos($post->post_name, 'youth') !== false){
   $templates = array( 'micro-site-homepage.twig' );
 }
+elseif($post->post_type == 'page' && strpos($post->post_name, 'disclaimer') !== false){
+  $templates = array('disclaimer.twig');
+}
 else{
   $templates = array( 'single-' . $post->ID . '.twig', 'single-' . $post->post_type . '.twig', 'single.twig' );
 }

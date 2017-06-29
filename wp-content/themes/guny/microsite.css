@@ -944,4 +944,10 @@ button:hover, button:focus {
     .button--inspiration__cta {
       width: auto; } }
 
+.c-hero-ms__disclaimer {
+  height: 400px; }
+  @media screen and (min-width: 1024px) {
+    .c-hero-ms__disclaimer {
+      height: 360px; } }
+
 /*# sourceMappingURL=microsite.css.map */

@@ -1,0 +1,10 @@
+// Micro Site Disclaimer page styles
+
+//Landing page
+//Hero
+.c-hero-ms__disclaimer {
+  height: 400px;
+  @include media($bp-large) {
+    height: 360px;
+  }
+}

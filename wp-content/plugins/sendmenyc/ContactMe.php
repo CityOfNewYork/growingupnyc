@@ -46,21 +46,28 @@ class ContactMe {
 	}
 
 	public function submission() {
-		if ( !isset($_POST["url"]) || empty($_POST["url"]) ){
+		if ( !isset($_POST["postid"]) || empty($_POST["postid"]) ){
+			$this->failure(400, "Post ID required");
+		}
+
+		$urltopost = $this->geturl($_POST['postid']);
+		if ( !isset($urltopost) || empty($urltopost) ){
 			$this->failure(400, "url required");
 		}
+
 		if ( !isset($_POST["sharetext"]) || empty($_POST["sharetext"]) ){
 			$this->failure(400, "sharetext required");
 		}
 
-		$this->validate_nonce( $_POST['hash'], $_POST['url'] );// use nonce for CSRF protection
+		$this->validate_nonce( $_POST['hash'], $urltopost );// use nonce for CSRF protection
+		
 		$this->valid_configuration( strtolower($this->service) ); //make sure credentials are specified
 		$recipient = $this->valid_recipient( $_POST['to'] ); // also filters addressee
 
-		$url = $this->shorten($_POST['url']); // SMS 160 char limit, should shorten URL
+		$url = $this->shorten($urltopost); // SMS 160 char limit, should shorten URL
 		$sharetext = $_POST['sharetext'];
 		//results pages have unique email content
-		if ( $this->is_results_url( $_POST['url'] ) ) {
+		if ( $this->is_results_url( $urltopost ) ) {
 			$content = $this->content( $url, self::RESULTS_PAGE , $sharetext );
 		} else {
 			$content = $this->content( $url, self::OTHER_PAGE , $sharetext );
@@ -69,6 +76,17 @@ class ContactMe {
 		$this->send($recipient,$content);
 		$this->success();
 
+	}
+
+/**
+	 * geturl
+	 * creates a bit.ly shortened link to provided url. Fails silently
+	 *
+	 * @param $id string, The post id to which the url needs to be generated
+	 * @return string generated permalink of the post id 
+	 */
+	private function geturl( $id ) {
+		return get_permalink($id);
 	}
 
 	/**

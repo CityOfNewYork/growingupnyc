@@ -718,6 +718,16 @@ p + p {
       -ms-transform: rotate(180deg);
           transform: rotate(180deg); }
 
+.js-s-accordion__header {
+  position: relative;
+  cursor: pointer; }
+
+.js-s-accordion li > .js-s-accordion__content {
+  display: none; }
+
+.js-s-accordion li:target > .js-s-accordion__content {
+  display: block; }
+
 .o-col-3, .o-col-2, .o-col-1 {
   display: inline-block;
   padding: 0.5rem 1.25rem;

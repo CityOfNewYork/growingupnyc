@@ -43,11 +43,11 @@
     <nav class="o-offcanvas__side js-offcanvas__side" id="ages" role="navigation" aria-label="ages-heading">
       <h2 id="ages-heading" class="show-for-screen-reader">Resources by Age</h2>
       <button data-toggle="offcanvas-ages" class="o-offcanvas__close button--text"><svg class="icon--small" role="img"><title>Close Resources by Age</title><use xlink:href="#close"></use></svg></button>
-      <ol class="js-accordion c-list-box c-list-box--secondary" data-multiselectable="true">
+      <ol class="js-s-accordion c-list-box c-list-box--secondary" data-multiselectable="true">
         {% for age_group in age_menu %}
           <li class="c-list-box__item">
-            <h3 class="js-accordion__header c-list-box__heading" id="ages-heading-{{loop.index}}">{{age_group.name}}</h3>
-            <ol class="js-accordion__content c-list-box__content" id="ages-panel-{{loop.index}}">
+            <h3 class="js-s-accordion__header c-list-box__heading" id="ages-heading-{{loop.index}}">{{age_group.name}}</h3>
+            <ol class="js-s-accordion__content c-list-box__content" id="ages-panel-{{loop.index}}">
               {% for post in age_group.posts('numberposts=-1&post_type=age&meta_key=numeric_age&orderby=meta_value_num&order=ASC') %}
                 <li><a href="{{post.link}}" class="c-list-box__subitem">{{post.title}}</a></li>
               {% endfor %}

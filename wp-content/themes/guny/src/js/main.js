@@ -1,10 +1,12 @@
 import globalSearch from './modules/globalSearch.js';
 import toggleOpen from './modules/toggleOpen.js';
 import accordion from './modules/accordion.js';
+import simpleAccordion from './modules/simpleAccordion.js';
 import offcanvas from './modules/offcanvas.js';
 import overlay from './modules/overlay.js';
 import stickyNav from './modules/stickyNav.js';
-import currentSection from './modules/currentSection.js';
+//import currentSection from './modules/currentSection.js';
+import sectionHighlighter from './modules/sectionHighlighter.js';
 import staticColumn from './modules/staticColumn.js';
 import searchResultsHeader from './modules/searchResultsHeader.js';
 import alert from './modules/alert.js';
@@ -16,7 +18,6 @@ import iOS7Hack from './modules/iOS7Hack.js';
 import ShareForm from './modules/share-form.js';
 import captchaResize from './modules/captchaResize.js';
 import rotatingTextAnimation from './modules/rotatingTextAnimation.js';
-import sectionHighlighter from './modules/sectionHighlighter.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -32,6 +33,7 @@ function init() {
   alert('is-open');
   offcanvas();
   accordion();
+  simpleAccordion();
   overlay();
   // Search results page
   searchResultsHeader();

@@ -1,6 +1,6 @@
 {% extends "partials/teaser.twig" %}
 
-{% block classes %}{{is_first ? "c-card--hero #{age_group|sanitize}-gradient"}}{% endblock %}
+{% block classes %}{{is_first ? "c-card--hero #{age_group.slug|sanitize|replace({'-es':''})}-gradient"}}{% endblock %}
 
 {% block sticker %}
   {% set category = post.terms('programs_cat')|first %}

@@ -23,7 +23,17 @@ new SMSMe;
  **/
 function get_current_url(){
 	global $wp;
-	return home_url(add_query_arg(NULL,NULL));
+	// return home_url(add_query_arg(NULL,NULL));
+	// return "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+	// $current_url = explode("?", $_SERVER['REQUEST_URI']);
+	// return $current_url[0] ;
+
+	$current_url = 'http://';
+	$current_url .= $_SERVER['HTTP_HOST']; // Get host
+	$path = explode( '?', $_SERVER['REQUEST_URI'] ); // Blow up URI
+	$current_url .= $path[0]; // Only use the rest of URL - before any parameters
+	return $current_url;
 }
 function hash( $data ) {
 	return wp_create_nonce( 'bsd_smnyc_token_'.$data );

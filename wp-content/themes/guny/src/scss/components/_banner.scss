@@ -28,7 +28,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 // Styleguide 2.1
 .c-banner {
   background: $color-background;
-  box-shadow: 0 2px 4px 0 $color-shadow;
+  box-shadow: 0 4px 4px 0 $color-shadow;
   //height: rem-calc($height-banner);
   height: auto;
   position: relative;

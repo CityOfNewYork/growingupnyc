@@ -1,4 +1,4 @@
-angular.module('sgApp', [
+var deps = [
   'ui.router',
   'ngAnimate',
   'colorpicker.module',
@@ -8,7 +8,17 @@ angular.module('sgApp', [
   'ngProgress',
   'rt.debounce',
   'duScroll'
-])
+];
+
+if( window._styleguideConfig &&
+  window._styleguideConfig.additionalNgDependencies &&
+  window._styleguideConfig.additionalNgDependencies.length &&
+  window._styleguideConfig.additionalNgDependencies.length > 0 ){
+  deps = deps.concat( window._styleguideConfig.additionalNgDependencies );
+  console.info('Merging dependencies: ' + deps);
+}
+
+angular.module('sgApp', deps)
   .value('duScrollOffset', 30)
   .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "localStorageServiceProvider", "$ocLazyLoadProvider", function($stateProvider, $urlRouterProvider, $locationProvider, localStorageServiceProvider, $ocLazyLoadProvider) {
     var styleguideConfig = {};
@@ -30,9 +40,10 @@ angular.module('sgApp', [
         url: '/section/:section',
         templateUrl: 'views/sections.html',
         controller: 'SectionsCtrl',
+        viewClass: 'view-section',
         resolve: {
-          loadLazyModule: ["$ocLazyLoad", function($ocLazyLoad) {
-            loadModule($ocLazyLoad);
+          loadLazyModule: ["$$animateJs", "$ocLazyLoad", function($$animateJs, $ocLazyLoad) {
+            return loadModule($$animateJs, $ocLazyLoad);
           }]
         }
       })
@@ -41,14 +52,15 @@ angular.module('sgApp', [
         templateUrl: 'views/sections.html',
         controller: 'SectionsCtrl',
         resolve: {
-          loadLazyModule: ["$ocLazyLoad", function($ocLazyLoad) {
-            loadModule($ocLazyLoad);
+          loadLazyModule: ["$$animateJs", "$ocLazyLoad", function($$animateJs, $ocLazyLoad) {
+            return loadModule($$animateJs, $ocLazyLoad);
           }]
         }
       })
       .state('app.index.overview', {
         url: '/',
         templateUrl: 'overview.html',
+        viewClass: 'view-overview',
         controller: ["$rootScope", "Styleguide", function($rootScope, Styleguide) {
           $rootScope.currentSection = 'overview';
           // Update current reference to update the designer tool view
@@ -71,8 +83,8 @@ angular.module('sgApp', [
         templateUrl: 'views/variable-sections.html',
         controller: 'VariablesCtrl',
         resolve: {
-          loadLazyModule: ["$ocLazyLoad", function($ocLazyLoad) {
-            loadModule($ocLazyLoad);
+          loadLazyModule: ["$$animateJs", "$ocLazyLoad", function($$animateJs, $ocLazyLoad) {
+            return loadModule($$animateJs, $ocLazyLoad);
           }]
         }
       })
@@ -81,8 +93,8 @@ angular.module('sgApp', [
         templateUrl: 'views/element-fullscreen.html',
         controller: 'ElementCtrl',
         resolve: {
-          loadLazyModule: ["$ocLazyLoad", function($ocLazyLoad) {
-            loadModule($ocLazyLoad);
+          loadLazyModule: ["$$animateJs", "$ocLazyLoad", function($$animateJs, $ocLazyLoad) {
+            return loadModule($$animateJs, $ocLazyLoad);
           }]
         }
       }).state('app.index.404', {
@@ -90,7 +102,7 @@ angular.module('sgApp', [
         templateUrl: 'views/404.html'
       });
 
-    function loadModule($ocLazyLoad) {
+    function loadModule($$animateJs, $ocLazyLoad) {
       if (window.filesConfig && window.filesConfig.length) {
         var moduleNames = [];
         angular.forEach(window.filesConfig, function(lazyLoadmodule) {
@@ -120,6 +132,16 @@ angular.module('sgApp', [
       section: {
       }
     };
+
+    $rootScope.$on('$stateNotFound', function(event, unfoundState) {
+      if (unfoundState.to === '-') {
+        event.preventDefault(); return;
+      }
+    });
+
+    $rootScope.$on('$stateChangeSuccess',function(event, toState){
+        $rootScope.viewClass = toState.viewClass;
+    });
 
     // Create global throttled scorll
     function broadcastScrollEvent(event) {
@@ -206,11 +228,6 @@ angular.module('sgApp')
     // See: https://github.com/VictorBjelkholm/ngProgress/issues/33
     ngProgress.setHeight('');
     ngProgress.setColor('');
-
-    // Scroll top when page is changed
-    $scope.$on('$viewContentLoaded', function() {
-      window.scrollTo(0, 0);
-    });
 
     $scope.$on('progress start', function() {
       ngProgress.start();
@@ -391,23 +408,41 @@ angular.module('sgApp')
 angular.module('sgApp')
   .controller('MainCtrl', ["$scope", "$location", "$state", "Styleguide", "Variables", "localStorageService", "Socket", function($scope, $location, $state, Styleguide, Variables, localStorageService, Socket) {
 
-    $scope.isNavCollapsed = false;
-    $scope.markupSection = {isVisible: true};
-    $scope.designerTool = {isVisible: false};
-
-    localStorageService.bind($scope, 'markupSection', {isVisible: true});
-    localStorageService.bind($scope, 'designerTool', {isVisible: false});
-
     // Bind scope variables to service updates
     $scope.sections = Styleguide.sections;
     $scope.config = Styleguide.config;
     $scope.status = Styleguide.status;
     $scope.variables = Variables.variables;
+    $scope.toggleMenu = true;
     $scope.toggleMenu = false;
+    $scope.isNavCollapsed = false;
+    $scope.markupSection = {isVisible: ''};
 
-    $scope.toggleBool = function(toggleMenu) {
+    $scope.$watch('config.data', function() {
+      if ($scope.config.data) {
+        $scope.markupSection = {isVisible: $scope.config.data.showMarkupSection};
+        localStorageService.bind($scope, 'markupSection', {isVisible: $scope.config.data.showMarkupSection});
+      }
+    });
+
+    $scope.designerTool = {isVisible: false};
+    localStorageService.bind($scope, 'designerTool', {isVisible: false});
+
+    $scope.toggleSideNav = function(toggleMenu) {
       $scope.toggleMenu = !toggleMenu;
       return $scope.toggleMenu;
+    };
+
+    $scope.isMainSectionNavigable = function() {
+      return $scope.config.data.hideSubsectionsOnMainSection ? '-' : 'app.index.section({section: section.reference})';
+    };
+
+    $scope.isSideNav = function() {
+      if ($scope.config.data && $scope.config.data.sideNav) {
+        return 'sideNav';
+      } else if ($scope.config.data && !$scope.config.data.sideNav) {
+        return 'topNav';
+      }
     };
 
     // Bind variable to scope to wait for data to be resolved
@@ -429,11 +464,12 @@ angular.module('sgApp')
     $scope.hasSubsections = function(parentSection) {
       var result = false;
       angular.forEach($scope.sections.data, function(section) {
-        if(parentSection.reference === section.parentReference) {
+        if (parentSection.reference === section.parentReference) {
           result = true;
           return;
         }
       });
+
       return result;
     };
 
@@ -463,6 +499,8 @@ angular.module('sgApp')
 
 angular.module('sgApp')
   .controller('SectionsCtrl', ["$scope", "$stateParams", "$location", "$state", "$rootScope", "Styleguide", function($scope, $stateParams, $location, $state, $rootScope, Styleguide) {
+
+    $scope.config = Styleguide.config;
 
     if ($stateParams.section) {
       $scope.currentSection = $stateParams.section;
@@ -520,7 +558,7 @@ angular.module('sgApp')
       if ($scope.currentSection === 'all') {
         return true;
       }
-      if ($scope.currentSection.indexOf('.') === -1) {
+      if ( $scope.config.data.hideSubsectionsOnMainSection && ($scope.currentSection.indexOf('.') === -1)) {
         return new RegExp('^' + $scope.currentSection + '(\\{D}|$)').test(section.reference);
       }
       return new RegExp('^' + $scope.currentSection + '(\\D|$)').test(section.reference);
@@ -649,6 +687,35 @@ angular.module('sgApp')
       }
     };
   }]);
+
+'use strict';
+
+angular.module('sgApp')
+.directive('routeCssClass', ["$rootScope", function($rootScope) {
+  return {
+    restrict: 'A',
+    scope: {},
+    link: function (scope, elem) {
+      $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
+        var fromClassnames = angular.isDefined(fromState.viewClass) && angular.isDefined(fromState.viewClass) ? fromState.viewClass : null;
+        var toClassnames = angular.isDefined(toState.viewClass) && angular.isDefined(toState.viewClass) ? toState.viewClass : null;
+
+        fromClassnames = 'root-' + fromClassnames;
+        toClassnames = 'root-' + toClassnames;
+        // don't do anything if they are the same
+        if (fromClassnames !== toClassnames) {
+          if (fromClassnames) {
+            elem.removeClass(fromClassnames);
+          }
+
+          if (toClassnames) {
+            elem.addClass(toClassnames);
+          }
+        }
+      });
+    }
+  };
+}]);
 
 'use strict';
 

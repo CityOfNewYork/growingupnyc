@@ -367,6 +367,13 @@ section:focus {
   .no-touchevents .button--pill--alt:hover {
     background: #00326d; }
 
+.button--pill--es {
+  background: #7735b2; }
+  .button--pill--es:focus {
+    background: #3c036f; }
+  .no-touchevents .button--pill--es:hover {
+    background: #3c036f; }
+
 .button--simple {
   background: #2793e0;
   border: none;
@@ -1125,10 +1132,12 @@ ol.o-inline {
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
   display: block;
   height: 3.75rem;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
   left: 15;
   padding: 0 5px 8px;
   position: absolute;
-  top: 0;
+  top: -2.1875rem;
   width: 4.6875rem; }
   @media screen and (min-width: 375px) {
     .c-banner__logo-wrapper {
@@ -1138,13 +1147,16 @@ ol.o-inline {
       left: 40; } }
   @media screen and (min-width: 375px) {
     .c-banner__logo-wrapper {
-      height: 5.0rem;
-      width: 6.25rem; } }
+      height: 6.24998rem;
+      width: 6.24998rem; } }
   @media screen and (min-width: 700px) {
     .c-banner__logo-wrapper {
       height: 9rem;
-      padding: 0 16px 20px 14px;
+      padding: 0 16px 15px 14px;
       width: 11.25rem; } }
+  @media screen and (min-width: 1024px) {
+    .c-banner__logo-wrapper {
+      top: -2.375rem; } }
 
 .c-banner__logo {
   background: url("/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_CMYK_Mobile_Final.png") no-repeat;
@@ -1156,6 +1168,12 @@ ol.o-inline {
   background-position: center bottom;
   height: 100%;
   width: 100%; }
+  @media screen and (min-width: 375px) {
+    .c-banner__logo {
+      background-position: center bottom -0.5625rem; } }
+  @media screen and (min-width: 700px) {
+    .c-banner__logo {
+      background-position: center bottom; } }
 
 .c-banner__nav {
   float: right;
@@ -1204,6 +1222,36 @@ ol.o-inline {
   top: 0.125rem; }
   .is-active .c-banner__icon__close {
     opacity: 1; }
+
+.c-language-switcher-wrapper {
+  border-bottom: 2px solid #eee; }
+  .c-language-switcher-wrapper .c-language__switcher {
+    text-align: right;
+    z-index: 1; }
+    .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal {
+      padding: 0 0 7px; }
+      .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li {
+        margin-right: 0.3125rem; }
+        .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li:last-child {
+          margin-right: 0; }
+          .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li:last-child a {
+            padding-right: 0; }
+        .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li a {
+          font-size: 0.6875rem;
+          color: rgba(45, 51, 61, 0.5);
+          padding: 5px 8px; }
+          .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li a:hover {
+            color: #2793e0; }
+        .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li.wpml-ls-current-language a {
+          color: #2793e0; }
+          .c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li.wpml-ls-current-language a:before {
+            content: '\f00c';
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: normal;
+            position: relative;
+            top: 0.125rem;
+            margin-right: 0.1875rem; }
 
 .c-block-list--shade {
   background: #eee; }
@@ -1624,7 +1672,7 @@ ol.o-inline {
 
 .c-hero__tagline {
   font-family: "museo-sans-rounded", sans-serif;
-  font-size: 1.64062rem;
+  font-size: 1.64063rem;
   font-weight: 900;
   line-height: 1.2;
   margin-top: 0.625rem;
@@ -2505,6 +2553,96 @@ a.pre-teen-secondary.is-active {
 
 .pre-teen-svg .stop2 {
   stop-color: #0055b8; }
+
+.teen-background {
+  background-color: #7735b2 !important; }
+
+button.teen-background,
+a.teen-background {
+  transition: background-color 250ms linear; }
+  button.teen-background:focus, button.teen-background.is-active,
+  a.teen-background:focus,
+  a.teen-background.is-active {
+    background-color: #3c036f !important;
+    border-color: #3c036f !important;
+    outline: none; }
+
+.no-touchevents button.teen-background:hover,
+.no-touchevents a.teen-background:hover {
+  background-color: #3c036f !important;
+  border-color: #3c036f !important; }
+
+.teen-secondary {
+  background-color: #3c036f !important;
+  border-color: #3c036f !important; }
+
+button.teen-secondary:focus, button.teen-secondary.is-active,
+a.teen-secondary:focus,
+a.teen-secondary.is-active {
+  background-color: #7735b2 !important;
+  outline: none; }
+
+.no-touchevents button.teen-secondary:hover,
+.no-touchevents a.teen-secondary:hover {
+  background-color: #7735b2 !important;
+  border-color: #7735b2 !important; }
+
+.teen-text {
+  color: #7735b2; }
+
+.teen-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/teen-gradient.png); }
+
+.teen-svg .stop1 {
+  stop-color: #3c036f; }
+
+.teen-svg .stop2 {
+  stop-color: #7735b2; }
+
+.young-adult-background {
+  background-color: #404657 !important; }
+
+button.young-adult-background,
+a.young-adult-background {
+  transition: background-color 250ms linear; }
+  button.young-adult-background:focus, button.young-adult-background.is-active,
+  a.young-adult-background:focus,
+  a.young-adult-background.is-active {
+    background-color: #2d333d !important;
+    border-color: #2d333d !important;
+    outline: none; }
+
+.no-touchevents button.young-adult-background:hover,
+.no-touchevents a.young-adult-background:hover {
+  background-color: #2d333d !important;
+  border-color: #2d333d !important; }
+
+.young-adult-secondary {
+  background-color: #2d333d !important;
+  border-color: #2d333d !important; }
+
+button.young-adult-secondary:focus, button.young-adult-secondary.is-active,
+a.young-adult-secondary:focus,
+a.young-adult-secondary.is-active {
+  background-color: #404657 !important;
+  outline: none; }
+
+.no-touchevents button.young-adult-secondary:hover,
+.no-touchevents a.young-adult-secondary:hover {
+  background-color: #404657 !important;
+  border-color: #404657 !important; }
+
+.young-adult-text {
+  color: #404657; }
+
+.young-adult-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/young-adult-gradient.png); }
+
+.teen-svg .stop1 {
+  stop-color: #3c036f; }
+
+.teen-svg .stop2 {
+  stop-color: #7735b2; }
 
 .u-sm-gutter {
   margin-bottom: 20px; }

@@ -34,12 +34,14 @@ $context['event_list'] = $event_list;
 $cat_id = get_query_var('cat_id');
 $age_id = get_query_var('age_id');
 $borough_id = get_query_var('borough_id');
+$lang_id = get_query_var('lang_id');
 $eventDate = get_query_var('eventDate');
 
 function addFilterArgs( $url, $preservePagination = false ) {
   global $cat_id;
   global $age_id;
   global $borough_id;
+  global $lang_id;
   global $eventDate;
 
   $query_args = array();
@@ -50,6 +52,9 @@ function addFilterArgs( $url, $preservePagination = false ) {
 
   if ($cat_id > 0) {
     $query_args['cat_id'] = $cat_id;
+  }
+  if ($cat_id > 0) {
+    $query_args['lang_id'] = $lang_id;
   }
   if ($age_id > 0) {
     $query_args['age_id'] = $age_id;
@@ -83,6 +88,28 @@ if ( $cat_id > 0 ) {
   $context['current_event_filter'] = Timber::get_term( $cat_id )->name;
 } else {
   $context['current_event_filter'] = $context['all_events']['name'];
+}
+
+// Language Category Filter
+$language_filter = Timber::get_terms('language', array(
+  'orderby' => 'NAME',
+  'hide_empty' => true,
+  'depth' => 1,
+  'hierarchical' => true,
+) );
+foreach ($language_filter as $key => $value) {
+  $value->link = esc_url( add_query_arg( 'lang_id', $value->ID ) );
+  $event_filter[$key] = $value;
+}
+$context['language_filter'] = $language_filter;
+$context['all_languages'] = array(
+  'name' => 'All Languages',
+  'link' => esc_url( remove_query_arg( 'lang_id' ) )
+);
+if ( $language_id > 0 ) {
+  $context['current_language_filter'] = Timber::get_term( $lang_id )->name;
+} else {
+  $context['current_language_filter'] = $context['all_languages']['name'];
 }
 
 // Age Group Filter
@@ -154,4 +181,7 @@ if ( tribe_has_next_event() ) {
 }
 
 $templates = array( 'list-events.twig', 'index.twig' );
+
+$context['top_widgets'] = Timber::get_widgets('top_widget');
+
 Timber::render( $templates, $context );

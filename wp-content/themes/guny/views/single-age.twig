@@ -20,17 +20,17 @@
 
 {% block content %}
   <div class="js-parallax">
-    <header class="c-hero c-hero--large {{post.age_group|sanitize}}-background js-parallax-content">
+    <header class="c-hero c-hero--large {{post.age_group.slug|sanitize|replace({'-es':''})}}-background js-parallax-content">
       <div class="o-container js-parallax-text">
         <h1 class="c-hero__title">
-          <span class="c-hero__sticker sticker {{post.age_group|sanitize}}-background">
-            <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{post.age_group|sanitize}}"></use></svg>
+          <span class="c-hero__sticker sticker {{post.age_group.slug|sanitize|replace({'-es':''})}}-background">
+            <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{post.age_group.slug|sanitize|replace({'-es':''})|replace({'-es':''})}}"></use></svg>
           </span>
           {{post.hero_headline}}
         </h1>
         <p class="c-hero__tagline">{{post.hero_subheadline}}</p>
       </div>
-      <svg class="c-hero__frill {{post.age_group|sanitize}}-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 404 359" >
+      <svg class="c-hero__frill {{post.age_group.slug|sanitize|replace({'-es':''})}}-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 404 359" >
         <title>Paint Splatter</title>
         <defs>
           <linearGradient x1="73.9267481%" y1="16.6229021%" x2="50%" y2="55.6984773%" id="a">
@@ -49,16 +49,16 @@
         <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
           {% if upcoming_events %}
             <li class="c-nav-list__item">
-              <a href="#section-events" data-section="section-events" class="js-section c-nav-list__link {{post.age_group|sanitize}}-secondary">Events<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+              <a href="#section-events" data-section="section-events" class="js-section c-nav-list__link {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">{{ __('Events', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
             </li>
           {% endif %}
           {% if post.featured_programs %}
             <li class="c-nav-list__item">
-              <a href="#section-programs" data-section="section-programs" class="js-section c-nav-list__link {{post.age_group|sanitize}}-secondary">Programs<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+              <a href="#section-programs" data-section="section-programs" class="js-section c-nav-list__link {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">{{ __('Programs', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
             </li>
           {% endif %}
           <li class="c-nav-list__item">
-            <a href="#section-milestones" data-section="section-milestones" class="js-section c-nav-list__link {{post.age_group|sanitize}}-secondary">Milestones<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+            <a href="#section-milestones" data-section="section-milestones" class="js-section c-nav-list__link {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">{{ __('Milestones', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
           </li>
         </ol>
       </div> <!-- /.o-content-container-compact -->
@@ -68,7 +68,7 @@
       {% if post.intro_content %}
         <section class="o-content-container--compact u-top-spacing u-bottom-spacing">
           <div class="o-content-container--text u-sm-gutter">
-            <h2>What to Expect</h2>
+            <h2>{{ __('What to Expect', 'GUNY-Single-Age') }}</h2>
             {{post.get_field('intro_content')}}
           </div>
         </section>
@@ -77,7 +77,7 @@
       {# Upcoming Events #}
       {% if upcoming_events %}
       <section class="c-block-list c-block-list--shade o-content-container{% if not post.tip %} u-sm-gutter{% endif %}" id="section-events">
-        <h2>Events</h2>
+        <h2>{{ __('Events', 'GUNY-Single-Age') }}</h2>
         {% if post.events_text %}
           <p class="c-block-list__text">{{post.events_text}}</p>
         {% endif %}
@@ -89,15 +89,15 @@
           {% endfor %}
         </div> <!-- /.c-block-list-inner -->
         <div class="text-center">
-          <a href="/events" class="button--outline button--outline--gray">See all events</a>
+          <a href="/events" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Single-Age') }}</a>
         </div>
       </section> <!-- /.c-block-list -->
       {% endif %}
 
       {# Tip #}
       {% if post.tip %}
-      <aside class="c-tip u-sm-gutter {{post.age_group|sanitize}}-secondary o-content-container">
-        <div class="c-tip__sticker sticker {{post.age_group|sanitize}}-secondary">
+      <aside class="c-tip u-sm-gutter {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary o-content-container">
+        <div class="c-tip__sticker sticker {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">
           <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#lightbulb"></use></svg>
         </div>
         <p class="c-tip__content">{{post.tip}}</p>
@@ -118,7 +118,7 @@
       {# Programs #}
       {% if post.featured_programs %}
       <section class="c-block-list c-block-list--shade o-content-container" id="section-programs">
-        <h2>Programs</h2>
+        <h2>{{ __('Programs', 'GUNY-Single-Age') }}</h2>
         {% if post.programs_text %}
           <p class="c-block-list__text">{{post.programs_text}}</p>
         {% endif %}
@@ -131,7 +131,7 @@
           {% endfor %}
         </div> <!-- /.c-block-list__inner -->
         <div class="text-center">
-          <a href="/programs" class="button--outline button--outline--gray">See all programs</a>
+          <a href="/programs" class="button--outline button--outline--gray">{{ __('See all programs', 'GUNY-Single-Age') }}</a>
         </div>
       </section>
       {% endif %}
@@ -148,14 +148,14 @@
 
       {# Milestones #}
       <section class="o-content-container--compact u-top-spacing u-bottom-spacing" id="section-milestones">
-        <h2>Milestones</h2>
+        <h2>{{ __('Milestones', 'GUNY-Single-Age') }}</h2>
         <div class="o-content-container--text u-sm-gutter">
-          <p>How your child plays, learns, speaks, and acts offers important clues about your child&rsquo;s development.</p>
+          <p>{{ __("How your child plays, learns, speaks, and acts offers important clues about your child&rsquo;s development.", 'GUNY-Single-Age') }}</p>
         </div>
         <h3>What most {{post.milestones_heading}} do at this age:</h3>
         <ul class="js-accordion c-list-box c-list-box--tertiary u-sm-gutter">
           <li class="c-list-box__item">
-            <h4 class="c-list-box__heading js-accordion__header {{post.age_group|sanitize}}-secondary" id="milestones-header-social">Social</h4>
+            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-social">{{ __('Social', 'GUNY-Single-Age') }}</h4>
             <ul class="c-list-box__content js-accordion__content" id="milestones-panel-social">
             {% for milestone in post.get_field('social_milestones') %}
               <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
@@ -163,7 +163,7 @@
             </ul>
           </li>
           <li class="c-list-box__item">
-            <h4 class="c-list-box__heading js-accordion__header {{post.age_group|sanitize}}-secondary" id="milestones-header-language">Communication</h4>
+            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-language">{{ __('Communication', 'GUNY-Single-Age') }}</h4>
             <ul class="c-list-box__content js-accordion__content" id="milestones-panel-language">
             {% for milestone in post.get_field('communication_milestones') %}
               <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
@@ -171,7 +171,7 @@
             </ul>
           </li>
           <li class="c-list-box__item">
-            <h4 class="c-list-box__heading js-accordion__header {{post.age_group|sanitize}}-secondary" id="milestones-header-cognitive">Learning</h4>
+            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-cognitive">{{ __('Learning', 'GUNY-Single-Age') }}</h4>
             <ul class="c-list-box__content js-accordion__content" id="milestones-panel-cognitive">
             {% for milestone in post.get_field('learning_milestones') %}
               <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
@@ -179,7 +179,7 @@
             </ul>
           </li>
           <li class="c-list-box__item">
-            <h4 class="c-list-box__heading js-accordion__header {{post.age_group|sanitize}}-secondary" id="milestones-header-movement">Physical Development</h4>
+            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-movement">{{ __('Physical Development', 'GUNY-Single-Age') }}</h4>
             <ul class="c-list-box__content js-accordion__content" id="milestones-panel-movement">
             {% for milestone in post.get_field('movement_milestones') %}
               <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
@@ -187,7 +187,7 @@
             </ul>
           </li>
           <li class="c-list-box__item">
-            <h4 class="c-list-box__heading js-accordion__header {{post.age_group|sanitize}}-secondary" id="milestones-header-health">Health</h4>
+            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-health">{{ __('Health', 'GUNY-Single-Age') }}</h4>
             <ul class="c-list-box__content js-accordion__content" id="milestones-panel-health">
             {% for milestone in post.get_field('health_milestones') %}
               <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
@@ -195,10 +195,10 @@
             </ul>
           </li>
           </ul>
-          <h3>Act early by talking to your child&rsquo;s doctor if your child:</h3>
+          <h3>{{ __("Act early by talking to your child&rsquo;s doctor if your child:", 'GUNY-Single-Age') }}</h3>
           <ul class="c-list-box c-list-box--tertiary">
             <li class="c-list-box__item">
-              <div class="c-list-box__border {{post.age_group|sanitize}}-secondary"></div>
+              <div class="c-list-box__border {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary"></div>
               <ul class="c-list-box__content">
                 {% for warning_sign in post.get_field('warning_signs') %}
                   <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#close"></use></svg>{{warning_sign.warning_sign}}</li>

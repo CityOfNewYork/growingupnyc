@@ -104,8 +104,10 @@
             <div id="share-by-text" class="sms-form-wrapper share-form hidden">
               <form method="post" action="{{ shareAction }}" class="js-share-form" novalidate>
                 <input type="hidden" name="action" value="sms_send">
-                <input type="hidden" name="url" value="{{ shareUrl }}">
+                {# <input type="hidden" name="url" value="{{ shareUrl }}"> #}
                 <input type="hidden" name="sharetext" value="{{post.get_field('sms_intro_text')}}">
+
+                <input type="hidden" name="postid" value="{{post.id}}">
                 <input type="hidden" name="hash" value="{{ shareHash }}">
 
                 <div class="signup-form__input signup-form__input--long sms-form__input--long">
@@ -127,7 +129,3 @@
       </div> <!-- /.o-article -->
     </article>
   {% endblock %}
-
-
-
-

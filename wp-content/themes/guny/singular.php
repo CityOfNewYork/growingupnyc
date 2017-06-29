@@ -62,6 +62,5 @@ $context['post'] = $post;
 
 //New codes by amalan for sms intergration 
 $context['shareAction'] = admin_url( 'admin-ajax.php' );
-$context['shareUrl'] = \SMNYC\get_current_url();
-$context['shareHash'] = \SMNYC\hash($context['shareUrl']);
+$context['shareHash'] = \SMNYC\hash($post->permalink);
 Timber::render( $templates, $context );

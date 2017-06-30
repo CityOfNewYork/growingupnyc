@@ -1999,7 +1999,7 @@ if (objCtr.defineProperty) {
 	  //var eTop = $('#free-day-trips').offset().top;
 
 	  $sections.each(function () {
-	    sectionIdTonavigationLink[$(this).attr('id')] = $('.js-section-set > li > a[href^=\#' + $(this).attr('id') + ']');
+	    sectionIdTonavigationLink[$(this).attr('id')] = $('.js-section-set > li > a[href="\#' + $(this).attr('id') + '"]');
 	  });
 
 	  function optimized() {

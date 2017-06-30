@@ -324,10 +324,12 @@ button {
       padding: rem-calc(0 0 0 27);
       text-indent: rem-calc(-27);
       &:before {
-        content: url(/wp-content/themes/guny/assets/img/check.svg);
+        position: relative;
+        top: -4px;
+        content: url(/wp-content/themes/guny/assets/img/circle.svg);
         margin-right: rem-calc(12);
         margin-top: rem-calc(2);
-        opacity: .2;
+        opacity: 1;
         vertical-align: middle;
       }
     }

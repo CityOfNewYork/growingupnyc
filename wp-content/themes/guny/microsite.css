@@ -240,10 +240,12 @@ button:hover, button:focus {
     padding: 0 0 0 1.6875rem;
     text-indent: -1.6875rem; }
     .c-details-list-ms__descr ul li:before {
-      content: url(/wp-content/themes/guny/assets/img/check.svg);
+      position: relative;
+      top: -4px;
+      content: url(/wp-content/themes/guny/assets/img/circle.svg);
       margin-right: 0.75rem;
       margin-top: 0.125rem;
-      opacity: .2;
+      opacity: 1;
       vertical-align: middle; }
 
 .carousel-ms,

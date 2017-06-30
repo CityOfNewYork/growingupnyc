@@ -1908,6 +1908,7 @@ if (objCtr.defineProperty) {
 	  var owl = $('.owl-carousel');
 	  owl.owlCarousel({
 	    animateIn: 'fadeIn',
+	    animateOut: 'fadeOut',
 	    items: 1,
 	    loop: true,
 	    margin: 0,

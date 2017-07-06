@@ -162,8 +162,8 @@
 
   @include media($bp-large) {
     margin-top: 0;
-    @include span-columns(4);
-    @include shift(2);
+    @include span-columns(5);
+    @include shift(1);
   }
 }
 

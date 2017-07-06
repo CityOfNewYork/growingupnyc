@@ -74,7 +74,7 @@
 .signup-form__input--short {
   width: 100%;
   @include media($bp-medium) {
-    max-width: rem-calc(153);
+    max-width: rem-calc(170);
     min-width: rem-calc(100);
     width: calc(100% - 15.3125rem);
   }

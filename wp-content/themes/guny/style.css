@@ -1642,8 +1642,8 @@ ol.o-inline {
       float: left;
       display: block;
       margin-right: 3.125%;
-      width: 31.25%;
-      margin-left: 17.1875%; }
+      width: 39.84375%;
+      margin-left: 8.59375%; }
       .c-footer__signup:last-child {
         margin-right: 0; } }
 
@@ -2170,7 +2170,7 @@ ol.o-inline {
   width: 100%; }
   @media screen and (min-width: 700px) {
     .signup-form__input--short {
-      max-width: 9.5625rem;
+      max-width: 10.625rem;
       min-width: 6.25rem;
       width: calc(100% - 15.3125rem); } }
 

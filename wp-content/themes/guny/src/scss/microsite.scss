@@ -183,7 +183,7 @@ button {
         position: relative;
         top: -4px;
         opacity: 1;
-        content: url(/wp-content/themes/guny/assets/img/circle.svg);
+        content: url(http://localhost:8888/guny-repo/wp-content/themes/guny/assets/img/circle.svg);
       }
     }
   }
@@ -322,7 +322,7 @@ button {
 
     li {
       padding: rem-calc(0 0 0 27);
-      text-indent: rem-calc(-27);
+      text-indent: rem-calc(-22);
       &:before {
         position: relative;
         top: -4px;

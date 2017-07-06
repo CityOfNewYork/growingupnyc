@@ -2389,7 +2389,7 @@ ol.o-inline {
         padding-left: 1.875rem; } }
   .s-wysiwyg ul li {
     padding: 0.9375rem 0 0.9375rem 1.6875rem;
-    text-indent: -1.6875rem; }
+    text-indent: -1.1875rem; }
     .s-wysiwyg ul li:before {
       content: url(/wp-content/themes/guny/assets/img/check.svg);
       margin-right: 0.55rem;

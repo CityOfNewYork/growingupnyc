@@ -180,11 +180,13 @@
 //
 // Wrapper around checkbox input, label, and hidden field (if its a Tools checkbox)
 .signup-form__checkbox {
-  display: inline-block;
+  //display: inline-block;
   line-height: rem-calc(20);
-  margin-right: rem-calc(20);
+  //margin-right: rem-calc(20);
   margin-top: rem-calc(10);
   vertical-align: middle;
+  @include span-columns(6 of 12);
+  @include omega(even);
 }
 
 // Signup Form Button

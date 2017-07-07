@@ -2250,11 +2250,17 @@ ol.o-inline {
   margin-top: 1.5rem; }
 
 .signup-form__checkbox {
-  display: inline-block;
   line-height: 1.25rem;
-  margin-right: 1.25rem;
   margin-top: 0.625rem;
-  vertical-align: middle; }
+  vertical-align: middle;
+  float: left;
+  display: block;
+  margin-right: 3.125%;
+  width: 48.4375%; }
+  .signup-form__checkbox:last-child {
+    margin-right: 0; }
+  .signup-form__checkbox:nth-child(even) {
+    margin-right: 0; }
 
 .signup-form__button {
   margin-top: 1.25rem; }

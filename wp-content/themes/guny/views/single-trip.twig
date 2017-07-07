@@ -1,0 +1,74 @@
+{% extends "microsite-base.twig" %}
+
+{% block content %}
+
+<div id="owl-demo" class="owl-carousel owl-theme carousel-ms">
+  {% for image in post.get_field('slider') %}
+    <div class="owl-bg" style="background: url({{image.url}}) center center no-repeat; background-size: cover;"></div>
+  {% endfor %}
+</div>
+
+<header class="c-hero c-hero--light c-hero-ms--light">
+  <div class="o-container">
+    <h1>{{post.title}}</h1>
+    <p class="c-hero__tagline">
+    {% for term in post.terms('trip_type') %}
+      <a href="/trip-type/{{term.slug}}" class="button--pill button--pill--trip">{{term.name}}</a>   
+    {% endfor %}
+    {% for term in post.terms('trip_free_day_trip') %}
+      <a href="/trip-type/free-day-trip/?fwp_trip_free_day_trip={{term.slug}}" class="button--pill button--pill--trip">{{term.name}}</a>
+    {% endfor %}
+    {% for term in post.terms('trip_free_this_week') %}
+      <a href="/trip-type/free-this-week/?fwp_trip_free_this_week={{term.slug}}" class="button--pill button--pill--trip">{{term.name}}</a>
+    {% endfor %}
+    </p>
+  </div> <!-- /.o-container -->
+</header>
+
+<section class="o-container u-bottom-spacing">
+  <article class="o-article o-article-trip o-content-container--compact">
+    <div class="o-content-container--text s-wysiwyg">
+      <div class="c-page__intro">
+        {% if post.intoduction %}
+          {{post.intoduction}}
+        {% endif %}
+      </div>
+      <div class="c-page__content">
+        {% for top in post.get_field('page_top') %}
+          {{top.page_top_content}}
+        {% endfor %}
+      </div>      
+    </div> <!-- /.o-content-container-text -->
+  </article>
+  <aside class="o-article-sidebar o-article-trip-sidebar o-content-container--compact u-lg-gutter">
+    <dl class="c-details-list c-details-list-ms">
+      <dt class="c-details-list__term c-details-list-ms__term">{{ __('Website', 'GUNY-Single-Trip') }}</dt>
+      <dd class="c-details-list__descr c-details-list-ms__descr">{{post.website_details}}</dd>
+
+      <dt class="c-details-list__term c-details-list-ms__term">{{ __('Hours', 'GUNY-Single-Trip') }}</dt>
+      <dd class="c-details-list__descr c-details-list-ms__descr">{{post.hours_details}}</dd>
+
+      <dt class="c-details-list__term c-details-list-ms__term">{{ __('Cost', 'GUNY-Single-Trip') }}</dt>
+      <dd class="c-details-list__descr c-details-list-ms__descr">{{post.cost_details}}</dd>
+
+      <dt class="c-details-list__term c-details-list-ms__term">{{ __('Getting There', 'GUNY-Single-Trip') }}</dt>
+      <dd class="c-details-list__descr c-details-list-ms__descr">{{post.getting_there}}</dd>
+    </dl>
+  </aside>
+  <article class="o-article o-article-trip o-content-container--compact">
+    <div class="o-content-container--text s-wysiwyg">
+      <div class="c-page__location--details">
+        <h3>{{ __('Location Details', 'GUNY-Single-Trip') }}</h3>
+        {{post.location_details}}
+        <a href="https://www.google.com/maps/place/{{post.map.address}}" target="_blank">Get directions to the location</a>
+      </div>
+      <div class="acf-map">
+        {% if post.map %}
+          <div class="marker" data-lat="{{post.map.lat}}" data-lng="{{post.map.lng}}"></div>
+        {% endif %}   
+      </div>
+    </div> <!-- /.o-content-container-text -->
+  </article>
+
+</section> <!-- /.o-container.u-bottom-spacing -->
+{% endblock %}

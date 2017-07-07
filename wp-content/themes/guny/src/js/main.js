@@ -11,6 +11,9 @@ import alert from './modules/alert.js';
 import bsdtoolsSignup from './modules/bsdtools-signup.js';
 import formEffects from './modules/formEffects.js';
 import facets from './modules/facets.js';
+import owlSettings from './modules/owlSettings.js';
+import iOS7Hack from './modules/iOS7Hack.js';
+import ShareForm from './modules/share-form.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -37,9 +40,20 @@ function init() {
   currentSection();
   bsdtoolsSignup();
   formEffects();
+  owlSettings();
+  iOS7Hack();
 }
 
 ready(init);
 
 // Make certain functions available globally
 window.accordion = accordion;
+
+(function(window, $) {
+  'use strict';
+  // Initialize share by email/sms forms.
+  $(`.${ShareForm.CssClass.FORM}`).each((i, el) => {
+    const shareForm = new ShareForm(el);
+    shareForm.init();
+  });
+})(window, jQuery);

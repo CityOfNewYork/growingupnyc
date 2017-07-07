@@ -1,0 +1,64 @@
+{% extends "microsite-list.twig" %}
+
+{% block head_extras %}
+<style>
+  .c-hero-ms__inspiration { background-color: #144f82; background-image: url(/wp-content/themes/guny/assets/img/hero-inspiration-landing.svg); }
+</style>
+{% endblock %}
+
+{% block hero %}
+<div class="js-parallax">
+  <header class="c-hero c-hero-ms c-hero-ms__inspiration js-parallax-content">
+    <div class="o-container js-parallax-text">
+      <h1 class="c-hero__title">{{options.inspiration_landing_title}}</h1>
+      <p class="c-hero__tagline">{{options.inspiration_landing_tagline}}</p>
+    </div>
+  </header>
+</div>
+{% endblock %}
+
+{% block classes %}
+js-sticky-container
+{% endblock %}
+
+{% block list_sidebar %}
+  {#<ol class="c-nav-list c-nav-list-ms c-nav-list-ms__inspiration js-sticky js-section-set o-sticky-nav">
+     <li class="c-nav-list__item">
+      <a href="#featured-inspiration" data-section="featured-inspiration" class="js-section c-nav-list__link">Featured Inspiration<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+    </li>
+    <li class="c-nav-list__item">
+      <a href="#other-inspirations" data-section="other-inspirations" class="js-section c-nav-list__link">Other Inspirations<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+    </li>
+  </ol>#}
+  {% for post in featuredposts %}
+    <dl class="c-details-list c-details-list-ms c-details-list-ms__inspiration">
+        <dd class="c-details-list__descr c-details-list-ms__descr c-prof-name"><h2>{{post.prof_name}}, {{post.prof_age}}</h2></dd>
+        <dd class="c-details-list__descr c-details-list-ms__descr c-prof-country">{{post.prof_country}}, {{post.prof_citystate}}</dd>
+        <dd class="c-details-list__descr c-details-list-ms__descr c-prof-intro">{{post.intro__overview}}</dd>
+    </dl>
+  {% endfor %}
+{% endblock %}
+
+{% block post_list %}
+  
+{% for post in featuredposts %}
+<section id="featured-inspiration">
+  {% include ['partials/teaser-featured-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+</section>
+{% endfor %}
+
+<section id="other-inspirations" class="c-block-list c-other-inspirations c-block-list--shade o-content-container u-sm-gutter">
+  <h3 class="c-other-inspirations__title">Other Inspirations</h3>
+  {% for post in posts %}
+    <div class="c-block-list__item">
+      {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+    </div>
+  {% endfor %}
+</section>
+{% endblock %}
+
+{% block after_list %}
+<div class="o-content-container--compact">
+  {{pagination}}
+</div>
+{% endblock %}

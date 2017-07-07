@@ -25,7 +25,7 @@
       <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
         <li><a href="{{all_events.link}}" class="c-list-box__subitem">{{all_events.name}}</a></li>
       {% for event_type in event_filter %}
-        <li><a href="{{event_type.link}}" class="c-list-box__subitem">{{event_type.name}}</a></li>
+        <li class="{{event_type.slug}}"><a href="{{event_type.link}}" class="c-list-box__subitem">{{event_type.name}}</a></li>
       {% endfor %}
       </ul>
     </div>

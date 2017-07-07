@@ -1,0 +1,438 @@
+/*!
+Theme Name: Growing Up NYC
+Theme URI: http://www.bluestatedigital.com
+Author: Blue State Digital
+Author URI: http://www.bluestatedigital.com
+Description: Custom theme for GUNY override styles for Micro Site
+*/
+
+// Settings (Global variables)
+// =====================
+@import "neat-helpers";
+@import "settings/*";
+
+// Tools (Default mixins and functions)
+// =====================
+@import "neat";
+@import "tools/unit";
+@import "tools/type";
+@import "tools/images";
+@import "tools/layout";
+
+// Microsite (Partials)
+// =====================
+@import "microsite/splatter";
+
+//Common styles for Micro Site
+
+//Button
+button {
+  &:hover,
+  &:focus {
+    outline: none;
+  }
+}
+
+// Header
+.c-banner__link {
+  color: $gray-1;
+  &:focus {
+    color: $dark-gray-1;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $dark-gray-1;
+    }
+  }
+}
+
+// Inline list item
+.o-inline__item {
+  display: inline-block;
+  margin-left: rem-calc(8);
+  margin-right: -4px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  @include media($bp-small) {
+    margin-left: rem-calc(16);
+  }
+
+  @include media($bp-large) {
+    margin-left: rem-calc(56);
+  }
+}
+
+// Show mobile only
+.mobile-only {
+  @include media($bp-large) {
+    display: none;
+  }
+}
+
+// Banner Logo Wrapper
+.c-banner__logo-wrapper {
+  top: 0;
+  @include media($bp-small) {
+    height: rem-calc(80);
+  }
+
+  @include media($bp-medium) {
+    height: rem-calc(144);
+  }
+
+  .c-banner-ms__logo {
+    @include image-replace("/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_MS.png");
+
+    background-position: center bottom;
+    height: 100%;
+    width: 100%;
+
+    @include media($bp-small) {
+      background-position: center bottom rem-calc(5);
+    }
+
+    @include media($bp-medium) {
+      background-position: center bottom rem-calc(11);
+    }
+  }
+}
+
+// Hero
+.c-hero-ms {
+  padding: percentage(126/375) 0 rem-calc(65);
+
+  @include media($bp-medium) {
+    padding: rem-calc(168 40 80);
+  }
+}
+
+.c-side-hero-ms {
+  border-left: none;
+}
+
+.c-hero-ms--light {
+  color: $color-text;
+  text-align: left;
+  padding: percentage(13/375) 0 rem-calc(35);
+
+  @include media($bp-medium) {
+    padding: rem-calc(30 0 78);
+  }
+}
+
+.c-side-hero-ms__title .c-side-hero__title__large {
+  @include font-size-xx-large;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  @include media($bp-large) {
+    font-size: rem-calc(50);
+  }
+
+  @include media($bp-xlarge) {
+    @include font-size-xxx-large;
+  }
+
+  .rotating-text__entry {
+    display: block;
+    width: 100%;
+  }
+}
+
+//Side Hero
+.c-side-hero-ms__content {
+  color: $white;
+  padding: rem-calc(40 15 30);
+  text-align: center;
+
+  @include media($bp-mobile-only) {
+    background: $very-dark-gray-1;
+    @include splatter(top, left);
+    @include splatter(bottom, right);
+  }
+
+  @include media($bp-large) {
+    bottom: 0;
+    left: 0;
+    padding: rem-calc(60);
+    position: absolute;
+    width: 100%;
+    text-align: left;
+  }
+}
+
+//WYSIWYG Style overrides
+.s-wysiwyg {
+  h3 {
+    margin: rem-calc(15 0 5);
+  }
+  ul {
+    padding-left: 0;
+    margin-top: 0;
+
+    li {
+      padding-bottom: 0;
+    }
+  }
+}
+
+//Article Content
+.o-article-ms {
+  h2 {
+    margin-top: rem-calc(20);
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+//Static Column Right
+.o-scroll-column--right {
+  background: $color-background-shade;
+  padding: rem-calc(8 0);
+}
+
+// List Box Heading
+//
+// Top level list item or section heading.
+// If used with the accordion pattern, this will be whatever the accordion drawer
+// heading is.
+//
+
+.c-list-box-ms {
+  padding-top: 0;
+  margin: rem-calc(0 15);
+
+  @include media($bp-medium) {
+    margin: rem-calc(0 30);
+  }
+
+  @include media($bp-xlarge) {
+    margin: rem-calc(0 45);
+  }
+}
+
+.c-list-box-ms__item {
+  display: inline-block;
+  width: 100%;
+  position: relative;
+  background: $white;
+  color: $very-dark-gray;
+  padding: rem-calc(30 25);
+  margin: rem-calc(8 0);
+
+  @include media($bp-medium) {
+    padding: rem-calc(35 35);
+  }
+
+  @include media($bp-xlarge) {
+    padding: rem-calc(40 45);
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-top: rem-calc(7) solid $dark-gray-1;
+  }
+
+  .c-list-box-ms__text {
+    display: inline-block;
+    margin-bottom: rem-calc(25);
+    @include media($bp-medium) {
+      margin-bottom: rem-calc(33);
+    }
+  }
+
+  .button--primary__curved {
+    color: $white;
+    font-family: $font-family-display;
+    background: $dark-gray-1;
+    @include font-size-x-large;
+    font-weight: $font-weight-extrablack;
+    border-radius: rem-calc(35);
+    border: none;
+    &:focus {
+      background: $black;
+    }
+
+    .no-touchevents & {
+      &:hover {
+        background: $black;
+      }
+    }
+  }
+
+  //Colors of list box items
+  &.topics__item {
+    &:before {
+      border-color: $purple;
+    }
+
+    .button--primary__curved {
+      background: $purple;
+      &:focus {
+        background: $dark-purple;
+      }
+
+      .no-touchevents & {
+        &:hover {
+          background: $dark-purple;
+        }
+      }
+    }
+  }
+
+  &.inspirations__item {
+    &:before {
+      border-color: $dark-blue;
+    }
+
+    .button--primary__curved {
+      background: $dark-blue;
+      &:focus {
+        background: $very-dark-blue;
+      }
+
+      .no-touchevents & {
+        &:hover {
+          background: $very-dark-blue;
+        }
+      }
+    }
+  }
+
+  &.trips__item {
+    &:before {
+      border-color: $green;
+    }
+
+    .button--primary__curved {
+      background: $green;
+      &:focus {
+        background: $dark-green;
+      }
+
+      .no-touchevents & {
+        &:hover {
+          background: $dark-green;
+        }
+      }
+    }
+  }
+}
+
+//Detail Page
+.c-details-list-ms__descr {
+  ul {
+    margin-top: rem-calc(18);
+    list-style: none;
+
+    li {
+      padding: rem-calc(0 0 0 27);
+      text-indent: rem-calc(-27);
+      &:before {
+        content: url(/wp-content/themes/guny/assets/img/check.svg);
+        margin-right: rem-calc(12);
+        margin-top: rem-calc(2);
+        opacity: .2;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+//Owl Carousel
+.carousel-ms {
+  &,
+  .owl-stage-outer,
+  .owl-stage,
+  .owl-item,
+  .owl-bg {
+    height: 190px;
+    @include media($bp-medium) {
+      height: 360px;
+    }
+  }
+
+  .owl-dots {
+    position: absolute;
+    width: 100%;
+    bottom: rem-calc(10);
+
+    .owl-dot {
+      span {
+        width: 12px;
+        height: 12px;
+        margin: 5px;
+        background: $white;
+        opacity: .6;
+      }
+
+      &.active {
+        span {
+          background: $white;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+//Card Invert
+//This is created for inspiration page other inspirations section
+//Added this as a common class for the micro site
+.c-card-invert {
+  background: $color-background;
+  display: flex;
+  flex-flow: column;
+  margin-left: rem-calc($sticker-size-mobile / 2);
+  margin-right: 0;
+  padding: rem-calc(25 21 25 ($sticker-size-mobile / 2) + 10);
+  position: relative;
+  margin-bottom: rem-calc(20);
+  @include media($bp-large) {
+    margin-left: rem-calc($sticker-size / 2);
+    padding: rem-calc(30);
+    padding-left: rem-calc(($sticker-size / 2) + 20);
+  }
+
+  .c-card__sticker {
+    order: 1;
+    position: absolute;
+    left: rem-calc(-$sticker-size-mobile / 2);
+    top: rem-calc(10);
+
+    .event-day {
+      display: none;
+    }
+
+    @include media($bp-large) {
+      left: rem-calc(-$sticker-size / 2);
+    }
+  }
+}
+
+.c-card__title {
+  text-decoration: none;
+}
+
+// Footer
+.c-footer {
+  background: $dark-gray-1;
+}
+
+// Trips page styles
+@import "microsite/trips";
+
+// Topics page styles
+@import "microsite/topics";
+
+// Inspiration page styles
+@import "microsite/inspiration"

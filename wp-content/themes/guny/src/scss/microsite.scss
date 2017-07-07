@@ -36,12 +36,15 @@ button {
 // Header
 .c-banner__link {
   color: $gray-1;
-  &:focus {
-    color: $dark-gray-1;
-  }
+}
 
-  .no-touchevents & {
-    &:hover {
+.no-touchevents {
+  &:hover {
+    color: $gray;
+  }
+  .c-banner__link {
+    &:hover,
+    &:focus {
       color: $dark-gray-1;
     }
   }
@@ -176,6 +179,12 @@ button {
 
     li {
       padding-bottom: 0;
+      &:before {
+        position: relative;
+        top: -4px;
+        opacity: 1;
+        content: url(/wp-content/themes/guny/assets/img/circle.svg);
+      }
     }
   }
 }
@@ -258,14 +267,9 @@ button {
     font-weight: $font-weight-extrablack;
     border-radius: rem-calc(35);
     border: none;
-    &:focus {
-      background: $black;
-    }
 
-    .no-touchevents & {
-      &:hover {
-        background: $black;
-      }
+    &:hover {
+      background: $black;
     }
   }
 
@@ -277,14 +281,8 @@ button {
 
     .button--primary__curved {
       background: $purple;
-      &:focus {
+      &:hover {
         background: $dark-purple;
-      }
-
-      .no-touchevents & {
-        &:hover {
-          background: $dark-purple;
-        }
       }
     }
   }
@@ -296,14 +294,8 @@ button {
 
     .button--primary__curved {
       background: $dark-blue;
-      &:focus {
+      &:hover {
         background: $very-dark-blue;
-      }
-
-      .no-touchevents & {
-        &:hover {
-          background: $very-dark-blue;
-        }
       }
     }
   }
@@ -315,14 +307,8 @@ button {
 
     .button--primary__curved {
       background: $green;
-      &:focus {
+      &:hover {
         background: $dark-green;
-      }
-
-      .no-touchevents & {
-        &:hover {
-          background: $dark-green;
-        }
       }
     }
   }
@@ -419,13 +405,27 @@ button {
   }
 }
 
-.c-card__title {
-  text-decoration: none;
-}
-
 // Footer
 .c-footer {
   background: $dark-gray-1;
+}
+
+// Footer Link
+.c-footer__link {
+  color: $color-text-invert;
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
+  text-decoration: none;
+
+  &:focus {
+    color: $gray-2;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $gray-2;
+    }
+  }
 }
 
 // Trips page styles
@@ -435,4 +435,4 @@ button {
 @import "microsite/topics";
 
 // Inspiration page styles
-@import "microsite/inspiration"
+@import "microsite/inspiration";

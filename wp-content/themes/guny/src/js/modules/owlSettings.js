@@ -10,12 +10,13 @@
 export default function() {
   var owl = $('.owl-carousel');
   owl.owlCarousel({
-      items:1,
-      loop:true,
-      margin:0,
-      dots: true,
-      autoplay:true,
-      autoplayTimeout:5000,
-      autoplayHoverPause:true
+    animateIn: 'fadeIn',
+    items:1,
+    loop:true,
+    margin:0,
+    dots: true,
+    autoplay:true,
+    autoplayTimeout:5000,
+    autoplayHoverPause:true
   });
 }

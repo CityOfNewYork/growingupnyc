@@ -25,13 +25,14 @@
   <div class="c-side-hero__image"></div>
   <div class="c-side-hero__content">
     <h1 class="c-side-hero__title">
-      {{post.c('hero_title_top')}}
+      {{post.get_field('hero_title_top')}}
       <div class="c-side-hero__title__large rotating-text">
         {% for text in post.get_field('hero_rotating_text_repeater') %}
           <span class="rotating-text__entry">
             {{text.hero_rotating_text}}
-          </span>
+          </span>          
         {% endfor %}
+        <span id="rotate"></span>
       </div> <!-- /.c-side-hero__title__large -->
     </h1>
     <a href="{{post.get_field('hero_button_url')}}" class="button--outline button--outline--white mobile-hide">{{post.get_field('hero_button_text')}}</a>
@@ -66,7 +67,7 @@
       {% endfor %}
     </div>
     <div class="text-center">
-      <a href="/guny/events" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Homepage') }}</a>
+      <a href="/events" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Homepage') }}</a>
     </div>
   </div> <!-- /.c-content-container.c-content-container--shade -->
 </section> <!-- /.o-scroll-column.o-scroll-column--right -->

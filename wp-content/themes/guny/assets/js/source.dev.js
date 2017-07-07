@@ -444,35 +444,39 @@ if (objCtr.defineProperty) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {'use strict';
 
-	var _globalSearch = __webpack_require__(25);
+	var _globalSearch = __webpack_require__(24);
 
 	var _globalSearch2 = _interopRequireDefault(_globalSearch);
 
-	var _toggleOpen = __webpack_require__(35);
+	var _toggleOpen = __webpack_require__(37);
 
 	var _toggleOpen2 = _interopRequireDefault(_toggleOpen);
 
-	var _accordion = __webpack_require__(17);
+	var _accordion = __webpack_require__(15);
 
 	var _accordion2 = _interopRequireDefault(_accordion);
 
-	var _offcanvas = __webpack_require__(27);
+	var _simpleAccordion = __webpack_require__(34);
+
+	var _simpleAccordion2 = _interopRequireDefault(_simpleAccordion);
+
+	var _offcanvas = __webpack_require__(26);
 
 	var _offcanvas2 = _interopRequireDefault(_offcanvas);
 
-	var _overlay = __webpack_require__(28);
+	var _overlay = __webpack_require__(27);
 
 	var _overlay2 = _interopRequireDefault(_overlay);
 
-	var _stickyNav = __webpack_require__(34);
+	var _stickyNav = __webpack_require__(36);
 
 	var _stickyNav2 = _interopRequireDefault(_stickyNav);
 
-	var _currentSection = __webpack_require__(21);
+	var _sectionHighlighter = __webpack_require__(32);
 
-	var _currentSection2 = _interopRequireDefault(_currentSection);
+	var _sectionHighlighter2 = _interopRequireDefault(_sectionHighlighter);
 
-	var _staticColumn = __webpack_require__(33);
+	var _staticColumn = __webpack_require__(35);
 
 	var _staticColumn2 = _interopRequireDefault(_staticColumn);
 
@@ -480,36 +484,45 @@ if (objCtr.defineProperty) {
 
 	var _searchResultsHeader2 = _interopRequireDefault(_searchResultsHeader);
 
-	var _alert = __webpack_require__(18);
+	var _alert = __webpack_require__(16);
 
 	var _alert2 = _interopRequireDefault(_alert);
 
-	var _bsdtoolsSignup = __webpack_require__(19);
+	var _bsdtoolsSignup = __webpack_require__(17);
 
 	var _bsdtoolsSignup2 = _interopRequireDefault(_bsdtoolsSignup);
 
-	var _formEffects = __webpack_require__(23);
+	var _formEffects = __webpack_require__(22);
 
 	var _formEffects2 = _interopRequireDefault(_formEffects);
 
-	var _facets = __webpack_require__(22);
+	var _facets = __webpack_require__(21);
 
 	var _facets2 = _interopRequireDefault(_facets);
 
-	var _owlSettings = __webpack_require__(29);
+	var _owlSettings = __webpack_require__(28);
 
 	var _owlSettings2 = _interopRequireDefault(_owlSettings);
 
-	var _iOS7Hack = __webpack_require__(26);
+	var _iOS7Hack = __webpack_require__(25);
 
 	var _iOS7Hack2 = _interopRequireDefault(_iOS7Hack);
 
-	var _shareForm = __webpack_require__(32);
+	var _shareForm = __webpack_require__(33);
 
 	var _shareForm2 = _interopRequireDefault(_shareForm);
 
+	var _captchaResize = __webpack_require__(18);
+
+	var _captchaResize2 = _interopRequireDefault(_captchaResize);
+
+	var _rotatingTextAnimation = __webpack_require__(30);
+
+	var _rotatingTextAnimation2 = _interopRequireDefault(_rotatingTextAnimation);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	//import currentSection from './modules/currentSection.js';
 	function ready(fn) {
 	  if (document.readyState === 'loading') {
 	    document.addEventListener('DOMContentLoaded', fn);
@@ -524,6 +537,7 @@ if (objCtr.defineProperty) {
 	  (0, _alert2.default)('is-open');
 	  (0, _offcanvas2.default)();
 	  (0, _accordion2.default)();
+	  (0, _simpleAccordion2.default)();
 	  (0, _overlay2.default)();
 	  // Search results page
 	  (0, _searchResultsHeader2.default)();
@@ -532,11 +546,14 @@ if (objCtr.defineProperty) {
 	  // Homepage
 	  (0, _staticColumn2.default)();
 	  (0, _stickyNav2.default)();
-	  (0, _currentSection2.default)();
+	  //currentSection();
 	  (0, _bsdtoolsSignup2.default)();
 	  (0, _formEffects2.default)();
 	  (0, _owlSettings2.default)();
 	  (0, _iOS7Hack2.default)();
+	  (0, _captchaResize2.default)();
+	  (0, _rotatingTextAnimation2.default)();
+	  (0, _sectionHighlighter2.default)();
 	}
 
 	ready(init);
@@ -565,10 +582,10 @@ if (objCtr.defineProperty) {
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var arrayEach = __webpack_require__(39),
-	    baseEach = __webpack_require__(41),
-	    castFunction = __webpack_require__(49),
-	    isArray = __webpack_require__(12);
+	var arrayEach = __webpack_require__(42),
+	    baseEach = __webpack_require__(44),
+	    castFunction = __webpack_require__(52),
+	    isArray = __webpack_require__(11);
 
 	/**
 	 * Iterates over elements of `collection` and invokes `iteratee` for each element.
@@ -612,9 +629,9 @@ if (objCtr.defineProperty) {
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(9),
-	    getRawTag = __webpack_require__(52),
-	    objectToString = __webpack_require__(57);
+	var Symbol = __webpack_require__(8),
+	    getRawTag = __webpack_require__(55),
+	    objectToString = __webpack_require__(60);
 
 	/** `Object#toString` result references. */
 	var nullTag = '[object Null]',
@@ -718,7 +735,7 @@ if (objCtr.defineProperty) {
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var freeGlobal = __webpack_require__(10);
+	var freeGlobal = __webpack_require__(9);
 
 	/** Detect free variable `self`. */
 	var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
@@ -748,28 +765,6 @@ if (objCtr.defineProperty) {
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	exports.default = function (elem, eventType) {
-	  var event = void 0;
-	  if (document.createEvent) {
-	    event = document.createEvent('HTMLEvents');
-	    event.initEvent(eventType, true, true);
-	    elem.dispatchEvent(event);
-	  } else {
-	    event = document.createEventObject();
-	    elem.fireEvent('on' + eventType, event);
-	  }
-	};
-
-/***/ }),
-/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var root = __webpack_require__(6);
@@ -781,7 +776,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
@@ -792,12 +787,12 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var isObject = __webpack_require__(4),
-	    now = __webpack_require__(66),
-	    toNumber = __webpack_require__(68);
+	    now = __webpack_require__(69),
+	    toNumber = __webpack_require__(72);
 
 	/** Error message constants. */
 	var FUNC_ERROR_TEXT = 'Expected a function';
@@ -986,7 +981,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports) {
 
 	/**
@@ -1018,11 +1013,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(62),
-	    isLength = __webpack_require__(14);
+	var isFunction = __webpack_require__(65),
+	    isLength = __webpack_require__(13);
 
 	/**
 	 * Checks if `value` is array-like. A value is considered array-like if it's
@@ -1057,7 +1052,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports) {
 
 	/** Used as references for various `Number` constants. */
@@ -1098,82 +1093,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var debounce = __webpack_require__(11),
-	    isObject = __webpack_require__(4);
-
-	/** Error message constants. */
-	var FUNC_ERROR_TEXT = 'Expected a function';
-
-	/**
-	 * Creates a throttled function that only invokes `func` at most once per
-	 * every `wait` milliseconds. The throttled function comes with a `cancel`
-	 * method to cancel delayed `func` invocations and a `flush` method to
-	 * immediately invoke them. Provide `options` to indicate whether `func`
-	 * should be invoked on the leading and/or trailing edge of the `wait`
-	 * timeout. The `func` is invoked with the last arguments provided to the
-	 * throttled function. Subsequent calls to the throttled function return the
-	 * result of the last `func` invocation.
-	 *
-	 * **Note:** If `leading` and `trailing` options are `true`, `func` is
-	 * invoked on the trailing edge of the timeout only if the throttled function
-	 * is invoked more than once during the `wait` timeout.
-	 *
-	 * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
-	 * until to the next tick, similar to `setTimeout` with a timeout of `0`.
-	 *
-	 * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
-	 * for details over the differences between `_.throttle` and `_.debounce`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.1.0
-	 * @category Function
-	 * @param {Function} func The function to throttle.
-	 * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
-	 * @param {Object} [options={}] The options object.
-	 * @param {boolean} [options.leading=true]
-	 *  Specify invoking on the leading edge of the timeout.
-	 * @param {boolean} [options.trailing=true]
-	 *  Specify invoking on the trailing edge of the timeout.
-	 * @returns {Function} Returns the new throttled function.
-	 * @example
-	 *
-	 * // Avoid excessively updating the position while scrolling.
-	 * jQuery(window).on('scroll', _.throttle(updatePosition, 100));
-	 *
-	 * // Invoke `renewToken` when the click event is fired, but not more than once every 5 minutes.
-	 * var throttled = _.throttle(renewToken, 300000, { 'trailing': false });
-	 * jQuery(element).on('click', throttled);
-	 *
-	 * // Cancel the trailing throttled invocation.
-	 * jQuery(window).on('popstate', throttled.cancel);
-	 */
-	function throttle(func, wait, options) {
-	  var leading = true,
-	      trailing = true;
-
-	  if (typeof func != 'function') {
-	    throw new TypeError(FUNC_ERROR_TEXT);
-	  }
-	  if (isObject(options)) {
-	    leading = 'leading' in options ? !!options.leading : leading;
-	    trailing = 'trailing' in options ? !!options.trailing : trailing;
-	  }
-	  return debounce(func, wait, {
-	    'leading': leading,
-	    'maxWait': wait,
-	    'trailing': trailing
-	  });
-	}
-
-	module.exports = throttle;
-
-
-/***/ }),
-/* 16 */
+/* 14 */
 /***/ (function(module, exports) {
 
 	module.exports = function(module) {
@@ -1189,7 +1109,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 17 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -1423,7 +1343,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 18 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1524,7 +1444,7 @@ if (objCtr.defineProperty) {
 
 	var _forEach2 = _interopRequireDefault(_forEach);
 
-	var _readCookie = __webpack_require__(30);
+	var _readCookie = __webpack_require__(29);
 
 	var _readCookie2 = _interopRequireDefault(_readCookie);
 
@@ -1532,18 +1452,18 @@ if (objCtr.defineProperty) {
 
 	var _dataset2 = _interopRequireDefault(_dataset);
 
-	var _createCookie = __webpack_require__(20);
+	var _createCookie = __webpack_require__(19);
 
 	var _createCookie2 = _interopRequireDefault(_createCookie);
 
-	var _getDomain = __webpack_require__(24);
+	var _getDomain = __webpack_require__(23);
 
 	var _getDomain2 = _interopRequireDefault(_getDomain);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 19 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -1647,11 +1567,53 @@ if (objCtr.defineProperty) {
 	/**
 	* Validate a form and submit via the signup API
 	*/
-	__webpack_require__(36);
+	__webpack_require__(38);
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 20 */
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  function scaleCaptcha() {
+	    // Width of the reCAPTCHA element, in pixels
+	    var reCaptchaWidth = 304;
+	    // Get the containing element's width
+	    var containerWidth = $('.sms-form-wrapper').width();
+
+	    // Only scale the reCAPTCHA if it won't fit
+	    // inside the container
+	    if (reCaptchaWidth > containerWidth) {
+	      // Calculate the scale
+	      var captchaScale = containerWidth / reCaptchaWidth;
+	      // Apply the transformation
+	      $('.g-recaptcha').css({
+	        transform: 'scale(' + captchaScale + ')'
+	      });
+	    }
+	  }
+
+	  $(function () {
+	    // Initialize scaling
+	    scaleCaptcha();
+	  });
+
+	  $(window).resize(function () {
+	    // Update scaling on window resize
+	    // Uses jQuery throttle plugin to limit strain on the browser
+	    scaleCaptcha();
+	  });
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 19 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -1666,8 +1628,8 @@ if (objCtr.defineProperty) {
 	};
 
 /***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 20 */
+/***/ (function(module, exports) {
 
 	'use strict';
 
@@ -1675,110 +1637,20 @@ if (objCtr.defineProperty) {
 	  value: true
 	});
 
-	exports.default = function () {
-	  /**
-	  * Gets an element's top position
-	  * @param {object} elem - The DOM element
-	  * @return {integer} - The distance from the top
-	  */
-	  function getTop(elem) {
-	    return elem.getBoundingClientRect().top;
-	  }
-
-	  /**
-	  * Gets an element's bottom position
-	  * @param {object} elem - The DOM element
-	  * @return {integer} - The distance from the bottom
-	  */
-	  function getBottom(elem) {
-	    return elem.getBoundingClientRect().bottom;
-	  }
-
-	  /**
-	  * Compares whether one element has entered the part of the page occupied by the other
-	  * Element is considered to have "entered" if its bottom position is equal to or below
-	  * the other element's top but not below the other element's bottom
-	  * @param {object} marker - The element being compared
-	  * @param {object} target - The element marker is being compared to
-	  * @return {boolean} - True if marker has entered target
-	  */
-	  function hasEntered(marker, target) {
-	    return getTop(marker) >= getTop(target) && getBottom(marker) <= getBottom(target) - 1;
-	  }
-
-	  /**
-	  * Adds or removes the current section class
-	  * @param {object} marker - The element being compared
-	  * @param {object} target - The element marker is being compared to
-	  */
-	  function toggleIndicator(marker, target) {
-	    var currentSectionClass = 'is-active';
-	    var hasClass = marker.classList.contains(currentSectionClass);
-	    var hasEnteredTarget = hasEntered(marker, target);
-
-	    if (hasEnteredTarget && !hasClass) {
-	      marker.classList.add(currentSectionClass);
-	    } else if (!hasEnteredTarget && hasClass) {
-	      marker.classList.remove(currentSectionClass);
-	    }
-	  }
-
-	  /**
-	  * Initialize the current section behavior
-	  * @param {object} marker - DOM node that should mark when a section is active
-	  */
-	  function initializeMarker(marker) {
-	    var targetSelector = void 0;
-	    if (typeof marker.dataset === 'undefined') {
-	      targetSelector = marker.getAttribute('data-section');
-	    } else {
-	      targetSelector = marker.dataset.section;
-	    }
-	    if (!targetSelector) {
-	      return;
-	    }
-	    var target = document.getElementById(targetSelector);
-	    if (!target) {
-	      return;
-	    }
-	    window.addEventListener('resize', (0, _throttle2.default)(function () {
-	      var scrollListener = void 0;
-	      if (window.matchMedia('(min-width: 1024px)').matches) {
-	        scrollListener = window.addEventListener('scroll', (0, _throttle2.default)(function () {
-	          toggleIndicator(marker, target);
-	        }, 100));
-	        toggleIndicator(marker, target);
-	      } else if (typeof scrollListener !== 'undefined') {
-	        window.removeEventListener('scroll', scrollListener);
-	      }
-	    }, 100));
-	    (0, _dispatchEvent2.default)(window, 'resize');
-	  }
-
-	  var markers = document.querySelectorAll('.js-section');
-	  if (markers.length) {
-	    (0, _forEach2.default)(markers, function (marker) {
-	      initializeMarker(marker);
-	    });
+	exports.default = function (elem, eventType) {
+	  var event = void 0;
+	  if (document.createEvent) {
+	    event = document.createEvent('HTMLEvents');
+	    event.initEvent(eventType, true, true);
+	    elem.dispatchEvent(event);
+	  } else {
+	    event = document.createEventObject();
+	    elem.fireEvent('on' + eventType, event);
 	  }
 	};
 
-	var _forEach = __webpack_require__(2);
-
-	var _forEach2 = _interopRequireDefault(_forEach);
-
-	var _throttle = __webpack_require__(15);
-
-	var _throttle2 = _interopRequireDefault(_throttle);
-
-	var _dispatchEvent = __webpack_require__(8);
-
-	var _dispatchEvent2 = _interopRequireDefault(_dispatchEvent);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -1800,7 +1672,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1844,14 +1716,14 @@ if (objCtr.defineProperty) {
 
 	var _forEach2 = _interopRequireDefault(_forEach);
 
-	var _dispatchEvent = __webpack_require__(8);
+	var _dispatchEvent = __webpack_require__(20);
 
 	var _dispatchEvent2 = _interopRequireDefault(_dispatchEvent);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1879,7 +1751,7 @@ if (objCtr.defineProperty) {
 	};
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -1920,7 +1792,7 @@ if (objCtr.defineProperty) {
 	};
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -1938,7 +1810,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1979,7 +1851,7 @@ if (objCtr.defineProperty) {
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2023,31 +1895,32 @@ if (objCtr.defineProperty) {
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 
 	exports.default = function () {
-	    var owl = $('.owl-carousel');
-	    owl.owlCarousel({
-	        items: 1,
-	        loop: true,
-	        margin: 0,
-	        dots: true,
-	        autoplay: true,
-	        autoplayTimeout: 5000,
-	        autoplayHoverPause: true
-	    });
+	  var owl = $('.owl-carousel');
+	  owl.owlCarousel({
+	    animateIn: 'fadeIn',
+	    items: 1,
+	    loop: true,
+	    margin: 0,
+	    dots: true,
+	    autoplay: true,
+	    autoplayTimeout: 5000,
+	    autoplayHoverPause: true
+	  });
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -2059,6 +1932,33 @@ if (objCtr.defineProperty) {
 	exports.default = function (cookieName, cookie) {
 	  return (RegExp("(?:^|; )" + cookieName + "=([^;]*)").exec(cookie) || []).pop();
 	};
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  var terms = [];
+
+	  $('.rotating-text__entry').each(function (i, e) {
+	    if ($(e).text().trim() != '') {
+	      terms.push($(e).text());
+	    }
+	  });
+
+	  function rotateTerm() {
+	    var ct = $("#rotate").data("term") || 0;
+	    $("#rotate").data("term", ct == terms.length - 1 ? 0 : ct + 1).text(terms[ct]).fadeIn().delay(2000).fadeOut(200, rotateTerm);
+	  }
+	  $(rotateTerm);
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 /* 31 */
@@ -2084,6 +1984,58 @@ if (objCtr.defineProperty) {
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
+	/* WEBPACK VAR INJECTION */(function($) {"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  var $navigationLinks = $('.js-section-set > li > a');
+	  var $sections = $("section");
+	  var $sectionsReversed = $($("section").get().reverse());
+	  var sectionIdTonavigationLink = {};
+	  //var eTop = $('#free-day-trips').offset().top;
+
+	  $sections.each(function () {
+	    sectionIdTonavigationLink[$(this).attr('id')] = $('.js-section-set > li > a[href=\\#' + $(this).attr('id') + ']');
+	  });
+
+	  function optimized() {
+	    var scrollPosition = $(window).scrollTop();
+
+	    $sectionsReversed.each(function () {
+	      var currentSection = $(this);
+	      var sectionTop = currentSection.offset().top;
+
+	      // if(currentSection.is('section:first-child') && sectionTop > scrollPosition){
+	      //   console.log('scrollPosition', scrollPosition);
+	      //   console.log('sectionTop', sectionTop);
+	      // }
+
+	      if (scrollPosition >= sectionTop || currentSection.is('section:first-child') && sectionTop > scrollPosition) {
+	        var id = currentSection.attr('id');
+	        var $navigationLink = sectionIdTonavigationLink[id];
+	        if (!$navigationLink.hasClass('is-active') || !$('section').hasClass('o-content-container--compact')) {
+	          $navigationLinks.removeClass('is-active');
+	          $navigationLink.addClass('is-active');
+	        }
+	        return false;
+	      }
+	    });
+	  }
+
+	  optimized();
+	  $(window).scroll(function () {
+	    optimized();
+	  });
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
 	/* eslint-env browser */
 	'use strict';
 
@@ -2097,7 +2049,11 @@ if (objCtr.defineProperty) {
 
 	var _jquery2 = _interopRequireDefault(_jquery);
 
-	var _utility = __webpack_require__(37);
+	var _jsCookie = __webpack_require__(41);
+
+	var _jsCookie2 = _interopRequireDefault(_jsCookie);
+
+	var _utility = __webpack_require__(39);
 
 	var _utility2 = _interopRequireDefault(_utility);
 
@@ -2134,6 +2090,15 @@ if (objCtr.defineProperty) {
 
 	    /** @private {boolean} Whether this component has been initialized. */
 	    this._initialized = false;
+
+	    /** @private {boolean} Whether the google reCAPTCHA widget is required. */
+	    this._recaptchaRequired = false;
+
+	    /** @private {boolean} Whether the google reCAPTCHA widget has passed. */
+	    this._recaptchaVerified = false;
+
+	    /** @private {boolean} Whether the google reCAPTCHA widget is initilaised. */
+	    this._recaptchainit = false;
 	  }
 
 	  /**
@@ -2154,14 +2119,52 @@ if (objCtr.defineProperty) {
 
 	      (0, _jquery2.default)(this._el).on('submit', function (e) {
 	        e.preventDefault();
-	        _this._validate();
-	        if (_this._isValid && !_this._isBusy && !_this._isDisabled) {
-	          _this._submit();
+	        if (_this._recaptchaRequired) {
+	          if (_this._recaptchaVerified) {
+	            _this._validate();
+	            if (_this._isValid && !_this._isBusy && !_this._isDisabled) {
+	              _this._submit();
+	              window.grecaptcha.reset();
+	              (0, _jquery2.default)(_this._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
+	              _this._recaptchaVerified = false;
+	            }
+	          } else {
+	            (0, _jquery2.default)(_this._el).find('.' + ShareForm.CssClass.ERROR_MSG).remove();
+	            _this._showError(ShareForm.Message.RECAPTCHA);
+	          }
+	        } else {
+	          _this._validate();
+	          if (_this._isValid && !_this._isBusy && !_this._isDisabled) {
+	            _this._submit();
+	          }
 	        }
+
+	        // // Determine whether or not to initialize ReCAPTCHA. This should be
+	        // // initialized only on every 10th view which is determined via an
+	        // // incrementing cookie.
+	        var viewCount = _jsCookie2.default.get('screenerViews') ? parseInt(_jsCookie2.default.get('screenerViews'), 10) : 1;
+	        if (viewCount >= 5 && !_this._recaptchainit) {
+	          (0, _jquery2.default)(_this._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
+	          _this._initRecaptcha();
+	          _this._recaptchainit = true;
+	        }
+	        _jsCookie2.default.set('screenerViews', ++viewCount, { expires: 2 / 1440 });
+
+	        (0, _jquery2.default)("#phone").focusout(function () {
+	          (0, _jquery2.default)(this).removeAttr('placeholder');
+	        });
 	      });
 
+	      // // Determine whether or not to initialize ReCAPTCHA. This should be
+	      // // initialized only on every 10th view which is determined via an
+	      // // incrementing cookie.
+	      var viewCount = _jsCookie2.default.get('screenerViews') ? parseInt(_jsCookie2.default.get('screenerViews'), 10) : 1;
+	      if (viewCount >= 5 && !this._recaptchainit) {
+	        (0, _jquery2.default)(this._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
+	        this._initRecaptcha();
+	        this._recaptchainit = true;
+	      }
 	      this._initialized = true;
-
 	      return this;
 	    }
 
@@ -2175,16 +2178,10 @@ if (objCtr.defineProperty) {
 	    key: '_validate',
 	    value: function _validate() {
 	      var validity = true;
-	      // const $email = $(this._el).find('input[type="email"]');
 	      var $tel = (0, _jquery2.default)(this._el).find('input[type="tel"]');
-
 	      // Clear any existing error messages.
 	      (0, _jquery2.default)(this._el).find('.' + ShareForm.CssClass.ERROR_MSG).remove();
 
-	      // if ($email.length) {
-	      //   validity = this._validateRequired($email[0]) &&
-	      //       this._validateEmail($email[0]);
-	      // }
 	      if ($tel.length) {
 	        validity = this._validatePhoneNumber($tel[0]);
 	      }
@@ -2195,28 +2192,6 @@ if (objCtr.defineProperty) {
 	      }
 	      return this;
 	    }
-
-	    /**
-	     * For a given input, checks to see if its value is a valid email. If not,
-	     * displays an error message and sets an error class on the element.
-	     * @param {HTMLElement} input - The html form element for the component.
-	     * @return {boolean} - Valid email.
-	     */
-	    // _validateEmail(input) {
-	    //   if (!$(input).val()) {
-	    //     return false;
-	    //   }
-	    //   else if (!(Utility.isValidEmail($(input).val()))) {
-	    //     this._showError(ShareForm.Message.EMAIL);
-	    //     $(input).one('keyup', e => {
-	    //       this._validate();
-	    //     });
-	    //     return false;
-	    //   } else {
-	    //     return true;
-	    //   }
-	    // }
-
 
 	    /**
 	     * For a given input, checks to see if its value is a valid Phonenumber. If not,
@@ -2251,13 +2226,11 @@ if (objCtr.defineProperty) {
 	      if ((0, _jquery2.default)(input).val()) {
 	        return true;
 	      }
-	      // else {
 	      this._showError(ShareForm.Message.REQUIRED);
 	      (0, _jquery2.default)(input).one('keyup', function () {
 	        this._validate();
 	      });
 	      return false;
-	      // }
 	    }
 
 	    /**
@@ -2269,9 +2242,7 @@ if (objCtr.defineProperty) {
 	  }, {
 	    key: '_showError',
 	    value: function _showError(msg) {
-	      var $msgdiv = (0, _jquery2.default)(document.createElement('div'));
-	      $msgdiv.addClass(ShareForm.CssClass.ERROR_MSG).text(_utility2.default.localize(msg));
-	      (0, _jquery2.default)(this._el).addClass(ShareForm.CssClass.ERROR).append($msgdiv);
+	      (0, _jquery2.default)('#sms-form-msg').addClass(ShareForm.CssClass.ERROR).text(_utility2.default.localize(msg));
 	      return this;
 	    }
 
@@ -2284,11 +2255,11 @@ if (objCtr.defineProperty) {
 	  }, {
 	    key: '_showSuccess',
 	    value: function _showSuccess(msg) {
-	      // $(this._el).addClass(ShareForm.CssClass.SUCCESS);
-
-	      var $msgdiv = (0, _jquery2.default)(document.createElement('div'));
-	      $msgdiv.addClass(ShareForm.CssClass.SUCCESS_MSG).text(_utility2.default.localize(msg));
-	      (0, _jquery2.default)(this._el).addClass(ShareForm.CssClass.SUCCESS).append($msgdiv);
+	      (0, _jquery2.default)('#phone').attr("placeholder", _utility2.default.localize(msg));
+	      (0, _jquery2.default)('#smsbutton').text("Send Another");
+	      (0, _jquery2.default)('#sms-form-msg').addClass(ShareForm.CssClass.SUCCESS).text('');
+	      (0, _jquery2.default)(this._el).parents('.c-tip-ms__topics').removeClass('success-js');
+	      (0, _jquery2.default)(this._el).parents('.c-tip-ms__topics').addClass('success-js');
 	      return this;
 	    }
 
@@ -2307,6 +2278,7 @@ if (objCtr.defineProperty) {
 	      (0, _jquery2.default)(this._el).find('input').prop('disabled', true);
 	      return _jquery2.default.post((0, _jquery2.default)(this._el).attr('action'), payload).done(function (response) {
 	        if (response.success) {
+	          _this2._el.reset();
 	          _this2._showSuccess(ShareForm.Message.SUCCESS);
 	          _this2._isDisabled = true;
 	          (0, _jquery2.default)(_this2._el).one('keyup', 'input', function () {
@@ -2314,7 +2286,6 @@ if (objCtr.defineProperty) {
 	            _this2._isDisabled = false;
 	          });
 	        } else {
-	          // this._showError(ShareForm.Message.SERVER);
 	          _this2._showError(JSON.stringify(response.message));
 	        }
 	      }).fail(function () {
@@ -2323,6 +2294,50 @@ if (objCtr.defineProperty) {
 	        (0, _jquery2.default)(_this2._el).find('input').prop('disabled', false);
 	        _this2._isBusy = false;
 	      });
+	    }
+
+	    /**
+	     * Asynchronously loads the Google recaptcha script and sets callbacks for
+	     * load, success, and expiration.
+	     * @private
+	     * @return {this} Screener
+	     */
+
+	  }, {
+	    key: '_initRecaptcha',
+	    value: function _initRecaptcha() {
+	      var _this3 = this;
+
+	      var $script = (0, _jquery2.default)(document.createElement('script'));
+	      $script.attr('src', 'https://www.google.com/recaptcha/api.js' + '?onload=screenerCallback&render=explicit').prop({
+	        async: true,
+	        defer: true
+	      });
+
+	      window.screenerCallback = function () {
+	        window.grecaptcha.render(document.getElementById('screener-recaptcha'), {
+	          'sitekey': '6LekICYUAAAAAOR2uZ0ajyWt9XxDuspHPUAkRzAB',
+	          //Below is the local host key
+	          // 'sitekey' : '6LcAACYUAAAAAPmtvQvBwK89imM3QfotJFHfSm8C',
+	          'callback': 'screenerRecaptcha',
+	          'expired-callback': 'screenerRecaptchaReset'
+	        });
+	        _this3._recaptchaRequired = true;
+	      };
+
+	      window.screenerRecaptcha = function () {
+	        _this3._recaptchaVerified = true;
+	        (0, _jquery2.default)(_this3._el).parents('.c-tip-ms__topics').removeClass('recaptcha-js');
+	      };
+
+	      window.screenerRecaptchaReset = function () {
+	        _this3._recaptchaVerified = false;
+	        (0, _jquery2.default)(_this3._el).parents('.c-tip-ms__topics').addClass('recaptcha-js');
+	      };
+
+	      this._recaptchaRequired = true;
+	      (0, _jquery2.default)('head').append($script);
+	      return this;
 	    }
 	  }]);
 
@@ -2353,13 +2368,53 @@ if (objCtr.defineProperty) {
 	  PHONE: 'Invalid Mobile Number',
 	  REQUIRED: 'ERROR_REQUIRED',
 	  SERVER: 'ERROR_SERVER',
-	  SUCCESS: 'Successfully Sent Text Message'
+	  SUCCESS: 'Message sent!',
+	  RECAPTCHA: 'Please fill the reCAPTCHA'
 	};
 
 	exports.default = ShareForm;
 
 /***/ }),
-/* 33 */
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function($) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function () {
+	  //$('.js-accordion > ul > li:has(ol)').addClass("has-sub");
+	  $('.js-s-accordion > li > h3.js-s-accordion__header').append('<svg class="o-accordion__caret icon" aria-hidden="true"><use xlink:href="#caret-down"></use></svg>');
+
+	  $('.js-s-accordion > li > h3.js-s-accordion__header').click(function () {
+	    var checkElement = $(this).next();
+
+	    $('.js-s-accordion li').removeClass('is-expanded');
+	    $(this).closest('li').addClass('is-expanded');
+
+	    if (checkElement.is('.js-s-accordion__content') && checkElement.is(':visible')) {
+	      $(this).closest('li').removeClass('is-expanded');
+	      checkElement.slideUp('normal');
+	    }
+
+	    if (checkElement.is('.js-s-accordion__content') && !checkElement.is(':visible')) {
+	      $('.js-s-accordion .js-s-accordion__content:visible').slideUp('normal');
+	      checkElement.slideDown('normal');
+	    }
+
+	    if (checkElement.is('.js-s-accordion__content')) {
+	      return false;
+	    } else {
+	      return true;
+	    }
+	  });
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2428,7 +2483,7 @@ if (objCtr.defineProperty) {
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -2448,15 +2503,15 @@ if (objCtr.defineProperty) {
 	  }
 	};
 
-	var _throttle = __webpack_require__(15);
+	var _throttle = __webpack_require__(71);
 
 	var _throttle2 = _interopRequireDefault(_throttle);
 
-	var _debounce = __webpack_require__(11);
+	var _debounce = __webpack_require__(10);
 
 	var _debounce2 = _interopRequireDefault(_debounce);
 
-	var _imagesready = __webpack_require__(38);
+	var _imagesready = __webpack_require__(40);
 
 	var _imagesready2 = _interopRequireDefault(_imagesready);
 
@@ -2659,7 +2714,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2717,7 +2772,7 @@ if (objCtr.defineProperty) {
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 36 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(jQuery) {'use strict';
@@ -2918,7 +2973,7 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 37 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* eslint-env browser */
@@ -2930,7 +2985,7 @@ if (objCtr.defineProperty) {
 
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-	var _underscore = __webpack_require__(69);
+	var _underscore = __webpack_require__(73);
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
@@ -3052,7 +3107,7 @@ if (objCtr.defineProperty) {
 	exports.default = Utility;
 
 /***/ }),
-/* 38 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function($) {/* imagesready v0.2.2 - 2015-07-04T06:22:14.435Z - https://github.com/r-park/images-ready */
@@ -3720,7 +3775,178 @@ if (objCtr.defineProperty) {
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 39 */
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	 * JavaScript Cookie v2.1.4
+	 * https://github.com/js-cookie/js-cookie
+	 *
+	 * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+	 * Released under the MIT license
+	 */
+	;(function (factory) {
+		var registeredInModuleLoader = false;
+		if (true) {
+			!(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+			registeredInModuleLoader = true;
+		}
+		if (true) {
+			module.exports = factory();
+			registeredInModuleLoader = true;
+		}
+		if (!registeredInModuleLoader) {
+			var OldCookies = window.Cookies;
+			var api = window.Cookies = factory();
+			api.noConflict = function () {
+				window.Cookies = OldCookies;
+				return api;
+			};
+		}
+	}(function () {
+		function extend () {
+			var i = 0;
+			var result = {};
+			for (; i < arguments.length; i++) {
+				var attributes = arguments[ i ];
+				for (var key in attributes) {
+					result[key] = attributes[key];
+				}
+			}
+			return result;
+		}
+
+		function init (converter) {
+			function api (key, value, attributes) {
+				var result;
+				if (typeof document === 'undefined') {
+					return;
+				}
+
+				// Write
+
+				if (arguments.length > 1) {
+					attributes = extend({
+						path: '/'
+					}, api.defaults, attributes);
+
+					if (typeof attributes.expires === 'number') {
+						var expires = new Date();
+						expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e+5);
+						attributes.expires = expires;
+					}
+
+					// We're using "expires" because "max-age" is not supported by IE
+					attributes.expires = attributes.expires ? attributes.expires.toUTCString() : '';
+
+					try {
+						result = JSON.stringify(value);
+						if (/^[\{\[]/.test(result)) {
+							value = result;
+						}
+					} catch (e) {}
+
+					if (!converter.write) {
+						value = encodeURIComponent(String(value))
+							.replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
+					} else {
+						value = converter.write(value, key);
+					}
+
+					key = encodeURIComponent(String(key));
+					key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
+					key = key.replace(/[\(\)]/g, escape);
+
+					var stringifiedAttributes = '';
+
+					for (var attributeName in attributes) {
+						if (!attributes[attributeName]) {
+							continue;
+						}
+						stringifiedAttributes += '; ' + attributeName;
+						if (attributes[attributeName] === true) {
+							continue;
+						}
+						stringifiedAttributes += '=' + attributes[attributeName];
+					}
+					return (document.cookie = key + '=' + value + stringifiedAttributes);
+				}
+
+				// Read
+
+				if (!key) {
+					result = {};
+				}
+
+				// To prevent the for loop in the first place assign an empty array
+				// in case there are no cookies at all. Also prevents odd result when
+				// calling "get()"
+				var cookies = document.cookie ? document.cookie.split('; ') : [];
+				var rdecode = /(%[0-9A-Z]{2})+/g;
+				var i = 0;
+
+				for (; i < cookies.length; i++) {
+					var parts = cookies[i].split('=');
+					var cookie = parts.slice(1).join('=');
+
+					if (cookie.charAt(0) === '"') {
+						cookie = cookie.slice(1, -1);
+					}
+
+					try {
+						var name = parts[0].replace(rdecode, decodeURIComponent);
+						cookie = converter.read ?
+							converter.read(cookie, name) : converter(cookie, name) ||
+							cookie.replace(rdecode, decodeURIComponent);
+
+						if (this.json) {
+							try {
+								cookie = JSON.parse(cookie);
+							} catch (e) {}
+						}
+
+						if (key === name) {
+							result = cookie;
+							break;
+						}
+
+						if (!key) {
+							result[name] = cookie;
+						}
+					} catch (e) {}
+				}
+
+				return result;
+			}
+
+			api.set = api;
+			api.get = function (key) {
+				return api.call(api, key);
+			};
+			api.getJSON = function () {
+				return api.apply({
+					json: true
+				}, [].slice.call(arguments));
+			};
+			api.defaults = {};
+
+			api.remove = function (key, attributes) {
+				api(key, '', extend(attributes, {
+					expires: -1
+				}));
+			};
+
+			api.withConverter = init;
+
+			return api;
+		}
+
+		return init(function () {});
+	}));
+
+
+/***/ }),
+/* 42 */
 /***/ (function(module, exports) {
 
 	/**
@@ -3748,15 +3974,15 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 40 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseTimes = __webpack_require__(47),
-	    isArguments = __webpack_require__(60),
-	    isArray = __webpack_require__(12),
-	    isBuffer = __webpack_require__(61),
-	    isIndex = __webpack_require__(53),
-	    isTypedArray = __webpack_require__(64);
+	var baseTimes = __webpack_require__(50),
+	    isArguments = __webpack_require__(63),
+	    isArray = __webpack_require__(11),
+	    isBuffer = __webpack_require__(64),
+	    isIndex = __webpack_require__(56),
+	    isTypedArray = __webpack_require__(67);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -3803,11 +4029,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 41 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseForOwn = __webpack_require__(43),
-	    createBaseEach = __webpack_require__(50);
+	var baseForOwn = __webpack_require__(46),
+	    createBaseEach = __webpack_require__(53);
 
 	/**
 	 * The base implementation of `_.forEach` without support for iteratee shorthands.
@@ -3823,10 +4049,10 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 42 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var createBaseFor = __webpack_require__(51);
+	var createBaseFor = __webpack_require__(54);
 
 	/**
 	 * The base implementation of `baseForOwn` which iterates over `object`
@@ -3845,11 +4071,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 43 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseFor = __webpack_require__(42),
-	    keys = __webpack_require__(65);
+	var baseFor = __webpack_require__(45),
+	    keys = __webpack_require__(68);
 
 	/**
 	 * The base implementation of `_.forOwn` without support for iteratee shorthands.
@@ -3867,7 +4093,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 44 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(3),
@@ -3891,11 +4117,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 45 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(3),
-	    isLength = __webpack_require__(14),
+	    isLength = __webpack_require__(13),
 	    isObjectLike = __webpack_require__(5);
 
 	/** `Object#toString` result references. */
@@ -3957,11 +4183,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 46 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var isPrototype = __webpack_require__(54),
-	    nativeKeys = __webpack_require__(55);
+	var isPrototype = __webpack_require__(57),
+	    nativeKeys = __webpack_require__(58);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -3993,7 +4219,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 47 */
+/* 50 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4019,7 +4245,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 48 */
+/* 51 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4039,10 +4265,10 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 49 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var identity = __webpack_require__(59);
+	var identity = __webpack_require__(62);
 
 	/**
 	 * Casts `value` to `identity` if it's not a function.
@@ -4059,10 +4285,10 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 50 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var isArrayLike = __webpack_require__(13);
+	var isArrayLike = __webpack_require__(12);
 
 	/**
 	 * Creates a `baseEach` or `baseEachRight` function.
@@ -4097,7 +4323,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 51 */
+/* 54 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4128,10 +4354,10 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 52 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(9);
+	var Symbol = __webpack_require__(8);
 
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -4180,7 +4406,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 53 */
+/* 56 */
 /***/ (function(module, exports) {
 
 	/** Used as references for various `Number` constants. */
@@ -4208,7 +4434,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 54 */
+/* 57 */
 /***/ (function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -4232,10 +4458,10 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 55 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var overArg = __webpack_require__(58);
+	var overArg = __webpack_require__(61);
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
 	var nativeKeys = overArg(Object.keys, Object);
@@ -4244,10 +4470,10 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 56 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(10);
+	/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(9);
 
 	/** Detect free variable `exports`. */
 	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -4270,10 +4496,10 @@ if (objCtr.defineProperty) {
 
 	module.exports = nodeUtil;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)(module)))
 
 /***/ }),
-/* 57 */
+/* 60 */
 /***/ (function(module, exports) {
 
 	/** Used for built-in method references. */
@@ -4301,7 +4527,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 58 */
+/* 61 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4322,7 +4548,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 59 */
+/* 62 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4349,10 +4575,10 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 60 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseIsArguments = __webpack_require__(44),
+	var baseIsArguments = __webpack_require__(47),
 	    isObjectLike = __webpack_require__(5);
 
 	/** Used for built-in method references. */
@@ -4391,11 +4617,11 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(6),
-	    stubFalse = __webpack_require__(67);
+	    stubFalse = __webpack_require__(70);
 
 	/** Detect free variable `exports`. */
 	var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
@@ -4433,10 +4659,10 @@ if (objCtr.defineProperty) {
 
 	module.exports = isBuffer;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(16)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)(module)))
 
 /***/ }),
-/* 62 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(3),
@@ -4479,7 +4705,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 63 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var baseGetTag = __webpack_require__(3),
@@ -4514,12 +4740,12 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 64 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var baseIsTypedArray = __webpack_require__(45),
-	    baseUnary = __webpack_require__(48),
-	    nodeUtil = __webpack_require__(56);
+	var baseIsTypedArray = __webpack_require__(48),
+	    baseUnary = __webpack_require__(51),
+	    nodeUtil = __webpack_require__(59);
 
 	/* Node.js helper references. */
 	var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
@@ -4547,12 +4773,12 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 65 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var arrayLikeKeys = __webpack_require__(40),
-	    baseKeys = __webpack_require__(46),
-	    isArrayLike = __webpack_require__(13);
+	var arrayLikeKeys = __webpack_require__(43),
+	    baseKeys = __webpack_require__(49),
+	    isArrayLike = __webpack_require__(12);
 
 	/**
 	 * Creates an array of the own enumerable property names of `object`.
@@ -4590,7 +4816,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 66 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var root = __webpack_require__(6);
@@ -4619,7 +4845,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 67 */
+/* 70 */
 /***/ (function(module, exports) {
 
 	/**
@@ -4643,11 +4869,86 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 68 */
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var debounce = __webpack_require__(10),
+	    isObject = __webpack_require__(4);
+
+	/** Error message constants. */
+	var FUNC_ERROR_TEXT = 'Expected a function';
+
+	/**
+	 * Creates a throttled function that only invokes `func` at most once per
+	 * every `wait` milliseconds. The throttled function comes with a `cancel`
+	 * method to cancel delayed `func` invocations and a `flush` method to
+	 * immediately invoke them. Provide `options` to indicate whether `func`
+	 * should be invoked on the leading and/or trailing edge of the `wait`
+	 * timeout. The `func` is invoked with the last arguments provided to the
+	 * throttled function. Subsequent calls to the throttled function return the
+	 * result of the last `func` invocation.
+	 *
+	 * **Note:** If `leading` and `trailing` options are `true`, `func` is
+	 * invoked on the trailing edge of the timeout only if the throttled function
+	 * is invoked more than once during the `wait` timeout.
+	 *
+	 * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
+	 * until to the next tick, similar to `setTimeout` with a timeout of `0`.
+	 *
+	 * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
+	 * for details over the differences between `_.throttle` and `_.debounce`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.1.0
+	 * @category Function
+	 * @param {Function} func The function to throttle.
+	 * @param {number} [wait=0] The number of milliseconds to throttle invocations to.
+	 * @param {Object} [options={}] The options object.
+	 * @param {boolean} [options.leading=true]
+	 *  Specify invoking on the leading edge of the timeout.
+	 * @param {boolean} [options.trailing=true]
+	 *  Specify invoking on the trailing edge of the timeout.
+	 * @returns {Function} Returns the new throttled function.
+	 * @example
+	 *
+	 * // Avoid excessively updating the position while scrolling.
+	 * jQuery(window).on('scroll', _.throttle(updatePosition, 100));
+	 *
+	 * // Invoke `renewToken` when the click event is fired, but not more than once every 5 minutes.
+	 * var throttled = _.throttle(renewToken, 300000, { 'trailing': false });
+	 * jQuery(element).on('click', throttled);
+	 *
+	 * // Cancel the trailing throttled invocation.
+	 * jQuery(window).on('popstate', throttled.cancel);
+	 */
+	function throttle(func, wait, options) {
+	  var leading = true,
+	      trailing = true;
+
+	  if (typeof func != 'function') {
+	    throw new TypeError(FUNC_ERROR_TEXT);
+	  }
+	  if (isObject(options)) {
+	    leading = 'leading' in options ? !!options.leading : leading;
+	    trailing = 'trailing' in options ? !!options.trailing : trailing;
+	  }
+	  return debounce(func, wait, {
+	    'leading': leading,
+	    'maxWait': wait,
+	    'trailing': trailing
+	  });
+	}
+
+	module.exports = throttle;
+
+
+/***/ }),
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var isObject = __webpack_require__(4),
-	    isSymbol = __webpack_require__(63);
+	    isSymbol = __webpack_require__(66);
 
 	/** Used as references for various `Number` constants. */
 	var NAN = 0 / 0;
@@ -4715,7 +5016,7 @@ if (objCtr.defineProperty) {
 
 
 /***/ }),
-/* 69 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.7.0

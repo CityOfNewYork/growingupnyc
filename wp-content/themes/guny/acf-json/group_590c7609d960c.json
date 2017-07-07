@@ -68,24 +68,6 @@
             ]
         },
         {
-            "key": "field_590c78670ca20",
-            "label": "Location Details",
-            "name": "location_details",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1
-        },
-        {
             "key": "field_590c76110ca18",
             "label": "Website Details",
             "name": "website_details",
@@ -193,5 +175,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1493990252
+    "modified": 1498551420
 }

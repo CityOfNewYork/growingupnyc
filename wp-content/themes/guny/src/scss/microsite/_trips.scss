@@ -102,6 +102,7 @@
   }
 
   .c-card__link {
+    margin-top: rem-calc(10);
     &:hover {
       svg {
         fill: $very-dark-gray;
@@ -187,9 +188,6 @@
 
 //Article Content
 .o-article-trip {
-  @include media($bp-large) {
-    float: right;
-  }
 
   //Detail page
   //Page Intro
@@ -207,7 +205,8 @@
 
 //Article Sidebar
 .o-article-trip-sidebar {
-  @include media($bp-large) {
-    float: left;
-  }
+  // @include media($bp-large) {
+  //   float: left;
+  // }
+  float: right;
 }

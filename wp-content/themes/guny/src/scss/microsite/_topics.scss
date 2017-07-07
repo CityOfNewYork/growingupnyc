@@ -7,6 +7,21 @@
 }
 
 //Sidebar list
+.o-container-ms__topics {
+  .o-article-sidebar {
+    @include media($bp-large) {
+      @include span-columns(6);
+    }
+  }
+
+  .o-article {
+    @include media($bp-large) {
+      @include span-columns(6);
+      @include omega;
+    }
+  }
+}
+
 .c-list-box-ms__topics {
   padding: 0;
   .c-list-box__heading,
@@ -25,14 +40,14 @@
       }
 
       &:last-child {
-        padding-bottom: rem-calc(5);
+        padding-bottom: rem-calc(20);
       }
 
       @include media($bp-large) {
         padding: rem-calc(3 25);
 
         &:last-child {
-          padding-bottom: rem-calc(30);
+          padding-bottom: rem-calc(40);
         }
       }
 
@@ -52,6 +67,7 @@
           transition: $button-transition;
           background: transparent;
           color: $white;
+          text-transform: none;
 
           &:focus {
             background: $white;
@@ -224,6 +240,17 @@
 }
 
 .c-block-list-ms__topics {
+  padding: rem-calc(30 $outer-gutter 35);
+
+  @include media($bp-small) {
+    padding: rem-calc(35 $outer-gutter-small 40);
+  }
+
+  @include media($bp-medium) {
+    padding-left: rem-calc($outer-gutter-medium);
+    padding-right: rem-calc($outer-gutter-medium);
+  }
+
   p {
     font-size: rem-calc(16);
   }
@@ -280,8 +307,20 @@
     }
   }
 
+  .c-card {
+    @include media($bp-large) {
+      margin-right: rem-calc($sticker-size-mobile / 2);
+    }
+  }
+
   .c-card__sticker {
     background: $purple;
+    @include media($bp-large) {
+      height: rem-calc($sticker-size-mobile);
+      width: rem-calc($sticker-size-mobile);
+      line-height: rem-calc($sticker-size-mobile);
+      right: rem-calc(-$sticker-size-mobile / 2);
+    }
   }
 }
 
@@ -323,11 +362,34 @@
   }
 }
 
+//Content
+.o-article-ms__topics {
+  .u-top-spacing {
+    padding-top: 25px;
+
+    @include media($bp-large) {
+      padding-top: 40px;
+    }
+  }
+
+  .u-bottom-spacing {
+    padding-bottom: 25px;
+
+    @include media($bp-large) {
+      padding-bottom: 40px;
+    }
+  }
+
+  h2 {
+    padding-top: 20px;
+  }
+}
+
 // Navigation List Link
 .c-nav-list-ms__topics {
   .c-nav-list__link {
     background-color: $dark-purple;
-    border-color: $purple;
+    border-color: $dark-purple;
 
     &:focus {
       background-color: $purple;
@@ -340,11 +402,17 @@
         border-color: $purple;
       }
     }
+
+    &.is-active {
+      background-color: $purple;
+      border-color: $purple;
+    }
   }
 }
 
 //Tips
 .c-tip-ms__topics {
+  text-align: center;
   &,
   .c-tip__sticker {
     background: $dark-purple;
@@ -355,20 +423,32 @@
   }
 }
 
+//Validation
+.c-validation {
+  font-size: rem-calc(16);
+}
+
+//Disclaimer Text
+.c-disclaimer-text {
+  font-size: rem-calc(12);
+  text-align: left;
+}
+
 //Do List
 .c-do-list {
   margin: rem-calc(30px) 0;
   background: $very-light-gray;
   padding: rem-calc(30px);
 
-  a {
+  a.button--topics__cta {
+    margin-top: rem-calc(25);
     &:focus {
       color: $purple;
     }
 
     .no-touchevents & {
       &:hover {
-        color: $purple;
+        color: $white;
       }
     }
   }
@@ -399,7 +479,8 @@
 
 //SMS form
 .sms-form-wrapper {
-  text-align: center;
+  display: inline-block;
+  max-width: 568px;
 
   button {
     margin-top: rem-calc(20);
@@ -422,6 +503,31 @@
   @include media($bp-xlarge) {
     width: rem-calc(400);
   }
+}
+
+//Recaptcha
+.recaptcha-js {
+  background: $light-purple-1;
+
+  .c-tip__sticker {
+    background: $light-purple-1;
+  }
+}
+
+//Succes
+.success-js .sms-form-wrapper {
+  max-width: 610px;
+}
+
+.g-recaptcha,
+.error-message,
+.c-validation {
+  margin-top: rem-calc(15);
+}
+
+.g-recaptcha {
+  transform-origin: left top;
+  margin-bottom: rem-calc(15);
 }
 
 .csstransforms3d .sms-form__label,

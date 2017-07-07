@@ -18,10 +18,12 @@ button:hover, button:focus {
 
 .c-banner__link {
   color: #404657; }
-  .c-banner__link:focus {
-    color: #2d333d; }
-  .no-touchevents .c-banner__link:hover {
-    color: #2d333d; }
+
+.no-touchevents:hover {
+  color: #999; }
+
+.no-touchevents .c-banner__link:hover, .no-touchevents .c-banner__link:focus {
+  color: #2d333d; }
 
 .o-inline__item {
   display: inline-block;
@@ -147,6 +149,11 @@ button:hover, button:focus {
   margin-top: 0; }
   .s-wysiwyg ul li {
     padding-bottom: 0; }
+    .s-wysiwyg ul li:before {
+      position: relative;
+      top: -4px;
+      opacity: 1;
+      content: url(/wp-content/themes/guny/assets/img/circle.svg); }
 
 .o-article-ms h2 {
   margin-top: 1.25rem; }
@@ -205,33 +212,25 @@ button:hover, button:focus {
     @media screen and (min-width: 1024px) {
       .c-list-box-ms__item .button--primary__curved {
         font-size: 1.5rem; } }
-    .c-list-box-ms__item .button--primary__curved:focus {
-      background: #000; }
-    .no-touchevents .c-list-box-ms__item .button--primary__curved:hover {
+    .c-list-box-ms__item .button--primary__curved:hover {
       background: #000; }
   .c-list-box-ms__item.topics__item:before {
     border-color: #7735b2; }
   .c-list-box-ms__item.topics__item .button--primary__curved {
     background: #7735b2; }
-    .c-list-box-ms__item.topics__item .button--primary__curved:focus {
-      background: #3c036f; }
-    .no-touchevents .c-list-box-ms__item.topics__item .button--primary__curved:hover {
+    .c-list-box-ms__item.topics__item .button--primary__curved:hover {
       background: #3c036f; }
   .c-list-box-ms__item.inspirations__item:before {
     border-color: #144f82; }
   .c-list-box-ms__item.inspirations__item .button--primary__curved {
     background: #144f82; }
-    .c-list-box-ms__item.inspirations__item .button--primary__curved:focus {
-      background: #00326d; }
-    .no-touchevents .c-list-box-ms__item.inspirations__item .button--primary__curved:hover {
+    .c-list-box-ms__item.inspirations__item .button--primary__curved:hover {
       background: #00326d; }
   .c-list-box-ms__item.trips__item:before {
     border-color: #00965c; }
   .c-list-box-ms__item.trips__item .button--primary__curved {
     background: #00965c; }
-    .c-list-box-ms__item.trips__item .button--primary__curved:focus {
-      background: #007145; }
-    .no-touchevents .c-list-box-ms__item.trips__item .button--primary__curved:hover {
+    .c-list-box-ms__item.trips__item .button--primary__curved:hover {
       background: #007145; }
 
 .c-details-list-ms__descr ul {
@@ -306,11 +305,18 @@ button:hover, button:focus {
       .c-card-invert .c-card__sticker {
         left: -3.125rem; } }
 
-.c-card__title {
-  text-decoration: none; }
-
 .c-footer {
   background: #2d333d; }
+
+.c-footer__link {
+  color: #fff;
+  font-family: "museo-sans-rounded", sans-serif;
+  font-weight: 900;
+  text-decoration: none; }
+  .c-footer__link:focus {
+    color: #838a97; }
+  .no-touchevents .c-footer__link:hover {
+    color: #838a97; }
 
 .c-hero-ms__trips {
   background-color: #00965c; }
@@ -362,8 +368,10 @@ button:hover, button:focus {
 .c-block-list-ms__trips .c-block-list-trips__title {
   margin-bottom: 0; }
 
-.c-block-list-ms__trips .c-card__link:hover svg {
-  fill: #333; }
+.c-block-list-ms__trips .c-card__link {
+  margin-top: 0.625rem; }
+  .c-block-list-ms__trips .c-card__link:hover svg {
+    fill: #333; }
 
 .c-block-list-ms__trips.c-block-list-ms__trips--week .button--pill {
   background: #00965c; }
@@ -405,10 +413,6 @@ button:hover, button:focus {
   height: 400px;
   margin: 2.5rem 0; }
 
-@media screen and (min-width: 1024px) {
-  .o-article-trip {
-    float: right; } }
-
 .o-article-trip .c-page__intro,
 .o-article-trip .c-page__content {
   margin-bottom: 1.875rem; }
@@ -417,12 +421,30 @@ button:hover, button:focus {
   .o-article-trip .c-page__content {
     margin-bottom: 0; } }
 
-@media screen and (min-width: 1024px) {
-  .o-article-trip-sidebar {
-    float: left; } }
+.o-article-trip-sidebar {
+  float: right; }
 
 .c-hero-ms__topics {
   background-color: #00965c; }
+
+@media screen and (min-width: 1024px) {
+  .o-container-ms__topics .o-article-sidebar {
+    float: left;
+    display: block;
+    margin-right: 3.125%;
+    width: 48.4375%; }
+    .o-container-ms__topics .o-article-sidebar:last-child {
+      margin-right: 0; } }
+
+@media screen and (min-width: 1024px) {
+  .o-container-ms__topics .o-article {
+    float: left;
+    display: block;
+    margin-right: 3.125%;
+    width: 48.4375%;
+    margin-right: 0; }
+    .o-container-ms__topics .o-article:last-child {
+      margin-right: 0; } }
 
 .c-list-box-ms__topics {
   padding: 0; }
@@ -437,12 +459,12 @@ button:hover, button:focus {
       .c-list-box-ms__topics .c-list-box__content li:first-child {
         padding-top: 0.3125rem; }
       .c-list-box-ms__topics .c-list-box__content li:last-child {
-        padding-bottom: 0.3125rem; }
+        padding-bottom: 1.25rem; }
       @media screen and (min-width: 1024px) {
         .c-list-box-ms__topics .c-list-box__content li {
           padding: 0.1875rem 1.5625rem; }
           .c-list-box-ms__topics .c-list-box__content li:last-child {
-            padding-bottom: 1.875rem; } }
+            padding-bottom: 2.5rem; } }
       .c-list-box-ms__topics .c-list-box__content li.c-list-box__subitem a {
         border: 2px solid #fff;
         border-radius: 1.5625rem;
@@ -457,7 +479,8 @@ button:hover, button:focus {
         text-decoration: none;
         transition: all ease-in-out 0.15s;
         background: transparent;
-        color: #fff; }
+        color: #fff;
+        text-transform: none; }
         @media screen and (min-width: 1024px) {
           .c-list-box-ms__topics .c-list-box__content li.c-list-box__subitem a {
             font-size: 1.125rem; } }
@@ -522,42 +545,54 @@ button:hover, button:focus {
     background: #fff;
     color: #9e49e1; }
 
-.c-block-list-ms__topics p {
-  font-size: 1rem; }
-
-.c-block-list-ms__topics .c-card__title a {
-  text-decoration: underline; }
-  .c-block-list-ms__topics .c-card__title a:hover, .c-block-list-ms__topics .c-card__title a:focus {
-    color: #7735b2; }
-
-.c-block-list-ms__topics .c-block-list__item {
-  padding: 0.625rem 0; }
+.c-block-list-ms__topics {
+  padding: 1.875rem 0.9375rem 2.1875rem; }
+  @media screen and (min-width: 375px) {
+    .c-block-list-ms__topics {
+      padding: 2.1875rem 1.25rem 2.5rem; } }
   @media screen and (min-width: 700px) {
-    .c-block-list-ms__topics .c-block-list__item {
-      padding: 0.8125rem 0; } }
-
-.c-block-list-ms__topics .c-block-list-ms__topics--title {
-  margin-bottom: 0.3125rem; }
-
-.c-block-list-ms__topics .c-block-list-ms__topics--text p {
-  margin-top: 0;
-  margin-bottom: 1.5rem; }
-
-.c-block-list-ms__topics .button--pill {
-  background: #3c036f; }
-  .c-block-list-ms__topics .button--pill:first-child {
+    .c-block-list-ms__topics {
+      padding-left: 1.875rem;
+      padding-right: 1.875rem; } }
+  .c-block-list-ms__topics p {
+    font-size: 1rem; }
+  .c-block-list-ms__topics .c-card__title a {
+    text-decoration: underline; }
+    .c-block-list-ms__topics .c-card__title a:hover, .c-block-list-ms__topics .c-card__title a:focus {
+      color: #7735b2; }
+  .c-block-list-ms__topics .c-block-list__item {
+    padding: 0.625rem 0; }
+    @media screen and (min-width: 700px) {
+      .c-block-list-ms__topics .c-block-list__item {
+        padding: 0.8125rem 0; } }
+  .c-block-list-ms__topics .c-block-list-ms__topics--title {
+    margin-bottom: 0.3125rem; }
+  .c-block-list-ms__topics .c-block-list-ms__topics--text p {
+    margin-top: 0;
+    margin-bottom: 1.5rem; }
+  .c-block-list-ms__topics .button--pill {
+    background: #3c036f; }
+    .c-block-list-ms__topics .button--pill:first-child {
+      background: #7735b2; }
+      .c-block-list-ms__topics .button--pill:first-child:focus {
+        background: #b35eff; }
+      .no-touchevents .c-block-list-ms__topics .button--pill:first-child:hover {
+        background: #b35eff; }
+    .c-block-list-ms__topics .button--pill:focus {
+      background: #7735b2; }
+    .no-touchevents .c-block-list-ms__topics .button--pill:hover {
+      background: #7735b2; }
+  @media screen and (min-width: 1024px) {
+    .c-block-list-ms__topics .c-card {
+      margin-right: 2.5rem; } }
+  .c-block-list-ms__topics .c-card__sticker {
     background: #7735b2; }
-    .c-block-list-ms__topics .button--pill:first-child:focus {
-      background: #b35eff; }
-    .no-touchevents .c-block-list-ms__topics .button--pill:first-child:hover {
-      background: #b35eff; }
-  .c-block-list-ms__topics .button--pill:focus {
-    background: #7735b2; }
-  .no-touchevents .c-block-list-ms__topics .button--pill:hover {
-    background: #7735b2; }
-
-.c-block-list-ms__topics .c-card__sticker {
-  background: #7735b2; }
+    @media screen and (min-width: 1024px) {
+      .c-block-list-ms__topics .c-card__sticker {
+        height: 5rem;
+        width: 5rem;
+        line-height: 5rem;
+        right: -2.5rem; } }
 
 .c-hero-ms__topics {
   background-color: #7735b2;
@@ -588,31 +623,59 @@ button:hover, button:focus {
   .c-hero-ms__topics__tagline {
     font-size: 1.3125rem; } }
 
+.o-article-ms__topics .u-top-spacing {
+  padding-top: 25px; }
+  @media screen and (min-width: 1024px) {
+    .o-article-ms__topics .u-top-spacing {
+      padding-top: 40px; } }
+
+.o-article-ms__topics .u-bottom-spacing {
+  padding-bottom: 25px; }
+  @media screen and (min-width: 1024px) {
+    .o-article-ms__topics .u-bottom-spacing {
+      padding-bottom: 40px; } }
+
+.o-article-ms__topics h2 {
+  padding-top: 20px; }
+
 .c-nav-list-ms__topics .c-nav-list__link {
   background-color: #3c036f;
-  border-color: #7735b2; }
+  border-color: #3c036f; }
   .c-nav-list-ms__topics .c-nav-list__link:focus {
     background-color: #7735b2;
     border-color: #7735b2; }
   .no-touchevents .c-nav-list-ms__topics .c-nav-list__link:hover {
     background-color: #7735b2;
     border-color: #7735b2; }
+  .c-nav-list-ms__topics .c-nav-list__link.is-active {
+    background-color: #7735b2;
+    border-color: #7735b2; }
 
-.c-tip-ms__topics,
-.c-tip-ms__topics .c-tip__sticker {
-  background: #3c036f; }
-
-.c-tip-ms__topics .c-tip__content {
+.c-tip-ms__topics {
   text-align: center; }
+  .c-tip-ms__topics,
+  .c-tip-ms__topics .c-tip__sticker {
+    background: #3c036f; }
+  .c-tip-ms__topics .c-tip__content {
+    text-align: center; }
+
+.c-validation {
+  font-size: 1rem; }
+
+.c-disclaimer-text {
+  font-size: 0.75rem;
+  text-align: left; }
 
 .c-do-list {
   margin: 1.875rem 0;
   background: #eee;
   padding: 1.875rem; }
-  .c-do-list a:focus {
-    color: #7735b2; }
-  .no-touchevents .c-do-list a:hover {
-    color: #7735b2; }
+  .c-do-list a.button--topics__cta {
+    margin-top: 1.5625rem; }
+    .c-do-list a.button--topics__cta:focus {
+      color: #7735b2; }
+    .no-touchevents .c-do-list a.button--topics__cta:hover {
+      color: #fff; }
 
 .c-ttc-title {
   text-transform: none; }
@@ -630,7 +693,8 @@ button:hover, button:focus {
     border-color: #b35eff; }
 
 .sms-form-wrapper {
-  text-align: center; }
+  display: inline-block;
+  max-width: 568px; }
   .sms-form-wrapper button {
     margin-top: 1.25rem; }
     @media screen and (min-width: 700px) {
@@ -648,6 +712,25 @@ button:hover, button:focus {
   @media screen and (min-width: 1200px) {
     .sms-form__input--long {
       width: 25rem; } }
+
+.recaptcha-js {
+  background: #8865a7; }
+  .recaptcha-js .c-tip__sticker {
+    background: #8865a7; }
+
+.success-js .sms-form-wrapper {
+  max-width: 610px; }
+
+.g-recaptcha,
+.error-message,
+.c-validation {
+  margin-top: 0.9375rem; }
+
+.g-recaptcha {
+  -webkit-transform-origin: left top;
+      -ms-transform-origin: left top;
+          transform-origin: left top;
+  margin-bottom: 0.9375rem; }
 
 .csstransforms3d .sms-form__label,
 .styleguide .sms-form__label {
@@ -723,7 +806,8 @@ button:hover, button:focus {
   .s-wysiwyg .c-other-inspirations .c-card__title,
   .c-other-inspirations .c-card__title {
     margin-top: 0;
-    margin-bottom: 0.5rem; }
+    margin-bottom: 0.5rem;
+    text-decoration: none; }
     .s-wysiwyg .c-other-inspirations .c-card__title a,
     .c-other-inspirations .c-card__title a {
       text-decoration: none; }

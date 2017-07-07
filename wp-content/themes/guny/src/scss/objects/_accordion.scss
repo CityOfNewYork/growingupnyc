@@ -30,3 +30,17 @@
 .is-expanded .o-accordion__caret {
   transform: rotate(180deg);
 }
+
+// Simple Accordion
+.js-s-accordion__header {
+  position: relative;
+  cursor: pointer;
+}
+
+.js-s-accordion li > .js-s-accordion__content {
+  display: none;
+}
+
+.js-s-accordion li:target > .js-s-accordion__content {
+  display: block;
+}

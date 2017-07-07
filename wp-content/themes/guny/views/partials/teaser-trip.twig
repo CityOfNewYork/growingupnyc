@@ -5,9 +5,11 @@
 {% block sticker %}
   {% set category = post.terms('trip_type')|first %}
   {% if category %}
-    <div class="c-card__sticker sticker" aria-hidden="true">
-      <svg class="icon--large"><title>{{category.name}}</title><use xlink:href="#arrow-right"></use></svg>
-    </div>
+    <a href="{{post.link}}" title="{{post.title}}" rel="bookmark">
+      <div class="c-card__sticker sticker" aria-hidden="true">
+        <svg class="icon--large"><title>{{category.name}}</title><use xlink:href="#arrow-right"></use></svg>
+      </div>
+    </a>
   {% endif %}
 {% endblock %}
 

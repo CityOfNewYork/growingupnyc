@@ -5,8 +5,6 @@ class FacetWP_Facet_Checkboxes
 
     function __construct() {
         $this->label = __( 'Checkboxes', 'fwp' );
-
-        add_filter( 'facetwp_store_unfiltered_post_ids', array( $this, 'store_unfiltered_post_ids' ) );
     }
 
 
@@ -66,7 +64,7 @@ class FacetWP_Facet_Checkboxes
         $where_clause = apply_filters( 'facetwp_facet_where', $where_clause, $facet );
 
         $sql = "
-        SELECT f.facet_value, f.facet_display_value, f.term_id, f.parent_id, f.depth, COUNT(*) AS counter
+        SELECT f.facet_value, f.facet_display_value, f.term_id, f.parent_id, f.depth, COUNT(DISTINCT f.post_id) AS counter
         FROM $from_clause
         WHERE f.facet_name = '{$facet['name']}' $where_clause
         GROUP BY f.facet_value
@@ -76,7 +74,7 @@ class FacetWP_Facet_Checkboxes
         $output = $wpdb->get_results( $sql, ARRAY_A );
 
         // Show "ghost" facet choices
-        if ( isset( $facet['ghosts'] ) && 'yes' == $facet['ghosts'] && ! empty( FWP()->unfiltered_post_ids ) ) {
+        if ( FWP()->helper->facet_is( $facet, 'ghosts', 'yes' ) && ! empty( FWP()->unfiltered_post_ids ) ) {
             $raw_post_ids = implode( ',', FWP()->unfiltered_post_ids );
 
             $sql = "
@@ -90,7 +88,7 @@ class FacetWP_Facet_Checkboxes
             $ghost_output = $wpdb->get_results( $sql, ARRAY_A );
 
             // Keep the facet placement intact
-            if ( isset( $facet['preserve_ghosts'] ) && 'yes' == $facet['preserve_ghosts'] ) {
+            if ( FWP()->helper->facet_is( $facet, 'preserve_ghosts', 'yes' ) ) {
                 $tmp = array();
                 foreach ( $ghost_output as $row ) {
                     $tmp[ $row['facet_value'] . ' ' ] = $row;
@@ -149,8 +147,8 @@ class FacetWP_Facet_Checkboxes
             }
             $selected = in_array( $result['facet_value'], $selected_values ) ? ' checked' : '';
             $selected .= ( 0 == $result['counter'] && '' == $selected ) ? ' disabled' : '';
-            $output .= '<div class="facetwp-checkbox' . $selected . '" data-value="' . $result['facet_value'] . '">';
-            $output .= $result['facet_display_value'] . ' <span class="facetwp-counter">(' . $result['counter'] . ')</span>';
+            $output .= '<div class="facetwp-checkbox' . $selected . '" data-value="' . esc_attr( $result['facet_value'] ) . '">';
+            $output .= esc_html( $result['facet_display_value'] ) . ' <span class="facetwp-counter">(' . $result['counter'] . ')</span>';
             $output .= '</div>';
         }
 
@@ -189,8 +187,8 @@ class FacetWP_Facet_Checkboxes
 
             $selected = in_array( $result['facet_value'], $selected_values ) ? ' checked' : '';
             $selected .= ( 0 == $result['counter'] && '' == $selected ) ? ' disabled' : '';
-            $output .= '<div class="facetwp-checkbox' . $selected . '" data-value="' . $result['facet_value'] . '">';
-            $output .= $result['facet_display_value'] . ' <span class="facetwp-counter">(' . $result['counter'] . ')</span>';
+            $output .= '<div class="facetwp-checkbox' . $selected . '" data-value="' . esc_attr( $result['facet_value'] ) . '">';
+            $output .= esc_html( $result['facet_display_value'] ) . ' <span class="facetwp-counter">(' . $result['counter'] . ')</span>';
             $output .= '</div>';
 
             $last_depth = $depth;
@@ -223,7 +221,7 @@ class FacetWP_Facet_Checkboxes
         // Match ALL values
         if ( 'and' == $facet['operator'] ) {
             foreach ( $selected_values as $key => $value ) {
-                $results = $wpdb->get_col( $sql . " AND facet_value IN ('$value')" );
+                $results = facetwp_sql( $sql . " AND facet_value IN ('$value')", $facet );
                 $output = ( $key > 0 ) ? array_intersect( $output, $results ) : $results;
 
                 if ( empty( $output ) ) {
@@ -234,7 +232,7 @@ class FacetWP_Facet_Checkboxes
         // Match ANY value
         else {
             $selected_values = implode( "','", $selected_values );
-            $output = $wpdb->get_col( $sql . " AND facet_value IN ('$selected_values')" );
+            $output = facetwp_sql( $sql . " AND facet_value IN ('$selected_values')", $facet );
         }
 
         return $output;
@@ -282,11 +280,18 @@ class FacetWP_Facet_Checkboxes
         var display = ('yes' == $(this).val()) ? 'table-row' : 'none';
         $facet.find('.facet-preserve-ghosts').closest('tr').css({ 'display' : display });
     });
-
-
 })(jQuery);
 </script>
 <?php
+    }
+
+
+    /**
+     * Output any front-end scripts
+     */
+    function front_scripts() {
+        FWP()->display->json['expand'] = '[+]';
+        FWP()->display->json['collapse'] = '[-]';
     }
 
 
@@ -402,22 +407,5 @@ class FacetWP_Facet_Checkboxes
             <td><input type="text" class="facet-soft-limit" value="5" /></td>
         </tr>
 <?php
-    }
-
-
-    /**
-     * Store unfiltered post IDs if a checkbox facet exists
-     * with ghosts or "OR" mode enabled
-     */
-    function store_unfiltered_post_ids( $boolean ) {
-        if ( FWP()->helper->facet_setting_exists( 'ghosts', 'yes' ) ) {
-            return true;
-        }
-
-        if ( FWP()->helper->facet_setting_exists( 'operator', 'or' ) ) {
-            return true;
-        }
-
-        return $boolean;
     }
 }

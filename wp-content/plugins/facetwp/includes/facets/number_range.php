@@ -5,8 +5,6 @@ class FacetWP_Facet_Number_Range
 
     function __construct() {
         $this->label = __( 'Number Range', 'fwp' );
-
-        add_filter( 'facetwp_index_row', array( $this, 'index_row' ), 5, 2 );
     }
 
 
@@ -19,9 +17,10 @@ class FacetWP_Facet_Number_Range
         $value = $params['selected_values'];
         $value = empty( $value ) ? array( '', '', ) : $value;
         $output .= '<label>' . __( 'Min', 'fwp' ) . '</label>';
-        $output .= '<input type="text" class="facetwp-number facetwp-number-min" value="' . $value[0] . '" />';
+        $output .= '<input type="text" class="facetwp-number facetwp-number-min" value="' . esc_attr( $value[0] ) . '" />';
         $output .= '<label>' . __( 'Max', 'fwp' ) . '</label>';
-        $output .= '<input type="text" class="facetwp-number facetwp-number-max" value="' . $value[1] . '" />';
+        $output .= '<input type="text" class="facetwp-number facetwp-number-max" value="' . esc_attr( $value[1] ) . '" />';
+        $output .= '<input type="button" class="facetwp-submit" value="' . __( 'OK', 'fwp' ) . '" />';
         return $output;
     }
 
@@ -39,14 +38,17 @@ class FacetWP_Facet_Number_Range
         $start = ( '' == $values[0] ) ? false : $values[0];
         $end = ( '' == $values[1] ) ? false : $values[1];
 
-        $is_dual = ! empty( $facet['source_other'] ) && false !== $start && false !== $end;
-        $is_intersect = FWP()->helper->facet_setting_is( $facet, 'compare_type', 'intersect' );
+        $is_dual = ! empty( $facet['source_other'] );
+        $is_intersect = FWP()->helper->facet_is( $facet, 'compare_type', 'intersect' );
 
         /**
          * Intersect compare
          * @link http://stackoverflow.com/a/325964
          */
         if ( $is_dual && $is_intersect ) {
+            $start = ( false !== $start ) ? $start : -999999999999;
+            $end = ( false !== $end ) ? $end : 999999999999;
+
             $where .= " AND (facet_value + 0) <= '$end'";
             $where .= " AND (facet_display_value + 0) >= '$start'";
         }
@@ -62,7 +64,7 @@ class FacetWP_Facet_Number_Range
         $sql = "
         SELECT DISTINCT post_id FROM {$wpdb->prefix}facetwp_index
         WHERE facet_name = '{$facet['name']}' $where";
-        return $wpdb->get_col( $sql );
+        return facetwp_sql( $sql, $facet );
     }
 
 
@@ -132,27 +134,5 @@ class FacetWP_Facet_Number_Range
             </td>
         </tr>
 <?php
-    }
-
-
-    /**
-     * Index the 2nd data source
-     * @since 2.1.1
-     */
-    function index_row( $params, $class ) {
-        if ( $class->is_overridden ) {
-            return $params;
-        }
-
-        $facet = FWP()->helper->get_facet_by_name( $params['facet_name'] );
-
-        if ( 'number_range' == $facet['type'] && ! empty( $facet['source_other'] ) ) {
-            $other_params = $params;
-            $other_params['facet_source'] = $facet['source_other'];
-            $rows = $class->get_row_data( $other_params );
-            $params['facet_display_value'] = $rows[0]['facet_display_value'];
-        }
-
-        return $params;
     }
 }

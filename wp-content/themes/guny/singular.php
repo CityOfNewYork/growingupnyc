@@ -52,8 +52,22 @@ if ( $post->post_type == 'age' ) {
   }
 }
 
-$templates = array( 'single-' . $post->ID . '.twig', 'single-' . $post->post_type . '.twig', 'single.twig' );
-
+if($post->post_type == 'page' && strpos($post->post_name, 'youth') !== false){
+  $templates = array( 'micro-site-homepage.twig' );
+}
+else{
+  $templates = array( 'single-' . $post->ID . '.twig', 'single-' . $post->post_type . '.twig', 'single.twig' );
+}
 $context['post'] = $post;
 
+//New codes by amalan for sms intergration 
+$context['shareAction'] = admin_url( 'admin-ajax.php' );
+$context['shareHash'] = \SMNYC\hash($post->link);
+
+$url = '/';
+if(ICL_LANGUAGE_CODE != 'en'){
+  $url = $url.ICL_LANGUAGE_CODE.'/';
+}
+$context['eventslink'] = $url.'events';
+$context['programslink'] = $url.'programs';
 Timber::render( $templates, $context );

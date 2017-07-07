@@ -8,6 +8,7 @@
   padding-top: rem-calc(200);
 
   @include media($bp-large) {
+    transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     height: 100vh;
     margin: 0;

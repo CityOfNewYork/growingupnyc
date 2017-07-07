@@ -36,6 +36,10 @@ Description: Custom theme for GUNY
 // =====================
 @import "components/*";
 
+// Elements (Styles for common HTML elements)
+// =====================
+@import "elements/*";
+
 // Scopes (Styles scoped to a specific context)
 // =====================
 @import "scopes/*";

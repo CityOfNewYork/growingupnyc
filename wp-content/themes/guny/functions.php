@@ -108,8 +108,10 @@ class GunySite extends TimberSite {
 
   function add_to_context ( $context ) {
     $context['menu'] = new TimberMenu('header-menu');
+    $context['ms_menu'] = new TimberMenu('ms-header-menu');
     $context['footer_menu_left'] = new TimberMenu('footer-menu-left');
     $context['footer_menu_right'] = new TimberMenu('footer-menu-right');
+    $context['ms_footer_menu_right'] = new TimberMenu('ms-footer-menu-right');
     $context['site'] = $this;
     $context['age_menu'] = Timber::get_terms('age_group', array(
       'orderby' => 'term_order',
@@ -137,7 +139,10 @@ class GunySite extends TimberSite {
       wp_deregister_script('jquery');
       wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/assets/js/modernizr.js', array(), '3.0.0', false );
       wp_enqueue_script( 'jquery', get_template_directory_uri() . '/src/js/vendor/jquery.js', array(), '2.1.14', false );
-      wp_enqueue_script( 'site-js', get_template_directory_uri() . '/assets/js/source.js', array(), '1.0.0', true );
+      wp_enqueue_script( 'owl-js', get_template_directory_uri() . '/src/js/vendor/owl.carousel.min.js', array(), '2.2.1', true );      
+      wp_enqueue_script( 'site-js', get_template_directory_uri() . '/assets/js/source.dev.js', array(), '1.0.0', true );
+      wp_enqueue_script( 'google-map', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDrvNnQZBiASAH3JI7LNFewrX9jeYZlMWo', array(), '3', true );
+      wp_enqueue_script( 'google-map-init', get_template_directory_uri() . '/src/js/vendor/google-maps.js', array('google-map', 'jquery'), '0.1', true );      
     }
   }
 
@@ -156,12 +161,23 @@ class GunySite extends TimberSite {
       'before_widget' => '',
       'after_widget' => ''
     ));
+    register_sidebar( array(
+      'name' => 'Top Widget Area',
+      'id' => 'top_widget',
+      'before_widget' => '<div class="c-language-switcher-wrapper"><div class="o-container c-language__switcher">',
+      'after_widget' => '</div></div>',
+      'before_title' => '<h2 class="rounded">',
+      'after_title' => '</h2>',
+    ));
+
   }
 
   function add_menus() {
     register_nav_menus(
       array(
         'header-menu' => __( 'Header Menu' ),
+        'ms-header-menu' => __( 'MS Header Menu' ),
+        'ms-footer-menu-right' => __( 'MS Footer Menu (Right)' ),
         'footer-menu-left' => __( 'Footer Menu (Left)' ),
         'footer-menu-right' => __( 'Footer Menu (Right)' )
       )
@@ -414,6 +430,29 @@ function guny_disable_emojis_tinymce( $plugins ) {
   }
 }
 
+//Amalan New codes to test new content post type and microsite testing
+add_action( 'wp_print_styles', 'microsite_styles' );
+function microsite_styles() {
+  if ( is_post_type_archive( 'magazine_' ) || is_singular( 'magazine_' ) ) {
+    wp_dequeue_style( 'master' );
+    wp_enqueue_style( 'magazine', get_stylesheet_directory_uri() . '/magazine.css', null, '0.1' ); 
+  } 
+}
+
+add_action('get_term_id', 'get_actual_term_id' , 10 , 2);
+function get_actual_term_id($translatedid , $category){
+  // echo $translatedid.''.$category;
+  // echo icl_object_id($translatedid, 'tribe_events_cat', false , 'en');
+  echo icl_object_id($translatedid, $category, false , 'en');
+}
+
+function my_acf_google_map_api( $api ){
+  $api['key'] = 'AIzaSyDrvNnQZBiASAH3JI7LNFewrX9jeYZlMWo';
+  return $api;
+}
+add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
+//End of the codes Amalan
+
 // Customize TinyMCE settings
 require_once(get_template_directory() . '/includes/guny_editor_styles.php');
 
@@ -437,12 +476,3 @@ require_once(get_template_directory() . '/includes/guny_filter_events.php');
 
 // Admin messages
 require_once(get_template_directory() . '/includes/guny_messages.php');
-
-register_sidebar( array(
-            'name' => 'Top Widget Area',
-            'id' => 'top_widget',
-            'before_widget' => '<div class="c-language-switcher-wrapper"><div class="o-container c-language__switcher">',
-            'after_widget' => '</div></div>',
-            'before_title' => '<h2 class="rounded">',
-            'after_title' => '</h2>',
-        ) );

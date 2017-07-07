@@ -55,14 +55,6 @@ section.pseudo-class-focus {
   background: #00326d;
 }
 
-.button--pill--es.pseudo-class-focus {
-  background: #3c036f;
-}
-
-.no-touchevents .button--pill--es.pseudo-class-hover {
-  background: #3c036f;
-}
-
 .button--simple.pseudo-class-focus {
   background: #0055b8;
   color: #fff;
@@ -152,18 +144,6 @@ a.pseudo-class-focus {
 
 .no-touchevents .c-banner__link.pseudo-class-hover {
   color: #0055b8;
-}
-
-.c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li.pseudo-class-last-child {
-  margin-right: 0;
-}
-
-.c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li.pseudo-class-last-child a {
-  padding-right: 0;
-}
-
-.c-language-switcher-wrapper .c-language__switcher .wpml-ls-legacy-list-horizontal li a.pseudo-class-hover {
-  color: #2793e0;
 }
 
 .c-block-list__link.pseudo-class-focus {
@@ -404,56 +384,6 @@ a.pre-teen-secondary.pseudo-class-focus {
 .no-touchevents a.pre-teen-secondary.pseudo-class-hover {
   background-color: #0055b8 !important;
   border-color: #0055b8 !important;
-}
-
-button.teen-background.pseudo-class-focus,
-a.teen-background.pseudo-class-focus {
-  background-color: #3c036f !important;
-  border-color: #3c036f !important;
-  outline: none;
-}
-
-.no-touchevents button.teen-background.pseudo-class-hover,
-.no-touchevents a.teen-background.pseudo-class-hover {
-  background-color: #3c036f !important;
-  border-color: #3c036f !important;
-}
-
-button.teen-secondary.pseudo-class-focus,
-a.teen-secondary.pseudo-class-focus {
-  background-color: #7735b2 !important;
-  outline: none;
-}
-
-.no-touchevents button.teen-secondary.pseudo-class-hover,
-.no-touchevents a.teen-secondary.pseudo-class-hover {
-  background-color: #7735b2 !important;
-  border-color: #7735b2 !important;
-}
-
-button.young-adult-background.pseudo-class-focus,
-a.young-adult-background.pseudo-class-focus {
-  background-color: #2d333d !important;
-  border-color: #2d333d !important;
-  outline: none;
-}
-
-.no-touchevents button.young-adult-background.pseudo-class-hover,
-.no-touchevents a.young-adult-background.pseudo-class-hover {
-  background-color: #2d333d !important;
-  border-color: #2d333d !important;
-}
-
-button.young-adult-secondary.pseudo-class-focus,
-a.young-adult-secondary.pseudo-class-focus {
-  background-color: #404657 !important;
-  outline: none;
-}
-
-.no-touchevents button.young-adult-secondary.pseudo-class-hover,
-.no-touchevents a.young-adult-secondary.pseudo-class-hover {
-  background-color: #404657 !important;
-  border-color: #404657 !important;
 }
 
 .show-for-keyboard.pseudo-class-focus {

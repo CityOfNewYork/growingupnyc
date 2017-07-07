@@ -8,7 +8,7 @@ if ( ! class_exists( 'Timber' ) ) {
 }
 $context = Timber::get_context();
 $context['post'] = Timber::get_post();
-
+$context['language'] = ICL_LANGUAGE_CODE;
 $templates = array( 'home.twig' );
 
 Timber::render( $templates, $context );

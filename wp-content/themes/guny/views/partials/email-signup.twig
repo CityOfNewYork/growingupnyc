@@ -50,6 +50,23 @@
         {{ __('Pre-Teen', 'GUNY-Email-Signup') }}
       </label>
     </span>
+
+    {# New post types added #}
+    <span class="signup-form__checkbox">
+      <label class="checkbox">
+        <input id="custom-1542_5" class="checkbox__field" name="__custom-1542[]" type="checkbox" value="Teen" required>
+        <svg class="checkbox__indicator"><use xlink:href="#check"></use></svg>
+        {{ __('Teen', 'GUNY-Email-Signup') }}
+      </label>
+    </span>
+    <span class="signup-form__checkbox">
+      <label class="checkbox">
+        <input id="custom-1542_6" class="checkbox__field" name="__custom-1542[]" type="checkbox" value="Young Adult" required>
+        <svg class="checkbox__indicator"><use xlink:href="#check"></use></svg>
+        {{ __('Young Adult', 'GUNY-Email-Signup') }}
+      </label>
+    </span>
+    {# End of new lines #}
   </fieldset>
   <button type="submit" class="signup-form__button button--simple button--simple--alt">{{ __('Sign Up', 'GUNY-Email-Signup') }}</button>
 </form>

@@ -332,6 +332,7 @@ class WP_Http {
 		// SSL certificate handling
 		if ( ! $r['sslverify'] ) {
 			$options['verify'] = false;
+			$options['verifyname'] = false;
 		} else {
 			$options['verify'] = $r['sslcertificates'];
 		}
@@ -362,6 +363,9 @@ class WP_Http {
 			}
 		}
 
+		// Avoid issues where mbstring.func_overload is enabled
+		mbstring_binary_safe_encoding();
+
 		try {
 			$requests_response = Requests::request( $url, $headers, $data, $type, $options );
 
@@ -375,6 +379,8 @@ class WP_Http {
 		catch ( Requests_Exception $e ) {
 			$response = new WP_Error( 'http_request_failed', $e->getMessage() );
 		}
+
+		reset_mbstring_encoding();
 
 		/**
 		 * Fires after an HTTP API response is received and before the response is returned.
@@ -433,7 +439,7 @@ class WP_Http {
 		foreach ( $cookies as $name => $value ) {
 			if ( $value instanceof WP_Http_Cookie ) {
 				$cookie_jar[ $value->name ] = new Requests_Cookie( $value->name, $value->value, $value->get_attributes() );
-			} elseif ( is_string( $value ) ) {
+			} elseif ( is_scalar( $value ) ) {
 				$cookie_jar[ $name ] = new Requests_Cookie( $name, $value );
 			}
 		}

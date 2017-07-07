@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<!--[if lte IE 8 ]>
+<html lang="en" class="no-js oldie">
+<![endif]-->
+<!--[if IE 9 ]>
+<html lang="en" class="no-js ie9">
+<![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="icon" type="image/x-icon" href="{{theme.path}}/assets/img/microsite-favicon.png">
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{{theme.path}}/assets/img/microsite-favicon.png" />
+  <link rel="stylesheet" href="{{theme.path}}/src/css/owl.theme.default.min.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="{{theme.path}}/src/css/owl.carousel.min.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="{{theme.path}}/src/css/animate.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="{{theme.path}}/style.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="{{theme.path}}/microsite.css" type="text/css" media="screen">
+  <script>
+    (function(d) {
+      var config = {
+        kitId: 'ywl0xbs',
+        scriptTimeout: 3000,
+        async: true,
+        active: function() {
+          if (typeof jQuery === 'function') {
+            jQuery('.js-accordion').trigger('fontsActive');
+          }
+        }
+      },
+      h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+    })(document);
+  </script>
+  {{function('wp_head')}}
+  {% block head_extras %}{% endblock %}
+</head>
+
+<body class="{{body_class}}" data-template="base.twig">
+  {% include 'partials/svg-sprite.twig' %}
+  <div class="o-offcanvas js-offcanvas" id="offcanvas-ages">
+    <a href="#main" class="show-for-keyboard">Skip to main content</a>
+    <nav class="o-offcanvas__side js-offcanvas__side" id="ages" role="navigation" aria-label="ages-heading">
+      <h2 id="ages-heading" class="show-for-screen-reader">Resources by Age</h2>
+      <button data-toggle="offcanvas-ages" class="o-offcanvas__close button--text"><svg class="icon--small" role="img"><title>Close Resources by Age</title><use xlink:href="#close"></use></svg></button>
+      <ol class="js-s-accordion c-list-box c-list-box--secondary" data-multiselectable="true">
+        {% for age_group in age_menu %}
+          <li class="c-list-box__item">
+            <h3 class="js-s-accordion__header c-list-box__heading" id="ages-heading-{{loop.index}}">{{age_group.name}}</h3>
+            <ol class="js-s-accordion__content c-list-box__content" id="ages-panel-{{loop.index}}">
+              {% for post in age_group.posts('numberposts=-1&post_type=age&meta_key=numeric_age&orderby=meta_value_num&order=ASC') %}
+                <li><a href="{{post.link}}" class="c-list-box__subitem">{{post.title}}</a></li>
+              {% endfor %}
+            </ol>
+          </li>
+        {% endfor %}
+      </ol>
+    </nav>
+
+    <div class="o-offcanvas__main">
+      {% block header %}
+        <header class="c-banner">
+          <div class="o-container">
+            <a href="/youth" class="c-banner__logo-wrapper"><span class="c-banner__logo c-banner-ms__logo">{{site.name}}</span></a>
+            <nav class="c-banner__nav" role="navigation" aria-label="Primary">
+              <ul class="o-inline o-inline-ms">
+                {% for menu_item in ms_menu.get_items %}
+                  <li class="o-inline__item"><a href="{{menu_item.link}}" class="c-banner__link">{{menu_item.title}}</a></li>
+                {% endfor %}
+              </ul>
+            </nav>
+          </div>
+        </header>
+        <section class="o-overlay js-overlay" id="overlay-search">
+          <div class="o-container-med">
+            <form action="/" method="get" class="js-global-search u-bottom-spacing">
+              <label for="fwp-search" class="show-for-screen-reader">Search</label>
+              <div class="form-field__icon-container">
+                <input type="search" name="s" placeholder="Search" class="form-field form-field--large form-field--full-width" id="fwp-search">
+                <button type="submit" class="form-field__icon form-field__icon--large"><svg role="img"><title>Search</title><use xlink:href="#search"></use></svg></button>
+              </div>
+            </form>
+
+            <section class="o-col__divider c-block-list">
+              <h2 class="c-block-list__heading">
+                {{ __('Programs', 'GUNY-W-Top-Programs') }}
+                <a class="c-block-list__link" href="{{site.url}}/programs">{{ __('See all programs', 'GUNY-W-Top-Programs') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="true"><use xlink:href="#caret-right"></use></svg></a>
+              </h2> <!-- /.c-content-tout__heading -->
+              <div class="c-block-list__inner o-row">
+                {{top_programs}}
+              </div> <!-- /.o-col__divider -->
+            </section> <!-- /.c-content-tout -->
+
+            <section class="o-col__divider c-block-list">
+              <h2 class="c-block-list__heading">
+                {{ __('Events', 'GUNY-W-Top-Programs') }}
+                <a class="c-block-list__link" href="{{site.url}}/events">{{ __('See all events', 'GUNY-W-Top-Programs') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="small"><use xlink:href="#caret-right"></use></svg></a>
+              </h2> <!-- /.c-content-tout__heading -->
+              <div class="c-block-list__inner o-row">
+              {% for post in top_events %}
+                <div class="o-col-3 c-content-tout">
+                  <h3 class="c-content-tout__title">
+                    <a href="{{post.path}}" title="{{post.post_title}}" rel="bookmark">{{post.post_title}}</a>
+                  </h3>
+                  <div class="c-content-tout__subtitle">
+                    {% include 'partials/event-date.twig' %}
+                  </div> <!-- /.c-content-tout__subtitle -->
+                  {% if post.venue %}
+                    <div class="c-content-tout__link">
+                      {% include 'partials/event-link.twig' %}
+                    </div>
+                  {% endif %}
+                </div> <!-- /.o-col-3.c-content-tout -->
+              {% endfor %}
+              </div> <!-- /.o-col__row -->
+            </section> <!-- /.o-col__divider -->
+          </div> <!-- /.o-container-med -->
+        </section> <!-- /.o-overlay -->
+      {% endblock %}
+
+      <main id="main" role="main">
+        {% block content %}
+          <section class="post-list small-12 columns">
+            <p>Sorry, no entries match your criteria</p>
+          </section> <!-- /.post-list.small-12.columns -->
+        {% endblock %}
+      </main> <!-- /#main -->
+
+      <footer class="c-footer" role="contentinfo">
+        <div class="o-container">
+          <div class="c-footer__section">
+            <div class="c-footer__logos">
+              <figure class="c-footer__logo">
+                <img alt="Growing Up NYC" src="{{theme.link}}/assets/img/NYCDOH_GrowingUP_logo_Wht_Mobile_Final_ms.png" height="68" width="118">
+              </figure>
+              <figure class="c-footer__logo">
+                <a href="http://www1.nyc.gov/site/childrenscabinet/index.page" target="_blank"><img alt="NYC Children's Cabinet" src="{{theme.link}}/assets/img/NYC-childrens-cabinet.svg" height="69" width="157"></a>
+              </figure>
+            </div>
+            <nav role="navigation" class="c-footer__nav" aria-label="Secondary">
+              <ul class="c-footer__column">
+                <li class="c-footer__nav-item"><a class="c-footer__link" href="{{site.url}}/youth/">{{ __('Home', 'GUNY-Footer') }}</a></li>
+                {% for menu_item in ms_menu.get_items %}
+                  <li class="c-footer__nav-item"><a class="c-footer__link" href="{{menu_item.link}}">{{menu_item.title}}</a></li>
+                {% endfor %}
+                {% for menu_item in footer_menu_left.get_items %}
+                  <li class="c-footer__nav-item{% if loop.first %} c-footer__nav-item--spaced{% endif %}"><a class="c-footer__link" href="{{menu_item.link}}" target="_blank">{{menu_item.title}}</a></li>
+                {% endfor %}
+              </ul>
+              <ul class="c-footer__column">
+                {% for menu_item in ms_footer_menu_right.get_items %}
+                  <li class="c-footer__nav-item"><a class="c-footer__link" href="{{menu_item.link}}" target="_blank">{{menu_item.title}}</a></li>
+                {% endfor %}
+              </ul>
+            </nav>
+          </div>
+        </div> <!-- /.o-container -->
+        <div class="o-container">
+          <div class="c-footer__footer">
+            <p>&copy; {{now|date('Y')}} {{ __('City of New York. All Rights Reserved.', 'GUNY-Footer') }}<br>{{ __('NYC is a trademark and service mark of the City of New York', 'GUNY-Footer') }}</p>
+          </div>
+        </div>
+      </footer> <!-- /.c-footer -->
+      <a class="o-offcanvas__overlay" data-toggle="offcanvas-ages" aria-hidden="true"></a>
+    </div> <!-- /.o-offcanvas__main -->
+  </div> <!-- /.o-offcanvas -->
+
+  {{wp_footer}}
+  <script type="text/javascript">
+    var prod_dcsId_val = "dcs222i18cz8hz10fn1xgf727_2t5f";
+    var prod_host = "growingupnyc.cityofnewyork.us";
+  </script>
+  <script type="text/javascript" src="//www1.nyc.gov/assets/home/js/webtrends/webtrends_v10.js"></script>
+</body>

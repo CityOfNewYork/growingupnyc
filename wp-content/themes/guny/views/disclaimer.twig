@@ -17,15 +17,14 @@
   </header>
 </div>
 {% endblock %}
-
 <section class="o-container u-bottom-spacing">
   <article class="o-content-container--compact o-article-ms__disclaimer">
     <h1 class="c-hero__title u-bottom-spacing">{{post.title}}</h1>
-    <div class="o-content-container--text s-wysiwyg">
-      {% if post.page_content %}
-        {{post.page_content}}
-      {% endif %}
-    </div> <!-- /.o-content-container-text -->
+    {% if post.post_content %}
+      <div class="o-content-container--text s-wysiwyg">
+        {{post.post_content}}
+      </div> <!-- /.o-content-container-text -->
+    {% endif %}
   </article>
 </section> <!-- /.o-container.u-bottom-spacing -->
 {% endblock %}

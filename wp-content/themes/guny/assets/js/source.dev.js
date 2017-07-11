@@ -468,9 +468,9 @@ if (objCtr.defineProperty) {
 
 	var _overlay2 = _interopRequireDefault(_overlay);
 
-	var _stickyNav = __webpack_require__(36);
+	var _stickNav = __webpack_require__(36);
 
-	var _stickyNav2 = _interopRequireDefault(_stickyNav);
+	var _stickNav2 = _interopRequireDefault(_stickNav);
 
 	var _sectionHighlighter = __webpack_require__(32);
 
@@ -545,7 +545,7 @@ if (objCtr.defineProperty) {
 	  (0, _facets2.default)();
 	  // Homepage
 	  (0, _staticColumn2.default)();
-	  (0, _stickyNav2.default)();
+	  (0, _stickNav2.default)();
 	  //currentSection();
 	  (0, _bsdtoolsSignup2.default)();
 	  (0, _formEffects2.default)();
@@ -2563,7 +2563,7 @@ if (objCtr.defineProperty) {
 	      }
 
 	      // Check if the sidebar has reached the bottom switch point
-	      if ($elem.offset().top + elemHeight > switchPointBottom) {
+	      if ($('.c-footer__reached').isOnScreen()) {
 	        isSticky = false;
 	        isAbsolute = true;
 	        $elem.addClass(settings.absoluteClass);
@@ -2708,8 +2708,25 @@ if (objCtr.defineProperty) {
 	  }
 
 	  initialize();
+
+	  $.fn.isOnScreen = function () {
+	    var win = $(window);
+
+	    var viewport = {
+	      top: win.scrollTop(),
+	      left: win.scrollLeft()
+	    };
+	    viewport.right = viewport.left + win.width();
+	    viewport.bottom = viewport.top + win.height();
+
+	    var bounds = this.offset();
+	    bounds.right = bounds.left + this.outerWidth();
+	    bounds.bottom = bounds.top + this.outerHeight();
+
+	    return !(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom);
+	  };
 	} /**
-	  * Sticky Nav module
+	  * Stick Nav module
 	  * @module modules/stickyNav
 	  */
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))

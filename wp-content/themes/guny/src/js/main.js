@@ -4,7 +4,7 @@ import accordion from './modules/accordion.js';
 import simpleAccordion from './modules/simpleAccordion.js';
 import offcanvas from './modules/offcanvas.js';
 import overlay from './modules/overlay.js';
-import stickyNav from './modules/stickyNav.js';
+import stickNav from './modules/stickNav.js';
 //import currentSection from './modules/currentSection.js';
 import sectionHighlighter from './modules/sectionHighlighter.js';
 import staticColumn from './modules/staticColumn.js';
@@ -41,7 +41,7 @@ function init() {
   facets();
   // Homepage
   staticColumn();
-  stickyNav();
+  stickNav();
   //currentSection();
   bsdtoolsSignup();
   formEffects();

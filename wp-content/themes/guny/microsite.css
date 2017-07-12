@@ -635,7 +635,7 @@ button:hover, button:focus {
   padding-bottom: 25px; }
   @media screen and (min-width: 1024px) {
     .o-article-ms__topics .u-bottom-spacing {
-      padding-bottom: 40px; } }
+      padding-bottom: 60px; } }
 
 .o-article-ms__topics h2 {
   padding-top: 20px; }
@@ -669,7 +669,7 @@ button:hover, button:focus {
   text-align: left; }
 
 .c-do-list {
-  margin: 1.875rem 0;
+  margin-bottom: 3.75rem;
   background: #eee;
   padding: 1.875rem; }
   .c-do-list a.button--topics__cta {

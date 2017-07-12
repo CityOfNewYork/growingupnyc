@@ -1548,6 +1548,7 @@ ol.o-inline {
   border-top: 2px solid #fff; }
 
 .c-footer {
+  position: relative;
   background: #2793e0;
   color: #fff;
   padding: 60px 0; }

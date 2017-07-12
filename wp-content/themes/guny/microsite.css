@@ -640,6 +640,10 @@ button:hover, button:focus {
 .o-article-ms__topics h2 {
   padding-top: 20px; }
 
+@media screen and (min-width: 700px) {
+  .c-nav-list-ms__topics {
+    margin-bottom: 2.1875rem; } }
+
 .c-nav-list-ms__topics .c-nav-list__link {
   background-color: #3c036f;
   border-color: #3c036f; }

@@ -387,6 +387,9 @@
 
 // Navigation List Link
 .c-nav-list-ms__topics {
+  @include media($bp-medium) {
+    margin-bottom: rem-calc(35px);
+  }
   .c-nav-list__link {
     background-color: $dark-purple;
     border-color: $dark-purple;

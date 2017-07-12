@@ -20,18 +20,18 @@ if ( $post->post_type == 'age' ) {
       'terms' => $post->age_group->id
     )
   ), true );
-  $num_remaining = 3 - count($upcoming_events);
-  if ($num_remaining > 0) {
-    $remaining_events = GunySite::get_featured_events($num_remaining, array(
-      array(
-        'taxonomy' => 'age_group',
-        'field' => 'term_id',
-        'terms' => $post->age_group->id,
-        'operator' => 'NOT IN'
-      )
-    ), false );
-    $upcoming_events = array_merge($upcoming_events, $remaining_events);
-  }
+  // $num_remaining = 3 - count($upcoming_events);
+  // if ($num_remaining > 0) {
+  //   $remaining_events = GunySite::get_featured_events($num_remaining, array(
+  //     array(
+  //       'taxonomy' => 'age_group',
+  //       'field' => 'term_id',
+  //       'terms' => $post->age_group->id,
+  //       'operator' => 'NOT IN'
+  //     )
+  //   ), false );
+  //   $upcoming_events = array_merge($upcoming_events, $remaining_events);
+  // }
   $context['upcoming_events'] = $upcoming_events;
 } elseif ( $post->post_type == 'program' ) {
   $programs_cat = $post->terms('programs_cat');
@@ -54,9 +54,6 @@ if ( $post->post_type == 'age' ) {
 
 if($post->post_type == 'page' && strpos($post->post_name, 'youth') !== false){
   $templates = array( 'micro-site-homepage.twig' );
-}
-elseif($post->post_type == 'page' && strpos($post->post_name, 'disclaimer') !== false){
-  $templates = array('disclaimer.twig');
 }
 else{
   $templates = array( 'single-' . $post->ID . '.twig', 'single-' . $post->post_type . '.twig', 'single.twig' );

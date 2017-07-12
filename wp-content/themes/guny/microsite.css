@@ -635,10 +635,14 @@ button:hover, button:focus {
   padding-bottom: 25px; }
   @media screen and (min-width: 1024px) {
     .o-article-ms__topics .u-bottom-spacing {
-      padding-bottom: 40px; } }
+      padding-bottom: 60px; } }
 
 .o-article-ms__topics h2 {
   padding-top: 20px; }
+
+@media screen and (min-width: 700px) {
+  .c-nav-list-ms__topics {
+    margin-bottom: 2.1875rem; } }
 
 .c-nav-list-ms__topics .c-nav-list__link {
   background-color: #3c036f;
@@ -669,7 +673,7 @@ button:hover, button:focus {
   text-align: left; }
 
 .c-do-list {
-  margin: 1.875rem 0;
+  margin-bottom: 3.75rem;
   background: #eee;
   padding: 1.875rem; }
   .c-do-list a.button--topics__cta {

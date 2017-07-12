@@ -22,7 +22,7 @@
     <h1 class="c-hero__title u-bottom-spacing">{{post.title}}</h1>
     {% if post.post_content %}
       <div class="o-content-container--text s-wysiwyg">
-        {{post.get_field('post_content')}}
+        {{post.content}}
       </div> <!-- /.o-content-container-text -->
     {% endif %}
   </article>

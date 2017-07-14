@@ -238,12 +238,14 @@ button:hover, button:focus {
   list-style: none; }
   .c-details-list-ms__descr ul li {
     padding: 0 0 0 1.6875rem;
-    text-indent: -1.6875rem; }
+    text-indent: -1.375rem; }
     .c-details-list-ms__descr ul li:before {
-      content: url(/wp-content/themes/guny/assets/img/check.svg);
+      position: relative;
+      top: -4px;
+      content: url(/wp-content/themes/guny/assets/img/circle.svg);
       margin-right: 0.75rem;
       margin-top: 0.125rem;
-      opacity: .2;
+      opacity: 1;
       vertical-align: middle; }
 
 .carousel-ms,
@@ -633,10 +635,14 @@ button:hover, button:focus {
   padding-bottom: 25px; }
   @media screen and (min-width: 1024px) {
     .o-article-ms__topics .u-bottom-spacing {
-      padding-bottom: 40px; } }
+      padding-bottom: 60px; } }
 
 .o-article-ms__topics h2 {
   padding-top: 20px; }
+
+@media screen and (min-width: 700px) {
+  .c-nav-list-ms__topics {
+    margin-bottom: 2.1875rem; } }
 
 .c-nav-list-ms__topics .c-nav-list__link {
   background-color: #3c036f;
@@ -667,7 +673,7 @@ button:hover, button:focus {
   text-align: left; }
 
 .c-do-list {
-  margin: 1.875rem 0;
+  margin-bottom: 3.75rem;
   background: #eee;
   padding: 1.875rem; }
   .c-do-list a.button--topics__cta {
@@ -943,5 +949,21 @@ button:hover, button:focus {
   @media screen and (min-width: 700px) {
     .button--inspiration__cta {
       width: auto; } }
+
+.c-hero-ms__disclaimer {
+  height: 400px; }
+  @media screen and (min-width: 1024px) {
+    .c-hero-ms__disclaimer {
+      height: 360px; } }
+
+.c-hero__title {
+  font-size: 2.5rem;
+  line-height: 1;
+  padding-top: 2.6875rem;
+  text-transform: uppercase;
+  z-index: 1; }
+  @media screen and (min-width: 700px) {
+    .c-hero__title {
+      font-size: 4.125rem; } }
 
 /*# sourceMappingURL=microsite.css.map */

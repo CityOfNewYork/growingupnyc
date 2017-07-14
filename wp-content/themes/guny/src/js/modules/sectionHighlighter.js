@@ -4,9 +4,6 @@
 * @see https://stackoverflow.com/questions/32395988/highlight-menu-item-when-scrolling-down-to-section
 */
 
-/**
-* owl carousel settings and to make the owl carousel work.
-*/
 export default function() {
   var $navigationLinks = $('.js-section-set > li > a');
   var $sections = $("section");
@@ -15,7 +12,7 @@ export default function() {
   //var eTop = $('#free-day-trips').offset().top;
 
   $sections.each(function() {
-    sectionIdTonavigationLink[$(this).attr('id')] = $('.js-section-set > li > a[href=\\#' + $(this).attr('id') + ']');
+    sectionIdTonavigationLink[$(this).attr('id')] = $('.js-section-set > li > a[href="\#' + $(this).attr('id') + '"]');
   });
 
   function optimized() {

@@ -290,7 +290,7 @@ function media_handle_upload($file_id, $post_id, $post_data = array(), $override
 	$url = $file['url'];
 	$type = $file['type'];
 	$file = $file['file'];
-	$title = sanitize_text_field( $name );
+	$title = $name;
 	$content = '';
 	$excerpt = '';
 
@@ -3054,8 +3054,6 @@ function wp_read_video_metadata( $file ) {
 
 	wp_add_id3_tag_data( $metadata, $data );
 
-	$metadata = wp_kses_post_deep( $metadata );
-
 	return $metadata;
 }
 
@@ -3100,8 +3098,6 @@ function wp_read_audio_metadata( $file ) {
 		$metadata['length_formatted'] = $data['playtime_string'];
 
 	wp_add_id3_tag_data( $metadata, $data );
-
-	$metadata = wp_kses_post_deep( $metadata );
 
 	return $metadata;
 }

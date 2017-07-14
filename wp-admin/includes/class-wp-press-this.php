@@ -119,28 +119,10 @@ class WP_Press_This {
 			'post_type'     => 'post',
 			'post_status'   => 'draft',
 			'post_format'   => ( ! empty( $_POST['post_format'] ) ) ? sanitize_text_field( $_POST['post_format'] ) : '',
+			'tax_input'     => ( ! empty( $_POST['tax_input'] ) ) ? $_POST['tax_input'] : array(),
+			'post_category' => ( ! empty( $_POST['post_category'] ) ) ? $_POST['post_category'] : array(),
 		);
 
-		// Only accept categories if the user actually can assign
-		$category_tax = get_taxonomy( 'category' );
-		if ( current_user_can( $category_tax->cap->assign_terms ) ) {
-			$post_data['post_category'] = ( ! empty( $_POST['post_category'] ) ) ? $_POST['post_category'] : array();
-		}
-
-		// Only accept taxonomies if the user can actually assign
-		if ( ! empty( $_POST['tax_input'] ) ) {
-			$tax_input = $_POST['tax_input'];
-			foreach ( $tax_input as $tax => $_ti ) {
-				$tax_object = get_taxonomy( $tax );
-				if ( ! $tax_object || ! current_user_can( $tax_object->cap->assign_terms ) ) {
-					unset( $tax_input[ $tax ] );
-				}
-			}
-
-			$post_data['tax_input'] = $tax_input;
-		}
-
-		// Toggle status to pending if user cannot actually publish
 		if ( ! empty( $_POST['post_status'] ) && 'publish' === $_POST['post_status'] ) {
 			if ( current_user_can( 'publish_posts' ) ) {
 				$post_data['post_status'] = 'publish';
@@ -473,7 +455,7 @@ class WP_Press_This {
 	 * @since 4.2.0
 	 *
 	 * @param string $src Embed source URL.
-	 * @return string If not from a supported provider, an empty string. Otherwise, a reformatted embed URL.
+	 * @return string If not from a supported provider, an empty string. Otherwise, a reformattd embed URL.
 	 */
 	private function _limit_embed( $src ) {
 		$src = $this->_limit_url( $src );
@@ -721,11 +703,7 @@ class WP_Press_This {
 			 * making PT fully backward compatible with the older bookmarklet.
 			 */
 			if ( empty( $_POST ) && ! empty( $data['u'] ) ) {
-				if ( isset( $_GET['_wpnonce'] ) && wp_verify_nonce( $_GET['_wpnonce'], 'scan-site' ) ) {
-					$data = $this->source_data_fetch_fallback( $data['u'], $data );
-				} else {
-					$data['errors'] = 'missing nonce';
-				}
+				$data = $this->source_data_fetch_fallback( $data['u'], $data );
 			} else {
 				foreach ( array( '_images', '_embeds' ) as $type ) {
 					if ( empty( $_POST[ $type ] ) ) {
@@ -878,12 +856,6 @@ class WP_Press_This {
 	public function categories_html( $post ) {
 		$taxonomy = get_taxonomy( 'category' );
 
-		// Bail if user cannot assign terms
-		if ( ! current_user_can( $taxonomy->cap->assign_terms ) ) {
-			return;
-		}
-
-		// Only show "add" if user can edit terms
 		if ( current_user_can( $taxonomy->cap->edit_terms ) ) {
 			?>
 			<button type="button" class="add-cat-toggle button-link" aria-expanded="false">
@@ -1241,7 +1213,7 @@ class WP_Press_This {
 		$site_data = array(
 			'v' => ! empty( $data['v'] ) ? $data['v'] : '',
 			'u' => ! empty( $data['u'] ) ? $data['u'] : '',
-			'hasData' => ! empty( $data ) && ! isset( $data['errors'] ),
+			'hasData' => ! empty( $data ),
 		);
 
 		if ( ! empty( $images ) ) {
@@ -1301,12 +1273,6 @@ class WP_Press_This {
 		wp_enqueue_script( 'press-this' );
 		wp_enqueue_script( 'json2' );
 		wp_enqueue_script( 'editor' );
-
-		$categories_tax   = get_taxonomy( 'category' );
-		$show_categories  = current_user_can( $categories_tax->cap->assign_terms ) || current_user_can( $categories_tax->cap->edit_terms );
-
-		$tag_tax          = get_taxonomy( 'post_tag' );
-		$show_tags        = current_user_can( $tag_tax->cap->assign_terms );
 
 		$supports_formats = false;
 		$post_format      = 0;
@@ -1373,9 +1339,8 @@ class WP_Press_This {
 	<div id="scanbar" class="scan">
 		<form method="GET">
 			<label for="url-scan" class="screen-reader-text"><?php _e( 'Scan site for content' ); ?></label>
-			<input type="url" name="u" id="url-scan" class="scan-url" value="<?php echo esc_attr( $site_data['u'] ) ?>" placeholder="<?php esc_attr_e( 'Enter a URL to scan' ) ?>" />
+			<input type="url" name="u" id="url-scan" class="scan-url" value="" placeholder="<?php esc_attr_e( 'Enter a URL to scan' ) ?>" />
 			<input type="submit" name="url-scan-submit" id="url-scan-submit" class="scan-submit" value="<?php esc_attr_e( 'Scan' ) ?>" />
-			<?php wp_nonce_field( 'scan-site' ); ?>
 		</form>
 	</div>
 
@@ -1460,21 +1425,17 @@ class WP_Press_This {
 					</button>
 				<?php endif; ?>
 
-				<?php if ( $show_categories ) : ?>
-					<button type="button" class="button-link post-option">
-						<span class="dashicons dashicons-category"></span>
-						<span class="post-option-title"><?php _e( 'Categories' ); ?></span>
-						<span class="dashicons post-option-forward"></span>
-					</button>
-				<?php endif; ?>
+				<button type="button" class="button-link post-option">
+					<span class="dashicons dashicons-category"></span>
+					<span class="post-option-title"><?php _e( 'Categories' ); ?></span>
+					<span class="dashicons post-option-forward"></span>
+				</button>
 
-				<?php if ( $show_tags ) : ?>
-					<button type="button" class="button-link post-option">
-						<span class="dashicons dashicons-tag"></span>
-						<span class="post-option-title"><?php _e( 'Tags' ); ?></span>
-						<span class="dashicons post-option-forward"></span>
-					</button>
-				<?php endif; ?>
+				<button type="button" class="button-link post-option">
+					<span class="dashicons dashicons-tag"></span>
+					<span class="post-option-title"><?php _e( 'Tags' ); ?></span>
+					<span class="dashicons post-option-forward"></span>
+				</button>
 			</div>
 
 			<?php if ( $supports_formats ) : ?>
@@ -1488,27 +1449,23 @@ class WP_Press_This {
 				</div>
 			<?php endif; ?>
 
-			<?php if ( $show_categories ) : ?>
-				<div class="setting-modal is-off-screen is-hidden">
-					<button type="button" class="button-link modal-close">
-						<span class="dashicons post-option-back"></span>
-						<span class="setting-title" aria-hidden="true"><?php _e( 'Categories' ); ?></span>
-						<span class="screen-reader-text"><?php _e( 'Back to post options' ) ?></span>
-					</button>
-					<?php $this->categories_html( $post ); ?>
-				</div>
-			<?php endif; ?>
+			<div class="setting-modal is-off-screen is-hidden">
+				<button type="button" class="button-link modal-close">
+					<span class="dashicons post-option-back"></span>
+					<span class="setting-title" aria-hidden="true"><?php _e( 'Categories' ); ?></span>
+					<span class="screen-reader-text"><?php _e( 'Back to post options' ) ?></span>
+				</button>
+				<?php $this->categories_html( $post ); ?>
+			</div>
 
-			<?php if ( $show_tags ) : ?>
-				<div class="setting-modal tags is-off-screen is-hidden">
-					<button type="button" class="button-link modal-close">
-						<span class="dashicons post-option-back"></span>
-						<span class="setting-title" aria-hidden="true"><?php _e( 'Tags' ); ?></span>
-						<span class="screen-reader-text"><?php _e( 'Back to post options' ) ?></span>
-					</button>
-					<?php $this->tags_html( $post ); ?>
-				</div>
-			<?php endif; ?>
+			<div class="setting-modal tags is-off-screen is-hidden">
+				<button type="button" class="button-link modal-close">
+					<span class="dashicons post-option-back"></span>
+					<span class="setting-title" aria-hidden="true"><?php _e( 'Tags' ); ?></span>
+					<span class="screen-reader-text"><?php _e( 'Back to post options' ) ?></span>
+				</button>
+				<?php $this->tags_html( $post ); ?>
+			</div>
 		</div><!-- .options-panel -->
 	</div><!-- .wrapper -->
 

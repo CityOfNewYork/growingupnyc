@@ -96,3 +96,6 @@ node_modules
 *.asf
 *.wmv
 *.avi
+
+# Ignoring the files on Plugins which are failing on GitPush
+wp-includes/random_compat/*

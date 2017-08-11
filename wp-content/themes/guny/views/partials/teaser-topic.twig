@@ -1,0 +1,21 @@
+{% extends "partials/teaser.twig" %}
+
+{% block classes %}{{is_first ? "c-card--hero #{age_group.slug|sanitize|replace({'-es':''})}-gradient"}}{% endblock %}
+
+{% block sticker %}
+  {% set category = post.terms('topic_group')|first %}
+  {% if category %}
+    <div class="c-card__sticker sticker" aria-hidden="true">
+      <svg class="icon--large"><title>{{category.name}}</title><use xlink:href="#book"></use></svg>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block subtitle %}
+  <p><strong>{{post.program_name}}{% if post.acronym %} ({{post.acronym}}){% endif %}</strong></p>
+  <p>{{post.government_agency}}</p>
+{% endblock %}
+
+{% block body %}
+{{post.post_excerpt ? post.post_excerpt : post.summary|excerpt(15)}}
+{% endblock %}

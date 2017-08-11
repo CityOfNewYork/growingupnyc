@@ -1,0 +1,41 @@
+.s-wysiwyg {
+  table {
+    font-size: rem-calc(16px);
+    margin-bottom: rem-calc(40px);
+    max-width: 100%;
+    text-align: right;
+    @include media($bp-medium) {
+      font-size: rem-calc(18px);
+    }
+  }
+
+  thead {
+    border-bottom: 1px solid $very-dark-gray;
+    color: $blue;
+
+    tr {
+      background-color: transparent;
+    }
+  }
+
+  tbody {
+    tr {
+      &:nth-child(odd) {
+        background-color: $light-blue;
+      }
+    }
+  }
+
+  th {
+    vertical-align: top;
+  }
+
+  th,
+  td {
+    padding: rem-calc(10px);
+    word-break: normal;
+    @include media($bp-medium) {
+      padding: rem-calc(10px 40px);
+    }
+  }
+}

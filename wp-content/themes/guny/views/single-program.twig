@@ -13,7 +13,7 @@
       <h1 class="c-hero__title--long">
         {% if post.category %}
         <span class="c-hero__sticker sticker">
-          <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{post.category.slug}}"></use></svg>
+          <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{post.category.slug|replace({'-es':''})}}"></use></svg>
         </span>
         {% endif %}
         {{post.title}}
@@ -39,22 +39,23 @@
       <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
         {% if post.summary %}
         <li class="c-nav-list__item">
-          <a href="#section-summary" data-section="section-summary" class="js-section c-nav-list__link">{{ __('Summary', 'GUNY-Single-Program') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+          <a href="#section-summary" data-section="section-summary" class="js-section c-nav-list__link">
+            {{post.get_field('jump_nav_heading_-_summary')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
         </li>
         {% endif %}
         {% if post.eligibility %}
         <li class="c-nav-list__item">
-          <a href="#section-eligibility" data-section="section-eligibility" class="js-section c-nav-list__link">{{ __('Eligibility', 'GUNY-Single-Program') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+          <a href="#section-eligibility" data-section="section-eligibility" class="js-section c-nav-list__link">{{post.get_field('jump_nav_heading_-_eligibility')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
         </li>
         {% endif %}
         {% if post.whats_needed or post.how_to_apply %}
         <li class="c-nav-list__item">
-          <a href="#section-application" data-section="section-application" class="js-section c-nav-list__link">{{ __('Application', 'GUNY-Single-Program') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+          <a href="#section-application" data-section="section-application" class="js-section c-nav-list__link">{{post.get_field('jump_nav_heading_-_application')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
         </li>
         {% endif %}
         {% if post.get_help %}
         <li class="c-nav-list__item">
-          <a href="#section-help" data-section="section-help" class="js-section c-nav-list__link">{{ __('Help', 'GUNY-Single-Program') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+          <a href="#section-help" data-section="section-help" class="js-section c-nav-list__link">{{post.get_field('jump_nav_heading_-_help')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
         </li>
         {% endif %}
       </ol>
@@ -75,7 +76,7 @@
       {% endif %}
       {% if post.eligibility %}
         <section class="o-content-container--text s-wysiwyg u-top-spacing-small u-bottom-spacing-small" id="section-eligibility">
-          <h2>{{ __('Am I Eligible?', 'GUNY-Single-Program') }}</h2>
+          <h2>{{post.get_field('eligibility_heading')}}</h2>
           {{post.get_field('eligibility')}}
         </section> <!-- /.o-content-container-text -->
         <hr>
@@ -84,14 +85,14 @@
         <section id="section-application" class="u-top-spacing-small u-bottom-spacing-small">
           {% if post.whats_needed %}
           <div class="o-content-container--text s-wysiwyg{% if post.how_to_apply %} u-bottom-spacing-small{% endif %}">
-            <h2>{{ __('What Will I Need to Apply?', 'GUNY-Single-Program') }}</h2>
+            <h2>{{post.get_field('whats_needed_heading')}}</h2>
             {{post.get_field('whats_needed')}}
           </div>
           <hr>
           {% endif %}
           {% if post.how_to_apply %}
           <div class="o-content-container--text s-wysiwyg{% if post.whats_needed %} u-top-spacing-small{% endif %}">
-            <h2>{{ __("I'm Ready to Apply", 'GUNY-Single-Program') }}</h2>
+            <h2>{{post.get_field('how_to_apply_heading')}}</h2>
             {{post.get_field('how_to_apply')}}
           </div>
           {% endif %}
@@ -100,7 +101,7 @@
       {% endif %}
       {% if post.get_help %}
         <section id="section-help" class="u-top-spacing-small u-bottom-spacing-small o-content-container--text s-wysiwyg">
-          <h2>{{ __('How Can I Get Help?', 'GUNY-Single-Program') }}</h2>
+          <h2>{{post.get_field('get_help_heading')}}</h2>
           {{post.get_field('get_help')}}
         </section> <!-- /.o-content-container-text -->
       {% endif %}

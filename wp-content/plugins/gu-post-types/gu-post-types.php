@@ -134,19 +134,6 @@ class GUPostTypes {
     );
 
     register_taxonomy(
-      'language',
-      array('language', 'tribe_events', 'program'),
-      array(
-        'label' => __( 'Language' ),
-        'rewrite' => array(
-          'slug' => 'language',
-          'with_front' => false
-        ),
-        'hierarchical' => true
-      )
-    );
-
-    register_taxonomy(
       'programs_cat',
       'program',
       array(

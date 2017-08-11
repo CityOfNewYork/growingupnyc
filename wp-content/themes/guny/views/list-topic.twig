@@ -1,0 +1,60 @@
+{% extends "microsite-list.twig" %}
+
+{% block head_extras %}
+<style>
+  .c-hero-ms__topics { background-color: #7735b2; background-image: url(/wp-content/themes/guny/assets/img/hero-topics-landing.svg); }
+</style>
+{% endblock %}
+
+{% block hero %}
+<div class="js-parallax">
+  <header class="c-hero c-hero-ms c-hero-ms__topics c-hero-ms__topics--landing js-parallax-content">
+    <div class="o-container js-parallax-text">
+      <h1 class="c-hero__title">{{options.topic_landing_title}}</h1>
+      <p class="c-hero__tagline">{{options.topic_landing_tagline}}</p>
+    </div>
+  </header>
+</div>
+{% endblock %}
+
+{% block classes %}
+o-container-ms__topics
+{% endblock %}
+
+{% block list_sidebar %}
+  <ol class="js-accordion c-list-box c-list-box-ms__topics c-list-box--primary" data-multiselectable="true">
+    {% for topic_group in topic_menu %}
+      <li class="c-list-box__item">
+        <h3 class="js-accordion__header c-list-box__heading {{topic_group.slug|sanitize|replace({'-es':''})}}-background" id="homepage-ages-heading-{{loop.index}}">
+          {{topic_group.name}}
+          <span class="c-list-box__subheading">{{topic_group.description}}</span>
+        </h3>
+        <ol class="js-accordion__content c-list-box__content {{topic_group.slug|sanitize|replace({'-es':''})}}-background" id="homepage-ages-panel-{{loop.index}}">
+          {% for post in topic_group.posts('numberposts=-1&post_type=topic') %}
+            <li class="c-list-box__subitem"><a href="{{post.link}}" class="button--full-width button--primary {{topic_group.slug|sanitize|replace({'-es':''})}}-text">{{post.title}}</a></li>
+          {% endfor %}
+        </ol>
+      </li>
+    {% endfor %}
+  </ol>
+{% endblock %}
+
+{% block post_list %}  
+  <section class="c-block-list c-block-list-ms__topics c-block-list--shade o-content-container u-sm-gutter">
+    <h3 class="c-block-list-ms__topics--title">{{options.topic_landing_subheading}}</h3>
+    <div class="c-block-list-ms__topics--text">{{options.topic_landing_intro__overview}}</div>
+    {% for post in posts %}
+      <div class="c-block-list__item">
+        {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+      </div>
+    {% endfor %}  
+  </section>
+{% endblock %}
+
+{% block after_list %}
+<div class="o-content-container--compact">
+  {{pagination}}
+</div>
+
+
+{% endblock %}

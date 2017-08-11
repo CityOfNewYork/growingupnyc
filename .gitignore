@@ -1,5 +1,6 @@
 # WordPress #
 ############
+.htaccess
 wp-config.php
 wp-content/uploads/
 wp-content/blogs.dir/
@@ -51,7 +52,6 @@ Thumbs.db
 # Vim generated files #
 ######################
 *.un~
-.idea
 
 # SASS #
 ##########

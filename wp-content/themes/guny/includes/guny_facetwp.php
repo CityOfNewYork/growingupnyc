@@ -2,10 +2,107 @@
 /**
 * Modifications to Facet WP
 */
-
 /**
 * Custom HTML for the search facet
 */
+if ( ! function_exists('get_current_page')) {
+  /*
+    Given a url and key as page or query then this function will return the page url or query parameters accordingly.
+    param: url , key value either 'page' or 'query'
+    returns: a string containing url or query string
+    default return : passued url
+  */
+  function get_current_page($url){
+    // $urlarray = parse_url($url);
+    // return $urlarray["scheme"].'://'.$urlarray['host'].$urlarray['path'];
+    $mainurl = explode("?", $url);
+    return $mainurl[0];
+  }
+}
+if ( ! function_exists('get_url_query_parameters')) {
+  /*
+    Given a url will return all query parameters as an array.
+    param: url
+    returns: an array of query parameters as a key value pair.
+  */
+  function get_url_query_parameters($url){
+    parse_str(parse_url($url, PHP_URL_QUERY), $output);
+    return $output;
+  }
+}
+if ( ! function_exists('update_url_queries')) {
+  /*
+    Given a array of queries with key value pair this function will update the array already with the key and value
+    param: array of query string as key value , querykey , query value 
+    returns: updated array of query parameters.
+  */
+  function update_url_queries($queryparameter , $newquerykey , $newqueryvalue){
+    $updated = false;
+    foreach ($queryparameter as $querykey => $queryvalue) {
+      if($querykey == 'fwp_'.$newquerykey){
+        $queryparameter[$querykey] = $newqueryvalue;
+        $updated = true;
+      }
+      if(is_null($queryparameter[$querykey])){
+        unset($queryparameter[$querykey]);
+        $updated = true;
+      }
+      if($querykey == 'fwp_paged'){
+        unset($queryparameter[$querykey]);
+      }
+    }
+    if(!$updated && !is_null($newqueryvalue)){
+      $queryparameter['fwp_'.$newquerykey] = $newqueryvalue;
+    }
+    return $queryparameter;
+  }
+}
+if ( ! function_exists('generate_new_url')) {
+  /*
+    Given a url and parameters function will generate the new url.
+    param : URL as string , Query parameter as array 
+    returns: the url with query strings appended to it.
+  */
+  function generate_new_url($url , $queryparameter){
+    if (!empty($queryparameter)) {
+      $querystring = http_build_query($queryparameter,'','&');
+      return $url.'?'.$querystring;
+    }
+    return $url;
+  }
+}
+if ( ! function_exists('update_url_pagers')) {
+  /*
+    Given a parameters array function will generate the pager for the facet.
+    param : Query parameter as array and $pagenumber
+    returns: the url with pager strings appended to it.
+  */
+  function update_url_pagers($queryparameter , $pagenumber){
+    $queryparameter['fwp_paged'] = $pagenumber;
+    return $queryparameter;
+  }
+}
+if ( ! function_exists('add_facet_query_string_url')) {
+  function add_facet_query_string_url($facetname , $facetvalue , $url){
+    $mainurl = get_current_page($url);
+    $urlqueries = get_url_query_parameters($url);
+    $urlqueries = update_url_queries($urlqueries , $facetname , $facetvalue);
+    $finalurl = generate_new_url($mainurl , $urlqueries);
+    return $finalurl;
+  }
+}
+if ( ! function_exists('add_facet_pagers')) {
+  function add_facet_pagers($url , $pagenumber){
+    $mainurl = get_current_page($url);
+    $urlqueries = get_url_query_parameters($url);
+    $urlqueries = update_url_pagers($urlqueries , $pagenumber);
+    $finalurl = generate_new_url($mainurl , $urlqueries);
+    //Serach value must be without +
+    $finalurl = str_replace("+","%20",$finalurl);
+    return $finalurl;
+  }
+}
+
 function guny_facetwp_facet_html( $output, $params ) {
   if ($params['facet']['type'] == 'search') {
     $output = '';
@@ -31,6 +128,7 @@ add_filter( 'facetwp_facet_html', 'guny_facetwp_facet_html', 10, 2 );
 * Custom HTML for the pager
 */
 function guny_facetwp_pager_html( $output, $params ) {
+  $url=strtok($_SERVER["HTTP_REFERER"],'?').'?'.strtok('&');
   $page = (int) $params['page'];
   $per_page = (int) $params['per_page'];
   $total_rows = (int) $params['total_rows'];
@@ -40,10 +138,10 @@ function guny_facetwp_pager_html( $output, $params ) {
     return $output;
   }
   if ( 1 <= ( $page - 1 ) ) {
-    $output .= '<button class="facetwp-page button--outline button--outline--gray alignleft" data-page="' . ($page - 1) . '">Previous</button>';
+    $output .= '<a class="button--outline button--outline--gray alignleft" href="'.add_facet_pagers($_SERVER["HTTP_REFERER"] , ($page - 1)).'">Previous</button>';
   }
   if ( $total_pages >= ( $page + 1 ) ) {
-    $output .= '<button class="facetwp-page button--outline button--outline--gray alignright" data-page="' . ($page + 1) . '">Next</button>';
+    $output .= '<a class="button--outline button--outline--gray alignright" href="'.add_facet_pagers($_SERVER["HTTP_REFERER"] , ($page + 1)). '">Next</button>';
   }
   return $output;
 }
@@ -132,7 +230,6 @@ class FacetWP_Facet_Guny {
 </script>
 <?php
   }
-
   function settings_html() {
 ?>
   <tr>
@@ -173,6 +270,7 @@ class FacetWP_Facet_Guny {
   }
 
   function render( $params ) {
+    $url=strtok($_SERVER["HTTP_REFERER"],'?'); 
     $facet = $params['facet'];
     $label_any = empty( $facet['label_any'] ) ? __( 'Any', 'fwp' ) : $facet['label_any'];
     $label_any = facetwp_i18n( $label_any );
@@ -190,16 +288,15 @@ class FacetWP_Facet_Guny {
     $output .= '<h3 class="js-accordion__header c-list-box__heading" id="' . $facet['name'] . '-heading">' . $header . '</h3>';
     $output .= '<ul class="js-accordion__content c-list-box__content" id="' . $facet['name'] . '-panel">';
     $selected = empty($selected_values) ? 'true' : 'false';
-    $output .= '<li><a href="#" class="c-list-box__subitem facetwp-item" aria-selected="' . $selected . '" data-value="">' . $label_any . '</a></li>';
+    $output .= '<li><a href="'.add_facet_query_string_url($facet['name'],null,$_SERVER["HTTP_REFERER"]).'" class="c-list-box__subitem" data-value="">' . $label_any . '</a></li>';
     foreach( $values as $result ) {
       $selected = in_array( $result['facet_value'], $selected_values) ? 'true' : 'false';
-      $output .= '<li><a href="#" class="c-list-box__subitem facetwp-item" aria-selected="' . $selected . '" data-value="' . $result['facet_value'] . '">' . $result['facet_display_value'] . '</a></li>';
+      $output .= '<li><a href="'.add_facet_query_string_url($facet['name'],$result['facet_value'],$_SERVER["HTTP_REFERER"]).'" class="c-list-box__subitem '.$result['facet_value'].'" aria-selected="' . $selected . '" data-value="' . $result['facet_value'] . '">' . $result['facet_display_value'] . '</a></li>';
     }
     $output .= '</ul>';
     $output .= '</div>';
     return $output;
   }
-
   function front_scripts() {
 ?>
   <script>

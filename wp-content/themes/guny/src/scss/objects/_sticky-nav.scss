@@ -3,6 +3,8 @@
 // Sticks content in place on the side of the page
 
 .o-sticky-nav {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
   &.is-sticky {
     position: fixed;
     top: 20px;

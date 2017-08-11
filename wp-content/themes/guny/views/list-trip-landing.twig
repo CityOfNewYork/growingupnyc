@@ -1,0 +1,81 @@
+{% extends "microsite-list.twig" %}
+
+{% block head_extras %}
+<style>
+  .c-hero-ms__trips { background-color: #00965c; background-image: url(/wp-content/themes/guny/assets/img/hero-trips-landing.svg); }
+</style>
+{% endblock %}
+
+{% block hero %}
+<div class="js-parallax">
+  <header class="c-hero c-hero-ms c-hero-ms__trips js-parallax-content">
+    <div class="o-container js-parallax-text">
+      <h1 class="c-hero__title">{{options.trip_landing_title}}</h1>
+      <p class="c-hero__tagline">{{options.trip_landing_tagline}}</p>
+    </div>
+  </header>
+</div>
+{% endblock %}
+
+{% block classes %}
+js-sticky-container
+{% endblock %}
+
+{% block list_sidebar %}
+  <ol class="c-nav-list c-nav-list-ms c-nav-list-ms__trips js-sticky js-section-set o-sticky-nav">
+    <li class="c-nav-list__item">
+      <a href="#free-day-trips" data-section="free-day-trips" class="js-section c-nav-list__link">Free day trips<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+    </li>
+    <li class="c-nav-list__item">
+      <a href="#free-this-week" data-section="free-this-week" class="js-section c-nav-list__link">Free this week<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+    </li>
+    <li class="c-nav-list__item">
+      <a href="#events" data-section="events" class="js-section c-nav-list__link">Events<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+    </li>
+  </ol>
+{% endblock %}
+
+{% block post_list %}
+    <section id="free-day-trips" class="c-block-list c-block-list-ms__trips c-block-list-ms__trips--day c-block-list--shade o-content-container u-sm-gutter">
+      <h3 class="c-block-list-trips__title">Free Day Trips</h3>
+      <div class="c-block-list__inner">
+        {% for post in free_day_trip %}
+          <div class="c-block-list__item">
+            {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+          </div>
+        {% endfor %}      
+      </div>
+      <div class="text-center">
+        <a class="button--outline button--outline--gray" href="/trip-type/free-day-trip">See All Free Day Trips</a>
+      </div>
+    </section>
+
+    <section id="free-this-week" class="c-block-list c-block-list-ms__trips c-block-list-ms__trips--week c-block-list--shade o-content-container u-sm-gutter">
+      <h3 class="c-block-list-trips__title">Free this week</h3>
+      <div class="c-block-list__inner">
+        {% for post in free_this_week_trip %}
+          <div class="c-block-list__item">
+            {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+          </div>         
+        {% endfor %} 
+      </div>
+      <div class="text-center">
+        <a class="button--outline button--outline--gray" href="/trip-type/free-this-week">See All Free This Week</a>
+      </div>
+    </section>
+
+    <section id="events" class="c-block-list c-block-list-ms__trips c-block-list-ms__trips--week c-block-list--shade o-content-container u-sm-gutter">
+      <h3 class="c-block-list-trips__title">Events</h3>
+      <div class="c-block-list__inner">
+        {% for post in upcoming_events %}
+          <div class="c-block-list__item">
+            {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
+          </div>          
+        {% endfor %} 
+      </div>
+      <div class="text-center">
+        <a class="button--outline button--outline--gray" href="/events">See All Free Events</a>
+      </div>
+    </section>
+
+{% endblock %}

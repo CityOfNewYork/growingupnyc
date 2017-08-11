@@ -1,0 +1,9 @@
+{
+    "name": "Growing Up NYC",
+    "icons": [{
+        "src": "/wp-content/themes/guny/assets/img/microsite-favicon.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "density": "4.0"
+    }]
+}

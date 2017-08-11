@@ -1,0 +1,37 @@
+{% extends "partials/teaser.twig" %}
+
+{% block classes %}{{is_first ? "c-card--hero #{age_group.slug|sanitize|replace({'-es':''})}-gradient"}}{% endblock %}
+
+{% block sticker %}
+  {% set category = post.terms('trip_type')|first %}
+  {% if category %}
+    <a href="{{post.link}}" title="{{post.title}}" rel="bookmark">
+      <div class="c-card__sticker sticker" aria-hidden="true">
+        <svg class="icon--large"><title>{{category.name}}</title><use xlink:href="#arrow-right"></use></svg>
+      </div>
+    </a>
+  {% endif %}
+{% endblock %}
+
+{% block subtitle_block %}
+{% endblock %}
+
+{% block tags %}
+  {% for term in post.terms('trip_type') %}
+    <a href="/trip-type/{{term.slug}}" class="button--pill">{{term.name}}</a>
+  {% endfor %}
+  {% for term in post.terms('trip_free_day_trip') %}
+    <a href="/trip-type/free-day-trip/?fwp_trip_free_day_trip={{term.slug}}" class="button--pill">{{term.name}}</a>
+  {% endfor %}
+  {% for term in post.terms('trip_free_this_week') %}
+    <a href="/trip-type/free-this-week/?fwp_trip_free_this_week={{term.slug}}" class="button--pill">{{term.name}}</a>
+  {% endfor %}
+  
+{% endblock %}
+
+{% block body %}
+{{post.post_excerpt ? post.post_excerpt : post.summary|excerpt(15)}}
+<p class="c-card__link">
+  <svg role="img" class="icon--xxsmall"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#map-marker"></use></svg><a href="https://www.google.com/maps/place/{{post.map.address}}" target="_blank">{{post.map.address}}</a>
+</p>
+{% endblock %}

@@ -3,7 +3,7 @@
 .s-wysiwyg {
   overflow-wrap: break-word;
   word-wrap: break-word;
-  -ms-word-break: break-all;
+  -ms-word-break: normal;
   word-break: break-word;
 
   @include media($bp-medium) {
@@ -49,11 +49,11 @@
 
   ul li {
     padding: rem-calc(15 0 15 27);
-    text-indent: rem-calc(-27);
+    text-indent: rem-calc(-19);
 
     &:before {
       content: url(/wp-content/themes/guny/assets/img/check.svg);
-      margin-right: rem-calc(12);
+      margin-right: rem-calc(8.8);
       margin-top: rem-calc(2);
       opacity: .2;
       vertical-align: middle;

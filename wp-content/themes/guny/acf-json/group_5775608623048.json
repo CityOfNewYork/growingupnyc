@@ -15,10 +15,10 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": "How your child plays, learns, speaks, and acts offers important clues about your child's development",
             "placeholder": "",
-            "prepend": "What most",
-            "append": "do at this age",
+            "prepend": "",
+            "append": "",
             "maxlength": "",
             "readonly": 0,
             "disabled": 0

@@ -100,18 +100,18 @@
         <div class="c-tip__sticker sticker {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">
           <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#lightbulb"></use></svg>
         </div>
+        {% if post.tip_action_heading %}
+          <p class="c-tip__content">{{post.tip_action_heading}}</p>
+        {% endif %}
         <p class="c-tip__content">{{post.tip}}</p>
-        <footer class="c-tip__footer">
-          {% if post.tip_action_heading %}
-            <p>{{post.tip_action_heading}}</p>
-            {% if post.sms_text or post.website_link %}
+        {# <footer class="c-tip__footer"> #}
+            {# {% if post.sms_text or post.website_link %}
               <p>
                 {{post.sms_text}}{% if post.sms_text and post.website_link %}, or{% endif %}
                 {% if post.website_link %}<a href="{{post.website_link}}" class="c-tip__link" target="_blank">find out more here</a>{% endif %}.
               </p>
-            {% endif %}
-          {% endif %}
-        </footer>
+            {% endif %} #}
+        {# </footer> #}
       </aside>
       {% endif %}
 

@@ -64,6 +64,30 @@
                             "maxlength": ""
                         },
                         {
+                            "key": "field_5994b68078c60",
+                            "label": "Section Heading Show",
+                            "name": "section_heading_show",
+                            "type": "radio",
+                            "instructions": "Would you like to display the header for this section?",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "Yes": "Yes",
+                                "No": "No"
+                            },
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "default_value": "Yes",
+                            "layout": "vertical",
+                            "return_format": "value"
+                        },
+                        {
                             "key": "field_591d45c1ddbf2",
                             "label": "Section Body",
                             "name": "page_top_content_text",

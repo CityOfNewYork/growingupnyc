@@ -36,9 +36,11 @@
       <div class="o-content-container--compact u-shift-up">
         <ol class="c-nav-list c-nav-list-ms__topics js-sticky js-section-set o-sticky-nav">
           {% for top in post.get_field('page_top') %}
+            {% if loop.index != 1 %}
             <li class="c-nav-list__item">
               <a href="#{{top.page_top_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" data-section="{{top.page_top_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" class="js-section c-nav-list__link">{{top.page_top_content_heading}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
             </li>
+            {% endif %}
           {% endfor %}
         </ol>
       </div> <!-- /.o-content-container-compact -->

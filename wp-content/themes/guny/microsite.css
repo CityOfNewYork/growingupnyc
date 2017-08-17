@@ -428,6 +428,10 @@ button:hover, button:focus {
 
 .o-article-trip-sidebar {
   float: right; }
+  .o-article-trip-sidebar ul {
+    margin-top: 0; }
+  .o-article-trip-sidebar dt {
+    margin-bottom: 5px; }
 
 .c-hero-ms__topics {
   background-color: #00965c; }

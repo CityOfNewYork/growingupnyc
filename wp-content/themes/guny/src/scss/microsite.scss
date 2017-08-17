@@ -173,10 +173,12 @@ button {
   h3 {
     margin: rem-calc(15 0 5);
   }
+  p {
+    margin-top: 1em;
+  }
   ul {
     padding-left: 0;
     margin-top: 0;
-
     li {
       padding-bottom: 0;
       &:before {

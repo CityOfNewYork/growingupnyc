@@ -144,6 +144,9 @@ button:hover, button:focus {
 .s-wysiwyg h3 {
   margin: 0.9375rem 0 0.3125rem; }
 
+.s-wysiwyg p {
+  margin-top: 1em; }
+
 .s-wysiwyg ul {
   padding-left: 0;
   margin-top: 0; }

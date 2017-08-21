@@ -87,7 +87,7 @@ export default function() {
   * Handle success response from the BSD Tools API
   */
   function handleSuccess() {
-    $(this).html('<p class="c-signup-form__success">One more step! Please check your inbox and confirm your email address to start receiving updates. Thanks for signing up!</p>');
+    $(this).html('<p class="c-signup-form__success">One more step! <br /> Please check your inbox and confirm your email address to start receiving updates. <br />Thanks for signing up!</p>');
   }
 
   if ($signupForms.length) {

@@ -66,6 +66,25 @@
             "disabled": 0
         },
         {
+            "key": "field_593ced862ba69",
+            "label": "Summary - Jump Nav",
+            "name": "jump_nav_heading_-_summary",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Summary",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_57a376ebaf8b9",
             "label": "Summary",
             "name": "summary",
@@ -101,6 +120,25 @@
             "maxlength": "",
             "rows": "",
             "new_lines": "wpautop"
+        },
+        {
+            "key": "field_593cecbf2ba67",
+            "label": "Am I Eligible? - Jump Nav",
+            "name": "jump_nav_heading_-_eligibility",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Eligibility",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         },
         {
             "key": "field_592fc042225cc",
@@ -140,9 +178,28 @@
             "media_upload": 0
         },
         {
+            "key": "field_593ceda52ba6a",
+            "label": "What Will I Need to Apply? - Jump Nav",
+            "name": "jump_nav_heading_-_application",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Application",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_592fc7f8c1784",
             "label": "What Will I Need to Apply? - Heading",
-            "name": "whats_needed_copy_heading",
+            "name": "whats_needed_heading",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -175,6 +232,25 @@
             "tabs": "all",
             "toolbar": "full",
             "media_upload": 0
+        },
+        {
+            "key": "field_593cedbf2ba6b",
+            "label": "How To Apply - Jump Nav",
+            "name": "jump_nav_heading_-_help",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Help",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         },
         {
             "key": "field_592fc9064dca2",
@@ -268,5 +344,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1496304021
+    "modified": 1498123717
 }

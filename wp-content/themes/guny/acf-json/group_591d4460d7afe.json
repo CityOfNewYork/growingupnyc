@@ -196,6 +196,25 @@
                             "media_upload": 1
                         },
                         {
+                            "key": "field_59a5ad1b62eb8",
+                            "label": "Inspiration Touts Title",
+                            "name": "inspiration_touts_title",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
                             "key": "field_592fc774593ef",
                             "label": "Inspiration Tout",
                             "name": "inspiration_tout",

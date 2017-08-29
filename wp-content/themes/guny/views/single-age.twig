@@ -96,8 +96,8 @@
 
       {# Tip #}
       {% if post.tip %}
-      <aside class="c-tip u-sm-gutter {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary o-content-container">
-        <div class="c-tip__sticker sticker {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">
+      <aside class="c-tip u-sm-gutter {{post.age_group|sanitize}}-secondary o-content-container" id="tip-{{(post.title|split(' '))|join('-')}}">
+        <div class="c-tip__sticker sticker {{post.age_group|sanitize}}-secondary">
           <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#lightbulb"></use></svg>
         </div>
         <p class="c-tip__content">{{post.tip}}</p>

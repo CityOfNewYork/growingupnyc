@@ -1147,6 +1147,7 @@ if (objCtr.defineProperty) {
 	module.exports = throttle;
 
 
+
 /***/ }),
 /* 16 */
 /***/ (function(module, exports) {
@@ -1161,6 +1162,7 @@ if (objCtr.defineProperty) {
 		}
 		return module;
 	}
+
 
 
 /***/ }),
@@ -1438,6 +1440,7 @@ if (objCtr.defineProperty) {
 	  }
 
 	  /**
+
 	  * Remove extra padding from alert sibling
 	  * @param {object} siblingElem - DOM node of alert sibling
 	  */
@@ -1606,7 +1609,8 @@ if (objCtr.defineProperty) {
 	  * Handle success response from the BSD Tools API
 	  */
 	  function handleSuccess() {
-	    $(this).html('<p class="c-signup-form__success">Thank you for signing up.</p>');
+	    $(this).html('<p class="c-signup-form__success">One more step! <br /> Please check your inbox and confirm your email address to start receiving updates. <br />Thanks for signing up!</p>');
+
 	  }
 
 	  if ($signupForms.length) {
@@ -1735,6 +1739,7 @@ if (objCtr.defineProperty) {
 	    (0, _forEach2.default)(markers, function (marker) {
 	      initializeMarker(marker);
 	    });
+
 	  }
 	};
 
@@ -1868,14 +1873,9 @@ if (objCtr.defineProperty) {
 	    var searchField = searchForm.querySelector('[name="s"]');
 	    if (searchField) {
 	      var searchTerm = searchField.value;
-	      searchTerm = searchTerm.replace(/[!'()*]/g, function (c) {
+	      searchTerm = encodeURIComponent(searchTerm).replace(/[!'()*]/g, function (c) {
 	        return '%' + c.charCodeAt(0).toString(16);
 	      });
-	      if (searchTerm.indexOf('%22') > -1 || searchTerm.indexOf('"') > -1) {
-	        searchTerm = searchTerm.replace(/%22|"/g, '');
-	        localStorage.setItem('exactsearch', true);
-	      }
-	      searchTerm = encodeURIComponent(searchTerm);
 	      window.location = window.location.origin + '/search?fwp_search=' + searchTerm;
 	    }
 	  }
@@ -1901,6 +1901,7 @@ if (objCtr.defineProperty) {
 /***/ }),
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
+
 
 	'use strict';
 
@@ -1930,6 +1931,7 @@ if (objCtr.defineProperty) {
 	        }
 	      }, false);
 	    });
+
 	  }
 	};
 
@@ -2008,24 +2010,10 @@ if (objCtr.defineProperty) {
 	});
 
 	exports.default = function () {
-	  function getURLParameter(name) {
-	    return decodeURIComponent((new RegExp('[?|&]' + name + '=([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
-	  }
-
 	  if (typeof window.FWP !== 'undefined' && $('body').hasClass('page-template-template-search')) {
 	    $('.facetwp-facet-search').on('click', '.facetwp-searchbtn', function (event) {
 	      event.preventDefault();
 	      window.FWP.autoload();
-	    });
-
-	    $(document).ajaxComplete(function () {
-	      var urlparameter = getURLParameter("fwp_search");
-	      if (urlparameter.indexOf("&exactsearch=true") !== -1) {
-	        urlparameter = urlparameter.replace("&exactsearch=true", '');
-	        urlparameter = '"' + urlparameter + '"';
-	        $('.facetwp-search').val(urlparameter);
-	        window.history.pushState('object or string', 'Title', '/search/?fwp_search=' + urlparameter);
-	      }
 	    });
 	  }
 	};
@@ -2089,6 +2077,7 @@ if (objCtr.defineProperty) {
 	      */
 	      window.addEventListener('resize', function () {
 	        calcWindowPos(stickyContentElem);
+
 	      }, false);
 	    });
 	  }
@@ -2102,6 +2091,7 @@ if (objCtr.defineProperty) {
 
 /***/ }),
 /* 31 */
+
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -2243,6 +2233,7 @@ if (objCtr.defineProperty) {
 	    // Bottom switch point is equal to the offset and height of the outer container, minus any padding on the bottom
 	    switchPointBottom = $elemContainer.offset().top + $elemContainer.outerHeight() - parseInt($elemContainer.css('padding-bottom'), 10);
 
+
 	    leftOffset = $elem.offset().left;
 	    elemWidth = $elem.outerWidth();
 	    elemHeight = $elem.outerHeight();
@@ -2335,6 +2326,7 @@ if (objCtr.defineProperty) {
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -2378,6 +2370,7 @@ if (objCtr.defineProperty) {
 	    });
 	  }
 	};
+
 
 	var _forEach = __webpack_require__(1);
 

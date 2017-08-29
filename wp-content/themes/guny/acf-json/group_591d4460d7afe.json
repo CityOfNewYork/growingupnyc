@@ -156,10 +156,10 @@
                                 "Yes": "Yes",
                                 "No": "No"
                             },
-                            "allow_null": 0,
+                            "allow_null": 1,
                             "other_choice": 0,
                             "save_other_choice": 0,
-                            "default_value": "No",
+                            "default_value": "",
                             "layout": "vertical",
                             "return_format": "value"
                         },

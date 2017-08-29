@@ -63,8 +63,13 @@
 
               {# URL and the buttons #}
               {% if top.cta_button_url %}
-                <a class="button--primary button--primary__curved button--primary__purple button--topics__cta" href="{{top.cta_button_url}}">{{top.cta_button_text}}</a>
+                {% if top.cta_url_target=="Yes" %}
+                  {% set target="_blank" %}
+                {% endif %}
+                <a class="button--primary button--primary__curved button--primary__purple button--topics__cta" href="{{top.cta_button_url}}" target={{target}}>{{top.cta_button_text}}</a>
               {% endif %}
+
+
             </div>
           {% endif %}
         </section>    

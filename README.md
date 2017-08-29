@@ -1,6 +1,6 @@
 # Growing Up NYC
 
-**URL:** [http://growingupnyc.wpengine.com/](http://growingupnyc.wpengine.com/)
+**URL:** [https://growingupnyc.cityofnewyork.us/](https://growingupnyc.cityofnewyork.us/)
 
 **Staging URL:** [http://growingupnyc.staging.wpengine.com/](http://growingupnyc.staging.wpengine.com/)
 
@@ -72,7 +72,7 @@ jQuery and Modernizr are available globally and do not have to be required by a 
 
 #### ES2015
 
-This project uses Babel to transpile JavaScript so that ES2015 features can (and should) be used where appropriate. 
+This project uses Babel to transpile JavaScript so that ES2015 features can (and should) be used where appropriate.
 
 ### Structure
 
@@ -113,11 +113,8 @@ This project uses Babel to transpile JavaScript so that ES2015 features can (and
 ### Shortcodes
 Custom shortcodes are located in <kbd>/wp-content/themes/guny/includes/guny_shortcodes.php</kbd>.
 
-- `[quote]Quote text[/quote]`, `[quote author="Author Name"]Quote text[/quote]`: Inserts a pullquote with optional author
-- `[stat value="100" label="Stat text"]`: Inserts a callout stat
-- `[iframe type="youtube" id="2jE59c9ncio"]`, `[iframe type="vimeo" id="142354343"]`,
-`[iframe src="http://yoururlhere.com"]`: Inserts a video iframe, wrapped in Foundation's flex-video class
 - `[nyc_logo]`: Inserts an NYC svg logo into the text
+- `[button url="" text=""]`: Inserts a link styled to look like a button
 
 --
 

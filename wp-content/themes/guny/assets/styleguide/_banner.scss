@@ -3,9 +3,9 @@
 // Styleguide 2
 
 // Local Variables
-$height-banner-logo-small: $height-banner-logo * 1.3333333333;
+$height-banner-logo-small: $height-banner-logo * 1.66666;
 $height-banner-logo-large: $height-banner-logo * 2.4;
-$width-banner-logo-small: $width-banner-logo * 1.33333333333;
+$width-banner-logo-small: $width-banner-logo * 1.33333;
 $width-banner-logo-large: $width-banner-logo * 2.4;
 
 // Banner
@@ -49,10 +49,14 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   box-shadow: 0 0 4px 0 $color-shadow;
   display: block;
   height: rem-calc($height-banner-logo);
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+
   @include layout-inner-left-edge;
+
   padding: 0 5px 8px;
   position: absolute;
-  top: 0;
+  top: rem-calc(-35);
   width: rem-calc($width-banner-logo);
 
   @include media($bp-small) {
@@ -62,17 +66,30 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 
   @include media($bp-medium) {
     height: rem-calc($height-banner-logo-large);
-    padding: 0 16px 20px 14px;
+    padding: 0 16px 15px 14px;
     width: rem-calc($width-banner-logo-large);
+  }
+
+  @include media($bp-large) {
+    top: rem-calc(-38);
   }
 }
 
 // Banner Logo
 .c-banner__logo {
-  @include image-replace('/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_CMYK_Mobile_Final.png');
+  @include image-replace("/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_CMYK_Mobile_Final.png");
+
   background-position: center bottom;
   height: 100%;
   width: 100%;
+
+  @include media($bp-small) {
+    background-position: center bottom rem-calc(-9);
+  }
+
+  @include media($bp-medium) {
+    background-position: center bottom;
+  }
 }
 
 // Banner Navigation
@@ -109,6 +126,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   font-weight: $font-weight-extrablack;
   position: relative;
   text-decoration: none;
+
   @include text-uppercase;
 
   &:focus {
@@ -155,5 +173,48 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 
   .is-active & {
     opacity: 1;
+  }
+}
+
+//Language switcher
+.c-language-switcher-wrapper {
+  border-bottom: 2px solid $very-light-gray;
+  .c-language__switcher {
+    text-align: right;
+    z-index: 1;
+    .wpml-ls-legacy-list-horizontal {
+      padding: 0 0 7px;
+      li {
+        margin-right: rem-calc(5);
+        &:last-child {
+          margin-right: 0;
+          a {
+            padding-right: 0;
+          }
+        }
+        a {
+          font-size: rem-calc(11);
+          color: $light-gray-1;
+          padding: 5px 8px;
+          &:hover {
+            color: $color-primary;
+          }
+        }
+        &.wpml-ls-current-language {
+          a {
+            color: $color-primary;
+            &:before {
+              content: '\f00c';
+              font-family: FontAwesome;
+              font-style: normal;
+              font-weight: normal;
+              position: relative;
+              top: rem-calc(2);
+              margin-right: rem-calc(3);
+            }
+          }
+        }
+      }
+    }
   }
 }

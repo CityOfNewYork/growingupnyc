@@ -15,6 +15,7 @@
   <meta name="format-detection" content="telephone=no">
   <link rel="icon" type="image/x-icon" href="{{theme.path}}/favicon.ico">
   <link rel="stylesheet" href="{{theme.path}}/style.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="{{theme.path}}/src/css/font-awesome.min.css" type="text/css" media="screen">
   <script>
     (function(d) {
       var config = {
@@ -56,6 +57,7 @@
     </nav>
 
     <div class="o-offcanvas__main">
+      {{top_widget}}
       {% block header %}
         <header class="c-banner">
           <div class="o-container">
@@ -65,7 +67,7 @@
                 {% for menu_item in menu.get_items %}
                   <li class="o-inline__item"><a href="{{menu_item.link}}" class="c-banner__link">{{menu_item.title}}</a></li>
                 {% endfor %}
-                <li class="o-inline__item"><a href="#ages" data-toggle="offcanvas-ages" class="c-banner__link">Ages</a></li>
+                <li class="o-inline__item"><a href="#ages" data-toggle="offcanvas-ages" class="c-banner__link">{{ __('Ages', 'GUNY-Primary-Menu') }}</a></li>
                 <li class="o-inline__item">
                   <a class="c-banner__link" href="#search" data-toggle="overlay-search">
                     <svg class="c-banner__icon c-banner__icon__search" role="img"><title>Search</title><use xlink:href="#search"></use></svg>
@@ -88,8 +90,8 @@
 
             <section class="o-col__divider c-block-list">
               <h2 class="c-block-list__heading">
-                Programs
-                <a class="c-block-list__link" href="{{site.url}}/programs">See all programs<svg role="img" class="icon--caret--xxsmall" aria-hidden="true"><use xlink:href="#caret-right"></use></svg></a>
+                {{ __('Programs', 'GUNY-W-Top-Programs') }}
+                <a class="c-block-list__link" href="{{site.url}}/programs">{{ __('See all programs', 'GUNY-W-Top-Programs') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="true"><use xlink:href="#caret-right"></use></svg></a>
               </h2> <!-- /.c-content-tout__heading -->
               <div class="c-block-list__inner o-row">
                 {{top_programs}}
@@ -98,8 +100,8 @@
 
             <section class="o-col__divider c-block-list">
               <h2 class="c-block-list__heading">
-                Events
-                <a class="c-block-list__link" href="{{site.url}}/events">See all events<svg role="img" class="icon--caret--xxsmall" aria-hidden="small"><use xlink:href="#caret-right"></use></svg></a>
+                {{ __('Events', 'GUNY-W-Top-Programs') }}
+                <a class="c-block-list__link" href="{{site.url}}/events">{{ __('See all events', 'GUNY-W-Top-Programs') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="small"><use xlink:href="#caret-right"></use></svg></a>
               </h2> <!-- /.c-content-tout__heading -->
               <div class="c-block-list__inner o-row">
               {% for post in top_events %}
@@ -144,7 +146,7 @@
             </div>
             <nav role="navigation" class="c-footer__nav" aria-label="Secondary">
               <ul class="c-footer__column">
-                <li class="c-footer__nav-item"><a class="c-footer__link" href="{{site.url}}">Home</a></li>
+                <li class="c-footer__nav-item"><a class="c-footer__link" href="{{site.url}}">{{ __('Home', 'GUNY-Footer') }}</a></li>
                 {% for menu_item in menu.get_items %}
                   <li class="c-footer__nav-item"><a class="c-footer__link" href="{{menu_item.link}}">{{menu_item.title}}</a></li>
                 {% endfor %}
@@ -165,7 +167,7 @@
         </div> <!-- /.o-container -->
         <div class="o-container">
           <div class="c-footer__footer">
-            <p>&copy; {{now|date('Y')}} City of New York. All Rights Reserved.<br>NYC is a trademark and service mark of the City of New York</p>
+            <p>&copy; {{now|date('Y')}} {{ __('City of New York. All Rights Reserved.', 'GUNY-Footer') }}<br>{{ __('NYC is a trademark and service mark of the City of New York', 'GUNY-Footer') }}</p>
           </div>
         </div>
       </footer> <!-- /.c-footer -->

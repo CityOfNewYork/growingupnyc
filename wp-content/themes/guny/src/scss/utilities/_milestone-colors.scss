@@ -317,3 +317,127 @@ a.pre-teen-secondary {
     stop-color: $color-pre-teen;
   }
 }
+
+.teen-background {
+  background-color: $color-teen !important;
+}
+
+button.teen-background,
+a.teen-background {
+  transition: background-color 250ms linear;
+  &:focus,
+  &.is-active {
+    background-color: $color-teen-secondary !important;
+    border-color: $color-teen-secondary !important;
+    outline: none;
+  }
+}
+
+.no-touchevents button.teen-background,
+.no-touchevents a.teen-background {
+  &:hover {
+    background-color: $color-teen-secondary !important;
+    border-color: $color-teen-secondary !important;
+  }
+}
+
+.teen-secondary {
+  background-color: $color-teen-secondary !important;
+  border-color: $color-teen-secondary !important;
+}
+
+button.teen-secondary,
+a.teen-secondary {
+  &:focus,
+  &.is-active {
+    background-color: $color-teen !important;
+    outline: none;
+  }
+}
+
+.no-touchevents button.teen-secondary,
+.no-touchevents a.teen-secondary {
+  &:hover {
+    background-color: $color-teen !important;
+    border-color: $color-teen !important;
+  }
+}
+
+.teen-text {
+  color: $color-teen;
+}
+
+.teen-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/teen-gradient.png);
+}
+
+.teen-svg {
+  .stop1 {
+    stop-color: $color-teen-secondary;
+  }
+  .stop2 {
+    stop-color: $color-teen;
+  }
+}
+
+.young-adult-background {
+  background-color: $color-young-adult !important;
+}
+
+button.young-adult-background,
+a.young-adult-background {
+  transition: background-color 250ms linear;
+  &:focus,
+  &.is-active {
+    background-color: $color-young-adult-secondary !important;
+    border-color: $color-young-adult-secondary !important;
+    outline: none;
+  }
+}
+
+.no-touchevents button.young-adult-background,
+.no-touchevents a.young-adult-background {
+  &:hover {
+    background-color: $color-young-adult-secondary !important;
+    border-color: $color-young-adult-secondary !important;
+  }
+}
+
+.young-adult-secondary {
+  background-color: $color-young-adult-secondary !important;
+  border-color: $color-young-adult-secondary !important;
+}
+
+button.young-adult-secondary,
+a.young-adult-secondary {
+  &:focus,
+  &.is-active {
+    background-color: $color-young-adult !important;
+    outline: none;
+  }
+}
+
+.no-touchevents button.young-adult-secondary,
+.no-touchevents a.young-adult-secondary {
+  &:hover {
+    background-color: $color-young-adult !important;
+    border-color: $color-young-adult !important;
+  }
+}
+
+.young-adult-text {
+  color: $color-young-adult;
+}
+
+.young-adult-gradient {
+  background-image: url(/wp-content/themes/guny/assets/img/young-adult-gradient.png);
+}
+
+.teen-svg {
+  .stop1 {
+    stop-color: $color-teen-secondary;
+  }
+  .stop2 {
+    stop-color: $color-teen;
+  }
+}

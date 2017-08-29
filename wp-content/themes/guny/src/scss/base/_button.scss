@@ -176,6 +176,20 @@
   }
 }
 
+.button--pill--es {
+  background: $purple;
+
+  &:focus {
+    background: $dark-purple;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $dark-purple;
+    }
+  }
+}
+
 // Simple Button
 //
 // Basic blue button used for links within a detail page

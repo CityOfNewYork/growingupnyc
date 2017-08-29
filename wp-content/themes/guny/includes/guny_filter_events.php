@@ -7,6 +7,7 @@ function guny_add_query_vars( $vars ) {
   $vars[] = 'cat_id';
   $vars[] = 'age_id';
   $vars[] = 'borough_id';
+  $vars[] = 'lang_id';
   return $vars;
 }
 add_filter( 'query_vars', 'guny_add_query_vars' );
@@ -23,6 +24,7 @@ function guny_events_get_posts( $query ) {
     $cat_id = $query->get( 'cat_id' );
     $age_id = $query->get( 'age_id' );
     $borough_id = $query->get( 'borough_id' );
+    $lang_id = $query->get( 'lang_id' );
     $tax_query = array(
       'relation' => 'AND'
     );
@@ -31,6 +33,13 @@ function guny_events_get_posts( $query ) {
         'taxonomy' => 'tribe_events_cat',
         'field' => 'term_id',
         'terms' => $cat_id
+      );
+    }
+    if ( $lang_id > 0 ) {
+      $tax_query[] = array(
+        'taxonomy' => 'language',
+        'field' => 'term_id',
+        'terms' => $lang_id
       );
     }
     if ( $age_id > 0 ) {

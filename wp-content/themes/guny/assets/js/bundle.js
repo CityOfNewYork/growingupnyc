@@ -765,6 +765,7 @@
 	}
 
 
+
 /***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -807,6 +808,7 @@
 	  }
 
 	  /**
+
 	   * Add attributes, classes, and event binding to accordion header
 	   * @param {object} $headerElem - The accordion header jQuery object
 	   * @param {object} $relatedPanel - The panel the accordion header controls
@@ -1209,6 +1211,7 @@
 	  */
 	  function handleSuccess() {
 	    $(this).html('<p class="c-signup-form__success">One more step! <br /> Please check your inbox and confirm your email address to start receiving updates. <br />Thanks for signing up!</p>');
+
 	  }
 
 	  if ($signupForms.length) {
@@ -1337,6 +1340,7 @@
 	    (0, _forEach2.default)(markers, function (marker) {
 	      initializeMarker(marker);
 	    });
+
 	  }
 	};
 
@@ -1498,6 +1502,7 @@
 /***/ }),
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
+
 
 	'use strict';
 
@@ -1672,6 +1677,7 @@
 	      */
 	      window.addEventListener('resize', function () {
 	        calcWindowPos(stickyContentElem);
+
 	      }, false);
 	    });
 	  }
@@ -1685,6 +1691,7 @@
 
 /***/ }),
 /* 31 */
+
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -1826,6 +1833,7 @@
 	    // Bottom switch point is equal to the offset and height of the outer container, minus any padding on the bottom
 	    switchPointBottom = $elemContainer.offset().top + $elemContainer.outerHeight() - parseInt($elemContainer.css('padding-bottom'), 10);
 
+
 	    leftOffset = $elem.offset().left;
 	    elemWidth = $elem.outerWidth();
 	    elemHeight = $elem.outerHeight();
@@ -1918,6 +1926,7 @@
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -1936,6 +1945,7 @@
 	  * Bind an event handler to toggle the openClass on/off on the target element
 	  * when the toggle element is clicked.
 	  */
+
 	  if (toggleElems) {
 	    (0, _forEach2.default)(toggleElems, function (toggleElem) {
 	      var targetElemSelector = (0, _dataset2.default)(toggleElem, 'toggle');

@@ -1163,6 +1163,7 @@ if (objCtr.defineProperty) {
 	}
 
 
+
 /***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -1438,6 +1439,7 @@ if (objCtr.defineProperty) {
 	  }
 
 	  /**
+
 	  * Remove extra padding from alert sibling
 	  * @param {object} siblingElem - DOM node of alert sibling
 	  */
@@ -1607,6 +1609,7 @@ if (objCtr.defineProperty) {
 	  */
 	  function handleSuccess() {
 	    $(this).html('<p class="c-signup-form__success">One more step! <br /> Please check your inbox and confirm your email address to start receiving updates. <br />Thanks for signing up!</p>');
+
 	  }
 
 	  if ($signupForms.length) {
@@ -1735,6 +1738,7 @@ if (objCtr.defineProperty) {
 	    (0, _forEach2.default)(markers, function (marker) {
 	      initializeMarker(marker);
 	    });
+
 	  }
 	};
 
@@ -1897,6 +1901,7 @@ if (objCtr.defineProperty) {
 /* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -1925,6 +1930,7 @@ if (objCtr.defineProperty) {
 	        }
 	      }, false);
 	    });
+
 	  }
 	};
 
@@ -2070,6 +2076,7 @@ if (objCtr.defineProperty) {
 	      */
 	      window.addEventListener('resize', function () {
 	        calcWindowPos(stickyContentElem);
+
 	      }, false);
 	    });
 	  }
@@ -2083,6 +2090,7 @@ if (objCtr.defineProperty) {
 
 /***/ }),
 /* 31 */
+
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
@@ -2224,6 +2232,7 @@ if (objCtr.defineProperty) {
 	    // Bottom switch point is equal to the offset and height of the outer container, minus any padding on the bottom
 	    switchPointBottom = $elemContainer.offset().top + $elemContainer.outerHeight() - parseInt($elemContainer.css('padding-bottom'), 10);
 
+
 	    leftOffset = $elem.offset().left;
 	    elemWidth = $elem.outerWidth();
 	    elemHeight = $elem.outerHeight();
@@ -2316,6 +2325,7 @@ if (objCtr.defineProperty) {
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -2359,6 +2369,7 @@ if (objCtr.defineProperty) {
 	    });
 	  }
 	};
+
 
 	var _forEach = __webpack_require__(1);
 

@@ -457,6 +457,7 @@ add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 add_filter( 'pre_get_document_title', 'change_generation_title', 999, 1 );
 
 function change_generation_title( $title ){
+  $gen_pages = array("youth", "events", "event", "topics", "inspirations");
   $_post = get_queried_object();
   // $url = get_permalink();
   $page_type = explode("/", trim(parse_url(get_permalink(), PHP_URL_PATH), "/"));

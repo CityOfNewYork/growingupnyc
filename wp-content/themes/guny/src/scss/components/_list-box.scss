@@ -87,7 +87,7 @@
     padding: rem-calc(28 40);
   }
   @include media($bp-x-small) {
-    @include font-size-regular;
+    padding: rem-calc(12 40 12 12);
   }
 
 }

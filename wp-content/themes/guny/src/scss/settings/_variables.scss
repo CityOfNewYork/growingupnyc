@@ -139,6 +139,7 @@ $horizontal-gutter: 20px;
 
 // Breakpoints
 // =====================
+$bp-x-small: new-breakpoint(max-width 375px);
 $bp-small: new-breakpoint(min-width 375px);
 $bp-medium: new-breakpoint(min-width 700px);
 $bp-large: new-breakpoint(min-width 1024px);

@@ -710,7 +710,7 @@ p + p {
   top: 50%;
   margin-top: -0.6875rem;
   position: absolute;
-  right: 1.75rem;
+  right: 0.875rem;
   width: 1.375rem; }
 
 .is-expanded .o-accordion__caret {
@@ -1880,6 +1880,12 @@ ol.o-inline {
   @media screen and (min-width: 1024px) {
     .c-list-box--primary .c-list-box__heading {
       padding: 1.75rem 2.5rem; } }
+  @media screen and (max-width: 375px) {
+    .c-list-box--primary .c-list-box__heading {
+      font-size: 0.98438rem; } }
+  @media screen and (max-width: 375px) and (min-width: 1024px) {
+    .c-list-box--primary .c-list-box__heading {
+      font-size: 1.125rem; } }
 
 .c-list-box--secondary .c-list-box__heading,
 .c-list-box--quaternary .c-list-box__heading {
@@ -2005,6 +2011,15 @@ ol.o-inline {
 
 .o-article-sidebar .c-list-box__content li.espanol {
   display: none; }
+
+.site-mobile-nav {
+  display: none; }
+
+.site-mobile-nav {
+  background: #eef3f7;
+  color: #172129;
+  width: 300px;
+  z-index: 10; }
 
 .c-nav-list {
   display: block; }
@@ -2312,13 +2327,7 @@ ol.o-inline {
       margin-right: 0; } }
 
 .c-tip__content {
-  font-family: "museo-sans-rounded", sans-serif;
-  font-size: 1.3125rem;
-  font-weight: 900;
-  line-height: 1.2; }
-  @media screen and (min-width: 1024px) {
-    .c-tip__content {
-      font-size: 1.5rem; } }
+  font-family: "museo-sans-rounded", sans-serif; }
 
 .c-tip__footer {
   font-size: 1rem;

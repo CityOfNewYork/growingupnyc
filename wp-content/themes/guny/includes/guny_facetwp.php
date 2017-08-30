@@ -180,6 +180,10 @@ class FacetWP_Facet_Guny {
     elseif ( 'raw_value' == $facet['orderby'] ) {
       $orderby = 'f.facet_value ASC';
     }
+    // restore the correct sorting of groups for the programs page
+    if ( 'ages' == $facet['name'] ) {
+      $orderby = 'FIELD(f.facet_display_value, "Baby", "Toddler", "Pre-Schooler", "Grade-Schooler", "Pre-Teen", "Teen", "Young Adult", "Caregiver", "Everyone")';
+    }
 
     // Limit
     $limit = ctype_digit( $facet['count'] ) ? $facet['count'] : 10;

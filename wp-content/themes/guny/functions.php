@@ -453,6 +453,21 @@ function my_acf_google_map_api( $api ){
 add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 //End of the codes Amalan
 
+// Changing the title tag to reflect generation pages
+add_filter( 'pre_get_document_title', 'change_generation_title', 999, 1 );
+
+function change_generation_title( $title ){
+  $_post = get_queried_object();
+  // $url = get_permalink();
+  $page_type = explode("/", trim(parse_url(get_permalink(), PHP_URL_PATH), "/"));
+  if ( !is_front_page() && is_single() && ($page_type == "event") ) {
+    $test=$_post->post_title;
+    $title = $test;
+  }
+  return $title . ' - ' . 'Generation NYC';
+}
+// end generation titles
+
 // Customize TinyMCE settings
 require_once(get_template_directory() . '/includes/guny_editor_styles.php');
 

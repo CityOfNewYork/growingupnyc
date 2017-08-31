@@ -453,20 +453,30 @@ function my_acf_google_map_api( $api ){
 add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 //End of the codes Amalan
 
-// Changing the title tag to reflect generation pages
-add_filter( 'pre_get_document_title', 'change_generation_title', 999, 1 );
-
+// Titles for Generation NYC pages - Topics, Inspirations, Trips
 function change_generation_title( $title ){
-  $gen_pages = array("youth", "events", "event", "topics", "inspirations");
+  $gen_pages = array("youth", "trips", "topics", "inspirations");
   $_post = get_queried_object();
-  // $url = get_permalink();
+  // if this is a single page
   $page_type = explode("/", trim(parse_url(get_permalink(), PHP_URL_PATH), "/"));
-  if ( !is_front_page() && is_single() && ($page_type == "event") ) {
-    $test=$_post->post_title;
-    $title = $test;
+  if ( !is_front_page() && is_single() && in_array($page_type[0], $gen_pages) ) {
+    $title = $_post->post_title . ' - ' . 'Generation NYC';
   }
-  return $title . ' - ' . 'Generation NYC';
+  // if this is a landing page
+  if ( !is_front_page() && !is_single() && in_array($page_type[0], $gen_pages) ) {
+    if ( $page_type[0] == "youth"){
+      $title = "Generation NYC";
+    }elseif ( $page_type[0] == "inspirations"){
+      $title = "Inspirations" . ' - ' . 'Generation NYC';
+    }elseif( $page_type[0] == "topics"){
+      $title = "Topics" . ' - ' . 'Generation NYC';
+    }elseif( $page_type[0] == "trips"){
+      $title = "Trips" . ' - ' . 'Generation NYC';
+    }
+  }
+  return $title;
 }
+add_filter( 'pre_get_document_title', 'change_generation_title', 999, 1 );
 // end generation titles
 
 // Customize TinyMCE settings

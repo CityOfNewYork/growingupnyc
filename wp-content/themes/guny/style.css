@@ -2006,6 +2006,52 @@ ol.o-inline {
 .o-article-sidebar .c-list-box__content li.espanol {
   display: none; }
 
+.js-show-nav {
+  float: right; }
+
+.site-mobile-nav {
+  display: none; }
+
+.site-mobile-nav {
+  -webkit-transform: translateX(-100%);
+      -ms-transform: translateX(-100%);
+          transform: translateX(-100%);
+  position: fixed;
+  top: 0;
+  right: -300px;
+  bottom: 0;
+  padding: 20px 0 20px 20px;
+  background: #2793e0;
+  border-left: 2px solid white;
+  color: white;
+  width: 300px;
+  z-index: 10; }
+  @media screen and (min-width: 375px) {
+    .site-mobile-nav {
+      display: none; } }
+  .site-mobile-nav a.site-nav-close {
+    color: #fff;
+    text-decoration: none;
+    text-align: right;
+    font-size: 21 !important;
+    font-style: italic;
+    display: block;
+    margin-right: 20px; }
+    .site-mobile-nav a.site-nav-close .icon--medium {
+      vertical-align: middle; }
+  .nav-active .site-mobile-nav {
+    display: block; }
+  .site-mobile-nav .nav-list li {
+    border-bottom: 1px solid #fff;
+    padding: 20px 0;
+    margin-left: 0 !important; }
+    .site-mobile-nav .nav-list li a {
+      font-size: 21;
+      text-decoration: none; }
+
+.site-mobile-nav-inner {
+  padding: 20px 20px 20px 0; }
+
 .c-nav-list {
   display: block; }
 
@@ -2312,13 +2358,7 @@ ol.o-inline {
       margin-right: 0; } }
 
 .c-tip__content {
-  font-family: "museo-sans-rounded", sans-serif;
-  font-size: 1.3125rem;
-  font-weight: 900;
-  line-height: 1.2; }
-  @media screen and (min-width: 1024px) {
-    .c-tip__content {
-      font-size: 1.5rem; } }
+  font-family: "museo-sans-rounded", sans-serif; }
 
 .c-tip__footer {
   font-size: 1rem;

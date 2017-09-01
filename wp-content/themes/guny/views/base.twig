@@ -68,12 +68,12 @@
           <div class="o-container">
             <a href="{{site.url}}" class="c-banner__logo-wrapper"><span class="c-banner__logo">{{site.name}}</span></a>
             <nav class="c-banner__nav" role="navigation" aria-label="Primary">
-              {# <ul class="o-inline">
+              <ul class="o-inline site-desktop-nav">
                 {% for menu_item in menu.get_items %}
                   <li class="o-inline__item"><a href="{{menu_item.link}}" class="c-banner__link">{{menu_item.title}}</a></li>
                 {% endfor %}
                 <li class="o-inline__item"><a href="#ages" data-toggle="offcanvas-ages" class="c-banner__link">{{ __('Ages', 'GUNY-Primary-Menu') }}</a></li>
-              </ul> #}
+              </ul>
               <ul class="o-inline">
                 <li><a class="js-show-nav c-banner__link" href="#mobile-nav">Menu</a></li>
               </ul>
@@ -84,6 +84,7 @@
                     {% for menu_item in menu.get_items %}
                       <li><a href="{{menu_item.link}}">{{menu_item.title}}</a></li><br>
                     {% endfor %}
+                    <li><a href="#ages">{{ __('Ages', 'GUNY-Primary-Menu') }}</a></li>
                   </ul>
                 </div>
               </div>

@@ -45,7 +45,7 @@ var dist = 'assets/',
     appRoot = '/wp-content/themes/guny/assets/',
     source = 'src/',
     views = 'views/',
-    sassInclude = ['node_modules', require('bourbon-neat').includePaths];
+    sassInclude = ['node_modules', require('bourbon-neat').includePaths, require('bourbon').includePaths];
 
 
 // ERROR HANDLING

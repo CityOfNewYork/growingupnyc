@@ -11,6 +11,14 @@ wp-content/wp-cache-config.php
 wp-content/cache/*
 wp-content/cache/supercache/*
 
+# Docker Image Adds #
+#####################
+wp-content/plugins/akismet/
+wp-content/plugins/akismet/*
+wp-content/themes/twentysixteen/
+wp-content/themes/twentysixteen/*
+wp-content/plugins/hello.php
+
 # WP-Engine Specific #
 ######################
 .smushit-status
@@ -22,7 +30,6 @@ wp-content/mu-plugins/slt-force-strong-passwords.php
 wp-content/mu-plugins/limit-login-attempts
 wp-content/mu-plugins/wpengine-common
 wp-content/mysql.sql
-
 
 # Packages #
 ############
@@ -54,11 +61,11 @@ Thumbs.db
 *.un~
 
 # SASS #
-##########
+########
 .sass-cache
 
 # npm #
-##########
+#######
 node_modules
 
 # Large/disallowed filetypes #

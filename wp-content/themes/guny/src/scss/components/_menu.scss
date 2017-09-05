@@ -14,6 +14,11 @@
   @include transform(translateX(-100%));
 }
 
+.nav-active {
+  position: absolute;
+  z-index: 10;
+}
+
 .site-mobile-nav {
   @include transform(translateX(0));
   @include transition(transform .2s ease-in);
@@ -22,7 +27,7 @@
   right: -300px;
   bottom: 0;
   padding: 20px 0 20px 20px;
-  background: $color-primary;
+  background: $purple;
   color: $white;
   display: block;
   width: 300px;
@@ -33,7 +38,7 @@
       color: $white;
       text-decoration: none;
       text-align: right;
-      font-size: $font-size-large;
+      font-size: $font-size-large !important;
       font-style: italic;
       display: block;
       margin-right: 20px;

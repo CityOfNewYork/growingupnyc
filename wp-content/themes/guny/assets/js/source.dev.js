@@ -2763,12 +2763,10 @@ if (objCtr.defineProperty) {
 	    $(e.currentTarget).toggleClass('active');
 	    $target.toggleClass('active hidden').prop('aria-hidden', $target.hasClass('hidden'));
 	  }).on('click', '.js-show-nav', function (e) {
-	    console.log("i've been clicked");
 	    // Shows the mobile nav by applying "nav-active" cass to the body.
 	    e.preventDefault();
 	    $(e.delegateTarget).addClass('nav-active');
 	  }).on('click', '.js-hide-nav', function (e) {
-	    console.log("i'm closing");
 	    // Hides the mobile nav.
 	    e.preventDefault();
 	    $(e.delegateTarget).removeClass('nav-active');

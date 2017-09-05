@@ -2010,7 +2010,7 @@ ol.o-inline {
   .js-show-nav {
     display: none !important; } }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 374px) {
   .site-desktop-nav {
     display: none; } }
 
@@ -2018,6 +2018,10 @@ ol.o-inline {
   -webkit-transform: translateX(-100%);
   -ms-transform: translateX(-100%);
   transform: translateX(-100%); }
+
+.nav-active {
+  position: absolute;
+  z-index: 10; }
 
 .site-mobile-nav {
   -webkit-transform: translateX(0);
@@ -2031,7 +2035,7 @@ ol.o-inline {
   right: -300px;
   bottom: 0;
   padding: 20px 0 20px 20px;
-  background: #2793e0;
+  background: #7735b2;
   color: #fff;
   display: block;
   width: 300px;
@@ -2040,7 +2044,7 @@ ol.o-inline {
     color: #fff;
     text-decoration: none;
     text-align: right;
-    font-size: 21;
+    font-size: 21 !important;
     font-style: italic;
     display: block;
     margin-right: 20px; }

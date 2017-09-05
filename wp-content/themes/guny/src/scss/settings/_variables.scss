@@ -1,6 +1,11 @@
 // Site Variables
 //
 
+// Animation
+//
+$animate-scss-speed: .75s !default;
+$animate-timing-function: cubic-bezier(.23, 1, .32, 1) !default;
+
 // Colors By Name
 // =====================
 $black: #000;
@@ -139,11 +144,16 @@ $horizontal-gutter: 20px;
 
 // Breakpoints
 // =====================
-$bp-x-small: new-breakpoint(max-width 375px);
-$bp-small: new-breakpoint(min-width 375px);
-$bp-medium: new-breakpoint(min-width 700px);
-$bp-large: new-breakpoint(min-width 1024px);
-$bp-xlarge: new-breakpoint(min-width 1200px);
+$screen-small: $screen-small + px;
+$screen-medium: $screen-medium + px;
+$screen-large: $screen-large + px;
+$screen-xlarge: $screen-xlarge + px;
+
+$bp-x-small: new-breakpoint(max-width $screen-small);
+$bp-small: new-breakpoint(min-width $screen-small);
+$bp-medium: new-breakpoint(min-width $screen-medium);
+$bp-large: new-breakpoint(min-width $screen-large);
+$bp-xlarge: new-breakpoint(min-width $screen-xlarge);
 $breakpoint-font: $bp-large;
 
 $bp-mobile-only: new-breakpoint(max-width 1023px);

@@ -5,6 +5,9 @@ import $ from 'jquery';
 import Cookies from 'js-cookie';
 import Utility from '../vendor/utility.js';
 
+/* eslint no-undef: "off" */
+const Variables = require('../../variables.json');
+
 /**
  * This component handles validation and submission for share by email and
  * share by SMS forms.
@@ -53,6 +56,13 @@ class ShareForm {
       return this;
     }
 
+    $(`.${ShareForm.CssClass.SHOW_DISCLAIMER}`)
+      .on('focus', () => {
+        this._disclaimer(true);
+      }).on('blur', () => {
+        this._disclaimer(false);
+      });
+
     $(this._el).on('submit', e => {
       e.preventDefault();
       if (this._recaptchaRequired) {
@@ -86,12 +96,10 @@ class ShareForm {
         this._recaptchainit = true;
       }
       Cookies.set('screenerViews', ++viewCount, {expires: (2/1440)});
-      
-      $("#phone").focusout(function(){
+
+      $("#phone").focusout(function() {
         $(this).removeAttr('placeholder');
       });
-
-
     });
 
     // // Determine whether or not to initialize ReCAPTCHA. This should be
@@ -106,6 +114,29 @@ class ShareForm {
     }
     this._initialized = true;
     return this;
+  }
+
+  /**
+   * Toggles the disclaimer visibility
+   * @param  {Boolean} active wether the disclaimer should be visible or not
+   */
+  _disclaimer(visible = true) {
+    let $el = $('#js-disclaimer');
+    let $class = (visible) ? 'addClass' : 'removeClass';
+    $el.attr('aria-hidden', !visible);
+    $el.attr(ShareForm.CssClass.HIDDEN, !visible);
+    $el[$class](ShareForm.CssClass.ANIMATE_DISCLAIMER);
+    // Scroll-to functionality for mobile
+    if (
+      window.scrollTo &&
+      visible &&
+      window.innerWidth < Variables['screen-desktop']
+    ) {
+      let $target = $(e.target);
+      window.scrollTo(
+        0, $target.offset().top - $target.data('scrollOffset')
+      );
+    }
   }
 
   /**
@@ -136,14 +167,14 @@ class ShareForm {
    * @param {HTMLElement} input - The html form element for the component.
    * @return {boolean} - Valid email.
    */
-  _validatePhoneNumber(input){  
-    // var phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/; 
+  _validatePhoneNumber(input){
+    // var phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
     var phoneno = (/^\+?[1-9]\d{1,14}$/);
-    if(!input.value.match(phoneno)){ 
-      this._showError(ShareForm.Message.PHONE); 
-      return false;  
-    }  
-    return true;  
+    if(!input.value.match(phoneno)){
+      this._showError(ShareForm.Message.PHONE);
+      return false;
+    }
+    return true;
   }
 
   /**
@@ -156,7 +187,7 @@ class ShareForm {
   _validateRequired(input) {
     if ($(input).val()) {
       return true;
-    } 
+    }
     this._showError(ShareForm.Message.REQUIRED);
     $(input).one('keyup', function(){
       this._validate();
@@ -266,6 +297,9 @@ ShareForm.CssClass = {
   ERROR: 'error',
   ERROR_MSG: 'error-message',
   FORM: 'js-share-form',
+  SHOW_DISCLAIMER: 'js-show-disclaimer',
+  NEEDS_DISCLAIMER: 'js-needs-disclaimer',
+  ANIMATE_DISCLAIMER: 'animated fadeInUp',
   HIDDEN: 'hidden',
   SUBMIT_BTN: 'btn-submit',
   SUCCESS: 'success'

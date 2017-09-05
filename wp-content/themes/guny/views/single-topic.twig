@@ -47,7 +47,7 @@
     </div> <!-- /.o-article-sidebar -->
 
     <div class="o-article o-article-ms o-article-ms__topics js-sticky-article">
-      {# Section One #}      
+      {# Section One #}
       {% for top in post.get_field('page_top') %}
         <section id="{{top.page_top_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" class="o-content-container--compact u-top-spacing u-bottom-spacing s-wysiwyg">
           {% if top.section_heading_show == 'Yes' %}
@@ -58,7 +58,7 @@
         {# Gray Section #}
         <section class="o-content-container--compact s-wysiwyg">
           {% if top.page_top_gray_inset_area %}
-            <div class="c-do-list">              
+            <div class="c-do-list">
               {{top.page_top_gray_inset_area}}
 
               {# URL and the buttons #}
@@ -72,7 +72,7 @@
 
             </div>
           {% endif %}
-        </section>    
+        </section>
         {# Tip section #}
         {% if top.tip_title %}
           <aside class="c-tip c-tip-ms__topics u-lg-gutter o-content-container">
@@ -93,7 +93,7 @@
               {% for inspiration in top.inspiration_tout %}
                 {% set inspiration = TimberPost(inspiration) %}
                   <div class="c-block-list__item">
-                    {% include ['partials/teaser-'~inspiration.post_type~'.twig', 'partials/teaser.twig'] with {post: inspiration, is_first: loop.first, age_group: post.title} %}                
+                    {% include ['partials/teaser-'~inspiration.post_type~'.twig', 'partials/teaser.twig'] with {post: inspiration, is_first: loop.first, age_group: post.title} %}
                   </div>
                 {% endfor %}
               </li>
@@ -110,11 +110,11 @@
             <p class="c-tip__content">Send yourself an SMS message to remember this page</p>
 
             <div id="share-by-text" class="sms-form-wrapper share-form hidden">
-              <form method="post" action="{{ shareAction }}" class="js-share-form" novalidate>
+              <form method="post" action="{{ shareAction }}" class="js-share-form js-needs-disclaimer is-active" novalidate>
+
                 <input type="hidden" name="action" value="sms_send">
                 {# <input type="hidden" name="url" value="{{ shareUrl }}"> #}
                 <input type="hidden" name="sharetext" value="{{post.get_field('sms_intro_text')}}">
-
                 <input type="hidden" name="postid" value="{{post.id}}">
                 <input type="hidden" name="hash" value="{{ shareHash }}">
 
@@ -122,12 +122,14 @@
                   <label for="phone" class="signup-form__label sms-form__label">
                     <span class="signup-form__label-content sms-form__label-content" data-content="Phone Number">Phone Number</span>
                   </label>
-                  <input type="tel" id="phone" name="to" class="form-field signup-form__field sms-form__field" required>
+                  <input type="tel" id="phone" name="to" class="form-field signup-form__field sms-form__field js-show-disclaimer" data-scroll-offset="20" required>
                 </div>
                 <button id="smsbutton" type="submit" class="button--primary button--primary__curved button--primary__purple">{{__('Send', 'accessnyc-program-detail')}}</button>
                 <div class="c-validation" id="sms-form-msg"></div>
                 <div class="g-recaptcha" id="screener-recaptcha"></div>
-                <div class="c-disclaimer-text">{{options.disclaimer_text}}</div>
+                {# <div class="c-disclaimer-text">{{options.disclaimer_text}}</div> #}
+                {% include 'partials/share-form-disclaimer.twig' with {'text': options.disclaimer_text} %}
+
               </form>
             </div>
             <footer class="c-tip__footer"></footer>

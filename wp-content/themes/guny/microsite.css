@@ -676,7 +676,7 @@ button:hover, button:focus {
   font-size: 1rem; }
 
 .c-disclaimer-text {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   text-align: left; }
 
 .c-do-list {
@@ -704,9 +704,14 @@ button:hover, button:focus {
   .no-touchevents .button--primary__purple:hover {
     background: #b35eff;
     border-color: #b35eff; }
+  .button--primary__purple[disabled], .button--primary__purple[disabled]:hover {
+    background: #7735b2;
+    border-color: #7735b2;
+    cursor: default; }
 
 .sms-form-wrapper {
   display: inline-block;
+  width: 100%;
   max-width: 568px; }
   .sms-form-wrapper button {
     margin-top: 1.25rem; }
@@ -724,15 +729,24 @@ button:hover, button:focus {
       width: 15rem; } }
   @media screen and (min-width: 1200px) {
     .sms-form__input--long {
-      width: 25rem; } }
+      width: 22rem; } }
+
+.sms-form__spinner {
+  width: 2.125rem;
+  right: 8px;
+  top: 0;
+  position: absolute; }
+
+.sms-form__submit {
+  min-width: 11.25rem; }
+  @media screen and (min-width: 700px) {
+    .sms-form__submit {
+      min-width: 12.125rem; } }
 
 .recaptcha-js {
   background: #8865a7; }
   .recaptcha-js .c-tip__sticker {
     background: #8865a7; }
-
-.success-js .sms-form-wrapper {
-  max-width: 610px; }
 
 .g-recaptcha,
 .error-message,

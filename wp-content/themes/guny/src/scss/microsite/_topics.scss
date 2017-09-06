@@ -433,7 +433,7 @@
 
 //Disclaimer Text
 .c-disclaimer-text {
-  font-size: rem-calc(12);
+  font-size: rem-calc(11);
   text-align: left;
 }
 
@@ -478,11 +478,19 @@
       border-color: $light-purple;
     }
   }
+
+  &[disabled],
+  &[disabled]:hover {
+    background: $purple;
+    border-color: $purple;
+    cursor: default;
+  }
 }
 
 //SMS form
 .sms-form-wrapper {
   display: inline-block;
+  width: 100%;
   max-width: 568px;
 
   button {
@@ -504,7 +512,21 @@
   }
 
   @include media($bp-xlarge) {
-    width: rem-calc(400);
+    width: rem-calc(352);
+  }
+}
+
+.sms-form__spinner {
+  width: rem-calc(34);
+  right: 8px;
+  top: 0;
+  position: absolute;
+}
+
+.sms-form__submit {
+  min-width: rem-calc(180);
+  @include media($bp-medium) {
+    min-width: rem-calc(194);
   }
 }
 
@@ -518,9 +540,9 @@
 }
 
 //Succes
-.success-js .sms-form-wrapper {
-  max-width: 610px;
-}
+// .success-js .sms-form-wrapper {
+//   max-width: 610px;
+// }
 
 .g-recaptcha,
 .error-message,

@@ -113,7 +113,6 @@
               <form method="post" action="{{ shareAction }}" class="js-share-form js-needs-disclaimer is-active" novalidate>
 
                 <input type="hidden" name="action" value="sms_send">
-                {# <input type="hidden" name="url" value="{{ shareUrl }}"> #}
                 <input type="hidden" name="sharetext" value="{{post.get_field('sms_intro_text')}}">
                 <input type="hidden" name="postid" value="{{post.id}}">
                 <input type="hidden" name="hash" value="{{ shareHash }}">
@@ -123,11 +122,14 @@
                     <span class="signup-form__label-content sms-form__label-content" data-content="Phone Number">Phone Number</span>
                   </label>
                   <input type="tel" id="phone" name="to" class="form-field signup-form__field sms-form__field js-show-disclaimer" data-scroll-offset="20" required>
+                  {% include 'partials/share-form-spinner.twig' %}
                 </div>
-                <button id="smsbutton" type="submit" class="button--primary button--primary__curved button--primary__purple">{{__('Send', 'accessnyc-program-detail')}}</button>
+
+                <button id="smsbutton" type="submit" class="button--primary button--primary__curved button--primary__purple sms-form__submit">{{__('Send', 'accessnyc-program-detail')}}</button>
+
                 <div class="c-validation" id="sms-form-msg"></div>
                 <div class="g-recaptcha" id="screener-recaptcha"></div>
-                {# <div class="c-disclaimer-text">{{options.disclaimer_text}}</div> #}
+
                 {% include 'partials/share-form-disclaimer.twig' with {'text': options.disclaimer_text} %}
 
               </form>

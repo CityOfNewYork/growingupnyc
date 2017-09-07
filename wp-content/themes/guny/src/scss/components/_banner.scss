@@ -78,11 +78,17 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 
 // Banner Logo
 .c-banner__logo {
-  @include image-replace("/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_CMYK_Mobile_Final.png");
+  @include image-replace('/wp-content/themes/guny/assets/img/logo-gunyc-color@150px.png');
 
   background-position: center bottom;
   height: 100%;
   width: 100%;
+  image-rendering: -webkit-optimize-contrast; // Chrome
+  image-rendering: optimizequality; // FF
+
+  @include retina {
+    @include image-replace('/wp-content/themes/guny/assets/img/logo-gunyc-color@300px.png');
+  }
 
   @include media($bp-small) {
     background-position: center bottom rem-calc(-9);

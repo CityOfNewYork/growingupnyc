@@ -74,6 +74,9 @@
   max-height: rem-calc(77);
   max-width: 100%;
 
+  image-rendering: -webkit-optimize-contrast; // Chrome
+  image-rendering: optimizequality; // FF
+
   @include media($bp-medium) {
     max-height: none;
   }

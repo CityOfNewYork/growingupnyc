@@ -51,21 +51,10 @@ button:hover, button:focus {
     .c-banner__logo-wrapper {
       height: 9rem; } }
   .c-banner__logo-wrapper .c-banner-ms__logo {
-    background: url("/wp-content/themes/guny/assets/img/Generation_NYC_logo_CMYK_FINAL.png") no-repeat;
-    background-size: contain;
-    display: block;
-    overflow: hidden;
-    text-indent: 100%;
-    white-space: nowrap;
-    background-position: center bottom;
-    height: 100%;
-    width: 100%; }
-    @media screen and (min-width: 375px) {
+    background-image: url("/wp-content/themes/guny/assets/img/logo-gnyc-color@150px.png"); }
+    @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) {
       .c-banner__logo-wrapper .c-banner-ms__logo {
-        background-position: center bottom 0.3125rem; } }
-    @media screen and (min-width: 700px) {
-      .c-banner__logo-wrapper .c-banner-ms__logo {
-        background-position: center bottom 0.6875rem; } }
+        background-image: url("/wp-content/themes/guny/assets/img/logo-gnyc-color@300px.png"); } }
 
 .c-hero-ms {
   padding: 33.6% 0 4.0625rem; }

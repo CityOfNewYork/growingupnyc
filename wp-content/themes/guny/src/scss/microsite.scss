@@ -18,6 +18,7 @@ Description: Custom theme for GUNY override styles for Micro Site
 @import "tools/type";
 @import "tools/images";
 @import "tools/layout";
+@import "tools/media";
 
 // Microsite (Partials)
 // =====================
@@ -88,18 +89,9 @@ button {
   }
 
   .c-banner-ms__logo {
-    @include image-replace("/wp-content/themes/guny/assets/img/Generation_NYC_logo_CMYK_FINAL.png");
-
-    background-position: center bottom;
-    height: 100%;
-    width: 100%;
-
-    @include media($bp-small) {
-      background-position: center bottom rem-calc(5);
-    }
-
-    @include media($bp-medium) {
-      background-position: center bottom rem-calc(11);
+    background-image: url('/wp-content/themes/guny/assets/img/logo-gnyc-color@150px.png');
+    @include retina {
+      background-image: url('/wp-content/themes/guny/assets/img/logo-gnyc-color@300px.png');
     }
   }
 }

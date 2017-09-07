@@ -1202,7 +1202,7 @@ ol.o-inline {
       top: -2.375rem; } }
 
 .c-banner__logo {
-  background: url("/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_CMYK_Mobile_Final.png") no-repeat;
+  background: url("/wp-content/themes/guny/assets/img/logo-gunyc-color@150px.png") no-repeat;
   background-size: contain;
   display: block;
   overflow: hidden;
@@ -1210,7 +1210,17 @@ ol.o-inline {
   white-space: nowrap;
   background-position: center bottom;
   height: 100%;
-  width: 100%; }
+  width: 100%;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimizequality; }
+  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) {
+    .c-banner__logo {
+      background: url("/wp-content/themes/guny/assets/img/logo-gunyc-color@300px.png") no-repeat;
+      background-size: contain;
+      display: block;
+      overflow: hidden;
+      text-indent: 100%;
+      white-space: nowrap; } }
   @media screen and (min-width: 375px) {
     .c-banner__logo {
       background-position: center bottom -0.5625rem; } }
@@ -1591,7 +1601,9 @@ ol.o-inline {
 
 .c-footer__logo img {
   max-height: 4.8125rem;
-  max-width: 100%; }
+  max-width: 100%;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimizequality; }
   @media screen and (min-width: 700px) {
     .c-footer__logo img {
       max-height: none; } }

@@ -426,6 +426,14 @@
   }
 }
 
+//SMS
+.c-tip--sms {
+  &,
+  .c-tip__sticker {
+    background: $dark-purple;
+  }
+}
+
 //Validation
 .c-validation {
   font-size: rem-calc(16);

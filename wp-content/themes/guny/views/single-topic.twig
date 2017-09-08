@@ -8,7 +8,7 @@
 
 {% block content %}
   <div class="js-parallax">
-    <header class="c-hero c-hero-ms__topics c-hero--large js-parallax-content">
+    <header class="c-hero c-hero--bg-secondary c-hero-ms__topics js-parallax-content">
       <div class="o-container js-parallax-text">
         <h1 class="c-hero__title c-hero-ms__topics__title">
           {#<span class="c-hero__sticker sticker {{post.age_group.slug|sanitize|replace({'-es':''})}}-background">
@@ -16,7 +16,7 @@
           </span>#}
           {{post.title}}
         </h1>
-        <p class="c-hero__tagline c-hero-ms__topics__tagline">{{post.sub_heading}}</p>
+        <p class="c-hero__tagline">{{post.sub_heading}}</p>
       </div>
       {#<svg class="c-hero__frill {{post.age_group.slug|sanitize|replace({'-es':''})}}-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 404 359" >
         <title>Paint Splatter</title>

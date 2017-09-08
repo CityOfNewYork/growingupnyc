@@ -2923,6 +2923,12 @@ a.young-adult-secondary.is-active {
 /**
 * Utility classes
 */
+.o-0 {
+  opacity: 0; }
+
+.pe-none {
+  pointer-events: none; }
+
 .nowrap {
   white-space: nowrap; }
 

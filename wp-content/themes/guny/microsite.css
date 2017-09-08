@@ -596,22 +596,13 @@ button:hover, button:focus {
   background-color: #7735b2;
   background-position: top center;
   background-repeat: no-repeat;
-  padding: 33.6% 0 4.0625rem;
   text-align: center; }
   @media screen and (min-width: 700px) {
     .c-hero-ms__topics {
-      text-align: left;
-      padding: 10.5rem 2.5rem 5rem; } }
+      text-align: left; } }
   @media screen and (min-width: 1200px) {
     .c-hero-ms__topics {
-      padding: 15.625rem 5rem 5rem;
       background-position: bottom -9.375rem center; } }
-
-.c-hero-ms__topics--landing {
-  padding: 33.6% 0 4.0625rem; }
-  @media screen and (min-width: 700px) {
-    .c-hero-ms__topics--landing {
-      padding: 10.5rem 2.5rem 5rem; } }
 
 .c-hero-ms__topics__title,
 .c-hero-ms__topics__tagline {

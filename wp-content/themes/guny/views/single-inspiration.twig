@@ -19,7 +19,12 @@
 {% endblock %}
 
 {% block content %}
-  <header class="c-hero c-hero-inspiration c-hero--large"></header>
+  <header class="c-hero c-hero--large c-hero-inspiration">
+    <div class="o-container pe-none o-0" aria-hidden="true">
+      <h1 class="c-hero__title">&nbsp;</h1>
+      <p class="c-hero__tagline">&nbsp;</p>
+    </div>
+  </header>
   <section class="o-container u-bottom-spacing u-top-spacing">
     <aside class="o-article-sidebar o-article-ms-sidebar o-content-container--compact u-bottom-spacing">
       <dl class="c-details-list c-details-list-ms c-details-list-ms__inspiration c-details-list-ms__inspiration--detail">
@@ -27,7 +32,7 @@
         {#<dt class="c-details-list__term c-details-list-ms__term">{{ __('Cost', 'GUNY-Single-Inspiration') }}</dt>#}
 
         <dd class="c-details-list__descr c-details-list-ms__descr c-prof-country">{{post.prof_country}}, {{post.prof_citystate}}</dd>
-        
+
         <dd class="c-details-list__descr c-details-list-ms__descr c-prof-intro">{{post.intro__overview}}</dd>
       </dl>
     </aside>
@@ -46,7 +51,7 @@
           {% endfor %}
         </section>
 
-        
+
       </div> <!-- /.o-article -->
         {# Section Inspirations #}
         {% if post.inspiration_posts %}
@@ -57,7 +62,7 @@
             {% for inspiration in post.get_field('inspiration_posts') %}
               {% set inspiration = TimberPost(inspiration) %}
               <div class="c-block-list__item">
-                {% include ['partials/teaser-'~inspiration.post_type~'.twig', 'partials/teaser.twig'] with {post: inspiration, is_first: loop.first, age_group: post.title} %}                
+                {% include ['partials/teaser-'~inspiration.post_type~'.twig', 'partials/teaser.twig'] with {post: inspiration, is_first: loop.first, age_group: post.title} %}
               </div>
             {% endfor %}
           </li>

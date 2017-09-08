@@ -100,6 +100,13 @@ button {
 .c-hero-ms {
   padding: percentage(126/375) 0 rem-calc(65);
 
+  // &:empty:before {
+  //   content: "";
+  //   min-height: 155px;
+  //   display: block;
+  //   position: relative;
+  // }
+
   @include media($bp-medium) {
     padding: rem-calc(168 40 80);
   }

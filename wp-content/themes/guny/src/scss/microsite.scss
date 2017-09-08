@@ -345,8 +345,13 @@ button {
   .owl-item,
   .owl-bg {
     height: 190px;
+
     @include media($bp-medium) {
-      height: 360px;
+      height: 357px;
+    }
+
+    @include media($bp-xlarge) {
+      height: 462px;
     }
   }
 

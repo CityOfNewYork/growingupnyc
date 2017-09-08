@@ -252,7 +252,14 @@ button:hover, button:focus {
     .carousel-ms .owl-stage,
     .carousel-ms .owl-item,
     .carousel-ms .owl-bg {
-      height: 360px; } }
+      height: 357px; } }
+  @media screen and (min-width: 1200px) {
+    .carousel-ms,
+    .carousel-ms .owl-stage-outer,
+    .carousel-ms .owl-stage,
+    .carousel-ms .owl-item,
+    .carousel-ms .owl-bg {
+      height: 462px; } }
 
 .carousel-ms .owl-dots {
   position: absolute;

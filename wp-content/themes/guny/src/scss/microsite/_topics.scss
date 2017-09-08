@@ -329,26 +329,26 @@
   background-color: $purple;
   background-position: top center;
   background-repeat: no-repeat;
-  padding: percentage(126/375) 0 rem-calc(65);
+  // padding: percentage(126/375) 0 rem-calc(65);
   text-align: center;
 
   @include media($bp-medium) {
     text-align: left;
-    padding: rem-calc(168 40 80);
+    // padding: rem-calc(168 40 80);
   }
 
   @include media($bp-xlarge) {
-    padding: rem-calc(250 80 80);
+    // padding: rem-calc(250 80 80);
     background-position: bottom rem-calc(-150) center;
   }
 }
 
 .c-hero-ms__topics--landing {
-  padding: percentage(126/375) 0 rem-calc(65);
+  // padding: percentage(126/375) 0 rem-calc(65);
 
-  @include media($bp-medium) {
-    padding: rem-calc(168 40 80);
-  }
+  // @include media($bp-medium) {
+  //   padding: rem-calc(168 40 80);
+  // }
 }
 
 .c-hero-ms__topics__title,

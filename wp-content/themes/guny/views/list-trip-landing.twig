@@ -8,7 +8,7 @@
 
 {% block hero %}
 <div class="js-parallax">
-  <header class="c-hero c-hero-ms c-hero-ms__trips js-parallax-content">
+  <header class="c-hero c-hero--bg-secondary u-lg-gutter c-hero-ms__trips js-parallax-content">
     <div class="o-container js-parallax-text">
       <h1 class="c-hero__title">{{options.trip_landing_title}}</h1>
       <p class="c-hero__tagline">{{options.trip_landing_tagline}}</p>
@@ -43,7 +43,7 @@ js-sticky-container
           <div class="c-block-list__item">
             {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
           </div>
-        {% endfor %}      
+        {% endfor %}
       </div>
       <div class="text-center">
         <a class="button--outline button--outline--gray" href="/trip-type/free-day-trip">See All Free Day Trips</a>
@@ -56,8 +56,8 @@ js-sticky-container
         {% for post in free_this_week_trip %}
           <div class="c-block-list__item">
             {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
-          </div>         
-        {% endfor %} 
+          </div>
+        {% endfor %}
       </div>
       <div class="text-center">
         <a class="button--outline button--outline--gray" href="/trip-type/free-this-week">See All Free This Week</a>
@@ -70,8 +70,8 @@ js-sticky-container
         {% for post in upcoming_events %}
           <div class="c-block-list__item">
             {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
-          </div>          
-        {% endfor %} 
+          </div>
+        {% endfor %}
       </div>
       <div class="text-center">
         <a class="button--outline button--outline--gray" href="/events">See All Free Events</a>

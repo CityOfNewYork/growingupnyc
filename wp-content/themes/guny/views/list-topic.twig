@@ -8,7 +8,7 @@
 
 {% block hero %}
 <div class="js-parallax">
-  <header class="c-hero c-hero-ms c-hero-ms__topics c-hero-ms__topics--landing js-parallax-content">
+  <header class="c-hero c-hero--bg-secondary u-lg-gutter c-hero-ms__topics js-parallax-content">
     <div class="o-container js-parallax-text">
       <h1 class="c-hero__title">{{options.topic_landing_title}}</h1>
       <p class="c-hero__tagline">{{options.topic_landing_tagline}}</p>
@@ -39,7 +39,7 @@ o-container-ms__topics
   </ol>
 {% endblock %}
 
-{% block post_list %}  
+{% block post_list %}
   <section class="c-block-list c-block-list-ms__topics c-block-list--shade o-content-container u-sm-gutter">
     <h3 class="c-block-list-ms__topics--title">{{options.topic_landing_subheading}}</h3>
     <div class="c-block-list-ms__topics--text">{{options.topic_landing_intro__overview}}</div>
@@ -47,7 +47,7 @@ o-container-ms__topics
       <div class="c-block-list__item">
         {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/microsite-teaser.twig'] %}
       </div>
-    {% endfor %}  
+    {% endfor %}
   </section>
 {% endblock %}
 

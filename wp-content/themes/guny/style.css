@@ -1178,7 +1178,7 @@ ol.o-inline {
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
   left: 15;
-  padding: 0 5px 8px;
+  padding: 0 5px 6px;
   position: absolute;
   top: -2.1875rem;
   width: 4.6875rem; }
@@ -1202,31 +1202,21 @@ ol.o-inline {
       top: -2.375rem; } }
 
 .c-banner__logo {
-  background: url("/wp-content/themes/guny/assets/img/logo-gunyc-color@150px.png") no-repeat;
+  background-image: url("/wp-content/themes/guny/assets/img/logo-gunyc-color@150px.png");
+  background-repeat: no-repeat;
+  background-position: center bottom;
   background-size: contain;
   display: block;
   overflow: hidden;
   text-indent: 100%;
   white-space: nowrap;
-  background-position: center bottom;
   height: 100%;
   width: 100%;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: optimizequality; }
-  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) {
+  @media only screen and (-webkit-min-device-pixel-ratio: 2) and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1024px), only screen and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) and (min-width: 1024px) {
     .c-banner__logo {
-      background: url("/wp-content/themes/guny/assets/img/logo-gunyc-color@300px.png") no-repeat;
-      background-size: contain;
-      display: block;
-      overflow: hidden;
-      text-indent: 100%;
-      white-space: nowrap; } }
-  @media screen and (min-width: 375px) {
-    .c-banner__logo {
-      background-position: center bottom -0.5625rem; } }
-  @media screen and (min-width: 700px) {
-    .c-banner__logo {
-      background-position: center bottom; } }
+      background-image: url("/wp-content/themes/guny/assets/img/logo-gunyc-color@300px.png"); } }
 
 .c-banner__nav {
   float: right;

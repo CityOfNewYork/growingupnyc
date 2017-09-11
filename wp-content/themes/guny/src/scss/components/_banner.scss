@@ -55,7 +55,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 
   @include layout-inner-left-edge;
 
-  padding: 0 5px 8px;
+  padding: 0 5px 6px;
   position: absolute;
   top: rem-calc(-35);
   width: rem-calc($width-banner-logo);
@@ -78,24 +78,30 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 
 // Banner Logo
 .c-banner__logo {
-  @include image-replace('/wp-content/themes/guny/assets/img/logo-gunyc-color@150px.png');
-
+  // @include image-replace('/wp-content/themes/guny/assets/img/logo-gunyc-color@150px.png');
+  background-image: url('/wp-content/themes/guny/assets/img/logo-gunyc-color@150px.png');
+  background-repeat: no-repeat;
   background-position: center bottom;
+  background-size: contain;
+
+  display: block;
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+
   height: 100%;
   width: 100%;
+
   image-rendering: -webkit-optimize-contrast; // Chrome
   image-rendering: optimizequality; // FF
-
+  // @include media($bp-small) {
+  //   background-position: center bottom rem-calc(-9);
+  // }
+  // @include media($bp-medium) {
+  //   background-position: center bottom;
+  // }
   @include retina {
-    @include image-replace('/wp-content/themes/guny/assets/img/logo-gunyc-color@300px.png');
-  }
-
-  @include media($bp-small) {
-    background-position: center bottom rem-calc(-9);
-  }
-
-  @include media($bp-medium) {
-    background-position: center bottom;
+    background-image: url('/wp-content/themes/guny/assets/img/logo-gunyc-color@300px.png');
   }
 }
 

@@ -52,7 +52,7 @@ button:hover, button:focus {
       height: 9rem; } }
   .c-banner__logo-wrapper .c-banner-ms__logo {
     background-image: url("/wp-content/themes/guny/assets/img/logo-gnyc-color@150px.png"); }
-    @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi) {
+    @media only screen and (-webkit-min-device-pixel-ratio: 2) and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1024px), only screen and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) and (min-width: 1024px) {
       .c-banner__logo-wrapper .c-banner-ms__logo {
         background-image: url("/wp-content/themes/guny/assets/img/logo-gnyc-color@300px.png"); } }
 

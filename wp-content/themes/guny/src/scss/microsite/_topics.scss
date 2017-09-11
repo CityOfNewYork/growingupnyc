@@ -343,18 +343,17 @@
   }
 }
 
-.c-hero-ms__topics--landing {
-  // padding: percentage(126/375) 0 rem-calc(65);
+// .c-hero-ms__topics--landing {
+//   padding: percentage(126/375) 0 rem-calc(65);
+//   @include media($bp-medium) {
+//     padding: rem-calc(168 40 80);
+//   }
+// }
 
-  // @include media($bp-medium) {
-  //   padding: rem-calc(168 40 80);
-  // }
-}
-
-.c-hero-ms__topics__title,
-.c-hero-ms__topics__tagline {
-  text-align: left;
-}
+// .c-hero-ms__topics__title,
+// .c-hero-ms__topics__tagline {
+//   text-align: left;
+// }
 
 .c-hero-ms__topics__tagline {
   @include media($bp-large) {

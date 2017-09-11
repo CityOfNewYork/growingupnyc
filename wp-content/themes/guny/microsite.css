@@ -611,10 +611,6 @@ button:hover, button:focus {
     .c-hero-ms__topics {
       background-position: bottom -9.375rem center; } }
 
-.c-hero-ms__topics__title,
-.c-hero-ms__topics__tagline {
-  text-align: left; }
-
 @media screen and (min-width: 1024px) {
   .c-hero-ms__topics__tagline {
     font-size: 1.3125rem; } }

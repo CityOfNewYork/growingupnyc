@@ -1768,6 +1768,7 @@ ol.o-inline {
   font-weight: 900;
   line-height: 1.2;
   margin-top: 0.625rem;
+  margin-bottom: 0.9375rem;
   position: relative;
   z-index: 1; }
   @media screen and (min-width: 700px) {

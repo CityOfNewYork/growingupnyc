@@ -14,11 +14,6 @@
   @include transform(translateX(-100%));
 }
 
-.nav-active {
-  position: absolute;
-  z-index: 10;
-}
-
 .site-mobile-nav {
   @include transform(translateX(0));
   @include transition(transform .2s ease-in);
@@ -27,15 +22,15 @@
   right: -300px;
   bottom: 0;
   padding: 20px 0 20px 20px;
-  background: $purple;
-  color: $white;
+  background: $very-light-gray;
+  color: $very-dark-gray;
   display: block;
   width: 300px;
   z-index: 10;
 
   a {
     &.site-nav-close {
-      color: $white;
+      color: $very-dark-gray;
       text-decoration: none;
       text-align: right;
       font-size: $font-size-large !important;
@@ -50,7 +45,8 @@
 
   .nav-list {
     li {
-      border-bottom: 1px solid $white;
+      list-style: none;
+      border-bottom: 1px solid $very-dark-gray;
       padding: 20px 0;
       margin-left: 0 !important;
       a {
@@ -59,6 +55,15 @@
       }
     }
   }
+}
+
+.nav-overlay {
+  display: none;
+  @include position(absolute, 0 0 0 0);
+  background: black;
+  content: '';
+  opacity: .6;
+  z-index: 4;
 }
 
 .site-mobile-nav-inner {

@@ -2354,6 +2354,7 @@
 	  'use strict';
 
 	  // Attach site-wide event listeners.
+	  // $('.o-offcanvas__main').on('click', '.js-simple-toggle', (e) => {
 
 	  $('body').on('click', '.js-simple-toggle', function (e) {
 	    // Simple toggle that add/removes "active" and "hidden" classes, as well as
@@ -2368,9 +2369,11 @@
 	    // Shows the mobile nav by applying "nav-active" cass to the body.
 	    e.preventDefault();
 	    $(e.delegateTarget).addClass('nav-active');
+	    $(".nav-overlay").show();
 	  }).on('click', '.js-hide-nav', function (e) {
 	    // Hides the mobile nav.
 	    e.preventDefault();
+	    $(".nav-overlay").hide();
 	    $(e.delegateTarget).removeClass('nav-active');
 	  });
 	  // END TODO

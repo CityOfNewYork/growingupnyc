@@ -2019,10 +2019,6 @@ ol.o-inline {
   -ms-transform: translateX(-100%);
   transform: translateX(-100%); }
 
-.nav-active {
-  position: absolute;
-  z-index: 10; }
-
 .site-mobile-nav {
   -webkit-transform: translateX(0);
   -ms-transform: translateX(0);
@@ -2035,13 +2031,13 @@ ol.o-inline {
   right: -300px;
   bottom: 0;
   padding: 20px 0 20px 20px;
-  background: #7735b2;
-  color: #fff;
+  background: #eee;
+  color: #333;
   display: block;
   width: 300px;
   z-index: 10; }
   .site-mobile-nav a.site-nav-close {
-    color: #fff;
+    color: #333;
     text-decoration: none;
     text-align: right;
     font-size: 21 !important;
@@ -2051,12 +2047,25 @@ ol.o-inline {
     .site-mobile-nav a.site-nav-close .icon--medium {
       vertical-align: middle; }
   .site-mobile-nav .nav-list li {
-    border-bottom: 1px solid #fff;
+    list-style: none;
+    border-bottom: 1px solid #333;
     padding: 20px 0;
     margin-left: 0 !important; }
     .site-mobile-nav .nav-list li a {
       font-size: 21;
       text-decoration: none; }
+
+.nav-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: black;
+  content: '';
+  opacity: .6;
+  z-index: 4; }
 
 .site-mobile-nav-inner {
   padding: 20px 20px 20px 0; }

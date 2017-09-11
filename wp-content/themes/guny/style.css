@@ -2016,7 +2016,7 @@ ol.o-inline {
   .js-show-nav {
     display: none !important; } }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 374px) {
   .site-desktop-nav {
     display: none; } }
 
@@ -2037,28 +2037,41 @@ ol.o-inline {
   right: -300px;
   bottom: 0;
   padding: 20px 0 20px 20px;
-  background: #2793e0;
-  color: #fff;
+  background: #eee;
+  color: #333;
   display: block;
   width: 300px;
   z-index: 10; }
   .site-mobile-nav a.site-nav-close {
-    color: #fff;
+    color: #333;
     text-decoration: none;
     text-align: right;
-    font-size: 21;
+    font-size: 21 !important;
     font-style: italic;
     display: block;
     margin-right: 20px; }
     .site-mobile-nav a.site-nav-close .icon--medium {
       vertical-align: middle; }
   .site-mobile-nav .nav-list li {
-    border-bottom: 1px solid #fff;
+    list-style: none;
+    border-bottom: 1px solid #333;
     padding: 20px 0;
     margin-left: 0 !important; }
     .site-mobile-nav .nav-list li a {
       font-size: 21;
       text-decoration: none; }
+
+.nav-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: black;
+  content: '';
+  opacity: .6;
+  z-index: 4; }
 
 .site-mobile-nav-inner {
   padding: 20px 20px 20px 0; }

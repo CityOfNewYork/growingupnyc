@@ -29,7 +29,8 @@
   background-size: contain;
   color: $color-text-invert;
   overflow: hidden;
-  padding: percentage(94/375) 0 rem-calc(33);
+  // padding: percentage(94/375) 0 rem-calc(33);
+  padding-bottom: rem-calc(33);
   position: relative;
   text-align: center;
 

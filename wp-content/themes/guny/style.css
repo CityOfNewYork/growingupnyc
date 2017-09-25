@@ -1663,7 +1663,7 @@ ol.o-inline {
   background-size: contain;
   color: #fff;
   overflow: hidden;
-  padding: 25.06667% 0 2.0625rem;
+  padding-bottom: 2.0625rem;
   position: relative;
   text-align: center; }
   @media screen and (min-width: 700px) {

@@ -2831,7 +2831,7 @@ a.teen-secondary.is-active {
   stop-color: #7735b2; }
 
 .young-adult-background {
-  background-color: #404657 !important; }
+  background-color: #51596b !important; }
 
 button.young-adult-background,
 a.young-adult-background {
@@ -2839,33 +2839,33 @@ a.young-adult-background {
   button.young-adult-background:focus, button.young-adult-background.is-active,
   a.young-adult-background:focus,
   a.young-adult-background.is-active {
-    background-color: #2d333d !important;
-    border-color: #2d333d !important;
+    background-color: #343e4c !important;
+    border-color: #343e4c !important;
     outline: none; }
 
 .no-touchevents button.young-adult-background:hover,
 .no-touchevents a.young-adult-background:hover {
-  background-color: #2d333d !important;
-  border-color: #2d333d !important; }
+  background-color: #343e4c !important;
+  border-color: #343e4c !important; }
 
 .young-adult-secondary {
-  background-color: #2d333d !important;
-  border-color: #2d333d !important; }
+  background-color: #343e4c !important;
+  border-color: #343e4c !important; }
 
 button.young-adult-secondary:focus, button.young-adult-secondary.is-active,
 a.young-adult-secondary:focus,
 a.young-adult-secondary.is-active {
-  background-color: #404657 !important;
-  border-color: #404657 !important;
+  background-color: #51596b !important;
+  border-color: #51596b !important;
   outline: none; }
 
 .no-touchevents button.young-adult-secondary:hover,
 .no-touchevents a.young-adult-secondary:hover {
-  background-color: #404657 !important;
-  border-color: #404657 !important; }
+  background-color: #51596b !important;
+  border-color: #51596b !important; }
 
 .young-adult-text {
-  color: #404657; }
+  color: #51596b; }
 
 .young-adult-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/young-adult-gradient.png); }

@@ -17,13 +17,13 @@ button:hover, button:focus {
   outline: none; }
 
 .c-banner__link {
-  color: #404657; }
+  color: #51596b; }
 
 .no-touchevents:hover {
   color: #999; }
 
 .no-touchevents .c-banner__link:hover, .no-touchevents .c-banner__link:focus {
-  color: #2d333d; }
+  color: #343e4c; }
 
 .o-inline__item {
   display: inline-block;
@@ -186,7 +186,7 @@ button:hover, button:focus {
     top: 0;
     left: 0;
     right: 0;
-    border-top: 0.4375rem solid #2d333d; }
+    border-top: 0.4375rem solid #343e4c; }
   .c-list-box-ms__item .c-list-box-ms__text {
     display: inline-block;
     margin-bottom: 1.5625rem; }
@@ -196,7 +196,7 @@ button:hover, button:focus {
   .c-list-box-ms__item .button--primary__curved {
     color: #fff;
     font-family: "museo-sans-rounded", sans-serif;
-    background: #2d333d;
+    background: #343e4c;
     font-size: 1.3125rem;
     font-weight: 900;
     border-radius: 2.1875rem;
@@ -307,7 +307,7 @@ button:hover, button:focus {
         left: -3.125rem; } }
 
 .c-footer {
-  background: #2d333d; }
+  background: #343e4c; }
 
 .c-footer__link {
   color: #fff;

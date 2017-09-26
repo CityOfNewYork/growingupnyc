@@ -96,22 +96,22 @@
 
       {# Tip #}
       {% if post.tip %}
-      <aside class="c-tip u-sm-gutter {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary o-content-container">
+      <aside class="c-tip u-sm-gutter {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary o-content-container" id="tip-{{(post.title|split(' '))|join('-')}}">
         <div class="c-tip__sticker sticker {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">
           <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#lightbulb"></use></svg>
         </div>
+        {% if post.tip_action_heading %}
+          <p class="c-tip__content">{{post.tip_action_heading}}</p>
+        {% endif %}
         <p class="c-tip__content">{{post.tip}}</p>
-        <footer class="c-tip__footer">
-          {% if post.tip_action_heading %}
-            <p>{{post.tip_action_heading}}</p>
-            {% if post.sms_text or post.website_link %}
+        {# <footer class="c-tip__footer"> #}
+            {# {% if post.sms_text or post.website_link %}
               <p>
                 {{post.sms_text}}{% if post.sms_text and post.website_link %}, or{% endif %}
                 {% if post.website_link %}<a href="{{post.website_link}}" class="c-tip__link" target="_blank">find out more here</a>{% endif %}.
               </p>
-            {% endif %}
-          {% endif %}
-        </footer>
+            {% endif %} #}
+        {# </footer> #}
       </aside>
       {% endif %}
 
@@ -150,9 +150,9 @@
       <section class="o-content-container--compact u-top-spacing u-bottom-spacing" id="section-milestones">
         <h2>{{ __('Milestones', 'GUNY-Single-Age') }}</h2>
         <div class="o-content-container--text u-sm-gutter">
-          <p>{{ __("How your child plays, learns, speaks, and acts offers important clues about your child&rsquo;s development.", 'GUNY-Single-Age') }}</p>
+          <p>{{post.milestones_pretext}}</p>
         </div>
-        <h3>What most {{post.milestones_heading}} do at this age:</h3>
+        <h3>{{post.milestones_heading}}</h3>
         <ul class="js-accordion c-list-box c-list-box--tertiary u-sm-gutter">
           
           {% if post.social_milestones %}

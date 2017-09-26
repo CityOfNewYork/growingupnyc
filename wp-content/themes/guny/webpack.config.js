@@ -9,8 +9,12 @@ module.exports = {
         query: {
           presets: ['es2015']
         }
+      },
+      {
+        loader: 'json-loader',
+        test: /\.json/
       }
-    ],
+    ]
   },
   externals: {
     'modernizr': 'Modernizr',

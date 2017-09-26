@@ -9,16 +9,19 @@ Description: Custom theme for GUNY
 // Settings (Global variables)
 // =====================
 @import "neat-helpers";
-@import "settings/*";
+@import "settings/_variables.json.scss";
+@import "settings/_variables.scss";
 
 // Tools (Default mixins and functions)
 // =====================
+@import "bourbon";
 @import "neat";
 @import "tools/unit";
 @import "tools/type";
 @import "tools/images";
 @import "tools/layout";
 @import "tools/splatter";
+@import "tools/media";
 
 // Resets (CSS resets and normalizers)
 // =====================

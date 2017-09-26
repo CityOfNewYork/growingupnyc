@@ -80,5 +80,3 @@ function ms_trips_create() {
 }
 
 add_action( 'init', 'ms_trips_create' );
-
-?>	

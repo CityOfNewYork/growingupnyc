@@ -710,7 +710,7 @@ p + p {
   top: 50%;
   margin-top: -0.6875rem;
   position: absolute;
-  right: 1.75rem;
+  right: 0.875rem;
   width: 1.375rem; }
 
 .is-expanded .o-accordion__caret {
@@ -1178,7 +1178,7 @@ ol.o-inline {
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
   left: 15;
-  padding: 0 5px 8px;
+  padding: 0 5px 6px;
   position: absolute;
   top: -2.1875rem;
   width: 4.6875rem; }
@@ -1202,21 +1202,21 @@ ol.o-inline {
       top: -2.375rem; } }
 
 .c-banner__logo {
-  background: url("/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_CMYK_Mobile_Final.png") no-repeat;
+  background-image: url("/wp-content/themes/guny/assets/img/logo-gunyc-color@150px.png");
+  background-repeat: no-repeat;
+  background-position: center bottom;
   background-size: contain;
   display: block;
   overflow: hidden;
   text-indent: 100%;
   white-space: nowrap;
-  background-position: center bottom;
   height: 100%;
-  width: 100%; }
-  @media screen and (min-width: 375px) {
+  width: 100%;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimizequality; }
+  @media only screen and (-webkit-min-device-pixel-ratio: 2) and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1024px), only screen and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) and (min-width: 1024px) {
     .c-banner__logo {
-      background-position: center bottom -0.5625rem; } }
-  @media screen and (min-width: 700px) {
-    .c-banner__logo {
-      background-position: center bottom; } }
+      background-image: url("/wp-content/themes/guny/assets/img/logo-gunyc-color@300px.png"); } }
 
 .c-banner__nav {
   float: right;
@@ -1591,7 +1591,9 @@ ol.o-inline {
 
 .c-footer__logo img {
   max-height: 4.8125rem;
-  max-width: 100%; }
+  max-width: 100%;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: optimizequality; }
   @media screen and (min-width: 700px) {
     .c-footer__logo img {
       max-height: none; } }
@@ -1766,6 +1768,7 @@ ol.o-inline {
   font-weight: 900;
   line-height: 1.2;
   margin-top: 0.625rem;
+  margin-bottom: 0.9375rem;
   position: relative;
   z-index: 1; }
   @media screen and (min-width: 700px) {
@@ -1880,6 +1883,9 @@ ol.o-inline {
   @media screen and (min-width: 1024px) {
     .c-list-box--primary .c-list-box__heading {
       padding: 1.75rem 2.5rem; } }
+  @media screen and (max-width: 375px) {
+    .c-list-box--primary .c-list-box__heading {
+      padding: 0.75rem 2.5rem 0.75rem 0.75rem; } }
 
 .c-list-box--secondary .c-list-box__heading,
 .c-list-box--quaternary .c-list-box__heading {
@@ -2005,6 +2011,70 @@ ol.o-inline {
 
 .o-article-sidebar .c-list-box__content li.espanol {
   display: none; }
+
+@media screen and (min-width: 375px) {
+  .js-show-nav {
+    display: none !important; } }
+
+@media screen and (max-width: 374px) {
+  .site-desktop-nav {
+    display: none; } }
+
+.nav-active .site-mobile-nav {
+  -webkit-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  transform: translateX(-100%); }
+
+.site-mobile-nav {
+  -webkit-transform: translateX(0);
+  -ms-transform: translateX(0);
+  transform: translateX(0);
+  transition: -webkit-transform 0.2s ease-in;
+  transition: transform 0.2s ease-in;
+  transition: transform 0.2s ease-in, -webkit-transform 0.2s ease-in;
+  position: fixed;
+  top: 0;
+  right: -300px;
+  bottom: 0;
+  padding: 20px 0 20px 20px;
+  background: #eee;
+  color: #333;
+  display: block;
+  width: 300px;
+  z-index: 10; }
+  .site-mobile-nav a.site-nav-close {
+    color: #333;
+    text-decoration: none;
+    text-align: right;
+    font-size: 21 !important;
+    font-style: italic;
+    display: block;
+    margin-right: 20px; }
+    .site-mobile-nav a.site-nav-close .icon--medium {
+      vertical-align: middle; }
+  .site-mobile-nav .nav-list li {
+    list-style: none;
+    border-bottom: 1px solid #333;
+    padding: 20px 0;
+    margin-left: 0 !important; }
+    .site-mobile-nav .nav-list li a {
+      font-size: 21;
+      text-decoration: none; }
+
+.nav-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: black;
+  content: '';
+  opacity: .6;
+  z-index: 4; }
+
+.site-mobile-nav-inner {
+  padding: 20px 20px 20px 0; }
 
 .c-nav-list {
   display: block; }
@@ -2312,13 +2382,7 @@ ol.o-inline {
       margin-right: 0; } }
 
 .c-tip__content {
-  font-family: "museo-sans-rounded", sans-serif;
-  font-size: 1.3125rem;
-  font-weight: 900;
-  line-height: 1.2; }
-  @media screen and (min-width: 1024px) {
-    .c-tip__content {
-      font-size: 1.5rem; } }
+  font-family: "museo-sans-rounded", sans-serif; }
 
 .c-tip__footer {
   font-size: 1rem;
@@ -2863,6 +2927,12 @@ a.young-adult-secondary.is-active {
 /**
 * Utility classes
 */
+.o-0 {
+  opacity: 0; }
+
+.pe-none {
+  pointer-events: none; }
+
 .nowrap {
   white-space: nowrap; }
 

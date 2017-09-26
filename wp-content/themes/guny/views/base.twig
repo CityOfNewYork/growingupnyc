@@ -68,18 +68,29 @@
           <div class="o-container">
             <a href="{{site.url}}" class="c-banner__logo-wrapper"><span class="c-banner__logo">{{site.name}}</span></a>
             <nav class="c-banner__nav" role="navigation" aria-label="Primary">
+              {# <ul class="o-inline site-desktop-nav"> #}
               <ul class="o-inline">
                 {% for menu_item in menu.get_items %}
                   <li class="o-inline__item"><a href="{{menu_item.link}}" class="c-banner__link">{{menu_item.title}}</a></li>
                 {% endfor %}
                 <li class="o-inline__item"><a href="#ages" data-toggle="offcanvas-ages" class="c-banner__link">{{ __('Ages', 'GUNY-Primary-Menu') }}</a></li>
-                {# <li class="o-inline__item">
-                  <a class="c-banner__link" href="#search" data-toggle="overlay-search">
-                    <svg class="c-banner__icon c-banner__icon__search" role="img"><title>Search</title><use xlink:href="#search"></use></svg>
-                    <svg class="c-banner__icon c-banner__icon__close" role="img"><title>Search</title><use xlink:href="#close"></use></svg>
-                  </a>
-                </li> #}
               </ul>
+              {# Menu Toggle for mobile #}
+              {# <ul class="o-inline">
+                <li><a class="js-show-nav c-banner__link" href="#mobile-nav">Menu</a></li>
+              </ul>
+              <div class="site-mobile-nav" id="mobile-nav">
+                <a class="site-nav-close js-hide-nav" href="#content">close &amp; return to site<svg role="img" class="icon--medium" aria-hidden="true"><use xlink:href="#close"></use></svg></a>
+                <div class="site-mobile-nav-inner">
+                  <ul class="nav-list">
+                    {% for menu_item in menu.get_items %}
+                      <li><a href="{{menu_item.link}}">{{menu_item.title}}</a></li><br>
+                    {% endfor %}
+                    <li><a href="#ages">{{ __('Ages', 'GUNY-Primary-Menu') }}</a></li>
+                  </ul>
+                </div>
+              </div> #}
+              {# end Menu Toggle for mobile #}
             </nav>
           </div>
         </header>
@@ -143,7 +154,7 @@
           <div class="c-footer__section">
             <div class="c-footer__logos">
               <figure class="c-footer__logo">
-                <img alt="Growing Up NYC" src="{{theme.link}}/assets/img/NYCDOH_GrowingUP_logo_Wht_Mobile_Final.png" height="80" width="118">
+                <img alt="Growing Up NYC" src="{{theme.link}}/assets/img/logo-gunyc-white@236px.png" width="118">
               </figure>
               <figure class="c-footer__logo">
                 <a href="http://www1.nyc.gov/site/childrenscabinet/index.page" target="_blank"><img alt="NYC Children's Cabinet" src="{{theme.link}}/assets/img/NYC-childrens-cabinet.svg" height="69" width="157"></a>

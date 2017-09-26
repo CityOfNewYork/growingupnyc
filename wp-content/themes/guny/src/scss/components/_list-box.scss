@@ -86,6 +86,10 @@
   @include media($bp-large) {
     padding: rem-calc(28 40);
   }
+  @include media($bp-x-small) {
+    padding: rem-calc(12 40 12 12);
+  }
+
 }
 
 .c-list-box--secondary .c-list-box__heading,

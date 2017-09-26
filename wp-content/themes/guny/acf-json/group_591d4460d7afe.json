@@ -64,6 +64,30 @@
                             "maxlength": ""
                         },
                         {
+                            "key": "field_5994b68078c60",
+                            "label": "Section Heading Show",
+                            "name": "section_heading_show",
+                            "type": "radio",
+                            "instructions": "Would you like to display the header for this section?",
+                            "required": 1,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "Yes": "Yes",
+                                "No": "No"
+                            },
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "default_value": "Yes",
+                            "layout": "vertical",
+                            "return_format": "value"
+                        },
+                        {
                             "key": "field_591d45c1ddbf2",
                             "label": "Section Body",
                             "name": "page_top_content_text",
@@ -114,6 +138,30 @@
                             },
                             "default_value": "",
                             "placeholder": ""
+                        },
+                        {
+                            "key": "field_59a5cd55f04f4",
+                            "label": "CTA URL Target",
+                            "name": "cta_url_target",
+                            "type": "radio",
+                            "instructions": "Do you want the URL to open in a new tab?",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "Yes": "Yes",
+                                "No": "No"
+                            },
+                            "allow_null": 1,
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "default_value": "",
+                            "layout": "vertical",
+                            "return_format": "value"
                         },
                         {
                             "key": "field_592fc48d98d6f",
@@ -170,6 +218,25 @@
                             "tabs": "all",
                             "toolbar": "full",
                             "media_upload": 1
+                        },
+                        {
+                            "key": "field_59a5ad1b62eb8",
+                            "label": "Inspiration Touts Title",
+                            "name": "inspiration_touts_title",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
                         },
                         {
                             "key": "field_592fc774593ef",

@@ -67,14 +67,32 @@
           <div class="o-container">
             <a href="/youth" class="c-banner__logo-wrapper"><span class="c-banner__logo c-banner-ms__logo">{{site.name}}</span></a>
             <nav class="c-banner__nav" role="navigation" aria-label="Primary">
-              <ul class="o-inline o-inline-ms">
+              <ul class="o-inline o-inline-ms site-desktop-nav">
                 {% for menu_item in ms_menu.get_items %}
                   <li class="o-inline__item"><a href="{{menu_item.link}}" class="c-banner__link">{{menu_item.title}}</a></li>
                 {% endfor %}
               </ul>
+              {# Menu toggle on mobile #}
+              <ul class="o-inline">
+                <li><a class="js-show-nav c-banner__link" href="#mobile-nav">Menu</a></li>
+              </ul>
+              {# end of Menu toggle on mobile #}
             </nav>
           </div>
         </header>
+        {# mobile nav #}
+        <div class="nav-overlay"></div>
+        <div class="site-mobile-nav" id="mobile-nav">
+          <a class="site-nav-close js-hide-nav" href="#content">close &amp; return to site<svg role="img" class="icon--medium" aria-hidden="true"><use xlink:href="#close"></use></svg></a>
+          <div class="site-mobile-nav-inner">
+            <ul class="nav-list">
+              {% for menu_item in ms_menu.get_items %}
+                <li><a href="{{menu_item.link}}">{{menu_item.title}}</a></li><br>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {# end mobile nav #}
         <section class="o-overlay js-overlay" id="overlay-search">
           <div class="o-container-med">
             <form action="/" method="get" class="js-global-search u-bottom-spacing">
@@ -135,7 +153,7 @@
           <div class="c-footer__section">
             <div class="c-footer__logos">
               <figure class="c-footer__logo">
-                <img alt="Growing Up NYC" src="{{theme.link}}/assets/img/NYCDOH_GrowingUP_logo_Wht_Mobile_Final_ms.png" height="68" width="118">
+                <img alt="Growing Up NYC" src="{{theme.link}}/assets/img/logo-gnyc-white@236px.png" width="118">
               </figure>
               <figure class="c-footer__logo">
                 <a href="http://www1.nyc.gov/site/childrenscabinet/index.page" target="_blank"><img alt="NYC Children's Cabinet" src="{{theme.link}}/assets/img/NYC-childrens-cabinet.svg" height="69" width="157"></a>

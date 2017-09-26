@@ -4,6 +4,11 @@
 import $ from 'jquery';
 import Cookies from 'js-cookie';
 import Utility from '../vendor/utility.js';
+import Cleave from 'cleave.js/dist/cleave.min';
+import 'cleave.js/dist/addons/cleave-phone.us';
+
+/* eslint no-undef: "off" */
+const Variables = require('../../variables.json');
 
 /**
  * This component handles validation and submission for share by email and
@@ -53,6 +58,14 @@ class ShareForm {
       return this;
     }
 
+    let selected = this._el.querySelector('input[type="tel"]');
+    if (selected) this._maskPhone(selected);
+
+    $(`.${ShareForm.CssClass.SHOW_DISCLAIMER}`)
+      .on('focus', () => {
+        this._disclaimer(true);
+      });
+
     $(this._el).on('submit', e => {
       e.preventDefault();
       if (this._recaptchaRequired) {
@@ -86,12 +99,10 @@ class ShareForm {
         this._recaptchainit = true;
       }
       Cookies.set('screenerViews', ++viewCount, {expires: (2/1440)});
-      
-      $("#phone").focusout(function(){
+
+      $("#phone").focusout(function() {
         $(this).removeAttr('placeholder');
       });
-
-
     });
 
     // // Determine whether or not to initialize ReCAPTCHA. This should be
@@ -106,6 +117,44 @@ class ShareForm {
     }
     this._initialized = true;
     return this;
+  }
+
+  /**
+   * Mask each phone number and properly format it
+   * @param  {HTMLElement} input the "tel" input to mask
+   * @return {constructor}       the input mask
+   */
+  _maskPhone(input) {
+    let cleave = new Cleave(input, {
+      phone: true,
+      phoneRegionCode: 'us',
+      delimiter: '-'
+    });
+    input.cleave = cleave;
+    return input;
+  }
+
+  /**
+   * Toggles the disclaimer visibility
+   * @param  {Boolean} active wether the disclaimer should be visible or not
+   */
+  _disclaimer(visible = true) {
+    let $el = $('#js-disclaimer');
+    let $class = (visible) ? 'addClass' : 'removeClass';
+    $el.attr('aria-hidden', !visible);
+    $el.attr(ShareForm.CssClass.HIDDEN, !visible);
+    $el[$class](ShareForm.CssClass.ANIMATE_DISCLAIMER);
+    // Scroll-to functionality for mobile
+    if (
+      window.scrollTo &&
+      visible &&
+      window.innerWidth < Variables['screen-desktop']
+    ) {
+      let $target = $(e.target);
+      window.scrollTo(
+        0, $target.offset().top - $target.data('scrollOffset')
+      );
+    }
   }
 
   /**
@@ -136,14 +185,30 @@ class ShareForm {
    * @param {HTMLElement} input - The html form element for the component.
    * @return {boolean} - Valid email.
    */
-  _validatePhoneNumber(input){  
-    // var phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/; 
-    var phoneno = (/^\+?[1-9]\d{1,14}$/);
-    if(!input.value.match(phoneno)){ 
-      this._showError(ShareForm.Message.PHONE); 
-      return false;  
-    }  
-    return true;  
+  _validatePhoneNumber(input){
+    let num = this._parsePhoneNumber(input.value); // parse the number
+    num = (num) ? num.join('') : 0; // if num is null, there are no numbers
+    if (num.length === 10) {
+      return true; // assume it is phone number
+    }
+    this._showError(ShareForm.Message.PHONE);
+    return false;
+    // var phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+    // var phoneno = (/^\+?[1-9]\d{1,14}$/);
+    // if(!input.value.match(phoneno)){
+    //   this._showError(ShareForm.Message.PHONE);
+    //   return false;
+    // }
+    // return true;
+  }
+
+  /**
+   * Get just the phone number of a given value
+   * @param  {string} value The string to get numbers from
+   * @return {array}       An array with matched blocks
+   */
+  _parsePhoneNumber(value) {
+    return value.match(/\d+/g); // get only digits
   }
 
   /**
@@ -156,7 +221,7 @@ class ShareForm {
   _validateRequired(input) {
     if ($(input).val()) {
       return true;
-    } 
+    }
     this._showError(ShareForm.Message.REQUIRED);
     $(input).one('keyup', function(){
       this._validate();
@@ -170,7 +235,9 @@ class ShareForm {
    * @return {this} ShareForm - shareform
    */
   _showError(msg) {
+    let $elParents = $(this._el).parents('.c-tip-ms__topics');
     $('#sms-form-msg').addClass(ShareForm.CssClass.ERROR).text(Utility.localize(msg));
+    $elParents.removeClass('success-js');
     return this;
   }
 
@@ -180,11 +247,12 @@ class ShareForm {
    * @return {this} ShareForm
    */
   _showSuccess(msg) {
+    let $elParents = $(this._el).parents('.c-tip-ms__topics');
     $('#phone').attr("placeholder", Utility.localize(msg));
     $('#smsbutton').text("Send Another");
     $('#sms-form-msg').addClass(ShareForm.CssClass.SUCCESS).text('');
-    $(this._el).parents('.c-tip-ms__topics').removeClass('success-js');
-    $(this._el).parents('.c-tip-ms__topics').addClass('success-js');
+    $elParents.removeClass('success-js');
+    $elParents.addClass('success-js');
     return this;
   }
 
@@ -194,8 +262,14 @@ class ShareForm {
    */
   _submit() {
     this._isBusy = true;
+    let $spinner = this._el.querySelector(`.${ShareForm.CssClass.SPINNER}`);
+    let $submit = this._el.querySelector('button[type="submit"]');
     const payload = $(this._el).serialize();
     $(this._el).find('input').prop('disabled', true);
+    if ($spinner) {
+      $submit.disabled = true; // hide submit button
+      $spinner.style.cssText = ''; // show spinner
+    }
     return $.post($(this._el).attr('action'), payload).done(response => {
       if (response.success) {
         this._el.reset();
@@ -212,6 +286,10 @@ class ShareForm {
       this._showError(ShareForm.Message.SERVER);
     }).always(() => {
       $(this._el).find('input').prop('disabled', false);
+      if ($spinner) {
+        $submit.disabled = false; // show submit button
+        $spinner.style.cssText = 'display: none'; // hide spinner;
+      }
       this._isBusy = false;
     });
   }
@@ -266,9 +344,13 @@ ShareForm.CssClass = {
   ERROR: 'error',
   ERROR_MSG: 'error-message',
   FORM: 'js-share-form',
+  SHOW_DISCLAIMER: 'js-show-disclaimer',
+  NEEDS_DISCLAIMER: 'js-needs-disclaimer',
+  ANIMATE_DISCLAIMER: 'animated fadeInUp',
   HIDDEN: 'hidden',
   SUBMIT_BTN: 'btn-submit',
-  SUCCESS: 'success'
+  SUCCESS: 'success',
+  SPINNER: 'js-spinner'
 };
 
 /**

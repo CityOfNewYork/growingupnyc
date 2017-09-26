@@ -51,21 +51,10 @@ button:hover, button:focus {
     .c-banner__logo-wrapper {
       height: 9rem; } }
   .c-banner__logo-wrapper .c-banner-ms__logo {
-    background: url("/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_MS.png") no-repeat;
-    background-size: contain;
-    display: block;
-    overflow: hidden;
-    text-indent: 100%;
-    white-space: nowrap;
-    background-position: center bottom;
-    height: 100%;
-    width: 100%; }
-    @media screen and (min-width: 375px) {
+    background-image: url("/wp-content/themes/guny/assets/img/logo-gnyc-color@150px.png"); }
+    @media only screen and (-webkit-min-device-pixel-ratio: 2) and (-webkit-min-device-pixel-ratio: 2) and (min-width: 1024px), only screen and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) and (min-width: 1024px) {
       .c-banner__logo-wrapper .c-banner-ms__logo {
-        background-position: center bottom 0.3125rem; } }
-    @media screen and (min-width: 700px) {
-      .c-banner__logo-wrapper .c-banner-ms__logo {
-        background-position: center bottom 0.6875rem; } }
+        background-image: url("/wp-content/themes/guny/assets/img/logo-gnyc-color@300px.png"); } }
 
 .c-hero-ms {
   padding: 33.6% 0 4.0625rem; }
@@ -143,6 +132,9 @@ button:hover, button:focus {
 
 .s-wysiwyg h3 {
   margin: 0.9375rem 0 0.3125rem; }
+
+.s-wysiwyg p {
+  margin-top: 1em; }
 
 .s-wysiwyg ul {
   padding-left: 0;
@@ -260,7 +252,14 @@ button:hover, button:focus {
     .carousel-ms .owl-stage,
     .carousel-ms .owl-item,
     .carousel-ms .owl-bg {
-      height: 360px; } }
+      height: 357px; } }
+  @media screen and (min-width: 1200px) {
+    .carousel-ms,
+    .carousel-ms .owl-stage-outer,
+    .carousel-ms .owl-stage,
+    .carousel-ms .owl-item,
+    .carousel-ms .owl-bg {
+      height: 462px; } }
 
 .carousel-ms .owl-dots {
   position: absolute;
@@ -425,6 +424,10 @@ button:hover, button:focus {
 
 .o-article-trip-sidebar {
   float: right; }
+  .o-article-trip-sidebar ul {
+    margin-top: 0; }
+  .o-article-trip-sidebar dt {
+    margin-bottom: 5px; }
 
 .c-hero-ms__topics {
   background-color: #00965c; }
@@ -600,26 +603,13 @@ button:hover, button:focus {
   background-color: #7735b2;
   background-position: top center;
   background-repeat: no-repeat;
-  padding: 33.6% 0 4.0625rem;
   text-align: center; }
   @media screen and (min-width: 700px) {
     .c-hero-ms__topics {
-      text-align: left;
-      padding: 10.5rem 2.5rem 5rem; } }
+      text-align: left; } }
   @media screen and (min-width: 1200px) {
     .c-hero-ms__topics {
-      padding: 15.625rem 5rem 5rem;
       background-position: bottom -9.375rem center; } }
-
-.c-hero-ms__topics--landing {
-  padding: 33.6% 0 4.0625rem; }
-  @media screen and (min-width: 700px) {
-    .c-hero-ms__topics--landing {
-      padding: 10.5rem 2.5rem 5rem; } }
-
-.c-hero-ms__topics__title,
-.c-hero-ms__topics__tagline {
-  text-align: left; }
 
 @media screen and (min-width: 1024px) {
   .c-hero-ms__topics__tagline {
@@ -661,15 +651,19 @@ button:hover, button:focus {
   text-align: center; }
   .c-tip-ms__topics,
   .c-tip-ms__topics .c-tip__sticker {
-    background: #3c036f; }
+    background: #7735b2; }
   .c-tip-ms__topics .c-tip__content {
     text-align: center; }
+
+.c-tip--sms,
+.c-tip--sms .c-tip__sticker {
+  background: #3c036f; }
 
 .c-validation {
   font-size: 1rem; }
 
 .c-disclaimer-text {
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   text-align: left; }
 
 .c-do-list {
@@ -697,9 +691,14 @@ button:hover, button:focus {
   .no-touchevents .button--primary__purple:hover {
     background: #b35eff;
     border-color: #b35eff; }
+  .button--primary__purple[disabled], .button--primary__purple[disabled]:hover {
+    background: #7735b2;
+    border-color: #7735b2;
+    cursor: default; }
 
 .sms-form-wrapper {
   display: inline-block;
+  width: 100%;
   max-width: 568px; }
   .sms-form-wrapper button {
     margin-top: 1.25rem; }
@@ -717,15 +716,24 @@ button:hover, button:focus {
       width: 15rem; } }
   @media screen and (min-width: 1200px) {
     .sms-form__input--long {
-      width: 25rem; } }
+      width: 22rem; } }
+
+.sms-form__spinner {
+  width: 2.125rem;
+  right: 8px;
+  top: 0;
+  position: absolute; }
+
+.sms-form__submit {
+  min-width: 11.25rem; }
+  @media screen and (min-width: 700px) {
+    .sms-form__submit {
+      min-width: 12.125rem; } }
 
 .recaptcha-js {
   background: #8865a7; }
   .recaptcha-js .c-tip__sticker {
     background: #8865a7; }
-
-.success-js .sms-form-wrapper {
-  max-width: 610px; }
 
 .g-recaptcha,
 .error-message,

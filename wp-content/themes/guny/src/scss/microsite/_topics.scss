@@ -329,32 +329,31 @@
   background-color: $purple;
   background-position: top center;
   background-repeat: no-repeat;
-  padding: percentage(126/375) 0 rem-calc(65);
+  // padding: percentage(126/375) 0 rem-calc(65);
   text-align: center;
 
   @include media($bp-medium) {
     text-align: left;
-    padding: rem-calc(168 40 80);
+    // padding: rem-calc(168 40 80);
   }
 
   @include media($bp-xlarge) {
-    padding: rem-calc(250 80 80);
+    // padding: rem-calc(250 80 80);
     background-position: bottom rem-calc(-150) center;
   }
 }
 
-.c-hero-ms__topics--landing {
-  padding: percentage(126/375) 0 rem-calc(65);
+// .c-hero-ms__topics--landing {
+//   padding: percentage(126/375) 0 rem-calc(65);
+//   @include media($bp-medium) {
+//     padding: rem-calc(168 40 80);
+//   }
+// }
 
-  @include media($bp-medium) {
-    padding: rem-calc(168 40 80);
-  }
-}
-
-.c-hero-ms__topics__title,
-.c-hero-ms__topics__tagline {
-  text-align: left;
-}
+// .c-hero-ms__topics__title,
+// .c-hero-ms__topics__tagline {
+//   text-align: left;
+// }
 
 .c-hero-ms__topics__tagline {
   @include media($bp-large) {
@@ -418,11 +417,19 @@
   text-align: center;
   &,
   .c-tip__sticker {
-    background: $dark-purple;
+    background: $purple;
   }
 
   .c-tip__content {
     text-align: center;
+  }
+}
+
+//SMS
+.c-tip--sms {
+  &,
+  .c-tip__sticker {
+    background: $dark-purple;
   }
 }
 
@@ -433,7 +440,7 @@
 
 //Disclaimer Text
 .c-disclaimer-text {
-  font-size: rem-calc(12);
+  font-size: rem-calc(11);
   text-align: left;
 }
 
@@ -478,11 +485,19 @@
       border-color: $light-purple;
     }
   }
+
+  &[disabled],
+  &[disabled]:hover {
+    background: $purple;
+    border-color: $purple;
+    cursor: default;
+  }
 }
 
 //SMS form
 .sms-form-wrapper {
   display: inline-block;
+  width: 100%;
   max-width: 568px;
 
   button {
@@ -504,7 +519,21 @@
   }
 
   @include media($bp-xlarge) {
-    width: rem-calc(400);
+    width: rem-calc(352);
+  }
+}
+
+.sms-form__spinner {
+  width: rem-calc(34);
+  right: 8px;
+  top: 0;
+  position: absolute;
+}
+
+.sms-form__submit {
+  min-width: rem-calc(180);
+  @include media($bp-medium) {
+    min-width: rem-calc(194);
   }
 }
 
@@ -518,9 +547,9 @@
 }
 
 //Succes
-.success-js .sms-form-wrapper {
-  max-width: 610px;
-}
+// .success-js .sms-form-wrapper {
+//   max-width: 610px;
+// }
 
 .g-recaptcha,
 .error-message,

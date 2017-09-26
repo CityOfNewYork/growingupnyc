@@ -19,7 +19,7 @@ function ms_inspirations_create() {
       'view_item' => 'View Inspiration',
       'search_items' => 'Search Inspirations',
       'not_found' =>  'No Inspirations Found',
-      'not_found_in_trash' => 'No Inspirations found in Trash', 
+      'not_found_in_trash' => 'No Inspirations found in Trash',
       'parent_item_colon' => '',
       'menu_name' => 'Inspirations',
     );
@@ -54,5 +54,3 @@ function ms_inspirations_create() {
 }
 
 add_action( 'init', 'ms_inspirations_create' );
-
-?>	

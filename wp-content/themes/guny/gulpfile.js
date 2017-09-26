@@ -36,7 +36,8 @@ var autoprefixer = require('gulp-autoprefixer'),
     svgSprite = require('gulp-svg-sprite'),
     uglify = require('gulp-uglify'),
     webpack = require('webpack-stream');
-    rtlcss = require('gulp-rtlcss');
+    rtlcss = require('gulp-rtlcss'),
+    jsonToSass = require('gulp-json-to-sass');
 
 
 // VARIABLES
@@ -45,7 +46,7 @@ var dist = 'assets/',
     appRoot = '/wp-content/themes/guny/assets/',
     source = 'src/',
     views = 'views/',
-    sassInclude = ['node_modules', require('bourbon-neat').includePaths];
+    sassInclude = ['node_modules', require('bourbon-neat').includePaths, require('bourbon').includePaths];
 
 
 // ERROR HANDLING
@@ -74,7 +75,10 @@ gulp.task('lint-css', function(){
 gulp.task('styles_dev', ['lint-css'], function() {
     return gulp.src([
       source+'scss/style.scss'
-    ])
+    ]).pipe(jsonToSass({
+      jsonPath: source + '/variables.json',
+      scssPath: source + '/scss/settings/_variables.json.scss'
+    }))
     .pipe(cssGlobbing({
       extensions: ['.scss']
     }))
@@ -92,7 +96,10 @@ gulp.task('styles_dev', ['lint-css'], function() {
 gulp.task('styles', ['lint-css'], function() {
     return gulp.src([
         source+'scss/style.scss'
-    ])
+    ]).pipe(jsonToSass({
+      jsonPath: source + '/variables.json',
+      scssPath: source + '/scss/settings/_variables.json.scss'
+    }))
     .pipe(cssGlobbing({
       extensions: ['.scss']
     }))
@@ -287,7 +294,7 @@ gulp.task('styleguide', ['styleguide:applystyles']);
 gulp.task('default', function() {
 
     browserSync.init({
-      proxy: 'http://guny.wp.local',
+      proxy: 'http://localhost:8080',
       port:3001,
       ghostMode: {
           scroll: true

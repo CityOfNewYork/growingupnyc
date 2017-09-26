@@ -65,5 +65,3 @@ function ms_topics_create() {
 }
 
 add_action( 'init', 'ms_topics_create' );
-
-?>	

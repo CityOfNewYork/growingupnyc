@@ -18,6 +18,7 @@ Description: Custom theme for GUNY override styles for Micro Site
 @import "tools/type";
 @import "tools/images";
 @import "tools/layout";
+@import "tools/media";
 
 // Microsite (Partials)
 // =====================
@@ -88,18 +89,9 @@ button {
   }
 
   .c-banner-ms__logo {
-    @include image-replace("/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_MS.png");
-
-    background-position: center bottom;
-    height: 100%;
-    width: 100%;
-
-    @include media($bp-small) {
-      background-position: center bottom rem-calc(5);
-    }
-
-    @include media($bp-medium) {
-      background-position: center bottom rem-calc(11);
+    background-image: url('/wp-content/themes/guny/assets/img/logo-gnyc-color@150px.png');
+    @include retina {
+      background-image: url('/wp-content/themes/guny/assets/img/logo-gnyc-color@300px.png');
     }
   }
 }
@@ -107,6 +99,13 @@ button {
 // Hero
 .c-hero-ms {
   padding: percentage(126/375) 0 rem-calc(65);
+
+  // &:empty:before {
+  //   content: "";
+  //   min-height: 155px;
+  //   display: block;
+  //   position: relative;
+  // }
 
   @include media($bp-medium) {
     padding: rem-calc(168 40 80);
@@ -173,10 +172,12 @@ button {
   h3 {
     margin: rem-calc(15 0 5);
   }
+  p {
+    margin-top: 1em;
+  }
   ul {
     padding-left: 0;
     margin-top: 0;
-
     li {
       padding-bottom: 0;
       &:before {
@@ -344,8 +345,13 @@ button {
   .owl-item,
   .owl-bg {
     height: 190px;
+
     @include media($bp-medium) {
-      height: 360px;
+      height: 357px;
+    }
+
+    @include media($bp-xlarge) {
+      height: 462px;
     }
   }
 

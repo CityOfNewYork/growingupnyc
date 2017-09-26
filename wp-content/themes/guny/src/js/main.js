@@ -18,6 +18,7 @@ import iOS7Hack from './modules/iOS7Hack.js';
 import ShareForm from './modules/share-form.js';
 import captchaResize from './modules/captchaResize.js';
 import rotatingTextAnimation from './modules/rotatingTextAnimation.js';
+import toggleMenu from './modules/toggleMenu.js';
 
 function ready(fn) {
   if (document.readyState === 'loading') {

@@ -10,6 +10,10 @@ wp-content/advanced-cache.php
 wp-content/wp-cache-config.php
 wp-content/cache/*
 wp-content/cache/supercache/*
+wp-includes/
+wp-includes/*
+wp-admin/
+wp-admin/*
 
 # Docker Image Adds #
 #####################

@@ -678,7 +678,7 @@ button:hover, button:focus {
 .c-do-list {
   margin-bottom: 3.75rem;
   background: #eee;
-  padding: 1.875rem; }
+  padding: 0.1875rem 1.875rem 1.875rem; }
   .c-do-list a.button--topics__cta {
     margin-top: 1.5625rem; }
     .c-do-list a.button--topics__cta:focus {

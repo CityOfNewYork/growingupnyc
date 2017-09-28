@@ -2870,11 +2870,11 @@ a.young-adult-secondary.is-active {
 .young-adult-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/young-adult-gradient.png); }
 
-.teen-svg .stop1 {
-  stop-color: #3c036f; }
+.young-adult-svg .stop1 {
+  stop-color: #343e4c; }
 
-.teen-svg .stop2 {
-  stop-color: #7735b2; }
+.young-adult-svg .stop2 {
+  stop-color: #51596b; }
 
 .u-sm-gutter {
   margin-bottom: 20px; }

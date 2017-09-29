@@ -13,7 +13,7 @@
     .c-side-hero__image{ background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(1400,0)}}); }
   }
   @media (min-width:1024px) {
-    .c-side-hero__image { background-image:url(https://growingupdev.wpengine.com/wp-content/uploads/2016/07/Home_Hero_large.png) }
+    .c-side-hero__image { background-image:url({{ featured_image }}) }
   }
 </style>
 {% endblock %}

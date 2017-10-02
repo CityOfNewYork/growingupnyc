@@ -18,6 +18,16 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Map' ) ) {
 		const AJAX_HOOK = 'tribe_geosearch';
 
 		/**
+		 * The path to the template file used for the view.
+		 * This value is used in Shortcodes/Tribe_Events.php to
+		 * locate the correct template file for each shortcode
+		 * view.
+		 *
+		 * @var string
+		 */
+		public $view_path = 'pro/map/content';
+
+		/**
 		 * Set up hooks for map view
 		 *
 		 * @return void
@@ -62,6 +72,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Map' ) ) {
 				'post_status'    => $post_status,
 				'eventDisplay'   => 'map',
 				'tribe_geoloc'   => true,
+				'featured'       => tribe( 'tec.featured_events' )->featured_events_requested(),
 			);
 
 			$view_state = 'map';
@@ -82,6 +93,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Map' ) ) {
 			}
 
 			$query       = Tribe__Events__Query::getEvents( $defaults, true );
+
 			$have_events = ( 0 < $query->found_posts );
 
 			if ( $have_events && Tribe__Events__Pro__Geo_Loc::instance()->is_geoloc_query() ) {

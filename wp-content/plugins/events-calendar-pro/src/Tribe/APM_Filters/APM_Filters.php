@@ -138,6 +138,10 @@ class Tribe__Events__Pro__APM_Filters__APM_Filters {
 
 	public function maybe_notify_about_new_plugin() {
 
+		if ( ! current_user_can( 'install_plugins' ) ) {
+			return;
+		}
+
 		if ( isset( $_GET['dismiss_apm_nag'] ) ) {
 			add_user_meta( get_current_user_id(), '_tribe_apm_plugin_nag', true );
 		}

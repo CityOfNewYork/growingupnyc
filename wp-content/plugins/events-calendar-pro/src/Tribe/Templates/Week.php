@@ -68,6 +68,16 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Week' ) ) {
 		 */
 		const AJAX_HOOK = 'tribe_week';
 
+		/**
+		 * The path to the template file used for the view.
+		 * This value is used in Shortcodes/Tribe_Events.php to
+		 * locate the correct template file for each shortcode
+		 * view.
+		 *
+		 * @var string
+		 */
+		public $view_path = 'pro/week/content';
+
 
 		/**
 		 * __construct()
@@ -228,6 +238,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Week' ) ) {
 		 */
 		public function set_global_post( $slug, $name, $data ) {
 			$GLOBALS['post'] = $data['event'];
+			setup_postdata( $data['event'] );
 		}
 
 
@@ -317,6 +328,10 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Week' ) ) {
 			// $day_number corresponds to the day of the week in $weekday_array
 			foreach ( self::$day_range as $i => $day_number ) {
 
+				// Used to determine how many events start at the same exact time.
+				$cur_datetime       = null;
+				$cur_starting_index = 1;
+
 				// figure out the $date that we're currently looking at
 				if ( $day_number >= self::$day_range[0] ) {
 					// usually we can just get the date for the next day
@@ -331,25 +346,33 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Week' ) ) {
 				$hourly_events  = array();
 				$all_day_events = array();
 
-				if ( $wp_query->have_posts() ) {
-					// loop through all the wordpress posts and sort them into all day vs hourly for the current $date
-					foreach ( $wp_query->posts as $j => $event ) {
-						if ( tribe_event_is_on_date( $date, $event ) ) {
+				// loop through all the wordpress posts and sort them into all day vs hourly for the current $date
+				foreach ( $wp_query->posts as $j => $event ) {
+					if ( ! tribe_event_is_on_date( $date, $event ) ) {
+						continue;
+					}
 
-							$event->days_between = tribe_get_days_between( $event->EventStartDate, $event->EventEndDate, true );
+					if ( $cur_datetime === $event->EventStartDate ) {
+						$cur_starting_index++;
+					} else {
+						$cur_datetime       = $event->EventStartDate;
+						$cur_starting_index = 1;
+					}
 
-							if ( tribe_event_is_all_day( $event ) ) {
-								$all_day_events[] = $event;
-							} else {
-								// if the event starts after the end of the hour range we're displaying, or ends before the start, skip it
-								$start_hour_today = $date . ' ' . tribe_events_week_get_hours( 'first-hour' );
-								$end_hour_today   = tribe_end_of_day( $date, 'Y-m-d ' ) . tribe_events_week_get_hours( 'last-hour' );
-								if ( tribe_get_start_time( $event, 'U' ) > strtotime( $end_hour_today ) || tribe_get_end_time( $event, 'U' ) < strtotime( $start_hour_today ) ) {
-									continue;
-								}
-								$hourly_events[] = $event;
-							}
+					$event->days_between = tribe_get_days_between( $event->EventStartDate, $event->EventEndDate, true );
+					$event->shared_start_time_index = $cur_starting_index;
+
+					if ( tribe_event_is_all_day( $event ) ) {
+						$all_day_events[] = $event;
+					} else {
+						// if the event starts after the end of the hour range we're displaying, or ends before the start, skip it
+						$start_hour_today = $date . ' ' . tribe_events_week_get_hours( 'first-hour' );
+						$end_hour_today   = tribe_end_of_day( $date, 'Y-m-d ' ) . tribe_events_week_get_hours( 'last-hour' );
+						if ( tribe_get_start_time( $event, 'U' ) > strtotime( $end_hour_today ) || tribe_get_end_time( $event, 'U' ) < strtotime( $start_hour_today ) ) {
+							continue;
 						}
+
+						$hourly_events[] = $event;
 					}
 				}
 
@@ -418,32 +441,42 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Week' ) ) {
 
 			if ( tribe_event_is_all_day( $event ) ) {
 				$attrs['data-hour'] = 'all-day';
-							} else {
+			} else {
 				$start_of_day_timestamp = self::get_rounded_beginning_of_day( self::get_current_date() );
 				$end_of_day_timestamp   = tribe_end_of_day( self::get_current_date(), 'U' );
+
 				if ( has_filter( 'tribe_events_week_get_hours' ) ) {
 					// if we're filtering the hour range on week view, stop the events at that hour
-					$last_hour_timestamp = strtotime( self::get_current_date() . tribe_events_week_get_hours( 'last-hour' ) );
+					$last_hour_timestamp  = strtotime( self::get_current_date() . tribe_events_week_get_hours( 'last-hour' ) );
 					$end_of_day_timestamp = min( $end_of_day_timestamp, $last_hour_timestamp );
 				}
+
 				$data_hour = date( 'G', $event_start_timestamp );
 				$data_min  = date( 'i', $event_start_timestamp );
+
 				if ( $event_start_timestamp < $start_of_day_timestamp ) {
+
 					if ( $event_end_timestamp > $end_of_day_timestamp ) {
 						// if there is a day in between start/end we just want to fill the spacer with the total mins in the day.
 						$duration = ( $end_of_day_timestamp - $start_of_day_timestamp ) / 60;
 					} else {
 						$duration = ( $event_end_timestamp - $start_of_day_timestamp ) / 60;
 					}
+
 					$data_hour = date( 'G', $start_of_day_timestamp );
 					$data_min  = date( 'i', $start_of_day_timestamp );
+
 				} elseif ( $event_end_timestamp > $end_of_day_timestamp ) {
+
 					// if the event is longer than a day we want to account for that with an offset
 					$duration = ( $end_of_day_timestamp - $event_start_timestamp ) / 60;
+
 				} else {
+
 					// for a default event continue as everything is normal
 					$remaining_minutes_in_day = ( $end_of_day_timestamp - $event_start_timestamp / 60 );
 					$duration                 = get_post_meta( $event->ID, '_EventDuration', true ) / 60;
+
 					if ( $duration > $remaining_minutes_in_day ) {
 						// this will happen in the case of a multi-day event that extends beyond the end of the day
 						$duration = $remaining_minutes_in_day;
@@ -580,6 +613,8 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Week' ) ) {
 
 			global $post;
 			$event = $post;
+			$event_time = strtotime( $event->EventStartDate );
+			$previous_event_time = isset( self::$previous_event ) ? strtotime( self::$previous_event->EventStartDate ) : null;
 
 			// we need to adjust on behalf of weekly span scripts
 			$day_span_length = $event->days_between + 1;
@@ -587,12 +622,13 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Week' ) ) {
 				$classes[] = 'tribe-dayspan' . $day_span_length . ' ';
 			}
 
-			if ( isset( self::$previous_event ) && ! tribe_event_is_all_day( $event ) && strtotime( self::$previous_event->EventStartDate ) < strtotime( $event->EventStartDate ) ) {
-				$classes[] = 'tribe-event-overlap ';
-			}
-
 			if ( ! tribe_event_is_all_day( $event ) ) {
 				$classes[] = 'tribe-events-week-hourly-single';
+				$classes[] = 'tribe-event-shared-start-time-' . $event->shared_start_time_index;
+
+				if ( null !== $previous_event_time && $previous_event_time < $event_time ) {
+					$classes[] = 'tribe-event-overlap';
+				}
 			} else {
 				$classes[] = 'tribe-events-week-allday-single';
 			}
@@ -656,6 +692,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Week' ) ) {
 					'post_status'  => $post_status,
 					'eventDate'    => $_POST['eventDate'],
 					'eventDisplay' => 'week',
+					'featured'     => tribe( 'tec.featured_events' )->featured_events_requested(),
 				);
 
 				if ( isset( $_POST['tribe_event_category'] ) ) {

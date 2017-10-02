@@ -199,8 +199,8 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 	 *		@type string    $end_date        Maximum end date of the Event.
 	 *		@type string    $eventDate       A specific Event date for the Query.
 	 *		@type bool      $hide_upcoming   Hide events that are not on eventDate, internal usage
-	 *		@type int       $venue           Select events from a specfic Venue
-	 *		@type int       $organizer       Select events from a specfic Organizer
+	 *		@type int       $venue           Select events from a specific Venue
+	 *		@type int       $organizer       Select events from a specific Organizer
 	 *		@type string    $eventDisplay    How to display the Events, internal usage
 	 *
 	 *		@see  get_posts()  for more params
@@ -627,7 +627,13 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 			$classes[] = 'tribe-events-last';
 		}
 
+		// Mark 'featured' events
+		if ( tribe( 'tec.featured_events' )->is_featured( $event_id ) ) {
+			$classes[] = 'tribe-event-featured';
+		}
+
 		$classes = apply_filters( 'tribe_events_event_classes', $classes );
+
 		if ( $echo ) {
 			echo implode( ' ', $classes );
 		} else {
@@ -653,7 +659,6 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 		} else {
 			$attrs['data-title'] = wp_title( '|', false, 'right' );
 		}
-
 		switch ( $current_view ) {
 			case 'month.php' :
 				$attrs['data-view']    = 'month';
@@ -728,7 +733,12 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 	 * @return bool
 	 */
 	function tribe_events_admin_show_cost_field() {
-		$modules      = apply_filters( 'tribe_events_tickets_modules', null );
+		$modules = null;
+
+		if ( class_exists( 'Tribe__Tickets__Tickets' ) ) {
+			$modules = Tribe__Tickets__Tickets::modules();
+		}
+
 		$event_origin = get_post_meta( get_the_ID(), '_EventOrigin', true );
 		$show_cost    = empty( $modules ) ||
 						class_exists( 'Tribe__Events__Tickets__Eventbrite__Main' ) ||
@@ -750,7 +760,7 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 		$tribe_ecp = Tribe__Events__Main::instance();
 		$post_id    = Tribe__Events__Main::postIdHelper( $post_id );
 
-		$cost_utils = Tribe__Events__Cost_Utils::instance();
+		$cost_utils = tribe( 'tec.cost-utils' );
 		$cost = $cost_utils->get_formatted_event_cost( $post_id, $with_currency_symbol );
 
 		return apply_filters( 'tribe_get_cost', $cost, $post_id, $with_currency_symbol );
@@ -778,7 +788,7 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 	 * @return int the minimum cost.
 	 */
 	function tribe_get_minimum_cost() {
-		return Tribe__Events__Cost_Utils::instance()->get_minimum_cost();
+		return tribe( 'tec.cost-utils' )->get_minimum_cost();
 	}
 
 	/**
@@ -788,7 +798,7 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 	 * @return int the maximum cost.
 	 */
 	function tribe_get_maximum_cost() {
-		return Tribe__Events__Cost_Utils::instance()->get_maximum_cost();
+		return tribe( 'tec.cost-utils' )->get_maximum_cost();
 	}
 
 	/**
@@ -798,7 +808,7 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 	 * @return bool if uncosted events exist
 	 */
 	function tribe_has_uncosted_events() {
-		return Tribe__Events__Cost_Utils::instance()->has_uncosted_events();
+		return tribe( 'tec.cost-utils' )->has_uncosted_events();
 	}
 
 	/**
@@ -857,16 +867,23 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 	}
 
 	/**
-	 * return the featured image html to an event (within the loop automatically will get event ID)
+	 * Return the featured image for an event (within the loop automatically will get event ID).
+	 *
+	 * Where possible, the image will be returned as a well formed <img> tag contained in a link
+	 * element and wrapped in a div used for targetting featured images from stylesheet. By setting
+	 * the two final and optional parameters to false, however, it is possible to retrieve only
+	 * the image URL itself.
 	 *
 	 * @category Events
+	 *
 	 * @param int    $post_id
 	 * @param string $size
 	 * @param bool   $link
+	 * @param bool   $wrapper
 	 *
 	 * @return string
 	 */
-	function tribe_event_featured_image( $post_id = null, $size = 'full', $link = true ) {
+	function tribe_event_featured_image( $post_id = null, $size = 'full', $link = true, $wrapper = true ) {
 		if ( is_null( $post_id ) ) {
 			$post_id = get_the_ID();
 		}
@@ -877,8 +894,15 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 		 * @param string $size
 		 * @param int    $post_id
 		 */
-		$image_html     = get_the_post_thumbnail( $post_id, apply_filters( 'tribe_event_featured_image_size', $size, $post_id ) );
-		$featured_image = '';
+		$size = apply_filters( 'tribe_event_featured_image_size', $size, $post_id );
+
+		$featured_image = $wrapper
+			? get_the_post_thumbnail( $post_id, $size )
+			: wp_get_attachment_image_src( get_post_thumbnail_id( $post_id ), $size, false );
+
+		if ( is_array( $featured_image ) ) {
+			$featured_image = $featured_image[ 0 ];
+		}
 
 		/**
 		 * Controls whether the featured image should be wrapped in a link
@@ -886,10 +910,18 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 		 *
 		 * @param bool $link
 		 */
-		if ( ! empty( $image_html ) && apply_filters( 'tribe_event_featured_image_link', $link ) ) {
-			$featured_image .= '<div class="tribe-events-event-image"><a href="' . esc_url( tribe_get_event_link() ) . '">' . $image_html . '</a></div>';
-		} elseif ( ! empty( $image_html ) ) {
-			$featured_image .= '<div class="tribe-events-event-image">' . $image_html . '</div>';
+		if ( ! empty( $featured_image ) && apply_filters( 'tribe_event_featured_image_link', $link ) ) {
+			$featured_image = '<a href="' . esc_url( tribe_get_event_link( $post_id ) ) . '">' . $featured_image . '</a>';
+		}
+
+		/**
+		 * Whether to wrap the featured image in our standard div (used to
+		 * assist in targeting featured images from stylesheets, etc).
+		 *
+		 * @param bool $wrapper
+		 */
+		if ( ! empty( $featured_image ) && apply_filters( 'tribe_events_featured_image_wrap', $wrapper ) ) {
+			$featured_image = '<div class="tribe-events-event-image">' . $featured_image . '</div>';
 		}
 
 		/**
@@ -967,8 +999,23 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 
 		$format = $date_with_year_format;
 
-		// if it starts and ends in the current year then there is no need to display the year
-		if ( tribe_get_start_date( $event, false, 'Y' ) === date( 'Y' ) && tribe_get_end_date( $event, false, 'Y' ) === date( 'Y' ) ) {
+		/**
+		 * If a yearless date format should be preferred.
+		 *
+		 * By default, this will be true if the event starts and ends in the current year.
+		 *
+		 * @param bool    $use_yearless_format
+		 * @param WP_Post $event
+		 */
+		$use_yearless_format = apply_filters( 'tribe_events_event_schedule_details_use_yearless_format',
+			(
+				tribe_get_start_date( $event, false, 'Y' ) === date_i18n( 'Y' )
+				&& tribe_get_end_date( $event, false, 'Y' ) === date_i18n( 'Y' )
+			),
+			$event
+		);
+
+		if ( $use_yearless_format ) {
 			$format = $date_without_year_format;
 		}
 
@@ -1076,25 +1123,20 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 				}
 
 				if ( function_exists( 'has_post_thumbnail' ) && has_post_thumbnail( $event->ID ) ) {
-					$has_image = true;
-					$image_arr = wp_get_attachment_image_src( get_post_thumbnail_id( $event->ID ), 'medium' );
-					$image_src = $image_arr[0];
-				}
-
-				if ( $has_image ) {
-					$image_tool_arr = wp_get_attachment_image_src( get_post_thumbnail_id( $event->ID ), array( 75, 75 ) );
-					$image_tool_src = $image_tool_arr[0];
+					$has_image      = true;
+					$image_src      = tribe_event_featured_image( $event->ID, 'large', false, false );
+					$image_tool_src = tribe_event_featured_image( $event->ID, 'medium', false, false );
 				}
 
 				$category_classes = tribe_events_event_classes( $event->ID, false );
 
-				$json['eventId'] = $event->ID;
-				$json['title'] = wp_kses_post( $event->post_title );
-				$json['permalink'] = tribe_get_event_link( $event->ID );
-				$json['imageSrc'] = $image_src;
-				$json['dateDisplay'] = $date_display;
+				$json['eventId']         = $event->ID;
+				$json['title']           = wp_kses_post( $event->post_title );
+				$json['permalink']       = tribe_get_event_link( $event->ID );
+				$json['imageSrc']        = $image_src;
+				$json['dateDisplay']     = $date_display;
 				$json['imageTooltipSrc'] = $image_tool_src;
-				$json['excerpt'] = tribe_events_get_the_excerpt( $event );
+				$json['excerpt']         = tribe_events_get_the_excerpt( $event );
 				$json['categoryClasses'] = $category_classes;
 
 				/**
@@ -1391,10 +1433,26 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 		$remove_shortcodes = apply_filters( 'tribe_events_excerpt_shortcode_removal', true );
 
 		// Get the Excerpt or content based on what is available
-		if ( has_excerpt( $post->ID ) ) {
-			$excerpt = $post->post_excerpt;
-		} else {
-			$excerpt = $post->post_content;
+		$excerpt = has_excerpt( $post->ID ) ? $post->post_excerpt : $post->post_content;
+
+		// If shortcode filter is enabled let's process them
+		if ( $allow_shortcodes ) {
+			$excerpt = do_shortcode( $excerpt );
+		}
+
+		// Remove all shortcode Content before removing HTML
+		if ( $remove_shortcodes ) {
+			$excerpt = preg_replace( '#\[.+\]#U', '', $excerpt );
+		}
+
+		// Remove "all" HTML based on what is allowed
+		$excerpt = wp_kses( $excerpt, $allowed_html );
+
+		if ( ! has_excerpt( $post->ID ) ) {
+			// Temporarily alter the global post in preparation for our filters.
+			$global_post     = $GLOBALS['post'];
+			$GLOBALS['post'] = $post;
+
 			// We will only trim Excerpt if it comes from Post Content
 
 			/**
@@ -1413,20 +1471,10 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 
 			// Now we actually trim it
 			$excerpt = wp_trim_words( $excerpt, $excerpt_length, $excerpt_more );
-		}
 
-		// If shortcode filter is enabled lets process them
-		if ( $allow_shortcodes ) {
-			$excerpt = do_shortcode( $excerpt );
+			// Original post is back in action!
+			$GLOBALS['post'] = $global_post;
 		}
-
-		// Remove all shortcode Content before removing HTML
-		if ( $remove_shortcodes ) {
-			$excerpt = preg_replace( '#\[.+\]#U', '', $excerpt );
-		}
-
-		// Remove "all" HTML based on what is allowed
-		$excerpt = wp_kses( $excerpt, $allowed_html );
 
 		/**
 		 * Filter the event excerpt used in various views.
@@ -1571,5 +1619,20 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 		}
 
 		return $url;
+	}
+
+	/**
+	 * Utility function to compile separated lists.
+	 *
+	 * @param string $body
+	 * @param string $separator
+	 * @param string $field
+	 *
+	 * @return string
+	 */
+	function tribe_separated_field( $body, $separator, $field ) {
+		$body_and_separator = $body ? $body . $separator : $body;
+
+		return $field ? $body_and_separator . $field : $body;
 	}
 }

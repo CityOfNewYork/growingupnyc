@@ -19,24 +19,10 @@
 	// @ifdef DEBUG
 	if ( dbug ) {
 		if ( !$().isotope ) {
-			debug.warn( 'TEC Debug: vendor isotope was not loaded before its dependant file tribe-photo-view.js' );
+			debug.warn( 'TEC Debug: vendor isotope was not loaded before its dependent file tribe-photo-view.js' );
 		}
 	}
 	// @endif
-
-	$( window ).load( function() {
-		var tribe_is_paged = tf.get_url_param( 'tribe_paged' ),
-			tribe_display = tf.get_url_param( 'tribe_event_display' ),
-			$container = $( '#tribe-events-photo-events' ),
-			container_width = 0,
-			resize_timer;
-
-		// Redraw after loading fonts, but only if isotope has been initialized
-		if ( $container.hasClass( 'isotope' ) ) {
-			$container.isotope( 'reLayout' );
-		}
-
-	} );
 
 	$( document ).ready( function() {
 
@@ -77,56 +63,27 @@
 		}
 
 		/**
-		 * @function tribe_apply_photo_cols
-		 * @desc tribe_apply_photo_cols sets up isotope layout by adding a class depending on container width.
-		 * @param {jQuery} $container The photo view container.
-		 */
-
-		function tribe_apply_photo_cols( $container ) {
-			container_width = $container.width();
-			if ( container_width < 645 ) {
-				$container.addClass( 'photo-two-col' );
-			}
-			else {
-				$container.removeClass( 'photo-two-col' );
-			}
-		}
-
-		/**
 		 * @function tribe_setup_isotope
 		 * @desc tribe_setup_isotope applies isotope layout to the events list, on initial load and on ajax.
 		 * @param {jQuery} $container The photo view container.
 		 */
-
 		function tribe_setup_isotope( $container ) {
 			if ( $().isotope ) {
 
-				$container.imagesLoaded( function() {
-					$container.isotope( {
-						transformsEnabled: false,
-						containerStyle   : {
-							position: 'relative',
-							overflow: 'visible'
-						}
+				$container.isotope({
+					itemSelector: '.tribe-events-photo-event',
+					percentPosition: true,
+					masonry: {
+						columnWidth: '.tribe-events-photo-grid-sizer',
+						gutter: '.tribe-events-photo-gutter-sizer'
+					}
+				});
 
-					}, tribe_hide_loader() );
-					// @ifdef DEBUG
-					dbug && debug.info( 'TEC Debug: imagesLoaded setup isotope on photo view.' );
-					// @endif
+				$container.imagesLoaded().progress( function() {
+					$container.isotope( 'layout' );
+				});
 
-					$container.resize( function() {
-						tribe_apply_photo_cols( $container );
-						clearTimeout( resize_timer );
-						resize_timer = setTimeout( function() {
-							$container.isotope( 'reLayout' );
-						}, 400 );
-					} );
-				} );
-
-				tribe_apply_photo_cols( $container );
-
-			}
-			else {
+			} else {
 				$( '#tribe-events-photo-events' ).removeClass( "photo-hidden" ).css( "opacity", "1" );
 			}
 		}
@@ -143,6 +100,10 @@
 
 			if ( ts.category ) {
 				params = params + '&tribe_event_category=' + ts.category;
+			}
+
+			if ( tf.is_featured() ) {
+				params = params + '&featured=1';
 			}
 
 			history.replaceState( {
@@ -217,7 +178,6 @@
 		 * @desc On events bar submit, this function collects the current state of the bar and sends it to the photo view ajax handler.
 		 * @param {event} e The event object.
 		 */
-
 		function tribe_events_bar_photoajax_actions( e ) {
 			if ( tribe_events_bar_action != 'change_view' ) {
 				e.preventDefault();
@@ -251,7 +211,7 @@
 			}
 		} );
 
-		tf.snap( '#tribe-events-content', '#tribe-events-content', '#tribe-events-footer .tribe-events-nav-previous a, #tribe-events-footer .tribe-events-nav-next a' );
+		tf.snap( '#tribe-events-content-wrapper', '#tribe-events-content-wrapper', '#tribe-events-footer .tribe-events-nav-previous a, #tribe-events-footer .tribe-events-nav-next a' );
 
 		$( te ).on( 'run-ajax.tribe', function() {
 			tribe_events_photo_ajax_post();
@@ -264,7 +224,6 @@
 		 * As post begins 'tribe_ev_ajaxStart' and 'tribe_ev_photoView_AjaxStart' are fired, and then 'tribe_ev_ajaxSuccess' and 'tribe_ev_photoView_ajaxSuccess' are fired on success.
 		 * Various functions in the events plugins hook into these events. They are triggered on the tribe_ev.events object.
 		 */
-
 		function tribe_events_photo_ajax_post() {
 
 			if ( !ts.popping ) {
@@ -279,7 +238,8 @@
 				ts.params = {
 					action             : 'tribe_photo',
 					tribe_paged        : ts.paged,
-					tribe_event_display: ts.view
+					tribe_event_display: ts.view,
+					featured           : tf.is_featured()
 				};
 
 				ts.url_params = {
@@ -330,7 +290,6 @@
 
 				ts.pushstate = false;
 				ts.do_string = true;
-
 			}
 
 			if ( tt.pushstate && !ts.filter_cats ) {

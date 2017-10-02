@@ -19,7 +19,11 @@
 
 	<div>
 		<label for="log-levels"><?php esc_html_e( 'Logging level', 'tribe-common' ) ?></label>
-		<select name="log-level" id="log-level">
+		<select
+			class="tribe-dropdown"
+			name="log-level"
+			id="log-level"
+		>
 			<?php foreach ( $log_levels as $code => $name ): ?>
 				<option name="<?php echo esc_attr( $code ) ?>" <?php selected( $code, tribe_get_option( 'logging_level') ); ?>>
 					<?php echo esc_html( $name ) ?>
@@ -37,7 +41,11 @@
 
 	<div>
 		<label for="log-engine"><?php esc_html_e( 'Method', 'tribe-common' ) ?></label>
-		<select name="log-engine" id="log-engine">
+		<select
+			class="tribe-dropdown"
+			name="log-engine"
+			id="log-engine"
+		>
 			<?php foreach ( $log_engines as $code => $name ): ?>
 				<option name="<?php echo esc_attr( $code ) ?>" <?php selected( $code, tribe_get_option( 'logging_engine') ); ?>>
 					<?php echo esc_html( $name ) ?>
@@ -55,7 +63,11 @@
 
 	<div>
 		<label for="log-selector"><?php esc_html_e( 'View', 'tribe-common' ) ?></label>
-		<select name="log-selector" id="log-selector">
+		<select
+			class="tribe-dropdown"
+			name="log-selector"
+			id="log-selector"
+		>
 			<?php foreach ( $log_choices as $name ): ?>
 				<option name="<?php echo esc_attr( $name ) ?>"><?php echo esc_html( $name ) ?></option>
 			<?php endforeach; ?>
@@ -84,6 +96,9 @@
 </div>
 
 <div id="tribe-log-viewer">
+	<?php if ( empty( $log_entries ) ): ?>
+		<p><?php esc_html_e( 'The selected log file is empty or has not been generated yet.', 'tribe-common' ); ?></p>
+	<?php else: ?>
 
 	<table>
 		<?php foreach ( $log_entries as $data ): ?>
@@ -95,8 +110,6 @@
 		<?php endforeach; ?>
 	</table>
 
-	<?php if ( empty( $log_entries ) ): ?>
-		<p><?php esc_html_e( 'The selected log file is empty or has not been generated yet.', 'tribe-common' ); ?></p>
 	<?php endif; ?>
 
 </div>

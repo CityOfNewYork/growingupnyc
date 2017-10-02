@@ -120,14 +120,15 @@ if ( ! class_exists( 'Tribe__Events__Templates' ) ) {
 			// add the template name to the body class
 			add_filter( 'body_class', array( __CLASS__, 'template_body_class' ) );
 
-
 			// user has selected a page/custom page template
 			if ( tribe_get_option( 'tribeEventsTemplate', 'default' ) != '' ) {
 				if ( ! is_single() || ! post_password_required() ) {
 					add_action( 'loop_start', array( __CLASS__, 'setup_ecp_template' ) );
 				}
 
-				$template = locate_template( tribe_get_option( 'tribeEventsTemplate', 'default' ) == 'default' ? 'page.php' : tribe_get_option( 'tribeEventsTemplate', 'default' ) );
+				$template = tribe_get_option( 'tribeEventsTemplate', 'default' ) !== 'default'
+					? locate_template( tribe_get_option( 'tribeEventsTemplate', 'default' ) )
+					: get_page_template();
 
 				if ( $template == '' ) {
 					$template = get_index_template();
@@ -257,7 +258,7 @@ if ( ! class_exists( 'Tribe__Events__Templates' ) ) {
 		public static function needs_compatibility_fix ( $theme = null ) {
 			// Defaults to current active theme
 			if ( $theme === null ) {
-				$theme = wp_get_theme()->Template;
+				$theme = get_stylesheet();
 			}
 
 			$theme_compatibility_list = apply_filters( 'tribe_themes_compatibility_fixes', self::$themes_with_compatibility_fixes );
@@ -558,7 +559,7 @@ if ( ! class_exists( 'Tribe__Events__Templates' ) ) {
 			);
 			/**
 			 * @var string $namespace
-			 * @var string $pluginpath
+			 * @var string $plugin_path
 			 * @var bool   $disable_view_check
 			 */
 			extract( $args );
@@ -569,9 +570,6 @@ if ( ! class_exists( 'Tribe__Events__Templates' ) ) {
 			if ( substr( $template, - 4 ) != '.php' ) {
 				$template .= '.php';
 			}
-
-			// setup the meta definitions
-			require_once( $tec->pluginPath . 'src/functions/advanced-functions/meta_registration.php' );
 
 			// Allow base path for templates to be filtered
 			$template_base_paths = apply_filters( 'tribe_events_template_paths', ( array ) Tribe__Events__Main::instance()->pluginPath );

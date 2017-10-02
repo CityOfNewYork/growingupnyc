@@ -15,7 +15,7 @@
  * your functions.php. In order to modify or extend a single filter, please see our
  * readme on templates hooks and filters (TO-DO)
  *
- * @version 4.1.1
+ * @version 4.5.13
  * @return string
  *
  * @package TribeEventsCalendar
@@ -40,6 +40,51 @@ if ( $posts ) : ?>
 			setup_postdata( $post );
 			?>
 			<li class="tribe-events-list-widget-events <?php tribe_events_event_classes() ?>">
+				<?php
+				if (
+					tribe( 'tec.featured_events' )->is_featured( get_the_ID() )
+					&& get_post_thumbnail_id( $post )
+				) {
+					/**
+					 * Fire an action before the list widget featured image
+					 */
+					do_action( 'tribe_events_list_widget_before_the_event_image' );
+
+					/**
+					 * Allow the default post thumbnail size to be filtered
+					 *
+					 * @param $size
+					 */
+					$thumbnail_size = apply_filters( 'tribe_events_list_widget_thumbnail_size', 'post-thumbnail' );
+
+					/**
+					 * Filters whether the featured image link should be added to the Events List Widget
+					 *
+					 * @since 4.5.13
+					 *
+					 * @param bool $featured_image_link Whether the featured image link should be added or not
+					 */
+					$featured_image_link = apply_filters( 'tribe_events_list_widget_featured_image_link', true );
+					$post_thumbnail      = get_the_post_thumbnail( null, $thumbnail_size );
+
+					if ( $featured_image_link ) {
+						$post_thumbnail = '<a href="' . esc_url( tribe_get_event_link() ) . '">' . $post_thumbnail . '</a>';
+					}
+					?>
+					<div class="tribe-event-image">
+						<?php
+						// not escaped because it contains markup
+						echo $post_thumbnail;
+						?>
+					</div>
+					<?php
+
+					/**
+					 * Fire an action after the list widget featured image
+					 */
+					do_action( 'tribe_events_list_widget_after_the_event_image' );
+				}
+				?>
 
 				<?php do_action( 'tribe_events_list_widget_before_the_event_title' ); ?>
 				<!-- Event Title -->

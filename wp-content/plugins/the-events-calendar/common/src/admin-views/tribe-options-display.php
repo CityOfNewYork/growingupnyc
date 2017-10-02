@@ -26,7 +26,7 @@ $displayTab = array(
 				'html' => __( '<p>The following three fields accept the date format options available to the php date() function. <a href="http://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">Learn how to make your own date format here</a>.</p>', 'tribe-common' ),
 			),
 			'datepickerFormat'                   => array(
-				'type'            => 'dropdown_select2',
+				'type'            => 'dropdown',
 				'label'           => esc_html__( 'Datepicker Date Format', 'tribe-common' ),
 				'tooltip'         => esc_html__( 'Select the date format to use in datepickers', 'tribe-common' ),
 				'default'         => 'Y-m-d',
@@ -40,6 +40,9 @@ $displayTab = array(
 					'6' => date( 'm-d-Y', $sample_date ),
 					'7' => date( 'j-n-Y', $sample_date ),
 					'8' => date( 'd-m-Y', $sample_date ),
+					'9' => date( 'Y.m.d', $sample_date ),
+					'10' => date( 'm.d.Y', $sample_date ),
+					'11' => date( 'd.m.Y', $sample_date ),
 				),
 				'validation_type' => 'options',
 			),

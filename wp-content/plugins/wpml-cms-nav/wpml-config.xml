@@ -4,7 +4,4 @@
         <custom-field action="translate">_cms_nav_section</custom-field>
         <custom-field action="copy">_top_nav_excluded</custom-field>
     </custom-fields>  
-    <custom-types>
-    	<custom-type translate="0">tribe_events</custom-type>
-		</custom-types>
 </wpml-config>

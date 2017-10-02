@@ -160,9 +160,9 @@ class SitePress_EditLanguages {
 		}
 		if ( $this->is_new_data_and_invalid()) {
 			$_POST['icl_edit_languages']['add']['id'] = 'add';
-			$new_lang = $_POST['icl_edit_languages']['add'];
+			$new_lang = $this->prepare_new_lang_data( $_POST['icl_edit_languages']['add'] );
 		} else {
-			$new_lang = array('id'=>'add');
+			$new_lang = $this->prepare_new_lang_data( array( 'id' => 'add' ) );
 		}
 		$this->table_row($new_lang,true,true);
 ?>
@@ -192,23 +192,26 @@ class SitePress_EditLanguages {
 <?php
 	}
 
-	function table_row( $lang, $echo = true, $add = false ){
-		if ('add' === $lang['id']) {
-			$keys = array( 'english_name', 'code', 'default_locale', 'tag' );
-			foreach ( $keys as $key ) {
-				if (isset( $_POST['icl_edit_languages']['add'][ $key ] )) {
-					$lang[ $key ] = filter_var( $_POST['icl_edit_languages']['add'][ $key ], FILTER_SANITIZE_STRING );
-				} else {
-					$lang[ $key ] = '';
-				}
+	private function prepare_new_lang_data( $new_lang ) {
+		$new_lang = stripslashes_deep( $new_lang );
+		$keys     = array( 'english_name', 'code', 'default_locale', 'tag' );
+
+		foreach ( $keys as $key ) {
+			if ( isset( $new_lang[ $key ] ) ) {
+				$new_lang[ $key ] = filter_var( $new_lang[ $key ], FILTER_SANITIZE_STRING );
+			} else {
+				$new_lang[ $key ] = '';
 			}
-
-			$lang['flag'] = '';
-			$lang['from_template'] = true;
-
 		}
-        global $sitepress;
 
+		$new_lang['flag'] = '';
+		$new_lang['from_template'] = true;
+
+		return $new_lang;
+	}
+
+	private function table_row( $lang, $echo = true, $add = false ){
+        global $sitepress;
 
 		$styles = array();
 		$classes = array();

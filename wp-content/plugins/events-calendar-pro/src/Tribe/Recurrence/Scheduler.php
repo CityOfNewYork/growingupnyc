@@ -97,9 +97,16 @@ class Tribe__Events__Pro__Recurrence__Scheduler {
 		$args = apply_filters( 'tribe_events_pro_clean_up_old_recurring_events_sql_args', $args );
 
 		$post_ids = $wpdb->get_col( $wpdb->prepare( $sql, $args ) );
+
+		// We do not wish for exclusions to be generated for these deletions
+		add_filter( 'tribe_events_pro_should_generate_exclusion_for_deleted_event', '__return_false' );
+
 		foreach ( $post_ids as $post_id ) {
 			wp_delete_post( $post_id, true );
 		}
+
+		// Undo our disabling of exclusion creation
+		remove_filter( 'tribe_events_pro_should_generate_exclusion_for_deleted_event', '__return_false' );
 	}
 
 	public function schedule_future_recurring_events() {

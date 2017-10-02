@@ -46,7 +46,8 @@ class Tribe__Events__Pro__Shortcodes__Mini_Calendar extends Tribe__Events__Pro__
 		'category'   => '',
 		'categories' => '',
 
-		'count' => ''
+		'count' => '',
+		'limit' => '',
 	);
 
 	protected $arguments = array();
@@ -56,9 +57,21 @@ class Tribe__Events__Pro__Shortcodes__Mini_Calendar extends Tribe__Events__Pro__
 		$this->arguments = shortcode_atts( $this->default_args, $attributes );
 		$this->taxonomy_filters();
 
-		// Avoid passing an empty count argument (will cause 0 events to be listed)
-		if ( empty( $this->arguments['count'] ) ) {
+		Tribe__Events__Pro__Mini_Calendar::instance()->register_assets();
+
+		// Support both 'count' and 'limit' attributes (the latter overrides the former)
+		$count = strlen( $this->arguments['count'] ) ? $this->arguments['count'] : null;
+		$count = strlen( $this->arguments['limit'] ) ? $this->arguments['limit'] : $count;
+
+		// Normalize
+		$count = trim( $count );
+
+		// If a count was not specified, ensure the count argument is unset (so the default value is used)
+		if ( 0 === strlen( $count ) ) {
 			unset( $this->arguments['count'] );
+		} // Otherwise ensure it is an absolute integer
+		else {
+			$this->arguments['count'] = absint( $count );
 		}
 
 		ob_start();

@@ -10,7 +10,7 @@ class WPML_Integrations_Requirements {
 	const DOCUMENTATION_LINK = 'https://wpml.org/documentation/plugins-compatibility/page-builders/';
 
 	private $issues = array();
-	private $tm_settings = array();
+	private $tm_settings;
 	private $should_create_editor_notice = false;
 	private $integrations;
 
@@ -212,9 +212,11 @@ class WPML_Integrations_Requirements {
 	 * @param WPML_WP_API $wp_api
 	 */
 	private function add_callbacks( WPML_Notice $notice, WPML_WP_API $wp_api ) {
-		$notice->add_display_callback( array( $wp_api, 'is_core_page' ) );
-		$notice->add_display_callback( array( $wp_api, 'is_plugins_page' ) );
-		$notice->add_display_callback( array( $wp_api, 'is_themes_page' ) );
+		if ( method_exists( $notice, 'add_display_callback' ) ) {
+			$notice->add_display_callback( array( $wp_api, 'is_core_page' ) );
+			$notice->add_display_callback( array( $wp_api, 'is_plugins_page' ) );
+			$notice->add_display_callback( array( $wp_api, 'is_themes_page' ) );
+		}
 	}
 
 	/**
@@ -246,7 +248,7 @@ class WPML_Integrations_Requirements {
 
 			$integrations_names = $this->get_integrations_names( 'wpml-translation-editor' );
 			$text   = $notice_model->get_settings( $integrations_names );
-			$notice = new WPML_Notice( self::EDITOR_NOTICE_ID, $text, self::NOTICE_GROUP );
+			$notice = new WPML_TM_Editor_Notice( self::EDITOR_NOTICE_ID, $text, self::NOTICE_GROUP );
 			$notice->set_css_class_types( 'info' );
 
 			$enable_action = new WPML_Notice_Action( _x( 'Enable it now', 'Integration requirement notice title for translation editor: enable action', 'sitepress' ), '#', false, false, true );

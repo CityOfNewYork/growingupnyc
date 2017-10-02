@@ -14,7 +14,7 @@ class WPML_Simple_Language_Selector extends WPML_SP_User {
 															'id'                 => '',
 															'name'               => '',
 															'show_please_select' => true,
-															'please_select_text' => __( '-- Please select --', 'sitepress' ),
+															'please_select_text' => __( '-- Please select --', 'wpml-string-translation' ),
 															'selected'           => '',
 															'echo'               => false,
 															'class'              => '',

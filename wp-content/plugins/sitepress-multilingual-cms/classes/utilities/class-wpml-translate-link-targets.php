@@ -37,7 +37,6 @@ class WPML_Translate_Link_Targets {
 
 	public function is_internal_url( $url ) {
 		$absolute_url = $this->absolute_links->convert_url( $url );
-		return $url != $absolute_url || $this->absolute_links->is_home( $url );
+		return $url != $absolute_url;
 	}
-
 }

@@ -16,18 +16,14 @@
  *
  * @package TribeEventsCalendarPro
  *
- * @version 4.3.2
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-$venue_id     = get_the_ID();
-$full_address = tribe_get_full_address();
-$telephone    = tribe_get_phone();
-$website_link = tribe_get_venue_website_link();
-global $wp_query;
+$venue_id = get_the_ID();
+
 ?>
 <?php while ( have_posts() ) : the_post(); ?>
 <div class="tribe-events-venue">
@@ -53,36 +49,12 @@ global $wp_query;
 
 			<?php if ( tribe_show_google_map_link() && tribe_address_exists() ) : ?>
 				<!-- Google Map Link -->
-				<?php echo tribe_get_map_link_html(); ?>
+				<?php echo tribe_get_meta( 'tribe_event_venue_gmap_link' ); ?>
 			<?php endif; ?>
 
 			<!-- Venue Meta -->
 			<?php do_action( 'tribe_events_single_venue_before_the_meta' ) ?>
-
-			<div class="venue-address">
-
-				<?php if ( $full_address ) : ?>
-				<address class="tribe-events-address">
-					<span class="location">
-						<?php echo $full_address; ?>
-					</span>
-				</address>
-				<?php endif; ?>
-
-				<?php if ( $telephone ): ?>
-					<span class="tel">
-						<?php echo $telephone; ?>
-					</span>
-				<?php endif; ?>
-
-				<?php if ( $website_link ): ?>
-					<span class="url">
-						<?php echo $website_link; ?>
-					</span>
-				<?php endif; ?>
-
-			</div><!-- .venue-address -->
-
+			<?php echo tribe_get_meta_group( 'tribe_event_venue' ) ?>
 			<?php do_action( 'tribe_events_single_venue_after_the_meta' ) ?>
 
 		</div><!-- .tribe-events-event-meta -->
@@ -97,14 +69,14 @@ global $wp_query;
 		<!-- Venue Featured Image -->
 		<?php echo tribe_event_featured_image( null, 'full' ) ?>
 
-	</div><!-- .tribe-events-venue-meta -->
+	</div><!-- .tribe-events-event-meta -->
 
 	<!-- Upcoming event list -->
 	<?php do_action( 'tribe_events_single_venue_before_upcoming_events' ) ?>
 
 	<?php
-	// Use the `tribe_events_single_venue_posts_per_page` to filter the number of events to get here.
-	echo tribe_venue_upcoming_events( $venue_id, $wp_query->query_vars ); ?>
+	// Use the tribe_events_single_venuer_posts_per_page to filter the number of events to get here.
+	echo tribe_venue_upcoming_events( $venue_id ); ?>
 
 	<?php do_action( 'tribe_events_single_venue_after_upcoming_events' ) ?>
 

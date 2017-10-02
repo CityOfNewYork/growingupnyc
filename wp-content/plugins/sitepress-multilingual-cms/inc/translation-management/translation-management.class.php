@@ -299,7 +299,7 @@ class TranslationManagement {
 	public static function get_batch_name( $batch_id ) {
 		$batch_data = self::get_batch_data( $batch_id );
 		if ( ! $batch_data || ! isset( $batch_data->batch_name ) ) {
-			$batch_name = __( 'No Batch', 'sitepress' );
+			$batch_name = __( 'No Batch', 'wpml-translation-management' );
 		} else {
 			$batch_name = $batch_data->batch_name;
 		}
@@ -1315,12 +1315,8 @@ class TranslationManagement {
 					// don't send documents that are already translated and don't need update
 					$current_translation_status = $this->get_element_translation( $post_id, $lang, $element_type );
 
-					if ( $current_translation_status ) {
-						if ( $current_translation_status->status == ICL_TM_IN_PROGRESS ) {
-							continue;
-						} else {
-							$this->cancel_previous_job_if_still_waiting( $translation_id, $current_translation_status->status );
-						}
+					if ( $current_translation_status && $current_translation_status->status == ICL_TM_IN_PROGRESS ) {
+						continue;
 					}
 
 					$_status = ICL_TM_WAITING_FOR_TRANSLATOR;
@@ -1413,16 +1409,6 @@ class TranslationManagement {
 			$translation_id ), ARRAY_A );
 
 		return isset( $data[0] ) ? $data[0] : array();
-	}
-
-	/**
-	 * @param string $translation_id
-	 * @param string $status
-	 */
-	private function cancel_previous_job_if_still_waiting( $translation_id, $status ) {
-		if ( ICL_TM_WAITING_FOR_TRANSLATOR === (int) $status ) {
-			$this->cancel_translation_request( $translation_id, false );
-		}
 	}
 
 	/**
@@ -1658,7 +1644,7 @@ class TranslationManagement {
 				do_action( 'wpml_tm_remove_job_notification', $prev_translator_id, $job_id );
 			}
 		} else {
-			$error = sprintf( __( 'Translation entry not found for: %d', 'sitepress' ), $job_id );
+			$error = sprintf( __( 'Translation entry not found for: %d', 'wpml-translation-management' ), $job_id );
 		}
 
 		return $error;
@@ -1670,7 +1656,7 @@ class TranslationManagement {
 
 		$error = $this->remove_translation_job( $job_id, ICL_TM_WAITING_FOR_TRANSLATOR, 0 );
 		if ( ! $error ) {
-			$message = __( 'Job removed', 'sitepress' );
+			$message = __( 'Job removed', 'wpml-translation-management' );
 		}
 
 		echo wp_json_encode( array( 'message' => $message, 'error' => $error ) );
@@ -1678,7 +1664,7 @@ class TranslationManagement {
 	}
 
 	// $translation_id - int or array
-	function cancel_translation_request( $translation_id, $remove_translation_record = true ) {
+	function cancel_translation_request( $translation_id ) {
 		global $wpdb, $WPML_String_Translation;;
 
 		if ( is_array( $translation_id ) ) {
@@ -1737,11 +1723,8 @@ class TranslationManagement {
 				$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}icl_translation_status WHERE translation_id=%d", $translation_id ) );
 			}
 
-			// delete record from icl_translations if element_id is null
-			if ( $remove_translation_record ) {
-				$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}icl_translations WHERE translation_id=%d AND element_id IS NULL", $translation_id ) );
-			}
-
+			// delete record from icl_translations if trid is null
+			$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}icl_translations WHERE translation_id=%d AND element_id IS NULL", $translation_id ) );
 			icl_cache_clear();
 		}
 	}
@@ -1835,7 +1818,7 @@ class TranslationManagement {
 			}
 
 			if ( false !== strpos( $name, '*' ) ) {
-				$o_value = '<span style="color:#bbb">{{ ' . esc_html__( 'Multiple options', 'sitepress' ) . ' }}</span>';
+				$o_value = '<span style="color:#bbb">{{ ' . esc_html__( 'Multiple options', 'wpml-translation-management' ) . ' }}</span>';
 			} else {
 				$o_value = esc_html( $o_value );
 				if ( strlen( $o_value ) > 200 ) {
@@ -2059,7 +2042,7 @@ class TranslationManagement {
 	public static function get_job_status_string( $status_id, $needs_update = false ) {
 		$job_status_text = TranslationManagement::status2text( $status_id );
 		if ( $needs_update ) {
-			$job_status_text .= __( ' - (needs update)', 'sitepress' );
+			$job_status_text .= __( ' - (needs update)', 'wpml-translation-management' );
 		}
 
 		return $job_status_text;

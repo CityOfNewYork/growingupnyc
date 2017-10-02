@@ -24,11 +24,6 @@ class Tribe__Events__Linked_Posts {
 	public $linked_post_types;
 
 	/**
-	 * @var Tribe__Cache
-	 */
-	protected $cache;
-
-	/**
 	 * Returns a singleton of this class
 	 *
 	 * @return Tribe__Events__Linked_Posts
@@ -43,12 +38,8 @@ class Tribe__Events__Linked_Posts {
 
 	/**
 	 * Constructor!
-	 *
-	 * @param Tribe__Cache|null $cache
 	 */
-	public function __construct( Tribe__Cache $cache = null ) {
-		$this->cache = null !== $cache ? $cache : tribe( 'cache' );
-
+	protected function __construct() {
 		$this->main = Tribe__Events__Main::instance();
 		$this->register_default_linked_post_types();
 
@@ -57,7 +48,7 @@ class Tribe__Events__Linked_Posts {
 	}
 
 	public function enqueue_scripts() {
-		wp_localize_script( 'tribe-events-admin', 'tribe_events_linked_posts', $this->get_post_type_container_data() );
+		wp_localize_script( 'jquery', 'tribe_events_linked_posts', $this->get_post_type_container_data() );
 	}
 
 	/**
@@ -424,12 +415,6 @@ class Tribe__Events__Linked_Posts {
 	 * @return array
 	 */
 	public function get_linked_post_info( $linked_post_type, $args = array(), $linked_post_ids = null ) {
-		$func_args = func_get_args();
-		$cache_key = $this->cache->make_key( $func_args, 'linked_post_info_' );
-		if ( isset( $this->cache[ $cache_key ] ) ) {
-			return $this->cache[ $cache_key ];
-		}
-
 		$defaults = array(
 			'post_type'            => $linked_post_type,
 			'post_status'          => array(
@@ -451,35 +436,12 @@ class Tribe__Events__Linked_Posts {
 		}
 
 		$args = wp_parse_args( $args, $defaults );
-
-		/**
-		 * Filters the linked posts query allowing third-party plugins to replace it.
-		 *
-		 * This is an opt-out filter: to avoid The Events Calendar from running the linked posts query as it would
-		 * normally do third parties should return anything that is not exactly `null` to replace the query and provide
-		 * alternative linked posts.
-		 *
-		 * @param array $linked_posts Defaults to `null`; will be an array if another plugin did run the query.
-		 * @param array $args         An array of query arguments in the same format used to provide arguments to WP_Query.
-		 *
-		 */
-		$linked_posts = apply_filters( 'tribe_events_linked_posts_query', null, $args );
-
-		if ( null !== $linked_posts ) {
-			return $linked_posts;
-		}
-
 		$result = new WP_Query( $args );
-
 		if ( $result->have_posts() ) {
-			$linked_posts = $result->posts;
-		} else {
-			$linked_posts = array();
+			return $result->posts;
 		}
 
-		$this->cache[ $cache_key ] = $linked_posts;
-
-		return $linked_posts;
+		return array();
 	}
 
 	/**
@@ -541,8 +503,9 @@ class Tribe__Events__Linked_Posts {
 			return $linked_posts;
 		}
 
-		$subject_meta_key  = $this->get_meta_key( $subject_post_type );
-		$target_link_posts = get_post_meta( $target_post_id, $subject_meta_key );
+		$subject_meta_key   = $this->get_meta_key( $subject_post_type );
+
+		$target_link_posts  = get_post_meta( $target_post_id, $subject_meta_key );
 
 		// if the subject isn't in the target's linked posts, add it
 		if ( ! in_array( $subject_post_id, $target_link_posts ) ) {
@@ -555,7 +518,7 @@ class Tribe__Events__Linked_Posts {
 			}
 
 			// add the subject to the target
-			$linked_posts = add_metadata( 'post', $target_post_id, $subject_meta_key, $subject_post_id );
+			$linked_posts = add_metadata('post', $target_post_id, $subject_meta_key, $subject_post_id );
 		}
 
 		if ( $linked_posts ) {
@@ -649,11 +612,6 @@ class Tribe__Events__Linked_Posts {
 		$linked_posts              = array();
 		$event_post_status         = get_post_status( $event_id );
 
-		// Prevents Revisons from been Linked
-		if ( 'inherit' === $event_post_status ) {
-			return;
-		}
-
 		if ( ! isset( $submission[ $linked_post_type_id_field ] ) ) {
 			$submission[ $linked_post_type_id_field ] = array( 0 );
 		}
@@ -732,7 +690,7 @@ class Tribe__Events__Linked_Posts {
 		$currently_linked_posts = $this->get_linked_posts_by_post_type( $event_id, $linked_post_type );
 		$currently_linked_posts = wp_list_pluck( $currently_linked_posts, 'ID' );
 
-		$posts_to_add    = array_diff( $linked_posts, $currently_linked_posts );
+		$posts_to_add = array_diff( $linked_posts, $currently_linked_posts );
 		$posts_to_remove = array_diff( $currently_linked_posts, $linked_posts );
 
 		foreach ( $posts_to_remove as $linked_post_id ) {
@@ -751,7 +709,6 @@ class Tribe__Events__Linked_Posts {
 	 * @param mixed  $current the current saved linked post item
 	 */
 	public function saved_linked_post_dropdown( $post_type, $current = null ) {
-		$post_type_object = get_post_type_object( $post_type );
 		$linked_post_type_container = $this->get_post_type_container( $post_type );
 		$linked_post_type_id_field  = $this->get_post_type_id_field_index( $post_type );
 		$name                       = "{$linked_post_type_container}[{$linked_post_type_id_field}][]";
@@ -759,64 +716,6 @@ class Tribe__Events__Linked_Posts {
 		$current_user               = wp_get_current_user();
 		$my_linked_posts            = false;
 		$my_linked_post_options     = '';
-
-		$plural_name = $this->linked_post_types[ $post_type ]['name'];
-		$singular_name = ! empty( $this->linked_post_types[ $post_type ]['singular_name'] ) ? $this->linked_post_types[ $post_type ]['singular_name'] : $plural_name;
-		$singular_name_lowercase = ! empty( $this->linked_post_types[ $post_type ]['singular_name_lowercase'] ) ? $this->linked_post_types[ $post_type ]['singular_name_lowercase'] : $singular_name;
-
-		$options = (object) array(
-			'owned' => array(
-				'text' => sprintf( esc_html__( 'My %s', 'the-events-calendar' ), $plural_name ),
-				'children' => array(),
-			),
-			'available' => array(
-				'text' => sprintf( esc_html__( 'Available %s', 'the-events-calendar' ), $plural_name ),
-				'children' => array(),
-			),
-		);
-
-		// backwards compatibility with old organizer filter
-		if ( Tribe__Events__Organizer::POSTTYPE === $post_type ) {
-			/**
-			 * Filters the linked organizer dropdown optgroup label that holds organizers that have
-			 * been created by that user
-			 *
-			 * @deprecated 4.2
-			 *
-			 * @param string $my_optgroup_name Label of the optgroup for the "My Organizers" section
-			 */
-			$options->owned['text'] = apply_filters( 'tribe_events_saved_organizers_dropdown_my_optgroup', $options->owned['text'] );
-
-			/**
-			 * Filters the linked organizer dropdown optgroup label for saved organizers
-			 *
-			 * @deprecated 4.2
-			 *
-			 * @param string $my_optgroup_name Label of the optgroup for the "Available Organizers" section
-			 */
-			$options->available['text'] = apply_filters( 'tribe_events_saved_organizers_dropdown_optgroup', $options->available['text'] );
-		}
-
-		/**
-		 * Filters the linked post dropdown optgroup label that holds organizers that have
-		 * been created by that user
-		 *
-		 * @since  4.2
-		 *
-		 * @param string $my_optgroup_name Label of the optgroup for the "My X" section
-		 * @param string $post_type Post type of the linked post
-		 */
-		$options->owned['text'] = apply_filters( 'tribe_events_saved_linked_post_dropdown_my_optgroup', $options->owned['text'], $post_type );
-
-		/**
-		 * Filters the linked post dropdown optgroup label that holds all published posts of the given type
-		 *
-		 * @since  4.2
-		 *
-		 * @param string $my_optgroup_name Label of the optgroup for the "Available X" section
-		 * @param string $post_type Post type of the linked post
-		 */
-		$options->available['text'] = apply_filters( 'tribe_events_saved_linked_post_dropdown_optgroup', $options->available['text'], $post_type );
 
 		if ( 0 != $current_user->ID ) {
 			$my_linked_posts = $this->get_linked_post_info(
@@ -835,14 +734,15 @@ class Tribe__Events__Linked_Posts {
 			if ( ! empty( $my_linked_posts ) ) {
 				foreach ( $my_linked_posts as $my_linked_post ) {
 					$my_linked_post_ids[] = $my_linked_post->ID;
-
-					$options->owned['children'][] = array(
-						'id' => $my_linked_post->ID,
-						'text' => wp_kses( get_the_title( $my_linked_post->ID ), array() ),
-					);
+					$linked_post_title    = wp_kses( get_the_title( $my_linked_post->ID ), array() );
+					$my_linked_post_options .= '<option value="' . esc_attr( $my_linked_post->ID ) . '"';
+					$my_linked_post_options .= selected( $current, $my_linked_post->ID, false );
+					$my_linked_post_options .= '>' . $linked_post_title . '</option>';
 				}
 			}
 		}
+
+		$post_type_object = get_post_type_object( $post_type );
 
 		if ( current_user_can( $post_type_object->cap->edit_others_posts ) ) {
 			$linked_posts = $this->get_linked_post_info(
@@ -867,86 +767,86 @@ class Tribe__Events__Linked_Posts {
 			);
 		}
 
-		if ( $linked_posts ) {
-			foreach ( $linked_posts as $linked_post ) {
-				$options->available['children'][] = array(
-					'id' => $linked_post->ID,
-					'text' => wp_kses( get_the_title( $linked_post->ID ), array() ),
-				);
-			}
-		}
-
-		// Clean Both Options
-		$options->owned['children'] = array_filter( $options->owned['children'] );
-		$options->available['children'] = array_filter( $options->available['children'] );
-
-		// When Owned is empty, we only use Available
-		if ( empty( $options->owned['children'] ) ) {
-			$data = $options->available['children'];
-
-		// When Available is empty, we only use Owned
-		} elseif ( empty( $options->available['children'] ) ) {
-			$data = $options->owned['children'];
-
-		// If we have both we make it an array
-		} else {
-			$data = array_values( (array) $options );
-		}
-
-		$user_can_create = ( ! empty( $post_type_object->cap->create_posts ) && current_user_can( $post_type_object->cap->create_posts ) );
-		$allowed_creation = ( ! empty( $this->linked_post_types[ $post_type ]['allow_creation'] ) && $this->linked_post_types[ $post_type ]['allow_creation'] );
-
-		/**
-		 * Controls whether the UI to create new linked posts should be displayed.
-		 *
-		 * @since 4.5.7
-		 *
-		 * @param bool $enabled
-		 * @param string $post_type
-		 * @param Tribe__Events__Linked_Posts
-		 */
-		$creation_enabled = apply_filters( 'tribe_events_linked_posts_dropdown_enable_creation', $user_can_create && $allowed_creation, $post_type, $this );
-
-		$indefinite_article = _x( 'a', 'Indefinite article for the phrase "Find a {post type name}. Will be replaced with "an" if the {post type name} starts with a vowel.', 'the-events-calendar' );
-
-		$post_type_starts_with = substr( $singular_name, 0, 1 );
-		$post_type_starts_with = strtolower( $post_type_starts_with );
-		$english_vowels        = array( 'a', 'e', 'i', 'o', 'u' );
-
-		if ( in_array( $post_type_starts_with, $english_vowels ) ) {
-			$indefinite_article = _x( 'an', 'Indefinite article for the phrase "Find a {post type name}" when the {post type name} starts with a vowel, e.g. "Find an Organizer".', 'the-events-calendar' );
-		}
-
-		$placeholder = sprintf( esc_attr__( 'Find %1$s %2$s', 'the-events-calendar' ), $indefinite_article, $singular_name );
-
-		if ( $creation_enabled ) {
-			$placeholder = sprintf( esc_attr__( 'Create or Find %s', 'the-events-calendar' ), $singular_name );
-		}
-
-		$search_placeholder = sprintf( esc_attr__( 'Find %1$s %2$s', 'the-events-calendar' ), $indefinite_article, $singular_name );
-
-		if ( $creation_enabled ) {
-			$search_placeholder = sprintf( esc_attr__( 'Create or Find %s', 'the-events-calendar' ), $singular_name );
-		}
+		$plural_name = $this->linked_post_types[ $post_type ]['name'];
+		$singular_name = ! empty( $this->linked_post_types[ $post_type ]['singular_name'] ) ? $this->linked_post_types[ $post_type ]['singular_name'] : $plural_name;
+		$singular_name_lowercase = ! empty( $this->linked_post_types[ $post_type ]['singular_name_lowercase'] ) ? $this->linked_post_types[ $post_type ]['singular_name_lowercase'] : $singular_name;
 
 		if ( $linked_posts || $my_linked_posts ) {
-			echo '<input
-				type="hidden"
-				class="tribe-dropdown linked-post-dropdown"
-				name="' . esc_attr( $name ) . '"
-				id="saved_' . esc_attr( $post_type ) . '"
-				data-placeholder="' . $placeholder . '"
-				data-search-placeholder="' . $search_placeholder . '" ' .
-				( $creation_enabled ?
-				'data-freeform
-				data-sticky-search
-				data-create-choice-template="' . __( 'Create: <b><%= term %></b>', 'the-events-calendar' ) . '"
-				data-allow-html ' : '' ) .
-				'data-options="' . esc_attr( json_encode( $data ) ) . '"' .
-				( empty( $current ) ? '' : ' value="' . esc_attr( $current ) . '"' ) .
-			'>';
+			$linked_post_pto = get_post_type_object( $post_type );
+			echo '<select class="chosen linked-post-dropdown" name="' . esc_attr( $name ) . '" id="saved_' . esc_attr( $post_type ) . '">';
+			if (
+				! empty( $linked_post_pto->cap->create_posts )
+				&& current_user_can( $linked_post_pto->cap->create_posts )
+				&& ! empty( $this->linked_post_types[ $post_type ]['allow_creation'] )
+			) {
+				echo '<option value="0">' . sprintf( esc_html__( 'Use New %s', 'the-events-calendar' ), $singular_name ) . '</option>';
+			}
+
+			if ( $my_linked_posts ) {
+				$my_optgroup_name = sprintf( esc_html__( 'My %s', 'the-events-calendar' ), $plural_name );
+
+				// backwards compatibility with old organizer filter
+				if ( Tribe__Events__Organizer::POSTTYPE === $post_type ) {
+					/**
+					 * Filters the linked organizer dropdown optgroup label that holds organizers that have
+					 * been created by that user
+					 *
+					 * @deprecated 4.2
+					 *
+					 * @param string $my_optgroup_name Label of the optgroup for the "My Organizers" section
+					 */
+					$my_optgroup_name = apply_filters( 'tribe_events_saved_organizers_dropdown_my_optgroup', $my_optgroup_name );
+				}
+
+				/**
+				 * Filters the linked post dropdown optgroup label that holds organizers that have
+				 * been created by that user
+				 *
+				 * @param string $my_optgroup_name Label of the optgroup for the "My X" section
+				 * @param string $post_type Post type of the linked post
+				 */
+				$my_optgroup_name = apply_filters( 'tribe_events_saved_linked_post_dropdown_my_optgroup', $my_optgroup_name, $post_type );
+
+				echo $linked_posts ? '<optgroup label="' . esc_attr( $my_optgroup_name ) . '">' : '';
+				echo $my_linked_post_options;
+				echo $linked_posts ? '</optgroup>' : '';
+			}
+
+			if ( $linked_posts ) {
+				$optgroup_name = sprintf( esc_html__( 'Available %s', 'the-events-calendar' ), $plural_name );
+
+				// backwards compatibility with old organizer filter
+				if ( Tribe__Events__Organizer::POSTTYPE === $post_type ) {
+					/**
+					 * Filters the linked organizer dropdown optgroup label for saved organizers
+					 *
+					 * @deprecated 4.2
+					 *
+					 * @param string $my_optgroup_name Label of the optgroup for the "Available Organizers" section
+					 */
+					$optgroup_name = apply_filters( 'tribe_events_saved_organizers_dropdown_optgroup', $optgroup_name );
+				}
+
+				/**
+				 * Filters the linked post dropdown optgroup label that holds all published posts of the given type
+				 *
+				 * @param string $my_optgroup_name Label of the optgroup for the "Available X" section
+				 * @param string $post_type Post type of the linked post
+				 */
+				$optgroup_name = apply_filters( 'tribe_events_saved_linked_post_dropdown_optgroup', $optgroup_name, $post_type );
+
+				echo $my_linked_posts ? '<optgroup label="' . esc_attr( $optgroup_name ) . '">' : '';
+				foreach ( $linked_posts as $linked_post ) {
+					$linked_post_title = wp_kses( get_the_title( $linked_post->ID ), array() );
+					echo '<option value="' . esc_attr( $linked_post->ID ) . '"';
+					selected( $current == $linked_post->ID );
+					echo '>' . $linked_post_title . '</option>';
+				}
+				echo $my_linked_posts ? '</optgroup>' : '';
+			}
+			echo '</select>';
 		} else {
-			echo '<p class="nosaved">' . sprintf( esc_attr__( 'No saved %s exists.', 'the-events-calendar' ), $singular_name_lowercase ) . '</p>';
+			echo '<p class="nosaved">' . sprintf( esc_html__( 'No saved %s exists.', 'the-events-calendar' ), $singular_name_lowercase ) . '</p>';
 			printf( '<input type="hidden" name="%s" value="%d"/>', esc_attr( $name ), 0 );
 		}
 	}

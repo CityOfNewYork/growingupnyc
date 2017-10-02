@@ -81,7 +81,6 @@ class WPML_ST_DB_Translation_Retrieve {
 				st.status,
 				s.domain_name_context_md5 AS ctx ,
 				st.value AS translated,
-				st.mo_string AS mo_string,
 				s.value AS original,
 				s.gettext_context
 			FROM {$this->wpdb->prefix}icl_strings s
@@ -167,19 +166,10 @@ class WPML_ST_DB_Translation_Retrieve {
 	 */
 	private function parse_result( array $row_data, $context ) {
 		$has_translation = ! empty( $row_data['translated'] ) && ICL_TM_COMPLETE == $row_data['status'];
-		if ( $has_translation ) {
-			$value = $row_data['translated'];
-		} else {
-			$use_mo_string = ! empty( $row_data['mo_string'] );
-			if ( $use_mo_string ) {
-				$value = $row_data['mo_string'];
-			} else {
-				$value = $row_data['original'];
-			}
-		}
+		$value           = $has_translation ? $row_data['translated'] : $row_data['original'];
 
 		$data = array( $row_data['id'], $value );
-		if ( $has_translation || $use_mo_string ) {
+		if ( $has_translation ) {
 			$data[] = $row_data['original'];
 		}
 

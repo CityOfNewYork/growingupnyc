@@ -14,9 +14,7 @@ class WPML_Troubleshoot_Action {
 	public function is_valid_request() {
 		$response = false;
 
-		if ( array_key_exists( 'nonce', $_POST ) && array_key_exists( 'debug_action', $_POST )
-		     && self::SYNC_POSTS_TAXONOMIES_SLUG === $_POST['debug_action']
-		) {
+		if ( array_key_exists( 'nonce', $_POST ) && array_key_exists( 'debug_action', $_POST ) ) {
 			$response = wp_verify_nonce( $_POST['nonce'], $_POST['debug_action'] );
 
 			if ( ! $response ) {

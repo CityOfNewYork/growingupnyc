@@ -78,7 +78,7 @@ class WPML_Taxonomy_Translation_Help_Notice {
 		$taxonomy = false;
 		if ( array_key_exists( 'taxonomy', $_GET )
 		     && ! empty( $_GET['taxonomy'] )
-		     && $this->is_translatable_taxonomy( $_GET['taxonomy'] )
+			&& $this->is_translatable_taxonomy( $_GET['taxonomy'] )
 		) {
 			$taxonomy = get_taxonomy( $_GET['taxonomy'] );
 		}
@@ -117,18 +117,11 @@ class WPML_Taxonomy_Translation_Help_Notice {
 	 * @return string
 	 */
 	private function build_tag_to_taxonomy_translation( $taxonomy ) {
-
-		$url = add_query_arg(
-			array(
-				'page' => WPML_PLUGIN_FOLDER . '/menu/taxonomy-translation.php',
-				'taxonomy' => $taxonomy->name,
-				),
-			admin_url('admin.php')
+		$url = apply_filters(
+			'wpml_taxonomy_term_translation_url',
+			admin_url( 'admin.php?page=sitepress-multilingual-cms/menu/taxonomy-translation.php&taxonomy=' . $taxonomy->name )
 		);
-		$url = apply_filters( 'wpml_taxonomy_term_translation_url', $url, $taxonomy->name );
-
-		return '<a href="' . esc_url( $url ) . '">' .
-		       sprintf( esc_html__( ' %s translation', 'sitepress' ), $taxonomy->labels->singular_name ) . '</a>';
+		return '<a href="' . esc_url( $url ) . '">' . $taxonomy->labels->singular_name . ' translation</a>';
 	}
 
 	private function taxonomy_term_screen() {
@@ -167,21 +160,8 @@ class WPML_Taxonomy_Translation_Help_Notice {
 		}
 	}
 
-	/**
-	 * @param string $taxonomy
-	 *
-	 * @return bool
-	 */
 	private function is_translatable_taxonomy( $taxonomy ) {
-		$is_translatable = false;
-
-		$taxonomy_object = get_taxonomy( $taxonomy );
-		if( $taxonomy_object ){
-			$post_type = isset( $taxonomy_object->object_type[0] ) ? $taxonomy_object->object_type[0] : 'post';
-			$translatable_taxonomies = $this->sitepress->get_translatable_taxonomies( true, $post_type );
-			$is_translatable = in_array( $taxonomy, $translatable_taxonomies );
-		}
-
-		return $is_translatable;
+		$translatable_taxonomies = $this->sitepress->get_translatable_taxonomies( true );
+		return in_array( $taxonomy, $translatable_taxonomies );
 	}
 }

@@ -34,38 +34,37 @@ if ( ! class_exists( 'Tribe__Events__API' ) ) {
 		 *
 		 * @param array $args The post args.
 		 *
-		 * @return int|WP_Error The created event ID or a WP_Error object if it fails.
+		 * @return int The created event ID.
 		 */
 		public static function createEvent( $args ) {
 
 			$args['post_type'] = Tribe__Events__Main::POSTTYPE;
-			$event_id          = wp_insert_post( $args, true );
+			$eventId           = wp_insert_post( $args, true );
 
-			if ( ! is_wp_error( $event_id ) ) {
-				self::saveEventMeta( $event_id, $args, get_post( $event_id ) );
+			if ( ! is_wp_error( $eventId ) ) {
+				self::saveEventMeta( $eventId, $args, get_post( $eventId ) );
+
+				return $eventId;
 			}
-
-			return $event_id;
 		}
 
 		/**
 		 * Update an existing event
 		 *
-		 * @param int   $event_id The event ID to update.
+		 * @param int   $eventId The event ID to update.
 		 * @param array $args    The post args.
 		 *
 		 * @return false|int The event ID.
 		 */
-		public static function updateEvent( $event_id, $args ) {
-			$post = get_post( $event_id );
-			$args['ID'] = $event_id;
+		public static function updateEvent( $eventId, $args ) {
+			$args['ID'] = $eventId;
 			$args['post_type'] = Tribe__Events__Main::POSTTYPE;
 
 			if ( wp_update_post( $args ) ) {
-				self::saveEventMeta( $event_id, $args, $post );
+				self::saveEventMeta( $eventId, $args, get_post( $eventId ) );
 			}
 
-			return $event_id;
+			return $eventId;
 		}
 
 		/**
@@ -110,34 +109,16 @@ if ( ! class_exists( 'Tribe__Events__API' ) ) {
 			Tribe__Events__Linked_Posts::instance()->handle_submission( $event_id, $data );
 
 			// Ordinarily there is a single cost value for each event, but addons (ie, ticketing plugins) may need
-			// to record a number of different price points for the same event
+			// to record a number of different pricepoints for the same event
 			$event_cost = isset( $data['EventCost'] ) ? (array) $data['EventCost'] : array();
 			$data['EventCost'] = (array) apply_filters( 'tribe_events_event_costs', $event_cost, $event_id );
-
-			// If we are saving just one meta, we reset to avoid deleting and re-adding cost every time
-			if ( is_array( $data['EventCost'] ) && 1 === count( $data['EventCost'] ) ) {
-				$data['EventCost'] = reset( $data['EventCost'] );
-			}
 
 			if ( isset( $data['FeaturedImage'] ) && ! empty( $data['FeaturedImage'] ) ) {
 				update_metadata( 'post', $event_id, '_thumbnail_id', $data['FeaturedImage'] );
 				unset( $data['FeaturedImage'] );
 			}
 
-			if ( isset( $data['EventAllDay'] ) && 'yes' === $data['EventAllDay'] ) {
-				$data['EventDuration'] = null;
-			}
-
-			/**
-			 * Allow hooking in prior to updating meta fields.
-			 *
-			 * @param int     $event_id The event ID we are modifying meta for.
-			 * @param array   $data     The meta fields we want saved.
-			 * @param WP_Post $event    The event itself.
-			 *
-			 * @since 4.6
-			 */
-			do_action( 'tribe_events_event_save', $event_id, $data, $event );
+			do_action( 'tribe_events_event_save', $event_id );
 
 			//update meta fields
 			foreach ( $tec->metaTags as $tag ) {
@@ -177,94 +158,7 @@ if ( ! class_exists( 'Tribe__Events__API' ) ) {
 				}
 			}
 
-			// Set featured status
-			empty( $data['feature_event'] )
-				? tribe( 'tec.featured_events' )->unfeature( $event_id )
-				: tribe( 'tec.featured_events' )->feature( $event_id );
-
-			/**
-			 * Allow hooking in after all event meta has been saved.
-			 *
-			 * @param int     $event_id The event ID we are modifying meta for.
-			 * @param array   $data     The meta fields we want saved.
-			 * @param WP_Post $event    The event itself.
-			 *
-			 * @since 4.6
-			 */
-			do_action( 'tribe_events_update_meta', $event_id, $data, $event );
-		}
-
-		/**
-		 * Determines if a meta value has been changed
-		 *
-		 * @param string $field Field to compare against
-		 * @param array $new New data
-		 * @param array $old Old post data
-		 *
-		 * @return boolean
-		 */
-		public static function is_meta_value_changed( $field, $new, $old ) {
-			if ( 0 === strpos( $field, '_' ) ) {
-				$field = ltrim( $field, '_' );
-			}
-
-			$prefixed_field = "_{$field}";
-
-			if ( isset( $new[ $field ] ) && ! isset( $old[ $prefixed_field ] ) && ! empty( $new[ $field ] ) ) {
-				return true;
-			}
-
-			if ( ! isset( $new[ $field ] ) && isset( $old[ $prefixed_field ] ) ) {
-				return true;
-			} elseif ( ! isset( $new[ $field ] ) ) {
-				// if the new field isn't set and the old field isn't set, there's no change
-				return false;
-			}
-
-			$data_value = $new[ $field ];
-
-			if ( is_array( $data_value ) && ! count( $data_value ) ) {
-				$data_value = null;
-			}
-
-			if ( ! isset( $old[ $prefixed_field ] ) || $data_value !== $old[ $prefixed_field ] ) {
-				return true;
-			}
-
-			return false;
-		}
-
-		/**
-		 * Determines if a post value has been changed
-		 *
-		 * @param string $field Field to compare against
-		 * @param array $new New data
-		 * @param array $old WP_Post pre-update
-		 *
-		 * @return boolean
-		 */
-		public static function is_post_value_changed( $field, $new, $old ) {
-			if ( ! is_object( $new ) ) {
-				$new = (object) $new;
-			}
-
-			if ( ! is_object( $old ) ) {
-				$old = (object) $old;
-			}
-
-			if ( ! isset( $new->$field ) ) {
-				return false;
-			}
-
-			if ( isset( $new->$field ) && ! isset( $old->$field ) ) {
-				return true;
-			}
-
-			if ( $new->$field !== $old->$field ) {
-				return true;
-			}
-
-			return false;
+			do_action( 'tribe_events_update_meta', $event_id, $data );
 		}
 
 		/**
@@ -289,14 +183,10 @@ if ( ! class_exists( 'Tribe__Events__API' ) ) {
 
 			if ( isset( $data['EventStartDate'] ) ) {
 				$data['EventStartDate'] = Tribe__Date_Utils::datetime_from_format( $datepicker_format, $data['EventStartDate'] );
-			} elseif ( $existing_start_date = get_post_meta( $event_id, '_EventStartDate', true ) ) {
-				$data['EventStartDate'] = $existing_start_date;
 			}
 
 			if ( isset( $data['EventEndDate'] ) ) {
 				$data['EventEndDate'] = Tribe__Date_Utils::datetime_from_format( $datepicker_format, $data['EventEndDate'] );
-			} elseif ( $existing_end_date = get_post_meta( $event_id, '_EventEndDate', true ) ) {
-				$data['EventEndDate'] = $existing_end_date;
 			}
 
 			if ( isset( $data['EventAllDay'] ) && 'yes' === $data['EventAllDay'] ) {
@@ -307,24 +197,15 @@ if ( ! class_exists( 'Tribe__Events__API' ) ) {
 				$date_provided = true;
 				delete_post_meta( $event_id, '_EventAllDay' );
 
-				// EventStartTime will always be 24h Format
-				if ( isset( $data['EventStartTime'] ) ) {
-					$start_date_string = "{$data['EventStartDate']} {$data['EventStartTime']}";
-				} else {
-					$start_date_string = "{$data['EventStartDate']} {$data['EventStartHour']}:{$data['EventStartMinute']}:00";
-					if ( isset( $data['EventStartMeridian'] ) ) {
-						$start_date_string .= " {$data['EventStartMeridian']}";
-					}
+				$start_date_string = "{$data['EventStartDate']} {$data['EventStartHour']}:{$data['EventStartMinute']}:00";
+				$end_date_string = "{$data['EventEndDate']} {$data['EventEndHour']}:{$data['EventEndMinute']}:00";
+
+				if ( isset( $data['EventStartMeridian'] ) ) {
+					$start_date_string .= " {$data['EventStartMeridian']}";
 				}
 
-				// EventEndTime will always be 24h Format
-				if ( isset( $data['EventEndTime'] ) ) {
-					$end_date_string = "{$data['EventEndDate']} {$data['EventEndTime']}";
-				} else {
-					$end_date_string = "{$data['EventEndDate']} {$data['EventEndHour']}:{$data['EventEndMinute']}:00";
-					if ( isset( $data['EventEndMeridian'] ) ) {
-						$end_date_string .= " {$data['EventEndMeridian']}";
-					}
+				if ( isset( $data['EventEndMeridian'] ) ) {
+					$end_date_string .= " {$data['EventEndMeridian']}";
 				}
 
 				$data['EventStartDate'] = date( Tribe__Date_Utils::DBDATETIMEFORMAT, strtotime( $start_date_string ) );
@@ -390,26 +271,6 @@ if ( ! class_exists( 'Tribe__Events__API' ) ) {
 			foreach ( $event_cost as $cost ) {
 				add_post_meta( $event_id, '_EventCost', $cost );
 			}
-		}
-
-		/**
-		 * @param int $event_id The event post ID
-		 * @param array $args An array of arguments supported by the `wp_get_object_terms` function.
-		 *
-		 * @since 4.5
-		 *
-		 * @see wp_get_object_terms()
-		 *
-		 * @return array An associative array of terms in the [ <taxonomy> => [ <term_1>, <term_2>, ...], ...] format.
-		 */
-		public static function get_event_terms( $event_id, array $args = array() ) {
-			$terms = array();
-			foreach ( get_post_taxonomies( $event_id ) as $taxonomy ) {
-				$tax_terms = wp_get_object_terms( $event_id, $taxonomy, $args );
-				$terms[ $taxonomy ] = $tax_terms;
-			}
-
-			return $terms;
 		}
 
 		/**
@@ -551,27 +412,6 @@ if ( ! class_exists( 'Tribe__Events__API' ) ) {
 		 */
 		private static function saveVenueMeta( $venue_id, $data ) {
 			return Tribe__Events__Venue::instance()->save_meta( $venue_id, $data );
-		}
-
-		/**
-		 * Gets all post meta and flattens it out a bit
-		 *
-		 * @param int $event_id Post ID for event
-		 *
-		 * @return array
-		 */
-		public static function get_and_flatten_event_meta( $event_id ) {
-			$temp_post_meta = get_post_meta( $event_id );
-			$post_meta = array();
-			foreach ( (array) $temp_post_meta as $key => $value ) {
-				if ( 1 === count( $value ) ) {
-					$post_meta[ $key ] = maybe_unserialize( reset( $value ) );
-				} else {
-					$post_meta[ $key ] = maybe_unserialize( $value );
-				}
-			}
-
-			return $post_meta;
 		}
 	}
 }

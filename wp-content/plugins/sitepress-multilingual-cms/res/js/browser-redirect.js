@@ -53,7 +53,7 @@ var WPMLBrowserRedirect = function () {
                 for (var i = 0; i < browserLanguagesLength; i++) {
                     browserLanguage = browserLanguages[i];
 
-					if ( pageLanguage === browserLanguage || self.referrerBelongsToSiteURLs()) {
+					if ( pageLanguage === browserLanguage ) {
 						self.setCookie(browserLanguage);
 						break;
 					} else {
@@ -74,15 +74,6 @@ var WPMLBrowserRedirect = function () {
 		var cookieParams = wpml_browser_redirect_params.cookie;
 		var cookieName = cookieParams.name;
 		return jQuery.cookie(cookieName);
-	};
-
-	self.referrerBelongsToSiteURLs = function () {
-		for(var languageCode in wpml_browser_redirect_params.languageUrls) {
-			if ( document.referrer === wpml_browser_redirect_params.languageUrls[languageCode]) {
-				return true;
-			}
-		}
-		return false;
 	};
 
 	self.setCookie = function (browserLanguage) {

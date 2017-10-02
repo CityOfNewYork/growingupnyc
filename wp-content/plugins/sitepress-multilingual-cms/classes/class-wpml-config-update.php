@@ -47,7 +47,7 @@ class WPML_Config_Update {
 				require_once WPML_PLUGIN_PATH . '/classes/class-wpml-active-plugin-provider.php';
 			}
 
-			$this->active_plugin_provider = new WPML_Active_Plugin_Provider();
+			$this->active_plugin_provider = new WPML_Active_Plugin_Provider( $this->sitepress->get_wp_api() );
 		}
 
 		return $this->active_plugin_provider;

@@ -82,8 +82,6 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 	 *
 	 * @param int $event_id
 	 * @param int $batch_size
-	 *
-	 * @return bool
 	 */
 	public function process_batch( $event_id, $batch_size = null ) {
 		/**
@@ -96,8 +94,7 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 		$this->batch_size = ( null === $batch_size ) ? $default_batch_size : (int) $batch_size;
 
 		$this->current_event_id = (int) $event_id;
-
-		return $this->do_processing();
+		$this->do_processing();
 	}
 
 	/**
@@ -200,10 +197,6 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 				break;
 			}
 
-			if ( ! $this->current_queue->have_ownership_of_job() ) {
-				return;
-			}
-
 			Tribe__Events__Pro__Recurrence__Meta::delete_unexcluded_event( $instance_id, $start_date );
 
 			unset( $instances_to_delete[ $instance_id ] );
@@ -221,10 +214,6 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 			// Don't process more than the current batch size allows
 			if ( $this->batch_complete() ) {
 				break;
-			}
-
-			if ( ! $this->current_queue->have_ownership_of_job() ) {
-				return;
 			}
 
 			$instance = new Tribe__Events__Pro__Recurrence__Instance( $this->current_event_id, $date_duration, $instance_id );
@@ -265,16 +254,9 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 				continue;
 			}
 
-			if ( ! $this->current_queue->have_ownership_of_job() ) {
-				return;
-			}
-
 			$sequence_number = isset( $date_duration['sequence'] ) ? $date_duration['sequence'] : 1;
 			$instance        = new Tribe__Events__Pro__Recurrence__Instance( $this->current_event_id, $date_duration, 0, $sequence_number );
-
-			if ( ! $instance->already_exists() ) {
-				$instance->save();
-			}
+			$instance->save();
 
 			unset( $instances_to_create[ $date_duration['original_index'] ] );
 			$this->processed++;

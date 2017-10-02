@@ -42,6 +42,11 @@
 	display: none;
 }
 
+.recurrence-row .eventduration-preamble {
+	margin-left: 10.56px;
+	margin-left: 0.66rem;
+}
+
 .recurrence-row .eventduration input[type="number"] {
 	margin-left: 10.56px;
 	margin-left: 0.66rem;
@@ -53,13 +58,4 @@
 
 .tribe.widget-settings select.venue-dropdown {
     max-width: 100%;
-}
-
-.tribe-customizer-select2 {
-	z-index: 100000000;
-}
-
-.recurrence_end_count {
-	width: 64px;
-	width: 4rem;
 }

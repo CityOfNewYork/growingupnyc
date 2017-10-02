@@ -7,12 +7,12 @@ class WPML_URL_Converter_Subdir_Strategy extends WPML_URL_Converter_Abstract_Str
 	/** @var array copy of $sitepress->get_settings( 'urls' ) */
 	private $urls_settings;
 
-	/** @var string|bool */
+	/** @var string */
 	private $root_url;
 
 	/** @var array map of wpml codes to custom codes*/
-	private $language_codes_map;
-	private $language_codes_reverse_map;
+	private $language_codes_map = array();
+	private $language_codes_reverse_map = array();
 
 	/**
 	 * @param string $dir_default
@@ -123,31 +123,21 @@ class WPML_URL_Converter_Subdir_Strategy extends WPML_URL_Converter_Abstract_Str
 			! empty( $this->urls_settings['directory_for_default_language'] )
 		) {
 
-			$root_url = $this->get_root_url();
-			if ( $root_url ) {
-				$result = strpos( trailingslashit( $url ), $root_url ) === 0;
+			if ( ! $this->root_url ) {
+				$root_post = get_post( $this->urls_settings['root_page'] );
+
+				if ( $root_post ) {
+					$this->root_url = trailingslashit( $this->get_url_helper()->get_abs_home() ) . $root_post->post_name;
+					$this->root_url = trailingslashit( $this->root_url );
+				} else {
+					$this->root_url = false;
+				}
 			}
+
+			$result = strpos( trailingslashit( $url ), $this->root_url ) === 0;
 		}
 
 		return $result;
-	}
-
-	/**
-	 * @return string|bool
-	 */
-	private function get_root_url() {
-		if ( null === $this->root_url ) {
-			$root_post = get_post( $this->urls_settings['root_page'] );
-
-			if ( $root_post ) {
-				$this->root_url = trailingslashit( $this->get_url_helper()->get_abs_home() ) . $root_post->post_name;
-				$this->root_url = trailingslashit( $this->root_url );
-			} else {
-				$this->root_url = false;
-			}
-		}
-
-		return $this->root_url;
 	}
 
 	/**

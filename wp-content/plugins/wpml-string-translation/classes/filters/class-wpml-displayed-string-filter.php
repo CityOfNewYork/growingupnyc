@@ -6,13 +6,7 @@
  * Handles all string translating when rendering translated strings to the user, unless auto-registering is
  * active for strings.
  */
-class WPML_Displayed_String_Filter {
-	/** @var  SitePress */
-	protected $sitepress;
-
-	/** @var wpdb */
-	protected $wpdb;
-
+class WPML_Displayed_String_Filter extends WPML_WPDB_And_SP_User {
 	/**
 	 * @var string
 	 */
@@ -35,9 +29,8 @@ class WPML_Displayed_String_Filter {
 	 * @param null|object $existing_filter
 	 * @param null|WPML_ST_Db_Cache_Factory
 	 */
-	public function __construct( $wpdb, $sitepress, $language, $existing_filter = null, $db_cache_factory = null ) {
-		$this->sitepress = $sitepress;
-		$this->wpdb      = $wpdb;
+	public function __construct( &$wpdb, &$sitepress, $language, $existing_filter = null, $db_cache_factory = null ) {
+		parent::__construct( $wpdb, $sitepress );
 		$this->language           = $language;
 
 		if ( $db_cache_factory instanceof WPML_ST_DB_Cache_Factory ) {
@@ -62,9 +55,12 @@ class WPML_Displayed_String_Filter {
 	 * @return bool|false|string
 	 */
 	public function translate_by_name_and_context( $untranslated_text, $name, $context = '', &$has_translation = null ) {
-		$translation = $this->get_translation( $untranslated_text, $name, $context );
+		list ( $name, $domain, $gettext_context ) = $this->transform_parameters( $name, $context );
+		$untranslated_text = is_string( $untranslated_text ) ? $untranslated_text : '';
 
-		if ( $translation ) {
+		$translation = $this->db_cache->get_translation( $name, $domain, $untranslated_text, $gettext_context );
+
+		if ( $translation instanceof WPML_ST_Page_Translation ) {
 			$res             = $translation->get_value();
 			$has_translation = $translation->has_translation();
 		} else {
@@ -84,6 +80,8 @@ class WPML_Displayed_String_Filter {
 	protected function transform_parameters( $name, $context ) {
 		list ( $domain, $gettext_context ) = wpml_st_extract_context_parameters( $context );
 
+		list( $name, $domain ) = array_map( array( $this, 'truncate_long_string' ), array( $name, $domain ) );
+
 		return array( $name, $domain, $gettext_context );
 	}
 
@@ -95,29 +93,9 @@ class WPML_Displayed_String_Filter {
 	 * @return string
 	 */
 	protected function truncate_long_string( $string ) {
+
 		return strlen( $string ) > WPML_STRING_TABLE_NAME_CONTEXT_LENGTH
 			? mb_substr( $string, 0, WPML_STRING_TABLE_NAME_CONTEXT_LENGTH )
 			: $string;
-	}
-
-	/**
-	 * @param $untranslated_text
-	 * @param $name
-	 * @param $context
-	 *
-	 * @return WPML_ST_Page_Translation|null
-	 */
-	protected function get_translation( $untranslated_text, $name, $context ) {
-		list ( $name, $domain, $gettext_context ) = $this->transform_parameters( $name, $context );
-		$untranslated_text = is_string( $untranslated_text ) ? $untranslated_text : '';
-
-		$translation = $this->db_cache->get_translation( $name, $domain, $untranslated_text, $gettext_context );
-
-		if ( ! $translation ) {
-			list( $name, $domain ) = array_map( array( $this, 'truncate_long_string' ), array( $name, $domain ) );
-			$translation = $this->db_cache->get_translation( $name, $domain, $untranslated_text, $gettext_context );
-		}
-
-		return $translation;
 	}
 }

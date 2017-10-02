@@ -27,6 +27,11 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Single_Organizer' ) ) {
 
 			parent::hooks();
 
+			add_action( 'tribe_events_single_organizer_before_upcoming_events', array(
+					$this,
+					'setup_upcoming_events',
+				) );
+
 			add_filter( 'tribe_get_template_part_templates', array( $this, 'remove_list_navigation' ), 10, 3 );
 
 			// Print JSON-LD markup on the `wp_head`
@@ -34,16 +39,56 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Single_Organizer' ) ) {
 		}
 
 		/**
-		 * Do any setup for upcoming events.
+		 * Setup meta display in this template
 		 *
-		 * @deprecated 4.3
+		 * @return void
+		 **/
+		public function setup_meta() {
+
+			// setup the template for the meta group
+			tribe_set_the_meta_template( 'tribe_event_organizer', array(
+				'before'         => '',
+				'after'          => '',
+				'label_before'   => '',
+				'label_after'    => '',
+				'meta_before'    => '<address class="organizer-address">',
+				'meta_after'     => '</address>',
+				'meta_separator' => '<span class="tribe-events-divider">|</span>',
+			), 'meta_group' );
+
+			// setup the template for the meta items
+			tribe_set_the_meta_template( array(
+				'tribe_event_organizer_phone',
+				'tribe_event_organizer_email',
+				'tribe_event_organizer_website',
+			), array(
+				'before'       => '',
+				'after'        => '',
+				'label_before' => '',
+				'label_after'  => '',
+				'meta_before'  => '<span class="%s">',
+				'meta_after'   => '</span>',
+			) );
+
+			// remove the title for the group & meta items
+			tribe_set_meta_label( 'tribe_event_organizer', '', 'meta_group' );
+			tribe_set_meta_label( array(
+				'tribe_event_organizer_phone'   => '',
+				'tribe_event_organizer_email'   => '',
+				'tribe_event_organizer_website' => '',
+			) );
+
+			// turn off the organizer name in the group
+			tribe_set_the_meta_visibility( 'tribe_event_organizer_name', false );
+		}
+
+		/**
+		 * Do any setup for upcoming events
 		 *
 		 * @return void
 		 **/
 		public function setup_upcoming_events() {
-			// This method has been unhooked and it's very unlikely third party code will call it
-			// directly, but to be safe it has been deprecated rather than removed outright
-			_deprecated_function( __METHOD__, '4.3' );
+			tribe_set_the_meta_visibility( 'tribe_event_organizer', false, 'meta_group' );
 		}
 
 		/**

@@ -27,7 +27,7 @@ class WPML_PB_String_Translation {
 			$package = $this->factory->get_wpml_package( $package_id );
 			if ( $package->post_id && $this->strategy->get_package_kind() === $package->kind ) {
 				$this->add_package_to_update_list( $package, $language );
-				if ( defined( 'DOING_AJAX' ) && DOING_AJAX || defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ) {
+				if ( DEFINED( 'DOING_AJAX' ) && DOING_AJAX ) {
 					$this->save_translations_to_post();
 				}
 			}
@@ -100,7 +100,7 @@ class WPML_PB_String_Translation {
 	public function remove_string( $string_data ) {
 		$field_type = 'package-string-' . $string_data['package_id'] . '-' . $string_data['id'];
 		$job_id = $this->get_job_id( $field_type );
-		if ( ! $job_id || ! $this->is_job_in_progress( $job_id ) ) {
+		if ( ! $this->is_job_in_progress( $job_id ) ) {
 			icl_unregister_string( $string_data['context'], $string_data['name'] );
 			$this->wpdb->delete( $this->wpdb->prefix . 'icl_translate', array( 'field_type' => $field_type ), array( '%s' ) );
 		}

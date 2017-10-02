@@ -102,49 +102,6 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 	}
 
 	/**
-	 * Returns a summary of key information for the specified organizer.
-	 *
-	 * Typically this is a pipe separated format containing the organizer's telephone
-	 * number, email address and website where available.
-	 *
-	 * @param int $post_id
-	 *
-	 * @return string
-	 */
-	function tribe_get_organizer_details( $post_id = null ) {
-		$post_id = Tribe__Events__Main::postIdHelper( $post_id );
-		$organizer_id = (int) tribe_get_organizer_id( $post_id );
-		$details = array();
-
-		if ( $organizer_id && $tel = tribe_get_organizer_phone() ) {
-			$details[] = '<span class="tel">' . $tel . '</span>';
-		}
-
-		if ( $organizer_id && $email = tribe_get_organizer_email() ) {
-			$details[] = '<span class="email"> <a href="mailto:' . esc_attr( $email ) . '">' . $email . '</a> </span>';
-		}
-
-		if ( $organizer_id && $link = tribe_get_organizer_website_link() ) {
-			$details[] = '<span class="link"> <a href="' . esc_attr( $link ) . '">' . $link . '</a> </span>';
-		}
-
-		$html = join( '<span class="tribe-events-divider">|</span>', $details );
-
-		if ( ! empty( $html ) ) {
-			$html = '<address class="organizer-address">' . $html . '</address>';
-		}
-
-		/**
-		 * Provides an opportunity to modify the organizer details HTML.
-		 *
-		 * @param string $html
-		 * @param int    $post_id
-		 * @param int    $organizer_id
-		 */
-		return apply_filters( 'tribe_get_organizer_details', $html, $post_id, $organizer_id );
-	}
-
-	/**
 	 * Get Organizer
 	 *
 	 * Returns the name of the Organizer
@@ -186,26 +143,14 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 	 * Returns the Organizer's Email
 	 *
 	 * @param int $postId Can supply either event id or organizer id, if none specified, current post is used
-	 * @param bool $antispambot Whether the email should pass through the `antispambot` function or not.
 	 *
 	 * @return string Organizer's Email
 	 */
-	function tribe_get_organizer_email( $postId = null, $antispambot = true ) {
+	function tribe_get_organizer_email( $postId = null ) {
 		$postId = Tribe__Events__Main::postIdHelper( $postId );
-		$unfiltered_email  = esc_html( tribe_get_event_meta( tribe_get_organizer_id( $postId ), '_OrganizerEmail', true ) );
-		$filtered_email = $antispambot ? antispambot( $unfiltered_email ) : $unfiltered_email;
+		$output = esc_html( tribe_get_event_meta( tribe_get_organizer_id( $postId ), '_OrganizerEmail', true ) );
 
-		/**
-		 * Allows for the organizer email to be filtered.
-		 *
-		 * Please note that obfuscation of email is done in subsequent line using the `antispambot` function.
-		 *
-		 * @param string $filtered_email   The organizer email obfuscated using the `antispambot` function.
-		 * @param string $unfiltered_email The organizer email as stored in the database before any filtering or obfuscation is applied.
-		 */
-		$filtered_email = apply_filters( 'tribe_get_organizer_email', $filtered_email, $unfiltered_email );
-
-		return $filtered_email;
+		return apply_filters( 'tribe_get_organizer_email', $output );
 	}
 
 	/**
@@ -231,7 +176,7 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 			if ( $full_link ) {
 				$name = tribe_get_organizer( $org_id );
 				$attr_title = the_title_attribute( array( 'post' => $org_id, 'echo' => false ) );
-				$link = ! empty( $url ) && ! empty( $name ) ? '<a href="' . esc_url( $url ) . '" title="'.$attr_title.'">' . $name . '</a>' : false;
+				$link = ! empty( $url ) && ! empty( $name ) ? '<a href="' . esc_url( $url ) . '" title="'.$attr_title.'"">' . $name . '</a>' : false;
 			} else {
 				$link = $url;
 			}
@@ -318,66 +263,22 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 	/**
 	 * Get all the organizers
 	 *
-	 * @param bool  $only_with_upcoming Only return organizers with upcoming events attached to them.
-	 * @param int   $posts_per_page
-	 * @param bool  $suppress_filters
-	 * @param array $args {
-	 *		Optional. Array of Query parameters.
-	 *
-	 *		@type int  $event      Only organizers linked to this event post ID.
-	 *		@type bool $has_events Only organizers that have events.
-	 * }
+	 * @param $deprecated
+	 * @param $posts_per_page Maximum number of results
 	 *
 	 * @return array An array of organizer post objects.
 	 */
-	function tribe_get_organizers( $only_with_upcoming = false, $posts_per_page = - 1, $suppress_filters = true, array $args = array() ) {
-		/** @var wpdb $wpdb */
-		global $wpdb;
-
-		// filter out the `null` values
-		$args = array_diff_key( $args, array_filter( $args, 'is_null' ) );
-
-		if ( tribe_is_truthy( $only_with_upcoming ) ) {
-			$args['only_with_upcoming'] = true;
+	function tribe_get_organizers( $deprecated = null, $posts_per_page = -1 ) {
+		if ( null !== $deprecated ) {
+			_deprecated_argument( __FUNCTION__, '3.0', 'This parameter is no longer supported.' );
 		}
 
-		$filter_args = array(
-			'event'              => 'find_for_event',
-			'has_events'         => 'find_with_events',
-			'only_with_upcoming' => 'find_with_upcoming_events',
-		);
-
-		foreach ( $filter_args as $filter_arg => $method ) {
-			if ( ! isset( $args[ $filter_arg ] ) ) {
-				continue;
-			}
-
-			$found = call_user_func(
-				array( tribe( 'tec.linked-posts.organizer' ), $method ),
-				$args[ $filter_arg ]
-			);
-
-			if ( empty( $found ) ) {
-				return array();
-			}
-
-			$args['post__in'] = ! empty( $args['post__in'] )
-				? array_intersect( (array) $args['post__in'], $found )
-				: $found;
-
-			if ( empty( $args['post__in'] ) ) {
-				return array();
-			}
-		}
-
-		$parsed_args = wp_parse_args( $args, array(
-				'post_type'        => Tribe__Events__Main::ORGANIZER_POST_TYPE,
-				'posts_per_page'   => $posts_per_page,
-				'suppress_filters' => $suppress_filters,
+		$organizers = get_posts(
+			array(
+				'post_type' => Tribe__Events__Main::ORGANIZER_POST_TYPE,
+				'posts_per_page' => $posts_per_page,
 			)
 		);
-
-		$organizers = get_posts( $parsed_args );
 
 		return $organizers;
 	}

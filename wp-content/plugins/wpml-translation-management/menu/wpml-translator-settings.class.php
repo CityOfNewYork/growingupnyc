@@ -1,18 +1,6 @@
 <?php
 
-class WPML_Translator_Settings {
-
-	/** @var wpdb $wpdb */
-	private $wpdb;
-
-	/** @var SitePress $sitepress */
-	private $sitepress;
-
-	/** @var TranslationManagement $tm_instance */
-	private $tm_instance;
-
-	/** @var WPML_TP_Client $tp_client */
-	private $tp_client;
+class WPML_Translator_Settings extends WPML_WPDB_And_SP_User {
 
 	/** @var TranslationProxy_Service $active_service */
 	private $active_service;
@@ -20,17 +8,17 @@ class WPML_Translator_Settings {
 	/** @var string $service_name  */
 	private $service_name;
 
-	public function __construct(
-		wpdb $wpdb,
-		SitePress $sitepress,
-		TranslationManagement $tm_instance,
-		WPML_TP_Client $tp_client
-	) {
-		$this->wpdb           = $wpdb;
-		$this->sitepress      = $sitepress;
-		$this->tm_instance    = $tm_instance;
-		$this->tp_client      = $tp_client;
+	/** @var TranslationManagement $tm_instance */
+	private $tm_instance;
 
+	/**
+	 * @param wpdb                  $wpdb
+	 * @param SitePress             $sitepress
+	 * @param TranslationManagement $tm_instance
+	 */
+	public function __construct( &$wpdb, &$sitepress, &$tm_instance ) {
+		parent::__construct( $wpdb, $sitepress );
+		$this->tm_instance    = &$tm_instance;
 		$this->active_service = TranslationProxy::get_current_service();
 		$this->service_name   = TranslationProxy::get_current_service_name();
 	}
@@ -329,7 +317,7 @@ class WPML_Translator_Settings {
                             <td>
                                 <?php echo isset( $rows[ 'type' ] ) ? ( icl_do_not_promote()
                                     ? __( 'Translation Service',
-                                          'wpml-translation-management' ) : $rows[ 'type' ] ) : ''; ?>
+                                          'sitepress' ) : $rows[ 'type' ] ) : ''; ?>
                             </td>
                             <td>
                                 <?php echo isset( $rows[ 'action' ] ) ? $rows[ 'action' ] : ''; ?>
@@ -368,23 +356,27 @@ class WPML_Translator_Settings {
     }
 
 	public function build_content_translation_services() {
-		$reload   = filter_input( INPUT_GET, 'reload_services', FILTER_VALIDATE_BOOLEAN );
-		$services = $this->tp_client->services()->get_all( $reload );
 
-        if ( $this->tp_client->services()->get_exception() ) {
-	        $this->display_error( $this->tp_client->services()->get_exception() );
-		}
+        $has_errors = false;
+
+		$reload = filter_input( INPUT_GET, 'reload_services', FILTER_VALIDATE_BOOLEAN );
+		$services = TranslationProxy::services( $reload );
+        $has_errors |= icl_handle_error( $services );
+        if(TranslationProxy::$errors) {
+            $has_errors |= true;
+            foreach(TranslationProxy::$errors as $error) {
+                icl_handle_error($error);
+            }
+        }
 
 		$active_service = TranslationProxy::get_current_service();
-
 		if ( is_wp_error( $active_service ) ) {
-			$this->display_error( $active_service );
+            $has_errors |= icl_handle_error( $active_service );
 			$active_service = false;
 		}
 
 		$service_activation_button_class = 'button-primary';
-
-		if ( $active_service ) {
+		if($active_service) {
 			$service_activation_button_class = 'button-secondary';
 		}
 
@@ -397,81 +389,82 @@ class WPML_Translator_Settings {
 			if ( $this->translation_service_has_translators( $active_service ) ) {
 				echo $this->flush_website_details_cache_button();
 			}
+            if(!$has_errors) {
+                ?>
+                <div class="icl-current-service">
+                    <?php
+                    if ( $active_service ) {
+                        ?>
+                        <div class="img-wrap">
+                            <img src="<?php echo $active_service->logo_url; ?>"
+                                 alt="<?php echo $active_service->name ?>"/>
+                        </div>
 
-			?>
-			<div class="icl-current-service">
-				<?php
-				if ( $active_service ) {
-					?>
-					<div class="img-wrap">
-						<img src="<?php echo $active_service->logo_url; ?>"
-							 alt="<?php echo $active_service->name ?>"/>
-					</div>
+                        <div class="desc">
+                            <?php if ( ! TranslationProxy::get_tp_default_suid() ) { ?>
+                                <h3><?php _e( 'Current service', 'wpml-translation-management' ) ?></h3>
+                            <?php } ?>
+                            <h4><?php echo $active_service->name ?></h4>
 
-					<div class="desc">
-						<?php if ( ! TranslationProxy::get_tp_default_suid() ) { ?>
-							<h3><?php _e( 'Current service', 'wpml-translation-management' ) ?></h3>
-						<?php } ?>
-						<h4><?php echo $active_service->name ?></h4>
+                            <p>
+                                <?php echo $active_service->description ?>
+                            </p>
+                            <?php
+                            echo translation_service_details( $active_service, true );
 
-						<p>
-							<?php echo $active_service->description ?>
-						</p>
-						<?php
-						echo translation_service_details( $active_service, true );
+                            do_action( 'translation_service_authentication' );
+                            ?>
+                        </div>
+                        <?php
+                    }
+                    ?>
+                </div>
+                <?php
+                if ( ! TranslationProxy::get_tp_default_suid() && ! empty( $services ) ) {
+                    ?>
+                    <ul class="icl-available-services">
+                        <?php foreach ( $services as $service ) {
+                            $state = ( $active_service && ( $service->id == $active_service->id ) ) ? "active" : "inactive";
+                            if ( $state === 'inactive' ) {
+                                ?>
+                                <li>
+                                    <div class="img-wrap js-activate-service"
+                                         data-target-id="<?php echo $service->id; ?>">
+                                        <img src="<?php echo $service->logo_url; ?>"
+                                             alt="<?php echo $service->name ?>"/>
+                                    </div>
+                                    <h4><?php echo $service->name; ?></h4>
 
-						do_action( 'translation_service_authentication' );
-						?>
-					</div>
-					<?php
-				}
-				?>
-			</div>
-			<?php
-			if ( ! TranslationProxy::get_tp_default_suid() && ! empty( $services ) ) {
-				?>
-				<ul class="icl-available-services">
-					<?php foreach ( $services as $service ) {
-						$state = ( $active_service && ( $service->id == $active_service->id ) ) ? "active" : "inactive";
-						if ( $state === 'inactive' ) {
-							?>
-							<li>
-								<div class="img-wrap js-activate-service"
-									 data-target-id="<?php echo $service->id; ?>">
-									<img src="<?php echo $service->logo_url; ?>"
-										 alt="<?php echo $service->name ?>"/>
-								</div>
-								<h4><?php echo $service->name; ?></h4>
+                                    <p>
+                                        <?php echo $service->description; ?>
+                                        <?php echo translation_service_details( $active_service, true ); ?>
+                                    </p>
 
-								<p>
-									<?php echo $service->description; ?>
-									<?php echo translation_service_details( $active_service, true ); ?>
-								</p>
-
-								<p>
-									<button type="submit"
-											class="js-activate-service-id <?php echo $service_activation_button_class; ?>"
-											data-id="<?php echo $service->id; ?>"
-											data-custom-fields="<?php echo esc_attr( wp_json_encode( $service->custom_fields ) ); ?>">
-										<?php _e( 'Activate', 'wpml-translation-management' ) ?>
-									</button>
-									<?php
-									if ( isset( $service->doc_url ) && $service->doc_url ) {
-										?>
-										&nbsp;<a href="<?php echo $service->doc_url; ?>"
-												 target="_blank"><?php echo __( 'Documentation', 'wpml-translation-management' ); ?></a>
-										<?php
-									}
-									?>
-								</p>
-							</li>
-							<?php
-						}
-					}
-					?>
-				</ul>
-				<?php
-			}
+                                    <p>
+                                        <button type="submit"
+                                                class="js-activate-service-id <?php echo $service_activation_button_class; ?>"
+                                                data-id="<?php echo $service->id; ?>"
+                                                data-custom-fields="<?php echo esc_attr( wp_json_encode( $service->custom_fields ) ); ?>">
+                                            <?php _e( 'Activate', 'wpml-translation-management' ) ?>
+                                        </button>
+                                        <?php
+                                        if ( isset( $service->doc_url ) && $service->doc_url ) {
+                                            ?>
+                                            &nbsp;<a href="<?php echo $service->doc_url; ?>"
+                                                     target="_blank"><?php echo __( 'Documentation', 'wpml-translation-management' ); ?></a>
+                                            <?php
+                                        }
+                                        ?>
+                                    </p>
+                                </li>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </ul>
+                    <?php
+                }
+            }
 			?>
 		</div>
 		<?php
@@ -644,50 +637,5 @@ class WPML_Translator_Settings {
 	 */
 	private function translation_service_has_translators( $active_service ) {
 		return $active_service && TranslationProxy::translator_selection_available();
-	}
-
-	/**
-	 * If the given $source is an error type, it will display an instant message
-	 *
-	 * @param WP_Error|TranslationProxy_Api_Error|Exception $source
-	 */
-	private function display_error( $source ) {
-		$error = false;
-		if ( $source instanceof Exception) {
-			$error = array(
-				'message' => $source->getMessage(),
-				'code'    => $source->getCode(),
-			);
-		} elseif ( is_wp_error( $source ) ) {
-			$error = array(
-				'message' => $source->get_error_message(),
-				'data'    => $source->get_error_data(),
-				'code'    => $source->get_error_code(),
-			);
-		}
-
-		if ( $error ) {
-			$message = '';
-
-			$message .= '<strong>';
-			if ( isset( $error[ 'code' ] ) && $error[ 'code' ] ) {
-				$message .= '#' . $error[ 'code' ] . ' ';
-			}
-			$message .= $error[ 'message' ];
-			$message .= '</strong>';
-			if ( isset( $error[ 'data' ] ) ) {
-				foreach ( $error[ 'data' ] as $data_key => $data_item ) {
-					if ( $data_key == 'details' ) {
-						$message .= '<br/>Details: ' . $data_item;
-					} elseif ( $data_key == 'service_id' ) {
-						$message .= '<br/>Service ID: ' . $data_item;
-					} else {
-						$message .= '<br/><pre>' . print_r( $data_item, true ) . '</pre>';
-					}
-				}
-			}
-			ICL_AdminNotifier::displayInstantMessage( $message, 'error' );
-		}
-		return $error;
 	}
 }

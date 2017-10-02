@@ -40,12 +40,13 @@ class WPML_Language_Resolution {
 		$this->maybe_reload();
 	}
 
-	public function current_lang_filter( $lang, WPML_Request $wpml_request_handler ) {
+	public function current_lang_filter( $lang ) {
+
 		if ( $this->current_request_lang !== $lang ) {
 			if ( $preview_lang = $this->filter_preview_language_code() ) {
 				$lang = $preview_lang;
-			} elseif ( $this->use_cookie_language() ) {
-				$lang = $wpml_request_handler->get_cookie_lang();
+			} elseif ( $this->use_referrer_language() === true ) {
+				$lang = $this->get_referrer_language_code();
 			}
 		}
 		$this->current_request_lang = $this->filter_for_legal_langs( $lang );
@@ -125,9 +126,10 @@ class WPML_Language_Resolution {
 	}
 
 	/**
-	 * @return bool
+	 * @return bool true if the current request requires determining the
+	 * request language from the HTTP referer
 	 */
-	private function use_cookie_language() {
+	private function use_referrer_language() {
 
 		return ( isset( $_GET['action'] ) && $_GET['action'] === 'ajax-tag-search' )
 		       || ( isset( $_POST['action'] ) && in_array( $_POST['action'],

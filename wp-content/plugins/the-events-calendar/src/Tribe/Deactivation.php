@@ -28,10 +28,6 @@ class Tribe__Events__Deactivation extends Tribe__Abstract_Deactivation {
 		$this->set_flags();
 		$this->clear_capabilities();
 		$this->flush_rewrite_rules();
-		/**
-		 * Fires an action during the-events-calendar deactivation
-		 */
-		do_action( 'tribe_events_blog_deactivate' );
 	}
 
 	/**

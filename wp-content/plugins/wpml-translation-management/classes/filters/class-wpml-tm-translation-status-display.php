@@ -125,7 +125,7 @@ class WPML_TM_Translation_Status_Display {
 			$text     = sprintf(
 				__(
 					"You can't edit this translation, because this translation to %s is already in progress.",
-					'wpml-translation-management'
+					'sitepress'
 				),
 				$language['display_name']
 			);
@@ -133,11 +133,11 @@ class WPML_TM_Translation_Status_Display {
 		} elseif ( $this->is_in_basket( $trid, $lang ) ) {
 			$text = __(
 				'Cannot edit this item, because it is currently in the translation basket.',
-				'wpml-translation-management'
+				'sitepress'
 			);
 		} elseif ( $this->is_lang_pair_allowed( $lang ) && $this->is_in_progress( $trid, $lang ) ) {
 			$language = $this->sitepress->get_language_details( $lang );
-			$text     = sprintf( __( 'Edit the %s translation', 'wpml-translation-management' ), $language['display_name'] );
+			$text     = sprintf( __( 'Edit the %s translation', 'sitepress' ), $language['display_name'] );
 		}
 
 		return $text;
@@ -227,14 +227,6 @@ class WPML_TM_Translation_Status_Display {
 
 	private function get_return_url() {
 		$args = array( 'wpml_tm_saved', 'wpml_tm_cancel' );
-
-		if ( wpml_is_ajax() ) {
-			if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
-				return remove_query_arg( $args, $_SERVER['HTTP_REFERER'] );
-			}
-
-			return null;
-		}
 
 		return remove_query_arg( $args );
 	}

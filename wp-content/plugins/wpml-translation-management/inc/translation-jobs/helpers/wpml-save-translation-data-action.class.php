@@ -248,9 +248,9 @@ class WPML_Save_Translation_Data_Action extends WPML_Translation_Job_Helper_With
 							'element_type' => 'post_' . $postarr['post_type']
 						) );
 						$wpdb->update( $wpdb->prefix . 'icl_translations', array( 'element_id' => $new_post_id ), array( 'translation_id' => $translation_id ) );
-						$user_message = __( 'Translation added: ', 'wpml-translation-management' ) . '<a href="' . $link . '">' . $postarr['post_title'] . '</a>.';
+						$user_message = __( 'Translation added: ', 'sitepress' ) . '<a href="' . $link . '">' . $postarr['post_title'] . '</a>.';
 					} else {
-						$user_message = __( 'Translation updated: ', 'wpml-translation-management' ) . '<a href="' . $link . '">' . $postarr['post_title'] . '</a>.';
+						$user_message = __( 'Translation updated: ', 'sitepress' ) . '<a href="' . $link . '">' . $postarr['post_title'] . '</a>.';
 					}
 
 					$this->add_message( array(
@@ -297,7 +297,7 @@ class WPML_Save_Translation_Data_Action extends WPML_Translation_Job_Helper_With
 			} else {
 				$this->add_message( array(
 					'type' => 'updated',
-					'text' => __( 'Translation (incomplete) saved.', 'wpml-translation-management' )
+					'text' => __( 'Translation (incomplete) saved.', 'sitepress' )
 				) );
 			}
 
@@ -345,7 +345,7 @@ class WPML_Save_Translation_Data_Action extends WPML_Translation_Job_Helper_With
 			} else {
 				$this->add_message( array(
 					'type' => 'error',
-					'text' => __( 'Submitted data is not valid.', 'wpml-translation-management' )
+					'text' => __( 'Submitted data is not valid.', 'sitepress' )
 				) );
 			}
 		}
@@ -363,13 +363,13 @@ class WPML_Save_Translation_Data_Action extends WPML_Translation_Job_Helper_With
 		if ( ! $job || ! $original_post || ! $element_type_prefix ) {
 			$is_valid = false;
 			if ( ! $job ) {
-				$validation_default_results['messages'][] = __( 'Job ID is missing', 'wpml-translation-management' );
+				$validation_default_results['messages'][] = __( 'Job ID is missing', 'sitepress' );
 			}
 			if ( ! $original_post ) {
-				$validation_default_results['messages'][] = __( 'The original post cannot be retrieved', 'wpml-translation-management' );
+				$validation_default_results['messages'][] = __( 'The original post cannot be retrieved', 'sitepress' );
 			}
 			if ( ! $element_type_prefix ) {
-				$validation_default_results['messages'][] = __( 'The type of the post cannot be retrieved', 'wpml-translation-management' );
+				$validation_default_results['messages'][] = __( 'The type of the post cannot be retrieved', 'sitepress' );
 			}
 		} elseif ( ! $this->tm_records->icl_translate_job_by_job_id( $job->job_id )->is_open() ) {
 			$is_valid                                 = false;

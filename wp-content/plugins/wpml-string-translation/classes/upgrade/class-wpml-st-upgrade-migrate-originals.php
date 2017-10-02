@@ -1,20 +1,14 @@
 <?php
 
-class WPML_ST_Upgrade_Migrate_Originals implements IWPML_St_Upgrade_Command {
-
-	/** @var wpdb $wpdb */
-	private $wpdb;
-
-	/** @var SitePress sitepress */
-	private $sitepress;
+class WPML_ST_Upgrade_Migrate_Originals extends WPML_WPDB_And_SP_User implements IWPML_St_Upgrade_Command {
+	
 
 	private $translations = array();
 	private $not_translated = array();
 	private $active_languages;
 	
-	public function __construct( wpdb $wpdb, SitePress $sitepress ) {
-		$this->wpdb      = $wpdb;
-		$this->sitepress = $sitepress;
+	public function __construct( &$wpdb, &$sitepress ) {
+		parent::__construct( $wpdb, $sitepress );
 		$active_languages = $this->sitepress->get_active_languages();
 		foreach( $active_languages as $lang ) {
 			$this->active_languages[] = $lang['code'];

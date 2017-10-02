@@ -38,19 +38,11 @@
 		map_add_marker: function( lat, lng, title, address, link ) {
 			var myLatlng = new google.maps.LatLng( lat, lng );
 
-			var marker = {
-					position: myLatlng,
-					map     : tg.map,
-					title   : title
-				};
-
-			// If we have a Map Pin set, we use it
-			if ( 'undefined' !== GeoLoc.pin_url && GeoLoc.pin_url ) {
-				marker.icon = GeoLoc.pin_url;
-			}
-
-			// Overwrite with an actual object
-			marker = new google.maps.Marker( marker );
+			var marker = new google.maps.Marker( {
+				position: myLatlng,
+				map     : tg.map,
+				title   : title
+			} );
 
 			var infoWindow = new google.maps.InfoWindow();
 
@@ -268,8 +260,7 @@
 			ts.params = {
 				action             : 'tribe_geosearch',
 				tribe_paged        : ts.paged,
-				tribe_event_display: ts.view,
-				featured           : tf.is_featured()
+				tribe_event_display: ts.view
 			};
 
 			if ( ts.category ) {
@@ -365,7 +356,7 @@
 
 					$( '#tribe-events-content' ).replaceWith( $the_content );
 
-					//If no events are returned, then hide Header
+					//If no events are returned, then hide Header 
 					if ( response.total_count == 0 ) {
 						$( '#tribe-events-header' ).hide();
 					}
@@ -380,13 +371,10 @@
 						document.title = ts.page_title;
 
 						if ( ts.do_string ) {
-							// strip the baseurl from the push state URL
-							var params = ts.params.replace( /&?baseurl=[^&]*/i, '' );
-
 							history.pushState( {
 								"tribe_paged" : ts.paged,
 								"tribe_params": ts.params
-							}, ts.page_title, td.cur_url + '?' + params );
+							}, ts.page_title, td.cur_url + '?' + ts.params );
 						}
 
 						if ( ts.pushstate ) {

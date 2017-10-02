@@ -29,7 +29,6 @@ class WPML_ST_Page_Translations_Persist implements IWPML_ST_Page_Translations_Pe
 						st.status,
 						s.gettext_context, 
 						st.value AS tra,
-						st.mo_string AS mo_string,
 						s.value AS orig
 					FROM {$this->wpdb->prefix}icl_string_pages sp
 					INNER JOIN {$this->wpdb->prefix}icl_string_urls su
@@ -63,7 +62,7 @@ class WPML_ST_Page_Translations_Persist implements IWPML_ST_Page_Translations_Pe
 			return true;
 		}
 
-		$expected_fields = array( 'id', 'name', 'context', 'status', 'gettext_context', 'tra', 'mo_string', 'orig' );
+		$expected_fields = array( 'id', 'name', 'context', 'status', 'gettext_context', 'tra', 'orig' );
 		$row             = current( $rowset );
 
 		if ( count( $row ) !== count( $expected_fields ) ) {
@@ -86,24 +85,14 @@ class WPML_ST_Page_Translations_Persist implements IWPML_ST_Page_Translations_Pe
 	 */
 	private function create_translation_from_db_record( array $res ) {
 		$has_translation = ! empty( $res['tra'] ) && ICL_TM_COMPLETE == $res['status'];
-		if ( $has_translation ) {
-			$value = $res['tra'];
-		} else {
-			$use_mo_string = ! empty( $res['mo_string'] );
-			if ( $use_mo_string ) {
-				$value = $res['mo_string'];
-			} else {
-				$value = $res['orig'];
-			}
-		}
-
+		$value = $has_translation ? $res['tra'] : $res['orig'];
 
 		return new WPML_ST_Page_Translation(
 			$res['id'],
 			$res['name'],
 			$res['context'],
 			$value,
-			$has_translation || $use_mo_string,
+			$has_translation,
 			$res['gettext_context']
 		);
 	}

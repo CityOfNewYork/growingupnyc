@@ -19,13 +19,24 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 			$control_ops = array( 'id_base' => 'tribe-events-countdown-widget' );
 
 			parent::__construct( 'tribe-events-countdown-widget', __( 'Events Countdown', 'tribe-events-calendar-pro' ), $widget_ops, $control_ops );
+
+			add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
+		}
+
+		public function load_assets( $hook ) {
+			if ( 'widgets.php' !== $hook ) {
+				return;
+			}
+
+			Tribe__Events__Template_Factory::asset_package( 'select2' );
+			wp_enqueue_script( 'tribe-admin-widget-countdown', tribe_events_pro_resource_url( 'admin-widget-countdown.js' ), array( 'jquery' ), apply_filters( 'tribe_events_pro_js_version', Tribe__Events__Pro__Main::VERSION ) );
 		}
 
 		public function update( $new_instance, $old_instance ) {
 			$instance = $old_instance;
 			$instance['title'] = strip_tags( $new_instance['title'] );
 			$instance['show_seconds'] = ( isset( $new_instance['show_seconds'] ) ? 1 : 0 );
-			if ( isset( $new_instance['type'] ) && in_array( $new_instance['type'], array( 'next-event', 'single-event' ) ) ) {
+			if ( isset( $new_instance['type'] ) && in_array( $new_instance['type'], array( 'next-event', 'single-event' ) ) ){
 				$instance['type'] = $new_instance['type'];
 			} else {
 				$instance['type'] = 'single-event';
@@ -34,12 +45,6 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 
 			$instance['event_ID'] = $instance['event'] = absint( $new_instance['event'] );
 			$instance['event_date'] = $event_data[1];
-
-			if ( isset( $new_instance['jsonld_enable'] ) && $new_instance['jsonld_enable'] == true ) {
-				$instance['jsonld_enable'] = 1;
-			} else {
-				$instance['jsonld_enable'] = 0;
-			}
 
 			return $instance;
 		}
@@ -58,32 +63,22 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 			);
 
 			$instance = wp_parse_args( (array) $instance, $defaults );
-			if ( empty( $instance['event'] ) ) {
+			if ( empty( $instance['event'] ) ){
 				$instance['event'] = $instance['event_ID'];
 			}
 
 			$limit = apply_filters( 'tribe_events_pro_countdown_widget_limit', 250 );
 			$paged = apply_filters( 'tribe_events_pro_countdown_widget_paged', 1 );
 
-			/**
-			 * Filters which post types are allowed for the widget.
-			 *
-			 * @param array allowed statuses; default `publish`.
-			 *
-			 * @since 4.4.11
-			 */
-			$statuses = apply_filters( 'tribe_events_pro_countdown_widget_allowed_status', array( 'publish' ) );
-
 			$events = tribe_get_events( array(
-				'eventDisplay'   => 'list',
+				'eventDisplay' => 'list',
 				'posts_per_page' => $limit,
-				'post_status'    => $statuses,
-				'paged'          => $paged,
+				'paged' => $paged,
 			) );
 
-			if ( is_numeric( $instance['event'] ) ) {
+			if ( is_numeric( $instance['event'] ) ){
 				$event = get_post( $instance['event'] );
-				if ( $event instanceof WP_Post && ! in_array( $event->ID, wp_list_pluck( $events, 'ID' ) ) ) {
+				if ( $event instanceof WP_Post && ! in_array( $event->ID, wp_list_pluck( $events, 'ID' ) ) ){
 					$event->EventStartDate = tribe_get_start_date( $event->ID, false, Tribe__Date_Utils::DBDATETIMEFORMAT );
 					$event->EventEndDate = tribe_get_end_date( $event->ID, false, Tribe__Date_Utils::DBDATETIMEFORMAT );
 					$events = array_merge( array( $event ), $events );
@@ -110,7 +105,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 			wp_enqueue_script( 'tribe-events-countdown-widget', tribe_events_pro_resource_url( 'widget-countdown.js' ), array( 'jquery' ), apply_filters( 'tribe_events_pro_js_version', Tribe__Events__Pro__Main::VERSION ), true );
 
 			// Setup required variables
-			if ( empty( $instance['event'] ) ) {
+			if ( empty( $instance['event'] ) ){
 				$instance['event'] = $instance['event_ID'];
 			}
 
@@ -170,27 +165,6 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 				$ret = $this->generate_countdown_output( $seconds, $instance['complete'], $hourformat, $event );
 			}
 
-			$jsonld_enable = isset( $instance['jsonld_enable'] ) ? $instance['jsonld_enable'] : true;
-
-			/**
-			 * Filters whether JSON LD information should be printed to the page or not for this widget type.
-			 *
-			 * @param bool $jsonld_enable Whether JSON-LD should be printed to the page or not; default `true`.
-			 */
-			$jsonld_enable = apply_filters( 'tribe_events_' . $this->id_base . '_jsonld_enabled', $jsonld_enable );
-
-
-			/**
-			 * Filters whether JSON LD information should be printed to the page for any widget type.
-			 *
-			 * @param bool $jsonld_enable Whether JSON-LD should be printed to the page or not; default `true`.
-			 */
-			$jsonld_enable = apply_filters( 'tribe_events_widget_jsonld_enabled', $jsonld_enable );
-
-			if ( $jsonld_enable ) {
-				$this->print_jsonld_markup_for( $event );
-			}
-
 			return $ret;
 		}
 
@@ -220,16 +194,6 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 				<span class="tribe-countdown-format">' . $hourformat . '</span>
 				' . $complete . '
 			</div>';
-		}
-
-		protected function print_jsonld_markup_for( $event ) {
-			$event = get_post( $event );
-
-			if ( empty( $event ) ) {
-				return;
-			}
-
-			Tribe__Events__JSON_LD__Event::instance()->markup( $event );
 		}
 
 	}

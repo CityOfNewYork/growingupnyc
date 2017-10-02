@@ -1,37 +1,6 @@
 <?php
 
-class WPML_Settings_Helper {
-
-	/** @var SitePress */
-	protected $sitepress;
-
-	/** @var WPML_Post_Translation */
-	protected $post_translation;
-
-	/**
-	 * @var WPML_Settings_Filters
-	 */
-	private $filters;
-
-	/**
-	 * @param WPML_Post_Translation $post_translation
-	 * @param SitePress             $sitepress
-	 */
-	public function __construct( WPML_Post_Translation $post_translation, SitePress $sitepress ) {
-		$this->sitepress        = $sitepress;
-		$this->post_translation = $post_translation;
-	}
-
-	/**
-	 * @return WPML_Settings_Filters
-	 */
-	private function get_filters() {
-		if ( ! $this->filters ) {
-			$this->filters = new WPML_Settings_Filters();
-		}
-
-		return $this->filters;
-	}
+class WPML_Settings_Helper extends WPML_SP_And_PT_User {
 
 	function set_post_type_translatable( $post_type ) {
 		$sync_settings               = $this->sitepress->get_setting( 'custom_posts_sync_option', array() );
@@ -132,6 +101,8 @@ class WPML_Settings_Helper {
 	 * @return array
 	 */
 	function _override_get_translatable_documents( $types ) {
+		global $wp_post_types;
+
 		$tm_settings = $this->sitepress->get_setting('translation-management', array());
 		foreach ( $types as $k => $type ) {
 			if ( isset( $tm_settings[ 'custom-types_readonly_config' ][ $k ] )
@@ -140,7 +111,11 @@ class WPML_Settings_Helper {
 				unset( $types[ $k ] );
 			}
 		}
-		$types = $this->get_filters()->get_translatable_documents( $types, $tm_settings['custom-types_readonly_config'] );
+		foreach ( $tm_settings[ 'custom-types_readonly_config' ] as $cp => $translate ) {
+			if ( $translate && ! isset( $types[ $cp ] ) && isset( $wp_post_types[ $cp ] ) ) {
+				$types[ $cp ] = $wp_post_types[ $cp ];
+			}
+		}
 
 		return $types;
 	}

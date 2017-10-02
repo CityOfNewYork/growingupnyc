@@ -16,29 +16,27 @@
 
 /* Tribe Theme Color */
 .tribe-events-grid {
+	.type-tribe_events a {
+		color: #fff;
+	}
+
 	.tribe-grid-header .tribe-week-today {
 	 	background-color: #21759b;
 	}
 }
 
-.tribe-grid-allday,
-.tribe-grid-body {
-	.tribe-event-featured {
-		&.tribe-events-week-allday-single,
-		&.tribe-events-week-hourly-single {
-			background-color: #0c4e67;
-			background-color: rgba( 12, 78, 103, 0.75 );
-			border-color: #1b607f;
+.tribe-grid-allday .tribe-events-week-allday-single,
+.tribe-grid-body .tribe-events-week-hourly-single,
+.tribe-grid-allday .tribe-events-week-allday-single:hover,
+.tribe-grid-body .tribe-events-week-hourly-single:hover {
+	background-color: #21759b;
+	background-color: rgba(33, 117, 155, .75);
+	border-color: #1b607f;
+}
 
-			&:hover {
-				background-color: rgba( 12, 78, 103, 0.9 );
-			}
-
-			a {
-				color: white;
-			}
-		}
-	}
+.tribe-grid-allday .tribe-events-week-allday-single:hover,
+.tribe-grid-body .tribe-events-week-hourly-single:hover {
+	background-color: rgba(33, 117, 155, .9);
 }
 
 .tribe-grid-allday .type-tribe_events > div[id^="tribe-events-tooltip"]{
@@ -139,6 +137,10 @@
 		display: inline-block;
 		zoom: 1;
 	}
+
+	#tribe-events-header li a {
+		display: none !important;
+	}
 }
 
 #tribe-events-header .tribe-events-ajax-loading {
@@ -195,26 +197,14 @@
 	margin-top: 23px;
 }
 
-/* Tile styling */
-.type-tribe_events {
-	&.tribe-events-photo-event {
-		.tribe-events-photo-event-wrap {
-			border: 0;
-			background: #f6f6f6;
+.type-tribe_events.tribe-events-photo-event .tribe-events-photo-event-wrap {
+	border: 0;
+	background: #f6f6f6;
+}
 
-			&:hover {
-				background: #fff;
-			}
-		}
-
-		&.tribe-event-featured .tribe-events-photo-event-wrap {
-			background: #0c4e67;
-
-			&:hover {
-				background: #1c5e77;
-			}
-		}
-	}
+/* Tile Styling */
+.type-tribe_events.tribe-events-photo-event .tribe-events-photo-event-wrap:hover {
+	background: #fff;
 }
 
 .tribe-events-loop .tribe-events-photo-event .tribe-events-list-event-description  {
@@ -224,6 +214,10 @@
 .tribe-events-photo {
 	#tribe-events-content .tribe-events-list-event-description p {
 		line-height: 1.45;
+	}
+
+	#tribe-events-header li a {
+		display: none !important;
 	}
 }
 

@@ -22,80 +22,15 @@
  *
  */
 
-/* Cost */
-
-.tribe-events-event-cost {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-align: center;
-	    -ms-flex-align: center;
-	        align-items: center;
-	float: none;
-	margin: 0 0 15px;
-}
-
-.tribe-events-event-cost span {
-	border: 1px solid #ddd;
-	display: block;
-	font-style: normal;
-	font-weight: bold;
-	line-height: 1;
-	padding: 8px 12px;
-	text-align: center;
-	text-overflow: ellipsis;
-}
-
-.tribe-events-event-cost .tribe-tickets-left {
-	background: #f0f0f0;
-	border-left: none;
-	color: #727272;
-	font-style: italic;
-	font-weight: normal;
-}
-
-.tribe-events-event-cost .tribe-out-of-stock {
-	background: #f0f0f0;
-	border-left: none;
-	color: #727272;
-	font-style: italic;
-	font-weight: normal;
-}
-
-.tribe-events-event-cost .tribe-ticket-cost {
-	margin: 0;
-}
-
-input.tribe-button,
-button.tribe-button,
-a.tribe-button,
-.tribe-button {
-	border-radius: 3px;
-	line-height: 1;
-	margin: 10px;
-	padding: 9px 12px;
-}
-
-input.tribe-button.sold-out, button.tribe-button.sold-out, a.tribe-button.sold-out, .tribe-button.sold-out {
-	background: none;
-	border: none;
-	color: #a00;
-}
-
-input.tribe-button.sold-out:hover, button.tribe-button.sold-out:hover, a.tribe-button.sold-out:hover, .tribe-button.sold-out:hover {
-	cursor: default;
-}
-
 /* = Global & Miscellaneous Styles
 =============================================*/
 
-#tribe-events-pg-template,
-.tribe-events-pg-template {
+#tribe-events-pg-template {
 	margin: 0 auto;
-	max-width: 1200px;
+	max-width: 1000px;
 }
 
-/* Default Events Template Base HTML Styles */
+/* Default Events Template Base HTML STyles */
 
 .tribe-events-after-html {
 	clear: both;
@@ -173,10 +108,6 @@ input.tribe-button.sold-out:hover, button.tribe-button.sold-out:hover, a.tribe-b
 
 .tribe-events-back {
 	margin: 0 0 20px 0;
-}
-
-.events-list .tribe-events-back.tribe-events-loop {
-	margin: 0 auto 20px;
 }
 
 /* Links */
@@ -539,7 +470,7 @@ h2.tribe-events-page-title a:hover,
 .tribe-events-ajax-loading {
 	background: #666;
 	border-radius: 5px;
-	box-shadow: none;
+	box-shadow: none !important;
 	display: none;
 	left: 50%;
 	margin-left: -27px;
@@ -632,122 +563,7 @@ select.tribe-events-dropdown {
 	margin-bottom: 60px;
 }
 
-.tribe-events-list .tribe-events-loop .tribe-event-featured {
-	background: #0ea0d7;
-	margin-bottom: 32px;
-	margin-bottom: 2rem;
-	padding: 0 24px 16px;
-	padding: 0 1.5rem 1rem;
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured.tribe-events-first {
-	padding-top: 0;
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-event-image {
-	display: block;
-	float: none;
-	margin: 0 -24px 0 -24px;
-	margin: 0 -1.5rem 0 -1.5rem;
-	width: auto;
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-list-event-title {
-	display: inline-block;
-	margin-top: 24px;
-	margin-top: 1.5rem;
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-list-event-title a {
-	color: #fff;
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-event-meta {
-	background-color: transparent;
-	color: rgba(255, 255, 255, .7);
-	font-weight: normal;
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-content {
-	color: rgba(255, 255, 255, .9);
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured a {
-	color: rgba(255, 255, 255, .7);
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured a:active,
-			.tribe-events-list .tribe-events-loop .tribe-event-featured a:hover {
-	color: rgba(255, 255, 255, .9);
-}
-
-/* Cost */
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-event-cost {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-align: center;
-	    -ms-flex-align: center;
-	        align-items: center;
-	float: none;
-	margin: 30px 0;
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-event-cost span {
-	border: 0;
-	color: #fff;
-	background: rgba(255, 255, 255, .1);
-	display: block;
-	font-style: normal;
-	font-weight: bold;
-	line-height: 1;
-	padding: 10px;
-	text-align: center;
-	text-overflow: ellipsis;
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-event-cost .ticket-cost {
-	background: rgba(255, 255, 255, .2);
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-event-cost .tribe-tickets-left {
-	font-style: italic;
-	font-weight: normal;
-	margin-left: 1px;
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-event-cost .tribe-out-of-stock {
-	background: #f0f0f0;
-	border-left: none;
-	color: #727272;
-	font-style: italic;
-	font-weight: normal;
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-event-cost .tribe-ticket-cost {
-	margin: 0;
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-event-cost .tribe-button {
-	color: #000;
-	font-weight: bold;
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-event-cost .tribe-button:hover {
-	color: #0ea0d7;
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-events-event-cost .tribe-button:active {
-	color: #000;
-}
-
-.tribe-events-list .tribe-events-loop .tribe-event-featured .tribe-button {
-	background: #fff;
-	color: #0ea0d7;
-}
-
-.tribe-events-list .tribe-events-loop .tribe-events-event-image {
+.tribe-events-list .tribe-events-loop .tribe-events-image {
 	float: left;
 	margin: 0 3% 0 0;
 	width: 30%;
@@ -761,15 +577,20 @@ select.tribe-events-dropdown {
 	margin-bottom: 15px;
 }
 
-.tribe-events-list .tribe-events-list-event-title {
+.tribe-events-list h2.tribe-events-list-event-title {
 	border: none;
-	display: inline-block;
+	display: block;
 	font-size: 1.4em;
 	letter-spacing: 0;
 	line-height: 1.4em;
 	margin: 0;
 	padding: 0;
 	text-transform: none;
+}
+
+.tribe-events-list h2.tribe-events-list-event-title {
+	display: inline;
+	float: none;
 }
 
 .tribe-events-list .type-tribe_events {
@@ -801,9 +622,9 @@ select.tribe-events-dropdown {
 }
 
 .tribe-events-list .tribe-events-event-image + div.tribe-events-content {
-	display: block;
-	float: none;
+	float: left;
 	position: relative;
+	width: 67%;
 }
 
 .tribe-events-list .tribe-events-loop .tribe-events-event-meta .recurringinfo {
@@ -834,8 +655,23 @@ select.tribe-events-dropdown {
 	margin: 0 0 8px 0;
 }
 
-.tribe-events-list .tribe-events-venue-details {
-	margin: 15px 0;
+/* Cost */
+
+.tribe-events-list .tribe-events-event-cost {
+	float: right;
+	margin: 0 0 5px 5px;
+}
+
+.tribe-events-list .tribe-events-event-cost span {
+	background: #eee;
+	border: 1px solid #ddd;
+	display: block;
+	font-style: normal;
+	font-weight: bold;
+	line-height: 1.3;
+	padding: 5px 10px;
+	text-align: center;
+	text-overflow: ellipsis;
 }
 
 .tribe-events-event-details .tribe-events-event-meta address.tribe-events-address {
@@ -845,7 +681,7 @@ select.tribe-events-dropdown {
 	line-height: inherit;
 }
 
-/* Date Separators */
+/* Date Seperators */
 
 .tribe-events-list-separator-year {
 	color: #ccc;
@@ -1020,6 +856,7 @@ select.tribe-events-dropdown {
 /* Map */
 
 .single-tribe_events .tribe-events-venue-map {
+	display: inline;
 	background: #eee;
 	border: 1px solid #ddd;
 	border-radius: 3px;
@@ -1028,24 +865,28 @@ select.tribe-events-dropdown {
 	margin: 20px 4% 2% 0;
 	padding: 5px;
 	vertical-align: top;
-	width: 90%;
+	width: 58%;
 	zoom: 1;
 }
 
-.single-tribe_events .tribe-events-meta-group + .tribe-events-meta-group + .tribe-events-meta-group-gmap {
-	clear: both;
-	display: block;
-	float: none;
-	width: auto;
+.single-tribe_events #tribe-events-gmap {
+	height: 0 !important;
+	margin: 0 !important;
+	padding-top: 50%;
+	width: 100% !important;
 }
 
-.single-tribe_events .tribe-events-meta-group + .tribe-events-meta-group + .tribe-events-meta-group-gmap .tribe-events-venue-map {
+.single-tribe_events .tribe-events-meta-group .tribe-events-venue-map {
 	float: none;
+	margin: 20px 0 0;
 	width: 100%;
 }
 
-.single-tribe_events .secondary .tribe-events-venue-map {
-	width: 58%;
+.single-tribe_events .tribe-events-meta-group #tribe-events-gmap {
+	height: 0 !important;
+	margin-top: 50px;
+	padding-top: 100%;
+	width: 100% !important;
 }
 
 /* Event Meta */
@@ -1075,6 +916,7 @@ select.tribe-events-dropdown {
 
 .tribe-events-event-meta .tribe-events-meta-group,
 	.tribe-events-event-meta .column {
+	display: inline;
 	box-sizing: border-box;
 	display: inline-block;
 	float: left;
@@ -1121,139 +963,22 @@ select.tribe-events-dropdown {
 	margin-left: 5%;
 }
 
-.tribe-events-day .tribe-event-featured {
-	background: #0ea0d7;
-	margin-bottom: 32px;
-	margin-bottom: 2rem;
-	padding: 0 24px 16px;
-	padding: 0 1.5rem 1rem;
+#tribe-events-day {
+	padding: 0 15px;
 }
 
-.tribe-events-day .tribe-event-featured .tribe-events-content {
-	display: block;
-	float: none;
-	width: auto;
-}
-
-.tribe-events-day .tribe-event-featured.tribe-events-first {
-	padding-top: 0;
-}
-
-.tribe-events-day .tribe-event-featured .tribe-events-event-image {
-	display: block;
-	float: none;
-	margin: 0 -24px 0 -24px;
-	margin: 0 -1.5rem 0 -1.5rem;
-	width: auto;
-}
-
-.tribe-events-day .tribe-event-featured .tribe-events-list-event-title {
-	display: inline-block;
-	margin-top: 24px;
-	margin-top: 1.5rem;
-}
-
-.tribe-events-day .tribe-event-featured .tribe-events-list-event-title a {
-	color: #fff;
-}
-
-.tribe-events-day .tribe-event-featured .tribe-events-event-meta {
-	background-color: transparent;
-	color: rgba(255, 255, 255, .7);
-	font-weight: normal;
-}
-
-.tribe-events-day .tribe-event-featured .tribe-events-content {
-	color: rgba(255, 255, 255, .9);
-}
-
-.tribe-events-day .tribe-event-featured a {
-	color: rgba(255, 255, 255, .7);
-}
-
-.tribe-events-day .tribe-event-featured a:active,
-			.tribe-events-day .tribe-event-featured a:hover {
-	color: rgba(255, 255, 255, .9);
-}
-
-/* Cost */
-
-.tribe-events-day .tribe-event-featured .tribe-events-event-cost {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	-webkit-box-align: center;
-	    -ms-flex-align: center;
-	        align-items: center;
-	float: none;
-	margin: 30px 0;
-}
-
-.tribe-events-day .tribe-event-featured .tribe-events-event-cost span {
-	border: 0;
-	color: #fff;
-	background: rgba(255, 255, 255, .1);
-	display: block;
-	font-style: normal;
-	font-weight: bold;
-	line-height: 1;
-	padding: 10px;
-	text-align: center;
-	text-overflow: ellipsis;
-}
-
-.tribe-events-day .tribe-event-featured .tribe-events-event-cost .ticket-cost {
-	background: rgba(255, 255, 255, .2);
-}
-
-.tribe-events-day .tribe-event-featured .tribe-events-event-cost .tribe-tickets-left {
-	font-style: italic;
-	font-weight: normal;
-	margin-left: 1px;
-}
-
-.tribe-events-day .tribe-event-featured .tribe-events-event-cost .tribe-out-of-stock {
-	background: #f0f0f0;
-	border-left: none;
-	color: #727272;
-	font-style: italic;
-	font-weight: normal;
-}
-
-.tribe-events-day .tribe-event-featured .tribe-events-event-cost .tribe-ticket-cost {
-	margin: 0;
-}
-
-.tribe-events-day .tribe-event-featured .tribe-events-event-cost .tribe-button {
-	color: #000;
-	font-weight: bold;
-}
-
-.tribe-events-day .tribe-event-featured .tribe-events-event-cost .tribe-button:hover {
-	color: #0ea0d7;
-}
-
-.tribe-events-day .tribe-event-featured .tribe-events-event-cost .tribe-button:active {
-	color: #000;
-}
-
-.tribe-events-day .tribe-event-featured .tribe-button {
-	background: #fff;
-	color: #0ea0d7;
-}
-
-.tribe-events-day .type-tribe_events {
+#tribe-events-day .type-tribe_events {
 	margin-left: 0;
 }
 
-.tribe-events-day .tribe-events-event-image {
+#tribe-events-day .tribe-events-event-image {
 	display: inline-block;
 	float: left;
 	margin: 0 3% 0 0;
 	width: 30%;
 }
 
-.tribe-events-day .tribe-events-content {
+#tribe-events-day .tribe-events-content {
 	display: inline-block;
 	float: right;
 	padding: 0;
@@ -1275,28 +1000,6 @@ select.tribe-events-dropdown {
 	width: 100%;
 }
 
-#tribe-events-content table.tribe-events-calendar .type-tribe_events.tribe-event-featured {
-	background: #0ea0d7;
-	margin: 0;
-	padding: 6px 14px;/* This is a failover if the browser doesn't support calc */
-	padding: 6px calc( 5% + 8px );
-}
-
-.events-archive.events-gridview #tribe-events-content table.tribe-events-calendar .type-tribe_events.tribe-event-featured {
-	margin: 0;
-	padding: 6px 14px;/* This is a failover if the browser doesn't support calc */
-	padding: 6px calc( 5% + 8px );
-}
-
-#tribe-events-content table.tribe-events-calendar .type-tribe_events.tribe-event-featured .tribe-events-month-event-title a {
-	color: #fff;
-}
-
-#tribe-events-content table.tribe-events-calendar .type-tribe_events.tribe-event-featured .tribe-events-month-event-title a:active,
-					#tribe-events-content table.tribe-events-calendar .type-tribe_events.tribe-event-featured .tribe-events-month-event-title a:hover {
-	color: #eee;
-}
-
 #tribe-events-content table.tribe-events-calendar,
 	#tribe-events-content .tribe-events-calendar td {
 	border: 1px solid #bbb;
@@ -1306,7 +1009,7 @@ select.tribe-events-dropdown {
 	box-sizing: border-box;
 	color: #114b7d;
 	font-size: 12px;
-	height: 145px;
+	height: 110px;
 	padding: 0 0 .5em;
 	vertical-align: top;
 	width: 14.28%;
@@ -1335,7 +1038,6 @@ select.tribe-events-dropdown {
 
 .tribe-events-calendar .tribe-events-tooltip,
 .tribe-events-week .tribe-events-tooltip,
-.tribe-events-shortcode.view-week .tribe-events-tooltip,
 .recurring-info-tooltip {
 	background-color: #f9f9f9;
 	border: 1px solid #666;
@@ -1364,7 +1066,6 @@ select.tribe-events-dropdown {
 
 .tribe-events-calendar .tribe-events-right .tribe-events-tooltip,
 .tribe-events-week .tribe-events-right .tribe-events-tooltip,
-.tribe-events-shortcode.view-week .tribe-events-right .tribe-events-tooltip,
 .recurring-info-tooltip {
 	left: auto;
 	right: 3px;
@@ -1378,39 +1079,6 @@ select.tribe-events-dropdown {
 .tribe-events-tooltip ul,
 	.tribe-events-tooltip ol {
 	margin-left: 1.6em;
-}
-
-/** For images contained *inside* the tooltip body, let's constrain the size by default */
-
-.tribe-events-tooltip .tribe-events-event-body .tribe-events-event-thumb img {
-	max-height: 150px;
-	max-width: 150px;
-}
-
-/** For when a tooltip is near top edge of viewport, so displays below event title instead of above it. */
-
-.tribe-events-tooltip.tribe-events-tooltip-flipdown:before {
-	border: 10px solid transparent;
-	border-bottom-color: #666;
-	content: ' ';
-	display: block;
-	height: 0;
-	left: 17px;
-	position: absolute;
-	top: -21px;
-	width: 0;
-	z-index: 2;
-}
-
-.tribe-events-tooltip.tribe-events-tooltip-flipdown .tribe-events-arrow {
-	display: none;
-}
-
-/** Tweak location of the arrow on "flipdown" tooltips for events on the right side of the screen. */
-
-.tribe-events-right .tribe-events-tooltip.tribe-events-tooltip-flipdown:before {
-	left: auto;
-	right: 43px;
 }
 
 /* Recurring info tooltip */
@@ -1432,18 +1100,6 @@ select.tribe-events-dropdown {
 
 .event-is-recurring:hover {
 	color: #000;
-}
-
-.tribe-event-featured .event-is-recurring {
-	color: rgba(255, 255, 255, .7);
-}
-
-.tribe-event-featured .event-is-recurring:hover {
-	color: #fff;
-}
-
-.tribe-event-featured .event-is-recurring div {
-	color: rgba(0, 0, 0, .7);
 }
 
 .recurring-info-tooltip.tribe-events-tooltip {
@@ -1509,12 +1165,14 @@ select.tribe-events-dropdown {
 
 #tribe-events-content .tribe-events-calendar div[id*='tribe-events-event-'] h3.tribe-events-month-event-title {
 	font-family: sans-serif;
-	font-size: 98%;
+	font-size: 13px;
+	font-weight: bold;
 	font-weight: normal;
+	letter-spacing: 0;
 	line-height: 1.25;
 	margin: 0;
 	overflow: hidden;
-	padding: 3%;
+	padding: 0;
 	text-transform: none;
 }
 
@@ -1543,16 +1201,9 @@ select.tribe-events-dropdown {
 	margin: 3px 0;
 }
 
-.tribe-events-tooltip:not(.tribe-event-featured) .tribe-events-event-thumb {
-	padding: 5px 5px 5px 0;
-}
-
-.tribe-events-tooltip.tribe-event-featured .tribe-events-event-thumb {
-	padding: 2px 0 8px 0;
-}
-
 .tribe-events-tooltip .tribe-events-event-thumb {
 	float: left;
+	padding: 5px 5px 5px 0;
 }
 
 .tribe-events-tooltip .tribe-events-event-thumb img {
@@ -1575,57 +1226,11 @@ select.tribe-events-dropdown {
 
 .tribe-events-list-widget ol li {
 	list-style: none;
-	margin-bottom: 8px;
-	margin-bottom: .5rem;
-}
-
-.tribe-events-list-widget .tribe-list-widget {
-	margin-left: 0;
-}
-
-.tribe-events-list-widget .tribe-events-list-widget-events {
-	padding: 0 24px;
-	padding: 0 1.5rem;
-	margin-bottom: 20px;
-	margin-bottom: 1.25rem;
-}
-
-.tribe-events-list-widget .tribe-event-title {
-	margin-bottom: 4px;
-	margin-bottom: .25rem;
-	margin-top: 0;
+	margin-bottom: 30px;
 }
 
 .tribe-events-list-widget .duration {
 	font-weight: bold;
-}
-
-.tribe-events-list-widget .tribe-event-featured {
-	background: #0ea0d7;
-	padding-bottom: 12px;
-	padding-bottom: .75rem;
-}
-
-.tribe-events-list-widget .tribe-event-featured .tribe-event-title {
-	margin-top: 12px;
-	margin-top: .75rem;
-}
-
-.tribe-events-list-widget .tribe-event-featured .tribe-event-title a {
-	color: white;
-}
-
-.tribe-events-list-widget .tribe-event-featured .tribe-event-image {
-	line-height: 0;
-	margin-left: -24px;
-	margin-left: -1.5rem;
-	margin-right: -24px;
-	margin-right: -1.5rem;
-	overflow: hidden;
-}
-
-.tribe-events-list-widget .tribe-event-featured .tribe-event-duration {
-	color: white;
 }
 
 /* = Events Navigation Bar
@@ -1634,6 +1239,10 @@ select.tribe-events-dropdown {
 
 /* Datepicker
    ========================================================================== */
+
+.datepicker {
+	z-index: 1000 !important;
+}
 
 .datepicker td,
 	.datepicker table tr td span {
@@ -1652,10 +1261,6 @@ select.tribe-events-dropdown {
 .datepicker table tr td.active.active:hover, .datepicker table tr td span.active.active:hover {
 	background: #dadada;
 	color: inherit;
-}
-
-body.admin-bar .datepicker {
-	margin-top: 32px;
 }
 
 #tribe-events-bar {
@@ -1689,8 +1294,7 @@ body.admin-bar .datepicker {
 	border-bottom: 1px dashed #b9b9b9;
 	border-radius: 0;
 	box-shadow: none;
-	font-style: italic;
-	font-weight: normal;
+	font-weight: bold;
 	height: auto;
 	line-height: 1;
 	padding: 5px;
@@ -1712,7 +1316,7 @@ body.admin-bar .datepicker {
 	font-size: 13px;
 	height: auto;
 	letter-spacing: 0;
-	line-height: 2;
+	line-height: 20px;
 	padding: 10px;
 	width: 100%;
 }
@@ -1742,6 +1346,10 @@ body.admin-bar .datepicker {
 
 #tribe-bar-form .tribe-bar-filters-inner {
 	margin: 0;
+}
+
+#tribe-bar-form.tribe-bar-full .tribe-bar-filters {
+	display: block !important;
 }
 
 #tribe-bar-form #tribe-bar-views {
@@ -1932,6 +1540,7 @@ input[name*='tribe-bar-']:-moz-placeholder {
 }
 
 .tribe-bar-mini .tribe-bar-filters {
+	display: block !important;
 	float: left;
 	width: 83.3333%;
 }
@@ -2219,9 +1828,9 @@ input[name*='tribe-bar-']:-moz-placeholder {
 	background-size: 12px 16px;
 }
 
-/* =========================================================================
+/* ==========================================================================
   Theme Compatibility
-========================================================================== */
+   ========================================================================== */
 
 /* Twenty Fourteen
 ========================================================================== */
@@ -2283,7 +1892,9 @@ input[name*='tribe-bar-']:-moz-placeholder {
 
 .tribe-theme-twentyfifteen.single-tribe_events .tribe-events-single {
 	box-shadow: none;
-	margin: 0;
+	margin-bottom: 0 !important;
+	margin-left: 0;
+	margin-right: 0;
 }
 
 .tribe-theme-twentyfifteen.tribe-events-week .tribe-events-grid .hentry {
@@ -2292,13 +1903,15 @@ input[name*='tribe-bar-']:-moz-placeholder {
 }
 
 .tribe-theme-twentyfifteen .tribe-events-list-widget .type-tribe_events {
-	border-top: 1px solid rgba(51, 51, 51, .1);
+	border-top: 1px solid rgba( 51, 51, 51, .1 );
 	box-shadow: none;
 	margin-left: 0;
 	margin-right: 0;
 }
 
 .tribe-theme-twentyfifteen .tribe-events-list-widget .entry-title {
+	font-size: 35.2px;
+	font-size: 2.2rem;
 	font-size: 22px;
 	line-height: 1.4545;
 }
@@ -2356,47 +1969,28 @@ input[name*='tribe-bar-']:-moz-placeholder {
 /* Twenty Sixteen
 ========================================================================== */
 
-.tribe-theme-twentysixteen table.tribe-events-calendar {
+body.tribe-theme-twentysixteen table.tribe-events-calendar {
 	table-layout: auto;
 }
 
-.tribe-theme-twentysixteen .tribe-events-single-section-title:first-child {
+body.tribe-theme-twentysixteen .tribe-events-single-section-title:first-child {
 	margin-top: 20px;
 }
 
-.tribe-theme-twentysixteen .tribe-events-content.entry-summary {
+body.tribe-theme-twentysixteen .tribe-events-content.entry-summary {
 	font-size: inherit;
 	margin-bottom: 0;
 	margin-top: 5px;
 }
 
-.tribe-theme-twentysixteen.events-archive .entry-content,
-	.tribe-theme-twentysixteen.events-archive .entry-header {
+body.tribe-theme-twentysixteen.events-archive .entry-content,
+	body.tribe-theme-twentysixteen.events-archive .entry-header {
 	width: auto;
 }
 
-.tribe-theme-twentysixteen .datepicker table {
+body.tribe-theme-twentysixteen .datepicker table {
 	border: 0;
 	width: auto;
-}
-
-.tribe-theme-twentysixteen .entry-content a {
-	box-shadow: none;
-}
-
-.tribe-theme-twentysixteen h2.tribe-events-list-event-title {
-	clear: none;
-}
-
-/* Twenty Seventeen
-========================================================================== */
-
-.tribe-theme-twentyseventeen .entry-content a {
-	box-shadow: none;
-}
-
-.tribe-theme-twentyseventeen.single-tribe_events .single-featured-image-header {
-	display: none;
 }
 
 /* = Events Retina
@@ -2413,16 +2007,9 @@ input[name*='tribe-bar-']:-moz-placeholder {
 	word-wrap: normal !important;
 }
 
-@media screen and (max-width: 767px) {
-
-	.single-tribe_events .secondary .tribe-events-venue-map {
-		width: 90%;
-	}
-}
-
 @media screen and (min-width: 44.375em) {
 
-	.tribe-events-day .tribe-events-content {
+	#tribe-events-day .tribe-events-content {
 		margin-left: 0;
 		margin-right: 0;
 	}
@@ -2433,13 +2020,6 @@ input[name*='tribe-bar-']:-moz-placeholder {
 	#tribe-events-content .tribe-events-tooltip ul,
 	#tribe-events-content .tribe-events-tooltip ol {
 		margin-left: 1.6em;
-	}
-}
-
-@media screen and (max-width: 782px) {
-
-	body.admin-bar .datepicker {
-		margin-top: 46px;
 	}
 }
 
@@ -2475,7 +2055,7 @@ input[name*='tribe-bar-']:-moz-placeholder {
 	}
 
 	#tribe-events-bar [class^='tribe-bar-button-']::after {
-		background-image: url(../../../common/vendor/select2/select2x2.png);
+		background-image: url(../vendor/select2/select2x2.png);
 	}/* Default icon */
 
 	.tribe-select2-results-views span[class^='tribe-icon-'],

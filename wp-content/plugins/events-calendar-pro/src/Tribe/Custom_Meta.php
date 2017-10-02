@@ -134,12 +134,11 @@ class Tribe__Events__Pro__Custom_Meta {
 		$pro = Tribe__Events__Pro__Main::instance();
 
 		// Grab the custom fields and append an extra blank row at the end
-		$custom_fields = tribe_get_option( 'custom-fields' );
-		$custom_fields = is_scalar( $custom_fields ) ? array() : (array) $custom_fields;
-		$custom_fields[] = array();
+		$customFields   = tribe_get_option( 'custom-fields' );
+		$customFields[] = array();
 
 		// Counts used to decide whether the "remove field" or "add another" should appear
-		$total = count( $custom_fields );
+		$total = count( $customFields );
 		$count = 0;
 		$add_another  = esc_html( __( 'Add another', 'tribe-events-calendar-pro' ) );
 		$remove_field = esc_html( __( 'Remove', 'tribe-events-calendar-pro' ) );

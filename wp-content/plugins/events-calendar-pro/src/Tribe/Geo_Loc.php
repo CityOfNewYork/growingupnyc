@@ -113,17 +113,10 @@ class Tribe__Events__Pro__Geo_Loc {
 	}
 
 	/**
-	 * Enqueue Google Maps Geolocation JS in all archive views if needed: 1) if the "Near" search is present in Tribe Bar (if Hide Location Search is unchecked), 2) if we are rendering Map View
+	 * Enqueue the maps JS in all the views (Needed for the location filter in the Tribe Bar)
 	 */
 	public function scripts() {
-		if (
-			tribe_is_event_query()
-			&& ! is_single()
-			&& (
-				! tribe_get_option( 'hideLocationSearch', false )
-				|| tribe_is_map()
-			)
-		) {
+		if ( tribe_is_event_query() && ! is_single() ) {
 			Tribe__Events__Pro__Template_Factory::asset_package( 'ajax-maps' );
 		}
 	}
@@ -168,7 +161,7 @@ class Tribe__Events__Pro__Geo_Loc {
 					),
 					'geoloc_fix_venues'       => array(
 						'type'        => 'html',
-						'html'        => '<a name="geoloc_fix"></a><fieldset class="tribe-field tribe-field-html"><legend>' . __( 'Fix geolocation data', 'tribe-events-calendar-pro' ) . '</legend><div class="tribe-field-wrap">' . $this->fix_geoloc_data_button() . '<p class="tribe-field-indent description">' . sprintf( __( "You have %d venues for which we don't have geolocation data. We need to use the Google Maps API to get that information. Doing this may take a while (approximately 1 minute for every 200 venues).", 'tribe-events-calendar-pro' ), $venues->found_posts ) . '</p></div></fieldset>',
+						'html'        => '<a name="geoloc_fix"></a><fieldset class="tribe-field tribe-field-html"><legend>' . __( 'Fix geolocation data', 'tribe-events-calendar-pro' ) . '</legend><div class="tribe-field-wrap">' . $this->fix_geoloc_data_button() . '<p class="tribe-field-indent description">' . sprintf( __( "You have %d venues for which we don't have geolocation data. We need to use the Google Maps API to get that information. Doing this may take a while (aprox. 1 minute for every 200 venues).", 'tribe-events-calendar-pro' ), $venues->found_posts ) . '</p></div></fieldset>',
 						'conditional' => ( $venues->found_posts > 0 ),
 					),
 				)
@@ -316,62 +309,28 @@ class Tribe__Events__Pro__Geo_Loc {
 	 * @return void
 	 */
 	public function setup_geoloc_in_query( $query ) {
-		if (
-			empty( $query->query_vars['tribe_geoloc'] )
-			&& (
-				( ! $query->is_main_query() && ! defined( 'DOING_AJAX' ) )
-				|| ! $query->get( 'post_type' ) == Tribe__Events__Main::POSTTYPE
-			)
-		) {
+		if ( ( ! $query->is_main_query() && ! defined( 'DOING_AJAX' ) ) || ! $query->get( 'post_type' ) == Tribe__Events__Main::POSTTYPE ) {
 			return;
 		}
 
-		$lat = null;
-		$lng = null;
-
-		if ( ! empty( $query->query_vars['tribe_geoloc_lat'] ) ) {
-			$lat = (float) $query->query_vars['tribe_geoloc_lat'];
-		} elseif ( ! empty( $_REQUEST['tribe-bar-geoloc-lat'] ) ) {
-			$lat = (float) $_REQUEST['tribe-bar-geoloc-lat'];
-		}
-
-		if ( ! empty( $query->query_vars['tribe_geoloc_lng'] ) ) {
-			$lng = (float) $query->query_vars['tribe_geoloc_lng'];
-		} elseif ( ! empty( $_REQUEST['tribe-bar-geoloc-lng'] ) ) {
-			$lng = (float) $_REQUEST['tribe-bar-geoloc-lng'];
-		}
-
 		$force = false;
-
-		if ( ! empty( $lat ) && ! empty( $lng ) ) {
-			// Show only venues that have geoloc info
-			$force = true;
-
-			// Get venues closest to the specified location
-			$venues = $this->get_venues_in_geofence( $lat, $lng );
+		if ( ! empty( $_REQUEST['tribe-bar-geoloc-lat'] ) && ! empty( $_REQUEST['tribe-bar-geoloc-lng'] ) ) {
+			$force  = true;
+			$venues = $this->get_venues_in_geofence( $_REQUEST['tribe-bar-geoloc-lat'], $_REQUEST['tribe-bar-geoloc-lng'] );
 		} elseif (
-			'map' === Tribe__Events__Main::instance()->displaying
-			|| ( ! empty( $query->query_vars['eventDisplay'] ) && 'map' === $query->query_vars['eventDisplay'] )
-			|| ! empty( $query->query_vars['tribe_geoloc'] )
+			Tribe__Events__Main::instance()->displaying == 'map'
+			|| ( ! empty( $query->query_vars['eventDisplay'] ) && $query->query_vars['eventDisplay'] == 'map' )
+			|| ( ! empty( $query->query_vars['tribe_geoloc'] ) && $query->query_vars['tribe_geoloc'] )
 		) {
 			// Show only venues that have geoloc info
 			$force = true;
-
-			// Set a geofence the size of the planet
-			$geofence_radio = self::EARTH_RADIO * M_PI;
-
-			// Get all geoloc'ed venues
-			$venues = $this->get_venues_in_geofence( 1, 1, $geofence_radio );
+			//Get all geoloc'ed venues (set a geofence the size of the planet)
+			$venues = $this->get_venues_in_geofence( 1, 1, self::EARTH_RADIO * M_PI );
 		}
 
 		if ( $force ) {
-
 			if ( empty( $venues ) ) {
-				// there aren't any venues in the geofence, so let's kill the meta query so we don't get any results
-				$venues = -1;
-			} elseif ( is_array( $venues ) ) {
-				// we have venues...let's make sure they are unique
-				$venues = array_unique( $venues );
+				$venues = - 1;
 			}
 
 			$meta_query = array(
@@ -405,19 +364,9 @@ class Tribe__Events__Pro__Geo_Loc {
 
 		$newRules = array();
 
-		/**
-		 * Filters the rewrite slugs used to generate the geocode based rewrite rules.
-		 *
-		 * @param array $rewrite_slugs An array of rewrite slugs to use; defaults to [ 'map' ], the
-		 *                             default geocode-based rewrite slug.
-		 */
-		$rewrite_slugs = apply_filters('tribe_events_pro_geocode_rewrite_slugs', array( $this->rewrite_slug ) );
-
-		foreach ( $rewrite_slugs as $rewrite_slug ) {
-			$newRules[ $base . $rewrite_slug ] = 'index.php?post_type=' . Tribe__Events__Main::POSTTYPE . '&eventDisplay=map';
-			$newRules[ $baseTax . '([^/]+)/' . $rewrite_slug . '/?$' ] = 'index.php?tribe_events_cat=' . $wp_rewrite->preg_index( 2 ) . '&post_type=' . Tribe__Events__Main::POSTTYPE . '&eventDisplay=map';
-			$newRules[ $baseTag . '([^/]+)/' . $rewrite_slug . '/?$' ] = 'index.php?tag=' . $wp_rewrite->preg_index( 2 ) . '&post_type=' . Tribe__Events__Main::POSTTYPE . '&eventDisplay=map';
-		}
+		$newRules[ $base . $this->rewrite_slug ]                         = 'index.php?post_type=' . Tribe__Events__Main::POSTTYPE . '&eventDisplay=map';
+		$newRules[ $baseTax . '([^/]+)/' . $this->rewrite_slug . '/?$' ] = 'index.php?tribe_events_cat=' . $wp_rewrite->preg_index( 2 ) . '&post_type=' . Tribe__Events__Main::POSTTYPE . '&eventDisplay=map';
+		$newRules[ $baseTag . '([^/]+)/' . $this->rewrite_slug . '/?$' ] = 'index.php?tag=' . $wp_rewrite->preg_index( 2 ) . '&post_type=' . Tribe__Events__Main::POSTTYPE . '&eventDisplay=map';
 
 		$wp_rewrite->rules = $newRules + $wp_rewrite->rules;
 	}
@@ -491,13 +440,6 @@ class Tribe__Events__Pro__Geo_Loc {
 		$data = wp_remote_get( apply_filters( 'tribe_events_pro_geocode_request_url', $url ) );
 
 		if ( is_wp_error( $data ) || ! isset( $data['body'] ) ) {
-			Tribe__Main::instance()->log()->log_warning( sprintf(
-					_x( 'Geocode request failed ($1%s - $2%s)', 'debug geodata', 'tribe-events-calendar-pro' ),
-					is_wp_error( $data ) ? $data->get_error_code() : _x( 'empty response', 'debug geodata' ),
-					$url
-				),
-				__METHOD__
-			);
 			return false;
 		}
 
@@ -621,7 +563,6 @@ class Tribe__Events__Pro__Geo_Loc {
 	 */
 	public function get_venues_in_geofence( $lat, $lng, $geofence_radio = null ) {
 
-		$lat = floatval( $lat );
 
 		if ( empty( $geofence_radio ) ) {
 			$geofence_radio = $this->get_geofence_size();
@@ -634,99 +575,41 @@ class Tribe__Events__Pro__Geo_Loc {
 		$maxLng = $lng + rad2deg( $geofence_radio / self::EARTH_RADIO / cos( deg2rad( $lat ) ) );
 		$minLng = $lng - rad2deg( $geofence_radio / self::EARTH_RADIO / cos( deg2rad( $lat ) ) );
 
-		$latlng = array(
-			'lat'    => $lat,
-			'lng'    => $lng,
-			'minLat' => $minLat,
-			'maxLat' => $maxLat,
-			'minLng' => $minLng,
-			'maxLng' => $maxLng,
-		);
 
-		/**
-		 * Allow overriding of Venues query by returning an array of Venue IDs.
-		 *
-		 * @since 4.4.16
-		 *
-		 * @param null|int[] $venues Venue IDs, default null will query database directly.
-		 * @param array      $latlng {
-		 * 		Latitude / longitude values for geofencing
-		 *
-		 *		@type float $lat    Central latitude point
-		 *		@type float $lng    Central longitude point
-		 *		@type float $minLat Minimum latitude constraint
-		 *		@type float $maxLat Maximum latitude constraint
-		 *		@type float $minLng Minimum longitude constraint
-		 *		@type float $maxLng Maximum longitude constraint
-		 * }
-		 * @param float      $geofence_radio Geofence size in kilometers
-		 */
-		$venues = apply_filters( 'tribe_geoloc_pre_get_venues_in_geofence', null, $latlng, $geofence_radio );
+		global $wpdb;
 
-		if ( null === $venues ) {
-			global $wpdb;
+		// Get the venues inside a geofence
 
-			// Get the venues inside a geofence
-			$sql = "
-				SELECT DISTINCT venue_id FROM (
-					SELECT coords.venue_id,
-					       MAX( coords.lat ) AS lat,
-					       MAX( coords.lng ) AS lng
-					FROM (
-						SELECT post_id AS venue_id,
-							CASE
-								WHEN meta_key = %s
-								THEN meta_value
-							END AS lat,
-							CASE
-								WHEN meta_key = %s
-								THEN meta_value
-							END AS lng
-						FROM $wpdb->postmeta
-						WHERE 
-							meta_key = %s
-							OR meta_key = %s
-					) AS coords
-					INNER JOIN $wpdb->posts p
-					    ON p.id = coords.venue_id
-					WHERE
-						(lat > %f OR lat IS NULL)
-						AND (lat < %f OR lat IS NULL)
-						AND (lng > %f OR lng IS NULL)
-						AND (lng < %f OR lng IS NULL)
-						AND p.post_status = 'publish'
-						AND p.post_type = %s
-					GROUP BY venue_id
-					HAVING
-						lat IS NOT NULL
-						AND lng IS NOT NULL
-			       ) AS query
-		       ";
+		$sql = "Select distinct venue_id from (
+		SELECT coords.venue_id,
+		       Max(lat) AS lat,
+		       Max(lng) AS lng
+		FROM   (SELECT post_id AS venue_id,
+		               CASE
+		                 WHEN meta_key = '" . self::LAT . "' THEN meta_value
+		               end     AS LAT,
+		               CASE
+		                 WHEN meta_key = '" . self::LNG . "' THEN meta_value
+		               end     AS LNG
+		        FROM   $wpdb->postmeta
+		        WHERE  meta_key = '" . self::LAT . "'
+		            OR meta_key = '" . self::LNG . "') coords
+		        INNER JOIN $wpdb->posts p
+		            ON coords.venue_id = p.id
+		WHERE (lat > $minLat OR lat IS NULL) AND (lat < $maxLat OR lat IS NULL) AND (lng > $minLng OR lng IS NULL) AND (lng < $maxLng OR lng IS NULL)
+			AND p.post_status = 'publish'
+		GROUP  BY venue_id
+		HAVING lat IS NOT NULL
+		       AND lng IS NOT NULL
+		       ) query";
 
-			$sql = $wpdb->prepare(
-				$sql,
-				array(
-					self::LAT,
-					self::LNG,
-					self::LAT,
-					self::LNG,
-					$minLat,
-					$maxLat,
-					$minLng,
-					$maxLng,
-					Tribe__Events__Main::VENUE_POST_TYPE,
-				)
-			);
+		$data = $wpdb->get_results( $sql, ARRAY_A );
 
-			$venues = $wpdb->get_col( $sql );
+		if ( empty( $data ) ) {
+			return null;
 		}
 
-		// Return null if $venues is empty
-		if ( empty( $venues ) ) {
-			$venues = null;
-		}
-
-		return $venues;
+		return wp_list_pluck( $data, 'venue_id' );
 	}
 
 	/**
@@ -811,68 +694,44 @@ class Tribe__Events__Pro__Geo_Loc {
 		$data = get_transient( self::ESTIMATION_CACHE_KEY );
 
 		if ( empty( $data ) ) {
+
 			$data = array();
 
 			// TODO: ask about the necessity of checking the current collection of posts. This seems like
 			// it limits the possible center-point which can screw up search bounding boxes
 			if ( ! empty( $wp_query->posts ) ) {
-				$prepared = array(
-					self::LAT,
-					self::LNG,
-					self::LAT,
-					self::LNG,
-				);
 
 				$event_ids = wp_list_pluck( $wp_query->posts, 'ID' );
+				$event_ids = implode( ',', $event_ids );
 
-				$event_ids_prepared = array_fill( 0, count( $event_ids ), '%d' );
-				$event_ids_prepared = implode( ', ', $event_ids_prepared );
-
-				$prepared = array_merge( $prepared, $event_ids );
-
-				$sql = "
-					SELECT
-						MAX( `coords`.`lat` ) AS `max_lat`,
-						MAX( `coords`.`lng` ) AS `max_lng`,
-						MIN( `coords`.`lat` ) AS `min_lat`,
-						MIN( `coords`.`lng` ) AS `min_lng`
-					FROM (
-						SELECT `post_id` AS `venue_id`,
-						CASE
-							WHEN `meta_key` = %s
-							THEN CAST( `meta_value` AS DECIMAL( 10, 6 ) )
-						END AS `lat`,
-						CASE
-							WHEN `meta_key` = %s
-							THEN CAST( `meta_value` AS DECIMAL( 10, 6 ) )
-						END AS `lng`
-					FROM `{$wpdb->postmeta}`
-					WHERE
-						(
-							`meta_key` = %s
-							OR `meta_key` = %s
-						)
-						AND `post_id` IN (
-							SELECT `meta_value`
-							FROM `{$wpdb->postmeta}`
-							WHERE
-								`meta_key` = '_EventVenueID'
-								AND `post_id` IN ( {$event_ids_prepared} )
-						)
-					) AS `coords`
+				$sql = "SELECT Max(lat) max_lat,
+					       Max(lng) max_lng,
+					       Min(lat) min_lat,
+					       Min(lng) min_lng
+					FROM   (SELECT post_id AS venue_id,
+				               CASE
+				                 WHEN meta_key = '" . self::LAT . "' THEN CAST( meta_value as DECIMAL( 10, 6 ) )
+				               end     AS LAT,
+				               CASE
+				                 WHEN meta_key = '" . self::LNG . "' THEN CAST( meta_value as DECIMAL( 10, 6 ) )
+				               end     AS LNG
+				        FROM   $wpdb->postmeta
+				        WHERE  ( meta_key = '" . self::LAT . "'
+				            OR meta_key = '" . self::LNG . "')
+				            AND post_id IN (SELECT meta_value FROM $wpdb->postmeta WHERE meta_key='_EventVenueID' AND post_id IN ($event_ids) )
+				            ) coors
 				";
 
-				$sql = $wpdb->prepare( $sql, $prepared );
-
-				$data = $wpdb->get_row( $sql, ARRAY_A );
+				$data = $wpdb->get_results( $sql, ARRAY_A );
 
 				if ( ! empty( $data ) ) {
+					$data = array_shift( $data );
+
 					// If there is no geoloc data then each result will be null - we cannot pass null values
 					// to the Google Maps API however
 					$data = array_map( 'floatval', $data );
 				}
 			}
-
 			set_transient( self::ESTIMATION_CACHE_KEY, $data, 5000 );
 		}
 

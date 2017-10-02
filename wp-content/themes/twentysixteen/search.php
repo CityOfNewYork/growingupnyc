@@ -17,7 +17,7 @@ get_header(); ?>
 			<header class="page-header">
 				<h1 class="page-title"><?php printf( __( 'Search Results for: %s', 'twentysixteen' ), '<span>' . esc_html( get_search_query() ) . '</span>' ); ?></h1>
 			</header><!-- .page-header -->
-      <div class="facetwp-template">
+
 			<?php
 			// Start the loop.
 			while ( have_posts() ) : the_post();
@@ -45,7 +45,6 @@ get_header(); ?>
 
 		endif;
 		?>
-  </div>
 
 		</main><!-- .site-main -->
 	</section><!-- .content-area -->

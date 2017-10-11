@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: FacetWP\n"
-"POT-Creation-Date: 2017-05-15 16:18-0400\n"
-"PO-Revision-Date: 2017-05-15 16:18-0400\n"
+"POT-Creation-Date: 2017-09-26 15:17-0400\n"
+"PO-Revision-Date: 2017-09-26 15:17-0400\n"
 "Last-Translator: Matt Gibbs <hello@facetwp.com>\n"
 "Language-Team: VBurlak <vburlak.ru@gmail.com>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.2\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
@@ -17,117 +17,262 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: includes/class-ajax.php:178
+#: includes/class-ajax.php:203
+#, fuzzy
 msgid "FacetWP was unable to auto-detect the post listing"
-msgstr ""
+msgstr "FacetWP не удалось автоматически обнаружить список пост"
 
-#: includes/class-ajax.php:207
+#: includes/class-ajax.php:231
 msgid "Settings saved"
 msgstr "Настройки сохранены"
 
-#: includes/class-ajax.php:210
+#: includes/class-ajax.php:234
 msgid "Error: invalid JSON"
 msgstr "Ошибка: недопустимый JSON"
 
-#: includes/class-ajax.php:329
+#: includes/class-ajax.php:353
 msgid "Nothing to import"
 msgstr "Нечего импортировать"
 
-#: includes/class-ajax.php:365
+#: includes/class-ajax.php:389
 msgid "Imported"
 msgstr "Импортировано"
 
-#: includes/class-ajax.php:368
+#: includes/class-ajax.php:392
 msgid "Skipped"
 msgstr "Пропущено"
 
-#: includes/class-ajax.php:399
+#: includes/class-ajax.php:423
 msgid "Error"
 msgstr "Ошибка"
 
-#: includes/class-facet.php:463 includes/class-facet.php:580
-msgid "of"
-msgstr "из"
+#: includes/class-display.php:130
+#, fuzzy
+#| msgid "No results"
+msgid "No results found"
+msgstr "Ничего не найдено"
 
-#: includes/class-facet.php:497 includes/facets/checkboxes.php:320
-#: includes/facets/dropdown.php:199 includes/facets/fselect.php:271
-#: includes/facets/hierarchy.php:218 includes/facets/radio.php:214
-msgid "Sort by"
-msgstr "Сортировать по"
-
-#: includes/class-facet.php:501
-msgid "Title (A-Z)"
-msgstr "Заголовок (А-Я)"
-
-#: includes/class-facet.php:508
-msgid "Title (Z-A)"
-msgstr "Заголовок (Я-А)"
-
-#: includes/class-facet.php:515
-msgid "Date (Newest)"
-msgstr "Дата (Сначала Новые)"
-
-#: includes/class-facet.php:522
-msgid "Date (Oldest)"
-msgstr "Дата (Сначала Старые)"
-
-#: includes/class-facet.php:579
-msgid "Page"
-msgstr "Страница"
-
-#: includes/class-facet.php:630
-msgid "Per page"
-msgstr "На страницу"
-
-#: includes/class-helper.php:380
+#: includes/class-helper.php:384
 msgid "Posts"
 msgstr "Записи"
 
-#: includes/class-helper.php:382
+#: includes/class-helper.php:386
 msgid "Post Type"
 msgstr "Тип Записи"
 
-#: includes/class-helper.php:383
+#: includes/class-helper.php:387
 msgid "Post Date"
 msgstr "Дата Записи"
 
-#: includes/class-helper.php:384
+#: includes/class-helper.php:388
 msgid "Post Modified"
 msgstr "Запись Изменена"
 
-#: includes/class-helper.php:385
+#: includes/class-helper.php:389
 msgid "Post Title"
 msgstr "Название записи"
 
-#: includes/class-helper.php:386
+#: includes/class-helper.php:390
 msgid "Post Author"
 msgstr "Автор Записи"
 
-#: includes/class-helper.php:391
+#: includes/class-helper.php:395
 msgid "Taxonomies"
 msgstr "Таксономии"
 
-#: includes/class-helper.php:396
+#: includes/class-helper.php:400
 msgid "Custom Fields"
 msgstr "Произвольные поля"
 
-#: includes/class-init.php:135 templates/page-settings.php:109
+#: includes/class-init.php:137 templates/page-settings.php:63
 msgid "Settings"
 msgstr "Настройки"
 
-#: includes/class-init.php:167
+#: includes/class-init.php:169
 #, fuzzy
 msgid "integration add-on"
 msgstr "интеграции дополнения"
 
-#: includes/class-init.php:168
+#: includes/class-init.php:170
 #, fuzzy, php-format
 msgid "To use FacetWP with %s, please install the %s, then re-index."
 msgstr ""
 "Чтобы использовать FacetWP с %s, пожалуйста установки %s, а затем повторное "
 "индексирование."
 
-#: includes/class-updater.php:109
+#: includes/class-renderer.php:461 includes/class-renderer.php:578
+msgid "of"
+msgstr "из"
+
+#: includes/class-renderer.php:495 includes/facets/checkboxes.php:324
+#: includes/facets/dropdown.php:191 includes/facets/fselect.php:263
+#: includes/facets/hierarchy.php:212 includes/facets/radio.php:206
+msgid "Sort by"
+msgstr "Сортировать по"
+
+#: includes/class-renderer.php:499
+msgid "Title (A-Z)"
+msgstr "Заголовок (А-Я)"
+
+#: includes/class-renderer.php:506
+msgid "Title (Z-A)"
+msgstr "Заголовок (Я-А)"
+
+#: includes/class-renderer.php:513
+msgid "Date (Newest)"
+msgstr "Дата (Сначала Новые)"
+
+#: includes/class-renderer.php:520
+msgid "Date (Oldest)"
+msgstr "Дата (Сначала Старые)"
+
+#: includes/class-renderer.php:577
+msgid "Page"
+msgstr "Страница"
+
+#: includes/class-renderer.php:628
+msgid "Per page"
+msgstr "На страницу"
+
+#: includes/class-settings-admin.php:14
+msgid "General"
+msgstr ""
+
+#: includes/class-settings-admin.php:17
+msgid "License Key"
+msgstr "Лицензионный ключ"
+
+#: includes/class-settings-admin.php:21
+#, fuzzy
+msgid "Google Maps API Key"
+msgstr "Ключ API Карт Google"
+
+#: includes/class-settings-admin.php:25
+msgid "Separators"
+msgstr "Сепаратор"
+
+#: includes/class-settings-admin.php:29
+#, fuzzy
+msgid "Loading Animation"
+msgstr "Загрузка анимации"
+
+#: includes/class-settings-admin.php:31
+#, fuzzy
+msgid "Spin"
+msgstr "Вращение"
+
+#: includes/class-settings-admin.php:31
+#, fuzzy
+msgid "Fade"
+msgstr "Увядание"
+
+#: includes/class-settings-admin.php:31 includes/facets/date_range.php:181
+#: includes/facets/number_range.php:116 includes/facets/proximity.php:196
+#: includes/facets/slider.php:174
+msgid "None"
+msgstr "Ничего"
+
+#: includes/class-settings-admin.php:35
+#, fuzzy
+#| msgid "Prefix"
+msgid "URL Prefix"
+msgstr "Префикс"
+
+#: includes/class-settings-admin.php:41
+#, fuzzy
+msgid "Debug Mode"
+msgstr "Режим разработчика"
+
+#: includes/class-settings-admin.php:43
+#, fuzzy
+msgid "Off"
+msgstr "Выкл"
+
+#: includes/class-settings-admin.php:43
+#, fuzzy
+msgid "On"
+msgstr "Вкл"
+
+#: includes/class-settings-admin.php:49
+#: includes/integrations/woocommerce/woocommerce.php:48
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: includes/class-settings-admin.php:52
+#, fuzzy
+msgid "Support product variations?"
+msgstr "Варианты поддержки продукта?"
+
+#: includes/class-settings-admin.php:53
+msgid "Enable if your store uses variable products."
+msgstr ""
+
+#: includes/class-settings-admin.php:55 includes/class-settings-admin.php:62
+#: includes/facets/checkboxes.php:359 includes/facets/checkboxes.php:374
+#: includes/facets/checkboxes.php:389 includes/facets/checkboxes.php:404
+#: includes/facets/dropdown.php:211 includes/facets/fselect.php:236
+#: includes/facets/fselect.php:283 includes/facets/radio.php:226
+#: includes/facets/radio.php:241 includes/integrations/acf/acf.php:204
+msgid "No"
+msgstr "Нет"
+
+#: includes/class-settings-admin.php:55 includes/class-settings-admin.php:62
+#: includes/facets/checkboxes.php:360 includes/facets/checkboxes.php:375
+#: includes/facets/checkboxes.php:390 includes/facets/checkboxes.php:405
+#: includes/facets/dropdown.php:212 includes/facets/fselect.php:237
+#: includes/facets/fselect.php:284 includes/facets/radio.php:227
+#: includes/facets/radio.php:242 includes/integrations/acf/acf.php:204
+msgid "Yes"
+msgstr "Да"
+
+#: includes/class-settings-admin.php:59
+#, fuzzy
+msgid "Include all products?"
+msgstr "Включить все продукты?"
+
+#: includes/class-settings-admin.php:60
+msgid "Show facet choices for out-of-stock products?"
+msgstr ""
+
+#: includes/class-settings-admin.php:68
+#, fuzzy
+#| msgid "Back"
+msgid "Backup"
+msgstr "Назад"
+
+#: includes/class-settings-admin.php:71 includes/class-settings-admin.php:123
+msgid "Export"
+msgstr "Экспорт"
+
+#: includes/class-settings-admin.php:75 includes/class-settings-admin.php:129
+msgid "Import"
+msgstr "Импорт"
+
+#: includes/class-settings-admin.php:100
+msgid "Activate"
+msgstr "Активировать"
+
+#: includes/class-settings-admin.php:127
+msgid "Paste the import code here"
+msgstr "Вставьте код импорта здесь"
+
+#: includes/class-settings-admin.php:128
+msgid "Overwrite existing items?"
+msgstr "Заменить существующие данные?"
+
+#: includes/class-settings-admin.php:197
+msgid "Not yet activated"
+msgstr "Еще не активировано"
+
+#: includes/class-settings-admin.php:203
+msgid "License active"
+msgstr "Лицензия активирована"
+
+#: includes/class-settings-admin.php:204
+msgid "expires"
+msgstr "истекает"
+
+#: includes/class-updater.php:105
 msgid "Please activate or renew your license for automatic updates."
 msgstr ""
 "Просьба активировать или обновить лицензию для автоматического обновления."
@@ -156,111 +301,113 @@ msgstr "Рыба"
 msgid "Checkboxes"
 msgstr "Чекбоксы"
 
-#: includes/facets/checkboxes.php:157
+#: includes/facets/checkboxes.php:148
 msgid "See {num} more"
 msgstr "Смотрите {num}"
 
-#: includes/facets/checkboxes.php:158 includes/facets/hierarchy.php:158
+#: includes/facets/checkboxes.php:149 includes/facets/hierarchy.php:152
 msgid "See less"
 msgstr "показать меньше"
 
-#: includes/facets/checkboxes.php:305 includes/facets/dropdown.php:184
-#: includes/facets/fselect.php:256 includes/facets/radio.php:199
+#: includes/facets/checkboxes.php:310 includes/facets/dropdown.php:177
+#: includes/facets/fselect.php:249 includes/facets/radio.php:192
 msgid "Parent term"
 msgstr "Родительский элемент"
 
-#: includes/facets/checkboxes.php:323 includes/facets/dropdown.php:202
-#: includes/facets/fselect.php:274 includes/facets/hierarchy.php:221
-#: includes/facets/radio.php:217
+#: includes/facets/checkboxes.php:327 includes/facets/dropdown.php:194
+#: includes/facets/fselect.php:266 includes/facets/hierarchy.php:215
+#: includes/facets/radio.php:209
 msgid "Highest Count"
 msgstr "Высокий игр"
 
-#: includes/facets/checkboxes.php:324 includes/facets/dropdown.php:203
-#: includes/facets/fselect.php:275 includes/facets/hierarchy.php:222
-#: includes/facets/radio.php:218
+#: includes/facets/checkboxes.php:328 includes/facets/dropdown.php:195
+#: includes/facets/fselect.php:267 includes/facets/hierarchy.php:216
+#: includes/facets/radio.php:210
 msgid "Display Value"
 msgstr "Отображаемое Значение"
 
-#: includes/facets/checkboxes.php:325 includes/facets/dropdown.php:204
-#: includes/facets/fselect.php:276 includes/facets/hierarchy.php:223
-#: includes/facets/radio.php:219
+#: includes/facets/checkboxes.php:329 includes/facets/dropdown.php:196
+#: includes/facets/fselect.php:268 includes/facets/hierarchy.php:217
+#: includes/facets/radio.php:211
 msgid "Raw Value"
 msgstr "Необработанное Значение"
 
-#: includes/facets/checkboxes.php:331 includes/facets/fselect.php:282
+#: includes/facets/checkboxes.php:330 includes/facets/dropdown.php:197
+#: includes/facets/fselect.php:269 includes/facets/hierarchy.php:218
+#: includes/facets/radio.php:212
+msgid "Term Order"
+msgstr ""
+
+#: includes/facets/checkboxes.php:336 includes/facets/fselect.php:290
 msgid "Behavior"
 msgstr "Поведение"
 
-#: includes/facets/checkboxes.php:334 includes/facets/fselect.php:285
+#: includes/facets/checkboxes.php:339 includes/facets/fselect.php:293
 msgid "How should multiple selections affect the results?"
 msgstr "Как множественный выбор должен влиять на результаты?"
 
-#: includes/facets/checkboxes.php:339 includes/facets/fselect.php:290
+#: includes/facets/checkboxes.php:344 includes/facets/fselect.php:298
 msgid "Narrow the result set"
 msgstr "Ограниченный набор результатов"
 
-#: includes/facets/checkboxes.php:340 includes/facets/fselect.php:291
+#: includes/facets/checkboxes.php:345 includes/facets/fselect.php:299
 msgid "Widen the result set"
 msgstr "Расширенный набор результатов"
 
-#: includes/facets/checkboxes.php:346 includes/facets/dropdown.php:210
+#: includes/facets/checkboxes.php:351 includes/facets/dropdown.php:203
+#: includes/facets/fselect.php:275
 msgid "Hierarchical"
 msgstr "По иерархии"
 
-#: includes/facets/checkboxes.php:349 includes/facets/dropdown.php:213
+#: includes/facets/checkboxes.php:354 includes/facets/dropdown.php:206
+#: includes/facets/fselect.php:278
 msgid "Is this a hierarchical taxonomy?"
 msgstr "Это иерархической таксономии?"
 
-#: includes/facets/checkboxes.php:354 includes/facets/checkboxes.php:369
-#: includes/facets/checkboxes.php:384 includes/facets/dropdown.php:218
-#: includes/facets/fselect.php:243 includes/facets/radio.php:233
-#: includes/facets/radio.php:248 includes/integrations/acf/acf.php:207
-#: templates/page-settings.php:267 templates/page-settings.php:284
-msgid "No"
-msgstr "Нет"
+#: includes/facets/checkboxes.php:366
+#, fuzzy
+msgid "Show expanded"
+msgstr "Показать расширенные"
 
-#: includes/facets/checkboxes.php:355 includes/facets/checkboxes.php:370
-#: includes/facets/checkboxes.php:385 includes/facets/dropdown.php:219
-#: includes/facets/fselect.php:244 includes/facets/radio.php:234
-#: includes/facets/radio.php:249 includes/integrations/acf/acf.php:207
-#: templates/page-settings.php:268 templates/page-settings.php:285
-msgid "Yes"
-msgstr "Да"
+#: includes/facets/checkboxes.php:369
+#, fuzzy
+msgid "Should child terms be visible by default?"
+msgstr "Следует ли видимым по умолчанию дочерних терминов?"
 
-#: includes/facets/checkboxes.php:361 includes/facets/radio.php:225
+#: includes/facets/checkboxes.php:381 includes/facets/radio.php:218
 msgid "Show ghosts"
 msgstr "Показать призраков"
 
-#: includes/facets/checkboxes.php:364 includes/facets/radio.php:228
+#: includes/facets/checkboxes.php:384 includes/facets/radio.php:221
 msgid "Show choices that would return zero results?"
 msgstr "Показать варианты, которые будут возвращать нулевой результат?"
 
-#: includes/facets/checkboxes.php:376 includes/facets/radio.php:240
+#: includes/facets/checkboxes.php:396 includes/facets/radio.php:233
 msgid "Preserve ghost order"
 msgstr "Сохранять порядок призрак"
 
-#: includes/facets/checkboxes.php:379 includes/facets/radio.php:243
+#: includes/facets/checkboxes.php:399 includes/facets/radio.php:236
 msgid "Keep ghost choices in the same order?"
 msgstr "Держать в том же порядке призрак выбор?"
 
-#: includes/facets/checkboxes.php:391 includes/facets/dropdown.php:225
-#: includes/facets/fselect.php:297 includes/facets/hierarchy.php:229
-#: includes/facets/radio.php:255
+#: includes/facets/checkboxes.php:411 includes/facets/dropdown.php:218
+#: includes/facets/fselect.php:305 includes/facets/hierarchy.php:224
+#: includes/facets/radio.php:248
 msgid "Count"
 msgstr "Сколько выводить"
 
-#: includes/facets/checkboxes.php:394 includes/facets/dropdown.php:228
-#: includes/facets/fselect.php:300 includes/facets/hierarchy.php:232
-#: includes/facets/radio.php:258
+#: includes/facets/checkboxes.php:414 includes/facets/dropdown.php:221
+#: includes/facets/fselect.php:308 includes/facets/hierarchy.php:227
+#: includes/facets/radio.php:251
 msgid "The maximum number of facet choices to show"
 msgstr ""
 "Максимальное количество выбранных вариантов, которые будут отображаться"
 
-#: includes/facets/checkboxes.php:401
+#: includes/facets/checkboxes.php:421
 msgid "Soft Limit"
 msgstr "Мягкий предел"
 
-#: includes/facets/checkboxes.php:404
+#: includes/facets/checkboxes.php:424
 msgid "Show a toggle link after this many choices"
 msgstr "Показать ссылку Переключение после этого много вариантов"
 
@@ -272,62 +419,61 @@ msgstr "Выбор в диапазоне Дат"
 msgid "Date"
 msgstr "Дата"
 
-#: includes/facets/date_range.php:25 includes/facets/date_range.php:177
+#: includes/facets/date_range.php:25 includes/facets/date_range.php:208
 msgid "Start Date"
 msgstr "Дата с"
 
-#: includes/facets/date_range.php:28 includes/facets/date_range.php:178
+#: includes/facets/date_range.php:28 includes/facets/date_range.php:209
 msgid "End Date"
 msgstr "Дата по"
 
-#: includes/facets/date_range.php:124
+#: includes/facets/date_range.php:154
 msgid "Clear"
 msgstr "Очистить"
 
-#: includes/facets/date_range.php:143 includes/facets/number_range.php:108
-#: includes/facets/proximity.php:171 includes/facets/slider.php:166
+#: includes/facets/date_range.php:173 includes/facets/number_range.php:108
+#: includes/facets/proximity.php:188 includes/facets/slider.php:166
 msgid "Other data source"
 msgstr "Другой источник данных"
 
-#: includes/facets/date_range.php:146 includes/facets/number_range.php:111
+#: includes/facets/date_range.php:176 includes/facets/number_range.php:111
 #: includes/facets/slider.php:169
 msgid "Use a separate value for the upper limit?"
 msgstr "Используйте отдельное значение для верхний предел?"
 
-#: includes/facets/date_range.php:151 includes/facets/number_range.php:116
-#: includes/facets/proximity.php:179 includes/facets/slider.php:174
-#: templates/page-settings.php:233
-msgid "None"
-msgstr "Ничего"
-
-#: includes/facets/date_range.php:163 includes/facets/number_range.php:128
+#: includes/facets/date_range.php:193 includes/facets/number_range.php:128
 #: includes/facets/slider.php:186
 msgid "Compare type"
 msgstr "Сравнить тип"
 
-#: includes/facets/date_range.php:166 includes/facets/number_range.php:131
+#: includes/facets/date_range.php:196 includes/facets/number_range.php:131
 #: includes/facets/slider.php:189
 msgid "Basic"
 msgstr "Основной"
 
-#: includes/facets/date_range.php:167 includes/facets/number_range.php:132
+#: includes/facets/date_range.php:197
+#, fuzzy
+msgid "Enclose"
+msgstr "Заключать"
+
+#: includes/facets/date_range.php:198 includes/facets/number_range.php:132
 #: includes/facets/slider.php:190
 msgid "Intersect"
 msgstr "пересекаться"
 
-#: includes/facets/date_range.php:172
+#: includes/facets/date_range.php:203
 msgid "Fields to show"
 msgstr "Поля, чтобы показать"
 
-#: includes/facets/date_range.php:175
+#: includes/facets/date_range.php:206
 msgid "Start + End Dates"
 msgstr "Даты начала и окончания"
 
-#: includes/facets/date_range.php:176
+#: includes/facets/date_range.php:207
 msgid "Exact Date"
 msgstr "Определенная дата"
 
-#: includes/facets/date_range.php:184
+#: includes/facets/date_range.php:215
 msgid "Display format"
 msgstr "Display Format"
 
@@ -335,13 +481,13 @@ msgstr "Display Format"
 msgid "Dropdown"
 msgstr "Выпадающий список"
 
-#: includes/facets/dropdown.php:85 includes/facets/dropdown.php:179
-#: includes/facets/fselect.php:96 includes/facets/fselect.php:169
-#: includes/facets/fselect.php:251 includes/facets/hierarchy.php:73
+#: includes/facets/dropdown.php:78 includes/facets/dropdown.php:172
+#: includes/facets/fselect.php:87 includes/facets/fselect.php:160
+#: includes/facets/fselect.php:244 includes/facets/hierarchy.php:67
 msgid "Any"
 msgstr "Любой"
 
-#: includes/facets/dropdown.php:170 includes/facets/fselect.php:249
+#: includes/facets/dropdown.php:163 includes/facets/fselect.php:242
 msgid "Default label"
 msgstr "По умолчанию метка"
 
@@ -349,15 +495,15 @@ msgstr "По умолчанию метка"
 msgid "fSelect"
 msgstr "fSelect"
 
-#: includes/facets/fselect.php:174
+#: includes/facets/fselect.php:165
 msgid "{n} selected"
 msgstr "{n} выбран"
 
-#: includes/facets/fselect.php:175 includes/facets/search.php:7
+#: includes/facets/fselect.php:166 includes/facets/search.php:7
 msgid "Search"
 msgstr "Поиск"
 
-#: includes/facets/fselect.php:239
+#: includes/facets/fselect.php:232
 msgid "Multi-select?"
 msgstr "Множественный выбор?"
 
@@ -365,7 +511,7 @@ msgstr "Множественный выбор?"
 msgid "Hierarchy"
 msgstr "Иерархия"
 
-#: includes/facets/hierarchy.php:157
+#: includes/facets/hierarchy.php:151
 msgid "See more"
 msgstr "Смотреть еще"
 
@@ -384,7 +530,7 @@ msgstr "Макс"
 #: includes/facets/number_range.php:23
 #, fuzzy
 msgid "OK"
-msgstr "ОК"
+msgstr "OK"
 
 #: includes/facets/proximity.php:19
 msgid "Proximity"
@@ -394,25 +540,31 @@ msgstr "Расстояние"
 msgid "Enter location"
 msgstr "Введите Местоположение"
 
-#: includes/facets/proximity.php:174
+#: includes/facets/proximity.php:176
+#, fuzzy
+#| msgid "Enter location"
+msgid "Clear location"
+msgstr "Введите Местоположение"
+
+#: includes/facets/proximity.php:191
 #, fuzzy
 #| msgid "Use a separate value for the upper limit?"
 msgid "Use a separate value for the longitude?"
-msgstr "Используйте отдельное значение для верхний предел?"
+msgstr "Используйте отдельное значение для долготы?"
 
-#: includes/facets/proximity.php:192
+#: includes/facets/proximity.php:209
 msgid "Unit of measurement"
 msgstr "Единица измерения"
 
-#: includes/facets/proximity.php:196
+#: includes/facets/proximity.php:213
 msgid "Miles"
 msgstr "мили"
 
-#: includes/facets/proximity.php:197
+#: includes/facets/proximity.php:214
 msgid "Kilometers"
 msgstr "Километров"
 
-#: includes/facets/proximity.php:251
+#: includes/facets/proximity.php:268
 msgid "Distance"
 msgstr "Расстояние"
 
@@ -476,10 +628,6 @@ msgstr "Размер увеличения между интервалами"
 msgid "Default"
 msgstr "По умолчанию"
 
-#: includes/integrations/woocommerce/woocommerce.php:48
-msgid "WooCommerce"
-msgstr "WooCommerce"
-
 #: includes/integrations/woocommerce/woocommerce.php:50
 msgid "Price"
 msgstr "Цена"
@@ -522,210 +670,125 @@ msgstr ""
 "FacetWP требует PHP %s или выше. Пожалуйста свяжитесь ваш хост и запросить "
 "обновление PHP."
 
-#: templates/page-settings.php:7
+#: templates/page-settings.php:5
 msgid "All post types"
 msgstr "Все типы советов"
 
-#: templates/page-settings.php:8
+#: templates/page-settings.php:6
 msgid "Indexing complete"
 msgstr "Индексирование полностью"
 
-#: templates/page-settings.php:9
+#: templates/page-settings.php:7
 msgid "Indexing"
 msgstr "Index"
 
-#: templates/page-settings.php:10
+#: templates/page-settings.php:8
 msgid "Saving"
 msgstr "Сохраняется"
 
-#: templates/page-settings.php:11
+#: templates/page-settings.php:9
 msgid "Loading"
 msgstr "Загрузка"
 
-#: templates/page-settings.php:12
+#: templates/page-settings.php:10
 msgid "Importing"
 msgstr "Импорт"
 
-#: templates/page-settings.php:13
+#: templates/page-settings.php:11
 msgid "Activating"
 msgstr "Активация"
 
-#: templates/page-settings.php:14
+#: templates/page-settings.php:12
 msgid "Are you sure?"
 msgstr "Вы уверены?"
 
-#: templates/page-settings.php:15
+#: templates/page-settings.php:13
 msgid "Select some items"
 msgstr "Выберите некоторые элементы"
 
-#: templates/page-settings.php:39
+#: templates/page-settings.php:22
 msgid "This facet type has no additional settings."
 msgstr "Этот тип facet имеет никаких дополнительных настроек."
 
-#: templates/page-settings.php:48
-msgid "Not yet activated"
-msgstr "Еще не активировано"
+#: templates/page-settings.php:62
+#, fuzzy
+#| msgid "Basic"
+msgid "Basics"
+msgstr "Основной"
 
-#: templates/page-settings.php:53
-msgid "License active"
-msgstr "Лицензия активирована"
-
-#: templates/page-settings.php:54
-msgid "expires"
-msgstr "истекает"
-
-#: templates/page-settings.php:106
-msgid "Welcome"
-msgstr "Добро пожаловать"
-
-#: templates/page-settings.php:107
-msgid "Facets"
-msgstr "Фасеты"
-
-#: templates/page-settings.php:108
-msgid "Templates"
-msgstr "Шаблоны"
-
-#: templates/page-settings.php:110
+#: templates/page-settings.php:64
 msgid "Support"
 msgstr "Поддержка"
 
-#: templates/page-settings.php:122
-msgid "Welcome to FacetWP"
-msgstr "Добро пожаловать на FacetWP"
-
-#: templates/page-settings.php:135 templates/page-settings.php:159
-msgid "Add New"
-msgstr "Добавить местоположение"
-
-#: templates/page-settings.php:138 templates/page-settings.php:162
-msgid "Back"
-msgstr "Назад"
-
-#: templates/page-settings.php:142
+#: templates/page-settings.php:69
 msgid "Re-index"
 msgstr "Повторное индексирование"
 
-#: templates/page-settings.php:143 templates/page-settings.php:166
-#: templates/page-settings.php:193
+#: templates/page-settings.php:70
 msgid "Save Changes"
 msgstr "Сохранить изменения"
 
-#: templates/page-settings.php:204
-msgid "License Key"
-msgstr "Лицензионный ключ"
+#: templates/page-settings.php:86
+msgid "Back"
+msgstr "Назад"
 
-#: templates/page-settings.php:207
-msgid "Activate"
-msgstr "Активировать"
-
-#: templates/page-settings.php:215
-msgid "Separators"
-msgstr "Сепаратор"
-
-#: templates/page-settings.php:227
-#, fuzzy
-msgid "Loading Animation"
-msgstr "Анимация загрузки"
-
-#: templates/page-settings.php:231
-#, fuzzy
-msgid "Spin"
-msgstr "Вращение"
-
-#: templates/page-settings.php:232
-#, fuzzy
-msgid "Fade"
-msgstr "Затухание"
-
-#: templates/page-settings.php:239
-#, fuzzy
-msgid "Debug Mode"
-msgstr "Режим Отладки"
-
-#: templates/page-settings.php:243
-#, fuzzy
-msgid "Off"
-msgstr "выкл"
-
-#: templates/page-settings.php:244
-#, fuzzy
-msgid "On"
-msgstr "Вкл."
-
-#: templates/page-settings.php:257
-msgid "Support product variations?"
-msgstr ""
-
-#: templates/page-settings.php:274
-msgid "Include all products?"
-msgstr ""
-
-#: templates/page-settings.php:298 templates/page-settings.php:306
-msgid "Export"
-msgstr "Экспорт"
-
-#: templates/page-settings.php:313 templates/page-settings.php:318
-msgid "Import"
-msgstr "Импорт"
-
-#: templates/page-settings.php:316
-msgid "Paste the import code here"
-msgstr "Вставьте код импорта здесь"
-
-#: templates/page-settings.php:317
-msgid "Overwrite existing items?"
-msgstr "Заменить существующие данные?"
-
-#: templates/page-settings.php:343
+#: templates/page-settings.php:159
 msgid "Label"
 msgstr "Лейбл"
 
-#: templates/page-settings.php:347 templates/page-settings.php:390
+#: templates/page-settings.php:163 templates/page-settings.php:206
 msgid "Name"
 msgstr "Имя"
 
-#: templates/page-settings.php:351
+#: templates/page-settings.php:167
 msgid "Facet type"
 msgstr "Тип Фасета"
 
-#: templates/page-settings.php:362
+#: templates/page-settings.php:178
 msgid "Data source"
 msgstr "Источник данных"
 
-#: templates/page-settings.php:393
+#: templates/page-settings.php:209
 msgid "Open query builder"
 msgstr "Открыть построитель"
 
-#: templates/page-settings.php:394
+#: templates/page-settings.php:210
 msgid "Query Arguments"
 msgstr "Аргументы Запроса"
 
-#: templates/page-settings.php:398
+#: templates/page-settings.php:214
 msgid "What goes here?"
 msgstr "То, что происходит здесь?"
 
-#: templates/page-settings.php:399
+#: templates/page-settings.php:215
 msgid "Display Code"
 msgstr "Отображаемый код"
 
-#: templates/page-settings.php:413
+#: templates/page-settings.php:229
 msgid "Query Builder"
 msgstr "Построитель Запросов"
 
-#: templates/page-settings.php:417
-msgid "Which posts would you like to use for the content listing?"
+#: templates/page-settings.php:233
+#, fuzzy
+#| msgid "Which posts would you like to use for the content listing?"
+msgid "Which posts would you like to use for the listing?"
 msgstr "Какие сообщения вы хотите использовать для контента списка?"
 
-#: templates/page-settings.php:426
+#: templates/page-settings.php:242
 msgid "Send to editor"
 msgstr "Отправить редактор"
 
-#~ msgid "Thousands"
-#~ msgstr "Тысяча"
+#~ msgid "Welcome"
+#~ msgstr "Добро пожаловать"
 
-#~ msgid "Decimal"
-#~ msgstr "Десятичный"
+#~ msgid "Facets"
+#~ msgstr "Фасеты"
 
-#~ msgid "Other settings"
-#~ msgstr "Другие настройки"
+#~ msgid "Templates"
+#~ msgstr "Шаблоны"
+
+#~ msgid "Welcome to FacetWP"
+#~ msgstr "Добро пожаловать на FacetWP"
+
+#~ msgid "Add New"
+#~ msgstr "Добавить местоположение"

@@ -11,7 +11,8 @@
                 numDisplayed: 3,
                 overflowText: '{n} selected',
                 searchText: 'Search',
-                showSearch: true
+                showSearch: true,
+                optionFormatter: false
             }, options);
         }
 
@@ -82,7 +83,13 @@
                             var disabled = $el.is(':disabled') ? ' disabled' : '';
                             var selected = -1 < $.inArray(val, $this.selected) ? ' selected' : '';
                             var group = ' g' + $this.optgroup;
-                            choices += '<div class="fs-option' + selected + disabled + group + '" data-value="' + val + '" data-index="' + $this.idx + '"><span class="fs-checkbox"><i></i></span><div class="fs-option-label">' + $el.html() + '</div></div>';
+                            var row = '<div class="fs-option' + selected + disabled + group + '" data-value="' + val + '" data-index="' + $this.idx + '"><span class="fs-checkbox"><i></i></span><div class="fs-option-label">' + $el.html() + '</div></div>';
+
+                            if ('function' === typeof $this.settings.optionFormatter) {
+                                row = $this.settings.optionFormatter(row);
+                            }
+
+                            choices += row;
                             $this.idx++;
                         }
                     }
@@ -155,7 +162,7 @@
             // shift + click support
             if (e.shiftKey && null != window.fSelect.last_choice) {
                 var current_choice = parseInt($(this).attr('data-index'));
-                var do_select = ! $(this).hasClass('selected');
+                var addOrRemove = ! $(this).hasClass('selected');
                 var min = Math.min(window.fSelect.last_choice, current_choice);
                 var max = Math.max(window.fSelect.last_choice, current_choice);
 
@@ -163,9 +170,7 @@
                     $wrap.find('.fs-option[data-index='+ i +']')
                         .not('.hidden, .disabled')
                         .each(function() {
-                            do_select ?
-                                $(this).addClass('selected') :
-                                $(this).removeClass('selected');
+                            $(this).toggleClass('selected', addOrRemove);
                         });
                 }
             }
@@ -187,6 +192,9 @@
 
         $wrap.find('select').val(selected);
         $wrap.find('select').fSelect('reloadDropdownLabel');
+
+        // fire an event
+        $(document).trigger('fs:changed', $wrap);
 
         if (do_close) {
             closeDropdown($wrap);
@@ -364,7 +372,7 @@
             var initial_values = window.fSelect.initial_values;
             var current_values = $wrap.find('select').val();
             if (JSON.stringify(initial_values) != JSON.stringify(current_values)) {
-                $(document).trigger('fs:changed', $wrap);
+                $(document).trigger('fs:closed', $wrap);
             }
         }
 

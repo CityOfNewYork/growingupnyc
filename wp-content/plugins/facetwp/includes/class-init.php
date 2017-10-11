@@ -25,7 +25,7 @@ class FacetWP_Init
         include( FACETWP_DIR . '/includes/api/refresh.php' );
 
         // update checks
-        if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
+        if ( is_admin() ) {
             include( FACETWP_DIR . '/includes/class-updater.php' );
             include( FACETWP_DIR . '/includes/libraries/github-updater.php' );
         }
@@ -33,10 +33,11 @@ class FacetWP_Init
         // core
         include( FACETWP_DIR . '/includes/class-helper.php' );
         include( FACETWP_DIR . '/includes/class-ajax.php' );
-        include( FACETWP_DIR . '/includes/class-facet.php' );
+        include( FACETWP_DIR . '/includes/class-renderer.php' );
         include( FACETWP_DIR . '/includes/class-indexer.php' );
         include( FACETWP_DIR . '/includes/class-display.php' );
         include( FACETWP_DIR . '/includes/class-overrides.php' );
+        include( FACETWP_DIR . '/includes/class-settings-admin.php' );
         include( FACETWP_DIR . '/includes/class-upgrade.php' );
         include( FACETWP_DIR . '/includes/functions.php' );
 
@@ -45,7 +46,7 @@ class FacetWP_Init
         new FacetWP_API_Fetch();
 
         FWP()->helper       = new FacetWP_Helper();
-        FWP()->facet        = new FacetWP_Facet();
+        FWP()->facet        = new FacetWP_Renderer();
         FWP()->indexer      = new FacetWP_Indexer();
         FWP()->display      = new FacetWP_Display();
         FWP()->ajax         = new FacetWP_Ajax();
@@ -103,6 +104,7 @@ class FacetWP_Init
     function admin_scripts( $hook ) {
         if ( 'settings_page_facetwp' == $hook ) {
             wp_enqueue_style( 'media-views' );
+            wp_enqueue_script( 'jquery-ui-sortable' );
             wp_enqueue_script( 'jquery-powertip', FACETWP_URL . '/assets/js/jquery-powertip/jquery.powertip.min.js', array( 'jquery' ), '1.2.0' );
         }
     }
@@ -120,7 +122,7 @@ class FacetWP_Init
      * Prevent WP from redirecting FWP pager to /page/X
      */
     function redirect_canonical( $redirect_url, $requested_url ) {
-        if ( false !== strpos( $redirect_url, 'fwp_paged' ) ) {
+        if ( false !== strpos( $redirect_url, FWP()->helper->get_setting( 'prefix' ) . 'paged' ) ) {
             return false;
         }
         return $redirect_url;

@@ -9,6 +9,9 @@ final class FacetWP_Helper
     /* (array) Associative array of facet objects */
     public $facet_types;
 
+    /* (array) Cached data sources */
+    public $data_sources;
+
 
     /**
      * Backwards-compatibility
@@ -22,6 +25,7 @@ final class FacetWP_Helper
         $this->settings = $this->load_settings();
 
         // custom facet types
+        include( FACETWP_DIR . '/includes/facets/base.php' );
         include( FACETWP_DIR . '/includes/facets/autocomplete.php' );
         include( FACETWP_DIR . '/includes/facets/checkboxes.php' );
         include( FACETWP_DIR . '/includes/facets/date_range.php' );
@@ -93,6 +97,9 @@ final class FacetWP_Helper
         }
         if ( ! isset( $settings['settings']['decimal_separator'] ) ) {
             $settings['settings']['decimal_separator'] = '.';
+        }
+        if ( ! isset( $settings['settings']['prefix'] ) ) {
+            $settings['settings']['prefix'] = 'fwp_';
         }
 
         // Store raw facet & template names
@@ -360,6 +367,12 @@ final class FacetWP_Helper
      * @since 2.2.1
      */
     function get_data_sources() {
+
+        // Return cached sources
+        if ( ! empty( $this->data_sources ) ) {
+            return $this->data_sources;
+        }
+
         global $wpdb;
 
         // Get excluded meta keys
@@ -413,6 +426,8 @@ final class FacetWP_Helper
 
         uasort( $sources, array( $this, 'sort_by_weight' ) );
 
+        $this->data_sources = $sources;
+
         return $sources;
     }
 
@@ -430,5 +445,16 @@ final class FacetWP_Helper
         }
 
         return ( $a['weight'] < $b['weight'] ) ? -1 : 1;
+    }
+
+
+    /**
+     * Grab the license key
+     * @since 3.0.3
+     */
+    function get_license_key() {
+        $license_key = defined( 'FACETWP_LICENSE_KEY' ) ? FACETWP_LICENSE_KEY : get_option( 'facetwp_license' );
+        $license_key = apply_filters( 'facetwp_license_key', $license_key );
+        return sanitize_text_field( trim( $license_key ) );
     }
 }

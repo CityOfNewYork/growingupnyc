@@ -1,6 +1,6 @@
 <?php
 
-class FacetWP_Facet_Hierarchy
+class FacetWP_Facet_Hierarchy extends FacetWP_Facet
 {
 
     function __construct() {
@@ -23,13 +23,7 @@ class FacetWP_Facet_Hierarchy
         $output = array();
 
         // Orderby
-        $orderby = 'counter DESC, f.facet_display_value ASC';
-        if ( 'display_value' == $facet['orderby'] ) {
-            $orderby = 'f.facet_display_value ASC';
-        }
-        elseif ( 'raw_value' == $facet['orderby'] ) {
-            $orderby = 'f.facet_value ASC';
-        }
+        $orderby = $this->get_orderby( $facet );
 
         // Determine the parent_id and depth
         if ( ! empty( $selected_values[0] ) ) {
@@ -197,7 +191,7 @@ class FacetWP_Facet_Hierarchy
         $this.find('.facet-count').val(obj.count);
     });
 
-    wp.hooks.addFilter('facetwp/save/hierarchy', function($this, obj) {
+    wp.hooks.addFilter('facetwp/save/hierarchy', function(obj, $this) {
         obj['source'] = $this.find('.facet-source').val();
         obj['orderby'] = $this.find('.facet-orderby').val();
         obj['count'] = $this.find('.facet-count').val();
@@ -221,6 +215,7 @@ class FacetWP_Facet_Hierarchy
                     <option value="count"><?php _e( 'Highest Count', 'fwp' ); ?></option>
                     <option value="display_value"><?php _e( 'Display Value', 'fwp' ); ?></option>
                     <option value="raw_value"><?php _e( 'Raw Value', 'fwp' ); ?></option>
+                    <option value="term_order"><?php _e( 'Term Order', 'fwp' ); ?></option>
                 </select>
             </td>
         </tr>

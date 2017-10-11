@@ -37,7 +37,7 @@ Parent Theme:               <?php echo empty( $parent ) ? '' : $parent->get( 'Na
 
 PHP Version:                <?php echo phpversion(); ?>
 
-MySQL Version:              <?php echo $wpdb->get_var( "SELECT VERSION()" ); ?>
+MySQL Version:              <?php echo $GLOBALS['wpdb']->get_var( "SELECT VERSION()" ); ?>
 
 Web Server Info:            <?php echo $_SERVER['SERVER_SOFTWARE']; ?>
 

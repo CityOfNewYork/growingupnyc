@@ -1,6 +1,6 @@
 <?php
 
-class FacetWP_Facet_Dropdown
+class FacetWP_Facet_Dropdown extends FacetWP_Facet
 {
 
     function __construct() {
@@ -40,15 +40,8 @@ class FacetWP_Facet_Dropdown
         $from_clause = $wpdb->prefix . 'facetwp_index f';
 
         // Orderby
-        $orderby = 'counter DESC, f.facet_display_value ASC';
-        if ( 'display_value' == $facet['orderby'] ) {
-            $orderby = 'f.facet_display_value ASC';
-        }
-        elseif ( 'raw_value' == $facet['orderby'] ) {
-            $orderby = 'f.facet_value ASC';
-        }
+        $orderby = $this->get_orderby( $facet );
 
-        $orderby = "f.depth, $orderby";
         $orderby = apply_filters( 'facetwp_facet_orderby', $orderby, $facet );
         $from_clause = apply_filters( 'facetwp_facet_from', $from_clause, $facet );
         $where_clause = apply_filters( 'facetwp_facet_where', $where_clause, $facet );
@@ -78,7 +71,7 @@ class FacetWP_Facet_Dropdown
         $values = (array) $params['values'];
         $selected_values = (array) $params['selected_values'];
 
-        if ( isset( $facet['hierarchical'] ) && 'yes' == $facet['hierarchical'] ) {
+        if ( FWP()->helper->facet_is( $facet, 'hierarchical', 'yes' ) ) {
             $values = FWP()->helper->sort_taxonomy_values( $params['values'], $facet['orderby'] );
         }
 
@@ -145,7 +138,7 @@ class FacetWP_Facet_Dropdown
         $this.find('.facet-count').val(obj.count);
     });
 
-    wp.hooks.addFilter('facetwp/save/dropdown', function($this, obj) {
+    wp.hooks.addFilter('facetwp/save/dropdown', function(obj, $this) {
         obj['source'] = $this.find('.facet-source').val();
         obj['label_any'] = $this.find('.facet-label-any').val();
         obj['parent_term'] = $this.find('.facet-parent-term').val();
@@ -185,8 +178,7 @@ class FacetWP_Facet_Dropdown
                 <div class="facetwp-tooltip">
                     <span class="icon-question">?</span>
                     <div class="facetwp-tooltip-content">
-                        If <strong>Data source</strong> is a taxonomy, enter the
-                        parent term's ID if you want to show child terms.
+                        To show only child terms, enter the parent <a href="https://facetwp.com/how-to-find-a-wordpress-terms-id/" target="_blank">term ID</a>.
                         Otherwise, leave blank.
                     </div>
                 </div>
@@ -202,6 +194,7 @@ class FacetWP_Facet_Dropdown
                     <option value="count"><?php _e( 'Highest Count', 'fwp' ); ?></option>
                     <option value="display_value"><?php _e( 'Display Value', 'fwp' ); ?></option>
                     <option value="raw_value"><?php _e( 'Raw Value', 'fwp' ); ?></option>
+                    <option value="term_order"><?php _e( 'Term Order', 'fwp' ); ?></option>
                 </select>
             </td>
         </tr>

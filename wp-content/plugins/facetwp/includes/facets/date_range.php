@@ -1,6 +1,6 @@
 <?php
 
-class FacetWP_Facet_Date_Range
+class FacetWP_Facet_Date_Range extends FacetWP_Facet
 {
 
     function __construct() {
@@ -52,6 +52,13 @@ class FacetWP_Facet_Date_Range
             $end = ( false !== $end ) ? $end : '3000-12-31';
 
             /**
+             * Single input, multiple data sources
+             */
+            if ( 'exact' == $facet['fields'] ) {
+                $end = $start;
+            }
+
+            /**
              * Intersect compare
              * @link http://stackoverflow.com/a/325964
              */
@@ -62,7 +69,7 @@ class FacetWP_Facet_Date_Range
 
             /**
              * Enclose compare
-             * The post's range must fully enclose the user-defined range
+             * The post's range must surround the user-defined range
              */
             elseif ( 'enclose' == $compare_type ) {
                 $where .= " AND LEFT(facet_value, 10) <= '$start'";
@@ -73,17 +80,20 @@ class FacetWP_Facet_Date_Range
         /**
          * Exact match
          */
-        elseif ( 'exact' == $facet['fields'] ) {
+        if ( 'exact' == $facet['fields'] && '' == $where ) {
             if ( $start ) {
                 $where .= " AND LEFT(facet_value, 10) = '$start'";
+            }
+            if ( $end ) {
+                $where .= " AND LEFT(facet_display_value, 10) = '$end'";
             }
         }
 
         /**
          * Basic compare
-         * The post's range must be fully inside the user-defined range
+         * The user-defined range must surround the post's range
          */
-        else {
+        if ( '' == $where ) {
             if ( $start ) {
                 $where .= " AND LEFT(facet_value, 10) >= '$start'";
             }
@@ -114,7 +124,7 @@ class FacetWP_Facet_Date_Range
         $this.find('.facet-format').val(obj.format);
     });
 
-    wp.hooks.addFilter('facetwp/save/date_range', function($this, obj) {
+    wp.hooks.addFilter('facetwp/save/date_range', function(obj, $this) {
         obj['source'] = $this.find('.facet-source').val();
         obj['source_other'] = $this.find('.facet-source-other').val();
         obj['compare_type'] = $this.find('.facet-compare-type').val();

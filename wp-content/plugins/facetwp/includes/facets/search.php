@@ -1,6 +1,6 @@
 <?php
 
-class FacetWP_Facet_Search
+class FacetWP_Facet_Search extends FacetWP_Facet
 {
 
     function __construct() {
@@ -66,7 +66,7 @@ class FacetWP_Facet_Search
         $this.find('.facet-placeholder').val(obj.placeholder);
     });
 
-    wp.hooks.addFilter('facetwp/save/search', function($this, obj) {
+    wp.hooks.addFilter('facetwp/save/search', function(obj, $this) {
         obj['search_engine'] = $this.find('.facet-search-engine').val();
         obj['placeholder'] = $this.find('.facet-placeholder').val();
         return obj;

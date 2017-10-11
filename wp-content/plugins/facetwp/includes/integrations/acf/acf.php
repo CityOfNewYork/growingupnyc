@@ -193,12 +193,9 @@ class FacetWP_Integration_ACF
 
         // date_picker
         elseif ( 'date_picker' == $field['type'] ) {
-            if ( 8 == strlen( $value ) && ctype_digit( $value ) ) {
-                $formatted = substr( $value, 0, 4 ) . '-' . substr( $value, 4, 2 ) . '-' . substr( $value, 6, 2 );
-                $params['facet_value'] = $formatted;
-                $params['facet_display_value'] = $formatted;
-            }
-
+            $formatted = $this->format_date( $value );
+            $params['facet_value'] = $formatted;
+            $params['facet_display_value'] = apply_filters( 'facetwp_acf_display_value', $formatted, $params );
             FWP()->indexer->index_row( $params );
         }
 
@@ -242,8 +239,12 @@ class FacetWP_Integration_ACF
             if ( 1 < count( $hierarchy ) ) {
                 array_shift( $hierarchy );
                 $value = $this->process_field_value( $value, $hierarchy );
-                return $value[ $this->repeater_row ];
+                $value = $value[ $this->repeater_row ];
             }
+        }
+
+        if ( 'date_range' == $facet['type'] ) {
+            $value = $this->format_date( $value );
         }
 
         return $value;
@@ -255,6 +256,18 @@ class FacetWP_Integration_ACF
      */
     function disable_wpml( $query ) {
         $query->set( 'suppress_filters', true );
+    }
+
+
+    /**
+     * Format dates in YYYY-MM-DD
+     */
+    function format_date( $str ) {
+        if ( 8 == strlen( $str ) && ctype_digit( $str ) ) {
+            $str = substr( $str, 0, 4 ) . '-' . substr( $str, 4, 2 ) . '-' . substr( $str, 6, 2 );
+        }
+
+        return $str;
     }
 
 

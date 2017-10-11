@@ -145,7 +145,7 @@ class FacetWP_Indexer
         global $wpdb;
 
         // Index everything
-        if ( empty( $post_id ) ) {
+        if ( false === $post_id ) {
 
             // Index all flag
             $this->index_all = true;
@@ -178,7 +178,7 @@ class FacetWP_Indexer
             );
         }
         // Index a single post
-        else {
+        elseif ( is_int( $post_id ) ) {
             $args = array(
                 'p'                 => $post_id,
                 'post_type'         => 'any',
@@ -189,6 +189,10 @@ class FacetWP_Indexer
 
             // Clear table values
             $wpdb->query( "DELETE FROM {$wpdb->prefix}facetwp_index WHERE post_id = $post_id" );
+        }
+        // Exit
+        else {
+            return;
         }
 
         // Control which posts to index

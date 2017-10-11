@@ -2,7 +2,7 @@
 /*
 Plugin Name: FacetWP - WPML
 Description: WPML support for FacetWP
-Version: 1.2.1
+Version: 1.2.3
 Author: FacetWP, LLC
 Author URI: https://facetwp.com/
 GitHub URI: facetwp/facetwp-wpml
@@ -22,9 +22,10 @@ class FWP_WPML
      * Initialize
      */
     function init() {
-        if ( defined( 'ICL_SITEPRESS_VERSION' ) ) {
+        if ( defined( 'ICL_SITEPRESS_VERSION' ) && function_exists( 'FWP' ) ) {
             add_action( 'wp_footer', array( $this, 'wp_footer' ), 30 );
             add_filter( 'facetwp_query_args', array( $this, 'facetwp_query_args' ), 10, 2 );
+            add_filter( 'facetwp_render_params', array( $this, 'support_preloader' ) );
             add_filter( 'facetwp_indexer_query_args', array( $this, 'indexer_query_args' ) );
             add_action( 'facetwp_indexer_post', array( $this, 'set_post_langcode' ) );
 
@@ -47,6 +48,18 @@ class FWP_WPML
 
 
     /**
+     * Support FacetWP preloading (3.0.4+)
+     */
+    function support_preloader( $params ) {
+        if ( isset( $params['is_preload'] ) && defined( 'ICL_LANGUAGE_CODE' ) ) {
+            $params['http_params']['lang'] = ICL_LANGUAGE_CODE;
+        }
+
+        return $params;
+    }
+
+
+    /**
      * Query posts for the current language
      */
     function facetwp_query_args( $args, $class ) {
@@ -61,9 +74,14 @@ class FWP_WPML
      * Index all languages
      */
     function indexer_query_args( $args ) {
+        if ( function_exists( 'is_checkout' ) && is_checkout() ) {
+            return $args;
+        }
+
         if ( -1 == $args['posts_per_page'] ) {
             $GLOBALS['sitepress']->switch_lang( 'all' );
         }
+
         $args['suppress_filters'] = true; // query posts in all languages
         return $args;
     }

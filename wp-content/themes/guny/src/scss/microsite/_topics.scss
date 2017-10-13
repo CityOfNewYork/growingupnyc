@@ -462,6 +462,7 @@
 
   a.button--topics__cta {
     margin-top: rem-calc(25);
+    text-decoration: none !important;
     &:focus {
       color: $purple;
     }

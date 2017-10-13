@@ -680,7 +680,8 @@ button:hover, button:focus {
   background: #eee;
   padding: 0.1875rem 1.875rem 1.875rem; }
   .c-do-list a.button--topics__cta {
-    margin-top: 1.5625rem; }
+    margin-top: 1.5625rem;
+    text-decoration: none !important; }
     .c-do-list a.button--topics__cta:focus {
       color: #7735b2; }
     .no-touchevents .c-do-list a.button--topics__cta:hover {

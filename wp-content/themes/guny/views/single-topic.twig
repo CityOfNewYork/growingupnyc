@@ -69,6 +69,11 @@
                 <a class="button--primary button--primary__curved button--primary__purple button--topics__cta" href="{{top.cta_button_url}}" target={{target}}>{{top.cta_button_text}}</a>
               {% endif %}
 
+              {# Phone Number and the buttons #}
+              {% if top.cta_button_phone %}
+                <a class="button--primary button--primary__curved button--primary__purple button--topics__cta" href="tel:{{top.cta_button_phone}}">{{top.cta_button_text}}</a>
+              {% endif %}
+
 
             </div>
           {% endif %}

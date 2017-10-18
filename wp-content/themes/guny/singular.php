@@ -8,16 +8,47 @@
 $context = Timber::get_context();
 $post = Timber::get_post();
 
+// check the language
+$context['language'] = ICL_LANGUAGE_CODE;
+
+// Get the right events by age group
 if ( $post->post_type == 'age' ) {
   $age_groups = $post->terms('age_group');
+
   if( $age_groups ) {
     $post->age_group = $age_groups[0];
+    $age_group_id=$post->age_group->id;
+
+    // reassign the age_group_id if on a spanish page
+    // TO EDIT: move away from hardcoded IDs
+    if ($post->age_group->slug == 'baby-es'){
+      $age_group_id=7;
+    }elseif ($post->age_group->slug == 'toddler-es'){
+      $age_group_id=8;
+    }elseif ($post->age_group->slug == 'pre-schooler-es'){
+      $age_group_id=9;
+    }elseif ($post->age_group->slug == 'grade-schooler-es'){
+      $age_group_id=10;
+    }elseif ($post->age_group->slug == 'pre-teen-es'){
+      $age_group_id=11;
+    }elseif ($post->age_group->slug == 'teen-es'){
+      $age_group_id=100;
+    }elseif ($post->age_group->slug == 'young-adult-es'){
+      $age_group_id=102;
+    }elseif ($post->age_group->slug == 'caregiver-es'){
+      $age_group_id=43;
+    }elseif ($post->age_group->slug == 'everyone-es'){
+      $age_group_id=47;
+    }
+    // end reassignment
+    
+    $context['age_group_id'] = $age_group_id;
   }
   $upcoming_events = GunySite::get_featured_events( 3, array(
     array(
       'taxonomy' => 'age_group',
-      'field' => 'term_id',
-      'terms' => $post->age_group->id
+      'field' => $age_group_id,
+      'terms' => $age_group_id
     )
   ), true );
   // $num_remaining = 3 - count($upcoming_events);

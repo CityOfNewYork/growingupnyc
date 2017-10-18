@@ -16,6 +16,8 @@ $context = Timber::get_context();
 $post = Timber::get_post(false, 'GunyEvent');
 $templates = array( 'single-event.twig', 'single.twig' );
 $context['post'] = $post;
+// check the language
+$context['language'] = ICL_LANGUAGE_CODE;
 
 
 //Inject custom language context manually in Events

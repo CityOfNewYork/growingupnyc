@@ -51,4 +51,35 @@ $output .= '</div>';
 
 $context['custom_switcher'] = $output;
 
+// getting the correct url for the spanish tags
+// TO EDIT: modify hardcoded Names and id values
+// get array of taxonomies
+$age_groups = $post->terms('age_group');
+// $context['age_groups'] = $age_groups;
+
+for ($i = 0; $i <= count($age_groups); $i++) {
+  if ($age_groups[$i] == 'Bebé' || $age_groups[$i] == 'Baby'){
+    $age_groups[$i]=7;
+  }elseif ($age_groups[$i] == 'Niño pequeño' || $age_groups[$i] =='Toddler'){
+    $age_groups[$i]=8;
+  }elseif ($age_groups[$i] == 'Preescolar' || $age_groups[$i] =='Pre-Schooler'){
+    $age_groups[$i]=9;
+  }elseif ($age_groups[$i] == 'Alumno de escuela primaria' || $age_groups[$i] =='Grade-Schooler'){
+    $age_groups[$i]=10;
+  }elseif ($age_groups[$i] == 'Preadolescente' || $age_groups[$i] =='Pre-Teen'){
+    $age_groups[$i]=11;
+  }elseif ($age_groups[$i] == 'Adolescente' || $age_groups[$i] =='Teen'){
+    $age_groups[$i]=100;
+  }elseif ($age_groups[$i] == 'Adulto joven' || $age_groups[$i] =='Young-Adult'){
+    $age_groups[$i]=102;
+  }elseif ($age_groups[$i] == '(es) Caregiver' || $age_groups[$i] =='Caregiver'){
+    $age_groups[$i]=43;
+  }elseif ($age_groups[$i] == '(es) All Age Groups' || $age_groups[$i] =='Everyone'){
+    $age_groups[$i]=47;
+  }
+}
+$context['age_groups'] = $age_groups;
+
+// end get correct url
+
 Timber::render( $templates, $context );

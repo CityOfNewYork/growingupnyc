@@ -21,7 +21,8 @@
       {% endif %}
     {% endfor %}
     {% for term in post.terms('age_group') %}
-      <a href="{{event_link}}/?age_id={{term.ID}}" class="button--pill button--pill--alt">{{term.name}}</a>
+      {# <a href="{{event_link}}/?age_id={{term.ID}}" class="button--pill button--pill--alt">{{term.name}}</a> #}
+      <a href="{{event_link}}/?age_id={{age_groups[loop.index-1]}}" class="button--pill button--pill--alt">{{term.name}}</a>
     {% endfor %}
     </p>
   </div> <!-- /.o-container -->

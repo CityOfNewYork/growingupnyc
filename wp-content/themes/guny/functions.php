@@ -455,7 +455,7 @@ add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 
 // Titles for Generation NYC pages - Topics, Inspirations, Trips
 function change_generation_title( $title ){
-  $gen_pages = array("youth", "trips", "topics", "inspirations");
+  $gen_pages = array("generationnyc", "trips", "topics", "inspirations");
   $_post = get_queried_object();
   // if this is a single page
   $page_type = explode("/", trim(parse_url(get_permalink(), PHP_URL_PATH), "/"));
@@ -464,7 +464,8 @@ function change_generation_title( $title ){
   }
   // if this is a landing page
   if ( !is_front_page() && !is_single() && in_array($page_type[0], $gen_pages) ) {
-    if ( $page_type[0] == "youth"){
+    // if ( $page_type[0] == "youth"){
+    if ( $page_type[0] == "generationnyc"){
       $title = "Generation NYC";
     }elseif ( $page_type[0] == "inspirations"){
       $title = "Inspirations" . ' - ' . 'Generation NYC';

@@ -83,7 +83,8 @@ if ( $post->post_type == 'age' ) {
   }
 }
 
-if($post->post_type == 'page' && strpos($post->post_name, 'youth') !== false){
+// Generation NYC homepage declaration
+if($post->post_type == 'page' && strpos($post->post_name, 'generationnyc') !== false){
   $templates = array( 'micro-site-homepage.twig' );
 }
 else{

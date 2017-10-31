@@ -69,7 +69,7 @@
     left: 0;
     padding: rem-calc(60);
     position: absolute;
-    width: 60%;
+    width: 100%;
   }
 }
 
@@ -106,7 +106,8 @@
   white-space: nowrap;
 
   .rotating-text__entry {
-    display: block;
+    //display: block;
+    display: none !important;
     width: 100%;
   }
 }

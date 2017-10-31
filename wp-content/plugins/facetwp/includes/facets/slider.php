@@ -1,12 +1,10 @@
 <?php
 
-class FacetWP_Facet_Slider
+class FacetWP_Facet_Slider extends FacetWP_Facet
 {
 
     function __construct() {
         $this->label = __( 'Slider', 'fwp' );
-
-        add_filter( 'facetwp_index_row', array( $this, 'index_row' ), 5, 2 );
     }
 
 
@@ -15,9 +13,7 @@ class FacetWP_Facet_Slider
      */
     function render( $params ) {
 
-        $output = '';
-        $value = $params['selected_values'];
-        $output .= '<div class="facetwp-slider-wrap">';
+        $output = '<div class="facetwp-slider-wrap">';
         $output .= '<div class="facetwp-slider"></div>';
         $output .= '</div>';
         $output .= '<span class="facetwp-slider-label"></span>';
@@ -39,14 +35,17 @@ class FacetWP_Facet_Slider
         $start = ( '' == $values[0] ) ? false : $values[0];
         $end = ( '' == $values[1] ) ? false : $values[1];
 
-        $is_dual = ! empty( $facet['source_other'] ) && false !== $start && false !== $end;
-        $is_intersect = FWP()->helper->facet_setting_is( $facet, 'compare_type', 'intersect' );
+        $is_dual = ! empty( $facet['source_other'] );
+        $is_intersect = FWP()->helper->facet_is( $facet, 'compare_type', 'intersect' );
 
         /**
          * Intersect compare
          * @link http://stackoverflow.com/a/325964
          */
         if ( $is_dual && $is_intersect ) {
+            $start = ( false !== $start ) ? $start : '-999999999999';
+            $end = ( false !== $end ) ? $end : '999999999999';
+
             $where .= " AND (facet_value + 0) <= '$end'";
             $where .= " AND (facet_display_value + 0) >= '$start'";
         }
@@ -62,7 +61,7 @@ class FacetWP_Facet_Slider
         $sql = "
         SELECT DISTINCT post_id FROM {$wpdb->prefix}facetwp_index
         WHERE facet_name = '{$facet['name']}' $where";
-        return $wpdb->get_col( $sql );
+        return facetwp_sql( $sql, $facet );
     }
 
 
@@ -124,7 +123,7 @@ class FacetWP_Facet_Slider
         $this.find('.facet-step').val(obj.step);
     });
 
-    wp.hooks.addFilter('facetwp/save/slider', function($this, obj) {
+    wp.hooks.addFilter('facetwp/save/slider', function(obj, $this) {
         obj['source'] = $this.find('.facet-source').val();
         obj['source_other'] = $this.find('.facet-source-other').val();
         obj['compare_type'] = $this.find('.facet-compare-type').val();
@@ -247,27 +246,5 @@ class FacetWP_Facet_Slider
             <td><input type="text" class="facet-step" value="1" /></td>
         </tr>
 <?php
-    }
-
-
-    /**
-     * Index the 2nd data source
-     * @since 2.1.1
-     */
-    function index_row( $params, $class ) {
-        if ( $class->is_overridden ) {
-            return $params;
-        }
-
-        $facet = FWP()->helper->get_facet_by_name( $params['facet_name'] );
-
-        if ( 'slider' == $facet['type'] && ! empty( $facet['source_other'] ) ) {
-            $other_params = $params;
-            $other_params['facet_source'] = $facet['source_other'];
-            $rows = $class->get_row_data( $other_params );
-            $params['facet_display_value'] = $rows[0]['facet_display_value'];
-        }
-
-        return $params;
     }
 }

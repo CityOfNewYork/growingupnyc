@@ -97,7 +97,7 @@
   line-height: 1.2;
   margin: rem-calc(0 0 12);
   order: 3;
-  text-decoration: none;
+  text-decoration: underline;
 
   @include media($bp-small) {
     font-size: 1.65rem;

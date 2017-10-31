@@ -28,8 +28,9 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 // Styleguide 2.1
 .c-banner {
   background: $color-background;
-  box-shadow: 0 2px 4px 0 $color-shadow;
-  height: rem-calc($height-banner);
+  box-shadow: 0 4px 4px 0 $color-shadow;
+  //height: rem-calc($height-banner);
+  height: auto;
   position: relative;
   z-index: $z-index-header;
 
@@ -54,7 +55,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 
   @include layout-inner-left-edge;
 
-  padding: 0 5px 8px;
+  padding: 0 5px 6px;
   position: absolute;
   top: rem-calc(-35);
   width: rem-calc($width-banner-logo);
@@ -77,18 +78,30 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 
 // Banner Logo
 .c-banner__logo {
-  @include image-replace("/wp-content/themes/guny/assets/img/NYCDOH_GrowingUP_logo_CMYK_Mobile_Final.png");
-
+  // @include image-replace('/wp-content/themes/guny/assets/img/logo-gunyc-color@150px.png');
+  background-image: url('/wp-content/themes/guny/assets/img/logo-gunyc-color@150px.png');
+  background-repeat: no-repeat;
   background-position: center bottom;
+  background-size: contain;
+
+  display: block;
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+
   height: 100%;
   width: 100%;
 
-  @include media($bp-small) {
-    background-position: center bottom rem-calc(-9);
-  }
-
-  @include media($bp-medium) {
-    background-position: center bottom;
+  image-rendering: -webkit-optimize-contrast; // Chrome
+  image-rendering: optimizequality; // FF
+  // @include media($bp-small) {
+  //   background-position: center bottom rem-calc(-9);
+  // }
+  // @include media($bp-medium) {
+  //   background-position: center bottom;
+  // }
+  @include retina {
+    background-image: url('/wp-content/themes/guny/assets/img/logo-gunyc-color@300px.png');
   }
 }
 
@@ -107,9 +120,40 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   float: right;
   line-height: 1;
   padding-top: rem-calc(18);
+  padding-bottom: rem-calc(18);
+  max-width: 65%;
 
+  li {
+    margin-left: 0;
+    margin-right: -8px;
+    margin-right: rem-calc(12);
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    a {
+      padding: rem-calc(3 0);
+      display: inline-block;
+    }
+  }
   @include media($bp-medium) {
     padding-top: rem-calc(20);
+    padding-bottom: 0;
+
+    li {
+      margin-right: 0;
+
+      &:first-child {
+        margin-left: 0;
+      }
+      @include media($bp-small) {
+        margin-left: rem-calc(16);
+      }
+      @include media($bp-large) {
+        margin-left: rem-calc(56);
+      }
+    }
   }
 }
 
@@ -178,7 +222,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 
 //Language switcher
 .c-language-switcher-wrapper {
-  border-bottom: 2px solid $very-light-gray;
+  // border-bottom: 2px solid $very-light-gray;
   .c-language__switcher {
     text-align: right;
     z-index: 1;

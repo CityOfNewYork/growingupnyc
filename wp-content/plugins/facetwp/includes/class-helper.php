@@ -9,6 +9,9 @@ final class FacetWP_Helper
     /* (array) Associative array of facet objects */
     public $facet_types;
 
+    /* (array) Cached data sources */
+    public $data_sources;
+
 
     /**
      * Backwards-compatibility
@@ -22,6 +25,7 @@ final class FacetWP_Helper
         $this->settings = $this->load_settings();
 
         // custom facet types
+        include( FACETWP_DIR . '/includes/facets/base.php' );
         include( FACETWP_DIR . '/includes/facets/autocomplete.php' );
         include( FACETWP_DIR . '/includes/facets/checkboxes.php' );
         include( FACETWP_DIR . '/includes/facets/date_range.php' );
@@ -32,6 +36,7 @@ final class FacetWP_Helper
         include( FACETWP_DIR . '/includes/facets/search.php' );
         include( FACETWP_DIR . '/includes/facets/slider.php' );
         include( FACETWP_DIR . '/includes/facets/proximity.php' );
+        include( FACETWP_DIR . '/includes/facets/radio.php' );
 
         $this->facet_types = apply_filters( 'facetwp_facet_types', array(
             'checkboxes'        => new FacetWP_Facet_Checkboxes(),
@@ -44,6 +49,7 @@ final class FacetWP_Helper
             'date_range'        => new FacetWP_Facet_Date_Range(),
             'number_range'      => new FacetWP_Facet_Number_Range(),
             'proximity'         => new FacetWP_Facet_Proximity_Core(),
+            'radio'             => new FacetWP_Facet_Radio_Core(),
         ) );
     }
 
@@ -91,6 +97,9 @@ final class FacetWP_Helper
         }
         if ( ! isset( $settings['settings']['decimal_separator'] ) ) {
             $settings['settings']['decimal_separator'] = '.';
+        }
+        if ( ! isset( $settings['settings']['prefix'] ) ) {
+            $settings['settings']['prefix'] = 'fwp_';
         }
 
         // Store raw facet & template names
@@ -276,39 +285,11 @@ final class FacetWP_Helper
 
         // Sort the array based on the new "order" element
         // Since this is a dot-separated hierarchy string, treat it like version_compare
-        usort( $values, array( $this, 'compare_order' ) );
+        usort( $values, function( $a, $b ) {
+            return version_compare( $a['order'], $b['order'] );
+        });
 
         return $values;
-    }
-
-
-    /**
-     * Sort the "order" string using version_compare
-     * @since 1.6.1
-     */
-    function compare_order( $a, $b ) {
-        return version_compare( $a['order'], $b['order'] );
-    }
-
-
-    /**
-     * Sanitize SQL data
-     * @return mixed The sanitized value(s)
-     * @since 0.9.1
-     */
-    function sanitize( $input ) {
-        if ( is_array( $input ) ) {
-            $output = array();
-
-            foreach ( $input as $key => $val ) {
-                $output[ $key ] = $this->sanitize( $val );
-            }
-        }
-        else {
-            $output = addslashes( $input );
-        }
-
-        return $output;
     }
 
 
@@ -332,7 +313,7 @@ final class FacetWP_Helper
      * @return boolean
      * @since 2.3.4
      */
-    function facet_setting_is( $facet, $setting_name, $setting_value ) {
+    function facet_is( $facet, $setting_name, $setting_value ) {
         if ( is_string( $facet ) ) {
             $facet = $this->get_facet_by_name( $facet );
         }
@@ -351,7 +332,9 @@ final class FacetWP_Helper
      * @since 2.1
      */
     function safe_value( $value ) {
-        if ( preg_match( '/[^a-z0-9.\- ]/i', $value ) ) {
+        $value = remove_accents( $value );
+
+        if ( preg_match( '/[^a-z0-9_.\- ]/i', $value ) ) {
             if ( ! preg_match( '/^\d{4}-(0[1-9]|1[012])-([012]\d|3[01])/', $value ) ) {
                 $value = md5( $value );
             }
@@ -362,11 +345,34 @@ final class FacetWP_Helper
 
 
     /**
+     * Properly format numbers, taking separators into account
+     * @return number
+     * @since 2.7.5
+     */
+    function format_number( $num ) {
+        $sep_decimal = $this->get_setting( 'decimal_separator' );
+        $sep_thousands = $this->get_setting( 'thousands_separator' );
+
+        $num = str_replace( $sep_thousands, '', $num );
+        $num = ( ',' == $sep_decimal ) ? str_replace( ',', '.', $num ) : $num;
+        $num = preg_replace( '/[^0-9-.]/', '', $num );
+
+        return $num;
+    }
+
+
+    /**
      * Get facet data sources
      * @return array
      * @since 2.2.1
      */
     function get_data_sources() {
+
+        // Return cached sources
+        if ( ! empty( $this->data_sources ) ) {
+            return $this->data_sources;
+        }
+
         global $wpdb;
 
         // Get excluded meta keys
@@ -391,15 +397,18 @@ final class FacetWP_Helper
                     'post_modified'     => __( 'Post Modified', 'fwp' ),
                     'post_title'        => __( 'Post Title', 'fwp' ),
                     'post_author'       => __( 'Post Author', 'fwp' )
-                )
+                ),
+                'weight' => 10
             ),
             'taxonomies' => array(
                 'label' => __( 'Taxonomies', 'fwp' ),
-                'choices' => array()
+                'choices' => array(),
+                'weight' => 20
             ),
             'custom_fields' => array(
                 'label' => __( 'Custom Fields', 'fwp' ),
-                'choices' => array()
+                'choices' => array(),
+                'weight' => 30
             )
         );
 
@@ -408,9 +417,44 @@ final class FacetWP_Helper
         }
 
         foreach ( $custom_fields as $cf ) {
-            $sources['custom_fields']['choices'][ 'cf/' . $cf ] = $cf;
+            if ( 0 !== strpos( $cf, '_oembed_' ) ) {
+                $sources['custom_fields']['choices'][ 'cf/' . $cf ] = $cf;
+            }
         }
 
-        return apply_filters( 'facetwp_facet_sources', $sources );
+        $sources = apply_filters( 'facetwp_facet_sources', $sources );
+
+        uasort( $sources, array( $this, 'sort_by_weight' ) );
+
+        $this->data_sources = $sources;
+
+        return $sources;
+    }
+
+
+    /**
+     * Sort facetwp_facet_sources by weight
+     * @since 2.7.5
+     */
+    function sort_by_weight( $a, $b ) {
+        $a['weight'] = isset( $a['weight'] ) ? $a['weight'] : 10;
+        $b['weight'] = isset( $b['weight'] ) ? $b['weight'] : 10;
+
+        if ( $a['weight'] == $b['weight'] ) {
+            return 0;
+        }
+
+        return ( $a['weight'] < $b['weight'] ) ? -1 : 1;
+    }
+
+
+    /**
+     * Grab the license key
+     * @since 3.0.3
+     */
+    function get_license_key() {
+        $license_key = defined( 'FACETWP_LICENSE_KEY' ) ? FACETWP_LICENSE_KEY : get_option( 'facetwp_license' );
+        $license_key = apply_filters( 'facetwp_license_key', $license_key );
+        return sanitize_text_field( trim( $license_key ) );
     }
 }

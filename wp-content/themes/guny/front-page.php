@@ -9,6 +9,10 @@ if ( ! class_exists( 'Timber' ) ) {
 $context = Timber::get_context();
 $context['post'] = Timber::get_post();
 
+$featured_image = get_the_post_thumbnail_url($post);
+$context['featured_image'] = $featured_image;
+
+$context['language'] = ICL_LANGUAGE_CODE;
 $templates = array( 'home.twig' );
 
 Timber::render( $templates, $context );

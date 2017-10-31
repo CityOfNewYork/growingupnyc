@@ -1,6 +1,11 @@
 // Site Variables
 //
 
+// Animation
+//
+$animate-scss-speed: .75s !default;
+$animate-timing-function: cubic-bezier(.23, 1, .32, 1) !default;
+
 // Colors By Name
 // =====================
 $black: #000;
@@ -22,11 +27,36 @@ $vivid-orange: #ff6100;
 $white: #fff;
 $purple: #7735b2;
 $dark-purple: #3c036f;
+$blue: #184e9e;
+$light-blue: #eef3f7;
 
-//Created gray colours as in the color palette
-$gray-1: #404657;
+//Created gray colors as in the color palette
+// =============================================
+$gray-1: #51596b;
+$very-light-gray-1: #e0e0e0;
 $light-gray-1: rgba(45, 51, 61, .5);
-$dark-gray-1: #2d333d;
+$dark-gray-1: #343e4c;
+$gray-2: #838a97;
+
+//Colors for Micro Site
+$dark-blue: #144f82;
+$light-green: #20bf65;
+$green: #00965c;
+$dark-green: #007145;
+$very-dark-green: #005e4c;
+$very-dark-gray-1: #353c48;
+$light-purple: #b35eff;
+$very-dark-blue-1: #0b2c49;
+$light-purple-1: #8865a7;
+
+//Micro site topics sidebar colours
+// ==================================
+$purple-60: #31035a;
+$purple-50: #3c036f;
+$purple-40: #511184;
+$purple-30: #57208a;
+$purple-20: #8d3bcb;
+$purple-10: #9e49e1;
 
 // Colors By Usage
 // =====================
@@ -114,13 +144,20 @@ $horizontal-gutter: 20px;
 
 // Breakpoints
 // =====================
-$bp-small: new-breakpoint(min-width 375px);
-$bp-medium: new-breakpoint(min-width 700px);
-$bp-large: new-breakpoint(min-width 1024px);
-$bp-xlarge: new-breakpoint(min-width 1200px);
+$screen-small: $screen-small + px;
+$screen-medium: $screen-medium + px;
+$screen-large: $screen-large + px;
+$screen-xlarge: $screen-xlarge + px;
+
+$bp-x-small: new-breakpoint(max-width $screen-small);
+$bp-small: new-breakpoint(min-width $screen-small);
+$bp-medium: new-breakpoint(min-width $screen-medium);
+$bp-large: new-breakpoint(min-width $screen-large);
+$bp-xlarge: new-breakpoint(min-width $screen-xlarge);
 $breakpoint-font: $bp-large;
 
 $bp-mobile-only: new-breakpoint(max-width 1023px);
+$bp-mobile-x-small: new-breakpoint(max-width 374px);
 
 // Heights
 // =====================

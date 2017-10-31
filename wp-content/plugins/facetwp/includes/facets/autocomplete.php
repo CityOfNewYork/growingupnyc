@@ -1,12 +1,15 @@
 <?php
 
-class FacetWP_Facet_Autocomplete
+class FacetWP_Facet_Autocomplete extends FacetWP_Facet
 {
 
     function __construct() {
         $this->label = __( 'Autocomplete', 'fwp' );
 
         // ajax
+        add_action( 'facetwp_autocomplete_load', array( $this, 'ajax_load' ) );
+
+        // deprecated
         add_action( 'wp_ajax_facetwp_autocomplete_load', array( $this, 'ajax_load' ) );
         add_action( 'wp_ajax_nopriv_facetwp_autocomplete_load', array( $this, 'ajax_load' ) );
     }
@@ -22,7 +25,7 @@ class FacetWP_Facet_Autocomplete
         $value = empty( $value ) ? '' : stripslashes( $value[0] );
         $placeholder = isset( $params['facet']['placeholder'] ) ? $params['facet']['placeholder'] : __( 'Start typing...', 'fwp' );
         $placeholder = facetwp_i18n( $placeholder );
-        $output .= '<input type="search" class="facetwp-autocomplete" value="' . $value . '" placeholder="' . esc_attr( $placeholder ) . '" />';
+        $output .= '<input type="search" class="facetwp-autocomplete" value="' . esc_attr( $value ) . '" placeholder="' . esc_attr( $placeholder ) . '" />';
         $output .= '<input type="button" class="facetwp-autocomplete-update" value="' . __( 'Update', 'fwp' ) . '" />';
         return $output;
     }
@@ -47,9 +50,8 @@ class FacetWP_Facet_Autocomplete
         SELECT DISTINCT post_id FROM {$wpdb->prefix}facetwp_index
         WHERE facet_name = %s AND facet_display_value LIKE %s";
 
-        return $wpdb->get_col(
-            $wpdb->prepare( $sql, $facet['name'], '%' . $selected_values . '%' )
-        );
+        $sql = $wpdb->prepare( $sql, $facet['name'], '%' . $selected_values . '%' );
+        return facetwp_sql( $sql, $facet );
     }
 
 
@@ -65,7 +67,7 @@ class FacetWP_Facet_Autocomplete
         $this.find('.facet-placeholder').val(obj.placeholder);
     });
 
-    wp.hooks.addFilter('facetwp/save/autocomplete', function($this, obj) {
+    wp.hooks.addFilter('facetwp/save/autocomplete', function(obj, $this) {
         obj['source'] = $this.find('.facet-source').val();
         obj['placeholder'] = $this.find('.facet-placeholder').val();
         return obj;
@@ -92,23 +94,26 @@ class FacetWP_Facet_Autocomplete
     function ajax_load() {
         global $wpdb;
 
-        $query = esc_sql( $_POST['query'] );
+        $query = esc_sql( $wpdb->esc_like( $_POST['query'] ) );
         $facet_name = esc_sql( $_POST['facet_name'] );
-
-        $sql = "
-        SELECT DISTINCT facet_display_value
-        FROM {$wpdb->prefix}facetwp_index
-        WHERE facet_name = '$facet_name' AND facet_display_value LIKE '%$query%'
-        ORDER BY facet_display_value ASC
-        LIMIT 10";
-        $results = $wpdb->get_results( $sql );
-
         $output = array();
-        foreach ( $results as $result ) {
-            $output[] = array(
-                'value' => $result->facet_display_value,
-                'data' => $result->facet_display_value,
-            );
+
+        if ( ! empty( $query ) && ! empty( $facet_name ) ) {
+            $sql = "
+            SELECT DISTINCT facet_display_value
+            FROM {$wpdb->prefix}facetwp_index
+            WHERE facet_name = '$facet_name' AND facet_display_value LIKE '%$query%'
+            ORDER BY facet_display_value ASC
+            LIMIT 10";
+
+            $results = $wpdb->get_results( $sql );
+
+            foreach ( $results as $result ) {
+                $output[] = array(
+                    'value' => $result->facet_display_value,
+                    'data' => $result->facet_display_value,
+                );
+            }
         }
 
         echo json_encode( array( 'suggestions' => $output ) );

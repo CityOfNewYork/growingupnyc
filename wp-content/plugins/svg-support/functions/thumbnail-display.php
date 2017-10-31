@@ -3,55 +3,49 @@
  * ADD ABILITY TO VIEW THUMBNAILS IN WP 4.0+
  */
 if ( ! defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly
+	exit; // Exit if accessed directly
 }
 
-add_action('admin_init', 'bodhi_svgs_display_thumbs');
-
+add_action( 'admin_init', 'bodhi_svgs_display_thumbs' );
 function bodhi_svgs_display_thumbs() {
 
-	ob_start();
+	if ( bodhi_svgs_specific_pages_media_library() ) {
 
-	add_action( 'shutdown', 'bodhi_svgs_thumbs_filter', 0 );
-	function bodhi_svgs_thumbs_filter() {
+		function bodhi_svgs_thumbs_filter( $content ) {
 
-	    $final = '';
-	    $ob_levels = count( ob_get_level() );
+			return apply_filters( 'final_output', $content );
 
-	    for ( $i = 0; $i < $ob_levels; $i++ ) {
+		}
 
-	        $final .= ob_get_clean();
+		ob_start( 'bodhi_svgs_thumbs_filter' );
 
-	    }
+		add_filter( 'final_output', 'bodhi_svgs_final_output' );
+		function bodhi_svgs_final_output( $content ) {
 
-	    echo apply_filters( 'final_output', $final );
+			$content = str_replace(
+				'<# } else if ( \'image\' === data.type && data.sizes && data.sizes.full ) { #>',
+				'<# } else if ( \'svg+xml\' === data.subtype ) { #>
+					<img class="details-image" src="{{ data.url }}" draggable="false" />
+					<# } else if ( \'image\' === data.type && data.sizes && data.sizes.full ) { #>',
 
-	}
+					$content
+					);
 
-	add_filter( 'final_output', 'bodhi_svgs_final_output' );
-	function bodhi_svgs_final_output( $content ) {
+			$content = str_replace(
+				'<# } else if ( \'image\' === data.type && data.sizes ) { #>',
+				'<# } else if ( \'svg+xml\' === data.subtype ) { #>
+					<div class="centered">
+						<img src="{{ data.url }}" class="thumbnail" draggable="false" />
+					</div>
+					<# } else if ( \'image\' === data.type && data.sizes ) { #>',
 
-		$content = str_replace(
-			'<# } else if ( \'image\' === data.type && data.sizes && data.sizes.full ) { #>',
-			'<# } else if ( \'svg+xml\' === data.subtype ) { #>
-				<img class="details-image" src="{{ data.url }}" draggable="false" />
-				<# } else if ( \'image\' === data.type && data.sizes && data.sizes.full ) { #>',
+					$content
+					);
 
-			$content
-		);
+			return $content;
 
-		$content = str_replace(
-			'<# } else if ( \'image\' === data.type && data.sizes ) { #>',
-			'<# } else if ( \'svg+xml\' === data.subtype ) { #>
-				<div class="centered">
-					<img src="{{ data.url }}" class="thumbnail" draggable="false" />
-				</div>
-			<# } else if ( \'image\' === data.type && data.sizes ) { #>',
-
-			$content
-		);
-
-		return $content;
+		}
 
 	}
+
 }

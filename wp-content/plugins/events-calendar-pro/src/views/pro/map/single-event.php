@@ -5,8 +5,7 @@
  *
  * Override this template in your own theme by creating a file at [your-theme]/tribe-events/pro/map/single_event.php
  *
- * @package TribeEventsCalendar
- *
+ * @version 4.4.12
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,13 +20,6 @@ $venue_details = tribe_get_venue_details();
 $has_venue         = ( $venue_details ) ? ' vcard' : '';
 $has_venue_address = ( ! empty( $venue_details['address'] ) ) ? ' location' : '';
 ?>
-
-<!-- Event Cost -->
-<?php if ( tribe_get_cost() ) : ?>
-	<div class="tribe-events-event-cost">
-		<span><?php echo tribe_get_cost( null, true ); ?></span>
-	</div>
-<?php endif; ?>
 
 <!-- Event Title -->
 <?php do_action( 'tribe_events_before_the_event_title' ) ?>
@@ -59,6 +51,17 @@ $has_venue_address = ( ! empty( $venue_details['address'] ) ) ? ' location' : ''
 	<?php endif; ?>
 
 </div><!-- .tribe-events-event-meta -->
+
+<?php if ( tribe_get_cost() ) : ?>
+	<div class="tribe-events-event-cost">
+		<span class="ticket-cost"><?php echo tribe_get_cost( null, true ); ?></span>
+		<?php
+			/** This action is documented in the-events-calendar/src/views/list/single-event.php */
+			do_action( 'tribe_events_inside_cost' )
+		?>
+	</div>
+<?php endif; ?>
+
 <?php do_action( 'tribe_events_after_the_meta' ) ?>
 
 <!-- Event Image -->

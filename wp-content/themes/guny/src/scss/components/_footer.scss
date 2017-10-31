@@ -18,6 +18,7 @@
 //
 // Styleguide 2.2
 .c-footer {
+  position: relative;
   background: $color-background-footer;
   color: $color-text-invert;
   padding: 60px 0;
@@ -72,6 +73,9 @@
 .c-footer__logo img {
   max-height: rem-calc(77);
   max-width: 100%;
+
+  image-rendering: -webkit-optimize-contrast; // Chrome
+  image-rendering: optimizequality; // FF
 
   @include media($bp-medium) {
     max-height: none;
@@ -162,8 +166,8 @@
 
   @include media($bp-large) {
     margin-top: 0;
-    @include span-columns(4);
-    @include shift(2);
+    @include span-columns(5);
+    @include shift(1);
   }
 }
 

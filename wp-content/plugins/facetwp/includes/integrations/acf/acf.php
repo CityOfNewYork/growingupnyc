@@ -11,11 +11,9 @@ class FacetWP_Integration_ACF
     function __construct() {
         $this->acf_version = acf()->settings['version'];
 
-        if ( version_compare( $this->acf_version, '4.0', '>=' ) ) {
-            add_filter( 'facetwp_facet_sources', array( $this, 'facet_sources' ) );
-            add_filter( 'facetwp_indexer_post_facet', array( $this, 'indexer_post_facet' ), 1, 2 );
-            add_filter( 'facetwp_acf_display_value', array( $this, 'index_source_other' ), 1, 2 );
-        }
+        add_filter( 'facetwp_facet_sources', array( $this, 'facet_sources' ) );
+        add_filter( 'facetwp_indexer_post_facet', array( $this, 'indexer_post_facet' ), 1, 2 );
+        add_filter( 'facetwp_acf_display_value', array( $this, 'index_source_other' ), 1, 2 );
     }
 
 
@@ -26,6 +24,7 @@ class FacetWP_Integration_ACF
         $sources['acf'] = array(
             'label' => 'Advanced Custom Fields',
             'choices' => array(),
+            'weight' => 5
         );
 
         // ACF 5
@@ -135,7 +134,7 @@ class FacetWP_Integration_ACF
         $value = maybe_unserialize( $value );
 
         // checkboxes
-        if ( 'checkbox' == $field['type'] || 'select' == $field['type'] ) {
+        if ( 'checkbox' == $field['type'] || 'select' == $field['type'] || 'radio' == $field['type'] ) {
             if ( false !== $value ) {
                 foreach ( (array) $value as $val ) {
                     $display_value = isset( $field['choices'][ $val ] ) ?
@@ -192,6 +191,14 @@ class FacetWP_Integration_ACF
             }
         }
 
+        // date_picker
+        elseif ( 'date_picker' == $field['type'] ) {
+            $formatted = $this->format_date( $value );
+            $params['facet_value'] = $formatted;
+            $params['facet_display_value'] = apply_filters( 'facetwp_acf_display_value', $formatted, $params );
+            FWP()->indexer->index_row( $params );
+        }
+
         // true_false
         elseif ( 'true_false' == $field['type'] ) {
             $display_value = ( 0 < (int) $value ) ? __( 'Yes', 'fwp' ) : __( 'No', 'fwp' );
@@ -232,11 +239,35 @@ class FacetWP_Integration_ACF
             if ( 1 < count( $hierarchy ) ) {
                 array_shift( $hierarchy );
                 $value = $this->process_field_value( $value, $hierarchy );
-                return $value[ $this->repeater_row ];
+                $value = $value[ $this->repeater_row ];
             }
         }
 
+        if ( 'date_range' == $facet['type'] ) {
+            $value = $this->format_date( $value );
+        }
+
         return $value;
+    }
+
+
+    /**
+     * We need to get field groups in ALL languages
+     */
+    function disable_wpml( $query ) {
+        $query->set( 'suppress_filters', true );
+    }
+
+
+    /**
+     * Format dates in YYYY-MM-DD
+     */
+    function format_date( $str ) {
+        if ( 8 == strlen( $str ) && ctype_digit( $str ) ) {
+            $str = substr( $str, 0, 4 ) . '-' . substr( $str, 4, 2 ) . '-' . substr( $str, 6, 2 );
+        }
+
+        return $str;
     }
 
 
@@ -245,10 +276,17 @@ class FacetWP_Integration_ACF
      * @return array
      */
     function get_acf_fields_v5() {
+
+        add_action( 'pre_get_posts', array( $this, 'disable_wpml' ) );
         $field_groups = acf_get_field_groups();
+        remove_action( 'pre_get_posts', array( $this, 'disable_wpml' ) );
+
         foreach ( $field_groups as $field_group ) {
             $fields = acf_get_fields( $field_group );
-            $this->recursive_get_fields( $fields, $field_group );
+
+            if ( ! empty( $fields ) ) {
+                $this->recursive_get_fields( $fields, $field_group );
+            }
         }
 
         return $this->fields;
@@ -265,6 +303,7 @@ class FacetWP_Integration_ACF
         $class = new facetwp_acf_field_group();
 
         $field_groups = $class->get_field_groups( array() );
+
         foreach ( $field_groups as $field_group ) {
             $fields = $class->get_fields( array(), $field_group['id'] );
             $this->recursive_get_fields( $fields, $field_group );

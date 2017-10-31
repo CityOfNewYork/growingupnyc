@@ -86,6 +86,10 @@
   @include media($bp-large) {
     padding: rem-calc(28 40);
   }
+  @include media($bp-x-small) {
+    padding: rem-calc(12 40 12 12);
+  }
+
 }
 
 .c-list-box--secondary .c-list-box__heading,
@@ -264,4 +268,13 @@
 .c-list-box__border {
   border-radius: 3px;
   padding: rem-calc(5 0);
+}
+
+//Hide list item call Espanol
+.o-article-sidebar {
+  .c-list-box__content {
+    li.espanol {
+      display: none;
+    }
+  }
 }

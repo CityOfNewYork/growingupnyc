@@ -26,7 +26,13 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		public $name;
 
 		/**
-		 * the field's attributes
+		 * the fieldset attributes
+		 * @var array
+		 */
+		public $fieldset_attributes;
+
+		/**
+		 * the field attributes
 		 * @var array
 		 */
 		public $attributes;
@@ -63,25 +69,28 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 
 			// setup the defaults
 			$this->defaults = array(
-				'type'             => 'html',
-				'name'             => $id,
-				'attributes'       => array(),
-				'class'            => null,
-				'label'            => null,
-				'tooltip'          => null,
-				'size'             => 'medium',
-				'html'             => null,
-				'error'            => false,
-				'value'            => $value,
-				'options'          => null,
-				'conditional'      => true,
-				'display_callback' => null,
-				'if_empty'         => null,
-				'can_be_empty'     => false,
-				'clear_after'      => true,
+				'type'                => 'html',
+				'name'                => $id,
+				'fieldset_attributes' => array(),
+				'attributes'          => array(),
+				'class'               => null,
+				'label'               => null,
+				'label_attributes'    => null,
+				'placeholder'         => null,
+				'tooltip'             => null,
+				'size'                => 'medium',
+				'html'                => null,
+				'error'               => false,
+				'value'               => $value,
+				'options'             => null,
+				'conditional'         => true,
+				'display_callback'    => null,
+				'if_empty'            => null,
+				'can_be_empty'        => false,
+				'clear_after'         => true,
 			);
 
-			// a list of valid field types, to prevent screwy behaviour
+			// a list of valid field types, to prevent screwy behavior
 			$this->valid_field_types = array(
 				'heading',
 				'html',
@@ -92,9 +101,11 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 				'checkbox_bool',
 				'checkbox_list',
 				'dropdown',
-				'dropdown_chosen',
-				'dropdown_select2',
+				'dropdown',
+				'dropdown_select2', // Deprecated use `dropdown`
+				'dropdown_chosen', // Deprecated use `dropdown`
 				'license_key',
+				'wrapped_html',
 			);
 
 			$this->valid_field_types = apply_filters( 'tribe_valid_field_types', $this->valid_field_types );
@@ -106,6 +117,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 			$id         = esc_attr( $id );
 			$type       = esc_attr( $args['type'] );
 			$name       = esc_attr( $args['name'] );
+			$placeholder = esc_attr( $args['placeholder'] );
 			$class      = sanitize_html_class( $args['class'] );
 			$label      = wp_kses(
 				$args['label'], array(
@@ -123,6 +135,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 					),
 				)
 			);
+			$label_attributes = $args['label_attributes'];
 			$tooltip    = wp_kses(
 				$args['tooltip'], array(
 					'a'      => array( 'href' => array(), 'title' => array(), 'target' => array() ),
@@ -141,10 +154,16 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 					'span'   => array(),
 				)
 			);
-			$attributes = $args['attributes'];
-			if ( is_array( $attributes ) ) {
-				foreach ( $attributes as $key => &$val ) {
-					$val = esc_attr( $val );
+			$fieldset_attributes = array();
+			if ( is_array( $args['fieldset_attributes'] ) ) {
+				foreach ( $args['fieldset_attributes'] as $key => $val ) {
+					$fieldset_attributes[ $key ] = esc_attr( $val );
+				}
+			}
+			$attributes = array();
+			if ( is_array( $args['attributes'] ) ) {
+				foreach ( $args['attributes'] as $key => $val ) {
+					$attributes[ $key ] = esc_attr( $val );
 				}
 			}
 			if ( is_array( $args['options'] ) ) {
@@ -174,8 +193,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 			}
 
 			// epicness
-			$this->doField();
-
+			$this->do_field();
 		}
 
 		/**
@@ -185,7 +203,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 *
 		 * @return void
 		 */
-		public function doField() {
+		public function do_field() {
 
 			if ( $this->conditional ) {
 
@@ -217,12 +235,13 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 *
 		 * @return string the field start
 		 */
-		public function doFieldStart() {
+		public function do_field_start() {
 			$return = '<fieldset id="tribe-field-' . $this->id . '"';
 			$return .= ' class="tribe-field tribe-field-' . $this->type;
 			$return .= ( $this->error ) ? ' tribe-error' : '';
 			$return .= ( $this->size ) ? ' tribe-size-' . $this->size : '';
 			$return .= ( $this->class ) ? ' ' . $this->class . '"' : '"';
+			$return .= ( $this->fieldset_attributes ) ? ' ' . $this->do_fieldset_attributes() . '"' : '"';
 			$return .= '>';
 
 			return apply_filters( 'tribe_field_start', $return, $this->id, $this->type, $this->error, $this->class, $this );
@@ -233,7 +252,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 *
 		 * @return string the field end
 		 */
-		public function doFieldEnd() {
+		public function do_field_end() {
 			$return = '</fieldset>';
 			$return .= ( $this->clear_after ) ? '<div class="clear"></div>' : '';
 
@@ -245,10 +264,16 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 *
 		 * @return string the field label
 		 */
-		public function doFieldLabel() {
+		public function do_field_label() {
 			$return = '';
 			if ( $this->label ) {
-				$return = '<legend class="tribe-field-label">' . $this->label . '</legend>';
+				if ( isset( $this->label_attributes ) ) {
+					$this->label_attributes['class'] = isset( $this->label_attributes['class'] ) ?
+						implode( ' ', array_merge( array( 'tribe-field-label' ), $this->label_attributes['class'] ) ) :
+						array( 'tribe-field-label' );
+					$this->label_attributes = $this->concat_attributes( $this->label_attributes );
+				}
+				$return = sprintf( '<legend class="tribe-field-label" %s>%s</legend>', $this->label_attributes, $this->label );
 			}
 
 			return apply_filters( 'tribe_field_label', $return, $this->label, $this );
@@ -259,7 +284,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 *
 		 * @return string the field div start
 		 */
-		public function doFieldDivStart() {
+		public function do_field_div_start() {
 			$return = '<div class="tribe-field-wrap">';
 
 			return apply_filters( 'tribe_field_div_start', $return, $this );
@@ -270,8 +295,8 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 *
 		 * @return string the field div end
 		 */
-		public function doFieldDivEnd() {
-			$return = $this->doToolTip();
+		public function do_field_div_end() {
+			$return = $this->do_tool_tip();
 			$return .= '</div>';
 
 			return apply_filters( 'tribe_field_div_end', $return, $this );
@@ -282,7 +307,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 *
 		 * @return string the field tooltip
 		 */
-		public function doToolTip() {
+		public function do_tool_tip() {
 			$return = '';
 			if ( $this->tooltip ) {
 				$return = '<p class="tooltip description">' . $this->tooltip . '</p>';
@@ -296,7 +321,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 *
 		 * @return string the screen reader label
 		 */
-		public function doScreenReaderLabel() {
+		public function do_screen_reader_label() {
 			$return = '';
 			if ( $this->tooltip ) {
 				$return = '<label class="screen-reader-text">' . $this->tooltip . '</label>';
@@ -310,7 +335,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 *
 		 * @return string the field value
 		 */
-		public function doFieldValue() {
+		public function do_field_value() {
 			$return = '';
 			if ( $this->value ) {
 				$return = ' value="' . $this->value . '"';
@@ -326,7 +351,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 *
 		 * @return string the field name
 		 */
-		public function doFieldName( $multi = false ) {
+		public function do_field_name( $multi = false ) {
 			$return = '';
 			if ( $this->name ) {
 				if ( $multi ) {
@@ -340,11 +365,25 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		}
 
 		/**
+		 * returns the field's placeholder
+		 *
+		 * @return string the field value
+		 */
+		public function do_field_placeholder() {
+			$return = '';
+			if ( $this->placeholder ) {
+				$return = ' placeholder="' . $this->placeholder . '"';
+			}
+
+			return apply_filters( 'tribe_field_placeholder', $return, $this->placeholder, $this );
+		}
+
+		/**
 		 * Return a string of attributes for the field
 		 *
 		 * @return string
 		 **/
-		public function doFieldAttributes() {
+		public function do_field_attributes() {
 			$return = '';
 			if ( ! empty( $this->attributes ) ) {
 				foreach ( $this->attributes as $key => $value ) {
@@ -353,6 +392,22 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 			}
 
 			return apply_filters( 'tribe_field_attributes', $return, $this->name, $this );
+		}
+
+		/**
+		 * Return a string of attributes for the fieldset
+		 *
+		 * @return string
+		 **/
+		public function do_fieldset_attributes() {
+			$return = '';
+			if ( ! empty( $this->fieldset_attributes ) ) {
+				foreach ( $this->fieldset_attributes as $key => $value ) {
+					$return .= ' ' . $key . '="' . $value . '"';
+				}
+			}
+
+			return apply_filters( 'tribe_fieldset_attributes', $return, $this->name, $this );
 		}
 
 		/**
@@ -372,7 +427,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 * @return string the field
 		 */
 		public function html() {
-			$field = $this->doFieldLabel();
+			$field = $this->do_field_label();
 			$field .= $this->html;
 
 			return $field;
@@ -384,17 +439,18 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 * @return string the field
 		 */
 		public function text() {
-			$field = $this->doFieldStart();
-			$field .= $this->doFieldLabel();
-			$field .= $this->doFieldDivStart();
+			$field = $this->do_field_start();
+			$field .= $this->do_field_label();
+			$field .= $this->do_field_div_start();
 			$field .= '<input';
 			$field .= ' type="text"';
-			$field .= $this->doFieldName();
-			$field .= $this->doFieldValue();
+			$field .= $this->do_field_name();
+			$field .= $this->do_field_value();
+			$field .= $this->do_field_placeholder();
 			$field .= '/>';
-			$field .= $this->doScreenReaderLabel();
-			$field .= $this->doFieldDivEnd();
-			$field .= $this->doFieldEnd();
+			$field .= $this->do_screen_reader_label();
+			$field .= $this->do_field_div_end();
+			$field .= $this->do_field_end();
 
 			return $field;
 		}
@@ -405,17 +461,17 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 * @return string the field
 		 */
 		public function textarea() {
-			$field = $this->doFieldStart();
-			$field .= $this->doFieldLabel();
-			$field .= $this->doFieldDivStart();
+			$field = $this->do_field_start();
+			$field .= $this->do_field_label();
+			$field .= $this->do_field_div_start();
 			$field .= '<textarea';
-			$field .= $this->doFieldName();
+			$field .= $this->do_field_name();
 			$field .= '>';
 			$field .= esc_html( stripslashes( $this->value ) );
 			$field .= '</textarea>';
-			$field .= $this->doScreenReaderLabel();
-			$field .= $this->doFieldDivEnd();
-			$field .= $this->doFieldEnd();
+			$field .= $this->do_screen_reader_label();
+			$field .= $this->do_field_div_end();
+			$field .= $this->do_field_end();
 
 			return $field;
 		}
@@ -433,13 +489,13 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 			ob_start();
 			wp_editor( html_entity_decode( ( $this->value ) ), $this->name, $settings );
 			$editor = ob_get_clean();
-			$field  = $this->doFieldStart();
-			$field .= $this->doFieldLabel();
-			$field .= $this->doFieldDivStart();
+			$field  = $this->do_field_start();
+			$field .= $this->do_field_label();
+			$field .= $this->do_field_div_start();
 			$field .= $editor;
-			$field .= $this->doScreenReaderLabel();
-			$field .= $this->doFieldDivEnd();
-			$field .= $this->doFieldEnd();
+			$field .= $this->do_screen_reader_label();
+			$field .= $this->do_field_div_end();
+			$field .= $this->do_field_end();
 
 			return $field;
 		}
@@ -450,14 +506,14 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 * @return string the field
 		 */
 		public function radio() {
-			$field = $this->doFieldStart();
-			$field .= $this->doFieldLabel();
-			$field .= $this->doFieldDivStart();
+			$field = $this->do_field_start();
+			$field .= $this->do_field_label();
+			$field .= $this->do_field_div_start();
 			if ( is_array( $this->options ) ) {
 				foreach ( $this->options as $option_id => $title ) {
 					$field .= '<label title="' . esc_attr( strip_tags( $title ) ) . '">';
 					$field .= '<input type="radio"';
-					$field .= $this->doFieldName();
+					$field .= $this->do_field_name();
 					$field .= ' value="' . esc_attr( $option_id ) . '" ' . checked( $this->value, $option_id, false ) . '/>';
 					$field .= $title;
 					$field .= '</label>';
@@ -465,8 +521,8 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 			} else {
 				$field .= '<span class="tribe-error">' . esc_html__( 'No radio options specified', 'tribe-common' ) . '</span>';
 			}
-			$field .= $this->doFieldDivEnd();
-			$field .= $this->doFieldEnd();
+			$field .= $this->do_field_div_end();
+			$field .= $this->do_field_end();
 
 			return $field;
 		}
@@ -477,9 +533,9 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 * @return string the field
 		 */
 		public function checkbox_list() {
-			$field = $this->doFieldStart();
-			$field .= $this->doFieldLabel();
-			$field .= $this->doFieldDivStart();
+			$field = $this->do_field_start();
+			$field .= $this->do_field_label();
+			$field .= $this->do_field_div_start();
 
 			if ( ! is_array( $this->value ) ) {
 				if ( ! empty( $this->value ) ) {
@@ -493,7 +549,7 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 				foreach ( $this->options as $option_id => $title ) {
 					$field .= '<label title="' . esc_attr( $title ) . '">';
 					$field .= '<input type="checkbox"';
-					$field .= $this->doFieldName( true );
+					$field .= $this->do_field_name( true );
 					$field .= ' value="' . esc_attr( $option_id ) . '" ' . checked( in_array( $option_id, $this->value ), true, false ) . '/>';
 					$field .= $title;
 					$field .= '</label>';
@@ -501,8 +557,8 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 			} else {
 				$field .= '<span class="tribe-error">' . esc_html__( 'No checkbox options specified', 'tribe-common' ) . '</span>';
 			}
-			$field .= $this->doFieldDivEnd();
-			$field .= $this->doFieldEnd();
+			$field .= $this->do_field_div_end();
+			$field .= $this->do_field_end();
 
 			return $field;
 		}
@@ -513,17 +569,17 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 * @return string the field
 		 */
 		public function checkbox_bool() {
-			$field = $this->doFieldStart();
-			$field .= $this->doFieldLabel();
-			$field .= $this->doFieldDivStart();
+			$field = $this->do_field_start();
+			$field .= $this->do_field_label();
+			$field .= $this->do_field_div_start();
 			$field .= '<input type="checkbox"';
-			$field .= $this->doFieldName();
+			$field .= $this->do_field_name();
 			$field .= ' value="1" ' . checked( $this->value, true, false );
-			$field .= $this->doFieldAttributes();
+			$field .= $this->do_field_attributes();
 			$field .= '/>';
-			$field .= $this->doScreenReaderLabel();
-			$field .= $this->doFieldDivEnd();
-			$field .= $this->doFieldEnd();
+			$field .= $this->do_screen_reader_label();
+			$field .= $this->do_field_div_end();
+			$field .= $this->do_field_end();
 
 			return $field;
 		}
@@ -534,12 +590,14 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 * @return string the field
 		 */
 		public function dropdown() {
-			$field = $this->doFieldStart();
-			$field .= $this->doFieldLabel();
-			$field .= $this->doFieldDivStart();
+			$field = $this->do_field_start();
+			$field .= $this->do_field_label();
+			$field .= $this->do_field_div_start();
 			if ( is_array( $this->options ) && ! empty( $this->options ) ) {
 				$field .= '<select';
-				$field .= $this->doFieldName();
+				$field .= $this->do_field_name();
+				$field .= " id='{$this->id}-select'";
+				$field .= " class='tribe-dropdown'";
 				$field .= '>';
 				foreach ( $this->options as $option_id => $title ) {
 					$field .= '<option value="' . esc_attr( $option_id ) . '"';
@@ -551,14 +609,14 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 					$field .= '>' . esc_html( $title ) . '</option>';
 				}
 				$field .= '</select>';
-				$field .= $this->doScreenReaderLabel();
+				$field .= $this->do_screen_reader_label();
 			} elseif ( $this->if_empty ) {
 				$field .= '<span class="empty-field">' . (string) $this->if_empty . '</span>';
 			} else {
 				$field .= '<span class="tribe-error">' . esc_html__( 'No select options specified', 'tribe-common' ) . '</span>';
 			}
-			$field .= $this->doFieldDivEnd();
-			$field .= $this->doFieldEnd();
+			$field .= $this->do_field_div_end();
+			$field .= $this->do_field_end();
 
 			return $field;
 		}
@@ -567,6 +625,8 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 * generate a chosen dropdown field - the same as the
 		 * regular dropdown but wrapped so it can have the
 		 * right css class applied to it
+		 *
+		 * @deprecated
 		 *
 		 * @return string the field
 		 */
@@ -580,6 +640,8 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 * generate a select2 dropdown field - the same as the
 		 * regular dropdown but wrapped so it can have the
 		 * right css class applied to it
+		 *
+		 * @deprecated
 		 *
 		 * @return string the field
 		 */
@@ -595,22 +657,129 @@ if ( ! class_exists( 'Tribe__Field' ) ) {
 		 * @return string the field
 		 */
 		public function license_key() {
-			$field = $this->doFieldStart();
-			$field .= $this->doFieldLabel();
-			$field .= $this->doFieldDivStart();
+			$field = $this->do_field_start();
+			$field .= $this->do_field_label();
+			$field .= $this->do_field_div_start();
 			$field .= '<input';
 			$field .= ' type="text"';
-			$field .= $this->doFieldName();
-			$field .= $this->doFieldValue();
+			$field .= $this->do_field_name();
+			$field .= $this->do_field_value();
+			$field .= $this->do_field_attributes();
 			$field .= '/>';
 			$field .= '<p class="license-test-results"><img src="' . esc_url( admin_url( 'images/wpspin_light.gif' ) ) . '" class="ajax-loading-license" alt="Loading" style="display: none"/>';
 			$field .= '<span class="key-validity"></span>';
-			$field .= $this->doScreenReaderLabel();
-			$field .= $this->doFieldDivEnd();
-			$field .= $this->doFieldEnd();
+			$field .= $this->do_screen_reader_label();
+			$field .= $this->do_field_div_end();
+			$field .= $this->do_field_end();
 
 			return $field;
 		}
 
+		/* deprecated camelCase methods */
+		public function doField() {
+			_deprecated_function( __METHOD__, '4.3', __CLASS__ . '::do_field' );
+			return $this->do_field();
+		}
+
+		public function doFieldStart() {
+			_deprecated_function( __METHOD__, '4.3', __CLASS__ . '::do_field_start' );
+			return $this->do_field_start();
+		}
+
+		public function doFieldEnd() {
+			_deprecated_function( __METHOD__, '4.3', __CLASS__ . '::do_field_end' );
+			return $this->do_field_end();
+		}
+
+		public function doFieldLabel() {
+			_deprecated_function( __METHOD__, '4.3', __CLASS__ . '::do_field_label' );
+			return $this->do_field_label();
+		}
+
+		public function doFieldDivStart() {
+			_deprecated_function( __METHOD__, '4.3', __CLASS__ . '::do_field_div_start' );
+			return $this->do_field_div_start();
+		}
+
+		public function doFieldDivEnd() {
+			_deprecated_function( __METHOD__, '4.3', __CLASS__ . '::do_field_div_end' );
+			return $this->do_field_div_end();
+		}
+
+		public function doToolTip() {
+			_deprecated_function( __METHOD__, '4.3', __CLASS__ . '::do_tool_tip' );
+			return $this->do_tool_tip();
+		}
+
+		public function doFieldValue() {
+			_deprecated_function( __METHOD__, '4.3', __CLASS__ . '::do_field_value' );
+			return $this->do_field_value();
+		}
+
+		public function doFieldName( $multi = false ) {
+			_deprecated_function( __METHOD__, '4.3', __CLASS__ . '::do_field_name' );
+			return $this->do_field_name( $multi );
+		}
+
+		public function doFieldAttributes() {
+			_deprecated_function( __METHOD__, '4.3', __CLASS__ . '::do_field_attributes' );
+			return $this->do_field_attributes();
+		}
+
+		public function doScreenReaderLabel() {
+			_deprecated_function( __METHOD__, '4.3', __CLASS__ . '::do_screen_reader_label' );
+			return $this->do_screen_reader_label();
+		}
+
+		/**
+		 * Generate a wrapped html field.
+		 *
+		 * This is useful to print some HTML that should be inline with the other fieldsets.
+		 *
+		 * @return string The field markup.
+		 */
+		public function wrapped_html() {
+			$field = $this->do_field_start();
+			$field .= $this->do_field_label();
+			$field .= $this->do_field_div_start();
+			$field .= $this->html;
+			$field .= $this->do_field_div_start();
+			$field .= $this->do_field_end();
+
+			return $field;
+		}
+
+		/**
+		 * Concatenatates an array of attributes to use in HTML tags.
+		 *
+		 * Example usage:
+		 *
+		 *      $attrs = array( 'class' => array('one', 'two'), 'style' => 'color:red;' );
+		 *      printf ( '<p %s>%s</p>', tribe_concat_attributes( $attrs ), 'bar' );
+		 *
+		 *      // <p> class="one two" style="color:red;">bar</p>
+		 *
+		 * @param array $attributes An array of attributes in the format
+		 *                          [<attribute1> => <value>, <attribute2> => <value>]
+		 *                          where `value` can be a string or an array.
+		 *
+		 * @return string The concatenated attributes.
+		 */
+		protected function concat_attributes( array $attributes = array() ) {
+			if ( empty( $attributes ) ) {
+				return '';
+			}
+
+			$concat = array();
+			foreach ( $attributes as $attribute => $value ) {
+				if ( is_array( $value ) ) {
+					$value = implode( ' ', $value );
+				}
+				$quote     = false !== strpos( $value, '"' ) ? "'" : '"';
+				$concat[] = esc_attr( $attribute ) . '=' . $quote . esc_attr( $value ) . $quote;
+			}
+
+			return implode( ' ', $concat );
+		}
 	} // end class
 } // endif class_exists

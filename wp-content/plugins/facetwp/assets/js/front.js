@@ -21,7 +21,7 @@ var FWP = FWP || {};
     };
 
     for (var prop in defaults) {
-        if ('undefined' == typeof FWP[prop]) {
+        if ('undefined' === typeof FWP[prop]) {
             FWP[prop] = defaults[prop];
         }
     }
@@ -47,12 +47,12 @@ var FWP = FWP || {};
 
 
     FWP.helper.get_url_var = function(name) {
-        var name = 'fwp_' + name;
+        var name = FWP_JSON.prefix + name;
         var query_string = FWP.build_query_string();
         var url_vars = query_string.split('&');
         for (var i = 0; i < url_vars.length; i++) {
             var item = url_vars[i].split('=');
-            if (item[0] == name) {
+            if (item[0] === name) {
                 return item[1];
             }
         }
@@ -62,13 +62,42 @@ var FWP = FWP || {};
 
     FWP.helper.serialize = function(obj, prefix) {
         var str = [];
-        var prefix = ('undefined' != typeof prefix) ? prefix : '';
+        var prefix = ('undefined' !== typeof prefix) ? prefix : '';
         for (var p in obj) {
-            if ('' != obj[p]) {
+            if ('' != obj[p]) { // This must be "!=" instead of "!=="
                 str.push(prefix + encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
             }
         }
         return str.join('&');
+    }
+
+
+    FWP.helper.escape_html = function(text) {
+        var map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; }).trim();
+    }
+
+
+    FWP.helper.detect_loop = function(node) {
+        var iterator = document.createNodeIterator(node, NodeFilter.SHOW_COMMENT, FWP.helper.node_filter, false);
+        while (curNode = iterator.nextNode()) {
+            if (8 === curNode.nodeType && 'fwp-loop' === curNode.nodeValue) {
+                return curNode.parentNode;
+            }
+        }
+
+        return false;
+    }
+
+
+    FWP.helper.node_filter = function() {
+        return NodeFilter.FILTER_ACCEPT;
     }
 
 
@@ -101,8 +130,13 @@ var FWP = FWP || {};
             FWP.set_hash();
         }
 
-        // Send request to server
-        FWP.fetch_data();
+        // Preload?
+        if (! FWP.loaded && ! FWP.is_bfcache && 'undefined' !== typeof FWP_JSON.preload_data) {
+            FWP.render(FWP_JSON.preload_data);
+        }
+        else {
+            FWP.fetch_data();
+        }
 
         // Cleanup
         FWP.paged = 1;
@@ -127,7 +161,7 @@ var FWP = FWP || {};
             // Support custom loader
             var do_loader = true;
             if (FWP.loaded) {
-                if (FWP.soft_refresh || facet_name == FWP.static_facet || 'undefined' != typeof FWP.used_facets[facet_name]) {
+                if (FWP.soft_refresh || facet_name === FWP.static_facet || 'undefined' !== typeof FWP.used_facets[facet_name]) {
                     do_loader = false;
                 }
             }
@@ -147,19 +181,37 @@ var FWP = FWP || {};
         }
 
         // Add "per page" to the URL hash
-        if (FWP.extras.per_page && 'default' != FWP.extras.per_page) {
+        if (FWP.extras.per_page && 'default' !== FWP.extras.per_page) {
             FWP.facets['per_page'] = FWP.extras.per_page;
         }
 
         // Add sorting to the URL hash
-        if (FWP.extras.sort && 'default' != FWP.extras.sort) {
+        if (FWP.extras.sort && 'default' !== FWP.extras.sort) {
             FWP.facets['sort'] = FWP.extras.sort;
         }
     }
 
 
     FWP.loading_handler = function(args) {
-        args.element.html('<div class="facetwp-loading"></div>');
+        if ('fade' == FWP_JSON.loading_animation) {
+            if (! FWP.loaded) {
+                var $el = args.element;
+                $(document).on('facetwp-refresh', function() {
+                    $el.prepend('<div class="facetwp-overlay">');
+                    $el.find('.facetwp-overlay').css({
+                        width: $el.width(),
+                        height: $el.height()
+                    });
+                });
+
+                $(document).on('facetwp-loaded', function() {
+                    $el.find('.facetwp-overlay').remove();
+                });
+            }
+        }
+        else if ('' == FWP_JSON.loading_animation) {
+            args.element.html('<div class="facetwp-loading"></div>');
+        }
     }
 
 
@@ -171,20 +223,20 @@ var FWP = FWP || {};
         var get_str = window.location.search.replace('?', '').split('&');
         $.each(get_str, function(idx, val) {
             var param_name = val.split('=')[0];
-            if ('fwp' != param_name.substr(0, 3)) {
+            if (0 !== param_name.indexOf(FWP_JSON.prefix)) {
                 hash.push(val);
             }
         });
         hash = hash.join('&');
 
         // FacetWP URL variables
-        var fwp_vars = FWP.helper.serialize(FWP.facets, 'fwp_');
+        var fwp_vars = FWP.helper.serialize(FWP.facets, FWP_JSON.prefix);
 
-        if ('' != hash) {
+        if ('' !== hash) {
             query_string += hash;
         }
-        if ('' != fwp_vars) {
-            query_string += ('' != hash ? '&' : '') + fwp_vars;
+        if ('' !== fwp_vars) {
+            query_string += ('' !== hash ? '&' : '') + fwp_vars;
         }
 
         return query_string;
@@ -194,13 +246,20 @@ var FWP = FWP || {};
     FWP.set_hash = function() {
         var query_string = FWP.build_query_string();
 
-        if ('' != query_string) {
+        if ('' !== query_string) {
             query_string = '?' + query_string;
         }
 
         if (history.pushState) {
             history.pushState(null, null, window.location.pathname + query_string);
         }
+
+        // Update FWP_HTTP.get
+        FWP_HTTP.get = {};
+        window.location.search.replace('?', '').split('&').forEach(function(el) {
+            var item = el.split('=');
+            FWP_HTTP.get[item[0]] = item[1];
+        });
     }
 
 
@@ -209,8 +268,8 @@ var FWP = FWP || {};
         var get_str = window.location.search.replace('?', '').split('&');
         $.each(get_str, function(idx, val) {
             var param_name = val.split('=')[0];
-            if ('fwp' == param_name.substr(0, 3)) {
-                hash.push(val.replace('fwp_', ''));
+            if (0 === param_name.indexOf(FWP_JSON.prefix)) {
+                hash.push(val.replace(FWP_JSON.prefix, ''));
             }
         });
         hash = hash.join('&');
@@ -223,21 +282,21 @@ var FWP = FWP || {};
         FWP.paged = 1;
         FWP.extras.sort = 'default';
 
-        if ('' != hash) {
+        if ('' !== hash) {
             hash = hash.split('&');
             $.each(hash, function(idx, val) {
                 var pieces = val.split('=');
 
-                if ('paged' == pieces[0]) {
+                if ('paged' === pieces[0]) {
                     FWP.paged = pieces[1];
                 }
-                else if ('per_page' == pieces[0]) {
+                else if ('per_page' === pieces[0]) {
                     FWP.extras.per_page = pieces[1];
                 }
-                else if ('sort' == pieces[0]) {
+                else if ('sort' === pieces[0]) {
                     FWP.extras.sort = pieces[1];
                 }
-                else if ('' != pieces[1]) {
+                else if ('' !== pieces[1]) {
                     FWP.facets[pieces[0]] = decodeURIComponent(pieces[1]).split(',');
                 }
             });
@@ -251,81 +310,85 @@ var FWP = FWP || {};
             FWP.jqXHR.abort();
         }
 
-        FWP.ajaxurl = ('wp' == FWP.template) ? document.URL : ajaxurl;
+        var endpoint = ('wp' === FWP.template) ? document.URL : FWP_JSON.ajaxurl;
 
         // dataType is "text" for better JSON error handling
-        FWP.jqXHR = $.post(FWP.ajaxurl, {
-            'action': 'facetwp_refresh',
-            'data': {
-                'facets': JSON.stringify(FWP.facets),
-                'static_facet': FWP.static_facet,
-                'used_facets': FWP.used_facets,
-                'http_params': FWP_HTTP,
-                'template': FWP.template,
-                'extras': FWP.extras,
-                'soft_refresh': FWP.soft_refresh ? 1 : 0,
-                'is_bfcache': FWP.is_bfcache ? 1 : 0,
-                'first_load': FWP.loaded ? 0 : 1,
-                'paged': FWP.paged
-            }
-        }, function(response) {
-
-            try {
-                var json_object = $.parseJSON(response);
-                FWP.render(json_object);
-            }
-            catch(e) {
-                var pos = response.indexOf('{"facets');
-                if (-1 < pos) {
-                    var error = response.substr(0, pos);
-                    var json_object = $.parseJSON(response.substr(pos));
+        FWP.jqXHR = $.ajax(endpoint, {
+            type: 'POST',
+            dataType: 'text',
+            data: {
+                action: 'facetwp_refresh',
+                data: {
+                    'facets': JSON.stringify(FWP.facets),
+                    'static_facet': FWP.static_facet,
+                    'used_facets': FWP.used_facets,
+                    'http_params': FWP_HTTP,
+                    'template': FWP.template,
+                    'extras': FWP.extras,
+                    'soft_refresh': FWP.soft_refresh ? 1 : 0,
+                    'is_bfcache': FWP.is_bfcache ? 1 : 0,
+                    'first_load': FWP.loaded ? 0 : 1,
+                    'paged': FWP.paged
+                }
+            },
+            success: function(response) {
+                try {
+                    var json_object = $.parseJSON(response);
                     FWP.render(json_object);
-
-                    // Log the error
-                    console.log(error);
                 }
-                else {
-                    $('.facetwp-template').text('FacetWP was unable to auto-detect the post listing');
+                catch(e) {
+                    var pos = response.indexOf('{"facets');
+                    if (-1 < pos) {
+                        var error = response.substr(0, pos);
+                        var json_object = $.parseJSON(response.substr(pos));
+                        FWP.render(json_object);
 
-                    // Log the error
-                    console.log(response);
+                        // Log the error
+                        console.log(error);
+                    }
+                    else {
+                        $('.facetwp-template').text('FacetWP was unable to auto-detect the post listing');
+
+                        // Log the error
+                        console.log(response);
+                    }
                 }
             }
-
-            // WP Playlist support
-            if ('function' === typeof WPPlaylistView) {
-                $('.facetwp-template .wp-playlist').each(function() {
-                    return new WPPlaylistView({ el: this });
-                });
-            }
-
-            // Fire a notification event
-            $(document).trigger('facetwp-loaded');
-
-            // Allow final actions
-            wp.hooks.doAction('facetwp/loaded');
-
-            // Detect "back-forward" cache
-            FWP.is_bfcache = true;
-
-            // Done loading?
-            FWP.loaded = true;
-
-        }, 'text');
+        });
     }
 
 
     FWP.render = function(response) {
 
-        // Populate the template
-        if ('' === response.template) {
+        // Don't render CSS-based (or empty) templates on pageload
+        // The template has already been pre-loaded
+        if (('wp' === FWP.template || '' === response.template) && ! FWP.loaded && ! FWP.is_bfcache) {
             var inject = false;
-        }
-        else if ('wp' == FWP.template) {
-            var inject = $(response.template).find('.facetwp-template').html();
         }
         else {
             var inject = response.template;
+
+            if ('wp' === FWP.template) {
+                var $tpl = $(response.template).find('.facetwp-template');
+
+                if (1 > $tpl.length) {
+                    var wrap = document.createElement('div');
+                    wrap.innerHTML = response.template;
+                    var loop = FWP.helper.detect_loop(wrap);
+
+                    if (loop) {
+                        $tpl = $(loop).addClass('facetwp-template');
+                    }
+                }
+
+                if (0 < $tpl.length) {
+                    var inject = $tpl.html();
+                }
+                else {
+                    // Fallback until "loop_no_results" action is added to WP core
+                    var inject = FWP_JSON['no_results_text'];
+                }
+            }
         }
 
         if (false !== inject) {
@@ -340,39 +403,75 @@ var FWP = FWP || {};
         });
 
         // Populate the counts
-        $('.facetwp-counts').html(response.counts);
+        if ('undefined' !== typeof response.counts) {
+            $('.facetwp-counts').html(response.counts);
+        }
 
-        // Populate the sort box
-        if ('undefined' != typeof response.sort) {
-            $('.facetwp-sort').html(response.sort);
-            $('.facetwp-sort-select').val(FWP.extras.sort);
+        // Populate the pager
+        if ('undefined' !== typeof response.pager) {
+            $('.facetwp-pager').html(response.pager);
         }
 
         // Populate the "per page" box
-        if ('undefined' != typeof response.per_page) {
+        if ('undefined' !== typeof response.per_page) {
             $('.facetwp-per-page').html(response.per_page);
-            if ('default' != FWP.extras.per_page) {
+            if ('default' !== FWP.extras.per_page) {
                 $('.facetwp-per-page-select').val(FWP.extras.per_page);
             }
         }
 
-        // Populate the pager
-        $('.facetwp-pager').html(response.pager);
+        // Populate the sort box
+        if ('undefined' !== typeof response.sort) {
+            $('.facetwp-sort').html(response.sort);
+            $('.facetwp-sort-select').val(FWP.extras.sort);
+        }
 
         // Populate the settings object (iterate to preserve static facet settings)
         $.each(response.settings, function(key, val) {
             FWP.settings[key] = val;
         });
+
+        // WP Playlist support
+        if ('function' === typeof WPPlaylistView) {
+            $('.facetwp-template .wp-playlist').each(function() {
+                return new WPPlaylistView({ el: this });
+            });
+        }
+
+        // Fire a notification event
+        $(document).trigger('facetwp-loaded');
+
+        // Allow final actions
+        wp.hooks.doAction('facetwp/loaded');
+
+        // Detect "back-forward" cache
+        FWP.is_bfcache = true;
+
+        // Done loading?
+        FWP.loaded = true;
     }
 
 
-    FWP.reset = function() {
+    FWP.reset = function(facet_name) {
         FWP.parse_facets();
+
+        if ('undefined' !== typeof facet_name) {
+            FWP.facets[facet_name] = [];
+
+            if ('undefined' !== typeof FWP.used_facets) {
+                delete FWP.used_facets[facet_name];
+            }
+        }
+        else {
+            $.each(FWP.facets, function(f) {
+                FWP.facets[f] = [];
+            });
+
+            FWP.extras.sort = 'default';
+            FWP.used_facets = {};
+        }
+
         FWP.is_reset = true;
-        $.each(FWP.facets, function(f) {
-            FWP.facets[f] = [];
-        });
-        FWP.used_facets = {};
         FWP.refresh();
     }
 
@@ -399,12 +498,25 @@ var FWP = FWP || {};
         }
 
         // Make sure there's a template
-        if (1 > $('.facetwp-template').length) {
-            return;
+        var has_template = $('.facetwp-template').length > 0;
+
+        if (! has_template) {
+            var has_loop = FWP.helper.detect_loop(document.body);
+
+            if (has_loop) {
+                $(has_loop).addClass('facetwp-template');
+            }
+            else {
+                return;
+            }
         }
-        else {
-            var $div = $('.facetwp-template:first');
-            FWP.template = $div.is('[data-name]') ? $div.attr('data-name') : 'wp';
+
+        var $div = $('.facetwp-template:first');
+        FWP.template = $div.is('[data-name]') ? $div.attr('data-name') : 'wp';
+
+        // Facets inside the template?
+        if (0 < $div.find('.facetwp-facet').length) {
+            console.error('Facets should not be inside the "facetwp-template" container');
         }
 
         wp.hooks.doAction('facetwp/ready');
@@ -414,29 +526,33 @@ var FWP = FWP || {};
             wp.hooks.addAction('facetwp/loaded', function() {
                 var selections = '';
                 $.each(FWP.facets, function(key, val) {
-                    var tmp_key = key.replace('fwp_', '');
-                    if (-1 < $.inArray(tmp_key, ['paged', 'per_page', 'sort'])) {
+                    if (val.length < 1 || 'undefined' === typeof FWP.settings.labels[key]) {
                         return true; // skip this facet
                     }
 
-                    if (val.length > 0) {
-                        var label = ('object' == typeof val) ? val.join(' / ') : val;
-                        var facet_type = $('.facetwp-facet-' + key).attr('data-type');
-                        label = wp.hooks.applyFilters('facetwp/selections/' + facet_type, label, {
-                            'el': $('.facetwp-facet-' + key),
-                            'selected_values': val
-                        });
+                    var choices = val;
+                    var facet_type = $('.facetwp-facet-' + key).attr('data-type');
+                    choices = wp.hooks.applyFilters('facetwp/selections/' + facet_type, choices, {
+                        'el': $('.facetwp-facet-' + key),
+                        'selected_values': choices
+                    });
 
-                        if ('' != label) {
-                            selections += '<li data-facet="' + key + '">' +
-                                '<span class="facetwp-selection-label">' + FWP.settings.labels[key] + ':</span> ' +
-                                '<span class="facetwp-selection-value">' + label + '</span>' +
-                                '</li>';
-                        }
+                    if ('string' === typeof choices) {
+                        choices = [{ value: '', label: choices }];
                     }
+                    else if ('undefined' === typeof choices[0].label) {
+                        choices = [{ value: '', label: choices[0] }];
+                    }
+
+                    var values = '';
+                    $.each(choices, function(idx, choice) {
+                        values += '<span class="facetwp-selection-value" data-value="' + choice.value + '">' + FWP.helper.escape_html(choice.label) + '</span>';
+                    });
+
+                    selections += '<li data-facet="' + key + '"><span class="facetwp-selection-label">' + FWP.settings.labels[key] + ':</span> ' + values + '</li>';
                 });
 
-                if ('' != selections) {
+                if ('' !== selections) {
                     selections = '<ul>' + selections + '</ul>';
                 }
 
@@ -445,19 +561,33 @@ var FWP = FWP || {};
         }
 
         // Click on a user selection
-        $(document).on('click', '.facetwp-selections li', function() {
+        $(document).on('click', '.facetwp-selections .facetwp-selection-value', function() {
             if (FWP.is_refresh) {
                 return;
             }
 
-            var facet_name = $(this).attr('data-facet');
+            var facet_name = $(this).closest('li').attr('data-facet');
+            var facet_value = $(this).attr('data-value');
 
             FWP.parse_facets();
             FWP.is_reset = true;
-            FWP.facets[facet_name] = [];
-            if ('undefined' != typeof FWP.used_facets) {
+
+            if ('' != facet_value) {
+                var arr = FWP.facets[facet_name];
+                var arr_idx = arr.indexOf(facet_value);
+                if (-1 < arr_idx) {
+                    arr.splice(arr_idx, 1);
+                    FWP.facets[facet_name] = arr;
+                }
+            }
+            else {
+                FWP.facets[facet_name] = [];
+            }
+
+            if ('undefined' !== typeof FWP.used_facets) {
                 delete FWP.used_facets[facet_name]; // slider support
             }
+
             delete FWP.facets['paged']; // remove "paged" from URL
             FWP.refresh();
         });

@@ -30,7 +30,7 @@ $general_tab_fields = Tribe__Main::array_insert_before_key(
 	array(
 		'tribeEventsDisplayThemeTitle'  => array(
 			'type' => 'html',
-			'html' => '<h3>' . esc_html__( 'General Settings', 'tribe-common' ) . '</h3>',
+			'html' => '<h3>' . esc_html__( 'General Settings', 'the-events-calendar' ) . '</h3>',
 		),
 		'postsPerPage'                  => array(
 			'type'            => 'text',
@@ -125,16 +125,16 @@ $general_tab_fields = Tribe__Main::array_insert_before_key(
 		),
 		'defaultCurrencySymbol'         => array(
 			'type'            => 'text',
-			'label'           => esc_html__( 'Default currency symbol', 'tribe-common' ),
-			'tooltip'         => esc_html__( 'Set the default currency symbol for event costs. Note that this only impacts future events, and changes made will not apply retroactively.', 'tribe-common' ),
+			'label'           => esc_html__( 'Default currency symbol', 'the-events-calendar' ),
+			'tooltip'         => esc_html__( 'Set the default currency symbol for event costs. Note that this only impacts future events, and changes made will not apply retroactively.', 'the-events-calendar' ),
 			'validation_type' => 'textarea',
 			'size'            => 'small',
 			'default'         => '$',
 		),
 		'reverseCurrencyPosition'       => array(
 			'type'            => 'checkbox_bool',
-			'label'           => esc_html__( 'Currency symbol follows value', 'tribe-common' ),
-			'tooltip'         => esc_html__( 'The currency symbol normally precedes the value. Enabling this option positions the symbol after the value.', 'tribe-common' ),
+			'label'           => esc_html__( 'Currency symbol follows value', 'the-events-calendar' ),
+			'tooltip'         => esc_html__( 'The currency symbol normally precedes the value. Enabling this option positions the symbol after the value.', 'the-events-calendar' ),
 			'default'         => false,
 			'validation_type' => 'boolean',
 		),
@@ -145,7 +145,7 @@ $general_tab_fields = Tribe__Main::array_insert_before_key(
 		),
 		'tribeEventsMiscellaneousTitle' => array(
 			'type' => 'html',
-			'html' => '<h3>' . esc_html__( 'Miscellaneous Settings', 'tribe-common' ) . '</h3>',
+			'html' => '<h3>' . esc_html__( 'Miscellaneous Settings', 'the-events-calendar' ) . '</h3>',
 		),
 	)
 );
@@ -156,11 +156,17 @@ $general_tab_fields = Tribe__Main::array_insert_after_key(
 	array(
 		'viewWelcomePage'          => array(
 			'type'        => 'html',
-			'html'        => '<fieldset class="tribe-field tribe-field-html"><legend>' . esc_html__( 'View Welcome Page', 'the-events-calendar' ) . '</legend><div class="tribe-field-wrap"><a href="' . Tribe__Settings::instance()->get_url( array( 'tec-welcome-message' => true ) ) . '" class="button">' . esc_html__( 'View Welcome Page', 'the-events-calendar' ) . '</a><p class="tribe-field-indent description">' . esc_html__( 'View the page that displayed when you initially installed the plugin.', 'the-events-calendar' ) . '</p></div></fieldset><div class="clear"></div>',
+			'html'        =>
+				'<fieldset class="tribe-field tribe-field-html"><legend>' .
+					esc_html__( 'View Welcome Page', 'the-events-calendar' ) .
+				'</legend><div class="tribe-field-wrap"><a href="' . Tribe__Settings::instance()->get_url( array( Tribe__Events__Main::instance()->activation_page->welcome_slug => 1 ) ) . '" class="button">' . esc_html__( 'View Welcome Page', 'the-events-calendar' ) . '</a><p class="tribe-field-indent description">' . esc_html__( 'View the page that displayed when you initially installed the plugin.', 'the-events-calendar' ) . '</p></div></fieldset><div class="clear"></div>',
 		),
 		'viewUpdatePage'          => array(
 			'type'        => 'html',
-			'html'        => '<fieldset class="tribe-field tribe-field-html"><legend>' . esc_html__( 'View Update Page', 'the-events-calendar' ) . '</legend><div class="tribe-field-wrap"><a href="' . Tribe__Settings::instance()->get_url( array( 'tec-update-message' => true ) ) . '" class="button">' . esc_html__( 'View Update Page', 'the-events-calendar' ) . '</a><p class="tribe-field-indent description">' . esc_html__( 'View the page that displayed when you updated the plugin.', 'the-events-calendar' ) . '</p></div></fieldset><div class="clear"></div>',
+			'html'        =>
+				'<fieldset class="tribe-field tribe-field-html"><legend>' .
+					esc_html__( 'View Update Page', 'the-events-calendar' ) .
+				'</legend><div class="tribe-field-wrap"><a href="' . Tribe__Settings::instance()->get_url( array( Tribe__Events__Main::instance()->activation_page->update_slug => 1 ) ) . '" class="button">' . esc_html__( 'View Update Page', 'the-events-calendar' ) . '</a><p class="tribe-field-indent description">' . esc_html__( 'View the page that displayed when you updated the plugin.', 'the-events-calendar' ) . '</p></div></fieldset><div class="clear"></div>',
 		),
 	)
 );

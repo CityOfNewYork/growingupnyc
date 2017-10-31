@@ -122,13 +122,23 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 	 * @todo move logic to template classes
 	 */
 	function tribe_get_events_title( $depth = true ) {
+		global $wp_query;
+
 		$events_label_plural = tribe_get_event_label_plural();
 
-		global $wp_query;
+		if ( $wp_query->get( 'featured' ) ) {
+			$events_label_plural = sprintf( _x( 'Featured %s', 'featured events title', 'the-events-calendar'), $events_label_plural );
+		}
 
 		$tribe_ecp = Tribe__Events__Main::instance();
 
-		$title = sprintf( esc_html__( 'Upcoming %s', 'the-events-calendar' ), $events_label_plural );
+		if ( is_single() && tribe_is_event() ) {
+			// For single events, the event title itself is required
+			$title = get_the_title();
+		} else {
+			// For all other cases, start with 'upcoming events'
+			$title = sprintf( esc_html__( 'Upcoming %s', 'the-events-calendar' ), $events_label_plural );
+		}
 
 		// If there's a date selected in the tribe bar, show the date range of the currently showing events
 		if ( isset( $_REQUEST['tribe-bar-date'] ) && $wp_query->have_posts() ) {
@@ -149,7 +159,7 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 
 		if ( tribe_is_month() ) {
 			$title = sprintf(
-				esc_html__( '%1$s for %2$s', 'the-events-calendar' ),
+				esc_html_x( '%1$s for %2$s', 'month view', 'the-events-calendar' ),
 				$events_label_plural,
 				date_i18n( tribe_get_date_option( 'monthAndYearFormat', 'F Y' ), strtotime( tribe_get_month_view_date() ) )
 			);
@@ -158,7 +168,7 @@ if ( class_exists( 'Tribe__Events__Main' ) ) {
 		// day view title
 		if ( tribe_is_day() ) {
 			$title = sprintf(
-				esc_html__( '%1$s for %2$s', 'the-events-calendar' ),
+				esc_html_x( '%1$s for %2$s', 'day_view', 'the-events-calendar' ),
 				$events_label_plural,
 				date_i18n( tribe_get_date_format( true ), strtotime( $wp_query->get( 'start_date' ) ) )
 			);

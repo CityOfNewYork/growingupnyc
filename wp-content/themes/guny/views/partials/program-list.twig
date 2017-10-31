@@ -3,5 +3,12 @@
     {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] with {show_post_type: false} %}
   </div>
 {% else %}
-  <p class="type--no-results">Sorry, we couldn’t find anything matching your search. <a href="/programs">Clear filters</a></p>
+	{% if is_archive %}
+    {% set programs_link %}{{current_url}}{% endset %}
+  {% elseif language == 'es' %}
+    {% set programs_link = '/es/programs' %}
+  {% else %}
+    {% set programs_link = '/programs' %}
+  {% endif %}
+  <p class="type--no-results">Sorry, we couldn’t find anything matching your search. <a href="{{programs_link}}">Clear filters</a></p>
 {% endfor %}

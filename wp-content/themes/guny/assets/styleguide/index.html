@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="sgApp" route-css-class>
+<html lang="en" ng-app="sgApp">
 <head>
   <meta charset="UTF-8">
   <link rel="icon" href="/wp-content/themes/guny/assets/styleguide/assets/img/favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>
-    var _styleguideConfig = {"title":"Growing Up NYC","disableEncapsulation":false,"disableHtml5Mode":true,"sideNav":false,"showMarkupSection":false,"hideSubsectionsOnMainSection":false,"additionalNgDependencies":false};
+    var _styleguideConfig = {"title":"Growing Up NYC","disableEncapsulation":false,"disableHtml5Mode":true,"sideNav":false};
     (function() {
       'use strict';
       var userStyleFiles = [
@@ -26,14 +26,13 @@
         head.appendChild(link);
       }
 
-      addCssLink('/wp-content/themes/guny/assets/styleguide/styleguide_at_rules.css');
-      addCssLink('/wp-content/themes/guny/assets/styleguide/styleguide-app.css', {noReload: true});
-
       // Use Shadow DOM but fallback to global styles if shadow DOM is not supported
       if (typeof head.createShadowRoot !== 'function' || _styleguideConfig.disableEncapsulation) {
         userStyleFiles.forEach(addCssLink);
       }
 
+      addCssLink('/wp-content/themes/guny/assets/styleguide/styleguide_at_rules.css');
+      addCssLink('/wp-content/themes/guny/assets/styleguide/styleguide-app.css', {noReload: true});
     }());
   </script>
   <script type="text/ng-template" id="userStyles.html">

@@ -89,29 +89,29 @@
           {% endfor %}
         </div> <!-- /.c-block-list-inner -->
         <div class="text-center">
-          <a href="/events" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Single-Age') }}</a>
+          <a href="{{eventslink}}" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Single-Age') }}</a>
         </div>
       </section> <!-- /.c-block-list -->
       {% endif %}
 
       {# Tip #}
       {% if post.tip %}
-      <aside class="c-tip u-sm-gutter {{post.age_group|sanitize}}-secondary o-content-container" id="tip-{{(post.title|split(' '))|join('-')}}">
-        <div class="c-tip__sticker sticker {{post.age_group|sanitize}}-secondary">
+      <aside class="c-tip u-sm-gutter {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary o-content-container" id="tip-{{(post.title|split(' '))|join('-')}}">
+        <div class="c-tip__sticker sticker {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">
           <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#lightbulb"></use></svg>
         </div>
+        {% if post.tip_action_heading %}
+          <p class="c-tip__content">{{post.tip_action_heading}}</p>
+        {% endif %}
         <p class="c-tip__content">{{post.tip}}</p>
-        <footer class="c-tip__footer">
-          {% if post.tip_action_heading %}
-            <p>{{post.tip_action_heading}}</p>
-            {% if post.sms_text or post.website_link %}
+        {# <footer class="c-tip__footer"> #}
+            {# {% if post.sms_text or post.website_link %}
               <p>
                 {{post.sms_text}}{% if post.sms_text and post.website_link %}, or{% endif %}
                 {% if post.website_link %}<a href="{{post.website_link}}" class="c-tip__link" target="_blank">find out more here</a>{% endif %}.
               </p>
-            {% endif %}
-          {% endif %}
-        </footer>
+            {% endif %} #}
+        {# </footer> #}
       </aside>
       {% endif %}
 
@@ -131,7 +131,7 @@
           {% endfor %}
         </div> <!-- /.c-block-list__inner -->
         <div class="text-center">
-          <a href="/programs" class="button--outline button--outline--gray">{{ __('See all programs', 'GUNY-Single-Age') }}</a>
+          <a href="{{programslink}}" class="button--outline button--outline--gray">{{ __('See all programs', 'GUNY-Single-Age') }}</a>
         </div>
       </section>
       {% endif %}
@@ -150,62 +150,83 @@
       <section class="o-content-container--compact u-top-spacing u-bottom-spacing" id="section-milestones">
         <h2>{{ __('Milestones', 'GUNY-Single-Age') }}</h2>
         <div class="o-content-container--text u-sm-gutter">
-          <p>{{ __("How your child plays, learns, speaks, and acts offers important clues about your child&rsquo;s development.", 'GUNY-Single-Age') }}</p>
+          <p>{{post.milestones_pretext}}</p>
         </div>
-        <h3>What most {{post.milestones_heading}} do at this age:</h3>
+        <h3>{{post.milestones_heading}}</h3>
         <ul class="js-accordion c-list-box c-list-box--tertiary u-sm-gutter">
-          <li class="c-list-box__item">
-            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-social">{{ __('Social', 'GUNY-Single-Age') }}</h4>
-            <ul class="c-list-box__content js-accordion__content" id="milestones-panel-social">
-            {% for milestone in post.get_field('social_milestones') %}
-              <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
-            {% endfor %}
-            </ul>
-          </li>
-          <li class="c-list-box__item">
-            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-language">{{ __('Communication', 'GUNY-Single-Age') }}</h4>
-            <ul class="c-list-box__content js-accordion__content" id="milestones-panel-language">
-            {% for milestone in post.get_field('communication_milestones') %}
-              <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
-            {% endfor %}
-            </ul>
-          </li>
-          <li class="c-list-box__item">
-            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-cognitive">{{ __('Learning', 'GUNY-Single-Age') }}</h4>
-            <ul class="c-list-box__content js-accordion__content" id="milestones-panel-cognitive">
-            {% for milestone in post.get_field('learning_milestones') %}
-              <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
-            {% endfor %}
-            </ul>
-          </li>
-          <li class="c-list-box__item">
-            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-movement">{{ __('Physical Development', 'GUNY-Single-Age') }}</h4>
-            <ul class="c-list-box__content js-accordion__content" id="milestones-panel-movement">
-            {% for milestone in post.get_field('movement_milestones') %}
-              <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
-            {% endfor %}
-            </ul>
-          </li>
-          <li class="c-list-box__item">
-            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-health">{{ __('Health', 'GUNY-Single-Age') }}</h4>
-            <ul class="c-list-box__content js-accordion__content" id="milestones-panel-health">
-            {% for milestone in post.get_field('health_milestones') %}
-              <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
-            {% endfor %}
-            </ul>
-          </li>
-          </ul>
-          <h3>{{ __("Act early by talking to your child&rsquo;s doctor if your child:", 'GUNY-Single-Age') }}</h3>
-          <ul class="c-list-box c-list-box--tertiary">
+          
+          {% if post.social_milestones %}
             <li class="c-list-box__item">
-              <div class="c-list-box__border {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary"></div>
-              <ul class="c-list-box__content">
-                {% for warning_sign in post.get_field('warning_signs') %}
-                  <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#close"></use></svg>{{warning_sign.warning_sign}}</li>
-                {% endfor %}
+              <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-social">{{ __('Social', 'GUNY-Single-Age') }}</h4>
+              <ul class="c-list-box__content js-accordion__content" id="milestones-panel-social">
+              {% for milestone in post.get_field('social_milestones') %}
+                <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
+              {% endfor %}
               </ul>
             </li>
+          {% endif %}
+
+          {% if post.communication_milestones %}
+            <li class="c-list-box__item">
+              <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-language">{{ __('Communication', 'GUNY-Single-Age') }}</h4>
+              <ul class="c-list-box__content js-accordion__content" id="milestones-panel-language">
+              {% for milestone in post.get_field('communication_milestones') %}
+                <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
+              {% endfor %}
+              </ul>
+            </li>
+          {% endif %}
+          
+          {% if post.learning_milestones %}
+            <li class="c-list-box__item">
+              <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-cognitive">{{ __('Learning', 'GUNY-Single-Age') }}</h4>
+              <ul class="c-list-box__content js-accordion__content" id="milestones-panel-cognitive">
+              {% for milestone in post.get_field('learning_milestones') %}
+                <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
+              {% endfor %}
+              </ul>
+            </li>
+          {% endif %}
+          
+
+          {% if post.movement_milestones %}
+            <li class="c-list-box__item">
+              <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-movement">{{ __('Physical Development', 'GUNY-Single-Age') }}</h4>
+              <ul class="c-list-box__content js-accordion__content" id="milestones-panel-movement">
+              {% for milestone in post.get_field('movement_milestones') %}
+                <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
+              {% endfor %}
+              </ul>
+            </li>
+          {% endif %}
+          
+          {% if post.health_milestones %}
+            <li class="c-list-box__item">
+              <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-health">{{ __('Health', 'GUNY-Single-Age') }}</h4>
+              <ul class="c-list-box__content js-accordion__content" id="milestones-panel-health">
+              {% for milestone in post.get_field('health_milestones') %}
+                <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#check"></use></svg>{{milestone.milestone}}</li>
+              {% endfor %}
+              </ul>
+            </li>
+          {% endif %}
           </ul>
+
+  
+          <h3>{{post.warning_header}}</h3>
+          {% if post.warning_signs %}
+            <ul class="c-list-box c-list-box--tertiary">
+              <li class="c-list-box__item">
+                <div class="c-list-box__border {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary"></div>
+                <ul class="c-list-box__content">
+                  {% for warning_sign in post.get_field('warning_signs') %}
+                    <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#close"></use></svg>{{warning_sign.warning_sign}}</li>
+                  {% endfor %}
+                </ul>
+              </li>
+            </ul>
+          {% endif %}
+          
         </section>
     </div> <!-- /.o-article -->
   </article>

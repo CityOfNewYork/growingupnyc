@@ -1,0 +1,73 @@
+{% extends "microsite-base.twig" %}
+
+{% block head_extras %}
+<style>
+  .c-hero { background-image: url({{TimberImage(post.hero_banner).src|resize(480,161)}}); }
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .c-hero { background-image: url({{TimberImage(post.hero_banner).src|resize(960,322)}}); }
+  }
+  @media (min-width:480px) {
+    .c-hero { background-image: url({{TimberImage(post.hero_banner).src|resize(700,235)}}); }
+  }
+  @media (min-width:480px) and (-webkit-min-device-pixel-ratio: 2), (min-width:480px) and (min-resolution: 192dpi) {
+    .c-hero { background-image: url({{TimberImage(post.hero_banner).src|resize(1400,470)}}); }
+  }
+  @media (min-width:700px) {
+    .c-hero { background-image: url({{TimberImage(post.hero_banner).src}}); }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+  <header class="c-hero c-hero--large c-hero-inspiration">
+    <div class="o-container pe-none o-0" aria-hidden="true">
+      <h1 class="c-hero__title">&nbsp;</h1>
+      <p class="c-hero__tagline">&nbsp;</p>
+    </div>
+  </header>
+  <section class="o-container u-bottom-spacing u-top-spacing">
+    <aside class="o-article-sidebar o-article-ms-sidebar o-content-container--compact u-bottom-spacing">
+      <dl class="c-details-list c-details-list-ms c-details-list-ms__inspiration c-details-list-ms__inspiration--detail">
+        <dd class="c-details-list__descr c-details-list-ms__descr c-prof-name"><h2>{{post.prof_name}}, {{post.prof_age}}</h2></dd>
+        {#<dt class="c-details-list__term c-details-list-ms__term">{{ __('Cost', 'GUNY-Single-Inspiration') }}</dt>#}
+
+        <dd class="c-details-list__descr c-details-list-ms__descr c-prof-country">{{post.prof_country}}, {{post.prof_citystate}}</dd>
+
+        <dd class="c-details-list__descr c-details-list-ms__descr c-prof-intro">{{post.intro__overview}}</dd>
+      </dl>
+    </aside>
+    <hr class="mobile-only">
+    {# <article class="o-article o-article-ms o-article-ms__inspiration--detail o-content-container--compact"> #}
+    <article class="o-article o-article-ms o-article-ms__inspiration--detail">
+      {# <div class="o-content-container--text s-wysiwyg"> #}
+      <div class="c-card c-card-inspiration__profile u-bottom-spacing">
+        {# Section One - Q & A #}
+        <section class="c-page-top-content" id="section-one">
+          <h2 class="u-lg-gutter" id="{{post.get_field('page_top_heading')|lower|replace({' ':'-'})}}">{{post.get_field('page_top_heading')}}</h2>
+          {% for top in post.get_field('page_top') %}
+            <div class="c-inspiration_qa">
+              {{top.question_and_answer}}
+            </div>
+          {% endfor %}
+        </section>
+
+
+      </div> <!-- /.o-article -->
+        {# Section Inspirations #}
+        {% if post.inspiration_posts %}
+        {# <section class="c-other-inspirations"> #}
+        <section class="c-block-list c-other-inspirations c-block-list--shade o-content-container u-sm-gutter">
+          <h3 class="c-other-inspirations__title">{{post.other_inspirations_title}}</h3>
+          <li class="c-nav-list__item">
+            {% for inspiration in post.get_field('inspiration_posts') %}
+              {% set inspiration = TimberPost(inspiration) %}
+              <div class="c-block-list__item">
+                {% include ['partials/teaser-'~inspiration.post_type~'.twig', 'partials/teaser.twig'] with {post: inspiration, is_first: loop.first, age_group: post.title} %}
+              </div>
+            {% endfor %}
+          </li>
+        </section>
+        {% endif %}
+    </article>
+  </section>
+{% endblock %}

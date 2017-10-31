@@ -33,7 +33,14 @@ class Tribe__Events__Pro__Recurrence__Meta_Builder {
 			return $this->get_zero_array();
 		}
 
-		$recurrence_meta       = $this->get_zero_array();
+		$recurrence_meta = $this->get_zero_array();
+		$custom_types = array(
+			Tribe__Events__Pro__Recurrence__Custom_Types::DAILY_CUSTOM_TYPE,
+			Tribe__Events__Pro__Recurrence__Custom_Types::WEEKLY_CUSTOM_TYPE,
+			Tribe__Events__Pro__Recurrence__Custom_Types::MONTHLY_CUSTOM_TYPE,
+			Tribe__Events__Pro__Recurrence__Custom_Types::YEARLY_CUSTOM_TYPE,
+			Tribe__Events__Pro__Recurrence__Custom_Types::DATE_CUSTOM_TYPE,
+		);
 
 		if ( isset( $this->data['recurrence']['recurrence-description'] ) ) {
 			unset( $this->data['recurrence']['recurrence-description'] );
@@ -42,7 +49,7 @@ class Tribe__Events__Pro__Recurrence__Meta_Builder {
 		foreach ( array( 'rules', 'exclusions' ) as $rule_type ) {
 			if ( ! isset( $this->data['recurrence'][ $rule_type ] ) ) {
 				continue;
-			}//end if
+			}
 
 			foreach ( $this->data['recurrence'][ $rule_type ] as $key => &$recurrence ) {
 				if ( ! $recurrence ) {
@@ -51,11 +58,19 @@ class Tribe__Events__Pro__Recurrence__Meta_Builder {
 
 				// Ignore the rule if the type isn't set OR the type is set to 'None'
 				// (we're not interested in exclusions here)
-				if ( ( empty( $recurrence['type'] ) || 'None' === $recurrence['type'] ) && $rule_type !== 'exclusions' ) {
+				if ( empty( $recurrence['type'] ) || 'None' === $recurrence['type'] ) {
 					continue;
 				}
 
-				if ( ( empty( $recurrence['type'] ) && empty( $recurrence['custom']['type'] ) ) || ( 'exclusions' == $rule_type && ! empty( $recurrence['custom']['type'] ) && 'None' === $recurrence['custom']['type'] ) ) {
+				if ( in_array( $recurrence['type'], $custom_types ) ) {
+					// we now consider all non-blank types to be custom types
+					$recurrence['custom']['type'] = $recurrence['type'];
+					$recurrence['type'] = 'Custom';
+				}
+
+				$has_no_type = empty( $recurrence['type'] ) && empty( $recurrence['custom']['type'] );
+				$is_custom_none_recurrence = 'exclusions' == $rule_type && ! empty( $recurrence['custom']['type'] ) && 'None' === $recurrence['custom']['type'];
+				if ( $has_no_type || $is_custom_none_recurrence ) {
 					unset( $this->data['recurrence'][ $rule_type ][ $key ] );
 					continue;
 				}
@@ -72,7 +87,20 @@ class Tribe__Events__Pro__Recurrence__Meta_Builder {
 					$recurrence['end'] = $this->utils->datetime_from_format( $datepicker_format, $recurrence['end'] );
 				}
 
-				if ( isset( $recurrence['custom'] ) && 'Date' === $recurrence['custom']['type'] ) {
+				// if the month should use the same day of the month as the main event, then unset irrelevant fields if they exist
+				if (
+					isset( $recurrence['custom']['month']['same-day'] )
+					&& 'yes' === $recurrence['custom']['month']['same-day']
+				) {
+					$remove             = array( 'number', 'day' );
+					$recurrence['custom']['month'] = array_intersect_key( $recurrence['custom']['month'], array_flip( $remove ) );
+				}
+
+				if (
+					isset( $recurrence['custom']['type'] )
+					&& Tribe__Events__Pro__Recurrence__Custom_Types::DATE_CUSTOM_TYPE === $recurrence['custom']['type']
+					&& isset( $recurrence['custom']['date']['date'] )
+				) {
 					$recurrence['custom']['date']['date'] = $this->utils->datetime_from_format( $datepicker_format, $recurrence['custom']['date']['date'] );
 				}
 
@@ -82,25 +110,28 @@ class Tribe__Events__Pro__Recurrence__Meta_Builder {
 						unset( $recurrence['custom'] );
 					}
 				} else {
-					$custom_types = array(
-						'date', 'day', 'week', 'month', 'year',
+					$type            = $recurrence['custom']['type'];
+					$type_slug       = Tribe__Events__Pro__Recurrence__Custom_Types::to_key( $type );
+					$slugs_to_remove = array(
+						'date',
+						'day',
+						'week',
+						'month',
+						'year',
 					);
-
-					$custom_type_key = $this->utils->to_key( $recurrence['custom']['type'] );
+					$slugs_to_remove = array_diff( $slugs_to_remove, array( $type_slug ) );
 
 					// clean up extraneous array elements
-					foreach ( $custom_types as $type ) {
-						if ( $type === $custom_type_key ) {
-							continue;
-						}
+					$recurrence['custom'] = array_diff_key( $recurrence['custom'], array_flip( $slugs_to_remove ) );
+				}
 
-						if ( ! isset( $recurrence['custom'][ $type ] ) ) {
-							continue;
-						}
+				if ( empty( $recurrence['custom']['same-time'] ) ) {
+					$recurrence['custom']['same-time'] = 'yes';
+				}
 
-						unset( $recurrence['custom'][ $type ] );
-					}
-				}//end else
+				if ( empty( $recurrence['custom']['interval'] ) ) {
+					$recurrence['custom']['interval'] = 1;
+				}
 
 				$recurrence['EventStartDate'] = $this->data['EventStartDate'];
 				$recurrence['EventEndDate']   = $this->data['EventEndDate'];
@@ -115,9 +146,15 @@ class Tribe__Events__Pro__Recurrence__Meta_Builder {
 	}
 
 	private function get_zero_array() {
+		$data_recurrence = null;
+		if ( ! empty( $this->data['recurrence'] ) ) {
+			$data_recurrence = (array) $this->data['recurrence'];
+		}
+
 		return array(
-			'rules'       => array(), 'exclusions' => array(),
-			'description' => empty( $this->data['recurrence']['description'] ) ? null : sanitize_text_field( $this->data['recurrence']['description'] ),
+			'rules'       => array(),
+			'exclusions'  => array(),
+			'description' => empty( $data_recurrence['description'] ) ? null : sanitize_text_field( $data_recurrence['description'] ),
 		);
 	}
 }

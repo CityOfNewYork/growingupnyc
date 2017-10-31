@@ -1,0 +1,43 @@
+{
+    "key": "group_59365396cb420",
+    "title": "SMS intergration",
+    "fields": [
+        {
+            "key": "field_5936540626f3a",
+            "label": "sms intro text",
+            "name": "sms_intro_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Signup with GUNY",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": 100
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "topic"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1496733952
+}

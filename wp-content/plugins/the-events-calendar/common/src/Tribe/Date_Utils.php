@@ -21,6 +21,39 @@ if ( ! class_exists( 'Tribe__Date_Utils' ) ) {
 		const DBTIMEFORMAT          = 'H:i:s';
 		const DBYEARMONTHTIMEFORMAT = 'Y-m';
 
+		private static $localized_months_full  = array();
+		private static $localized_months_short = array();
+		private static $localized_weekdays     = array();
+		private static $localized_months       = array();
+
+		/**
+		 * Try to format a Date to the Default Datepicker format
+		 *
+		 * @since  4.5.12
+		 *
+		 * @param  string      $date       Original Date that came from a datepicker
+		 * @param  string|int  $datepicker Datepicker format
+		 * @return string
+		 */
+		public static function maybe_format_from_datepicker( $date, $datepicker = null ) {
+			if ( ! is_numeric( $datepicker ) ) {
+				$datepicker = tribe_get_option( 'datepickerFormat' );
+			}
+
+			if ( is_numeric( $datepicker ) ) {
+				$datepicker = self::datepicker_formats( $datepicker );
+			}
+
+			$default_datepicker = self::datepicker_formats( 0 );
+
+			// If the current datepicker is the default we don't care
+			if ( $datepicker === $default_datepicker ) {
+				return $date;
+			}
+
+			return self::datetime_from_format( $datepicker, $date );
+		}
+
 		/**
 		 * Get the datepicker format, that is used to translate the option from the DB to a string
 		 *
@@ -28,6 +61,8 @@ if ( ! class_exists( 'Tribe__Date_Utils' ) ) {
 		 * @return string|array            If $translate is not set returns the full array, if not returns the `Y-m-d`
 		 */
 		public static function datepicker_formats( $translate = null ) {
+
+			// The datepicker has issues when a period separator and no leading zero is used. Those formats are purposefully omitted.
 			$formats = array(
 				'Y-m-d',
 				'n/j/Y',
@@ -38,6 +73,9 @@ if ( ! class_exists( 'Tribe__Date_Utils' ) ) {
 				'm-d-Y',
 				'j-n-Y',
 				'd-m-Y',
+				'Y.m.d',
+				'm.d.Y',
+				'd.m.Y',
 			);
 
 			if ( is_null( $translate ) ) {
@@ -134,16 +172,16 @@ if ( ! class_exists( 'Tribe__Date_Utils' ) ) {
 			$dt = array();
 
 			// Now try to match it
-			if ( preg_match( '#^' . $regex . '$#', $date, $dt ) ){
+			if ( preg_match( '#^' . $regex . '$#', $date, $dt ) ) {
 				// Remove unwanted Indexes
-				foreach ( $dt as $k => $v ){
-					if ( is_int( $k ) ){
+				foreach ( $dt as $k => $v ) {
+					if ( is_int( $k ) ) {
 						unset( $dt[ $k ] );
 					}
 				}
 
 				// We need at least Month + Day + Year to work with
-				if ( ! checkdate( $dt['month'], $dt['day'], $dt['year'] ) ){
+				if ( ! checkdate( $dt['month'], $dt['day'], $dt['year'] ) ) {
 					return false;
 				}
 			} else {
@@ -181,14 +219,15 @@ if ( ! class_exists( 'Tribe__Date_Utils' ) ) {
 		}
 
 		/**
-		 * Returns the date only.
+		 * Returns the time only.
 		 *
 		 * @param string $date The date.
 		 *
 		 * @return string The time only in DB format.
 		 */
 		public static function time_only( $date ) {
-			return date( self::DBTIMEFORMAT, strtotime( $date ) );
+			$date = is_numeric( $date ) ? $date : strtotime( $date );
+			return date( self::DBTIMEFORMAT, $date );
 		}
 
 		/**
@@ -199,7 +238,8 @@ if ( ! class_exists( 'Tribe__Date_Utils' ) ) {
 		 * @return string The hour only.
 		 */
 		public static function hour_only( $date ) {
-			return date( self::HOURFORMAT, strtotime( $date ) );
+			$date = is_numeric( $date ) ? $date : strtotime( $date );
+			return date( self::HOURFORMAT, $date );
 		}
 
 		/**
@@ -210,7 +250,8 @@ if ( ! class_exists( 'Tribe__Date_Utils' ) ) {
 		 * @return string The minute only.
 		 */
 		public static function minutes_only( $date ) {
-			return date( self::MINUTEFORMAT, strtotime( $date ) );
+			$date = is_numeric( $date ) ? $date : strtotime( $date );
+			return date( self::MINUTEFORMAT, $date );
 		}
 
 		/**
@@ -221,7 +262,8 @@ if ( ! class_exists( 'Tribe__Date_Utils' ) ) {
 		 * @return string The meridian only in DB format.
 		 */
 		public static function meridian_only( $date ) {
-			return date( self::MERIDIANFORMAT, strtotime( $date ) );
+			$date = is_numeric( $date ) ? $date : strtotime( $date );
+			return date( self::MERIDIANFORMAT, $date );
 		}
 
 		/**
@@ -366,7 +408,7 @@ if ( ! class_exists( 'Tribe__Date_Utils' ) ) {
 		 * @return string
 		 */
 		public static function reformat( $dt_string, $new_format ) {
-			$timestamp = strtotime( $dt_string );
+			$timestamp = self::is_timestamp( $dt_string ) ? $dt_string : strtotime( $dt_string );
 			$revised   = date( $new_format, $timestamp );
 
 			return $revised ? $revised : '';
@@ -547,6 +589,288 @@ if ( ! class_exists( 'Tribe__Date_Utils' ) ) {
 				$timestamp = strtotime( $string ) - $seconds;
 				return $timestamp;
 			}
+		}
+
+		/**
+		 * Returns an array of localized full month names.
+		 *
+		 * @return array
+		 */
+		public static function get_localized_months_full() {
+			global $wp_locale;
+
+			if ( empty( self::$localized_months ) ) {
+				self::build_localized_months();
+			}
+
+			if ( empty( self::$localized_months_full ) ) {
+				self::$localized_months_full = array(
+					'January'   => self::$localized_months['full']['01'],
+					'February'  => self::$localized_months['full']['02'],
+					'March'     => self::$localized_months['full']['03'],
+					'April'     => self::$localized_months['full']['04'],
+					'May'       => self::$localized_months['full']['05'],
+					'June'      => self::$localized_months['full']['06'],
+					'July'      => self::$localized_months['full']['07'],
+					'August'    => self::$localized_months['full']['08'],
+					'September' => self::$localized_months['full']['09'],
+					'October'   => self::$localized_months['full']['10'],
+					'November'  => self::$localized_months['full']['11'],
+					'December'  => self::$localized_months['full']['12'],
+				);
+			}
+
+			return self::$localized_months_full;
+		}
+
+		/**
+		 * Returns an array of localized short month names.
+		 *
+		 * @return array
+		 */
+		public static function get_localized_months_short() {
+			global $wp_locale;
+
+			if ( empty( self::$localized_months ) ) {
+				self::build_localized_months();
+			}
+
+			if ( empty( self::$localized_months_short ) ) {
+				self::$localized_months_short = array(
+					'Jan' => self::$localized_months['short']['01'],
+					'Feb' => self::$localized_months['short']['02'],
+					'Mar' => self::$localized_months['short']['03'],
+					'Apr' => self::$localized_months['short']['04'],
+					'May' => self::$localized_months['short']['05'],
+					'Jun' => self::$localized_months['short']['06'],
+					'Jul' => self::$localized_months['short']['07'],
+					'Aug' => self::$localized_months['short']['08'],
+					'Sep' => self::$localized_months['short']['09'],
+					'Oct' => self::$localized_months['short']['10'],
+					'Nov' => self::$localized_months['short']['11'],
+					'Dec' => self::$localized_months['short']['12'],
+				);
+			}
+
+			return self::$localized_months_short;
+		}
+
+		/**
+		 * Returns an array of localized full week day names.
+		 *
+		 * @return array
+		 */
+		public static function get_localized_weekdays_full() {
+			if ( empty( self::$localized_weekdays ) ) {
+				self::build_localized_weekdays();
+			}
+
+			return self::$localized_weekdays['full'];
+		}
+
+		/**
+		 * Returns an array of localized short week day names.
+		 *
+		 * @return array
+		 */
+		public static function get_localized_weekdays_short() {
+			if ( empty( self::$localized_weekdays ) ) {
+				self::build_localized_weekdays();
+			}
+
+			return self::$localized_weekdays['short'];
+		}
+
+		/**
+		 * Returns an array of localized week day initials.
+		 *
+		 * @return array
+		 */
+		public static function get_localized_weekdays_initial() {
+			if ( empty( self::$localized_weekdays ) ) {
+				self::build_localized_weekdays();
+			}
+
+			return self::$localized_weekdays['initial'];
+		}
+
+		/**
+		 * Builds arrays of localized full, short and initialized weekdays.
+		 */
+		private static function build_localized_weekdays() {
+			global $wp_locale;
+
+			for ( $i = 0; $i <= 6; $i++ ) {
+				$day = $wp_locale->get_weekday( $i );
+				self::$localized_weekdays['full'][ $i ]    = $day;
+				self::$localized_weekdays['short'][ $i ]   = $wp_locale->get_weekday_abbrev( $day );
+				self::$localized_weekdays['initial'][ $i ] = $wp_locale->get_weekday_initial( $day );
+			}
+		}
+
+		/**
+		 * Builds arrays of localized full and short months.
+		 *
+		 * @since 4.4.3
+		 */
+		private static function build_localized_months() {
+			global $wp_locale;
+
+			for ( $i = 1; $i <= 12; $i++ ) {
+				$month_number = str_pad( $i, 2, '0', STR_PAD_LEFT );
+				$month        = $wp_locale->get_month( $month_number );
+				self::$localized_months['full'][ $month_number ]  = $month;
+				self::$localized_months['short'][ $month_number ] = $wp_locale->get_month_abbrev( $month );
+			}
+		}
+
+		/**
+		 * Return a WP Locale weekday in the specified format
+		 *
+		 * @since 4.4.3
+		 *
+		 * @param int|string $weekday Day of week
+		 * @param string $format Weekday format: full, weekday, initial, abbreviation, abbrev, abbr, short
+		 *
+		 * @return string
+		 */
+		public static function wp_locale_weekday( $weekday, $format = 'weekday' ) {
+			$weekday = trim( $weekday );
+
+			$valid_formats = array(
+				'full',
+				'weekday',
+				'initial',
+				'abbreviation',
+				'abbrev',
+				'abbr',
+				'short',
+			);
+
+			// if there isn't a valid format, bail without providing a localized string
+			if ( ! in_array( $format, $valid_formats ) ) {
+				return $weekday;
+			}
+
+			if ( empty( self::$localized_weekdays ) ) {
+				self::build_localized_weekdays();
+			}
+
+			// if the weekday isn't numeric, we need to convert to numeric in order to
+			// leverage self::localized_weekdays
+			if ( ! is_numeric( $weekday ) ) {
+				$days_of_week = array(
+					'Sun',
+					'Mon',
+					'Tue',
+					'Wed',
+					'Thu',
+					'Fri',
+					'Sat',
+				);
+
+				$day_index = array_search( ucwords( substr( $weekday, 0, 3 ) ), $days_of_week );
+
+				if ( false === $day_index ) {
+					return $weekday;
+				}
+
+				$weekday = $day_index;
+			}
+
+			switch ( $format ) {
+				case 'initial':
+					$type = 'initial';
+					break;
+				case 'abbreviation':
+				case 'abbrev':
+				case 'abbr':
+				case 'short':
+					$type = 'short';
+					break;
+				case 'weekday':
+				case 'full':
+				default:
+					$type = 'full';
+					break;
+			}
+
+			return self::$localized_weekdays[ $type ][ $weekday ];
+		}
+
+		/**
+		 * Return a WP Locale month in the specified format
+		 *
+		 * @since 4.4.3
+		 *
+		 * @param int|string $month Month of year
+		 * @param string $format Month format: full, month, abbreviation, abbrev, abbr, short
+		 *
+		 * @return string
+		 */
+		public static function wp_locale_month( $month, $format = 'month' ) {
+			$month = trim( $month );
+
+			$valid_formats = array(
+				'full',
+				'month',
+				'abbreviation',
+				'abbrev',
+				'abbr',
+				'short',
+			);
+
+			// if there isn't a valid format, bail without providing a localized string
+			if ( ! in_array( $format, $valid_formats ) ) {
+				return $month;
+			}
+
+			if ( empty( self::$localized_months ) ) {
+				self::build_localized_months();
+			}
+
+			// make sure numeric months are valid
+			if ( is_numeric( $month ) ) {
+				$month_num = (int) $month;
+
+				// if the month num falls out of range, bail without localizing
+				if ( 0 > $month_num || 12 < $month_num ) {
+					return $month;
+				}
+			} else {
+				$months = array(
+					'Jan',
+					'Feb',
+					'Mar',
+					'Apr',
+					'May',
+					'Jun',
+					'Jul',
+					'Aug',
+					'Sep',
+					'Oct',
+					'Nov',
+					'Dec',
+				);
+
+				// convert the provided month to a 3-character month and find it in the months array so we
+				// can build an appropriate month number
+				$month_num = array_search( ucwords( substr( $month, 0, 3 ) ), $months );
+
+				// if we can't find the provided month in our month list, bail without localizing
+				if ( false === $month_num ) {
+					return $month;
+				}
+
+				// let's increment the num because months start at 01 rather than 00
+				$month_num++;
+			}
+
+			$month_num = str_pad( $month_num, 2, '0', STR_PAD_LEFT );
+
+			$type = ( 'full' === $format || 'month' === $format ) ? 'full' : 'short';
+
+			return self::$localized_months[ $type ][ $month_num ];
 		}
 
 		// DEPRECATED METHODS
@@ -843,7 +1167,6 @@ if ( ! class_exists( 'Tribe__Date_Utils' ) ) {
 			// Why so simple? Let's handle other cases as those come up. We have tests in place!
 			return str_replace( '\\\\', '\\', $date_format );
 		}
-		// @codingStandardsIgnoreEnd
 	}
 
 }

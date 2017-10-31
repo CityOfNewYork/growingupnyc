@@ -9,6 +9,10 @@ var FWP = {
         var row_count = 0;
 
         FWP.load_settings = function() {
+
+            // Settings load hook
+            FWP.settings = wp.hooks.applyFilters('facetwp/load_settings', FWP.settings);
+
             $.each(FWP.settings.facets, function(idx, obj) {
                 var $row = $('.clone-facet .facetwp-row').clone();
                 $row.attr('data-id', row_count);
@@ -26,8 +30,8 @@ var FWP = {
                     $row.addClass('in-code');
                 }
 
-                $('.facetwp-region-facets .facetwp-content').append($row);
-                $('.facetwp-region-facets .facetwp-cards').append(FWP.build_card({
+                $('.facetwp-content').append($row);
+                $('.content-facets .facetwp-cards').append(FWP.build_card({
                     card: 'facet',
                     id: row_count,
                     label: obj.label,
@@ -50,8 +54,8 @@ var FWP = {
                     $row.addClass('in-code');
                 }
 
-                $('.facetwp-region-templates .facetwp-content').append($row);
-                $('.facetwp-region-templates .facetwp-cards').append(FWP.build_card({
+                $('.facetwp-content').append($row);
+                $('.content-templates .facetwp-cards').append(FWP.build_card({
                     card: 'template',
                     id: row_count,
                     label: obj.label,
@@ -88,10 +92,15 @@ var FWP = {
                 placeholder: FWP.i18n['Select some items']
             });
 
+            // Sortable
+            $('.facetwp-cards').sortable({
+                handle: '.card-label'
+            });
+
             // Hide the preloader
-            $('.facetwp-loading').hide();
+            $('.facetwp-loading').addClass('hidden');
             $('.facetwp-header-nav a:first').click();
-            $('.facetwp-settings-nav a:first').click();
+            $('.facetwp-region-settings .facetwp-subnav a:first').click();
         }
 
 
@@ -103,7 +112,6 @@ var FWP = {
             if ('facet' === params.card) {
                 output += '<div class="card-type">' + params.type + '</div>';
             }
-            output += '<div class="card-shortcode">[facetwp ' + params.card + '="' + params.name + '"]</div>';
             output += '</div>';
             output += '</li>';
             return output;
@@ -126,7 +134,7 @@ var FWP = {
                 }
                 else if ($.isNumeric(response)) {
                     $('.facetwp-response').html(FWP.i18n['Indexing'] + '... ' + response + '%');
-                    $('.facetwp-response').show();
+                    $('.facetwp-response').addClass('visible');
                     setTimeout(function() {
                         FWP.get_progress();
                     }, 5000);
@@ -199,15 +207,15 @@ var FWP = {
 
         // Add item
         $(document).on('click', '.facetwp-add', function() {
-            var $parent = $(this).closest('.facetwp-region');
-            var type = $parent.hasClass('facetwp-region-facets') ? 'facet' : 'template';
+            var $parent = $(this).closest('.facetwp-col');
+            var type = $parent.hasClass('content-facets') ? 'facet' : 'template';
             var label = ('facet' === type) ? 'New facet' : 'New template';
             var name = ('facet' === type) ? 'new_facet' : 'new_template';
 
             var $row = $('.clone-' + type + ' .facetwp-row').clone();
             $row.attr('data-id', row_count);
 
-            $parent.find('.facetwp-content').append($row);
+            $('.facetwp-content').append($row);
             $parent.find('.facetwp-cards').append(FWP.build_card({
                 card: type,
                 id: row_count,
@@ -236,27 +244,23 @@ var FWP = {
 
         // Edit item
         $(document).on('click', '.facetwp-card', function(e) {
-            if ('' !== window.getSelection().toString()) {
-                return;
-            }
+            var $this = $(this);
+            var id = $this.closest('li').attr('data-id');
+            var $el = $('.facetwp-row[data-id="' + id + '"]');
 
-            var id = $(this).closest('li').attr('data-id');
-            var $parent = $(this).closest('.facetwp-region');
-            var $el = $parent.find('.facetwp-row[data-id="' + id + '"]');
-            var type = $parent.hasClass('facetwp-region-facets') ? 'facets' : 'templates';
+            $('.facetwp-grid').addClass('hidden');
+            $('.facetwp-region-basics .facetwp-subnav .btn-wrap').removeClass('hidden');
+            $('.facetwp-region-basics .facetwp-subnav .search-wrap').addClass('hidden');
+            $el.addClass('visible');
 
-            $parent.find('.facetwp-cards').hide();
-            $parent.find('.facetwp-content').show();
-            $parent.find('.facetwp-back').closest('.btn-wrap').show();
-            $parent.find('.facetwp-add').closest('.btn-wrap').hide();
-            $parent.find('.facetwp-row').hide();
-            $el.show();
-
-            // Trigger conditional settings
-            if ('facets' === type) {
+            // Trigger facet conditionals
+            if ($this.closest('.facetwp-col').hasClass('content-facets')) {
                 $el.find('.facet-type').trigger('change');
                 $el.find('.facet-source').fSelect();
             }
+
+            // Scroll to top
+            $('html, body').animate({ scrollTop: 0 }, 'fast');
 
             // Set the active row
             FWP.active_row = id;
@@ -265,10 +269,10 @@ var FWP = {
 
         // Back button
         $(document).on('click', '.facetwp-back', function() {
-            $(this).closest('.facetwp-region').find('.facetwp-cards').show();
-            $(this).closest('.facetwp-region').find('.facetwp-content').hide();
-            $(this).closest('.facetwp-region').find('.facetwp-add').closest('.btn-wrap').show();
-            $(this).closest('.btn-wrap').hide();
+            $('.facetwp-grid').removeClass('hidden');
+            $('.facetwp-row.visible').removeClass('visible');
+            $(this).closest('.btn-wrap').addClass('hidden');
+            $(this).closest('.facetwp-subnav').find('.search-wrap').removeClass('hidden');
         });
 
 
@@ -277,16 +281,6 @@ var FWP = {
             var type = $(this).hasClass('facet-label') ? 'facet' : 'template';
             var name_val = $(this).siblings('.' + type + '-name').text();
             FWP.is_name_editable = ('' === name_val || ('new_' + type) === name_val);
-        });
-
-
-        // Change the name
-        $(document).on('keyup', '.facet-name, .template-name', function() {
-            var val = $(this).text();
-            var type = $(this).hasClass('.facet-name') ? 'facet' : 'template';
-            var $row = $(this).closest('.facetwp-row');
-            var id = $row.attr('data-id');
-            $('.facetwp-cards li[data-id="'+ id +'"] .card-shortcode').text('[facetwp ' + type + '="' + val + '"]');
         });
 
 
@@ -305,7 +299,6 @@ var FWP = {
 
                 // Update the input field
                 $(this).siblings('.' + type + '-name').text(val);
-                $('.facetwp-cards li[data-id="'+ id +'"] .card-shortcode').text('[facetwp ' + type + '="' + val + '"]');
             }
 
             // Edit the card
@@ -342,11 +335,11 @@ var FWP = {
 
 
         // Tab click
-        $(document).on('click', '.facetwp-settings-nav a', function() {
+        $(document).on('click', '.facetwp-region-settings .facetwp-subnav a', function() {
             var tab = $(this).attr('data-tab');
-            $('.facetwp-settings-nav a').removeClass('active');
+            $('.facetwp-region-settings .facetwp-subnav a').removeClass('active');
             $('.facetwp-settings-section').removeClass('active');
-            $('.facetwp-settings-nav a[data-tab=' + tab + ']').addClass('active');
+            $('.facetwp-region-settings .facetwp-subnav a[data-tab=' + tab + ']').addClass('active');
             $('.facetwp-settings-section[data-tab=' + tab + ']').addClass('active');
         });
 
@@ -354,7 +347,7 @@ var FWP = {
         // Save
         $(document).on('click', '.facetwp-save', function() {
             $('.facetwp-response').html(FWP.i18n['Saving'] + '...');
-            $('.facetwp-response').show();
+            $('.facetwp-response').addClass('visible');
 
             var data = {
                 'facets': [],
@@ -362,35 +355,50 @@ var FWP = {
                 'settings': {}
             };
 
-            $('.facetwp-region-facets .facetwp-row:not(.in-code)').each(function() {
-                var $this = $(this);
-                var type = $this.find('.facet-type').val();
+            // Loop through cards, looking up the content
+            $('.facetwp-cards li').each(function() {
+                var $this = $('.facetwp-row[data-id="' + $(this).data('id') + '"]');
 
-                var obj = {
-                    'label': $this.find('.facet-label').val(),
-                    'name': $this.find('.facet-name').text(),
-                    'type': $this.find('.facet-type').val()
-                };
+                if ($this.hasClass('in-code')) {
+                    return;
+                }
 
-                // Facet save hook
-                obj = wp.hooks.applyFilters('facetwp/save/' + obj.type, $this, obj);
-                data.facets.push(obj);
-            });
+                // Facet
+                if ($this.is('[data-type]')) {
+                    var obj = {
+                        'label': $this.find('.facet-label').val(),
+                        'name': $this.find('.facet-name').text(),
+                        'type': $this.find('.facet-type').val()
+                    };
 
-            $('.facetwp-region-templates .facetwp-row:not(.in-code)').each(function() {
-                var $this = $(this);
-                data.templates.push({
-                    'label': $this.find('.template-label').val(),
-                    'name': $this.find('.template-name').text(),
-                    'query': $this.find('.template-query').val(),
-                    'template': $this.find('.template-template').val()
-                });
+                    // Argument order changed in 3.0.0
+                    try {
+                        obj = wp.hooks.applyFilters('facetwp/save/' + obj.type, obj, $this);
+                    }
+                    catch(err) {
+                        obj = wp.hooks.applyFilters('facetwp/save/' + obj.type, $this, obj);
+                    }
+
+                    data.facets.push(obj);
+                }
+                // Template
+                else {
+                    data.templates.push({
+                        'label': $this.find('.template-label').val(),
+                        'name': $this.find('.template-name').text(),
+                        'query': $this.find('.template-query').val(),
+                        'template': $this.find('.template-template').val()
+                    });
+                }
             });
 
             $('.facetwp-region-settings .facetwp-setting').each(function() {
                 var name = $(this).attr('data-name');
                 data.settings[name] = $(this).val();
             });
+
+            // Settings save hook
+            data = wp.hooks.applyFilters('facetwp/save_settings', data);
 
             $.post(ajaxurl, {
                 action: 'facetwp_save',
@@ -419,7 +427,7 @@ var FWP = {
 
         // Import
         $(document).on('click', '.import-submit', function() {
-            $('.facetwp-response').show();
+            $('.facetwp-response').addClass('visible');
             $('.facetwp-response').html(FWP.i18n['Importing'] + '...');
             $.post(ajaxurl, {
                 action: 'facetwp_backup',
@@ -447,7 +455,7 @@ var FWP = {
 
             $.post(ajaxurl, { action: 'facetwp_rebuild_index', nonce: FWP.nonce });
             $('.facetwp-response').html(FWP.i18n['Indexing'] + '...');
-            $('.facetwp-response').show();
+            $('.facetwp-response').addClass('visible');
             setTimeout(function() {
                 FWP.get_progress();
             }, 5000);
@@ -477,6 +485,29 @@ var FWP = {
                     mouseOnToPopup: true
                 });
                 $.powerTip.show(this);
+            }
+        });
+
+
+        // Search
+        $(document).on('keyup', '.facetwp-search', function() {
+            var input = $(this).val().toLowerCase();
+
+            if (input.length < 1) {
+                $('.facetwp-cards li.hidden').removeClass('hidden');
+            }
+            else {
+                $('.facetwp-card').each(function() {
+                    var label = $(this).find('.card-label').text().toLowerCase();
+                    var type = $(this).find('.card-type').text().toLowerCase();
+
+                    if (-1 === label.indexOf(input) && -1 === type.indexOf(input)) {
+                        $(this).closest('li').addClass('hidden');
+                    }
+                    else {
+                        $(this).closest('li').removeClass('hidden');
+                    }
+                });
             }
         });
 

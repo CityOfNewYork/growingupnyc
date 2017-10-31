@@ -9,8 +9,11 @@ class FacetWP_Ajax
     /* (boolean) FWP template shortcode? */
     public $is_shortcode = false;
 
+    /* (boolean) Is a FacetWP refresh? */
+    public $is_refresh = false;
+
     /* (boolean) Initial load? */
-    public $first_load;
+    public $is_preload;
 
 
     function __construct() {
@@ -46,36 +49,45 @@ class FacetWP_Ajax
     function intercept_request() {
         $action = isset( $_POST['action'] ) ? $_POST['action'] : '';
 
-        // Store whether first load
-        $this->first_load = ( 'facetwp_refresh' != $action );
+        // Store some variables
+        $this->is_refresh = ( 'facetwp_refresh' == $action );
+        $this->is_preload = ( 'facetwp_refresh' != $action );
+        $prefix = FWP()->helper->get_setting( 'prefix' );
+        $tpl = isset( $_POST['data']['template'] ) ? $_POST['data']['template'] : '';
 
         // Pageload
-        if ( $this->first_load ) {
-            foreach ( $_GET as $key => $val ) {
+        if ( $this->is_preload ) {
 
-                // Store relevant GET variables
-                if ( 'fwp_' == substr( $key, 0, 4 ) ) {
-                    $new_key = substr( $key, 4 );
-                    $this->url_vars[ $new_key ] = $val;
+            // Store GET variables
+            foreach ( $_GET as $key => $val ) {
+                if ( 0 === strpos( $key, $prefix ) ) {
+                    $new_key = substr( $key, strlen( $prefix ) );
+                    $new_val = stripslashes( $val );
+                    if ( ! in_array( $new_key, array( 'paged', 'per_page', 'sort' ) ) ) {
+                        $new_val = explode( ',', $new_val );
+                    }
+
+                    $this->url_vars[ $new_key ] = $new_val;
                 }
             }
 
-            // At this point, we don't know if the template is a shortcode
-            if ( ! empty( $this->url_vars ) ) {
-                add_action( 'pre_get_posts', array( $this, 'update_query_vars' ), 999 );
-            }
+            $this->url_vars = apply_filters( 'facetwp_preload_url_vars', $this->url_vars );
         }
 
-        // Ajax refresh
-        else {
-            if ( 'wp' == $_POST['data']['template'] ) {
-                ob_start();
-
-                // Capture the normal HTML response
-                add_action( 'pre_get_posts', array( $this, 'update_query_vars' ), 999 );
-                add_action( 'shutdown', array( $this, 'inject_template' ), 0 );
-            }
+        if ( $this->is_preload || 'wp' == $tpl ) {
+            add_action( 'pre_get_posts', array( $this, 'sacrificial_lamb' ), 998 );
+            add_action( 'pre_get_posts', array( $this, 'update_query_vars' ), 999 );
         }
+
+        if ( ! $this->is_preload && 'wp' == $tpl ) {
+            add_action( 'shutdown', array( $this, 'inject_template' ), 0 );
+            ob_start();
+        }
+    }
+
+
+    function sacrificial_lamb( $query ) {
+        // Fix for WP core issue #40393
     }
 
 
@@ -84,25 +96,39 @@ class FacetWP_Ajax
      */
     function update_query_vars( $query ) {
 
-        // Template shortcode
-        if ( $this->is_shortcode ) {
-            return;
-        }
-
         // Only run once
         if ( isset( $this->query_vars ) ) {
             return;
         }
 
+        // Skip shortcode template
+        if ( $this->is_shortcode ) {
+            return;
+        }
+
+        // Skip admin
+        if ( is_admin() && ! wp_doing_ajax() ) {
+            return;
+        }
+
         $is_main_query = ( $query->is_archive || $query->is_search || ( $query->is_main_query() && ! $query->is_singular ) );
+        $is_main_query = ( wp_doing_ajax() && ! $this->is_refresh ) ? false : $is_main_query;
         $is_main_query = apply_filters( 'facetwp_is_main_query', $is_main_query, $query );
 
         if ( $is_main_query ) {
 
+            // Set the flag
+            $query->set( 'facetwp', true );
+
             // Store the default WP query vars
             $this->query_vars = $query->query_vars;
 
-            if ( $this->first_load ) {
+            // No URL variables
+            if ( $this->is_preload && empty( $this->url_vars ) ) {
+                return;
+            }
+
+            if ( $this->is_preload ) {
                 $this->get_preload_data( 'wp' );
             }
             else {
@@ -123,7 +149,13 @@ class FacetWP_Ajax
      * Preload the AJAX response so search engines can see it
      * @since 2.0
      */
-    function get_preload_data( $template_name ) {
+    function get_preload_data( $template_name, $overrides = array() ) {
+
+        if ( false === $template_name ) {
+            $template_name = isset( $this->template_name ) ? $this->template_name : 'wp';
+        }
+
+        $this->template_name = $template_name;
 
         // Is this a template shortcode?
         $this->is_shortcode = ( 'wp' != $template_name );
@@ -138,6 +170,7 @@ class FacetWP_Ajax
             'static_facet'  => '',
             'used_facets'   => array(),
             'soft_refresh'  => 0,
+            'is_preload'    => 1,
             'is_bfcache'    => 0,
             'first_load'    => 0, // force load template
             'extras'        => array(),
@@ -145,7 +178,6 @@ class FacetWP_Ajax
         );
 
         foreach ( $this->url_vars as $key => $val ) {
-            $val =  stripslashes($val); 
             if ( 'paged' == $key ) {
                 $params['paged'] = $val;
             }
@@ -158,10 +190,13 @@ class FacetWP_Ajax
             else {
                 $params['facets'][] = array(
                     'facet_name' => $key,
-                    'selected_values' => explode( ',', $val ),
+                    'selected_values' => $val,
                 );
             }
         }
+
+        // Override the defaults
+        $params = array_merge( $params, $overrides );
 
         return FWP()->facet->render( $params );
     }
@@ -178,9 +213,8 @@ class FacetWP_Ajax
         if ( empty( $this->output['settings'] ) ) {
             $html = __( 'FacetWP was unable to auto-detect the post listing', 'fwp' );
         }
+        // Grab the <body> contents
         else {
-
-            // We only want the <body>
             preg_match( "/<body(.*?)>(.*?)<\/body>/s", $html, $matches );
 
             if ( ! empty( $matches ) ) {

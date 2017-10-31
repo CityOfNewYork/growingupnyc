@@ -59,7 +59,19 @@ class Tribe__Log__File_Logger implements Tribe__Log__Logger {
 	 */
 	protected function obtain_handle() {
 		$this->close_handle();
-		$this->handle = fopen( $this->log_file, $this->context );
+
+		if ( ! file_exists( $this->log_file ) ) {
+			touch( $this->log_file );
+		}
+
+		// Bail if we're attempting to write but don't have permission.
+		if ( 'r' !== $this->context && ! is_writable( $this->log_file ) ) {
+			return;
+		}
+
+		if ( is_readable( $this->log_file ) ) {
+			$this->handle = fopen( $this->log_file, $this->context );
+		}
 	}
 
 	/**
@@ -138,6 +150,11 @@ class Tribe__Log__File_Logger implements Tribe__Log__Logger {
 			$this->set_context( 'a' );
 		}
 
+		// Couldn't obtain the file handle? We'll bail out without causing further disruption
+		if ( ! $this->handle ) {
+			return;
+		}
+
 		fputcsv( $this->handle, array( date_i18n( 'Y-m-d H:i:s' ), $entry, $type, $src ) );
 	}
 
@@ -158,6 +175,11 @@ class Tribe__Log__File_Logger implements Tribe__Log__Logger {
 		// Ensure we're in 'read' mode before we try to retrieve
 		if ( 'r' !== $this->context ) {
 			$this->set_context( 'r' );
+		}
+
+		// Couldn't obtain the file handle? We'll bail out without causing further disruption
+		if ( ! $this->handle ) {
+			return array();
 		}
 
 		$rows = array();
@@ -189,14 +211,31 @@ class Tribe__Log__File_Logger implements Tribe__Log__Logger {
 	 */
 	public function list_available_logs() {
 		$logs = array();
+
+		// This could be called when the log dir is not accessible.
+		if ( ! $this->is_available() ) {
+			return $logs;
+		}
+
 		$basename = $this->get_log_file_basename();
 
 		// Look through the log storage directory
 		foreach ( new DirectoryIterator( $this->log_dir ) as $node ) {
+			if ( ! $node->isReadable() ) {
+				continue;
+			}
+
 			$name = $node->getFilename();
 
+			// DirectoryIterator::getExtension() is only available on 5.3.6
+			if ( version_compare( phpversion(), '5.3.6', '>=' ) ) {
+				$ext = $node->getExtension();
+			} else {
+				$ext = pathinfo( $name, PATHINFO_EXTENSION );
+			}
+
 			// Skip unless it is a .log file with the expected prefix
-			if ( 'log' !== $node->getExtension() || 0 !== strpos( $name, $basename ) ) {
+			if ( 'log' !== $ext || 0 !== strpos( $name, $basename ) ) {
 				continue;
 			}
 

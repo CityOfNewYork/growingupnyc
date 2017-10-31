@@ -455,7 +455,7 @@ add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 
 // Titles for Generation NYC pages - Topics, Inspirations, Trips
 function change_generation_title( $title ){
-  $gen_pages = array("youth", "trips", "topics", "inspirations");
+  $gen_pages = array("generationnyc", "trips", "topics", "inspirations");
   $_post = get_queried_object();
   // if this is a single page
   $page_type = explode("/", trim(parse_url(get_permalink(), PHP_URL_PATH), "/"));
@@ -464,7 +464,8 @@ function change_generation_title( $title ){
   }
   // if this is a landing page
   if ( !is_front_page() && !is_single() && in_array($page_type[0], $gen_pages) ) {
-    if ( $page_type[0] == "youth"){
+    // if ( $page_type[0] == "youth"){
+    if ( $page_type[0] == "generationnyc"){
       $title = "Generation NYC";
     }elseif ( $page_type[0] == "inspirations"){
       $title = "Inspirations" . ' - ' . 'Generation NYC';
@@ -478,6 +479,35 @@ function change_generation_title( $title ){
 }
 add_filter( 'pre_get_document_title', 'change_generation_title', 999, 1 );
 // end generation titles
+
+
+// add validation on cta phone number on topics page
+add_filter('acf/validate_value/name=cta_button_phone', 'my_acf_validate_cta_button_phone', 10,4);
+
+function my_acf_validate_cta_button_phone( $valid, $value){
+  // if the value entered is not 10 characters long
+  if( $value ) {
+    // checks that there are no letters
+    if(preg_match( '/[a-zA-Z]/', $value )){
+      $valid = 'Phone Number can only contain integers';
+      return $valid; 
+    }
+    // check that value is within 10 or 11 digits
+    if ((strlen($value) < 10 ) or (strlen($value) > 11)){
+      $valid = 'Phone Number must be 10 or 11-digits';
+      return $valid; 
+    }
+    // return valid if the value is between 10 and 11 digits
+    else{
+      return $valid;
+    }
+  }
+  // return valid if the field is empty
+  else{
+    return $valid;
+  }
+}  
+// end add validation
 
 // Customize TinyMCE settings
 require_once(get_template_directory() . '/includes/guny_editor_styles.php');

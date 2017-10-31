@@ -1,6 +1,6 @@
 <?php
 
-class FacetWP_Facet_Number_Range
+class FacetWP_Facet_Number_Range extends FacetWP_Facet
 {
 
     function __construct() {
@@ -81,7 +81,7 @@ class FacetWP_Facet_Number_Range
         $this.find('.facet-compare-type').val(obj.compare_type);
     });
 
-    wp.hooks.addFilter('facetwp/save/number_range', function($this, obj) {
+    wp.hooks.addFilter('facetwp/save/number_range', function(obj, $this) {
         obj['source'] = $this.find('.facet-source').val();
         obj['source_other'] = $this.find('.facet-source-other').val();
         obj['compare_type'] = $this.find('.facet-compare-type').val();

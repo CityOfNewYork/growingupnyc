@@ -186,9 +186,6 @@ class Tribe__Events__Pro__Mini_Calendar {
 			$this->show_list = false;
 		}
 
-		// enqueue the widget js
-		self::styles_and_scripts();
-
 		// widget setting for count is not 0
 		if ( ! $this->show_list ) {
 			add_filter( 'tribe_events_template_widgets/mini-calendar/list.php', '__return_false' );
@@ -203,9 +200,11 @@ class Tribe__Events__Pro__Mini_Calendar {
 	}
 
 	/**
-	 * @todo revise so that our stylesheet is enqueued in time for the link to be included within the head element
+	 * Register and enqueue the widget's stylesheets.
+	 *
+	 * @since 4.4.16
 	 */
-	protected function styles_and_scripts() {
+	public function register_assets() {
 		wp_enqueue_script( 'tribe-mini-calendar', tribe_events_pro_resource_url( 'widget-calendar.js' ), array( 'jquery' ), apply_filters( 'tribe_events_pro_js_version', Tribe__Events__Pro__Main::VERSION ) );
 		Tribe__Events__Pro__Widgets::enqueue_calendar_widget_styles();
 
@@ -226,22 +225,31 @@ class Tribe__Events__Pro__Mini_Calendar {
 				break;
 		}
 
-		$styleUrl = tribe_events_pro_resource_url( $event_file_option );
-		$styleUrl = apply_filters( 'tribe_events_pro_widget_calendar_stylesheet_url', $styleUrl );
+		/**
+		 * The URL to the Minical Widget's stylesheet.
+		 *
+		 * @param string $style_url Full URL
+		 */
+		$style_url          = apply_filters( 'tribe_events_pro_widget_calendar_stylesheet_url', tribe_events_pro_resource_url( $event_file_option ) );
+		$style_override_url = Tribe__Events__Templates::locate_stylesheet( 'tribe-events/pro/' . $event_file, $style_url );
 
-		$styleOverrideUrl = Tribe__Events__Templates::locate_stylesheet( 'tribe-events/pro/' . $event_file, $styleUrl );
-
+		/**
+		 * The version of Pro that is appended to stylesheet URLs as a query parameter.
+		 *
+		 * @param string $version Pro version number
+		 */
+		$pro_version = apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION );
 
 		// Load up stylesheet from theme or plugin
-		if ( $styleUrl && $stylesheet_option == 'tribe' ) {
-			wp_enqueue_style( 'widget-calendar-pro-style', tribe_events_pro_resource_url( 'widget-calendar-full.css' ), array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
-			wp_enqueue_style( Tribe__Events__Main::POSTTYPE . '-widget-calendar-pro-style', $styleUrl, array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
+		if ( $style_url && 'tribe' === $stylesheet_option ) {
+			wp_enqueue_style( 'widget-calendar-pro-style', tribe_events_pro_resource_url( 'widget-calendar-full.css' ), array(), $pro_version );
+			wp_enqueue_style( 'tribe_events-widget-calendar-pro-style', $style_url, array(), $pro_version );
 		} else {
-			wp_enqueue_style( Tribe__Events__Main::POSTTYPE . '-widget-calendar-pro-style', $styleUrl, array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
+			wp_enqueue_style( 'tribe_events-widget-calendar-pro-style', $style_url, array(), $pro_version );
 		}
 
-		if ( $styleOverrideUrl ) {
-			wp_enqueue_style( Tribe__Events__Main::POSTTYPE . '--widget-calendar-pro-override-style', $styleOverrideUrl, array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
+		if ( $style_override_url ) {
+			wp_enqueue_style( 'tribe_events-widget-calendar-pro-override-style', $style_override_url, array(), $pro_version );
 		}
 
 		$widget_data = array( 'ajaxurl' => admin_url( 'admin-ajax.php', ( is_ssl() ? 'https' : 'http' ) ) );
@@ -278,14 +286,13 @@ class Tribe__Events__Pro__Mini_Calendar {
 				);
 
 				// set end date if initial load, or ajax month switch
-				if ( ! defined( 'DOING_AJAX' ) || ( defined( 'DOING_AJAX' ) && $_POST['action'] == 'tribe-mini-cal' ) ) {
+				if ( Tribe__Main::instance()->doing_ajax() && 'tribe-mini-cal' === tribe_get_request_var( 'action' ) ) {
 					$query_args['end_date'] = substr_replace( $this->get_month( Tribe__Date_Utils::DBDATEFORMAT ), Tribe__Date_Utils::get_last_day_of_month( strtotime( $this->get_month() ) ), - 2 );
 					// @todo use tribe_events_end_of_day() ?
 					$query_args['end_date'] = tribe_end_of_day( $query_args['end_date'] );
 				}
 
 				$wp_query = Tribe__Events__Query::getEvents( $query_args, true );
-
 			}
 		}
 	}

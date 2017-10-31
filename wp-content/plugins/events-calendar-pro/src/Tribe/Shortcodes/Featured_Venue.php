@@ -59,15 +59,15 @@ class Tribe__Events__Pro__Shortcodes__Featured_Venue {
 	 * "count" attribute.
 	 */
 	protected function parse_args() {
-		if ( ! empty( $this->arguments['id'] ) ) {
+		if ( strlen( $this->arguments['id'] ) ) {
+			$this->arguments['venue_ID'] = (int) $this->arguments['id'];
+		} elseif ( strlen( $this->arguments['venue'] ) ) {
 			$this->arguments['venue_ID'] = (int) $this->arguments['venue'];
-		} elseif ( ! empty( $this->arguments['venue'] ) ) {
-			$this->arguments['venue_ID'] = (int) $this->arguments['venue'];
-		} elseif ( ! empty( $this->arguments['slug'] ) ) {
+		} elseif ( strlen( $this->arguments['slug'] ) ) {
 			$this->set_by_slug();
 		}
 
-		if ( ! empty( $this->arguments['limit'] ) ) {
+		if ( strlen( $this->arguments['limit'] ) ) {
 			$this->arguments['count'] = (int) $this->arguments['limit'];
 		} else {
 			$this->arguments['count'] = (int) tribe_get_option( 'postsPerPage', 10 );

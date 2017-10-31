@@ -5,7 +5,7 @@ class Tribe__Events__Pro__Asset__Ajax_Maps extends Tribe__Events__Asset__Abstrac
 
 	public function handle() {
 		$http = is_ssl() ? 'https' : 'http';
-		$url  = apply_filters( 'tribe_events_pro_google_maps_api', $http . '://maps.google.com/maps/api/js' );
+		$url  = apply_filters( 'tribe_events_pro_google_maps_api', 'https://maps.google.com/maps/api/js' );
 		wp_register_script( 'tribe-gmaps', $url, array( 'tribe-events-pro' ) );
 		$path = Tribe__Events__Template_Factory::getMinFile( tribe_events_pro_resource_url( 'tribe-events-ajax-maps.js' ), true );
 		wp_register_script( 'tribe-events-pro-geoloc', $path, array(
@@ -19,6 +19,7 @@ class Tribe__Events__Pro__Asset__Ajax_Maps extends Tribe__Events__Asset__Abstrac
 			'ajaxurl'  => admin_url( 'admin-ajax.php', $http ),
 			'nonce'    => wp_create_nonce( 'tribe_geosearch' ),
 			'map_view' => 'map' == Tribe__Events__Main::instance()->displaying ? true : false,
+			'pin_url'  => Tribe__Customizer::instance()->get_option( array( 'global_elements', 'map_pin' ), false ),
 		);
 
 		wp_localize_script( 'tribe-events-pro-geoloc', 'GeoLoc', $data );

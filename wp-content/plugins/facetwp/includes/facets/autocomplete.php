@@ -1,6 +1,6 @@
 <?php
 
-class FacetWP_Facet_Autocomplete
+class FacetWP_Facet_Autocomplete extends FacetWP_Facet
 {
 
     function __construct() {
@@ -67,7 +67,7 @@ class FacetWP_Facet_Autocomplete
         $this.find('.facet-placeholder').val(obj.placeholder);
     });
 
-    wp.hooks.addFilter('facetwp/save/autocomplete', function($this, obj) {
+    wp.hooks.addFilter('facetwp/save/autocomplete', function(obj, $this) {
         obj['source'] = $this.find('.facet-source').val();
         obj['placeholder'] = $this.find('.facet-placeholder').val();
         return obj;

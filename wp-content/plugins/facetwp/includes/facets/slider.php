@@ -1,6 +1,6 @@
 <?php
 
-class FacetWP_Facet_Slider
+class FacetWP_Facet_Slider extends FacetWP_Facet
 {
 
     function __construct() {
@@ -123,7 +123,7 @@ class FacetWP_Facet_Slider
         $this.find('.facet-step').val(obj.step);
     });
 
-    wp.hooks.addFilter('facetwp/save/slider', function($this, obj) {
+    wp.hooks.addFilter('facetwp/save/slider', function(obj, $this) {
         obj['source'] = $this.find('.facet-source').val();
         obj['source_other'] = $this.find('.facet-source-other').val();
         obj['compare_type'] = $this.find('.facet-compare-type').val();

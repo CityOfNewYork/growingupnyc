@@ -3,8 +3,8 @@ Contributors:      gathercontent, mathew-chapman, namshee, jtsternberg, justinsa
 Donate link:       http://www.gathercontent.com
 Tags               structured content, gather content, gathercontent, import, migrate, export, mapping, production, writing, collaboration, platform, connect, link, gather, client, word, production
 Requires at least: 3.8
-Tested up to:      4.7.3
-Stable tag:        3.0.9
+Tested up to:      4.8.0
+Stable tag:        3.1.5
 License:           GPL-2.0+
 License URI:       https://opensource.org/licenses/GPL-2.0
 
@@ -63,6 +63,28 @@ Below the text box is a button that will allow you to simply save all of that in
 6. Or change the item's GatherContent status in quick-edit mode.
 
 == Changelog ==
+
+= 3.1.5 =
+* Update to enable the Yoast SEO focus keyword again (a Yoast SEO plugin update changed the field type).
+* Add ACF compatibility shim for transforming ACF checkbox values to/from GatherContent checkbox values.
+* Two new filters, `gc_config_pre_meta_field_value_updated` and `gc_config_meta_field_value_updated`.
+
+= 3.1.4 =
+* Fix issue where syncing multiple items would not work (only syncing the first). Caused by nested wp-async tasks causing the action name name to be modified and the hooked callbacks not to be called.
+* Fixed "Attempt to modify property of non-object" notice.
+
+= 3.1.3 =
+* Fix bug where some taxonomy terms were not being set (caused by changes made for [#27](https://github.com/gathercontent/wordpress-plugin/issues/27)).
+
+= 3.1.2 =
+* Allow side-loading non-image files/media from GatherContent.
+
+= 3.1.1 =
+* Added ability log the async requests in debug mode.
+* Removed duplicated abstract method. Fixes "Can't inherit abstract function" error which may occur on some servers.
+
+= 3.1.0 =
+* Do not require logged-in cookies for wp-async requests (which performa push/pull operations). Fixes [#27](https://github.com/gathercontent/wordpress-plugin/issues/27).
 
 = 3.0.9 =
 * Fix improperly cast object property for php 7 compatibility.
@@ -192,6 +214,28 @@ Below the text box is a button that will allow you to simply save all of that in
 * Complete rewrite of old plugin
 
 == Upgrade Notice ==
+
+= 3.1.5 =
+* Update to enable the Yoast SEO focus keyword again (a Yoast SEO plugin update changed the field type).
+* Add ACF compatibility shim for transforming ACF checkbox values to/from GatherContent checkbox values.
+* Two new filters, `gc_config_pre_meta_field_value_updated` and `gc_config_meta_field_value_updated`.
+
+= 3.1.4 =
+* Fix issue where syncing multiple items would not work (only syncing the first). Caused by nested wp-async tasks causing the action name name to be modified and the hooked callbacks not to be called.
+* Fixed "Attempt to modify property of non-object" notice.
+
+= 3.1.3 =
+* Fix bug where some taxonomy terms were not being set (caused by changes made for [#27](https://github.com/gathercontent/wordpress-plugin/issues/27)).
+
+= 3.1.2 =
+* Allow side-loading non-image files/media from GatherContent.
+
+= 3.1.1 =
+* Added ability log the async requests in debug mode.
+* Removed duplicated abstract method. Fixes "Can't inherit abstract function" error which may occur on some servers.
+
+= 3.1.0 =
+* Do not require logged-in cookies for wp-async requests (which performa push/pull operations). Fixes [#27](https://github.com/gathercontent/wordpress-plugin/issues/27).
 
 = 3.0.9 =
 * Fix improperly cast object property for php 7 compatibility.

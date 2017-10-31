@@ -3,32 +3,57 @@
  * Attribute Control
  */
 if ( ! defined( 'ABSPATH' ) ) {
-    exit; // Exit if accessed directly
+	exit; // Exit if accessed directly
 }
 
-// filters the img tag class during insertion and returns SVG Support class
-function bodhi_svgs_image_class_filter($classes) {
+/**
+ * If in Advanced Mode
+ */
+if ( bodhi_svgs_advanced_mode() ) {
 
-	global $bodhi_svgs_options;
+	/**
+	 * Strip HTML of all attributes and add custom class if the file is .svg
+	 */
+	function bodhi_svgs_auto_insert_class( $html, $alt='' ) {
 
-	if ( !empty( $bodhi_svgs_options['css_target'] ) ) {
-		$classes = $bodhi_svgs_options['css_target'];
-	} else {
-		$classes = 'style-svg';
+		global $bodhi_svgs_options;
+
+		if ( ! empty( $bodhi_svgs_options['css_target'] ) ) {
+
+			// if custom class is set, use it
+			$class = $bodhi_svgs_options['css_target'];
+
+		} else {
+
+			// if no custom class set, use default
+			$class = 'style-svg';
+
+		}
+
+		// check if the src file has .svg extension
+		if ( strpos( $html, '.svg' ) !== FALSE ) {
+
+			// strip html for svg files
+			$html = preg_replace( '/(width|height|title|alt|class)=".*"\s/', 'class="' . $class . '"', $html );;
+
+		} else {
+
+			// leave html intact for non-svg
+			$html = $html;
+
+		}
+
+		return $html;
+
 	}
-	return $classes;
 
-}
-if ( !empty( $bodhi_svgs_options['auto_insert_class'] ) ) {
-add_filter('get_image_tag_class', 'bodhi_svgs_image_class_filter');
-}
-
-// removes the width and height attributes during insertion of svg
-function remove_dimensions_svg( $html='' ) {
-	if( preg_match( '/src="(.*[.]svg)"\s/', $html ) ) {
-		//$html = preg_replace( '/(width|height)="\d*"\s/', "", $html );
+	/**
+	 * Fire auto insert class
+	 */
+	if ( ! empty( $bodhi_svgs_options['auto_insert_class'] ) ) {
+		add_filter( 'image_send_to_editor', 'bodhi_svgs_auto_insert_class', 10 );
+		// add_filter( 'post_thumbnail_html', 'bodhi_svgs_auto_insert_class', 10 );
 	}
-	return str_ireplace( array( " width=\"1\"", " height=\"1\"" ), "", $html );
+
+
 }
-add_filter( 'post_thumbnail_html', 'remove_dimensions_svg', 10 );
-add_filter( 'image_send_to_editor', 'remove_dimensions_svg', 10 );

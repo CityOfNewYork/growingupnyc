@@ -1,14 +1,14 @@
 {% extends "microsite-base.twig" %}
-
+ 
 {% block head_extras %}
   <style>
-    .c-hero-ms__topics {background-image: url(/wp-content/themes/guny/assets/img/hero-topics-splatter.svg);}
+    .c-hero-ms__topics-single {background-image: url(/wp-content/themes/guny/assets/img/hero-topics-splatter.svg);}
   </style>
 {% endblock %}
 
 {% block content %}
   <div class="js-parallax">
-    <header class="c-hero c-hero--bg-secondary c-hero-ms__topics js-parallax-content">
+    <header class="c-hero c-hero--bg-secondary c-hero-ms__topics-single js-parallax-content">
       <div class="o-container js-parallax-text">
         <h1 class="c-hero__title c-hero-ms__topics__title">
           {#<span class="c-hero__sticker sticker {{post.age_group.slug|sanitize|replace({'-es':''})}}-background">
@@ -67,6 +67,11 @@
                   {% set target="_blank" %}
                 {% endif %}
                 <a class="button--primary button--primary__curved button--primary__purple button--topics__cta" href="{{top.cta_button_url}}" target={{target}}>{{top.cta_button_text}}</a>
+              {% endif %}
+
+              {# Phone Number and the buttons #}
+              {% if top.cta_button_phone %}
+                <a class="button--primary button--primary__curved button--primary__purple button--topics__cta" href="tel:{{top.cta_button_phone}}">{{top.cta_button_text}}</a>
               {% endif %}
 
 

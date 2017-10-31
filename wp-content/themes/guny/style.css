@@ -1663,7 +1663,7 @@ ol.o-inline {
   background-size: contain;
   color: #fff;
   overflow: hidden;
-  padding: 25.06667% 0 2.0625rem;
+  padding-bottom: 0.9375rem;
   position: relative;
   text-align: center; }
   @media screen and (min-width: 700px) {
@@ -2831,7 +2831,7 @@ a.teen-secondary.is-active {
   stop-color: #7735b2; }
 
 .young-adult-background {
-  background-color: #404657 !important; }
+  background-color: #51596b !important; }
 
 button.young-adult-background,
 a.young-adult-background {
@@ -2839,42 +2839,42 @@ a.young-adult-background {
   button.young-adult-background:focus, button.young-adult-background.is-active,
   a.young-adult-background:focus,
   a.young-adult-background.is-active {
-    background-color: #2d333d !important;
-    border-color: #2d333d !important;
+    background-color: #343e4c !important;
+    border-color: #343e4c !important;
     outline: none; }
 
 .no-touchevents button.young-adult-background:hover,
 .no-touchevents a.young-adult-background:hover {
-  background-color: #2d333d !important;
-  border-color: #2d333d !important; }
+  background-color: #343e4c !important;
+  border-color: #343e4c !important; }
 
 .young-adult-secondary {
-  background-color: #2d333d !important;
-  border-color: #2d333d !important; }
+  background-color: #343e4c !important;
+  border-color: #343e4c !important; }
 
 button.young-adult-secondary:focus, button.young-adult-secondary.is-active,
 a.young-adult-secondary:focus,
 a.young-adult-secondary.is-active {
-  background-color: #404657 !important;
-  border-color: #404657 !important;
+  background-color: #51596b !important;
+  border-color: #51596b !important;
   outline: none; }
 
 .no-touchevents button.young-adult-secondary:hover,
 .no-touchevents a.young-adult-secondary:hover {
-  background-color: #404657 !important;
-  border-color: #404657 !important; }
+  background-color: #51596b !important;
+  border-color: #51596b !important; }
 
 .young-adult-text {
-  color: #404657; }
+  color: #51596b; }
 
 .young-adult-gradient {
   background-image: url(/wp-content/themes/guny/assets/img/young-adult-gradient.png); }
 
-.teen-svg .stop1 {
-  stop-color: #3c036f; }
+.young-adult-svg .stop1 {
+  stop-color: #343e4c; }
 
-.teen-svg .stop2 {
-  stop-color: #7735b2; }
+.young-adult-svg .stop2 {
+  stop-color: #51596b; }
 
 .u-sm-gutter {
   margin-bottom: 20px; }

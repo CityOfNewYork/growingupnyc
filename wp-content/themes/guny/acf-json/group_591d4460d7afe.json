@@ -164,6 +164,26 @@
                             "return_format": "value"
                         },
                         {
+                            "key": "field_59e0fd1abf77c",
+                            "label": "CTA Button Phone",
+                            "name": "cta_button_phone",
+                            "type": "text",
+                            "value": null,
+                            "instructions": "Enter a phone number",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
                             "key": "field_592fc48d98d6f",
                             "label": "CTA Button Text",
                             "name": "cta_button_text",

@@ -343,6 +343,16 @@
   }
 }
 
+.c-hero-ms__topics-single {
+  background-color: $purple;
+  padding-bottom: rem-calc(33);
+  @include media($bp-medium) {
+    background-size: cover;
+    text-align: left;
+    padding: rem-calc(92 40 80);
+  }
+}
+
 // .c-hero-ms__topics--landing {
 //   padding: percentage(126/375) 0 rem-calc(65);
 //   @include media($bp-medium) {
@@ -448,10 +458,11 @@
 .c-do-list {
   margin-bottom: rem-calc(60px);
   background: $very-light-gray;
-  padding: rem-calc(30px);
+  padding: rem-calc(3 30 30);
 
   a.button--topics__cta {
     margin-top: rem-calc(25);
+    text-decoration: none !important;
     &:focus {
       color: $purple;
     }

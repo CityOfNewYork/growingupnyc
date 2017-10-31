@@ -84,6 +84,10 @@ class Tribe__Events__List_Widget extends WP_Widget {
 		extract( $args, EXTR_SKIP );
 		extract( $instance, EXTR_SKIP );
 
+		if ( ! isset( $no_upcoming_events ) ) {
+			$no_upcoming_events = true;
+		}
+
 		// Temporarily unset the tribe bar params so they don't apply
 		$hold_tribe_bar_args = array();
 		foreach ( $_REQUEST as $key => $value ) {
@@ -107,6 +111,7 @@ class Tribe__Events__List_Widget extends WP_Widget {
 					'eventDisplay'   => 'list',
 					'posts_per_page' => self::$limit,
 					'tribe_render_context' => 'widget',
+					'featured' => empty( $instance['featured_events_only'] ) ? false : (bool) $instance['featured_events_only'],
 				)
 			)
 		);
@@ -132,6 +137,27 @@ class Tribe__Events__List_Widget extends WP_Widget {
 		echo $after_widget;
 		wp_reset_query();
 
+		$jsonld_enable = isset( $jsonld_enable ) ? $jsonld_enable : true;
+
+		/**
+		 * Filters whether JSON LD information should be printed to the page or not for this widget type.
+		 *
+		 * @param bool $jsonld_enable Whether JSON-LD should be printed to the page or not; default `true`.
+		 */
+		$jsonld_enable = apply_filters( 'tribe_events_' . $this->id_base . '_jsonld_enabled', $jsonld_enable );
+
+
+		/**
+		 * Filters whether JSON LD information should be printed to the page for any widget type.
+		 *
+		 * @param bool $jsonld_enable Whether JSON-LD should be printed to the page or not; default `true`.
+		 */
+		$jsonld_enable = apply_filters( 'tribe_events_widget_jsonld_enabled', $jsonld_enable );
+
+		if ( $jsonld_enable ) {
+			Tribe__Events__JSON_LD__Event::instance()->markup( self::$posts );
+		}
+
 		// Reinstate the tribe bar params
 		if ( ! empty( $hold_tribe_bar_args ) ) {
 			foreach ( $hold_tribe_bar_args as $key => $value ) {
@@ -153,9 +179,16 @@ class Tribe__Events__List_Widget extends WP_Widget {
 		$new_instance = $this->default_instance_args( $new_instance );
 
 		/* Strip tags (if needed) and update the widget settings. */
-		$instance['title']              = strip_tags( $new_instance['title'] );
-		$instance['limit']              = $new_instance['limit'];
-		$instance['no_upcoming_events'] = $new_instance['no_upcoming_events'];
+		$instance['title']                = strip_tags( $new_instance['title'] );
+		$instance['limit']                = $new_instance['limit'];
+		$instance['no_upcoming_events']   = $new_instance['no_upcoming_events'];
+		$instance['featured_events_only'] = $new_instance['featured_events_only'];
+
+		if ( isset( $new_instance['jsonld_enable'] ) && $new_instance['jsonld_enable'] == true ) {
+			$instance['jsonld_enable'] = 1;
+		} else {
+			$instance['jsonld_enable'] = 0;
+		}
 
 		return $instance;
 	}
@@ -183,9 +216,10 @@ class Tribe__Events__List_Widget extends WP_Widget {
 	 */
 	protected function default_instance_args( array $instance ) {
 		return wp_parse_args( $instance, array(
-			'title'              => esc_html__( 'Upcoming Events', 'the-events-calendar' ),
-			'limit'              => '5',
-			'no_upcoming_events' => false,
+			'title'                => esc_html__( 'Upcoming Events', 'the-events-calendar' ),
+			'limit'                => '5',
+			'no_upcoming_events'   => false,
+			'featured_events_only' => false,
 		) );
 	}
 }

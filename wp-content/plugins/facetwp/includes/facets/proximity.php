@@ -1,6 +1,6 @@
 <?php
 
-class FacetWP_Facet_Proximity_Core
+class FacetWP_Facet_Proximity_Core extends FacetWP_Facet
 {
 
     /**
@@ -90,8 +90,15 @@ class FacetWP_Facet_Proximity_Core
         $radius = (float) $selected_values[2];
 
         $sql = "
-        SELECT DISTINCT post_id,
-        ( $earth_radius * acos( cos( radians( $lat ) ) * cos( radians( facet_value ) ) * cos( radians( facet_display_value ) - radians( $lng ) ) + sin( radians( $lat ) ) * sin( radians( facet_value ) ) ) ) AS distance
+        SELECT DISTINCT post_id, ( $earth_radius * acos(
+            greatest( -1, least( 1, ( /* acos() must be between -1 and 1 */
+                cos( radians( $lat ) ) *
+                cos( radians( facet_value ) ) *
+                cos( radians( facet_display_value ) - radians( $lng ) ) +
+                sin( radians( $lat ) ) *
+                sin( radians( facet_value ) )
+            ) ) )
+        ) ) AS distance
         FROM {$wpdb->prefix}facetwp_index
         WHERE facet_name = '{$facet['name']}'
         HAVING distance < $radius
@@ -128,7 +135,7 @@ class FacetWP_Facet_Proximity_Core
         $this.find('.facet-unit').val(obj.unit);
     });
 
-    wp.hooks.addFilter('facetwp/save/proximity', function($this, obj) {
+    wp.hooks.addFilter('facetwp/save/proximity', function(obj, $this) {
         obj['source'] = $this.find('.facet-source').val();
         obj['source_other'] = $this.find('.facet-source-other').val();
         obj['unit'] = $this.find('.facet-unit').val();
@@ -165,7 +172,8 @@ class FacetWP_Facet_Proximity_Core
 
         // Pass extra options into Places Autocomplete
         $options = apply_filters( 'facetwp_proximity_autocomplete_options', array() );
-        FWP()->display->json['autocomplete_options'] = $options;
+        FWP()->display->json['proximity']['autocomplete_options'] = $options;
+        FWP()->display->json['proximity']['clearText'] = __( 'Clear location', 'fwp' );
     }
 
 

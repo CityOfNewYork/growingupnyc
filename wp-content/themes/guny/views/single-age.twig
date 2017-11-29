@@ -1,8 +1,8 @@
 {% extends "base.twig" %}
 
 {% block head_extras %}
-<style>
-  .c-hero { background-image: url({{TimberImage(post.hero_image).src|resize(480,161)}}); }
+<style type='text/css' id='c-hero'>
+  .c-hero { background-image: url( {{TimberImage(post.hero_image).src|resize(480,161)}} ); }
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .c-hero { background-image: url({{TimberImage(post.hero_image).src|resize(960,322)}}); }
   }
@@ -13,7 +13,10 @@
     .c-hero { background-image: url({{TimberImage(post.hero_image).src|resize(1400,470)}}); }
   }
   @media (min-width:700px) {
-    .c-hero { background-image: url({{TimberImage(post.hero_image).src}}); }
+    .c-hero {
+      background-image: url({{TimberImage(post.hero_image).src}});
+      {{ function('Templating\\get_focal_point', post.hero_image) }}
+    }
   }
 </style>
 {% endblock %}
@@ -154,7 +157,7 @@
         </div>
         <h3>{{post.milestones_heading}}</h3>
         <ul class="js-accordion c-list-box c-list-box--tertiary u-sm-gutter">
-          
+
           {% if post.social_milestones %}
             <li class="c-list-box__item">
               <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-social">{{ __('Social', 'GUNY-Single-Age') }}</h4>
@@ -176,7 +179,7 @@
               </ul>
             </li>
           {% endif %}
-          
+
           {% if post.learning_milestones %}
             <li class="c-list-box__item">
               <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-cognitive">{{ __('Learning', 'GUNY-Single-Age') }}</h4>
@@ -187,7 +190,6 @@
               </ul>
             </li>
           {% endif %}
-          
 
           {% if post.movement_milestones %}
             <li class="c-list-box__item">
@@ -199,7 +201,7 @@
               </ul>
             </li>
           {% endif %}
-          
+
           {% if post.health_milestones %}
             <li class="c-list-box__item">
               <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-health">{{ __('Health', 'GUNY-Single-Age') }}</h4>
@@ -212,7 +214,6 @@
           {% endif %}
           </ul>
 
-  
           <h3>{{post.warning_header}}</h3>
           {% if post.warning_signs %}
             <ul class="c-list-box c-list-box--tertiary">
@@ -226,7 +227,7 @@
               </li>
             </ul>
           {% endif %}
-          
+
         </section>
     </div> <!-- /.o-article -->
   </article>

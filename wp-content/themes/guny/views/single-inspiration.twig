@@ -4,7 +4,7 @@
 <style>
   .c-hero {
     background-image: url({{TimberImage(post.hero_banner).src|resize(480,161)}});
-    background-position: {{ function('unserialize', TimberImage(post.hero_banner).focus_point).x }}% {{ function('unserialize', TimberImage(post.hero_banner).focus_point).y }}%;
+    {{ function('Templating\\get_focal_point', post.hero_banner) }}
   }
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .c-hero { background-image: url({{TimberImage(post.hero_banner).src|resize(960,322)}}); }

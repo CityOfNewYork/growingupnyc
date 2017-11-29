@@ -4,7 +4,7 @@
 
 <div id="owl-demo" class="owl-carousel owl-theme carousel-ms">
   {% for image in post.get_field('slider') %}
-    <div class="owl-bg" style="background: url({{image.url}}) center center no-repeat; background-size: cover;"></div>
+    <div class="owl-bg" style="background: url({{image.url}}) center center no-repeat; background-size: cover; {{ function('Templating\\get_focal_point', image.id) }}"></div>
   {% endfor %}
 </div>
 
@@ -13,7 +13,7 @@
     <h1>{{post.title}}</h1>
     <p class="c-hero__tagline">
     {% for term in post.terms('trip_type') %}
-      <a href="/trip-type/{{term.slug}}" class="button--pill button--pill--trip">{{term.name}}</a>   
+      <a href="/trip-type/{{term.slug}}" class="button--pill button--pill--trip">{{term.name}}</a>
     {% endfor %}
     {% for term in post.terms('trip_free_day_trip') %}
       <a href="/trip-type/free-day-trip/?fwp_trip_free_day_trip={{term.slug}}" class="button--pill button--pill--trip">{{term.name}}</a>
@@ -37,7 +37,7 @@
         {% for top in post.get_field('page_top') %}
           {{top.page_top_content}}
         {% endfor %}
-      </div>      
+      </div>
     </div> <!-- /.o-content-container-text -->
   </article>
   <aside class="o-article-sidebar o-article-trip-sidebar o-content-container--compact u-lg-gutter">
@@ -45,7 +45,7 @@
 
       <dt class="c-details-list__term c-details-list-ms__term">{{ __('Free Days', 'GUNY-Single-Trip') }}</dt>
       <dd class="c-details-list__descr c-details-list-ms__descr">{{post.cost_details}}</dd>
-      
+
       <dt class="c-details-list__term c-details-list-ms__term">{{ __('Hours', 'GUNY-Single-Trip') }}</dt>
       <dd class="c-details-list__descr c-details-list-ms__descr">{{post.hours_details}}</dd>
 
@@ -66,7 +66,7 @@
       <div class="acf-map">
         {% if post.map %}
           <div class="marker" data-lat="{{post.map.lat}}" data-lng="{{post.map.lng}}"></div>
-        {% endif %}   
+        {% endif %}
       </div>
     </div> <!-- /.o-content-container-text -->
   </article>

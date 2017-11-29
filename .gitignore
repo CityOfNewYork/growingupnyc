@@ -35,8 +35,8 @@ wp-content/mysql.sql
 
 # Composer #
 ############
-vendor/
-vendor/*
+/vendor/
+/vendor/*
 
 # Packages #
 ############

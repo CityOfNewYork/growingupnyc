@@ -20,7 +20,7 @@
       <h1 class="c-hero__title--long">
         {% if post.category %}
         <span class="c-hero__sticker sticker">
-          <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{post.category.slug|replace({'-es':''})}}"></use></svg>
+          <svg aria-hidden="true" class="icon--medium"><use xlink:href="#icon-{{post.category.slug|replace({'-es':''})}}"></use></svg>
         </span>
         {% endif %}
         {{post.title}}
@@ -47,22 +47,22 @@
         {% if post.summary %}
         <li class="c-nav-list__item">
           <a href="#section-summary" data-section="section-summary" class="js-section c-nav-list__link">
-            {{post.get_field('jump_nav_heading_-_summary')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+            {{post.get_field('jump_nav_heading_-_summary')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
         </li>
         {% endif %}
         {% if post.eligibility %}
         <li class="c-nav-list__item">
-          <a href="#section-eligibility" data-section="section-eligibility" class="js-section c-nav-list__link">{{post.get_field('jump_nav_heading_-_eligibility')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+          <a href="#section-eligibility" data-section="section-eligibility" class="js-section c-nav-list__link">{{post.get_field('jump_nav_heading_-_eligibility')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
         </li>
         {% endif %}
         {% if post.whats_needed or post.how_to_apply %}
         <li class="c-nav-list__item">
-          <a href="#section-application" data-section="section-application" class="js-section c-nav-list__link">{{post.get_field('jump_nav_heading_-_application')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+          <a href="#section-application" data-section="section-application" class="js-section c-nav-list__link">{{post.get_field('jump_nav_heading_-_application')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
         </li>
         {% endif %}
         {% if post.get_help %}
         <li class="c-nav-list__item">
-          <a href="#section-help" data-section="section-help" class="js-section c-nav-list__link">{{post.get_field('jump_nav_heading_-_help')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#caret-right"></use></svg></a>
+          <a href="#section-help" data-section="section-help" class="js-section c-nav-list__link">{{post.get_field('jump_nav_heading_-_help')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
         </li>
         {% endif %}
       </ol>

@@ -228,6 +228,7 @@ gulp.task('images', function() {
 // SVGs
 gulp.task('icons', function() {
   return gulp.src(source+'icons/*.svg')
+    .pipe(rename({prefix: 'icon-'}))
     .pipe(svgSprite({
       mode: {
         symbol: {

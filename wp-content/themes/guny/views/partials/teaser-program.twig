@@ -7,7 +7,7 @@
   {% if category %}
     <a href="{{post.link}}">
       <div class="c-card__sticker sticker" aria-hidden="true">
-        <svg class="icon--large"><title>{{category.name}}</title><use xlink:href="#{{category.slug|replace({'-es':''})}}"></use></svg>
+        <svg class="icon--large"><title>{{category.name}}</title><use xlink:href="#icon-{{category.slug|replace({'-es':''})}}"></use></svg>
       </div>
     </a>
   {% endif %}

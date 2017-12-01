@@ -59,7 +59,10 @@ class ShareForm {
     }
 
     let selected = this._el.querySelector('input[type="tel"]');
-    if (selected) this._maskPhone(selected);
+
+    if (selected) {
+      this._maskPhone(selected);
+    }
 
     $(`.${ShareForm.CssClass.SHOW_DISCLAIMER}`)
       .on('focus', () => {
@@ -136,7 +139,7 @@ class ShareForm {
 
   /**
    * Toggles the disclaimer visibility
-   * @param  {Boolean} active wether the disclaimer should be visible or not
+   * @param  {Boolean} visible - wether the disclaimer should be visible or not
    */
   _disclaimer(visible = true) {
     let $el = $('#js-disclaimer');

@@ -27,10 +27,14 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
   let isSticky = false; // Whether the sidebar is sticky at this exact moment in time
   let isAbsolute = false; // Whether the sidebar is absolutely positioned at the bottom
   let switchPoint = 0; // Point at which to switch to sticky mode
+  /* eslint-disable no-unused-vars */
   let switchPointBottom = 0; // Point at which to "freeze" the sidebar so it doesn't overlap the footer
+  /* eslint-enable no-unused-vars */
   let leftOffset = 0; // Amount sidebar should be set from the left side
   let elemWidth = 0; // Width in pixels of sidebar
+  /* eslint-disable no-unused-vars */
   let elemHeight = 0; // Height in pixels of sidebar
+  /* eslint-enable no-unused-vars */
 
   /**
   * Toggle the sticky behavior
@@ -201,21 +205,21 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
 
   initialize();
 
-  $.fn.isOnScreen = function(){    
+  $.fn.isOnScreen = function(){
     var win = $(window);
-    
+
     var viewport = {
         top : win.scrollTop(),
         left : win.scrollLeft()
     };
     viewport.right = viewport.left + win.width();
     viewport.bottom = viewport.top + win.height();
-    
+
     var bounds = this.offset();
     bounds.right = bounds.left + this.outerWidth();
     bounds.bottom = bounds.top + this.outerHeight();
-    
-    return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));    
+
+    return (!(viewport.right < bounds.left || viewport.left > bounds.right || viewport.bottom < bounds.top || viewport.top > bounds.bottom));
   };
 }
 

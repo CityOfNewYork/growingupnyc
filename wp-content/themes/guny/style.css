@@ -779,6 +779,13 @@ p + p {
       padding-left: 0;
       padding-right: 0; } }
 
+.o-content-container--text a {
+  color: #2793e0; }
+  .o-content-container--text a:focus {
+    color: #0055b8; }
+  .no-touchevents .o-content-container--text a:hover {
+    color: #0055b8; }
+
 @media screen and (min-width: 1024px) {
   .o-content-container--text {
     width: 91.66667%; } }
@@ -1457,8 +1464,10 @@ ol.o-inline {
   -webkit-order: 7;
       -ms-flex-order: 7;
           order: 7; }
-  .c-card__link a:focus {
-    color: #333; }
+  .c-card__link a {
+    color: inherit; }
+    .c-card__link a:focus {
+      color: #333; }
   .no-touchevents .c-card__link a:hover {
     color: #333; }
 
@@ -2022,16 +2031,16 @@ ol.o-inline {
 
 .nav-active .site-mobile-nav {
   -webkit-transform: translateX(-100%);
-  -ms-transform: translateX(-100%);
-  transform: translateX(-100%); }
+      -ms-transform: translateX(-100%);
+          transform: translateX(-100%); }
 
 .site-mobile-nav {
   -webkit-transform: translateX(0);
-  -ms-transform: translateX(0);
-  transform: translateX(0);
-  transition: -webkit-transform 0.2s ease-in;
-  transition: transform 0.2s ease-in;
-  transition: transform 0.2s ease-in, -webkit-transform 0.2s ease-in;
+      -ms-transform: translateX(0);
+          transform: translateX(0);
+  transition: -webkit-transform .2s ease-in;
+  transition: transform .2s ease-in;
+  transition: transform .2s ease-in, -webkit-transform .2s ease-in;
   position: fixed;
   top: 0;
   right: -300px;
@@ -2360,6 +2369,12 @@ ol.o-inline {
     .c-tip {
       padding-top: 3.125rem;
       margin-top: 4.375rem; } }
+  .c-tip a {
+    color: inherit; }
+    .c-tip a:focus {
+      color: #b5b9c1; }
+    .no-touchevents .c-tip a:hover {
+      color: #b5b9c1; }
 
 .c-tip__sticker {
   margin-left: -2.5rem;
@@ -2391,10 +2406,10 @@ ol.o-inline {
     margin-top: 0; }
 
 .c-tip__link:focus {
-  color: #d9d9d9; }
+  color: #b5b9c1; }
 
 .no-touchevents .c-tip__link:hover {
-  color: #d9d9d9; }
+  color: #b5b9c1; }
 
 .s-wysiwyg table {
   font-size: 1rem;

@@ -11,12 +11,12 @@
 }
 
 .nav-active .site-mobile-nav {
-  @include transform(translateX(-100%));
+  transform: translateX(-100%);
 }
 
 .site-mobile-nav {
-  @include transform(translateX(0));
-  @include transition(transform .2s ease-in);
+  transform: translateX(0);
+  transition: transform .2s ease-in;
   position: fixed;
   top: 0;
   right: -300px;

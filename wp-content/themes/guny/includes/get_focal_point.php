@@ -5,11 +5,11 @@ namespace Templating;
 /**
  * Gets the focal point of an image by ID as css background position attribute
  * with percentage units.
- * @param  number $ID The ID of the image
- * @return string     the background position property with css coor of the focal point
+ * @param  number $ID - The ID of the image
+ * @return string       The background position property with css coor of the
+ *                      focal point
  */
 function get_focal_point($ID) {
-
   if (is_array($ID)) return "content: 'Pass the image ID to return focus point';";
 
   $meta = get_post_meta($ID);
@@ -26,5 +26,4 @@ function get_focal_point($ID) {
   }
 
   return $background_position;
-
 }

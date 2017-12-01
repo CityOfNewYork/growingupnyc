@@ -528,3 +528,6 @@ require_once(get_template_directory() . '/includes/guny_messages.php');
 
 // Focal point functions
 require_once(get_template_directory() . '/includes/get_focal_point.php');
+
+// Enqueue functions
+require_once(get_template_directory() . '/includes/style.php');

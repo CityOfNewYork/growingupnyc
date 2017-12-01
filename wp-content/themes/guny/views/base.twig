@@ -16,9 +16,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="manifest" href="{{theme.path}}/manifest.json">
   <link rel="icon" type="image" href="{{theme.path}}/assets/img/growningup-favicon.png">
-  {# <link rel="apple-touch-icon" sizes="76x76" href="{{theme.path}}/assets/img/growningup-Icon-App-76x76@3x.png"> #}
   <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{theme.path}}/assets/img/growningup-Icon-App-76x76@3x.png">
-  <link rel="stylesheet" href="{{theme.path}}/style.css" type="text/css" media="screen">
   <link rel="stylesheet" href="{{theme.path}}/src/css/font-awesome.min.css" type="text/css" media="screen">
   <script>
     (function(d) {
@@ -35,7 +33,8 @@
       h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
     })(document);
   </script>
-  {{function('wp_head')}}
+  {{ function('Enqueue\\style', 'default') }}
+  {{ function('wp_head') }}
   {% block head_extras %}{% endblock %}
 </head>
 

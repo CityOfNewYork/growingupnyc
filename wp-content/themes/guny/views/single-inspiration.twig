@@ -3,20 +3,17 @@
 {% block head_extras %}
 <style>
   .c-hero {
-    background-image: url({{TimberImage(post.hero_banner).src|resize(480,161)}});
+    background-image: url({{TimberImage(post.hero_banner).src|resize(1100)}});
     {{ function('Templating\\get_focal_point', post.hero_banner) }}
   }
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .c-hero { background-image: url({{TimberImage(post.hero_banner).src|resize(960,322)}}); }
+    .c-hero { background-image: url({{TimberImage(post.hero_banner).src|resize(960)}}); }
   }
-  @media (min-width:480px) {
-    .c-hero { background-image: url({{TimberImage(post.hero_banner).src|resize(700,235)}}); }
+  @media (min-width: 480px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 480px) and (min-resolution: 192dpi) {
+    .c-hero { background-image: url({{TimberImage(post.hero_banner).src|resize(1400)}}); }
   }
-  @media (min-width:480px) and (-webkit-min-device-pixel-ratio: 2), (min-width:480px) and (min-resolution: 192dpi) {
-    .c-hero { background-image: url({{TimberImage(post.hero_banner).src|resize(1400,470)}}); }
-  }
-  @media (min-width:700px) {
-    .c-hero { background-image: url({{TimberImage(post.hero_banner).src}}); }
+  @media (min-width: 700px) {
+    .c-hero { background-image: url({{TimberImage(post.hero_banner).src|resize(1400)}}); }
   }
 </style>
 {% endblock %}

@@ -34,21 +34,6 @@
 }
 
 .o-content-container--text {
-
-  a {
-    color: $color-primary;
-
-    &:focus {
-      color: $color-secondary;
-    }
-
-    .no-touchevents & {
-      &:hover {
-        color: $color-secondary;
-      }
-    }
-  }
-
   // Reduces width at the largest breakpoint to control line length
   @include media($bp-large) {
     width: flex-grid(7, 8) + flex-gutter(8);

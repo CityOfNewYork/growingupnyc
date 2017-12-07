@@ -6,7 +6,7 @@
 * @return string HTML markup containing embedded SVG
 */
 function guny_logo() {
-  $output = '<svg role="img" class="icon--nyc"><title>NYC</title><use xlink:href="#nyc-logo"></use></svg>';
+  $output = '<svg role="img" class="icon--nyc"><title>NYC</title><use xlink:href="#icon-nyc-logo"></use></svg>';
   return $output;
 }
 add_shortcode( 'nyc_logo', 'guny_logo' );

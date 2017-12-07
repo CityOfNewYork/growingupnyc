@@ -16,9 +16,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="manifest" href="{{theme.path}}/manifest.json">
   <link rel="icon" type="image" href="{{theme.path}}/assets/img/growningup-favicon.png">
-  {# <link rel="apple-touch-icon" sizes="76x76" href="{{theme.path}}/assets/img/growningup-Icon-App-76x76@3x.png"> #}
   <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{theme.path}}/assets/img/growningup-Icon-App-76x76@3x.png">
-  <link rel="stylesheet" href="{{theme.path}}/style.css" type="text/css" media="screen">
   <link rel="stylesheet" href="{{theme.path}}/src/css/font-awesome.min.css" type="text/css" media="screen">
   <script>
     (function(d) {
@@ -35,7 +33,8 @@
       h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
     })(document);
   </script>
-  {{function('wp_head')}}
+  {{ function('Enqueue\\style', 'default') }}
+  {{ function('wp_head') }}
   {% block head_extras %}{% endblock %}
 </head>
 
@@ -45,7 +44,7 @@
     <a href="#main" class="show-for-keyboard">Skip to main content</a>
     <nav class="o-offcanvas__side js-offcanvas__side" id="ages" role="navigation" aria-label="ages-heading">
       <h2 id="ages-heading" class="show-for-screen-reader">Resources by Age</h2>
-      <button data-toggle="offcanvas-ages" class="o-offcanvas__close button--text"><svg class="icon--small" role="img"><title>Close Resources by Age</title><use xlink:href="#close"></use></svg></button>
+      <button data-toggle="offcanvas-ages" class="o-offcanvas__close button--text"><svg class="icon--small" role="img"><title>Close Resources by Age</title><use xlink:href="#icon-close"></use></svg></button>
       <ol class="js-s-accordion c-list-box c-list-box--secondary" data-multiselectable="true">
         {% for age_group in age_menu %}
           <li class="c-list-box__item">
@@ -80,7 +79,7 @@
                 <li><a class="js-show-nav c-banner__link" href="#mobile-nav">Menu</a></li>
               </ul>
               <div class="site-mobile-nav" id="mobile-nav">
-                <a class="site-nav-close js-hide-nav" href="#content">close &amp; return to site<svg role="img" class="icon--medium" aria-hidden="true"><use xlink:href="#close"></use></svg></a>
+                <a class="site-nav-close js-hide-nav" href="#content">close &amp; return to site<svg role="img" class="icon--medium" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></a>
                 <div class="site-mobile-nav-inner">
                   <ul class="nav-list">
                     {% for menu_item in menu.get_items %}
@@ -100,14 +99,14 @@
               <label for="fwp-search" class="show-for-screen-reader">Search</label>
               <div class="form-field__icon-container">
                 <input type="search" name="s" placeholder="Search" class="form-field form-field--large form-field--full-width" id="fwp-search">
-                <button type="submit" class="form-field__icon form-field__icon--large"><svg role="img"><title>Search</title><use xlink:href="#search"></use></svg></button>
+                <button type="submit" class="form-field__icon form-field__icon--large"><svg role="img"><title>Search</title><use xlink:href="#icon-search"></use></svg></button>
               </div>
             </form>
 
             <section class="o-col__divider c-block-list">
               <h2 class="c-block-list__heading">
                 {{ __('Programs', 'GUNY-W-Top-Programs') }}
-                <a class="c-block-list__link" href="{{site.url}}/guny/programs">{{ __('See all programs', 'GUNY-W-Top-Programs') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="true"><use xlink:href="#caret-right"></use></svg></a>
+                <a class="c-block-list__link" href="{{site.url}}/guny/programs">{{ __('See all programs', 'GUNY-W-Top-Programs') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="true"><use xlink:href="#icon-caret-right"></use></svg></a>
               </h2> <!-- /.c-content-tout__heading -->
               <div class="c-block-list__inner o-row">
                 {{top_programs}}
@@ -117,7 +116,7 @@
             <section class="o-col__divider c-block-list">
               <h2 class="c-block-list__heading">
                 {{ __('Events', 'GUNY-W-Top-Programs') }}
-                <a class="c-block-list__link" href="{{site.url}}/guny/events">{{ __('See all events', 'GUNY-W-Top-Programs') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="small"><use xlink:href="#caret-right"></use></svg></a>
+                <a class="c-block-list__link" href="{{site.url}}/guny/events">{{ __('See all events', 'GUNY-W-Top-Programs') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="small"><use xlink:href="#icon-caret-right"></use></svg></a>
               </h2> <!-- /.c-content-tout__heading -->
               <div class="c-block-list__inner o-row">
               {% for post in top_events %}
@@ -190,7 +189,7 @@
       </footer> <!-- /.c-footer -->
       {% if options.show_banner %}
         <div class="c-alert js-alert" data-cookie="{{options.current_banner.slug}}" id="banner-{{options.current_banner.slug}}">
-          <button type="button" class="c-alert__button" data-toggle="banner-{{options.current_banner.slug}}"><svg role="img" class="icon--small"><title>Close</title><use xlink:href="#close"></use></svg></button>
+          <button type="button" class="c-alert__button" data-toggle="banner-{{options.current_banner.slug}}"><svg role="img" class="icon--small"><title>Close</title><use xlink:href="#icon-close"></use></svg></button>
           <div class="c-alert__banner">
             <div class="o-container">
               {{options.current_banner.get_field('banner_content')}}

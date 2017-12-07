@@ -2332,16 +2332,6 @@ function wp_check_filetype_and_ext( $file, $filename, $mimes = null ) {
 				$type = $ext = false;
 			}
 		}
-	} elseif ( function_exists( 'finfo_file' ) ) {
-		// Use finfo_file if available to validate non-image files.
-		$finfo = finfo_open( FILEINFO_MIME_TYPE );
-		$real_mime = finfo_file( $finfo, $file );
-		finfo_close( $finfo );
-
-		// If the extension does not match the file's real type, return false.
-		if ( $real_mime !== $type ) {
-			$type = $ext = false;
-		}
 	}
 
 	/**
@@ -2563,8 +2553,9 @@ function get_allowed_mime_types( $user = null ) {
 	if ( function_exists( 'current_user_can' ) )
 		$unfiltered = $user ? user_can( $user, 'unfiltered_html' ) : current_user_can( 'unfiltered_html' );
 
-	if ( empty( $unfiltered ) )
-		unset( $t['htm|html'] );
+	if ( empty( $unfiltered ) ) {
+		unset( $t['htm|html'], $t['js'] );
+	}
 
 	/**
 	 * Filters list of allowed mime types and file extensions.

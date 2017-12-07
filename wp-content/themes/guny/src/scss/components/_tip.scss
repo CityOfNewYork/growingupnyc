@@ -25,6 +25,20 @@
     padding-top: rem-calc($sticker-size / 2);
     margin-top: rem-calc(($sticker-size / 2) + $horizontal-gutter);
   }
+
+  a {
+    color: inherit;
+
+    &:focus {
+      color: lighten($gray-2, 18%);
+    }
+
+    .no-touchevents & {
+      &:hover {
+        color: lighten($gray-2, 18%);
+      }
+    }
+  }
 }
 
 // Tip Sticker
@@ -52,9 +66,6 @@
 // Tip Content
 .c-tip__content {
   font-family: $font-family-display;
-  // @include font-size-x-large;
-  // font-weight: 900;
-  // line-height: 1.2;
 }
 
 // Tip Footer
@@ -70,12 +81,12 @@
 // Tip Link
 .c-tip__link {
   &:focus {
-    color: darken($color-text-invert, 15%);
+    color: lighten($gray-2, 18%);
   }
 
   .no-touchevents & {
     &:hover {
-      color: darken($color-text-invert, 15%);
+      color: lighten($gray-2, 18%);
     }
   }
 }

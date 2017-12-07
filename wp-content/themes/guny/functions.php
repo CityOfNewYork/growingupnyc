@@ -139,10 +139,10 @@ class GunySite extends TimberSite {
       wp_deregister_script('jquery');
       wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/assets/js/modernizr.js', array(), '3.0.0', false );
       wp_enqueue_script( 'jquery', get_template_directory_uri() . '/src/js/vendor/jquery.js', array(), '2.1.14', false );
-      wp_enqueue_script( 'owl-js', get_template_directory_uri() . '/src/js/vendor/owl.carousel.min.js', array(), '2.2.1', true );      
+      wp_enqueue_script( 'owl-js', get_template_directory_uri() . '/src/js/vendor/owl.carousel.min.js', array(), '2.2.1', true );
       wp_enqueue_script( 'site-js', get_template_directory_uri() . '/assets/js/source.dev.js', array(), '1.0.0', true );
       wp_enqueue_script( 'google-map', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDrvNnQZBiASAH3JI7LNFewrX9jeYZlMWo', array(), '3', true );
-      wp_enqueue_script( 'google-map-init', get_template_directory_uri() . '/src/js/vendor/google-maps.js', array('google-map', 'jquery'), '0.1', true );      
+      wp_enqueue_script( 'google-map-init', get_template_directory_uri() . '/src/js/vendor/google-maps.js', array('google-map', 'jquery'), '0.1', true );
     }
   }
 
@@ -435,15 +435,8 @@ add_action( 'wp_print_styles', 'microsite_styles' );
 function microsite_styles() {
   if ( is_post_type_archive( 'magazine_' ) || is_singular( 'magazine_' ) ) {
     wp_dequeue_style( 'master' );
-    wp_enqueue_style( 'magazine', get_stylesheet_directory_uri() . '/magazine.css', null, '0.1' ); 
-  } 
-}
-
-add_action('get_term_id', 'get_actual_term_id' , 10 , 2);
-function get_actual_term_id($translatedid , $category){
-  // echo $translatedid.''.$category;
-  // echo icl_object_id($translatedid, 'tribe_events_cat', false , 'en');
-  echo icl_object_id($translatedid, $category, false , 'en');
+    wp_enqueue_style( 'magazine', get_stylesheet_directory_uri() . '/magazine.css', null, '0.1' );
+  }
 }
 
 function my_acf_google_map_api( $api ){
@@ -490,12 +483,12 @@ function my_acf_validate_cta_button_phone( $valid, $value){
     // checks that there are no letters
     if(preg_match( '/[a-zA-Z]/', $value )){
       $valid = 'Phone Number can only contain integers';
-      return $valid; 
+      return $valid;
     }
     // check that value is within 10 or 11 digits
     if ((strlen($value) < 10 ) or (strlen($value) > 11)){
       $valid = 'Phone Number must be 10 or 11-digits';
-      return $valid; 
+      return $valid;
     }
     // return valid if the value is between 10 and 11 digits
     else{
@@ -506,7 +499,7 @@ function my_acf_validate_cta_button_phone( $valid, $value){
   else{
     return $valid;
   }
-}  
+}
 // end add validation
 
 // Customize TinyMCE settings
@@ -532,3 +525,9 @@ require_once(get_template_directory() . '/includes/guny_filter_events.php');
 
 // Admin messages
 require_once(get_template_directory() . '/includes/guny_messages.php');
+
+// Focal point functions
+require_once(get_template_directory() . '/includes/get_focal_point.php');
+
+// Enqueue functions
+require_once(get_template_directory() . '/includes/style.php');

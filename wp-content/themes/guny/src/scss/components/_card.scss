@@ -108,6 +108,7 @@
   }
 
   a {
+    color: inherit;
     text-decoration: inherit;
   }
 }
@@ -197,6 +198,8 @@
   order: 7;
 
   a {
+    color: inherit;
+
     &:focus {
       color: $color-text;
     }

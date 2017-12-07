@@ -33,7 +33,7 @@ if ( ! function_exists('get_url_query_parameters')) {
 if ( ! function_exists('update_url_queries')) {
   /*
     Given a array of queries with key value pair this function will update the array already with the key and value
-    param: array of query string as key value , querykey , query value 
+    param: array of query string as key value , querykey , query value
     returns: updated array of query parameters.
   */
   function update_url_queries($queryparameter , $newquerykey , $newqueryvalue){
@@ -60,7 +60,7 @@ if ( ! function_exists('update_url_queries')) {
 if ( ! function_exists('generate_new_url')) {
   /*
     Given a url and parameters function will generate the new url.
-    param : URL as string , Query parameter as array 
+    param : URL as string , Query parameter as array
     returns: the url with query strings appended to it.
   */
   function generate_new_url($url , $queryparameter){
@@ -115,8 +115,8 @@ function guny_facetwp_facet_html( $output, $params ) {
     }
     $output .= '<div class="facetwp-search-wrap form-field__icon-container">';
     $output .= '<input type="text" id="facetwp-' . $params['facet']['name'] . '" class="facetwp-search form-field form-field--large form-field--full-width c-hero__input" value="' . esc_attr( $value ) . '" placeholder="Search" />';
-    $output .= '<button class="facetwp-searchbtn form-field__icon form-field__icon--large"><svg class="icon"><title>Search</title><use xlink:href="#search"></use></svg></button>';
-    $output .= '<button class="facetwp-btn form-field__icon form-field__icon--large form-field__icon--weak"><svg class="icon"><title>Clear</title><use xlink:href="#close"></use></svg></button>';
+    $output .= '<button class="facetwp-searchbtn form-field__icon form-field__icon--large"><svg class="icon"><title>Search</title><use xlink:href="#icon-search"></use></svg></button>';
+    $output .= '<button class="facetwp-btn form-field__icon form-field__icon--large form-field__icon--weak"><svg class="icon"><title>Clear</title><use xlink:href="#icon-close"></use></svg></button>';
     $output .= '</div>';
     return $output;
   }
@@ -277,7 +277,7 @@ class FacetWP_Facet_Guny {
   }
 
   function render( $params ) {
-    $url=strtok($_SERVER["HTTP_REFERER"],'?'); 
+    // $url=strtok($_SERVER["HTTP_REFERER"],'?');
     $facet = $params['facet'];
     $label_any = empty( $facet['label_any'] ) ? __( 'Any', 'fwp' ) : $facet['label_any'];
     $label_any = facetwp_i18n( $label_any );

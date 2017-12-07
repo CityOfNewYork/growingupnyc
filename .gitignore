@@ -15,6 +15,8 @@ wp-content/cache/supercache/*
 #####################
 wp-content/plugins/akismet/
 wp-content/plugins/akismet/*
+wp-content/themes/twentyfifteen
+wp-content/themes/twentyfifteen/*
 wp-content/themes/twentysixteen/
 wp-content/themes/twentysixteen/*
 wp-content/plugins/hello.php
@@ -30,6 +32,11 @@ wp-content/mu-plugins/slt-force-strong-passwords.php
 wp-content/mu-plugins/limit-login-attempts
 wp-content/mu-plugins/wpengine-common
 wp-content/mysql.sql
+
+# Composer #
+############
+/vendor/
+/vendor/*
 
 # Packages #
 ############

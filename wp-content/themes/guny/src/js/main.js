@@ -1,5 +1,7 @@
 import globalSearch from './modules/globalSearch.js';
+/* eslint-disable no-unused-vars */
 import toggleOpen from './modules/toggleOpen.js';
+/* eslint-enable no-unused-vars */
 import accordion from './modules/accordion.js';
 import simpleAccordion from './modules/simpleAccordion.js';
 import offcanvas from './modules/offcanvas.js';
@@ -18,7 +20,9 @@ import iOS7Hack from './modules/iOS7Hack.js';
 import ShareForm from './modules/share-form.js';
 import captchaResize from './modules/captchaResize.js';
 import rotatingTextAnimation from './modules/rotatingTextAnimation.js';
+/* eslint-disable no-unused-vars */
 import toggleMenu from './modules/toggleMenu.js';
+/* eslint-enable no-unused-vars */
 
 function ready(fn) {
   if (document.readyState === 'loading') {

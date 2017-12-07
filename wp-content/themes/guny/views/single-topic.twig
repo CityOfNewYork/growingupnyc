@@ -1,5 +1,5 @@
 {% extends "microsite-base.twig" %}
- 
+
 {% block head_extras %}
   <style>
     .c-hero-ms__topics-single {background-image: url(/wp-content/themes/guny/assets/img/hero-topics-splatter.svg);}
@@ -12,7 +12,7 @@
       <div class="o-container js-parallax-text">
         <h1 class="c-hero__title c-hero-ms__topics__title">
           {#<span class="c-hero__sticker sticker {{post.age_group.slug|sanitize|replace({'-es':''})}}-background">
-            <svg aria-hidden="true" class="icon--medium"><use xlink:href="#{{post.age_group.slug|sanitize|replace({'-es':''})|replace({'-es':''})}}"></use></svg>
+            <svg aria-hidden="true" class="icon--medium"><use xlink:href="#icon-{{post.age_group.slug|sanitize|replace({'-es':''})|replace({'-es':''})}}"></use></svg>
           </span>#}
           {{post.title}}
         </h1>
@@ -38,7 +38,7 @@
           {% for top in post.get_field('page_top') %}
             {% if loop.index != 1 %}
             <li class="c-nav-list__item">
-              <a href="#{{top.page_top_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" data-section="{{top.page_top_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" class="js-section c-nav-list__link">{{top.page_top_content_heading}}<svg aria-hidden="true" class="o-accordion__caret"><use xlink:href="#caret-right"></use></svg></a>
+              <a href="#{{top.page_top_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" data-section="{{top.page_top_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" class="js-section c-nav-list__link">{{top.page_top_content_heading}}<svg aria-hidden="true" class="o-accordion__caret"><use xlink:href="#icon-caret-right"></use></svg></a>
             </li>
             {% endif %}
           {% endfor %}
@@ -82,7 +82,7 @@
         {% if top.tip_title %}
           <aside class="c-tip c-tip-ms__topics u-lg-gutter o-content-container">
             <div class="c-tip__sticker sticker">
-              <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#lightbulb"></use></svg>
+              <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#icon-lightbulb"></use></svg>
             </div>
             <p class="c-tip__content">{{top.tip_title}}</p>
             <p class="c-tip__content">{{top.tips}}</p>

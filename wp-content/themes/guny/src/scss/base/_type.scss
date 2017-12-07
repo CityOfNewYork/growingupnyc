@@ -49,16 +49,19 @@ h3 {
 }
 
 a {
-  color: inherit;
+  color: $color-primary;
   text-decoration: underline;
 
   &:focus {
-    color: $color-text-link;
+    color: $color-secondary;
   }
-}
 
-.no-touchevents a:hover {
-  color: $color-text-link;
+  .no-touchevents & {
+    &:hover {
+      color: $color-secondary;
+    }
+  }
+
 }
 
 a[href^="tel:"] {

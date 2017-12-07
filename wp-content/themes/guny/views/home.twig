@@ -1,19 +1,22 @@
 {% extends "base.twig" %}
 
 {% block head_extras %}
-<style>
-  .c-side-hero__image { background-image:url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(480, 0)}}) }
+<style type='text/css' id='c-side-hero__image'>
+  .c-side-hero__image {
+    background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(480, 0)}});
+    {{ function('Templating\\get_focal_point', post.get_field('hero_mobile_image')['ID']) }}
+  }
   @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
     .c-side-hero__image { background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(960,0)}}); }
   }
-  @media (min-width:480px) {
+  @media (min-width: 480px) {
     .c-side-hero__image { background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(700,0)}}); }
   }
-  @media (min-width:480px) and (-webkit-min-device-pixel-ratio: 2), (min-width:480px) and (min-resolution: 192dpi) {
-    .c-side-hero__image{ background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(1400,0)}}); }
+  @media (min-width: 480px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 480px) and (min-resolution: 192dpi) {
+    .c-side-hero__image { background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(1400,0)}}); }
   }
-  @media (min-width:1024px) {
-    .c-side-hero__image { background-image:url({{ featured_image }}) }
+  @media (min-width: 1024px) {
+    .c-side-hero__image { background-image: url({{ featured_image }}); }
   }
 </style>
 {% endblock %}
@@ -30,7 +33,7 @@
         {% for text in post.get_field('hero_rotating_text_repeater') %}
           <span class="rotating-text__entry">
             {{text.hero_rotating_text}}
-          </span>          
+          </span>
         {% endfor %}
         <span id="rotate"></span>
       </div> <!-- /.c-side-hero__title__large -->

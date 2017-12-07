@@ -16,7 +16,7 @@
 
 {% block body %}
 {# {{post.intro__overview}} #}
-<section class="c-intro__img" style="background:url({{post.get_field('hero_banner').url}}) no-repeat center center; background-size: cover;"></section>
+<section class="c-intro__img" style="background:url({{post.get_field('hero_banner').url}}) no-repeat center center; background-size: cover; {{ function('Templating\\get_focal_point', post.hero_banner) }}"></section>
 <section class="c-featured-intro">{{post.intro__overview}}</section>
 <hr>
 <h2 class="c-intro__subheading u-top-spacing" id="{{post.get_field('page_top_heading')|replace({' ':'-'})}}">{{post.get_field('page_top_heading')}}</h2>

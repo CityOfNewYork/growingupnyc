@@ -26,14 +26,14 @@
   {% endif %}
 
   {% for term in post.terms('tribe_events_cat') %}
-    <a href="{{ event_link }}?cat_id={{ function('apply_filters', 'wpml_object_id', term.ID, 'tribe_events_cat', false, 'en') }}"
-       class="button--pill {% if term.slug == 'espanol' %}button--pill--es{% endif %}">
+    <a href="{{ event_link }}?cat_id={{ function('Wpml\\get_translated_term_id', term.ID, 'tribe_events_cat') }}"
+       class="button--pill {% if function('Wpml\\get_translated_term_slug', term.ID, 'tribe_events_cat') == 'espanol' %}button--pill--es{% endif %}">
        {{ term.name }}
     </a>
   {% endfor %}
 
   {% for term in post.terms('age_group') %}
-    <a href="{{ event_link }}?age_id={{ function('apply_filters', 'wpml_object_id', term.ID, 'tribe_events_cat', false, 'en') }}{% if current_month %}&amp;eventDate={{ current_month }}{% endif %}"
+    <a href="{{ event_link }}?age_id={{ function('Wpml\\get_translated_term_id', term.ID, 'tribe_events_cat') }}{% if current_month %}&amp;eventDate={{ current_month }}{% endif %}"
       class="button--pill button--pill--alt">
         {{ term.name }}
     </a>

@@ -46,6 +46,7 @@ export default function() {
       'aria-selected': false,
       'aria-controls': $relatedPanel.get(0).id,
       'aria-expanded': false,
+      'aria-haspopup': true,
       'role': 'tab'
     }).addClass('o-accordion__header');
 

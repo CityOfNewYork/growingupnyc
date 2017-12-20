@@ -19,7 +19,7 @@ if ( $today < $current_month_date ) {
   $context['prev_month_url'] = tribe_get_previous_month_link();
 }
 $context['next_month_url'] = tribe_get_next_month_link();
-$context['current_month_text'] = date( 'F Y', strtotime( $current_month_date ) );
+$context['current_month_text'] = date_i18n( __('F Y', 'guny-date-formats'), strtotime( $current_month_date ) );
 
 // Group current view's events by day
 while ( tribe_events_have_month_days() ) : tribe_events_the_month_day();
@@ -35,7 +35,7 @@ while ( tribe_events_have_month_days() ) : tribe_events_the_month_day();
 
       if(count($event_posts) > 0) {
         $context['event_list'][] = array(
-          'date_header' => date( 'l, F j', strtotime( $day['date'] ) ),
+          'date_header' => date_i18n( __('l, F j', 'guny-date-formats'), strtotime( $day['date'] ) ),
           'posts' => $event_posts
         );
       }
@@ -63,7 +63,7 @@ foreach ($event_filter as $key => $value) {
 }
 $context['event_filter'] = $event_filter;
 $context['all_events'] = array(
-  'name' => 'All Event Types',
+  'name' => __('All Event Types', 'guny-events'),
   'link' => remove_query_arg( 'cat_id' )
 );
 if ( $cat_id > 0 ) {
@@ -85,7 +85,7 @@ foreach ($age_filter as $key => $value) {
 }
 $context['age_filter'] = $age_filter;
 $context['all_ages'] = array(
-  'name' => 'All Ages',
+  'name' => __('All Ages', 'guny-events'),
   'link' => remove_query_arg( 'age_id' )
 );
 if ( $age_id > 0 ) {
@@ -107,7 +107,7 @@ foreach ($borough_filter as $key => $value) {
 }
 $context['borough_filter'] = $borough_filter;
 $context['all_boroughs'] = array(
-  'name' => 'All Boroughs',
+  'name' => __('All Boroughs', 'guny-events'),
   'link' => remove_query_arg( 'borough_id' )
 );
 if ( $borough_id > 0 ) {

@@ -287,30 +287,35 @@ class GunyEvent extends TimberPost {
 
   public function start_date_full() {
     if (function_exists('tribe_get_start_date')) {
-      return date('l, F j', $this->start_datetime());
+      return date_i18n( __('l, F j', 'guny-date-formats'), $this->start_datetime());
     }
   }
 
   public function end_date_full() {
     if (function_exists('tribe_get_end_date')) {
-      return date('l, F j', $this->end_datetime());
+      return date_i18n( __('l, F j', 'guny-date-formats'), $this->end_datetime());
     }
   }
 
   public function start_date_formatted() {
     // TODO - format for user's timezone (possibly with JS)
     if (function_exists('tribe_get_start_date')) {
-      $date = new DateTime("now", new DateTimeZone('America/New_York'));
+      $date = new DateTime('now', new DateTimeZone('America/New_York'));
       $today = $date->format('Y-m-d');
       $tomorrow = $date->modify('+1 day')->format('Y-m-d');
-      $start_time = date('Y-m-d', $this->start_datetime());
+      $start_time = date_i18n(__('Y-m-d', 'guny-date-formats'), $this->start_datetime());
 
       if ($start_time == $today ) {
-        $time = 'today';
+        $time = __('today', 'guny-events');
       } else if ($start_time == $tomorrow) {
-        $time = 'tomorrow';
+        $time = __('tomorrow', 'guny-events');
       } else {
-        $time = '<span class="event-day">' . date('l ', $this->start_datetime()) . '</span> <span class="event-month-date">' . date('M j', $this->start_datetime()) . '</span>';
+        $time = '<span class="event-day">' .
+            date_i18n( __('l ', 'guny-date-formats') , $this->start_datetime()) .
+          '</span>' .
+          '<span class="event-month-date">' .
+            date_i18n( __('M j', 'guny-date-formats'), $this->start_datetime()) .
+          '</span>';
       }
 
       return $time;
@@ -533,4 +538,4 @@ require_once(get_template_directory() . '/includes/get_focal_point.php');
 require_once(get_template_directory() . '/includes/style.php');
 
 // Term translation helpers
-require_once(get_template_directory() . '/includes/term-translations.php');
+require_once(get_template_directory() . '/includes/term_translations.php');

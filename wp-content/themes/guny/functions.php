@@ -539,3 +539,6 @@ require_once(get_template_directory() . '/includes/style.php');
 
 // Term translation helpers
 require_once(get_template_directory() . '/includes/term_translations.php');
+
+// Add program name to post
+require_once(get_template_directory() . '/includes/program_posts_column.php');

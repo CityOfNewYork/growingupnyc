@@ -190,7 +190,9 @@
     </div> <!-- /.o-offcanvas__main -->
   </div> <!-- /.o-offcanvas -->
 
-  {{wp_footer}}
+  {{ function('Enqueue\\script', 'source') }}
+  {{ wp_footer }}
+
   <script type="text/javascript">
     var prod_dcsId_val = "dcs222bzsl0e9yqub15qsk92g_5z5q";
     var prod_host = "growingupnyc.cityofnewyork.us/generationnyc";

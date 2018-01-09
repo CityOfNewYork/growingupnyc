@@ -86,7 +86,7 @@ export default function() {
     calculatePanelHeight($panelElem);
     $panelElem.attr({
       'aria-hidden': true,
-      'role': 'tabpanel',
+      'role': 'region',
       'aria-labelledby': labelledby
     });
   }

@@ -22,24 +22,23 @@ function ms_trips_create() {
     'archives' => 'Trip Archives',
     'insert_into_item' => 'Insert into trip',
     'uploaded_to_this_item' => 'Uploaded to this trip'
-    );
+  );
 
   //register post type
   register_post_type( 'trip', array(
-    'labels' => $labels,
-    'public' => true,
-    'menu_position' => 24,
-    'menu_icon' => 'dashicons-groups',
-    'supports' => array( 'title', 'excerpt', 'thumbnail'),
-    'has_archive' => true,
-    'rewrite' => array(
-        'slug' => 'trips',
-        'with_front' => false
-      ),
+      'labels' => $labels,
+      'public' => true,
+      'menu_position' => 24,
+      'menu_icon' => 'dashicons-groups',
+      'supports' => array( 'title', 'excerpt', 'thumbnail'),
+      'has_archive' => 'generationnyc/trips',
+      'rewrite' => array(
+        'slug' => 'generationnyc/trips'
+      )
     )
   );
 
-	register_taxonomy(
+  register_taxonomy(
     'trip_free_day_trip',
     array('trip',),
     array(

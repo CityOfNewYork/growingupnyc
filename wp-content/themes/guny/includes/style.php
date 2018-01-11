@@ -7,7 +7,7 @@ namespace Enqueue;
  * @param  [string] $name - the name of the stylesheet source
  * @return null
  */
-function style($name = 'style') {
+function style($name = 'default') {
   $dir = get_template_directory();
 
   $files = array_filter(scandir($dir), function($var) use ($name) {

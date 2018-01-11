@@ -207,48 +207,57 @@ gulp.task('modernizr', function() {
 
 // Webpack
 gulp.task('pack', ['lint'], function() {
-  return gulp.src(source+'js/main.js')
+  return gulp.src(source + 'js/main.js')
     .pipe(webpack(require('./webpack.config.js')))
     .pipe(rename('bundle.js'))
-    .pipe(gulp.dest(dist+'js'));
+    .pipe(gulp.dest(dist + 'js'));
 });
 
 
 // Scripts
-gulp.task('scripts', ['pack'], function() {
+gulp.task('scripts', ['clean (scripts)', 'pack'], function() {
   return gulp.src([
-      source+'js/vendor/_*.js',
-      dist+'js/bundle.js'
+    source + 'js/vendor/_*.js',
+    dist + 'js/bundle.js'
   ])
-  .pipe(concat('source.dev.js'))
-  .pipe(gulp.dest(dist+'js'))
-  .pipe(rename('source.js'))
+  .pipe(concat('source.js'))
+  .pipe(hashFilename())
+  .pipe(gulp.dest(dist + 'js'))
   .pipe(uglify())
-  .pipe(size({
-    'showFiles': true
-  }))
-  .pipe(gulp.dest(dist+'js'))
+  .pipe(rename({suffix: '.min'}))
+  .pipe(size({showFiles: true}))
+  .pipe(gulp.dest(dist + 'js'))
   .pipe(browserSync.stream({match: '**/*.js'}));
 });
 
 
 // Clean
-gulp.task('clean', function(cb) {
-    del([dist+'js/bundle.js', dist+'js/source.dev.js', dist+'js/source.js'], cb);
+gulp.task('clean (scripts)', function(cb) {
+  del([
+    dist + 'js/bundle.js',
+    dist + 'js/source.dev.js',
+    dist + 'js/source.js',
+    dist + 'js/source-*.js',
+    dist + 'js/source-*.min.js'
+  ], cb);
 });
 
 
 // Images
 gulp.task('images', function() {
-  return gulp.src(source+'img/**/*')
-    .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
-    .pipe(gulp.dest(dist+'img'))
-    .pipe(notify({ message: 'Images task complete' }));
+  return gulp.src(source + 'img/**/*')
+    .pipe(cache(imagemin({
+      optimizationLevel: 5,
+      progressive: true,
+      interlaced: true
+    })))
+    .pipe(gulp.dest(dist + 'img'))
+    .pipe(notify({message: 'Images task complete'}));
 });
 
 // SVGs
 gulp.task('icons', function() {
-  return gulp.src(source+'icons/*.svg')
+  return gulp.src(source + 'icons/*.svg')
     .pipe(rename({prefix: 'icon-'}))
     .pipe(svgSprite({
       mode: {
@@ -260,7 +269,7 @@ gulp.task('icons', function() {
         }
       }
     }))
-    .pipe(gulp.dest(views + 'partials'))
+    .pipe(gulp.dest(views + 'partials'));
 });
 
 gulp.task('styleguideIcons', function() {
@@ -350,6 +359,6 @@ gulp.task('default', function() {
 });
 
 // Build
-gulp.task('build', ['clean'], function() {
+gulp.task('build', ['clean (scripts)'], function() {
     gulp.start('modernizr', 'scripts', 'styleguide');
 });

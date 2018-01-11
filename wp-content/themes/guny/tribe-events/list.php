@@ -23,7 +23,9 @@ foreach ($events as $event) {
     }
     $postTimestamp = strtotime( date( Tribe__Date_Utils::DBDATEFORMAT, $postTimestamp ), $now );
     if ( empty( $event_list[$postTimestamp]['date_header'] ) ) {
-      $event_list[$postTimestamp]['date_header'] = date( 'l, F j', $postTimestamp );
+      $event_list[$postTimestamp]['date_header'] = date_i18n(
+        __('l, F j', 'guny-date-formats'), $postTimestamp
+      );
     }
     $event_list[$postTimestamp]['posts'][] = $event;
   }
@@ -79,7 +81,7 @@ foreach ($event_filter as $key => $value) {
 }
 $context['event_filter'] = $event_filter;
 $context['all_events'] = array(
-  'name' => 'All Event Types',
+  'name' => __('All Event Types', 'guny-events'),
   'link' => esc_url( remove_query_arg( 'cat_id' ) )
 );
 if ( $cat_id > 0 ) {
@@ -101,7 +103,7 @@ foreach ($age_filter as $key => $value) {
 }
 $context['age_filter'] = $age_filter;
 $context['all_ages'] = array(
-  'name' => 'All Ages',
+  'name' => __('All Ages', 'guny-events'),
   'link' => esc_url( remove_query_arg( 'age_id' ) )
 );
 if ( $age_id > 0 ) {
@@ -124,7 +126,7 @@ foreach ($borough_filter as $key => $value) {
 }
 $context['borough_filter'] = $borough_filter;
 $context['all_boroughs'] = array(
-  'name' => 'All Boroughs',
+  'name' => __('All Boroughs', 'guny-events'),
   'link' => esc_url( remove_query_arg( 'borough_id' ) )
 );
 if ( $borough_id > 0 ) {
@@ -164,14 +166,14 @@ $context['language'] = ICL_LANGUAGE_CODE;
 global $wp;
 $postlink = add_query_arg(array(),$wp->request);
 
-$languagearray = array("en" => "English" , "es" => "Español");  
+$languagearray = array("en" => "English" , "es" => "Español");
 $output = '';
 $output .= '<div class="c-language-switcher-wrapper">';
 $output .=  '<div class="o-container c-language__switcher">';
 $output .=    '<div class="wpml-ls-sidebars-top_widget wpml-ls wpml-ls-legacy-list-horizontal">';
 $output .=      '<ul>';
 foreach ($languagearray as $key => $value) {
-  $output .= '<li class="wpml-ls-slot-top_widget wpml-ls-item wpml-ls-item-'.$key; 
+  $output .= '<li class="wpml-ls-slot-top_widget wpml-ls-item wpml-ls-item-'.$key;
   if($key == ICL_LANGUAGE_CODE){
     $output .= ' wpml-ls-current-language';
   }

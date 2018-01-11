@@ -1,13 +1,21 @@
 var webpack = require('webpack');
+
 module.exports = {
   module: {
     loaders: [
       {
-        loader: 'babel',
+        loader: 'babel-loader',
         test: /\.js$/,
         exclude: /node_modules/,
         query: {
-          presets: ['es2015']
+          presets: [
+            [
+              'es2015',
+              {
+                'modules': false
+              }
+            ]
+          ]
         }
       },
       {
@@ -21,11 +29,9 @@ module.exports = {
     'jquery': 'jQuery'
   },
   resolve: {
-    modulesDirectories: ['src', 'node_modules']
+    modules: ['src', 'node_modules']
   },
   plugins: [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.ProvidePlugin({
       Modernizr : 'modernizr',
       $: 'jquery',

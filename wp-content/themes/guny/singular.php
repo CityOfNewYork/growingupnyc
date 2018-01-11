@@ -8,8 +8,13 @@
 $context = Timber::get_context();
 $post = Timber::get_post();
 
-// check the language
+// Check the language
+// Global constants are not good practice...
+// ... disabling error messages isn't debug friendly...
+// ... disable error reporting for this line only.
+error_reporting(0);
 $context['language'] = ICL_LANGUAGE_CODE;
+error_reporting(WP_DEBUG);
 
 // Get the right events by age group
 if ( $post->post_type == 'age' ) {
@@ -41,7 +46,7 @@ if ( $post->post_type == 'age' ) {
       $age_group_id=47;
     }
     // end reassignment
-    
+
     $context['age_group_id'] = $age_group_id;
   }
   $upcoming_events = GunySite::get_featured_events( 3, array(
@@ -92,7 +97,7 @@ else{
 }
 $context['post'] = $post;
 
-//New codes by amalan for sms intergration 
+//New codes by amalan for sms intergration
 $context['shareAction'] = admin_url( 'admin-ajax.php' );
 $context['shareHash'] = \SMNYC\hash($post->link);
 

@@ -26,15 +26,14 @@ function ms_inspirations_create() {
 
   register_post_type( 'inspiration', array(
     'labels' => $labels,
-    'has_archive' => true,
+    'has_archive' => 'generationnyc/inspirations',
     'public' => true,
     'menu_position' => 26,
     'menu_icon' => 'dashicons-groups',
     'supports' => array( 'title', 'excerpt', 'thumbnail'),
     'exclude_from_search' => false,
     'rewrite' => array(
-        'slug' => 'inspirations',
-        'with_front' => false
+        'slug' => 'generationnyc/inspirations'
       ),
     )
   );

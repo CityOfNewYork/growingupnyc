@@ -46,7 +46,7 @@ export default function() {
       'aria-selected': false,
       'aria-controls': $relatedPanel.get(0).id,
       'aria-expanded': false,
-      'role': 'tab'
+      'role': 'heading'
     }).addClass('o-accordion__header');
 
     $headerElem.on('click.accordion', function(event) {
@@ -85,7 +85,7 @@ export default function() {
     calculatePanelHeight($panelElem);
     $panelElem.attr({
       'aria-hidden': true,
-      'role': 'tabpanel',
+      'role': 'region',
       'aria-labelledby': labelledby
     });
   }
@@ -162,7 +162,7 @@ export default function() {
    */
   function initialize($accordionElem, multiSelectable) {
     $accordionElem.attr({
-      'role': 'tablist',
+      'role': 'presentation',
       'aria-multiselectable': multiSelectable
     }).addClass('o-accordion');
     $accordionElem.children().each(function() {

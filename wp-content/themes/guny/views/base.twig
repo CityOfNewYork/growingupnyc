@@ -93,7 +93,7 @@
             </nav>
           </div>
         </header>
-        <section class="o-overlay js-overlay" id="overlay-search">
+        <section class="o-overlay js-overlay" id="overlay-search" aria-hidden="true">
           <div class="o-container-med">
             <form action="/" method="get" class="js-global-search u-bottom-spacing">
               <label for="fwp-search" class="show-for-screen-reader">Search</label>
@@ -201,7 +201,9 @@
     </div> <!-- /.o-offcanvas__main -->
   </div> <!-- /.o-offcanvas -->
 
-  {{wp_footer}}
+  {{ function('Enqueue\\script', 'source') }}
+  {{ wp_footer }}
+
   <script type="text/javascript">
     var prod_dcsId_val = "dcs222i18cz8hz10fn1xgf727_2t5f";
     var prod_host = "growingupnyc.cityofnewyork.us";

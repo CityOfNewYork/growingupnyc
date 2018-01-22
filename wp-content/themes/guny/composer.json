@@ -1,0 +1,10 @@
+{
+    "require": {
+        "nyco/wp-assets": "0.0.4"
+    },
+    "config": {
+        "preferred-install": {
+          "nyco/*": "dist"
+        }
+    }
+}

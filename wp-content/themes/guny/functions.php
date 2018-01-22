@@ -535,8 +535,8 @@ require_once(get_template_directory() . '/includes/guny_messages.php');
 require_once(get_template_directory() . '/includes/get_focal_point.php');
 
 // Enqueue functions
-require_once(get_template_directory() . '/includes/style.php');
-require_once(get_template_directory() . '/includes/script.php');
+require_once(get_template_directory() . '/vendor/nyco/wp-assets/dist/style.php');
+require_once(get_template_directory() . '/vendor/nyco/wp-assets/dist/script.php');
 
 // Term translation helpers
 require_once(get_template_directory() . '/includes/term_translations.php');

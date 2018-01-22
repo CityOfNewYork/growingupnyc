@@ -133,13 +133,15 @@ define('WP_SITEURL', 'http://yourlocalurl');
 Add the database credentials to that file as well.
 
 ### Development Dependencies
-
 - Node
-- Gulp
-- Browsersync
-- Sass
+- Composer
 
-Project-level development dependences can be found in the theme's `package.json` file.
+Project-level dependences can be found in the theme's `package.json` and `composer.json` files.
+
+Run `npm install` and `composer install` to get dependencies.
+
+# Composer
+Where possible, Wordpress plugins can be installed via composer from WP Packagist and included in the root package `/composer.json`. Theme dependencies can be added in the theme package `wp-content/themes/guny/composer.json`. Composer dependencies are committed to the repository to keep it functioning.
 
 ### Deploying
 To deploy, you will need to log into WP Engine and add your SSH public key under "Git Push". Once your key has been added, follow the instructions at https://wpengine.com/git/ to set up 'git remote' endpoints for staging and production. After your end points have been set up, you will deploy new code by pushing to the `staging` remote, i.e. `git push staging develop`, and then to the `production` remote.

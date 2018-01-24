@@ -1,18 +1,10 @@
 <?php
 
-if ( ! class_exists( 'Timber' ) ) {
-  add_action( 'admin_notices', function() {
-    echo '<div class="error"><p>Timber not activated. Make sure you activate the plugin in <a href="' . esc_url( admin_url( 'plugins.php#timber' ) ) . '">' . esc_url( admin_url( 'plugins.php' ) ) . '</a></p></div>';
-  } );
-  return;
-}
+// Notifications
+require_once(get_template_directory() . '/includes/notifications.php');
 
-if ( ! class_exists( 'GUPostTypes' ) ) {
-  add_action( 'admin_notices', function() {
-    echo '<div class="error"><p>GUPostTypes not activated. Make sure you activate the plugin in <a href="' . esc_url( admin_url( 'plugins.php#growing-up-nyc-post-types' ) ) . '">' . esc_url( admin_url( 'plugins.php' ) ) . '</a></p></div>';
-  } );
-  return;
-}
+Notifications\timber();
+Notifications\custom_post_types();
 
 class GunySite extends TimberSite {
 
@@ -328,14 +320,14 @@ class GunyEvent extends TimberPost {
       $date = new DateTime("now", new DateTimeZone('America/New_York'));
       $today = $date->format('Y-m-d');
       $tomorrow = $date->modify('+1 day')->format('Y-m-d');
-      $end_time = date('Y-m-d', $this->end_datetime());
+      $end_time = date(__('Y-m-d', 'guny-date-formats'), $this->end_datetime());
 
       if ($end_time == $today ) {
-        $time = 'today';
+        $time = __('today', 'guny-events');
       } else if ($end_time == $tomorrow) {
-        $time = 'tomorrow';
+        $time = __('tomorrow', 'guny-events');
       } else {
-        $time = date('l M j', $this->end_datetime());
+        $time = date(__('l M j', 'guny-date-formats'), $this->end_datetime());
       }
 
       return $time;
@@ -523,7 +515,7 @@ require_once(get_template_directory() . '/includes/guny_top_programs.php');
 require_once(get_template_directory() . '/includes/guny_term_meta.php');
 
 // Customize Facet WP output
-require_once(get_template_directory() . '/includes/guny_facetwp.php');
+// require_once(get_template_directory() . '/includes/guny_facetwp.php');
 
 // Event filters
 require_once(get_template_directory() . '/includes/guny_filter_events.php');

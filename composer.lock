@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b18077d8966942933e9d2076ca23c6b1",
+    "content-hash": "dcbf406a6d44d05b1aab591c64876ecc",
     "packages": [
         {
             "name": "composer/installers",
@@ -162,6 +162,26 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/image-focus/"
+        },
+        {
+            "name": "wpackagist-plugin/relevanssi",
+            "version": "4.0.3",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/relevanssi/",
+                "reference": "tags/4.0.3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/relevanssi.4.0.3.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/relevanssi/"
         }
     ],
     "packages-dev": [],

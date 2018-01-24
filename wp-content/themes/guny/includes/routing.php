@@ -36,3 +36,24 @@ Routes::map('/trips', function($params) {
 Routes::map('/trips/:post', function($params) {
   load($params, 'trips/'.$params['post']);
 });
+
+
+/**
+ * Search
+ * We redirect the default homepage search to our /search url and use the same
+ * templates Wordpress would use.
+ */
+
+Routes::map('/search', function($params) {
+  Routes::load('search.php', $params, null, 200);
+});
+
+// redirect default Wordpress search to our route
+function search() {
+  if (is_search() && !empty($_GET['s'])) {
+    wp_redirect(home_url('/search/') . urlencode(get_query_var('s')));
+    exit();
+  }
+}
+
+add_action('template_redirect', 'search');

@@ -1,0 +1,14 @@
+<div class="c-list-box__item">
+  <h3 class="js-accordion__header c-list-box__heading" id="filter-heading">{{ __('Filter by...', 'guny') }}</h3>
+  <ul class="js-accordion__content c-list-box__content" id="filter-panel">
+    <li>
+      <a href="/search/?s={{ term }}&type=age" class="c-list-box__subitem" data-value="filter-ages">{{ __('Ages', 'guny') }}</a>
+    </li>
+    <li>
+      <a href="/search/?s={{ term }}&type=tribe_events" class="c-list-box__subitem" data-value="filter-tribe_events">{{ __('Events', 'guny') }}</a>
+    </li>
+    <li>
+      <a href="/search/?s={{ term }}&type=program" class="c-list-box__subitem" data-value="filter-programs">{{ __('Programs', 'guny') }}</a>
+    </li>
+  </ul>
+</div>

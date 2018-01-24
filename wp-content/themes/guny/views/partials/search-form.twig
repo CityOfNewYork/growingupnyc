@@ -1,0 +1,17 @@
+<form role="search" method="get" class="search-form" action="/search">
+  <div class="form-field__icon-container">
+    <input type="search" class="form-field form-field--large form-field--full-width c-hero__input" placeholder="{{ __('Search', 'guny') }}" name="s" value="{{ term }}" />
+    <button class="form-field__icon form-field__icon--large">
+      <svg class="icon">
+        <title>{{ __('Search', 'guny') }}</title>
+        <use xlink:href="#icon-search"></use>
+      </svg>
+    </button>
+    <button class="form-field__icon form-field__icon--large form-field__icon--weak">
+      <svg class="icon">
+        <title>{{ __('Clear', 'guny') }}</title>
+        <use xlink:href="#icon-close"></use>
+      </svg>
+    </button>
+  </div>
+</form>

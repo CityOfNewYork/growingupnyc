@@ -4,11 +4,11 @@
     "fields": [
         {
             "key": "field_5a6a00e7dda1d",
-            "label": "Autocorrect",
+            "label": "Auto Correct",
             "name": "autocorrect",
             "type": "repeater",
             "value": null,
-            "instructions": "Add a list of user search terms that need to be autocorrected for the user to see the most relevant results. Keep in mind this should be very specific as you don't want to exercise too much control over user search. Add terms in the format <code>key = value<\/code> (ex. <code>pre k = Pre-K<\/code>). Include spaces around the <code>=<\/code> operator. <code>key<\/code> is the user input, <code>value<\/code> is what the term should be. Phrases are respected.",
+            "instructions": "Add a list of user search terms that need to be auto corrected for the user to see the most relevant results. Keep in mind this should be very specific as you don't want to exercise too much control over user search. Add terms in the format <code>key = Value<\/code> (ex. <code>pre k = Pre-K<\/code>). Include spaces around the <code>=<\/code> operator. <code>key<\/code> is the user input, <code>Value<\/code> is what the term should be. Phrases are respected.\r\n\r\nComparisons are always lower-cased so it doesn't matter if you capitalize the <code>key<\/code>. The <code>Value<\/code> case does matter as it will be preferred as the correct term and replace what the user sees as the search term.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -62,5 +62,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1516901405
+    "modified": 1516908024
 }

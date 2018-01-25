@@ -1,0 +1,66 @@
+{
+    "key": "group_5a6a00e9e6ee2",
+    "title": "Search Options",
+    "fields": [
+        {
+            "key": "field_5a6a00e7dda1d",
+            "label": "Autocorrect",
+            "name": "autocorrect",
+            "type": "repeater",
+            "value": null,
+            "instructions": "Add a list of user search terms that need to be autocorrected for the user to see the most relevant results. Keep in mind this should be very specific as you don't want to exercise too much control over user search. Add terms in the format <code>key = value<\/code> (ex. <code>pre k = Pre-K<\/code>). Include spaces around the <code>=<\/code> operator. <code>key<\/code> is the user input, <code>value<\/code> is what the term should be. Phrases are respected.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add Term",
+            "sub_fields": [
+                {
+                    "key": "field_5a6a0129dda1e",
+                    "label": "Terms",
+                    "name": "terms",
+                    "type": "text",
+                    "value": null,
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "key = value",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "theme-general-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1516901405
+}

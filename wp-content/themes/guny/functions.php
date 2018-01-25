@@ -515,7 +515,7 @@ require_once(get_template_directory() . '/includes/guny_top_programs.php');
 require_once(get_template_directory() . '/includes/guny_term_meta.php');
 
 // Customize Facet WP output
-// require_once(get_template_directory() . '/includes/guny_facetwp.php');
+require_once(get_template_directory() . '/includes/guny_facetwp.php');
 
 // Event filters
 require_once(get_template_directory() . '/includes/guny_filter_events.php');

@@ -21,9 +21,8 @@ $autocorrected = (isset($_GET['ac'])) ? $_GET['ac'] : false;
 if ($autocorrected !== '0') {
   $autocorrect_terms = get_field('field_5a6a00e7dda1d', 'option');
   foreach ($autocorrect_terms as $key => $value) {
-    $user_term = strtolower($term);
     $autocorrect_term = explode(' = ', $value['terms']);
-    if ($user_term === $autocorrect_term[0]) {
+    if (strtolower($term) === strtolower($autocorrect_term[0])) {
       $term = $autocorrect_term[1]; // swap user term with correct term
       $autocorrected = true;
     }

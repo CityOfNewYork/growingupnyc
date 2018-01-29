@@ -2,17 +2,23 @@
   <div class="form-field__icon-container">
     <input type="search" class="form-field form-field--large form-field--full-width c-hero__input" placeholder="{{ __('Search', 'guny') }}" name="s" value="{{ term }}" />
     <input type="hidden" name="type" value="{{ type }}" />
-    <button class="form-field__icon form-field__icon--large">
+    <button type="submit" class="form-field__icon form-field__icon--large">
       <svg class="icon">
         <title>{{ __('Search', 'guny') }}</title>
         <use xlink:href="#icon-search"></use>
       </svg>
     </button>
-    {# <button class="form-field__icon form-field__icon--large form-field__icon--weak">
+    <a href="/search/{% if type %}?type={{type}}{% endif %}"
+       class="form-field__icon form-field__icon--large form-field__icon--weak"
+       {% if term == '' %}
+       style="display:none;"
+       aria-hidden="true"
+       {% endif %}
+       >
       <svg class="icon">
         <title>{{ __('Clear', 'guny') }}</title>
         <use xlink:href="#icon-close"></use>
       </svg>
-    </button> #}
+    </a>
   </div>
 </form>

@@ -51,7 +51,7 @@ Routes::map('/search', function($params) {
 // redirect default Wordpress search to our route
 function search() {
   if (is_search() && !empty($_GET['s'])) {
-    wp_redirect(home_url('/search/') . urlencode(get_query_var('s')));
+    wp_redirect(home_url('/search/?s=') . urlencode(get_query_var('s')));
     exit();
   }
 }

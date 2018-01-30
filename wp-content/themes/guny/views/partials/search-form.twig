@@ -1,6 +1,6 @@
 <form role="search" method="get" class="search-form" action="/search">
   <div class="form-field__icon-container">
-    <input type="search" class="form-field form-field--large form-field--full-width c-hero__input" placeholder="{{ __('Search', 'guny') }}" name="s" value="{{ term }}" />
+    <input type="search" class="form-field form-field--large form-field--full-width c-hero__input" placeholder="{{ __('Search', 'guny') }}" name="s" value="{{ s }}" />
     <input type="hidden" name="type" value="{{ type }}" />
     <button type="submit" class="form-field__icon form-field__icon--large">
       <svg class="icon">
@@ -8,9 +8,9 @@
         <use xlink:href="#icon-search"></use>
       </svg>
     </button>
-    <a href="/search/{% if type %}?type={{type}}{% endif %}"
+    <a href="?s={% if type %}&type={{ type }}{% endif %}"
        class="form-field__icon form-field__icon--large form-field__icon--weak"
-       {% if term == '' %}
+       {% if s == '' %}
        style="display:none;"
        aria-hidden="true"
        {% endif %}

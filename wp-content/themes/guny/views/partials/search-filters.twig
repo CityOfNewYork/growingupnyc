@@ -2,11 +2,11 @@
   <h3 class="js-accordion__header c-list-box__heading" id="filter-heading">{{ __('Filter Results', 'guny') }}</h3>
   <ul class="js-accordion__content c-list-box__content" id="filter-panel">
     <li>
-      <a href="/search/" class="c-list-box__subitem" aria-selected="{% if term == '' and type == '' %}true{% else %}false{% endif %}">{{ __('All Results', 'guny') }}</a>
+      <a href="?s={{ s }}" class="c-list-box__subitem" aria-selected="{% if type == '' %}true{% else %}false{% endif %}">{{ __('All Results', 'guny') }}</a>
     </li>
     {% for key, value in types %}
     <li>
-      <a href="/search/?s={{ term }}&type={{ key }}" class="c-list-box__subitem" aria-selected="{% if type == key %}true{% else %}false{% endif %}" data-value="filter-{{ key }}">{{ __(value, 'guny') }}</a>
+      <a href="?s={{ s }}&post_type={{ key }}" class="c-list-box__subitem" aria-selected="{% if type == key %}true{% else %}false{% endif %}" data-value="filter-{{ key }}">{{ __(value, 'guny') }}</a>
     </li>
     {% endfor %}
   </ul>

@@ -13,11 +13,11 @@ $types = array(
 // Build the query
 $query = array(
   // Get the search term
-  's' => get_query_var('s', ''),
+  's' => (isset($_GET['s'])) ? $_GET['s'] : '',
   // Get post type filter
   'post_type' => (isset($_GET['post_type'])) ? $_GET['post_type'] : 'any',
   // Get pagination
-  'paged' => get_query_var('paged', 1)
+  'paged' => (isset($_GET['paged'])) ? $_GET['paged'] : 1
 );
 
 // This cam be used to for displaying a link that prevents auto-correcting...

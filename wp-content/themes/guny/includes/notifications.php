@@ -6,7 +6,6 @@
 
 namespace Notifications;
 
-
 /**
  * Notify admin to activate Timber if it has not been activated.
  * @return null
@@ -17,6 +16,15 @@ function timber() {
       echo 'Timber not activated. Make sure you activate the plugin in <a href="/wp-admin/plugins.php#timber">/wp-admin/plugins.php</a>';
     });
     return;
+  }
+}
+
+/**
+ * Throw exception if timber context isn't set
+ */
+function timber_context() {
+  if (!isset($timberContext)) {
+    throw new \Exception('Timber context not set in footer.');
   }
 }
 

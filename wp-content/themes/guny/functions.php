@@ -523,8 +523,11 @@ require_once(get_template_directory() . '/includes/guny_filter_events.php');
 // Admin messages
 require_once(get_template_directory() . '/includes/guny_messages.php');
 
+// Templating
 // Focal point functions
 require_once(get_template_directory() . '/includes/get_focal_point.php');
+// Format posts based on their type
+require_once(get_template_directory() . '/includes/format_posts.php');
 
 // Enqueue functions
 require_once(get_template_directory() . '/vendor/nyco/wp-assets/dist/style.php');
@@ -533,7 +536,7 @@ require_once(get_template_directory() . '/vendor/nyco/wp-assets/dist/script.php'
 // Term translation helpers
 require_once(get_template_directory() . '/includes/term_translations.php');
 
-// Add program name to post
+// Add program name to post in the admin
 require_once(get_template_directory() . '/includes/program_posts_column.php');
 
 // Redirects

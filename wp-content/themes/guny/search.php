@@ -1,7 +1,5 @@
 <?php
 
-Notifications\timber();
-
 // Get the context
 $context = Timber::get_context();
 
@@ -51,25 +49,8 @@ $relevanssi_query = relevanssi_do_query($wp_query);
 $wp_query_ids = wp_list_pluck($wp_query->posts, 'ID');
 $posts = Timber::get_posts($wp_query_ids);
 
-// Post filtering
-// This functionality should be available in functions.php
-if (is_array($posts)) {
-  foreach ($posts as $i => $post) {
-    switch ($post->post_type) {
-      case 'tribe_events':
-        // Format events posts
-        $posts[$i] = new GunyEvent($post);
-        break;
-      case 'age':
-        // Add age groups to age posts
-        $age_groups = $post->terms('age_group');
-        if ($age_groups) {
-          $post->age_group = $age_groups[0];
-        }
-        break;
-    }
-  }
-}
+// Format the posts
+$posts = Templating\format_posts($posts);
 
 // URL
 // if the post type filter is default don't worry about setting it to context

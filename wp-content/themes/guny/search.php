@@ -7,23 +7,16 @@ $context = Timber::get_context();
 $types = array(
   'age' => 'Ages',
   'tribe_events' => 'Events',
-  'programs' => 'Programs'
+  'program' => 'Programs'
 );
 
-// Build the query
-$query = array(
-  // Get the search term
-  's' => (isset($_GET['s'])) ? $_GET['s'] : '',
-  // Get post type filter
-  'post_type' => (isset($_GET['post_type'])) ? $_GET['post_type'] : 'any',
-  // Get pagination
-  'paged' => (isset($_GET['paged'])) ? $_GET['paged'] : 1
-);
+// Get the query and validate parameters
+$query = $_GET;
 
-// This cam be used to for displaying a link that prevents auto-correcting...
+// This can be used to for displaying a link that prevents auto-correcting...
 // but even Google just makes assumptions for corrections like 'pre k' = 'pre-k'
 // so we may not need to override our autocorrect for any reason...
-$autocorrected = (isset($_GET['ac'])) ? $_GET['ac'] : false;
+$autocorrected = (isset($query['ac'])) ? $query['ac'] : false;
 
 // Autocorrect terms
 if ($autocorrected !== '0') {
@@ -48,18 +41,10 @@ $wp_query = new WP_Query($query);
 $relevanssi_query = relevanssi_do_query($wp_query);
 $wp_query_ids = wp_list_pluck($wp_query->posts, 'ID');
 $posts = Timber::get_posts($wp_query_ids);
-
-// Format the posts
-$posts = Templating\format_posts($posts);
-
-// URL
-// if the post type filter is default don't worry about setting it to context
-if ($query['post_type'] === 'any') {
-  unset($query['post_type']);
-}
+$posts = Templating\format_posts($posts); // Format the posts per type
 
 $url = http_build_query($query);
-$url = ($url) ? '?' . $url : '';
+$url = ($url) ? '/?' . $url : '';
 
 // Pagination
 $pagination = $query;
@@ -71,7 +56,7 @@ if (get_previous_posts_link()) {
   );
   $previous = array_merge($pagination, $previous);
   $previous = http_build_query($previous);
-  $previous = ($previous) ? '?' . $previous : '';
+  $previous = ($previous) ? '/?' . $previous : '';
 }
 
 if (get_next_posts_link()) {
@@ -80,7 +65,7 @@ if (get_next_posts_link()) {
   );
   $next = array_merge($pagination, $next);
   $next = http_build_query($next);
-  $next = ($next) ? '?' . $next : '';
+  $next = ($next) ? '/?' . $next : '';
 }
 
 // Set Context

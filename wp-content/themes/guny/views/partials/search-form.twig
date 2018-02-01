@@ -8,7 +8,7 @@
         <use xlink:href="#icon-search"></use>
       </svg>
     </button>
-    <a href="/?s={% if type %}&type={{ post_type }}{% endif %}"
+    <a href="/?s={% if post_type %}&post_type={{ post_type }}{% endif %}"
        class="form-field__icon form-field__icon--large form-field__icon--weak"
        {% if s == '' %}
        style="display:none;"

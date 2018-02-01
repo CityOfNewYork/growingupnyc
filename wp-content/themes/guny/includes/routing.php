@@ -5,6 +5,16 @@
  * These may not be needed once we do a search and replace of the database.
  */
 
+/**
+ * Dependencies
+ */
+
+use Search as Search;
+
+/**
+ * Routes
+ */
+
 function load($params, $endpoint) {
   $params['endpoint'] = $endpoint;
   Routes::load('redirect-generationnyc.php', $params, null, 200);
@@ -51,20 +61,7 @@ Routes::map('/search', function($params) {
 // Redirect default Wordpress search to our route
 function search() {
   if (is_search() && !empty($_GET['s'])) {
-    $default = array(
-      's' => '',
-      'post_type' => 'any',
-      'paged' => 0
-    );
-    $query = array(
-      's' => get_query_var('s', $default['s']),
-      'post_type' => get_query_var('post_type', $default['post_type']),
-      'paged' => get_query_var('paged', $default['paged'])
-    );
-    // Don't worry about passing defaults to the controller
-    foreach ($query as $key => $value) {
-      if ($query[$key] === $default[$key]) unset($query[$key]);
-    }
+    $query = Search\get_query();
     wp_redirect(home_url('/search/?') . http_build_query($query));
     exit();
   }

@@ -51,6 +51,10 @@ function get_query() {
     'paged' => get_query_var('page', DEFAULT_PARAMS['paged'])
   );
 
+  // Blank post types can get through
+  $query['post_type'] = ($query['post_type'] === '') ?
+    DEFAULT_PARAMS['post_type'] : $query['post_type'];
+
   // Validate our paramters
   $query = Templating\validate_params($query, PARAM_PATTERNS);
 

@@ -3,5 +3,7 @@
     {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] with {show_post_type: false} %}
   </div>
 {% else %}
-  <p class="type--no-results">Sorry, we couldn’t find anything matching your search. <a href="/programs">Clear filters</a></p>
+  <p class="type--no-results">
+    {{ _('Sorry, we couldn’t find anything matching your search.', 'guny') }} <a href="/programs">{{ _('Clear filters', 'guny') }}</a>
+  </p>
 {% endfor %}

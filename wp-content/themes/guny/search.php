@@ -22,6 +22,9 @@ $wp_query_ids = wp_list_pluck($wp_query->posts, 'ID');
 $posts = Timber::get_posts($wp_query_ids);
 $posts = Templating\format_posts($posts); // Format the posts per type
 
+// Suggested Terms
+$suggested_terms = Search\get_term_index();
+
 // Set Context
 $context = array_merge($context, $query);
 $context['types'] = Search\FILTER_TYPES;

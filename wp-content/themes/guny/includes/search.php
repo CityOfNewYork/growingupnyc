@@ -124,3 +124,12 @@ function pagination($query, $max_num_pages) {
     'next' => (isset($next)) ? $next : false
   );
 }
+
+function get_term_index() {
+  global $wpdb;
+  $query = "SELECT term FROM {$wpdb->prefix}relevanssi";
+  $results = $wpdb->get_results($query);
+  // echo '<pre>';
+  // var_dump($results);
+  // echo '</pre>';
+}

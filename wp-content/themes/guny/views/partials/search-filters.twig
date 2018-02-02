@@ -6,7 +6,7 @@
     </li>
     {% for key, value in types %}
     <li>
-      <a href="?s={{ s }}&post_type={{ key }}" class="c-list-box__subitem" aria-selected="{% if type == key %}true{% else %}false{% endif %}" data-value="filter-{{ key }}">{{ value }}</a>
+      <a href="?s={{ s }}&post_type={{ key }}" class="c-list-box__subitem" aria-selected="{% if type == key %}true{% else %}false{% endif %}" data-value="filter-{{ key }}">{{ __(value, 'guny') }}</a>
     </li>
     {% endfor %}
   </ul>

@@ -15,9 +15,9 @@ use Templating as Templating;
  */
 
 CONST FILTER_TYPES = array(
-  'age' => __('Ages', 'guny'),
-  'tribe_events' => __('Events', 'guny'),
-  'program' => __('Programs', 'guny')
+  'age' => 'Ages',
+  'tribe_events' => 'Events',
+  'program' => 'Programs'
 );
 
 // Default values for query string parameters.

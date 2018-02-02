@@ -1,10 +1,12 @@
 <form role="search" method="get" class="search-form" action="/search/">
   <div class="form-field__icon-container">
-    <input type="search" class="form-field form-field--large form-field--full-width c-hero__input" placeholder="{{ __('Search', 'guny-search') }}" name="s" value="{{ s }}" />
+    <input type="search" name="s" value="{{ s }}"
+           class="form-field form-field--large form-field--full-width c-hero__input"
+           placeholder="{{ __('Search', function('Search\\get_translation_domain')) }}"/>
     {% if post_type %}<input type="hidden" name="post_type" value="{{ post_type }}" />{% endif %}
     <button type="submit" class="form-field__icon form-field__icon--large">
       <svg class="icon">
-        <title>{{ __('Search', 'guny-search') }}</title>
+        <title>{{ __('Search', function('Search\\get_translation_domain')) }}</title>
         <use xlink:href="#icon-search"></use>
       </svg>
     </button>
@@ -16,7 +18,7 @@
        {% endif %}
        >
       <svg class="icon">
-        <title>{{ __('Clear', 'guny-search') }}</title>
+        <title>{{ __('Clear', function('Search\\get_translation_domain')) }}</title>
         <use xlink:href="#icon-close"></use>
       </svg>
     </a>

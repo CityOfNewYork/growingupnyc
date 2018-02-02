@@ -34,6 +34,9 @@ const PARAM_PATTERNS = array(
   'paged' => '/^[0-9]*$/'
 );
 
+// The translation domain for search templates
+const TRANSLATION_DOMAIN = 'guny-search-templates';
+
 
 /**
  * Functions
@@ -125,11 +128,18 @@ function pagination($query, $max_num_pages) {
   );
 }
 
-function get_term_index() {
-  global $wpdb;
-  $query = "SELECT term FROM {$wpdb->prefix}relevanssi";
-  $results = $wpdb->get_results($query);
-  // echo '<pre>';
-  // var_dump($results);
-  // echo '</pre>';
+/**
+ * Return the translation domain for templates
+ * @return string The translation domain constant
+ */
+function get_translation_domain() {
+  return TRANSLATION_DOMAIN;
+}
+
+/**
+ * Return the suggested terms for the spelling suggestion dropdown
+ * @return [string] JSON data as string of terms and synonyms.
+ */
+function get_suggested_terms() {
+  return '[["Pre-K", "prek", "pre k"], ["Child Care", "childcare"]]';
 }

@@ -22,9 +22,6 @@ $wp_query_ids = wp_list_pluck($wp_query->posts, 'ID');
 $posts = Timber::get_posts($wp_query_ids);
 $posts = Templating\format_posts($posts); // Format the posts per type
 
-// Suggested Terms
-$suggested_terms = Search\get_term_index();
-
 // Set Context
 $context = array_merge($context, $query);
 $context['types'] = Search\FILTER_TYPES;
@@ -33,6 +30,8 @@ $context['language'] = ICL_LANGUAGE_CODE;
 $context['pagination'] = Search\pagination($query, $wp_query->max_num_pages);
 $context['previous'] = $context['pagination']['previous'];
 $context['next'] = $context['pagination']['next'];
+$context['suggested_terms'] = Search\get_suggested_terms();
+$context['translation_domain'] = Search\TRANSLATION_DOMAIN;
 
 // Compile templates for search template
 $templates_form = array('partials/search-form.twig');

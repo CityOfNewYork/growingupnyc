@@ -6,7 +6,7 @@ $context = Timber::get_context();
 // Get the query and validate parameters
 $query = Search\get_query();
 
-// Autocorrect search term
+// Auto correct search term
 $auto_correct_terms = get_field('field_5a6a00e7dda1d', 'option');
 if ($auto_correct_terms) {
   $query['s'] = Search\auto_correct($query['s'], $auto_correct_terms);
@@ -22,7 +22,7 @@ $wp_query_ids = wp_list_pluck($wp_query->posts, 'ID');
 $posts = Timber::get_posts($wp_query_ids);
 $posts = Templating\format_posts($posts); // Format the posts per type
 
-// Set Context
+// Set context
 $context = array_merge($context, $query);
 $context['types'] = Search\FILTER_TYPES;
 $context['posts'] = $posts;

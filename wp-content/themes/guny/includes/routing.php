@@ -62,7 +62,8 @@ Routes::map('/search', function($params) {
 function search() {
   if (is_search() && !empty($_GET['s'])) {
     $query = Search\get_query();
-    wp_redirect(home_url('/search/?') . http_build_query($query));
+    $path = Search\get_path();
+    wp_redirect($path . '/?' . http_build_query($query));
     exit();
   }
 } add_action('template_redirect', 'search');

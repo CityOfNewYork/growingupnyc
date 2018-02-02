@@ -14,33 +14,56 @@ use Templating as Templating;
  * Constants
  */
 
+// The routing path. This doesn't affect the Timber route but it is used
+// by templates and the redirect function in the routing config. Used in
+// conjunction with get_home_url() insures that the WPML language path prefix
+// is set properly.
+CONST PATH = '/search';
+
+// The WPML domain for templates
+const TRANSLATION_DOMAIN = 'guny-search';
+
+// The search filters
 CONST FILTER_TYPES = array(
   'age' => 'Ages',
   'tribe_events' => 'Events',
   'program' => 'Programs'
 );
 
-// Default values for query string parameters.
+// Default values for query string parameters
 const DEFAULT_PARAMS = array(
   's' => '',
   'post_type' => 'any',
   'paged' => 1
 );
 
-// Match query string parameters against these patterns.
+// Parameter validation patterns
 const PARAM_PATTERNS = array(
   's' => '/^[\W\w]*$/',
   'post_type' => '/^[A-Za-z_-]*$/',
   'paged' => '/^[0-9]*$/'
 );
 
-// The translation domain for search templates
-const TRANSLATION_DOMAIN = 'guny-search-templates';
-
 
 /**
  * Functions
  */
+
+/**
+ * Get the search domain, this ensures integration with WPML
+ * @return string The full url for search, including language prefix
+ */
+function get_path() {
+  return get_home_url() . PATH;
+}
+
+/**
+ * Return the translation domain for templates
+ * @return string The translation domain constant
+ */
+function get_translation_domain() {
+  return TRANSLATION_DOMAIN;
+}
 
 /**
  * Uses get_query_var to get query parameters as an array for search, it
@@ -128,13 +151,6 @@ function pagination($query, $max_num_pages) {
   );
 }
 
-/**
- * Return the translation domain for templates
- * @return string The translation domain constant
- */
-function get_translation_domain() {
-  return TRANSLATION_DOMAIN;
-}
 
 /**
  * Return the suggested terms for the spelling suggestion dropdown

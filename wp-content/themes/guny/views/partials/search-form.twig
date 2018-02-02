@@ -1,4 +1,4 @@
-<form role="search" method="get" class="search-form" action="/search/">
+<form role="search" method="get" class="search-form" action="{{ function('Search\\get_path') }}">
   <div class="form-field__icon-container">
     <input type="search" name="s" value="{{ s }}"
            class="form-field form-field--large form-field--full-width c-hero__input"
@@ -10,7 +10,7 @@
         <use xlink:href="#icon-search"></use>
       </svg>
     </button>
-    <a href="/search/?s={% if post_type %}&post_type={{ post_type }}{% endif %}"
+    <a href="{{ function('Search\\get_path') }}/?s={% if post_type %}&post_type={{ post_type }}{% endif %}"
        class="form-field__icon form-field__icon--large form-field__icon--weak"
        {% if s == '' %}
        style="display:none;"

@@ -9,26 +9,26 @@
 {% block hero %}
 <header class="c-hero u-lg-gutter">
   <div class="o-container-med">
-    <h1 class="show-for-screen-reader">{{ __('Search Results', 'guny') }}</h1>
-    {{search}}
+    <h1 class="show-for-screen-reader">{{ __('Search Results', 'guny-search') }}</h1>
+    {{ search }}
   </div>
 </header>
 {% endblock %}
 
 {% block list_sidebar %}
 <ol class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
-  {{facet_post_type}}
+  {{ facet_post_type }}
 </ol>
 {% endblock %}
 
 {% block post_list %}
   <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
-    {{results}}
+    {{ results }}
   </section>
 {% endblock %}
 
 {% block after_list %}
 <div class="o-content-container--compact">
-  {{pagination}}
+  {{ pagination }}
 </div>
 {% endblock %}

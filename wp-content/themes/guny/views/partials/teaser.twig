@@ -1,6 +1,6 @@
 <div class="c-card {% block classes %}{% endblock %}">
   {% block sticker %}
-  <a href="{{post.link}}">  
+  <a href="{{ post.link }}">
     <div class="c-card__sticker sticker" aria-hidden="true">
       {% block sticker_content %}{% endblock %}
     </div>
@@ -8,8 +8,8 @@
   {% endblock %}
   <h3 class="c-card__title">
     {% block title %}
-    <a href="{{post.link}}" title="{{post.title}}" rel="bookmark">
-      {{post.title}}
+    <a href="{{ post.link }}" title="{{ post.title }}" rel="bookmark">
+      {{ post.title }}
     </a>
     {% endblock %}
   </h3>
@@ -17,11 +17,11 @@
   {% if show_post_type %}
     <p class="c-card__label">
     {% if post.post_type == 'tribe_events' %}
-      Event
+      {{ __('Event', 'guny') }}
     {% elseif post.post_type == 'age' %}
-      Age Guide
+      {{ __('Age Guide', 'guny') }}
     {% else %}
-      {{post.post_type|replace({'_': ' '})|title}}
+      {{ __(post.post_type|replace({'_': ' '})|title, 'guny') }}
     {% endif %}
     </p>
   {% endif %}
@@ -36,7 +36,7 @@
     <div class="c-card__tags">
     {% block tags %}
       {% for term in post.terms('age_group') %}
-        <a href="{{term.link}}" class="button--pill button--pill--alt">{{term.name}}</a>
+        <a href="{{term.link}}" class="button--pill button--pill--alt">{{ term.name }}</a>
       {% endfor %}
     {% endblock %}
     </div>
@@ -44,7 +44,7 @@
   {% endblock %}
   <div class="c-card__body">
     {% block body %}
-    {{post.post_excerpt ? post.post_excerpt : post.post_content|excerpt(15)}}
+    {{  post.post_excerpt ? post.post_excerpt : post.post_content|excerpt(15)  }}
     {% endblock %}
   </div>
   {% block link %}{% endblock %}

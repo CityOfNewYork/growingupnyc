@@ -108,24 +108,24 @@
 
             <section class="o-col__divider c-block-list">
               <h2 class="c-block-list__heading">
-                {{ __('Programs', 'GUNY-W-Top-Programs') }}
-                <a class="c-block-list__link" href="{{site.url}}/guny/programs">{{ __('See all programs', 'GUNY-W-Top-Programs') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="true"><use xlink:href="#icon-caret-right"></use></svg></a>
+                {{ __('Programs', 'guny') }}
+                <a class="c-block-list__link" href="{{ site.url }}/guny/programs">{{ __('See all programs', 'guny') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="true"><use xlink:href="#icon-caret-right"></use></svg></a>
               </h2> <!-- /.c-content-tout__heading -->
               <div class="c-block-list__inner o-row">
-                {{top_programs}}
+                {{ top_programs }}
               </div> <!-- /.o-col__divider -->
             </section> <!-- /.c-content-tout -->
 
             <section class="o-col__divider c-block-list">
               <h2 class="c-block-list__heading">
-                {{ __('Events', 'GUNY-W-Top-Programs') }}
-                <a class="c-block-list__link" href="{{site.url}}/guny/events">{{ __('See all events', 'GUNY-W-Top-Programs') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="small"><use xlink:href="#icon-caret-right"></use></svg></a>
+                {{ __('Events', 'guny') }}
+                <a class="c-block-list__link" href="{{ site.url }}/guny/events">{{ __('See all events', 'guny') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="small"><use xlink:href="#icon-caret-right"></use></svg></a>
               </h2> <!-- /.c-content-tout__heading -->
               <div class="c-block-list__inner o-row">
               {% for post in top_events %}
                 <div class="o-col-3 c-content-tout">
                   <h3 class="c-content-tout__title">
-                    <a href="{{post.path}}" title="{{post.post_title}}" rel="bookmark">{{post.post_title}}</a>
+                    <a href="{{ post.path }}" title="{{ post.post_title }}" rel="bookmark">{{ post.post_title }}</a>
                   </h3>
                   <div class="c-content-tout__subtitle">
                     {% include 'partials/event-date.twig' %}

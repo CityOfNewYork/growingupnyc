@@ -543,3 +543,13 @@ for ($i=0; $i < sizeof($includes); $i++) {
     require_once(get_template_directory() . $includes[$i]);
   }
 }
+
+/**
+ * Utiltiy for wrapping var_dump in pre tags for a nicer front end
+ * @param  any $var The variable to pass to var_dump()
+ */
+function pre_dump($var) {
+  echo '<pre>';
+  var_dump($var);
+  echo '</pre>';
+}

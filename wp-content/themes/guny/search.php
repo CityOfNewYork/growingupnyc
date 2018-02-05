@@ -1,16 +1,17 @@
 <?php
 
+/*
+Template Name: Search
+*/
+
 // Get the context
 $context = Timber::get_context();
 
 // Get the query and validate parameters
 $query = Search\get_query();
 
-// Auto correct search term
-$auto_correct_terms = get_field('field_5a6a00e7dda1d', 'option');
-if ($auto_correct_terms) {
-  $query['s'] = Search\auto_correct($query['s'], $auto_correct_terms);
-}
+// Auto correct the search term
+$query['s'] = Search\auto_correct($query['s']);
 
 // Create query
 $wp_query = new WP_Query($query);
@@ -26,11 +27,9 @@ $posts = Templating\format_posts($posts); // Format the posts per type
 $context = array_merge($context, $query);
 $context['types'] = Search\FILTER_TYPES;
 $context['posts'] = $posts;
-$context['language'] = ICL_LANGUAGE_CODE;
 $context['pagination'] = Search\pagination($query, $wp_query->max_num_pages);
 $context['previous'] = $context['pagination']['previous'];
 $context['next'] = $context['pagination']['next'];
-$context['suggested_terms'] = Search\get_suggested_terms();
 $context['translation_domain'] = Search\TRANSLATION_DOMAIN;
 
 // Compile templates for search template

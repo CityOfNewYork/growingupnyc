@@ -14,6 +14,7 @@ import iOS7Hack from './modules/iOS7Hack.js';
 import ShareForm from './modules/share-form.js';
 import captchaResize from './modules/captchaResize.js';
 import rotatingTextAnimation from './modules/rotatingTextAnimation.js';
+import Search from './modules/search.js';
 /* eslint-disable no-unused-vars */
 import toggleOpen from './modules/toggleOpen.js';
 import toggleMenu from './modules/toggleMenu.js';
@@ -48,6 +49,9 @@ function init() {
   captchaResize();
   rotatingTextAnimation();
   sectionHighlighter();
+
+  // Search
+  new Search().init();
 }
 
 ready(init);

@@ -1,7 +1,10 @@
 <?php
 
-namespace Search;
+/**
+ * Config and functions for the search controller
+ */
 
+namespace Search;
 
 /**
  * Dependencies
@@ -17,7 +20,8 @@ use Templating as Templating;
 // The routing path. This doesn't affect the Timber route but it is used
 // by templates and the redirect function in the routing config. Used in
 // conjunction with get_home_url() insures that the WPML language path prefix
-// is set properly.
+// is set properly. Also used for getting search settings defined in the
+// 'Search' (slug; '/search') Wordpress page.
 CONST PATH = '/search';
 
 // The WPML domain for templates
@@ -44,10 +48,29 @@ const PARAM_PATTERNS = array(
   'paged' => '/^[0-9]*$/'
 );
 
+// The field ID for auto corrected terms
+// Search Options > Auto Correct
+// group_5a6a00e9e6ee2.json
+const AUTO_CORRECT_FIELD = 'field_5a6a00e7dda1d';
+
+// The field ID for enabling the suggested dropdowns
+// Search Options > Enable Suggestions
+// group_5a6a00e9e6ee2.json
+const ENABLE_SUGGESTIONS = 'field_5a7886d200097';
+
+// The field ID for the suggested terms list
+// Search Options > Suggestions
+// group_5a6a00e9e6ee2.json
+const SUGGESTED_TERMS_FIELD = 'field_5a74dbd08af7f';
+
 
 /**
  * Functions
  */
+
+function get_controller_id() {
+  return get_page_by_path(PATH)->ID;
+}
 
 /**
  * Get the search domain, this ensures integration with WPML
@@ -103,11 +126,14 @@ function get_query() {
  * @param  array $terms Key, value pair of misspellings => corrections
  * @return string       The corrected term
  */
-function auto_correct($term, $auto_correct_terms) {
-  foreach ($auto_correct_terms as $key => $value) {
-    $auto_correct_term = explode(' = ', $value['terms']);
-    if (strtolower($term) === strtolower($auto_correct_term[0])) {
-      $term = $auto_correct_term[1]; // swap user term with correct term
+function auto_correct($term) {
+  $auto_correct_terms = get_field(AUTO_CORRECT_FIELD, get_controller_id());
+  if ($auto_correct_terms) {
+    foreach ($auto_correct_terms as $key => $value) {
+      $auto_correct_term = explode(' = ', $value['terms']);
+      if (strtolower($term) === strtolower($auto_correct_term[0])) {
+        $term = $auto_correct_term[1]; // swap user term with correct term
+      }
     }
   }
   return $term;
@@ -151,11 +177,23 @@ function pagination($query, $max_num_pages) {
   );
 }
 
+function enabled_suggestions() {
+  return (isset(get_field(ENABLE_SUGGESTIONS, get_controller_id())[0]));
+}
 
 /**
  * Return the suggested terms for the spelling suggestion dropdown
  * @return [string] JSON data as string of terms and synonyms.
  */
 function get_suggested_terms() {
-  return '[["Pre-K", "prek", "pre k"], ["Child Care", "childcare"]]';
+  $return =  '';
+  $suggested_terms = get_field(SUGGESTED_TERMS_FIELD, get_controller_id());
+  if ($suggested_terms) {
+    foreach ($suggested_terms as $key => $value) {
+      $group = explode(', ', $value['terms_and_synonyms']);
+      $group = '["' . implode('", "', $group) . '"]';
+      $return .= ($key === 0) ? $group : ', ' . $group;
+    }
+  }
+  return '['. $return .']';
 }

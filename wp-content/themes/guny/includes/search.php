@@ -177,6 +177,10 @@ function pagination($query, $max_num_pages) {
   );
 }
 
+/**
+ * Check to see if the suggestion dropdowns are enabled
+ * @return boolean True if enabled, false if not.
+ */
 function enabled_suggestions() {
   return (isset(get_field(ENABLE_SUGGESTIONS, get_controller_id())[0]));
 }

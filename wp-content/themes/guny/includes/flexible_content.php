@@ -28,9 +28,13 @@ function get_sections() {
   $sections = get_field(SECTION_ID);
   if ($sections) {
     foreach ($sections as $key => $value) {
-      $sections[$key]['slug'] = strtolower(
-        str_replace(' ', '-', $value['section_title'])
-      );
+
+      if (isset($value['section_title'])) {
+        $sections[$key]['slug'] = strtolower(
+          str_replace(' ', '-', $value['section_title'])
+        );
+      }
+
     }
   }
   return $sections;

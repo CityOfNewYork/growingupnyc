@@ -1,5 +1,11 @@
 <form action="https://growingupnyc-our.cityofnewyork.us/page/s/website-signup" name="signup" id="{{form_id}}-signup" class="signup-form bsdtools-signup" novalidate>
-  <h2{% if full_width %} class="text-center"{% endif %}>{{ __('Get Updates', 'GUNY-Email-Signup') }}</h2>
+  <h2{% if full_width %} class="text-center"{% endif %}>
+    {% if title %}
+      {{ title }} {# translation comes from page content #}
+    {% else %}
+      {{ __('Get Updates', 'GUNY-Email-Signup') }}
+    {% endif %}
+  </h2>
   <div class="signup-form__error bsdtools-error"></div>
   <div class="signup-form__input {% if full_width %}signup-form__input--full{% else %}signup-form__input--long{% endif %}">
     <label for="{{form_id}}-email" class="signup-form__label">

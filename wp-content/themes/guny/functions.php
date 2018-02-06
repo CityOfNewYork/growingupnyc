@@ -521,6 +521,7 @@ $includes = [
     '/includes/get_focal_point.php', // Focal point functions
     '/includes/format_posts.php', // Format posts based on their type
     '/includes/parameters.php', // Parameter functions for templates
+    '/includes/flexible_content.php' // Working with ACF Flexible Content
   ],
   [ // Nyco\Enqueue
     '/vendor/nyco/wp-assets/dist/style.php', // Enqueue functions

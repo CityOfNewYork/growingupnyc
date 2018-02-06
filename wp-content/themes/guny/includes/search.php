@@ -68,6 +68,11 @@ const SUGGESTED_TERMS_FIELD = 'field_5a74dbd08af7f';
  * Functions
  */
 
+/**
+ * Get the id of the post through the page path. Requires a page
+ * of the same slug as above to be created.
+ * @return integer The ID of the post
+ */
 function get_controller_id() {
   return get_page_by_path(PATH)->ID;
 }

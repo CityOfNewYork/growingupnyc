@@ -523,7 +523,7 @@ $includes = [
     '/includes/parameters.php', // Parameter functions for templates
     '/includes/flexible_content.php' // Working with ACF Flexible Content
   ],
-  [ // Nyco\Enqueue
+  [ // Nyco
     '/vendor/nyco/wp-assets/dist/style.php', // Enqueue functions
     '/vendor/nyco/wp-assets/dist/script.php' // Enqueue functions
   ],

@@ -74,7 +74,7 @@
                 {% endfor %}
                 <li class="o-inline__item"><a href="#ages" data-toggle="offcanvas-ages" class="c-banner__link">{{ __('Ages', 'GUNY-Primary-Menu') }}</a></li>
                 <li class="o-inline__item">
-                   <a class="c-banner__link" href="#search" data-toggle="overlay-search">
+                   <a class="c-banner__link" href="#search" data-toggle="overlay-search" data-toggle-class="fadeInDown">
                      <svg class="c-banner__icon c-banner__icon__search" role="img"><title>Search</title><use xlink:href="#icon-search"></use></svg>
                      <svg class="c-banner__icon c-banner__icon__close" role="img"><title>Search</title><use xlink:href="#icon-close"></use></svg>
                    </a>
@@ -99,7 +99,7 @@
             </nav>
           </div>
         </header>
-        <section class="o-overlay js-overlay" id="overlay-search" aria-hidden="true">
+        <section class="o-overlay js-overlay animated" id="overlay-search" aria-hidden="true">
           <div class="o-container-med">
 
             <div class="u-bottom-spacing">

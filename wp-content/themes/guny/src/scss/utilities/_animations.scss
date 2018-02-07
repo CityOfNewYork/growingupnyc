@@ -2,6 +2,27 @@
 * Animations
 */
 
+// Dependencies
+@import '../settings/variables';
+
+// Declarations
+@mixin animate($animation: none, $speed: $animate-scss-speed) {
+  @if $animation != none {
+    animation-name: $animation;
+  }
+  animation-duration: $speed;
+  animation-fill-mode: both;
+  animation-timing-function: $animate-timing-function;
+}
+
+body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
+  -webkit-backface-visibility: hidden;
+}
+
+.animated {
+  @include animate();
+}
+
 // Rotating Text
 .rotating-text {
   position: relative;

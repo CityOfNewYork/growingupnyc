@@ -1,6 +1,12 @@
 <?php
 
 namespace Templating;
+
+/**
+ * Dependencies
+ */
+
+use Wpml;
 use GunyEvent;
 
 /**
@@ -21,6 +27,10 @@ function format_posts($posts) {
           $age_groups = $post->terms('age_group');
           if ($age_groups) {
             $post->age_group = $age_groups[0];
+            // Get the English slug for icon references in templates
+            $post->age_group->icon = Wpml\get_translated_term_slug(
+              $post->age_group->id, 'age_group'
+            );
           }
           break;
       }

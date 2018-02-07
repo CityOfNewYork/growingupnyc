@@ -24,7 +24,12 @@ function get_translated_term_slug($id, $type) {
   $id = get_translated_term_id($id, $type);
 
   remove_filter('get_term', array($sitepress, 'get_term_adjust_id'), 1, 1);
-  $slug = get_term($id, $type)->slug;
+  if (get_term($id, $type)) {
+    $slug = get_term($id, $type)->slug;
+  } else {
+    trigger_error('Translated term unavailable, check the type or ID.');
+    return;
+  }
   add_filter('get_term', array($sitepress, 'get_term_adjust_id'), 1, 1);
 
   return $slug;

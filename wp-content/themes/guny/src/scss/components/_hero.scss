@@ -232,3 +232,12 @@
   margin-bottom: rem-calc(15);
   text-align: center;
 }
+
+// Hero Search
+.c-hero__search {
+  padding-top: rem-calc(($sticker-size-mobile / 2) + 3);
+
+  @include media($bp-medium) {
+    padding-top: 0;
+  }
+}

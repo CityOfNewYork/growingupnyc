@@ -135,7 +135,10 @@ class GunySite extends TimberSite {
       }
     }
 
-    if($page_desc){
+    if (is_page()) {
+      $page_desc = get_field('page_meta_description', get_the_ID());
+      $context['page_meta_desc'] = $page_desc;
+    }elseif($page_desc){
       $context['page_meta_desc'] = $page_desc;
     }
     // end of META description

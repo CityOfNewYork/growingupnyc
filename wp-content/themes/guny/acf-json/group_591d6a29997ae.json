@@ -7,6 +7,7 @@
             "label": "Title",
             "name": "topic_landing_title",
             "type": "text",
+            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -26,6 +27,7 @@
             "label": "Tagline",
             "name": "topic_landing_tagline",
             "type": "text",
+            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -45,6 +47,7 @@
             "label": "Subheading",
             "name": "topic_landing_subheading",
             "type": "text",
+            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -64,6 +67,7 @@
             "label": "Intro \/ Overview",
             "name": "topic_landing_intro__overview",
             "type": "wysiwyg",
+            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -75,7 +79,28 @@
             "default_value": "",
             "tabs": "all",
             "toolbar": "full",
-            "media_upload": 1
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_5a8eec127af0c",
+            "label": "Topic Meta Description",
+            "name": "topic_meta_description",
+            "type": "text",
+            "value": null,
+            "instructions": "Enter a Meta Description for the Topics Page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
@@ -94,6 +119,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "modified": 1495635040
+    "description": ""
 }

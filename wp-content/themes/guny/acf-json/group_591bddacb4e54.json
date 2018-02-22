@@ -7,6 +7,7 @@
             "label": "Title",
             "name": "trip_landing_title",
             "type": "text",
+            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -26,7 +27,28 @@
             "label": "Tagline",
             "name": "trip_landing_tagline",
             "type": "text",
+            "value": null,
             "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5a8eec2bdd105",
+            "label": "Trip Meta Description",
+            "name": "trip_meta_description",
+            "type": "text",
+            "value": null,
+            "instructions": "Enter a Meta Description for the Trips Page.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -57,6 +79,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "modified": 1495628330
+    "description": ""
 }

@@ -124,6 +124,22 @@ class GunySite extends TimberSite {
     }
     $context['is_archive'] = is_archive();
     $context['current_url'] = strtok($_SERVER["REQUEST_URI"],'?');
+
+    // Get the META description from Theme Settings
+    // TO EDIT if all the pages will get meta desc
+    $arr_pages=array('events', 'inspirations', 'programs', 'topics', 'trips');
+    $cur_page=$_SERVER["REQUEST_URI"];
+    foreach($arr_pages as $key=>$value) {
+      if(strpos($cur_page,$value)){
+        $page_desc=$context['options'][rtrim($value,'s').'_meta_description']; 
+      }
+    }
+
+    if($page_desc){
+      $context['page_meta_desc'] = $page_desc;
+    }
+    // end of META description
+    
     return $context;
   }
 

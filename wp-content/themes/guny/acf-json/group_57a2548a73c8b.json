@@ -7,6 +7,7 @@
             "label": "Title",
             "name": "program_landing_title",
             "type": "text",
+            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -28,6 +29,7 @@
             "label": "Tagline",
             "name": "program_landing_tagline",
             "type": "text",
+            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -43,6 +45,26 @@
             "maxlength": "",
             "readonly": 0,
             "disabled": 0
+        },
+        {
+            "key": "field_5a8eebf7ca601",
+            "label": "Program Meta Description",
+            "name": "program_meta_description",
+            "type": "text",
+            "value": null,
+            "instructions": "Enter a Meta Description for the Programs Page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
@@ -61,6 +83,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "modified": 1470256295
+    "description": ""
 }

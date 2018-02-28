@@ -1,10 +1,11 @@
 <?php
+
 /**
-* Plugin Name: Growing Up NYC Post Types
-* Description: Custom post types and taxonomies
-* Version: 1.0.1
-* Author: Blue State Digital <http://www.bluestatedigital.com>
-*/
+ * Plugin Name: Growing Up NYC Post Types
+ * Description: Custom post types and taxonomies
+ * Version: 1.0.2
+ * Author: Blue State Digital <http://www.bluestatedigital.com>
+ */
 
 class GUPostTypes {
 
@@ -108,12 +109,41 @@ class GUPostTypes {
         'rewrite' => false
       )
     );
+
+    register_post_type(
+      'summer-guide',
+      array(
+        'labels' => array(
+          'name' => 'Summer Guides',
+          'singular_name' => 'Summer Guide',
+          'add_new_item' => 'Add New Summer Guide',
+          'edit_item' => 'Edit Summer Guide',
+          'new_item' => 'New Summer Guide',
+          'view_item' => 'View Summer Guide',
+          'search_items' => 'Search Summer Guides',
+          'not_found' =>  'No Summer Guides Found',
+          'not_found_in_trash' => 'No Summer Guides found in trash',
+          'all_items' => 'All Summer Guides',
+          'archives' => 'Summer Guide Archives',
+          'insert_into_item' => 'Insert into Summer Guide',
+          'uploaded_to_this_item' => 'Uploaded to this Summer Guide'
+        ),
+        'public' => true,
+        'menu_position' => 24,
+        'menu_icon' => 'dashicons-groups',
+        'supports' => array('title', 'excerpt'),
+        'has_archive' => 'Summer Guides',
+        'rewrite' => array(
+          'slug' => 'Summer Guides'
+        )
+      )
+    );
   }
 
   function create_taxonomies() {
     register_taxonomy(
       'borough',
-      'tribe_events',
+      array('tribe_events', 'summer-guide'),
       array(
         'label' => __( 'Event Location' ),
         'hierarchical' => true
@@ -122,7 +152,7 @@ class GUPostTypes {
 
     register_taxonomy(
       'age_group',
-      array('age', 'tribe_events', 'program'),
+      array('age', 'tribe_events', 'program', 'summer-guide'),
       array(
         'label' => __( 'Age Groups' ),
         'rewrite' => array(
@@ -135,7 +165,7 @@ class GUPostTypes {
 
     register_taxonomy(
       'programs_cat',
-      'program',
+      array('program', 'summer-guide'),
       array(
         'label' => __( 'Program Categories' ),
         'hierarchical' => true

@@ -1,10 +1,11 @@
 <?php
-/*
-Plugin Name: ms-inspirations
-Version: 1.0
-Author: Smallaxe
-Description: Inspirations posttypes for Microsite
-*/
+
+/**
+ * Plugin Name: ms-inspirations
+ * Version: 1.0
+ * Author: Smallaxe
+ * Description: Inspirations posttypes for Microsite
+ */
 
 function ms_inspirations_create() {
     // set up labels

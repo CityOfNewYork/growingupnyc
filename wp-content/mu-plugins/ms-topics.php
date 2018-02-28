@@ -1,10 +1,11 @@
 <?php
-/*
-Plugin Name: ms-topics
-Version: 1.0
-Author: Smallaxe
-Description: Topics posttypes for Microsite
-*/
+
+/**
+ * Plugin Name: ms-topics
+ * Version: 1.0
+ * Author: Smallaxe
+ * Description: Topics posttypes for Microsite
+ */
 
 function ms_topics_create() {
   // set up labels

@@ -130,7 +130,7 @@ class GUPostTypes {
         ),
         'public' => true,
         'menu_position' => 24,
-        'menu_icon' => 'dashicons-groups',
+        'menu_icon' => 'dashicons-palmtree',
         'supports' => array('title', 'excerpt'),
         'has_archive' => 'Summer Guides',
         'rewrite' => array(

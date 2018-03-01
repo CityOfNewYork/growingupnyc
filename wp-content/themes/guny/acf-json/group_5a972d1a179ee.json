@@ -6,7 +6,7 @@
             "key": "field_5a972d0ffd99e",
             "label": "",
             "name": "location_description",
-            "type": "textarea",
+            "type": "text",
             "value": null,
             "instructions": "",
             "required": 0,
@@ -18,9 +18,9 @@
             },
             "default_value": "",
             "placeholder": "",
-            "maxlength": "",
-            "rows": 3,
-            "new_lines": ""
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
@@ -40,5 +40,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1519857542
+    "modified": 1519932978
 }

@@ -131,10 +131,11 @@ class GUPostTypes {
         'public' => true,
         'menu_position' => 24,
         'menu_icon' => 'dashicons-palmtree',
-        'supports' => array('title', 'excerpt'),
-        'has_archive' => 'Summer Guides',
+        'supports' => array('title', 'excerpt', 'editor'),
+        'has_archive' => true,
         'rewrite' => array(
-          'slug' => 'Summer Guides'
+          'slug' => 'summer-guides',
+          'with_front' => false
         )
       )
     );

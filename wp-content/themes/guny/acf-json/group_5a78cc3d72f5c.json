@@ -4,7 +4,7 @@
     "fields": [
         {
             "key": "field_5a78cc2bc5e51",
-            "label": "Sections",
+            "label": "",
             "name": "sections",
             "type": "flexible_content",
             "value": null,
@@ -96,36 +96,6 @@
                     ],
                     "min": "",
                     "max": ""
-                },
-                "5a7a1b9aaeb83": {
-                    "key": "5a7a1b9aaeb83",
-                    "name": "contact-us",
-                    "label": "Contact Us",
-                    "display": "block",
-                    "sub_fields": [
-                        {
-                            "key": "field_5a7a1ba2aeb84",
-                            "label": "Section Title",
-                            "name": "section_title",
-                            "type": "text",
-                            "value": null,
-                            "instructions": "",
-                            "required": 1,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "Contact Us",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
-                        }
-                    ],
-                    "min": "",
-                    "max": ""
                 }
             },
             "button_label": "Add Section",
@@ -147,6 +117,13 @@
                 "operator": "==",
                 "value": "template-generic-microsite-page.php"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
         ]
     ],
     "menu_order": 0,
@@ -157,5 +134,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1517952204
+    "modified": 1519946249
 }

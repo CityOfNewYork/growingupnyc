@@ -165,9 +165,18 @@ class GUPostTypes {
 
     register_taxonomy(
       'programs_cat',
-      array('program', 'summer-guide'),
+      array('program'),
       array(
         'label' => __( 'Program Categories' ),
+        'hierarchical' => true
+      )
+    );
+
+    register_taxonomy(
+      'summer_programs_cat',
+      array('summer-guide'),
+      array(
+        'label' => __( 'Program Gategories' ),
         'hierarchical' => true
       )
     );

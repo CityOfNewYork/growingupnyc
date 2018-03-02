@@ -62,7 +62,7 @@
           {% set section_no_divider_after = ['newsletter-signup'] %}
           {% for key, section in sections %}
 
-            {% include 'partials/' ~ section.acf_fc_layout ~ '.twig' with {title: section.section_title, id: 'section-' ~ section.slug} %}
+            {% include 'partials/' ~ section.acf_fc_layout ~ '.twig' with {title: section.section_title, id: 'section-' ~ section.slug, class: ''} %}
 
             {% if section_previous and section_previous in section_no_divider_after %}<hr>{% endif %}
 

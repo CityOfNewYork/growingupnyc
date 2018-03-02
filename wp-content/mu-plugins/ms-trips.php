@@ -1,10 +1,11 @@
 <?php
-/*
-Plugin Name: ms-trips
-Version: 1.0
-Author: Smallaxe
-Description: Trips posttypes for Microsite
-*/
+
+/**
+ * Plugin Name: ms-trips
+ * Version: 1.0
+ * Author: Smallaxe
+ * Description: Trips posttypes for Microsite
+ */
 
 function ms_trips_create() {
   // set up labels

@@ -77,7 +77,7 @@
 
                 <li class="o-inline__item"><a href="#ages" data-toggle="offcanvas-ages" class="c-banner__link">{{ __('Ages', 'GUNY-Primary-Menu') }}</a></li>
 
-                {% if function('Search\\get_controller_id') %}
+                {% if function('Search\\auth') %}
                 <li class="o-inline__item">
                    <a class="c-banner__link" href="#search" data-toggle="overlay-search" data-toggle-class="fadeInDown">
                      <svg class="c-banner__icon c-banner__icon__search" role="img"><title>Search</title><use xlink:href="#icon-search"></use></svg>
@@ -91,7 +91,7 @@
           </div>
         </header>
 
-        {% if function('Search\\get_controller_id') %}
+        {% if function('Search\\auth') %}
         <section class="o-overlay js-overlay animated" id="overlay-search" aria-hidden="true">
           <div class="o-container-med">
 

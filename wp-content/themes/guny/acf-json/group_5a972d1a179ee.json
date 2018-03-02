@@ -8,7 +8,7 @@
             "name": "location_description",
             "type": "text",
             "value": null,
-            "instructions": "",
+            "instructions": "To add a link, use markdown syntax. Ex; \"Multiple locations, see [website](http:\/\/website.com) for details\"",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -40,5 +40,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1519932978
+    "modified": 1520020516
 }

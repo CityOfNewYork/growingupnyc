@@ -517,7 +517,6 @@ $includes = [
   '/includes/guny_filter_events.php', // Event filters
   '/includes/routing.php', // Routing
   '/includes/search.php', // Search functions
-  '/includes/banners.php', // Banner functions
   [ // Templating
     '/includes/get_focal_point.php', // Focal point functions
     '/includes/format_posts.php', // Format posts based on their type

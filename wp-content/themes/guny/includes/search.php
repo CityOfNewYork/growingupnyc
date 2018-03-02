@@ -84,15 +84,20 @@ function get_controller_id() {
  * Determine if the page is public or the current user has permission
  * @return boolean Permission status
  */
-function auth() {
+function visible() {
   $auth = false;
-  $status = get_post_status(get_controller_id());
-  if ($status != 'private' || current_user_can(USER_PRIVATE_VIEWING_ROLE)) {
+
+  if (
+    get_post_status(get_controller_id()) != 'private' ||
+    current_user_can(USER_PRIVATE_VIEWING_ROLE)
+  ) {
     $auth = true;
   }
+
+  $auth = (null === get_controller_id()) ? false : $auth;
+
   return $auth;
 }
-
 
 /**
  * Get the search domain, this ensures integration with WPML

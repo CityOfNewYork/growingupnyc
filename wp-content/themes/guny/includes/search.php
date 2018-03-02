@@ -64,6 +64,9 @@ const ENABLE_SUGGESTIONS = 'field_5a7886d200097';
 const SUGGESTED_TERMS_FIELD = 'field_5a74dbd08af7f';
 
 
+const USER_PRIVATE_VIEWING_ROLE = 'administrator';
+
+
 /**
  * Functions
  */
@@ -75,6 +78,25 @@ const SUGGESTED_TERMS_FIELD = 'field_5a74dbd08af7f';
  */
 function get_controller_id() {
   return get_page_by_path(PATH)->ID;
+}
+
+/**
+ * Determine if the page is public or the current user has permission
+ * @return boolean Permission status
+ */
+function visible() {
+  $auth = false;
+
+  if (
+    get_post_status(get_controller_id()) != 'private' ||
+    current_user_can(USER_PRIVATE_VIEWING_ROLE)
+  ) {
+    $auth = true;
+  }
+
+  $auth = (null === get_controller_id()) ? false : $auth;
+
+  return $auth;
 }
 
 /**

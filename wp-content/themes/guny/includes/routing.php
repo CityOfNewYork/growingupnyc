@@ -55,7 +55,7 @@ Routes::map('/trips/:post', function($params) {
  */
 
 Routes::map('/search', function($params) {
-  if (Search\get_controller_id()) {
+  if (Search\visible()) {
     Routes::load('search.php', $params, null, 200);
   } else {
     wp_redirect('/'); exit;

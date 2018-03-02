@@ -1,0 +1,120 @@
+{% extends "list.twig" %}
+
+{% block head_extras %}
+  <style>
+    .c-hero {
+      background-image: url(/wp-content/themes/guny/assets/img/hero-full-splatter.svg);
+    }
+  </style>
+{% endblock %}
+
+{% block hero %}
+  <div class="js-parallax">
+    <header class="c-hero c-hero--bg-secondary u-lg-gutter js-parallax-content">
+      <div class="o-container js-parallax-text">
+        <h1 class="c-hero__title">{{options.event_landing_title}}</h1>
+        <p class="c-hero__tagline">{{options.event_landing_tagline}}</p>
+      </div>
+    </header>
+  </div> <!-- /.js-parallax -->
+{% endblock %}
+
+{% block list_sidebar %}
+  {# Event List Filters #}
+  <div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
+
+    <div class="c-list-box__item">
+      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{current_event_filter}}</h3>
+      <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
+        <li><a href="{{all_events.link}}" class="c-list-box__subitem">{{all_events.name}}</a></li>
+        {% for event_type in event_filter %}
+        {# <li class="{{event_type.slug}}"><a href="{{event_type.link}}" class="c-list-box__subitem">{{event_type.name}}</a></li> #}
+        <li><a href="{{event_type.link}}" class="c-list-box__subitem">{{event_type.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="c-list-box__item">
+      <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{current_age_filter}}</h3>
+      <ul class="js-accordion__content c-list-box__content" id="age-filter-panel">
+        <li><a href="{{all_ages.link}}" class="c-list-box__subitem">{{all_ages.name}}</a></li>
+        {% for age in age_filter %}
+        <li><a href="{{age.link}}" class="c-list-box__subitem">{{age.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="c-list-box__item">
+      <h3 class="js-accordion__header c-list-box__heading" id="borough-filter-heading">{{current_borough_filter}}</h3>
+      <ul class="js-accordion__content c-list-box__content" id="borough-filter-panel">
+        <li><a href="{{all_boroughs.link}}" class="c-list-box__subitem">{{all_boroughs.name}}</a></li>
+        {% for borough in borough_filter %}
+        <li><a href="{{borough.link}}" class="c-list-box__subitem">{{borough.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+
+  </div>
+{% endblock %}
+
+{% block before_list %}
+  {{function('do_action', 'tribe_events_before_template')}}
+{% endblock %}
+
+{% block post_list %}
+  {# Pager #}
+  <h2 class="c-arrow-pager">
+
+    {% if prev_month_url %}
+    <a class="c-arrow-pager__arrow c-arrow-pager__arrow--left" href="{{prev_month_url}}" rel="prev">
+      <svg role="img" class="icon--xsmall"><title>{{ __('Previous Month', 'guny-events') }}</title><use xlink:href="#icon-caret-left"></use></svg>
+    </a>
+    {% endif %}
+
+    {{current_month_text}}
+
+    {% if next_month_url %}
+    <a class="c-arrow-pager__arrow c-arrow-pager__arrow--right" href="{{next_month_url}}" rel="next">
+      <svg role="img" class="icon--xsmall"><title>{{ __('Next Month', 'guny-events') }}</title><use xlink:href="#icon-caret-right"></use></svg>
+    </a>
+    {% endif %}
+
+  </h2>
+
+  {# Event List #}
+  {% for event in event_list %}
+
+  <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
+    <h3>{{ event.date_header }}</h3>
+    {% for post in event.posts %}
+    <div class="c-block-list__item">
+      {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
+    </div>
+    {% endfor %}
+  </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-sm-gutter -->
+
+  {% else %}
+
+  <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-sm-gutter">
+    <p class="type--no-results">
+      {{ __('No events found for those filter options. Check for similar events in', 'guny-events') }} <a href="{{next_month_url}}" rel="next">{{next_month_text}}</a> {{ __('or', 'guny-events') }} <a href="{{reset_filters_url}}">{{ __('reset your filters', 'guny-events') }}</a>.</p>
+  </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-sm-gutter -->
+
+  {% endfor %}
+{% endblock %}
+
+{% block after_list %}
+  {{function('do_action', 'tribe_events_after_template')}}
+
+  <div class="o-content-container--compact">
+
+    {% if prev_url %}
+    <a href="{{prev_url}}" class="button--outline button--outline--gray alignleft">{{ __('Previous', 'guny') }}</a>
+    {% endif %}
+
+    {% if next_url %}
+    <a href="{{next_url}}" class="button--outline button--outline--gray alignright">{{ __('Next', 'guny') }}</a>
+    {% endif %}
+
+  </div>
+{% endblock %}

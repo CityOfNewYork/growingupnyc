@@ -55,7 +55,11 @@ Routes::map('/trips/:post', function($params) {
  */
 
 Routes::map('/search', function($params) {
-  Routes::load('search.php', $params, null, 200);
+  if (Search\get_controller_id()) {
+    Routes::load('search.php', $params, null, 200);
+  } else {
+    wp_redirect('/'); exit;
+  }
 });
 
 // Redirect default Wordpress search to our route
@@ -63,7 +67,6 @@ function search() {
   if (is_search() && !empty($_GET['s'])) {
     $query = Search\get_query();
     $path = Search\get_path();
-    wp_redirect($path . '/?' . http_build_query($query));
-    exit();
+    wp_redirect($path . '/?' . http_build_query($query)); exit;
   }
 } add_action('template_redirect', 'search');

@@ -533,6 +533,9 @@ $includes = [
   ],
   [ // Admin
     '/includes/program_posts_column.php' // Add program name to post in the admin
+  ],
+  [ // michelf
+    '/vendor/michelf/php-markdown/Michelf/Markdown.inc.php' // Markdown parser
   ]
 ];
 

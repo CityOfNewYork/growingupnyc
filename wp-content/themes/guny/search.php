@@ -42,6 +42,6 @@ $context['facet_post_type'] = Timber::compile($templates_filters, $context);
 $context['results'] = Timber::compile($templates_results, $context);
 $context['pagination'] = Timber::compile($templates_pagination, $context);
 
-// Render view
 $templates = array('search.twig');
+
 Timber::render($templates, $context);

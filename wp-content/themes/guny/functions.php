@@ -529,7 +529,8 @@ $includes = [
     '/vendor/nyco/wp-assets/dist/script.php' // Enqueue functions
   ],
   [ // Wpml
-    '/includes/term_translations.php', // Wpml, Term translation helpers
+    '/includes/term_translations.php', // Term translation helpers
+    '/includes/languages.php' // A custom language switcher
   ],
   [ // Admin
     '/includes/program_posts_column.php' // Add program name to post in the admin

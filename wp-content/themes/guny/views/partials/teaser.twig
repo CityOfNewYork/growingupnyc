@@ -1,7 +1,7 @@
 <div class="c-card {% block classes %}{% endblock %}">
   {% block sticker %}
   <a href="{{ post.link }}">
-    <div class="c-card__sticker sticker" aria-hidden="true">
+    <div class="c-card__sticker sticker {% block classes_sticker %}{% endblock %}" aria-hidden="true">
       {% block sticker_content %}{% endblock %}
     </div>
   </a>

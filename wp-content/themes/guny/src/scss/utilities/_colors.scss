@@ -1,0 +1,17 @@
+/**
+ * Colors
+ */
+
+// Dependencies
+@import '../settings/variables';
+
+// Declarations
+.bg-pure-orange,
+.hover\:bg-pure-orange:hover {
+  background-color: $pure-orange !important;
+}
+
+.bg-vivid-orange,
+.hover\:bg-vivid-orange:hover {
+  background-color: $vivid-orange !important;
+}

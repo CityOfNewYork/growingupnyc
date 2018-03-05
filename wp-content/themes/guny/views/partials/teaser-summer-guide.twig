@@ -1,0 +1,48 @@
+{% extends "partials/teaser.twig" %}
+
+{% block classes %}c-card--subtitle-first{% endblock %}
+
+{% block classes_sticker %}bg-pure-orange{% endblock %}
+
+{% block sticker_content %}
+  {% if post.multiday %}
+  <span class="event-month-date">{{post.start_datetime|date('M j')}} -</span>
+  <span class="event-month-date">{{post.end_datetime|date('M j')}}</span>
+  {% else %}
+  {{ post.start_date_formatted }}
+  {% endif %}
+{% endblock %}
+
+{% block subtitle %}
+  {% include "partials/event-date.twig" %}
+{% endblock %}
+
+{% block tags %}
+
+  {% for key, value in taxonomies %}
+    {% for term in post.terms(key) %}
+
+      {% if translated_ids %}
+        {% set id = function('Wpml\\get_translated_term_id', term.ID, key) %}
+      {% else %}
+        {% set id = term.ID %}
+      {% endif %}
+
+      <a class="button--pill bg-vivid-orange hover:bg-pure-orange" href="?{{ key }}={{ id }}">{{ term.name }}</a>
+
+    {% endfor %}
+  {% endfor %}
+
+{% endblock %}
+
+{% block link %}
+  {% if post.venue %}
+  <p class="c-card__link">
+    {% include 'partials/event-link.twig' %}
+  </p>
+  {% endif %}
+{% endblock %}
+
+{% block body %}
+{{post.post_excerpt ? post.post_excerpt : post.summary|excerpt(15)}}
+{% endblock %}

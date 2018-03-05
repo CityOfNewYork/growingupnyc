@@ -34,39 +34,44 @@ const FIELD_DATE_OPTIONS = 'field_5a9727557ffee';
 
 const FIELD_SECTIONS = 'field_5a78cc2bc5e51';
 
-// Borrough filter term configuration
-const CONFIG_BORROUGH = array(
-  'hierarchical' => true,
-  'depth' => 1,
-  'orderby' => 'NAME',
-  'hide_empty' => false
-);
-
-// Age filter term configuration
-const CONFIG_AGE = array(
-  'hierarchical' => true,
-  'depth' => 1,
-  'hide_empty' => true,
-  'orderby' => 'term_order'
-);
+// The theme options setting for the banner image in group_5a9d9040b6b10.json
+const FIELD_BANNER_IMAGE = 'field_5a9dbafbc4617';
 
 // The base configuration for all filters
-const FILTERS = array(
-  // Someone misspelled 'borrough' when initially setting up the taxonomy
+const TAXONOMIES = array(
+  // TODO - Fix misspelling on taxonomy
   'borough' => array(
     'name' => 'All Borroughs',
     'prompt' => 'All Borroughs',
-    'slug' => 'borroughs'
+    'slug' => 'borroughs',
+    'config' => array(
+      'hierarchical' => true,
+      'depth' => 1,
+      'orderby' => 'NAME',
+      'hide_empty' => false
+    )
   ),
   'summer_programs_cat' => array(
     'name' => 'All Programs',
     'prompt' => 'All Programs',
-    'slug' => 'programs'
+    'slug' => 'programs',
+    'config' => array(
+      'orderby' => 'NAME',
+      'hide_empty' => false,
+      'depth' => 1,
+      'hierarchical' => true,
+    )
   ),
   'age_group' => array(
     'name' => 'All Ages',
     'prompt' => 'All Ages',
-    'slug' => 'ages'
+    'slug' => 'ages',
+    'config' => array(
+      'hierarchical' => true,
+      'depth' => 1,
+      'hide_empty' => true,
+      'orderby' => 'term_order'
+    )
   )
 );
 
@@ -109,6 +114,10 @@ function get_sections() {
   return get_field(FIELD_SECTIONS);
 }
 
+function get_hero_banner_img() {
+  return get_field(FIELD_BANNER_IMAGE, 'option');
+}
+
 /**
  * Return the translation domain for templates
  * @return string The translation domain constant
@@ -119,13 +128,13 @@ function get_translation_domain() {
 
 /**
  * Get the filter template data for a taxonomy
- * @return [array] The collection of filters with slug, name, and links
+ * @return [array] The collection of TAXONOMIES with slug, name, and links
  */
 function get_filter($translate_ids = false, $slug) {
   $filter = array();
 
   // Works in context of the post type/archive type
-  $filter = Timber::get_terms($slug, CONFIG_AGE);
+  $filter = Timber::get_terms($slug, TAXONOMIES[$slug]['config']);
 
   // If it's empty, just return what we got
   if (!sizeof($filter)) return $filter;
@@ -142,8 +151,8 @@ function get_filter($translate_ids = false, $slug) {
 
   // Add the reset filter
   array_unshift($filter, array(
-    'slug' => 'all_' . FILTERS[$slug]['slug'],
-    'name' => __(FILTERS[$slug]['name'], TRANSLATION_DOMAIN),
+    'slug' => 'all_' . TAXONOMIES[$slug]['slug'],
+    'name' => __(TAXONOMIES[$slug]['name'], TRANSLATION_DOMAIN),
     'link' => esc_url(remove_query_arg($slug))
   ));
 
@@ -158,7 +167,7 @@ function get_filter($translate_ids = false, $slug) {
 function get_filters($translate_ids = false) {
   $filters = array();
 
-  foreach (FILTERS as $key => $value) {
+  foreach (TAXONOMIES as $key => $value) {
     $value['filters'] = get_filter($translate_ids, $key);
     if (sizeof($value['filters'])) {
       $value['name'] = __($value['name'], TRANSLATION_DOMAIN);
@@ -168,4 +177,12 @@ function get_filters($translate_ids = false) {
   }
 
   return $filters;
+}
+
+/**
+ * Get the post type taxonomy configuration
+ * @return array The taxonomy configuration defined above
+ */
+function get_taxonomies() {
+  return TAXONOMIES;
 }

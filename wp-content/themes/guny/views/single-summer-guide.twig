@@ -1,164 +1,95 @@
-{% extends "base.twig" %}
+{% extends 'base.twig' %}
 
 {% block content %}
 
-  {% if is_archive %}
-    {% set event_link %}{{current_url}}{% endset %}
-  {% elseif language == 'es' %}
-    {% set event_link = '/es/events' %}
-  {% else %}
-    {% set event_link = '/events' %}
-  {% endif %}
+  <div class="js-parallax">
+    <header class="c-hero c-hero--large bg-pure-orange bg-splatter-pure-orange js-parallax-content">
+      <div class="o-container js-parallax-text">
 
-  <header class="c-hero c-hero--light">
-    <div class="o-container">
+        <h1 class="c-hero__title c-hero-ms__topics__title">
 
-      <h1>{{post.title}}</h1>
+          <span class="c-hero__sticker sticker bg-vivid-orange">
+            <svg aria-hidden="true" class="icon--medium"><use xlink:href="#icon-summer-guides"></use></svg>
+          </span>
 
-      <p class="c-hero__tagline">
+          {{ post.title }}
 
-        {% for term in post.terms('tribe_events_cat') %}
-        <a href="{{ event_link }}/?cat_id={{ function('Wpml\\get_translated_term_id', term.ID, 'tribe_events_cat') }}"
-          class="button--pill {% if term.slug == 'espanol' %}button--pill--es{% endif %}">
-          {{ term.name }}
-        </a>
-        {% endfor %}
+        </h1>
 
-        {% for term in post.terms('age_group') %}
-        <a href="{{ event_link }}/?age_id={{ function('Wpml\\get_translated_term_id', term.ID, 'tribe_events_cat') }}"
-           class="button--pill button--pill--alt">
-           {{ term.name }}
-        </a>
-        {% endfor %}
+        <p class="c-hero__tagline">
+          {% set i = 0 %}
+          {% set next = i + 1 %}
+          {% set colors = ['vivid-orange', 'bright-red', 'vivid-orange', 'bright-red'] %}
+          {% for key, value in taxonomies %}
 
-      </p>
+            {% set next = i + 1 %}
 
-    </div> <!-- /.o-container -->
-  </header>
+            {% for term in post.terms(key) %}
+            <a class="button--pill bg-{{ colors[i] }} hover:bg-{{ colors[ i + 1 ] }}" href="?{{ key }}={{ term.slug }}">
+              {{ term.name }}
+            </a>
+            {% endfor %}
 
-  <section class="o-container u-bottom-spacing">
-    <aside class="o-article-sidebar o-content-container--compact u-lg-gutter">
-      <dl class="c-details-list">
+            {% set i = next %}
 
-        <dt class="c-details-list__term">{{ __('Date', 'guny-events') }}</dt>
-
-        <dd class="c-details-list__descr">
-          {{post.start_date_full}}
-          {% if post.multiday %}
-          - {{post.end_date_full}}
-          {% endif %}
-        </dd>
-
-        <dt class="c-details-list__term">{{ __('Time', 'guny-events') }}</dt>
-
-        <dd class="c-details-list__descr">
-          {% if not post.all_day %}
-          {{post.start_datetime|date('g:i A')}}
-
-            {% if post.end_datetime != post.start_datetime %}
-            - {{post.end_datetime|date('g:i A')}}
-            {% endif %}
-
-          {% else %}
-          {{ __('All Day', 'guny-events') }}
-          {% endif %}
-        </dd>
-
-        <dt class="c-details-list__term">{{ __('Location', 'guny-events') }}</dt>
-
-        <dd class="c-details-list__descr">
-          {{post.venue}},
-          {% for borough in post.terms('borough') %}
-          {{borough.name}}
           {% endfor %}
-        </dd>
+        </p>
 
-        <dt class="c-details-list__term">{{ __('Address', 'guny-events') }}</dt>
+      </div>
+    </header>
+  </div>
 
-        <dd class="c-details-list__descr">
+  <article class="o-container u-bottom-spacing-small js-sticky-container">
 
-          {% if post.venue_address %}
+    {% if sections %}
+    <aside class="o-article-sidebar">
+      <div class="o-content-container--compact u-shift-up">
+        <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
 
-          <span class="tribe-street-address">{{post.venue_address.address}}</span><br>
-          <span class="tribe-locality">{{post.venue_address.city}}</span><span class="tribe-delimiter">,</span>
-          <abbr class="tribe-region tribe-events-abbr" title="{{post.venue_address.full_region}}">{{post.venue_address.region}}</abbr>
-          <span class="tribe-postal-code">{{post.venue_address.zip}}</span>
-
-            {% if post.venue_address.phone %}
-            <br>{{post.venue_address.phone}}
-            {% endif %}
-
-            {% if post.venue_address.website %}
-            <br>{{post.venue_address.website}}
-            {% endif %}
-
+          {% for section in sections %}
+          {% if section.section_title %}
+          <li class="c-nav-list__item">
+            <a class="js-section c-nav-list__link bg-vivid-orange border-vivid-orange hover:border-bright-red hover:bg-bright-red" href="#section-{{ section.slug }}" data-section="section-{{ section.slug }}">
+              {{ section.section_title }} {# translation comes from page content #}
+              <svg aria-hidden="true" class="icon--caret">
+                <use xlink:href="#icon-caret-right"></use>
+              </svg>
+            </a>
+          </li>
           {% endif %}
+          {% endfor %}
 
-        </dd>
-
-        <dt class="c-details-list__term">{{ __('Cost', 'guny-events') }}</dt>
-
-        <dd class="c-details-list__descr">
-          {% if post.event_cost %}
-          {{post.event_cost}}
-          {% else %}
-          {{ __('Free', 'guny-events') }}
-          {% endif %}
-        </dd>
-
-        {% if post.accessibility %}
-        <dt class="c-details-list__term">{{ __('Accessibility', 'guny-events') }}</dt>
-        <dd class="c-details-list__descr">{{post.accessibility}}</dd>
-        {% endif %}
-
-        {% if post.event_website %}
-        <dt class="c-details-list__term">{{ __('Event Website', 'guny-events') }}</dt>
-        <dd class="c-details-list__descr"><a href="{{post.event_website}}" target="_blank">{{post.event_website}}</a></dd>
-        {% endif %}
-
-      </dl>
+        </ol>
+      </div>
     </aside>
-    <article class="o-article o-content-container--compact">
-      <div class="o-content-container--text s-wysiwyg">
+    {% endif %}
 
-        {% if post.summary %}
-        <h2>{{ __('About This Event', 'guny-events') }}</h2>
-        {{post.get_field('summary')}}
+    <div class="o-article js-sticky-article">
+      <div class="o-content-container--compact">
+
+        {% if post.content %}
+        <section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" id="section-summary">
+          {{ post.content }} {# translation comes from page content #}
+        </section>
         {% endif %}
 
-        {% if post.image %}
-        <figure class="o-feature-photo">
-          <img src="{{post.image.src}}" alt="{{post.image.alt}}" class="o-feature-photo__photo">
-        </figure>
+        {% if sections %}
+          {% set section_previous = true %}
+          {% set section_no_divider_after = ['newsletter-signup'] %}
+          {% for key, section in sections %}
+
+            {% include 'partials/' ~ section.acf_fc_layout ~ '.twig' with {title: section.section_title, id: 'section-' ~ section.slug, class: ''} %}
+
+            {% if section_previous and section_previous in section_no_divider_after %}<hr>{% endif %}
+
+            {% set section_previous = section.acf_fc_layout %}
+
+          {% endfor %}
         {% endif %}
 
-        <h3>{{ __('Location Details', 'guny-events') }}</h3>
+      </div>
+    </div>
 
-        {{post.location_details}} <a href="{{post.google_directions_link}}" target="_blank">{{ __('Get directions to the location.', 'guny-events') }}</a>
+  </article>
 
-        {{post.venue_map}}
-
-        {% if post.organizer %}
-        <h3>{{ __('Event Organizer', 'guny-events') }}</h3>
-        <p>{{post.organizer}}</p>
-        {% endif %}
-
-        {% if post.organizer_phone %}
-        <h3>{{ __('Phone Number', 'guny-events') }}</h3>
-        <p><a href="tel:{{post.organizer_phone}}">{{post.organizer_phone}}</a></p>
-        {% endif %}
-
-        {% if post.organizer_email %}
-        <h3>{{ __('Email Address', 'guny-events') }}</h3>
-        <p><a href="mailto:{{post.organizer_email}}" rel="nofollow">{{post.organizer_email}}</a></p>
-        {% endif %}
-
-        {% if post.organizer_link %}
-        <h3>{{ __('Website', 'guny-events') }}</h3>
-        <p><a href="{{post.organizer_link}}" target="_blank">{{post.organizer_link}}</a></p>
-        {% endif %}
-
-      </div> <!-- /.o-content-container-text -->
-    </article>
-  </section> <!-- /.o-container.u-bottom-spacing -->
 {% endblock %}

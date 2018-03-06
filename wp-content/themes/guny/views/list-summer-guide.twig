@@ -28,7 +28,7 @@
 {% block hero %}
 
   <div class="js-parallax">
-    <header class="c-hero c-hero--large pre-schooler-background js-parallax-content">
+    <header class="c-hero c-hero--large bg-pure-orange js-parallax-content">
 
       <div class="o-container js-parallax-text">
         <h1 class="c-hero__title">
@@ -40,7 +40,7 @@
         <p class="c-hero__tagline">{{ options.summer_landing_tagline }}</p>
       </div>
 
-      <svg class="c-hero__frill pre-schooler-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 404 359" >
+      <svg class="c-hero__frill" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 404 359" >
         <title>Paint Splatter</title>
         <defs>
           <linearGradient x1="73.9267481%" y1="16.6229021%" x2="50%" y2="55.6984773%" id="a">
@@ -77,6 +77,8 @@
 
 {% block post_list %}
 
+  {% if posts %}
+
   <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
   {% for post in posts %}
     <div class="c-block-list__item">
@@ -84,6 +86,17 @@
     </div>
   {% endfor %}
   </section>
+
+  {% else %}
+
+  <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-sm-gutter">
+    <p class="type--no-results">
+      {{ __('No summer events found for those filter options. Check for similar summer events in', domain) }} <a href="{{ archive_link }}">{{ __('reset your filters', domain) }}</a>.
+    </p>
+  </section>
+
+  {% endif %}
+
 
 {% endblock %}
 

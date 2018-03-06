@@ -20,20 +20,21 @@
   {% endif %}
 
   <div class="c-card__tags">
+  {% set i = 0 %}
+  {% set next = i + 1 %}
+  {% set colors = ['pure-orange', 'vivid-orange', 'bright-red', 'vivid-orange'] %}
   {% for key, value in taxonomies %}
+
+    {% set next = i + 1 %}
+
     {% for term in post.terms(key) %}
-
-      {% if translated_ids %}
-        {% set id = function('Wpml\\get_translated_term_id', term.ID, key) %}
-      {% else %}
-        {% set id = term.ID %}
-      {% endif %}
-
-      <a class="button--pill bg-vivid-orange hover:bg-pure-orange" href="?{{ key }}={{ id }}">
-        {{ term.name }}
-      </a>
-
+    <a class="button--pill bg-{{ colors[i] }} hover:bg-{{ colors[ i + 1 ] }}" href="?{{ key }}={{ term.slug }}">
+      {{ term.name }}
+    </a>
     {% endfor %}
+
+    {% set i = next %}
+
   {% endfor %}
   </div>
 

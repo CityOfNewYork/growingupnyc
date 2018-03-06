@@ -102,6 +102,7 @@ function get_sections($id = null) {
  * @return Object The media image object
  */
 function get_hero_banner_img() {
+  pre_dump(get_field(FIELD_BANNER_IMAGE, 'option'));
   return get_field(FIELD_BANNER_IMAGE, 'option');
 }
 
@@ -117,7 +118,7 @@ function get_translation_domain() {
  * Get the filter template data for a taxonomy
  * @return [array] The collection of TAXONOMIES with slug, name, and links
  */
-function get_filter($translate_ids = false, $slug) {
+function get_filter($slug) {
   $filter = array();
 
   // Works in context of the post type/archive type
@@ -130,8 +131,6 @@ function get_filter($translate_ids = false, $slug) {
     // Get properties of each item
     $filter[$key] = get_object_vars($value);
     // Translate the filter ID if needed
-    // $id = ($translate_ids) ?
-      // Wpml\get_translated_term_id($value->ID, $slug) : $value->ID;
     $id = $value->slug;
     // Create the link
     $filter[$key]['link'] = esc_url(add_query_arg($slug, $id));
@@ -149,14 +148,13 @@ function get_filter($translate_ids = false, $slug) {
 
 /**
  * Get all of the filters defined in the configuration
- * @param  [boolean] $translate_ids Wether the ids are to be translated
  * @return [array]                  The collection of filters
  */
-function get_filters($translate_ids = false) {
+function get_filters() {
   $filters = array();
 
   foreach (TAXONOMIES as $key => $value) {
-    $value['filters'] = get_filter($translate_ids, $key);
+    $value['filters'] = get_filter($key);
     if (sizeof($value['filters'])) {
       $value['name'] = __($value['name'], TRANSLATION_DOMAIN);
       $value['prompt'] = __($value['prompt'], TRANSLATION_DOMAIN);
@@ -165,6 +163,14 @@ function get_filters($translate_ids = false) {
   }
 
   return $filters;
+}
+
+/**
+ * Get the archive of the post type by it's slug
+ * @return string The post type archive link
+ */
+function get_archive_link() {
+  return get_post_type_archive_link(SLUG);
 }
 
 /**

@@ -17,6 +17,7 @@ $context['custom_switcher'] = Timber::compile(
   )
 );
 
-$templates = array('single-' . $post->post_type . '.twig');
+$context['taxonomies'] = SummerGuides\get_taxonomies();
+$context['sections'] = Templating\get_sections();
 
-Timber::render($templates, $context);
+Timber::render(array('single-summer-guide.twig'), $context);

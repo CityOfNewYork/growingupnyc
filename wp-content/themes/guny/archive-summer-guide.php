@@ -6,9 +6,6 @@
 
 $context = Timber::get_context();
 
-/** Filter IDs are translated to English until this post type is translated. */
-$context['translated_ids'] = true;
-
 $context['custom_switcher'] = Timber::compile(
   array('partials/language-switcher.twig'),
   array(
@@ -17,9 +14,11 @@ $context['custom_switcher'] = Timber::compile(
   )
 );
 
+$context['posts'] = Timber::get_posts();
 $context['taxonomies'] = SummerGuides\get_taxonomies();
 $context['banner'] = SummerGuides\get_hero_banner_img();
 $context['filters'] = SummerGuides\get_filters($context['translated_ids']);
 $context['domain'] = SummerGuides\get_translation_domain();
+$context['archive_link'] = SummerGuides\get_archive_link();
 
 Timber::render(array('list-summer-guide.twig'), $context);

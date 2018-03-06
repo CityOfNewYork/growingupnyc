@@ -130,8 +130,9 @@ function get_filter($translate_ids = false, $slug) {
     // Get properties of each item
     $filter[$key] = get_object_vars($value);
     // Translate the filter ID if needed
-    $id = ($translate_ids) ?
-      Wpml\get_translated_term_id($value->ID, $slug) : $value->ID;
+    // $id = ($translate_ids) ?
+      // Wpml\get_translated_term_id($value->ID, $slug) : $value->ID;
+    $id = $value->slug;
     // Create the link
     $filter[$key]['link'] = esc_url(add_query_arg($slug, $id));
   }

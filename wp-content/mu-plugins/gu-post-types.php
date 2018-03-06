@@ -134,7 +134,7 @@ class GUPostTypes {
         'supports' => array('title', 'excerpt', 'editor'),
         'has_archive' => true,
         'rewrite' => array(
-          'slug' => 'summer-guides',
+          'slug' => 'summer',
           'with_front' => false
         )
       )
@@ -147,7 +147,8 @@ class GUPostTypes {
       array('tribe_events', 'summer-guide'),
       array(
         'label' => __( 'Event Location' ),
-        'hierarchical' => true
+        'hierarchical' => true,
+        'rewrite' => false
       )
     );
 
@@ -156,11 +157,8 @@ class GUPostTypes {
       array('age', 'tribe_events', 'program', 'summer-guide'),
       array(
         'label' => __( 'Age Groups' ),
-        'rewrite' => array(
-          'slug' => 'age-group',
-          'with_front' => false
-        ),
-        'hierarchical' => true
+        'hierarchical' => true,
+        'rewrite' => false
       )
     );
 
@@ -178,7 +176,8 @@ class GUPostTypes {
       array('summer-guide'),
       array(
         'label' => __( 'Program Gategories' ),
-        'hierarchical' => true
+        'hierarchical' => true,
+        'rewrite' => false
       )
     );
   }

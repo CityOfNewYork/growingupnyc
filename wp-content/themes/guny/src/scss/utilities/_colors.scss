@@ -1,0 +1,67 @@
+/**
+ * Colors
+ */
+
+// Dependencies
+@import '../settings/variables';
+
+// Declarations
+.bg-pure-orange,
+.hover\:bg-pure-orange:hover {
+  background-color: $pure-orange !important;
+}
+
+.border-pure-orange,
+.hover\:border-pure-orange:hover {
+  border-color: $pure-orange !important;
+}
+
+.text-pure-orange,
+.hover\:text-pure-orange:hover {
+  color: $pure-orange !important;
+}
+
+.bg-vivid-orange,
+.hover\:bg-vivid-orange:hover {
+  background-color: $vivid-orange !important;
+}
+
+.border-vivid-orange,
+.hover\:border-vivid-orange:hover {
+  border-color: $vivid-orange !important;
+}
+
+.text-vivid-orange,
+.hover\:text-vivid-orange:hover {
+  color: $vivid-orange !important;
+}
+
+.bg-bright-red,
+.hover\:bg-bright-red:hover {
+  background-color: $bright-red !important;
+}
+
+.border-bright-red,
+.hover\:border-bright-red:hover {
+  border-color: $bright-red !important;
+}
+
+.text-bright-red,
+.hover\:text-bright-red:hover {
+  color: $bright-red !important;
+}
+
+.bg-white,
+.hover\:bg-white:hover {
+  background-color: $white !important;
+}
+
+.border-white,
+.hover\:border-white:hover {
+  border-color: $white !important;
+}
+
+.text-white,
+.hover\:text-white:hover {
+  color: $white !important;
+}

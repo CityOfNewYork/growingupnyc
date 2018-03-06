@@ -19,36 +19,12 @@ $context['post'] = $post;
 // check the language
 $context['language'] = ICL_LANGUAGE_CODE;
 
-
-//Inject custom language context manually in Events
-global $wp;
-$postlink = add_query_arg(array(),$wp->request);
-
-$languagearray = array("en" => "English" , "es" => "Español");
-$output = '';
-$output .= '<div class="c-language-switcher-wrapper">';
-$output .=	'<div class="o-container c-language__switcher">';
-$output .=		'<div class="wpml-ls-sidebars-top_widget wpml-ls wpml-ls-legacy-list-horizontal">';
-$output .=  		'<ul>';
-foreach ($languagearray as $key => $value) {
-	$output .= '<li class="wpml-ls-slot-top_widget wpml-ls-item wpml-ls-item-'.$key;
-	if($key == ICL_LANGUAGE_CODE){
-		$output .= ' wpml-ls-current-language';
-	}
-	$output .= ' wpml-ls-item-legacy-list-horizontal">';
-	if($key == 'en'){
-		$output .=	'<a href="'.site_url().'/'.$postlink.'"><span class="wpml-ls-native">'.$value.'</span></a>';
-	}
-	else{
-		$output .=	'<a href="'.site_url().'/'.$key.'/'.$postlink.'"><span class="wpml-ls-native">'.$value.'</span></a>';
-	}
-  $output .= '</li>';
-}
-$output .= 			'</ul>';
-$output .=		'</div>';
-$output .=	'</div>';
-$output .= '</div>';
-
-$context['custom_switcher'] = $output;
+$context['custom_switcher'] = Timber::compile(
+  array('partials/language-switcher.twig'),
+  array(
+    'languages' => Wpml\get_wpdb_languages(),
+    'current' => $context['language']
+  )
+);
 
 Timber::render( $templates, $context );

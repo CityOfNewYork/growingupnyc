@@ -1,0 +1,58 @@
+{% extends 'partials/teaser.twig' %}
+
+{% block classes %}c-card--subtitle-first{% endblock %}
+{% block classes_sticker %}bg-pure-orange{% endblock %}
+
+{% block sticker_content %}
+  <svg aria-hidden="true" class="icon--large"><use xlink:href="#icon-summer-guides"></use></svg>
+{% endblock %}
+
+{% block subtitle %}
+  {{ function('SummerGuides\\get_dates') }}
+{% endblock %}
+
+{% block tags_block %}
+
+  {% if post.cta_href %}
+  <a class="c-card__cta" href="{{ post.cta_href }}" {% if post.cta_new_window %}target="_blank" rel="nofollow"{% endif %}>
+    {{ post.cta_title }}
+  </a>
+  {% endif %}
+
+  <div class="c-card__tags">
+  {% set i = 0 %}
+  {% set next = i + 1 %}
+  {% set colors = ['pure-orange', 'vivid-orange', 'bright-red', 'vivid-orange'] %}
+  {% for key, value in taxonomies %}
+
+    {% set next = i + 1 %}
+
+    {% for term in post.terms(key) %}
+    <a class="button--pill bg-{{ colors[i] }} hover:bg-{{ colors[ i + 1 ] }}" href="?{{ key }}={{ term.slug }}">
+      {{ term.name }}
+    </a>
+    {% endfor %}
+
+    {% set i = next %}
+
+  {% endfor %}
+  </div>
+
+{% endblock %}
+
+{% block link %}
+
+  <p class="c-card__link">
+    <svg role="img" class="icon--xxsmall">
+      <use xlink:href="#icon-map-marker"></use>
+    </svg>
+    <span>
+      {{ function('SummerGuides\\get_location_description') }}
+    </span>
+  </p>
+
+{% endblock %}
+
+{% block body %}
+  {{ post.post_excerpt ? post.post_excerpt : post.summary|excerpt(15) }}
+{% endblock %}

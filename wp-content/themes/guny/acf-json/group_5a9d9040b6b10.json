@@ -1,11 +1,11 @@
 {
-    "key": "group_5a972d7091f25",
-    "title": "Call to action",
+    "key": "group_5a9d9040b6b10",
+    "title": "Summer Guides Landing",
     "fields": [
         {
-            "key": "field_5a972d6549e96",
+            "key": "field_5a9d9040cb1a1",
             "label": "Title",
-            "name": "cta_title",
+            "name": "summer_landing_title",
             "type": "text",
             "value": null,
             "instructions": "",
@@ -23,9 +23,9 @@
             "maxlength": ""
         },
         {
-            "key": "field_5a98543e843a3",
-            "label": "Url",
-            "name": "cta_href",
+            "key": "field_5a9d9040cb271",
+            "label": "Tagline",
+            "name": "summer_landing_tagline",
             "type": "text",
             "value": null,
             "instructions": "",
@@ -37,16 +37,16 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "https:\/\/",
+            "placeholder": "",
             "prepend": "",
             "append": "",
             "maxlength": ""
         },
         {
-            "key": "field_5a9eca68651f0",
-            "label": "",
-            "name": "cta_new_window",
-            "type": "checkbox",
+            "key": "field_5a9dbafbc4617",
+            "label": "Hero Banner",
+            "name": "summer_hero_banner",
+            "type": "image",
             "value": null,
             "instructions": "",
             "required": 0,
@@ -56,23 +56,24 @@
                 "class": "",
                 "id": ""
             },
-            "choices": {
-                "true": "New Window"
-            },
-            "allow_custom": 0,
-            "save_custom": 0,
-            "default_value": [],
-            "layout": "vertical",
-            "toggle": 0,
-            "return_format": "value"
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
         }
     ],
     "location": [
         [
             {
-                "param": "post_type",
+                "param": "options_page",
                 "operator": "==",
-                "value": "summer-guide"
+                "value": "theme-general-settings"
             }
         ]
     ],
@@ -84,5 +85,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1520356591
+    "modified": 1520286515
 }

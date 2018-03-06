@@ -522,14 +522,17 @@ $includes = [
     '/includes/get_focal_point.php', // Focal point functions
     '/includes/format_posts.php', // Format posts based on their type
     '/includes/parameters.php', // Parameter functions for templates
-    '/includes/flexible_content.php' // Working with ACF Flexible Content
+    '/includes/flexible_content.php', // Working with ACF Flexible Content
+    '/includes/location_description.php', // Date option custom field
+    '/includes/date_options.php' // Date option custom field
   ],
   [ // Nyco
     '/vendor/nyco/wp-assets/dist/style.php', // Enqueue functions
     '/vendor/nyco/wp-assets/dist/script.php' // Enqueue functions
   ],
   [ // Wpml
-    '/includes/term_translations.php', // Wpml, Term translation helpers
+    '/includes/term_translations.php', // Term translation helpers
+    '/includes/languages.php' // A custom language switcher
   ],
   [ // Admin
     '/includes/program_posts_column.php' // Add program name to post in the admin

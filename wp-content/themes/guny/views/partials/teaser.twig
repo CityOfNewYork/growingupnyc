@@ -1,11 +1,13 @@
 <div class="c-card {% block classes %}{% endblock %}">
+
   {% block sticker %}
   <a href="{{ post.link }}">
-    <div class="c-card__sticker sticker" aria-hidden="true">
+    <div class="c-card__sticker sticker {% block classes_sticker %}{% endblock %}" aria-hidden="true">
       {% block sticker_content %}{% endblock %}
     </div>
   </a>
   {% endblock %}
+
   <h3 class="c-card__title">
     {% block title %}
     <a href="{{ post.link }}" title="{{ post.title }}" rel="bookmark">
@@ -13,6 +15,7 @@
     </a>
     {% endblock %}
   </h3>
+
   {% block label %}
   {% if show_post_type %}
     <p class="c-card__label">
@@ -26,11 +29,13 @@
     </p>
   {% endif %}
   {% endblock %}
+
   {% block subtitle_block %}
   <div class="c-card__subtitle">
     {% block subtitle %}{% endblock %}
   </div>
   {% endblock %}
+
   {% block tags_block %}
   {% if post.terms %}
     <div class="c-card__tags">
@@ -42,10 +47,12 @@
     </div>
   {% endif %}
   {% endblock %}
+
   <div class="c-card__body">
     {% block body %}
     {{  post.post_excerpt ? post.post_excerpt : post.post_content|excerpt(15)  }}
     {% endblock %}
   </div>
+
   {% block link %}{% endblock %}
 </div>

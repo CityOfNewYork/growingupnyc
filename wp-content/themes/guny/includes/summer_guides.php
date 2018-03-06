@@ -102,7 +102,6 @@ function get_sections($id = null) {
  * @return Object The media image object
  */
 function get_hero_banner_img() {
-  pre_dump(get_field(FIELD_BANNER_IMAGE, 'option'));
   return get_field(FIELD_BANNER_IMAGE, 'option');
 }
 

@@ -8,7 +8,7 @@
             "name": "date_options",
             "type": "radio",
             "value": null,
-            "instructions": "",
+            "instructions": "Choose your date option below. The dates are automatically formatted to display without the time or the year on the front-end. If you would like to change the format of the way the dates are displayed, you can do so in Custom Fields > Date Options. Changes in formatting will affect how all dates in any post type using this field are displayed on the front-end. You can see which post types use this field in Custom Fields > Date Options under Location.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -17,11 +17,11 @@
                 "id": ""
             },
             "choices": {
-                "plain-text-date": "Plain Text Date",
-                "single-date": "Single Date",
-                "date-range": "Date Range",
-                "multiple-dates": "Multiple Dates",
-                "multiple-date-ranges": "Multiple Date Ranges"
+                "single_date": "Single Date",
+                "date_range": "Date Range",
+                "multiple_dates": "Multiple Dates",
+                "multiple_date_ranges": "Multiple Date Ranges",
+                "plain_text_date": "Plain Text Date"
             },
             "allow_null": 0,
             "other_choice": 0,
@@ -29,34 +29,6 @@
             "default_value": "",
             "layout": "vertical",
             "return_format": "value"
-        },
-        {
-            "key": "field_5a9728c57ffef",
-            "label": "Plain Text Date",
-            "name": "plain_text_date",
-            "type": "text",
-            "value": null,
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5a9727557ffee",
-                        "operator": "==",
-                        "value": "plain-text-date"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "\"Daily\"",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
         },
         {
             "key": "field_5a9729147fff0",
@@ -71,7 +43,7 @@
                     {
                         "field": "field_5a9727557ffee",
                         "operator": "==",
-                        "value": "single-date"
+                        "value": "single_date"
                     }
                 ]
             ],
@@ -81,7 +53,7 @@
                 "id": ""
             },
             "display_format": "F j, Y g:i a",
-            "return_format": "F j, Y g:i a",
+            "return_format": "F j",
             "first_day": 1
         },
         {
@@ -97,7 +69,7 @@
                     {
                         "field": "field_5a9727557ffee",
                         "operator": "==",
-                        "value": "date-range"
+                        "value": "date_range"
                     }
                 ]
             ],
@@ -107,7 +79,7 @@
                 "id": ""
             },
             "display_format": "F j, Y g:i a",
-            "return_format": "F j, Y g:i a",
+            "return_format": "F j",
             "first_day": 1
         },
         {
@@ -123,7 +95,7 @@
                     {
                         "field": "field_5a9727557ffee",
                         "operator": "==",
-                        "value": "date-range"
+                        "value": "date_range"
                     }
                 ]
             ],
@@ -133,7 +105,7 @@
                 "id": ""
             },
             "display_format": "F j, Y g:i a",
-            "return_format": "F j, Y g:i a",
+            "return_format": "F j, Y",
             "first_day": 1
         },
         {
@@ -149,7 +121,7 @@
                     {
                         "field": "field_5a9727557ffee",
                         "operator": "==",
-                        "value": "multiple-dates"
+                        "value": "multiple_dates"
                     }
                 ]
             ],
@@ -179,7 +151,7 @@
                         "id": ""
                     },
                     "display_format": "F j, Y g:i a",
-                    "return_format": "F j, Y g:i a",
+                    "return_format": "F j",
                     "first_day": 1
                 }
             ]
@@ -197,7 +169,7 @@
                     {
                         "field": "field_5a9727557ffee",
                         "operator": "==",
-                        "value": "multiple-date-ranges"
+                        "value": "multiple_date_ranges"
                     }
                 ]
             ],
@@ -227,7 +199,7 @@
                         "id": ""
                     },
                     "display_format": "F j, Y g:i a",
-                    "return_format": "F j, Y g:i a",
+                    "return_format": "F j",
                     "first_day": 1
                 },
                 {
@@ -245,10 +217,38 @@
                         "id": ""
                     },
                     "display_format": "F j, Y g:i a",
-                    "return_format": "F j, Y g:i a",
+                    "return_format": "F j",
                     "first_day": 1
                 }
             ]
+        },
+        {
+            "key": "field_5a9728c57ffef",
+            "label": "Plain Text Date",
+            "name": "plain_text_date",
+            "type": "text",
+            "value": null,
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5a9727557ffee",
+                        "operator": "==",
+                        "value": "plain_text_date"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [
@@ -268,5 +268,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1519857283
+    "modified": 1520355740
 }

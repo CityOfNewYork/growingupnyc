@@ -1,24 +1,25 @@
-{% extends "partials/teaser.twig" %}
+{% extends 'partials/teaser.twig' %}
 
 {% block classes %}c-card--subtitle-first{% endblock %}
-
 {% block classes_sticker %}bg-pure-orange{% endblock %}
 
 {% block sticker_content %}
-  {% if post.multiday %}
-  <span class="event-month-date">{{post.start_datetime|date('M j')}} -</span>
-  <span class="event-month-date">{{post.end_datetime|date('M j')}}</span>
-  {% else %}
-  {{ post.start_date_formatted }}
-  {% endif %}
+  <svg aria-hidden="true" class="icon--large"><use xlink:href="#icon-summer-guides"></use></svg>
 {% endblock %}
 
 {% block subtitle %}
-  {% include "partials/event-date.twig" %}
+  {{ function('SummerGuides\\get_dates') }}
 {% endblock %}
 
-{% block tags %}
+{% block tags_block %}
 
+  {% if post.cta_href %}
+  <a class="c-card__cta" href="{{ post.cta_href }}" {% if post.cta_new_window %}target="_blank" rel="nofollow"{% endif %}>
+    {{ post.cta_title }}
+  </a>
+  {% endif %}
+
+  <div class="c-card__tags">
   {% for key, value in taxonomies %}
     {% for term in post.terms(key) %}
 
@@ -28,21 +29,29 @@
         {% set id = term.ID %}
       {% endif %}
 
-      <a class="button--pill bg-vivid-orange hover:bg-pure-orange" href="?{{ key }}={{ id }}">{{ term.name }}</a>
+      <a class="button--pill bg-vivid-orange hover:bg-pure-orange" href="?{{ key }}={{ id }}">
+        {{ term.name }}
+      </a>
 
     {% endfor %}
   {% endfor %}
+  </div>
 
 {% endblock %}
 
 {% block link %}
-  {% if post.venue %}
+
   <p class="c-card__link">
-    {% include 'partials/event-link.twig' %}
+    <svg role="img" class="icon--xxsmall">
+      <use xlink:href="#icon-map-marker"></use>
+    </svg>
+    <span>
+      {{ function('SummerGuides\\get_location_description') }}
+    </span>
   </p>
-  {% endif %}
+
 {% endblock %}
 
 {% block body %}
-{{post.post_excerpt ? post.post_excerpt : post.summary|excerpt(15)}}
+  {{ post.post_excerpt ? post.post_excerpt : post.summary|excerpt(15) }}
 {% endblock %}

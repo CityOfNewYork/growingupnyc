@@ -12,7 +12,7 @@ namespace SummerGuides;
 
 use Timber;
 use Wpml;
-use Michelf\Markdown;
+use Templating;
 
 
 /**
@@ -24,15 +24,6 @@ const SLUG = 'summer-guide';
 
 // The translation domain for WPML
 const TRANSLATION_DOMAIN = 'guny-summer-guide';
-
-// Custom post type field IDs
-const FIELD_CALL_TO_ACTION = 'field_5a972d6549e96';
-
-const FIELD_LOCATION_DESCRIPTION = 'field_5a972d0ffd99e';
-
-const FIELD_DATE_OPTIONS = 'field_5a9727557ffee';
-
-const FIELD_SECTIONS = 'field_5a78cc2bc5e51';
 
 // The theme options setting for the banner image in group_5a9d9040b6b10.json
 const FIELD_BANNER_IMAGE = 'field_5a9dbafbc4617';
@@ -81,39 +72,35 @@ const TAXONOMIES = array(
  */
 
 /**
- * Get the call to action custom field
- * @return [type] [description]
+ * Get the location description content in markdown, but remove the paragraph
+ * tags from the output because it is a single line.
+ * @return string The formated markdown link content marked up with html tags
  */
-function get_call_to_action() {
-  return get_field(FIELD_CALL_TO_ACTION);
+function get_location_description($id = null) {
+  return Templating\get_location_description($id);
 }
 
 /**
- * [get_location_description description]
- * @return [type] [description]
+ * Get the date option custom field string for the post
+ * @param  integer $id The id of the post
+ * @return string      The date option custom field value for the post
  */
-function get_location_description() {
-  return Markdown::defaultTransform(
-    get_field(FIELD_LOCATION_DESCRIPTION)
-  );
+function get_dates($id = null) {
+  return Templating\get_dates($id);
 }
 
 /**
- * [get_date_options description]
- * @return [type] [description]
+ * The the section content flexible content field
+ * @return Object The flexible content field
  */
-function get_date_options() {
-  return get_field(FIELD_DATE_OPTIONS);
+function get_sections($id = null) {
+  return Templating\get_sections($id);
 }
 
 /**
- * [get_sections description]
- * @return [type] [description]
+ * Get the hero banner image for the archive page
+ * @return Object The media image object
  */
-function get_sections() {
-  return get_field(FIELD_SECTIONS);
-}
-
 function get_hero_banner_img() {
   return get_field(FIELD_BANNER_IMAGE, 'option');
 }

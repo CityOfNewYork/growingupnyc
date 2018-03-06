@@ -24,8 +24,8 @@ const SECTION_ID = 'field_5a78cc2bc5e51';
  * section title.
  * @return array The collection of sections for the post.
  */
-function get_sections() {
-  $sections = get_field(SECTION_ID);
+function get_sections($id = null) {
+  $sections = get_field(SECTION_ID, $id);
   if ($sections) {
     foreach ($sections as $key => $value) {
 

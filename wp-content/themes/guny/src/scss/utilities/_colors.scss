@@ -21,6 +21,18 @@
   color: $pure-orange !important;
 }
 
+.fill-pure-orange,
+.hover\:fill-pure-orange:hover {
+  fill: $pure-orange !important;
+}
+
+.stop-color-pure-orange,
+.hover\:stop-color-pure-orange:hover {
+  stop-color: $pure-orange !important;
+}
+
+//
+
 .bg-vivid-orange,
 .hover\:bg-vivid-orange:hover {
   background-color: $vivid-orange !important;
@@ -36,6 +48,18 @@
   color: $vivid-orange !important;
 }
 
+.fill-vivid-orange,
+.hover\:fill-vivid-orange:hover {
+  fill: $vivid-orange !important;
+}
+
+.stop-color-vivid-orange,
+.hover\:stop-color-vivid-orange:hover {
+  stop-color: $vivid-orange !important;
+}
+
+//
+
 .bg-bright-red,
 .hover\:bg-bright-red:hover {
   background-color: $bright-red !important;
@@ -50,6 +74,8 @@
 .hover\:text-bright-red:hover {
   color: $bright-red !important;
 }
+
+//
 
 .bg-white,
 .hover\:bg-white:hover {

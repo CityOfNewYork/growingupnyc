@@ -1,31 +1,11 @@
 {
     "key": "group_5a9d9040b6b10",
-    "title": "Summer Guides Landing",
+    "title": "Landing Page Content",
     "fields": [
-        {
-            "key": "field_5a9d9040cb1a1",
-            "label": "Title",
-            "name": "summer_landing_title",
-            "type": "text",
-            "value": null,
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
         {
             "key": "field_5a9d9040cb271",
             "label": "Tagline",
-            "name": "summer_landing_tagline",
+            "name": "tagline",
             "type": "text",
             "value": null,
             "instructions": "",
@@ -45,7 +25,7 @@
         {
             "key": "field_5a9dbafbc4617",
             "label": "Hero Banner",
-            "name": "summer_hero_banner",
+            "name": "hero_banner",
             "type": "image",
             "value": null,
             "instructions": "",
@@ -71,9 +51,9 @@
     "location": [
         [
             {
-                "param": "options_page",
+                "param": "page_template",
                 "operator": "==",
-                "value": "theme-general-settings"
+                "value": "template-landing_page.php"
             }
         ]
     ],
@@ -82,8 +62,10 @@
     "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
-    "hide_on_screen": "",
+    "hide_on_screen": [
+        "the_content"
+    ],
     "active": 1,
     "description": "",
-    "modified": 1520286515
+    "modified": 1520376606
 }

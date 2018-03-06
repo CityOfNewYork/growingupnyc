@@ -22,8 +22,14 @@ use Templating;
 // The post type slug
 const SLUG = 'summer-guide';
 
+// This doesn't affect the route, but it's used as a reference to the page
+// path for getting custom field content.
+const PATH = '/summer';
+
 // The translation domain for WPML
 const TRANSLATION_DOMAIN = 'guny-summer-guide';
+
+const FIELD_TAGLINE = 'field_5a9d9040cb271';
 
 // The theme options setting for the banner image in group_5a9d9040b6b10.json
 const FIELD_BANNER_IMAGE = 'field_5a9dbafbc4617';
@@ -72,6 +78,15 @@ const TAXONOMIES = array(
  */
 
 /**
+ * Get the id of the post through the page path. Requires a page
+ * of the same slug as above to be created.
+ * @return integer The ID of the post
+ */
+function get_controller_id() {
+  return get_page_by_path(PATH)->ID;
+}
+
+/**
  * Get the location description content in markdown, but remove the paragraph
  * tags from the output because it is a single line.
  * @return string The formated markdown link content marked up with html tags
@@ -102,7 +117,15 @@ function get_sections($id = null) {
  * @return Object The media image object
  */
 function get_hero_banner_img() {
-  return get_field(FIELD_BANNER_IMAGE, 'option');
+  return get_field(FIELD_BANNER_IMAGE, get_controller_id());
+}
+
+function get_tagline() {
+  return get_field(FIELD_TAGLINE, get_controller_id());
+}
+
+function get_title() {
+  return get_the_title(get_controller_id());
 }
 
 /**

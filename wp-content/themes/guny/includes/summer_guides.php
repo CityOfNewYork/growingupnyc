@@ -11,7 +11,7 @@ namespace SummerGuides;
  */
 
 use Timber;
-use Wpml;
+use WP_Query;
 use Templating;
 
 
@@ -36,12 +36,18 @@ const FIELD_TAGLINE = 'field_5a9d9040cb271';
 const FIELD_BANNER_IMAGE = 'field_5a9dbafbc4617';
 
 // The base configuration for all filters
+// Changing the order of this object will change how they display on the front-
+// end. However, this will also affect the coloring of the tags because we
+// aren't showing the borough tag. The default and prompt params need to match
+// because the template checks to see if the prompt has changed for the "no
+// posts found messaging" in the filter-summer-guide.twig template.
 const TAXONOMIES = array(
   'summer_programs_cat' => array(
     'name' => 'All Programs',
-    'default' => 'Select a Program Type', // these should match (for templates)
-    'prompt' => 'Select a Program Type', // these should match (for templates)
-    'slug' => 'programs',
+    'single' => 'program',
+    'plural' => 'programs',
+    'default' => 'Select a Program Type', // these need to match
+    'prompt' => 'Select a Program Type', // these need to match
     'config' => array(
       'orderby' => 'NAME',
       'hide_empty' => false,
@@ -51,9 +57,10 @@ const TAXONOMIES = array(
   ),
   'age_group' => array(
     'name' => 'All Ages',
-    'default' => 'Select an Age', // these should match (for templates)
-    'prompt' => 'Select an Age', // these should match (for templates)
-    'slug' => 'ages',
+    'single' => 'age',
+    'plural' => 'ages',
+    'default' => 'Select an Age', // these need to match
+    'prompt' => 'Select an Age', // these need to match
     'config' => array(
       'hierarchical' => true,
       'depth' => 1,
@@ -63,9 +70,10 @@ const TAXONOMIES = array(
   ),
   'borough' => array(
     'name' => 'All Boroughs',
-    'default' => 'Select a Borough', // these should match (for templates)
-    'prompt' => 'Select a Borough', // these should match (for templates)
-    'slug' => 'boroughs',
+    'single' => 'borough',
+    'plural' => 'boroughs',
+    'default' => 'Select a Borough', // these need to match
+    'prompt' => 'Select a Borough', // these need to match
     'config' => array(
       'hierarchical' => true,
       'depth' => 1,
@@ -163,15 +171,35 @@ function get_translation_domain() {
 function get_filter($slug) {
   $filter = array();
 
-  // Works in context of the post type/archive type
+  // Timber::get_terms() works in context of the post type/archive type
   $filter = Timber::get_terms($slug, TAXONOMIES[$slug]['config']);
 
   // If it's empty, just return what we got
   if (!sizeof($filter)) return $filter;
 
   foreach ($filter as $key => $value) {
-    // Get properties of each item
+    // Query the tanxonomy to find out if the taxonomy has any posts
+    $query = new WP_Query(array(
+      'post_type' => SLUG,
+      'tax_query' => array(array(
+        'field' => 'slug',
+        'taxonomy' => $value->taxonomy,
+        'terms' => $value->slug
+      ))
+    ));
+
+    // If there are no posts, remove the filter and skip to next filter...
+    if (!$query->have_posts()) {
+      unset($filter[$key]);
+      continue;
+    }
+
+    // pre_dump($query);
+
+    // ... else, get properties of each item
     $filter[$key] = get_object_vars($value);
+    // Set the post count
+    $filter[$key]['count'] = $query->post_count;
     // Translate the filter ID if needed
     $id = $value->slug;
     // Create the link
@@ -210,6 +238,8 @@ function get_filters() {
       // Use the translated string for the name.
       $value['name'] = __($value['name'], TRANSLATION_DOMAIN);
       $value['default'] = __($value['default'], TRANSLATION_DOMAIN);
+      $value['single'] = __($value['single'], TRANSLATION_DOMAIN);
+      $value['plural'] = __($value['plural'], TRANSLATION_DOMAIN);
       $value['prompt'] = $prompt;
       $filters[$key] = $value;
     }

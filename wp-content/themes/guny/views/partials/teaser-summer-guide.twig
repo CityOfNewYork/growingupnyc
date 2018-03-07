@@ -1,7 +1,7 @@
 {% extends 'partials/teaser.twig' %}
 
 {% block classes %}c-card--subtitle-first{% endblock %}
-{% block classes_sticker %}bg-pure-orange{% endblock %}
+{% block classes_sticker %}bg-vivid-orange{% endblock %}
 
 {% block sticker_content %}
   <svg aria-hidden="true" class="icon--large"><use xlink:href="#icon-summer-guides"></use></svg>
@@ -20,7 +20,7 @@
   {% endif %}
 
   <div class="c-card__tags">
-  {% set colors = ['bright-red', 'pure-orange', 'vivid-orange', 'bright-red'] %}
+  {% set colors = ['bright-red', 'vivid-orange', 'bright-red', 'vivid-orange'] %}
   {% for key, value in taxonomies %}
 
     {% if key != 'borough' %}

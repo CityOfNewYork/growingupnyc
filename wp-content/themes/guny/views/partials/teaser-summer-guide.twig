@@ -14,6 +14,7 @@
 {% block tags_block %}
 
   {% if post.cta_href %}
+  <hr class="c-card__cta-divider">
   <a class="c-card__cta" href="{{ post.cta_href }}" {% if post.cta_new_window %}target="_blank" rel="nofollow"{% endif %}>
     {{ post.cta_title }}
   </a>

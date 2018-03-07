@@ -63,7 +63,7 @@
     {% for item in filters %}
     <div class="c-list-box__item">
       <h3 class="js-accordion__header c-list-box__heading bg-vivid-orange" id="type-filter-heading">{{ item.prompt }}</h3>
-      <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
+      <ul class="js-accordion__content c-list-box__content bg-pure-orange" id="type-filter-panel">
         {% for filter in item.filters %}
         <li>
           <a href="{{ filter.link }}" class="c-list-box__subitem bg-pure-orange hover:bg-vivid-orange">

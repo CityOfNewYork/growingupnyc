@@ -17,20 +17,20 @@
         </h1>
 
         <p class="c-hero__tagline">
-          {% set i = 0 %}
-          {% set next = i + 1 %}
           {% set colors = ['vivid-orange', 'bright-red', 'vivid-orange', 'bright-red'] %}
           {% for key, value in taxonomies %}
 
-            {% set next = i + 1 %}
+            {% set i = loop.index %}
+
+            {% if key != 'borough' %}
 
             {% for term in post.terms(key) %}
-            <a class="button--pill bg-{{ colors[i] }} hover:bg-{{ colors[ i + 1 ] }}" href="?{{ key }}={{ term.slug }}">
+            <a class="button--pill bg-{{ colors[i] }} hover:bg-{{ colors[ i + 1 ] }}" href="{{ archive_link }}?{{ key }}={{ term.slug }}">
               {{ term.name }}
             </a>
             {% endfor %}
 
-            {% set i = next %}
+            {% endif %}
 
           {% endfor %}
         </p>

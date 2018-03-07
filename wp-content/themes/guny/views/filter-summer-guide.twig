@@ -90,14 +90,17 @@
   {% else %}
 
   <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-sm-gutter">
+    {% spaceless %}
     <p class="type--no-results">
       {{ __('No summer events found for for;', domain) }}
       {% for value in filters %}
-        {% if loop.last %}{{ __('and', domain) }} {% endif %}{{ value.prompt }}{% if loop.last %}.{% else %},{% endif %}
+        {% if loop.last %}{{ __('and', domain) }} {% endif %}
+        {% if value.prompt == value.default %}{{ value.name }}{% else %}{{ value.prompt }}{% endif %}{% if loop.last %}.{% else %},{% endif %}
       {% endfor %}
       {{ __('Try choosing different filters or ', domain) }}
-      <a href="{{ archive_link }}">{{ __('reset them by clicking this link', domain) }}</a>.
+      <a href="{{ reset_link }}">{{ __('reset them by clicking this link', domain) }}</a>.
     </p>
+    {% endspaceless %}
   </section>
 
   {% endif %}

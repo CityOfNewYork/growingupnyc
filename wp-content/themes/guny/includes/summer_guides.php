@@ -38,9 +38,9 @@ const FIELD_BANNER_IMAGE = 'field_5a9dbafbc4617';
 const TAXONOMIES = array(
   // TODO - Fix misspelling on taxonomy
   'borough' => array(
-    'name' => 'All Borroughs',
-    'prompt' => 'All Borroughs',
-    'slug' => 'borroughs',
+    'name' => 'All Boroughs',
+    'prompt' => 'All Boroughs',
+    'slug' => 'boroughs',
     'config' => array(
       'hierarchical' => true,
       'depth' => 1,
@@ -120,12 +120,29 @@ function get_hero_banner_img() {
   return get_field(FIELD_BANNER_IMAGE, get_controller_id());
 }
 
+/**
+ * Get the tagline from the landing page post
+ * @return string The page tagline
+ */
 function get_tagline() {
   return get_field(FIELD_TAGLINE, get_controller_id());
 }
 
+/**
+ * Get the title from the landing page post
+ * @return string The page title
+ */
 function get_title() {
   return get_the_title(get_controller_id());
+}
+
+/**
+ * If the post is filtered or not
+ * @return boolean [description]
+ */
+function is_filtered() {
+  $obj = get_queried_object();
+  return isset($obj->taxonomy);
 }
 
 /**
@@ -178,8 +195,11 @@ function get_filters() {
   foreach (TAXONOMIES as $key => $value) {
     $value['filters'] = get_filter($key);
     if (sizeof($value['filters'])) {
+      $term = get_term_by('slug', get_query_var($key), $key);
+      $prompt = ($term) ?
+        $term -> name : __($value['prompt'], TRANSLATION_DOMAIN);
       $value['name'] = __($value['name'], TRANSLATION_DOMAIN);
-      $value['prompt'] = __($value['prompt'], TRANSLATION_DOMAIN);
+      $value['prompt'] = $prompt;
       $filters[$key] = $value;
     }
   }
@@ -202,3 +222,19 @@ function get_archive_link() {
 function get_taxonomies() {
   return TAXONOMIES;
 }
+
+/**
+ * Get the pagination array from Timber
+ * @return array The pagination array
+ */
+function get_pagination() {
+  $pagination = new Timber\Pagination();
+  return $pagination->get_pagination(array());
+}
+
+// function add_query_vars($vars) {
+//   foreach (TAXONOMIES as $key => $value) {
+//     $vars[] .= $key;
+//   }
+//   return $vars;
+// } add_filter('query_vars', 'SummerGuides\\add_query_vars');

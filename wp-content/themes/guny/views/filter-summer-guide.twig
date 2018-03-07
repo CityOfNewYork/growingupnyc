@@ -1,4 +1,4 @@
-{% extends "list.twig" %}
+{% extends 'filter.twig' %}
 
 
 {% block head_extras %}
@@ -40,7 +40,7 @@
         <p class="c-hero__tagline">{{ tagline }}</p>
       </div>
 
-      <svg class="c-hero__frill color-pure-orange" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 404 359" >
+      <svg class="c-hero__frill" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 404 359" >
         <title>Paint Splatter</title>
         <defs>
           <linearGradient x1="73.9267481%" y1="16.6229021%" x2="50%" y2="55.6984773%" id="a">
@@ -91,7 +91,12 @@
 
   <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-sm-gutter">
     <p class="type--no-results">
-      {{ __('No summer events found for those filter options. Check for similar summer events in', domain) }} <a href="{{ archive_link }}">{{ __('reset your filters', domain) }}</a>.
+      {{ __('No summer events found for for;', domain) }}
+      {% for value in filters %}
+        {% if loop.last %}{{ __('and', domain) }} {% endif %}{{ value.prompt }}{% if loop.last %}.{% else %},{% endif %}
+      {% endfor %}
+      {{ __('Try choosing different filters or ', domain) }}
+      <a href="{{ archive_link }}">{{ __('reset them by clicking this link', domain) }}</a>.
     </p>
   </section>
 
@@ -105,12 +110,16 @@
 
   <div class="o-content-container--compact">
 
-    {% if prev_url %}
-    <a href="{{prev_url}}" class="button--outline button--outline--gray alignleft">{{ __('Previous', 'guny') }}</a>
+    {% if pagination.prev %}
+    <a href="{{ pagination.prev.link }}" class="button--outline button--outline--gray float-left">
+      {{ __('Previous', 'guny') }}
+    </a>
     {% endif %}
 
-    {% if next_url %}
-    <a href="{{next_url}}" class="button--outline button--outline--gray alignright">{{ __('Next', 'guny') }}</a>
+    {% if pagination.next %}
+    <a href="{{ pagination.next.link }}" class="button--outline button--outline--gray float-right">
+      {{ __('Next', 'guny') }}
+    </a>
     {% endif %}
 
   </div>

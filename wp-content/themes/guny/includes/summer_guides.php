@@ -29,6 +29,7 @@ const PATH = '/summer';
 // The translation domain for WPML
 const TRANSLATION_DOMAIN = 'guny-summer-guide';
 
+// Tagline custom field in group_5a9d9040b6b10.json
 const FIELD_TAGLINE = 'field_5a9d9040cb271';
 
 // The theme options setting for the banner image in group_5a9d9040b6b10.json
@@ -36,21 +37,10 @@ const FIELD_BANNER_IMAGE = 'field_5a9dbafbc4617';
 
 // The base configuration for all filters
 const TAXONOMIES = array(
-  // TODO - Fix misspelling on taxonomy
-  'borough' => array(
-    'name' => 'All Boroughs',
-    'prompt' => 'All Boroughs',
-    'slug' => 'boroughs',
-    'config' => array(
-      'hierarchical' => true,
-      'depth' => 1,
-      'orderby' => 'NAME',
-      'hide_empty' => false
-    )
-  ),
   'summer_programs_cat' => array(
     'name' => 'All Programs',
-    'prompt' => 'All Programs',
+    'default' => 'Select a Program Type', // these should match (for templates)
+    'prompt' => 'Select a Program Type', // these should match (for templates)
     'slug' => 'programs',
     'config' => array(
       'orderby' => 'NAME',
@@ -61,13 +51,26 @@ const TAXONOMIES = array(
   ),
   'age_group' => array(
     'name' => 'All Ages',
-    'prompt' => 'All Ages',
+    'default' => 'Select an Age', // these should match (for templates)
+    'prompt' => 'Select an Age', // these should match (for templates)
     'slug' => 'ages',
     'config' => array(
       'hierarchical' => true,
       'depth' => 1,
       'hide_empty' => true,
       'orderby' => 'term_order'
+    )
+  ),
+  'borough' => array(
+    'name' => 'All Boroughs',
+    'default' => 'Select a Borough', // these should match (for templates)
+    'prompt' => 'Select a Borough', // these should match (for templates)
+    'slug' => 'boroughs',
+    'config' => array(
+      'hierarchical' => true,
+      'depth' => 1,
+      'orderby' => 'NAME',
+      'hide_empty' => false
     )
   )
 );
@@ -142,7 +145,7 @@ function get_title() {
  */
 function is_filtered() {
   $obj = get_queried_object();
-  return isset($obj->taxonomy);
+  return isset($_GET);
 }
 
 /**
@@ -175,11 +178,12 @@ function get_filter($slug) {
     $filter[$key]['link'] = esc_url(add_query_arg($slug, $id));
   }
 
-  // Add the reset filter
+  // Add the reset filter, the 'All ...' filter needs to be set to something
+  // blank in order to show all results.
   array_unshift($filter, array(
     'slug' => 'all_' . TAXONOMIES[$slug]['slug'],
     'name' => __(TAXONOMIES[$slug]['name'], TRANSLATION_DOMAIN),
-    'link' => esc_url(remove_query_arg($slug))
+    'link' => esc_url(add_query_arg($slug, '', remove_query_arg($slug)))
   ));
 
   return $filter;
@@ -195,10 +199,17 @@ function get_filters() {
   foreach (TAXONOMIES as $key => $value) {
     $value['filters'] = get_filter($key);
     if (sizeof($value['filters'])) {
+      // Get the term name
       $term = get_term_by('slug', get_query_var($key), $key);
+      // Set the prompt if the term is avaliable
       $prompt = ($term) ?
         $term -> name : __($value['prompt'], TRANSLATION_DOMAIN);
+      // If the query var is there, but blank, use the 'All ...' name
+      $prompt = ($_GET[$key] === '') ?
+        __($value['name'], TRANSLATION_DOMAIN) : $prompt;
+      // Use the translated string for the name.
       $value['name'] = __($value['name'], TRANSLATION_DOMAIN);
+      $value['default'] = __($value['default'], TRANSLATION_DOMAIN);
       $value['prompt'] = $prompt;
       $filters[$key] = $value;
     }
@@ -213,6 +224,18 @@ function get_filters() {
  */
 function get_archive_link() {
   return get_post_type_archive_link(SLUG);
+}
+
+/**
+ * Get the reset link which is all taxonomies as blank query parameters
+ * @return string The link with taxonomies and stripped query params.
+ */
+function get_reset_link() {
+  $link = get_archive_link();
+  foreach (TAXONOMIES as $key => $value) {
+    $link = add_query_arg($key, '', $link);
+  }
+  return esc_url($link);
 }
 
 /**
@@ -231,10 +254,3 @@ function get_pagination() {
   $pagination = new Timber\Pagination();
   return $pagination->get_pagination(array());
 }
-
-// function add_query_vars($vars) {
-//   foreach (TAXONOMIES as $key => $value) {
-//     $vars[] .= $key;
-//   }
-//   return $vars;
-// } add_filter('query_vars', 'SummerGuides\\add_query_vars');

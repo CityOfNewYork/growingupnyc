@@ -23,6 +23,7 @@ $context['banner'] = SummerGuides\get_hero_banner_img();
 $context['filters'] = SummerGuides\get_filters();
 $context['domain'] = SummerGuides\get_translation_domain();
 $context['archive_link'] = SummerGuides\get_archive_link();
+$context['reset_link'] = SummerGuides\get_reset_link();
 $context['pagination'] = SummerGuides\get_pagination();
 
 Timber::render(array('filter-summer-guide.twig'), $context);

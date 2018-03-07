@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block subtitle %}
-  {{ function('SummerGuides\\get_dates') }}
+  {{ function('SummerGuides\\get_dates', post.id) }}
 {% endblock %}
 
 {% block tags_block %}
@@ -20,20 +20,20 @@
   {% endif %}
 
   <div class="c-card__tags">
-  {% set i = 0 %}
-  {% set next = i + 1 %}
-  {% set colors = ['pure-orange', 'vivid-orange', 'bright-red', 'vivid-orange'] %}
+  {% set colors = ['bright-red', 'pure-orange', 'vivid-orange', 'bright-red'] %}
   {% for key, value in taxonomies %}
 
-    {% set next = i + 1 %}
+    {% if key != 'borough' %}
 
-    {% for term in post.terms(key) %}
-    <a class="button--pill bg-{{ colors[i] }} hover:bg-{{ colors[ i + 1 ] }}" href="?{{ key }}={{ term.slug }}">
-      {{ term.name }}
-    </a>
-    {% endfor %}
+      {% set i = loop.index %}
 
-    {% set i = next %}
+      {% for term in post.terms(key) %}
+      <a class="button--pill bg-{{ colors[i] }} hover:bg-{{ colors[ i + 1 ] }}" href="?{{ key }}={{ term.slug }}">
+        {{ term.name }}
+      </a>
+      {% endfor %}
+
+    {% endif %}
 
   {% endfor %}
   </div>
@@ -47,7 +47,7 @@
       <use xlink:href="#icon-map-marker"></use>
     </svg>
     <span>
-      {{ function('SummerGuides\\get_location_description') }}
+      {{ function('SummerGuides\\get_location_description', post.id) }}
     </span>
   </p>
 

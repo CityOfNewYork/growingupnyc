@@ -3,7 +3,7 @@
 {% block content %}
 
   <div class="js-parallax">
-    <header class="c-hero c-hero--large bg-pure-orange bg-splatter-pure-orange js-parallax-content">
+    <header class="c-hero c-hero--large c-hero--long-text bg-pure-orange bg-splatter-pure-orange js-parallax-content">
       <div class="o-container js-parallax-text">
 
         <h1 class="c-hero__title--long">
@@ -16,19 +16,21 @@
 
         </h1>
 
-        <p class="c-hero__tagline">
-          {% set colors = ['vivid-orange', 'bright-red', 'vivid-orange', 'bright-red'] %}
-          {% for key, value in taxonomies %}
+        <p class="c-hero__tagline"></p>
 
-            {% set i = loop.index %}
+        <p class="c-hero__tagline">
+          {% set colors = ['bright-red', 'vivid-orange', 'bright-red', 'vivid-orange'] %}
+          {% for key, value in taxonomies %}
 
             {% if key != 'borough' %}
 
-            {% for term in post.terms(key) %}
-            <a class="button--pill bg-{{ colors[i] }} hover:bg-{{ colors[ i + 1 ] }}" href="{{ archive_link }}?{{ key }}={{ term.slug }}">
-              {{ term.name }}
-            </a>
-            {% endfor %}
+              {% set i = loop.index %}
+
+              {% for term in post.terms(key) %}
+              <a class="button--pill bg-{{ colors[i] }} hover:bg-{{ colors[ i + 1 ] }}" href="{{ archive_link }}?{{ key }}={{ term.slug }}">
+                {{ term.name }}
+              </a>
+              {% endfor %}
 
             {% endif %}
 

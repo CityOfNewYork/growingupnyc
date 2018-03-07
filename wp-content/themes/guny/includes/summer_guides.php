@@ -177,28 +177,57 @@ function get_filter($slug) {
   // If it's empty, just return what we got
   if (!sizeof($filter)) return $filter;
 
-  foreach ($filter as $key => $value) {
-    // Query the tanxonomy to find out if the taxonomy has any posts
-    $query = new WP_Query(array(
-      'post_type' => SLUG,
-      'tax_query' => array(array(
-        'field' => 'slug',
-        'taxonomy' => $value->taxonomy,
-        'terms' => $value->slug
-      ))
-    ));
+  // Get the current query so that we can filter down on the available posts
+  // for the different combinations of taxonomy filters.
+  $context = Timber::get_context();
+  $request = $context['request'] -> get;
+  $args = array('post_type' => SLUG, 'tax_query' => array());
 
-    // If there are no posts, remove the filter and skip to next filter...
+  // Build the taxonomy query request as is in the wp_query format
+  foreach ($request as $key => $value) {
+    if ($value == '') continue;
+    $args['tax_query'][] = array(
+      'field' => 'slug',
+      'taxonomy' => $key,
+      'terms' => $value
+    );
+  }
+
+  // Run through each filter and build the necessary front-end data for it.
+  foreach ($filter as $key => $value) {
+    // Query the tanxonomy to find out if the current query PLUS this filter
+    // will have any posts.
+    // Start. Create new args for manipulating on this filter
+    $filter_args = $args;
+
+    // Next. Find the current filter taxonomy query in the list of arguments
+    // and remove it so we aren't querying against duplicate taxonomies.
+    foreach ($filter_args['tax_query'] as $tax => $params) {
+      if ($params['taxonomy'] == $value->taxonomy) {
+        unset($filter_args['tax_query'][$tax]);
+      }
+    }
+
+    // Next. Add the current filter taxonomy
+    $filter_args['tax_query'][] = array(
+      'field' => 'slug',
+      'taxonomy' => $value->taxonomy,
+      'terms' => $value->slug
+    );
+
+    // Finally. Query our arguments to find out if there will be any posts
+    $query = new WP_Query($filter_args);
+
+    // If there will be no posts, remove the filter and skip to next filter
+    // so that we don't add the link on the front end.
     if (!$query->have_posts()) {
       unset($filter[$key]);
       continue;
     }
 
-    // pre_dump($query);
-
     // ... else, get properties of each item
     $filter[$key] = get_object_vars($value);
-    // Set the post count
+    // Set the post count for the compined query PLUS filter
     $filter[$key]['count'] = $query->post_count;
     // Translate the filter ID if needed
     $id = $value->slug;

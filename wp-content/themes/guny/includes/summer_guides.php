@@ -153,7 +153,7 @@ function get_title() {
  */
 function is_filtered() {
   $obj = get_queried_object();
-  return isset($_GET);
+  return sizeof($_GET);
 }
 
 /**

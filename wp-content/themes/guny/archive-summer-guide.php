@@ -15,8 +15,8 @@ $context['custom_switcher'] = Timber::compile(
 );
 
 $context['posts'] = Timber::get_posts();
-$context['title'] = SummerGuides\get_title();
-$context['tagline'] = SummerGuides\get_tagline();
+$context['page_title'] = SummerGuides\get_title();
+$context['page_tagline'] = SummerGuides\get_tagline();
 $context['filtered'] = SummerGuides\is_filtered();
 $context['taxonomies'] = SummerGuides\get_taxonomies();
 $context['banner'] = SummerGuides\get_hero_banner_img();

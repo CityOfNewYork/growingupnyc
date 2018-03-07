@@ -32,7 +32,7 @@
 
       <div class="o-container js-parallax-text">
         <h1 class="c-hero__title">
-          <span class="c-hero__sticker sticker bg-pure-orange">
+          <span class="c-hero__sticker sticker bg-vivid-orange">
             <svg aria-hidden="true" class="icon--medium"><use xlink:href="#icon-summer-guides"></use></svg>
           </span>
           {{ page_title }}
@@ -65,7 +65,17 @@
       <h3 class="js-accordion__header c-list-box__heading bg-vivid-orange" id="type-filter-heading">{{ item.prompt }}</h3>
       <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
         {% for filter in item.filters %}
-        <li><a href="{{ filter.link }}" class="c-list-box__subitem bg-pure-orange hover:bg-vivid-orange">{{ filter.name }}</a></li>
+        <li>
+          <a href="{{ filter.link }}" class="c-list-box__subitem bg-pure-orange hover:bg-vivid-orange">
+            {{ filter.name }}
+            {% if filter.count %}
+              <span class="bg-vivid-orange rounded float-right"
+                    title="{{ filter.count }} {{ item.single }} {% if filter.count == 1 %}{{ __('program available for', domain) }}{% else %}{{ __('programs available for', domain) }}{% endif %} {{ filter.name }}">
+                &nbsp;&nbsp;{{ filter.count }}&nbsp;&nbsp;
+              </span>
+            {% endif %}
+          </a>
+        </li>
         {% endfor %}
       </ul>
     </div>
@@ -92,7 +102,7 @@
   <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-sm-gutter">
     {% spaceless %}
     <p class="type--no-results">
-      {{ __('No summer events found for for;', domain) }}
+      {{ __('No summer events found for;', domain) }}
       {% for value in filters %}
         {% if loop.last %}{{ __('and', domain) }} {% endif %}
         {% if value.prompt == value.default %}{{ value.name }}{% else %}{{ value.prompt }}{% endif %}{% if loop.last %}.{% else %},{% endif %}

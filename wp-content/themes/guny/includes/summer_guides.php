@@ -11,7 +11,7 @@ namespace SummerGuides;
  */
 
 use Timber;
-use Wpml;
+use WP_Query;
 use Templating;
 
 
@@ -36,12 +36,18 @@ const FIELD_TAGLINE = 'field_5a9d9040cb271';
 const FIELD_BANNER_IMAGE = 'field_5a9dbafbc4617';
 
 // The base configuration for all filters
+// Changing the order of this object will change how they display on the front-
+// end. However, this will also affect the coloring of the tags because we
+// aren't showing the borough tag. The default and prompt params need to match
+// because the template checks to see if the prompt has changed for the "no
+// posts found messaging" in the filter-summer-guide.twig template.
 const TAXONOMIES = array(
   'summer_programs_cat' => array(
     'name' => 'All Programs',
-    'default' => 'Select a Program Type', // these should match (for templates)
-    'prompt' => 'Select a Program Type', // these should match (for templates)
-    'slug' => 'programs',
+    'single' => 'program',
+    'plural' => 'programs',
+    'default' => 'Select a Program Type', // these need to match
+    'prompt' => 'Select a Program Type', // these need to match
     'config' => array(
       'orderby' => 'NAME',
       'hide_empty' => false,
@@ -51,9 +57,10 @@ const TAXONOMIES = array(
   ),
   'age_group' => array(
     'name' => 'All Ages',
-    'default' => 'Select an Age', // these should match (for templates)
-    'prompt' => 'Select an Age', // these should match (for templates)
-    'slug' => 'ages',
+    'single' => 'age',
+    'plural' => 'ages',
+    'default' => 'Select an Age', // these need to match
+    'prompt' => 'Select an Age', // these need to match
     'config' => array(
       'hierarchical' => true,
       'depth' => 1,
@@ -63,9 +70,10 @@ const TAXONOMIES = array(
   ),
   'borough' => array(
     'name' => 'All Boroughs',
-    'default' => 'Select a Borough', // these should match (for templates)
-    'prompt' => 'Select a Borough', // these should match (for templates)
-    'slug' => 'boroughs',
+    'single' => 'borough',
+    'plural' => 'boroughs',
+    'default' => 'Select a Borough', // these need to match
+    'prompt' => 'Select a Borough', // these need to match
     'config' => array(
       'hierarchical' => true,
       'depth' => 1,
@@ -163,15 +171,64 @@ function get_translation_domain() {
 function get_filter($slug) {
   $filter = array();
 
-  // Works in context of the post type/archive type
+  // Timber::get_terms() works in context of the post type/archive type
   $filter = Timber::get_terms($slug, TAXONOMIES[$slug]['config']);
 
   // If it's empty, just return what we got
   if (!sizeof($filter)) return $filter;
 
+  // Get the current query so that we can filter down on the available posts
+  // for the different combinations of taxonomy filters.
+  $context = Timber::get_context();
+  $request = $context['request'] -> get;
+  $args = array('post_type' => SLUG, 'tax_query' => array());
+
+  // Build the taxonomy query request as is in the wp_query format
+  foreach ($request as $key => $value) {
+    if ($value == '') continue;
+    $args['tax_query'][] = array(
+      'field' => 'slug',
+      'taxonomy' => $key,
+      'terms' => $value
+    );
+  }
+
+  // Run through each filter and build the necessary front-end data for it.
   foreach ($filter as $key => $value) {
-    // Get properties of each item
+    // Query the tanxonomy to find out if the current query PLUS this filter
+    // will have any posts.
+    // Start. Create new args for manipulating on this filter
+    $filter_args = $args;
+
+    // Next. Find the current filter taxonomy query in the list of arguments
+    // and remove it so we aren't querying against duplicate taxonomies.
+    foreach ($filter_args['tax_query'] as $tax => $params) {
+      if ($params['taxonomy'] == $value->taxonomy) {
+        unset($filter_args['tax_query'][$tax]);
+      }
+    }
+
+    // Next. Add the current filter taxonomy
+    $filter_args['tax_query'][] = array(
+      'field' => 'slug',
+      'taxonomy' => $value->taxonomy,
+      'terms' => $value->slug
+    );
+
+    // Finally. Query our arguments to find out if there will be any posts
+    $query = new WP_Query($filter_args);
+
+    // If there will be no posts, remove the filter and skip to next filter
+    // so that we don't add the link on the front end.
+    if (!$query->have_posts()) {
+      unset($filter[$key]);
+      continue;
+    }
+
+    // ... else, get properties of each item
     $filter[$key] = get_object_vars($value);
+    // Set the post count for the compined query PLUS filter
+    $filter[$key]['count'] = $query->post_count;
     // Translate the filter ID if needed
     $id = $value->slug;
     // Create the link
@@ -210,6 +267,8 @@ function get_filters() {
       // Use the translated string for the name.
       $value['name'] = __($value['name'], TRANSLATION_DOMAIN);
       $value['default'] = __($value['default'], TRANSLATION_DOMAIN);
+      $value['single'] = __($value['single'], TRANSLATION_DOMAIN);
+      $value['plural'] = __($value['plural'], TRANSLATION_DOMAIN);
       $value['prompt'] = $prompt;
       $filters[$key] = $value;
     }

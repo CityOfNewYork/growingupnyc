@@ -6,6 +6,9 @@
 @import '../settings/variables';
 
 // Declarations
+// These are mapped to Tailwind.css utilities. When we integrate those utils into
+// the patterns library for Growing Up we can remove these.
+// EXCEPTION, Tailwind doesn't support svg coloring so leave those.
 .bg-pure-orange,
 .hover\:bg-pure-orange:hover {
   background-color: $pure-orange !important;
@@ -91,3 +94,4 @@
 .hover\:text-white:hover {
   color: $white !important;
 }
+// End Tailwind Utility

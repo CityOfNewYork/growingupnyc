@@ -14,6 +14,8 @@ $context['custom_switcher'] = Timber::compile(
   )
 );
 
+// pre_dump($context['request']->get);
+
 $context['posts'] = Timber::get_posts();
 $context['page_title'] = SummerGuides\get_title();
 $context['page_tagline'] = SummerGuides\get_tagline();

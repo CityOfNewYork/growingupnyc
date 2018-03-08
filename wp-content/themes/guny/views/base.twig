@@ -33,7 +33,7 @@
       h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
     })(document);
   </script>
-  {{ function('Enqueue\\style', 'default') }}
+  {{ function('Nyco\\Enqueue\\style', 'default') }}
   {{ function('wp_head') }}
   {% block head_extras %}{% endblock %}
 </head>
@@ -62,67 +62,63 @@
     <div class="o-offcanvas__main">
       {{top_widget}}
       {% block header %}
-        {{custom_switcher}}
+
+        {{ custom_switcher }}
+
         <header class="c-banner">
           <div class="o-container">
             <a href="{{site.url}}" class="c-banner__logo-wrapper"><span class="c-banner__logo">{{site.name}}</span></a>
             <nav class="c-banner__nav" role="navigation" aria-label="Primary">
-              {# <ul class="o-inline site-desktop-nav"> #}
               <ul class="o-inline">
+
                 {% for menu_item in menu.get_items %}
-                  <li class="o-inline__item"><a href="{{menu_item.link}}" class="c-banner__link">{{menu_item.title}}</a></li>
+                <li class="o-inline__item"><a href="{{menu_item.link}}" class="c-banner__link">{{menu_item.title}}</a></li>
                 {% endfor %}
+
                 <li class="o-inline__item"><a href="#ages" data-toggle="offcanvas-ages" class="c-banner__link">{{ __('Ages', 'GUNY-Primary-Menu') }}</a></li>
+
+                {% if function('Search\\visible') %}
+                <li class="o-inline__item">
+                   <a class="c-banner__link" href="#search" data-toggle="overlay-search" data-toggle-class="fadeInDown">
+                     <svg class="c-banner__icon c-banner__icon__search" role="img"><title>Search</title><use xlink:href="#icon-search"></use></svg>
+                     <svg class="c-banner__icon c-banner__icon__close" role="img"><title>Search</title><use xlink:href="#icon-close"></use></svg>
+                   </a>
+                </li>
+                {% endif %}
+
               </ul>
-              {# Menu Toggle for mobile #}
-              {# <ul class="o-inline">
-                <li><a class="js-show-nav c-banner__link" href="#mobile-nav">Menu</a></li>
-              </ul>
-              <div class="site-mobile-nav" id="mobile-nav">
-                <a class="site-nav-close js-hide-nav" href="#content">close &amp; return to site<svg role="img" class="icon--medium" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></a>
-                <div class="site-mobile-nav-inner">
-                  <ul class="nav-list">
-                    {% for menu_item in menu.get_items %}
-                      <li><a href="{{menu_item.link}}">{{menu_item.title}}</a></li><br>
-                    {% endfor %}
-                    <li><a href="#ages">{{ __('Ages', 'GUNY-Primary-Menu') }}</a></li>
-                  </ul>
-                </div>
-              </div> #}
-              {# end Menu Toggle for mobile #}
             </nav>
           </div>
         </header>
-        <section class="o-overlay js-overlay" id="overlay-search" aria-hidden="true">
+
+        {% if function('Search\\visible') %}
+        <section class="o-overlay js-overlay animated" id="overlay-search" aria-hidden="true">
           <div class="o-container-med">
-            <form action="/" method="get" class="js-global-search u-bottom-spacing">
-              <label for="fwp-search" class="show-for-screen-reader">Search</label>
-              <div class="form-field__icon-container">
-                <input type="search" name="s" placeholder="Search" class="form-field form-field--large form-field--full-width" id="fwp-search">
-                <button type="submit" class="form-field__icon form-field__icon--large"><svg role="img"><title>Search</title><use xlink:href="#icon-search"></use></svg></button>
-              </div>
-            </form>
+
+            <div class="u-bottom-spacing">
+              {% include 'partials/search-form.twig' %}
+            </div>
 
             <section class="o-col__divider c-block-list">
               <h2 class="c-block-list__heading">
-                {{ __('Programs', 'GUNY-W-Top-Programs') }}
-                <a class="c-block-list__link" href="{{site.url}}/guny/programs">{{ __('See all programs', 'GUNY-W-Top-Programs') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="true"><use xlink:href="#icon-caret-right"></use></svg></a>
+                {{ __('Programs', 'guny') }}
+                <a class="c-block-list__link" href="{{ site.url }}/guny/programs">{{ __('See all programs', 'guny') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="true"><use xlink:href="#icon-caret-right"></use></svg></a>
               </h2> <!-- /.c-content-tout__heading -->
               <div class="c-block-list__inner o-row">
-                {{top_programs}}
+                {{ top_programs }}
               </div> <!-- /.o-col__divider -->
             </section> <!-- /.c-content-tout -->
 
             <section class="o-col__divider c-block-list">
               <h2 class="c-block-list__heading">
-                {{ __('Events', 'GUNY-W-Top-Programs') }}
-                <a class="c-block-list__link" href="{{site.url}}/guny/events">{{ __('See all events', 'GUNY-W-Top-Programs') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="small"><use xlink:href="#icon-caret-right"></use></svg></a>
+                {{ __('Events', 'guny') }}
+                <a class="c-block-list__link" href="{{ site.url }}/guny/events">{{ __('See all events', 'guny') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="small"><use xlink:href="#icon-caret-right"></use></svg></a>
               </h2> <!-- /.c-content-tout__heading -->
               <div class="c-block-list__inner o-row">
               {% for post in top_events %}
                 <div class="o-col-3 c-content-tout">
                   <h3 class="c-content-tout__title">
-                    <a href="{{post.path}}" title="{{post.post_title}}" rel="bookmark">{{post.post_title}}</a>
+                    <a href="{{ post.path }}" title="{{ post.post_title }}" rel="bookmark">{{ post.post_title }}</a>
                   </h3>
                   <div class="c-content-tout__subtitle">
                     {% include 'partials/event-date.twig' %}
@@ -138,6 +134,8 @@
             </section> <!-- /.o-col__divider -->
           </div> <!-- /.o-container-med -->
         </section> <!-- /.o-overlay -->
+        {% endif %}
+
       {% endblock %}
 
       <main id="main" role="main">
@@ -177,7 +175,7 @@
             </nav>
           </div>
           <div class="c-footer__signup">
-            {% include 'partials/email-signup.twig' with {form_id: 'footer'} %}
+            {% include 'partials/form-email-signup.twig' with {form_id: 'footer'} %}
           </div> <!-- /.c-footer__signup -->
         </div> <!-- /.o-container -->
         <div class="o-container">
@@ -201,7 +199,7 @@
     </div> <!-- /.o-offcanvas__main -->
   </div> <!-- /.o-offcanvas -->
 
-  {{ function('Enqueue\\script', 'source') }}
+  {{ function('Nyco\\Enqueue\\script', 'source', '.min') }}
   {{ wp_footer }}
 
   <script type="text/javascript">

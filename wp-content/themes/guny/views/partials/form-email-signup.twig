@@ -1,0 +1,78 @@
+<form action="https://growingupnyc-our.cityofnewyork.us/page/s/website-signup" name="signup" id="{{form_id}}-signup" class="signup-form bsdtools-signup" novalidate>
+  <h2{% if full_width %} class="text-center"{% endif %}>
+    {% if title %}
+      {{ title }} {# translation comes from page content #}
+    {% else %}
+      {{ __('Get Updates', 'GUNY-Email-Signup') }}
+    {% endif %}
+  </h2>
+  <div class="signup-form__error bsdtools-error"></div>
+  <div class="signup-form__input {% if full_width %}signup-form__input--full{% else %}signup-form__input--long{% endif %}">
+    <label for="{{form_id}}-email" class="signup-form__label">
+      <span class="signup-form__label-content" data-content="Email">{{ __('Email', 'GUNY-Email-Signup') }}</span>
+    </label>
+    <input name="email" id="{{form_id}}-email" type="email" class="form-field signup-form__field" required>
+  </div> <!-- /.signup-form__input -->
+  <div class="signup-form__input {% if full_width %}signup-form__input--full{% else %}signup-form__input--short{%endif %}">
+    <label for="{{form_id}}-zip" class="signup-form__label">
+      <span class="signup-form__label-content" data-content="Zip code">{{ __('Zip code', 'GUNY-Email-Signup') }}</span>
+    </label>
+    <input name="zip" id="{{form_id}}-zip" type="tel" class="form-field signup-form__field" required>
+  </div> <!-- /.signup-form__input -->
+  <fieldset class="signup-form__fieldset">
+    <legend>{{ __('I would like to receive updates for:', 'GUNY-Email-Signup') }}</legend>
+    <span class="signup-form__checkbox">
+      <label class="checkbox">
+        <input id="custom-1542_0" class="checkbox__field" name="__custom-1542[]" type="checkbox" value="Baby" required>
+        <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+        {{ __('Baby', 'GUNY-Email-Signup') }}
+      </label>
+    </span>
+    <span class="signup-form__checkbox">
+      <label class="checkbox">
+        <input id="custom-1542_1" class="checkbox__field" name="__custom-1542[]" type="checkbox" value="Toddler" required>
+        <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+        {{ __('Toddler', 'GUNY-Email-Signup') }}
+      </label>
+    </span>
+    <span class="signup-form__checkbox">
+      <label class="checkbox">
+        <input id="custom-1542_2" class="checkbox__field" name="__custom-1542[]" type="checkbox" value="Pre-Schooler" required>
+        <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+        {{ __('Pre-Schooler', 'GUNY-Email-Signup') }}
+      </label>
+    </span>
+    <span class="signup-form__checkbox">
+      <label class="checkbox">
+        <input id="custom-1542_3" class="checkbox__field" name="__custom-1542[]" type="checkbox" value="Grade-Schooler" required>
+        <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+        {{ __('Grade-Schooler', 'GUNY-Email-Signup') }}
+      </label>
+    </span>
+    <span class="signup-form__checkbox">
+      <label class="checkbox">
+        <input id="custom-1542_4" class="checkbox__field" name="__custom-1542[]" type="checkbox" value="Pre-Teen" required>
+        <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+        {{ __('Pre-Teen', 'GUNY-Email-Signup') }}
+      </label>
+    </span>
+
+    {# New post types added #}
+    <span class="signup-form__checkbox">
+      <label class="checkbox">
+        <input id="custom-1542_5" class="checkbox__field" name="__custom-1542[]" type="checkbox" value="Teen" required>
+        <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+        {{ __('Teen', 'GUNY-Email-Signup') }}
+      </label>
+    </span>
+    <span class="signup-form__checkbox">
+      <label class="checkbox">
+        <input id="custom-1542_6" class="checkbox__field" name="__custom-1542[]" type="checkbox" value="Young Adult" required>
+        <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+        {{ __('Young Adult', 'GUNY-Email-Signup') }}
+      </label>
+    </span>
+    {# End of new lines #}
+  </fieldset>
+  <button type="submit" class="signup-form__button button--simple button--simple--alt">{{ __('Sign Up', 'GUNY-Email-Signup') }}</button>
+</form>

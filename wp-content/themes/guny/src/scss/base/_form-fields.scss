@@ -67,11 +67,12 @@ input[type="search"].form-field {
   display: block;
   color: $color-primary;
   cursor: pointer;
-  height: rem-calc(20);
-  margin-top: rem-calc(-10);
+  // height: rem-calc(20);
+  height: 100%;
+  // margin-top: rem-calc(-10);
   position: absolute;
   right: rem-calc(20);
-  top: 50%;
+  top: 0;
   width: rem-calc(20);
 
   @include media($bp-medium) {
@@ -115,18 +116,75 @@ input[type="search"].form-field {
 
 // Large
 .form-field__icon--large {
-  height: rem-calc(20);
-  margin-top: rem-calc(-15);
+  // height: rem-calc(20);
+  // margin-top: rem-calc(-15);
   width: rem-calc(20);
 
   @include media($bp-medium) {
-    height: rem-calc(30);
-    margin-top: rem-calc(-15);
+    // height: rem-calc(30);
+    // margin-top: rem-calc(-15);
     width: rem-calc(30);
 
     + .form-field__icon--large {
       right: rem-calc(65);
     }
+  }
+}
+
+/**
+ * Dropdowns
+ */
+
+[class*='form-field-dropdown'] {
+  position: relative;
+}
+
+[class*='form-field-dropdown'] > ul {
+  background: $white;
+  color: $color-text;
+
+  position: absolute;
+  right: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+  text-align: left;
+  border: 1.5rem solid $color-background-shade;
+  margin-top: 1px;
+  z-index: 1;
+}
+
+[class*='form-field-dropdown'] > ul > li {
+  padding: .2em .5em;
+}
+
+[class*='form-field-dropdown'] > ul > li.highlight {
+  cursor: pointer;
+  color: $white;
+  background-color: $color-primary;
+}
+
+[class*='form-field-dropdown'] > ul > li span {
+  color: $white;
+}
+
+// Large
+
+[class*='form-field-dropdown'][class*='--large'] {
+  @include font-size-x-large;
+  line-height: normal;
+}
+
+[class*='form-field-dropdown'][class*='--large'] > ul > li {
+  padding: rem-calc(10 40 10 20);
+
+  @include media($bp-medium) {
+    padding: rem-calc(20 60 20 25);
   }
 }
 

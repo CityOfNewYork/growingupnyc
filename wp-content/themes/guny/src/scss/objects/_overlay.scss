@@ -9,29 +9,20 @@ $transition-function: cubic-bezier(0, 1, .5, 1);
   background: $very-light-gray;
   box-shadow: $color-shadow 0 2px 4px 0;
   left: 0;
-  max-height: 0;
-  overflow: hidden;
   padding: rem-calc(55 0 10);
   position: absolute;
   width: 100%;
   z-index: $z-index-search-overlay;
 
-  // Transform
-  transform: scaleY(0);
-  transform-origin: top;
-  // Transition Delay
-  transition: transform 1s $transition-function, max-height $transition-function 1s 0s;
+  opacity: 0;
+  pointer-events: none;
+
+  &.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
   @include media($bp-medium) {
     padding-top: rem-calc(110);
-  }
-
-  &.is-open {
-    max-height: 9999px;
-    overflow: auto;
-    opacity: 1;
-
-    // Transform
-    transform: scaleY(1);
   }
 }

@@ -1,0 +1,139 @@
+{
+    "key": "group_5a6a00e9e6ee2",
+    "title": "Search Options",
+    "fields": [
+        {
+            "key": "field_5a6a00e7dda1d",
+            "label": "Auto Correct",
+            "name": "auto_correct",
+            "type": "repeater",
+            "value": null,
+            "instructions": "Add a list of user search terms that need to be auto corrected for the user to see the most relevant results. Keep in mind this should be very specific as you don't want to exercise too much control over user search. Add terms in the format <code>key = Value<\/code> (ex. <code>pre k = Pre-K<\/code>). Include spaces around the <code>=<\/code> operator. <code>key<\/code> is the user input, <code>Value<\/code> is what the term should be. Phrases are respected.\r\n\r\nComparisons are always lower-cased so it doesn't matter if you capitalize the <code>key<\/code>. The <code>Value<\/code> case does matter as it will be preferred as the correct term and replace what the user sees as the search term.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add Term",
+            "sub_fields": [
+                {
+                    "key": "field_5a6a0129dda1e",
+                    "label": "Terms",
+                    "name": "terms",
+                    "type": "text",
+                    "value": null,
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "key = value",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                }
+            ]
+        },
+        {
+            "key": "field_5a7886d200097",
+            "label": "Enable Suggestions",
+            "name": "enable_suggestions",
+            "type": "checkbox",
+            "value": null,
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Check this box to enable the suggested search drop-down": "Check this box to enable the suggested search drop-down"
+            },
+            "allow_custom": 0,
+            "save_custom": 0,
+            "default_value": [],
+            "layout": "horizontal",
+            "toggle": 0,
+            "return_format": "value"
+        },
+        {
+            "key": "field_5a74dbd08af7f",
+            "label": "Suggestions",
+            "name": "suggestions",
+            "type": "repeater",
+            "value": null,
+            "instructions": "Enter a term followed by it's synonyms. For example, `Pre-K, prek, pre k, pre-kindergarden`. Terms and synonyms must be separated by commas and the suggested term should always come first.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add Term",
+            "sub_fields": [
+                {
+                    "key": "field_5a74dc0e8af80",
+                    "label": "Term and synonyms",
+                    "name": "terms_and_synonyms",
+                    "type": "text",
+                    "value": null,
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "term, synonym, synonym, synonym",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "search.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content",
+        "excerpt",
+        "custom_fields",
+        "discussion",
+        "comments",
+        "featured_image"
+    ],
+    "active": 1,
+    "description": "",
+    "modified": 1517848999
+}

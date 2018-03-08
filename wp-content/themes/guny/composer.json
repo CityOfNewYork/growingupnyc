@@ -1,0 +1,11 @@
+{
+    "require": {
+        "nyco/wp-assets": "0.0.4",
+        "michelf/php-markdown": "^1.8"
+    },
+    "config": {
+        "preferred-install": {
+          "nyco/*": "dist"
+        }
+    }
+}

@@ -57,6 +57,12 @@
 .c-side-hero__content {
   color: $white;
   padding: rem-calc(40 15);
+  text-align: center;
+
+  > * {
+    position: relative;
+    z-index: $z-index-hero-title;
+  }
 
   @include media($bp-mobile-only) {
     background: $color-primary;
@@ -70,6 +76,7 @@
     padding: rem-calc(60);
     position: absolute;
     width: 100%;
+    text-align: left;
   }
 }
 
@@ -90,13 +97,10 @@
 .c-side-hero__title {
   @include font-size-x-large;
   line-height: 1.2;
-  position: relative;
-  text-align: center;
-  z-index: $z-index-hero-title;
+  margin-bottom: rem-calc(10);
 
   @include media($bp-large) {
     margin-bottom: rem-calc(20);
-    text-align: left;
   }
 }
 

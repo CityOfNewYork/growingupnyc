@@ -1,18 +1,13 @@
 <?php
 
-if ( ! class_exists( 'Timber' ) ) {
-  add_action( 'admin_notices', function() {
-    echo '<div class="error"><p>Timber not activated. Make sure you activate the plugin in <a href="' . esc_url( admin_url( 'plugins.php#timber' ) ) . '">' . esc_url( admin_url( 'plugins.php' ) ) . '</a></p></div>';
-  } );
-  return;
-}
+// Environments
+require_once(get_template_directory() . '/config/environments.php');
 
-if ( ! class_exists( 'GUPostTypes' ) ) {
-  add_action( 'admin_notices', function() {
-    echo '<div class="error"><p>GUPostTypes not activated. Make sure you activate the plugin in <a href="' . esc_url( admin_url( 'plugins.php#growing-up-nyc-post-types' ) ) . '">' . esc_url( admin_url( 'plugins.php' ) ) . '</a></p></div>';
-  } );
-  return;
-}
+// Notifications
+require_once(get_template_directory() . '/includes/notifications.php');
+
+Notifications\timber();
+Notifications\custom_post_types();
 
 class GunySite extends TimberSite {
 
@@ -328,14 +323,14 @@ class GunyEvent extends TimberPost {
       $date = new DateTime("now", new DateTimeZone('America/New_York'));
       $today = $date->format('Y-m-d');
       $tomorrow = $date->modify('+1 day')->format('Y-m-d');
-      $end_time = date('Y-m-d', $this->end_datetime());
+      $end_time = date(__('Y-m-d', 'guny-date-formats'), $this->end_datetime());
 
       if ($end_time == $today ) {
-        $time = 'today';
+        $time = __('today', 'guny-events');
       } else if ($end_time == $tomorrow) {
-        $time = 'tomorrow';
+        $time = __('tomorrow', 'guny-events');
       } else {
-        $time = date('l M j', $this->end_datetime());
+        $time = date(__('l M j', 'guny-date-formats'), $this->end_datetime());
       }
 
       return $time;
@@ -507,42 +502,62 @@ function my_acf_validate_cta_button_phone( $valid, $value){
 }
 // end add validation
 
-// Customize TinyMCE settings
-require_once(get_template_directory() . '/includes/guny_editor_styles.php');
 
-// Custom Shortcodes
-require_once(get_template_directory() . '/includes/guny_shortcodes.php');
+/**
+ * Includes
+ */
 
-// Customize Wordpress meta boxes
-require_once(get_template_directory() . '/includes/guny_meta_boxes.php');
+$includes = [
+  '/includes/guny_editor_styles.php', // Customize TinyMCE settings
+  '/includes/guny_shortcodes.php', // Custom Shortcodes
+  '/includes/guny_meta_boxes.php', // Customize Wordpress meta boxes
+  '/includes/guny_top_programs.php', // Add Top Programs Widget
+  '/includes/guny_term_meta.php', // Add custom meta fields to taxonomies
+  '/includes/guny_facetwp.php', // Customize Facet WP output
+  '/includes/guny_filter_events.php', // Event filters
+  '/includes/routing.php', // Routing
+  '/includes/search.php', // Search functions
+  '/includes/summer_guides.php', // Summer guide functions
+  [ // Templating
+    '/includes/get_focal_point.php', // Focal point functions
+    '/includes/format_posts.php', // Format posts based on their type
+    '/includes/parameters.php', // Parameter functions for templates
+    '/includes/flexible_content.php', // Working with ACF Flexible Content
+    '/includes/location_description.php', // Date option custom field
+    '/includes/date_options.php' // Date option custom field
+  ],
+  [ // Nyco
+    '/vendor/nyco/wp-assets/dist/style.php', // Enqueue functions
+    '/vendor/nyco/wp-assets/dist/script.php' // Enqueue functions
+  ],
+  [ // Wpml
+    '/includes/term_translations.php', // Term translation helpers
+    '/includes/languages.php' // A custom language switcher
+  ],
+  [ // Admin
+    '/includes/program_posts_column.php' // Add program name to post in the admin
+  ],
+  [ // michelf
+    '/vendor/michelf/php-markdown/Michelf/Markdown.inc.php' // Markdown parser
+  ]
+];
 
-// Add Top Programs Widget
-require_once(get_template_directory() . '/includes/guny_top_programs.php');
+for ($i=0; $i < sizeof($includes); $i++) {
+  if (is_array($includes[$i])) {
+    for ($x=0; $x < sizeof($includes[$i]); $x++) {
+      require_once(get_template_directory() . $includes[$i][$x]);
+    }
+  } else {
+    require_once(get_template_directory() . $includes[$i]);
+  }
+}
 
-// Add custom meta fields to taxonomies
-require_once(get_template_directory() . '/includes/guny_term_meta.php');
-
-// Customize Facet WP output
-require_once(get_template_directory() . '/includes/guny_facetwp.php');
-
-// Event filters
-require_once(get_template_directory() . '/includes/guny_filter_events.php');
-
-// Admin messages
-require_once(get_template_directory() . '/includes/guny_messages.php');
-
-// Focal point functions
-require_once(get_template_directory() . '/includes/get_focal_point.php');
-
-// Enqueue functions
-require_once(get_template_directory() . '/includes/style.php');
-require_once(get_template_directory() . '/includes/script.php');
-
-// Term translation helpers
-require_once(get_template_directory() . '/includes/term_translations.php');
-
-// Add program name to post
-require_once(get_template_directory() . '/includes/program_posts_column.php');
-
-// Redirects
-require_once(get_template_directory() . '/includes/routing.php');
+/**
+ * Utiltiy for wrapping var_dump in pre tags for a nicer front end
+ * @param  any $var The variable to pass to var_dump()
+ */
+function pre_dump($var) {
+  echo '<pre>';
+  var_dump($var);
+  echo '</pre>';
+}

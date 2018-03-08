@@ -1,0 +1,90 @@
+[
+    {
+        "name": "michelf/php-markdown",
+        "version": "1.8.0",
+        "version_normalized": "1.8.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/michelf/php-markdown.git",
+            "reference": "01ab082b355bf188d907b9929cd99b2923053495"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/michelf/php-markdown/zipball/01ab082b355bf188d907b9929cd99b2923053495",
+            "reference": "01ab082b355bf188d907b9929cd99b2923053495",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2018-01-15T00:49:33+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Michelf\\": "Michelf/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Michel Fortin",
+                "email": "michel.fortin@michelf.ca",
+                "homepage": "https://michelf.ca/",
+                "role": "Developer"
+            },
+            {
+                "name": "John Gruber",
+                "homepage": "https://daringfireball.net/"
+            }
+        ],
+        "description": "PHP Markdown",
+        "homepage": "https://michelf.ca/projects/php-markdown/",
+        "keywords": [
+            "markdown"
+        ]
+    },
+    {
+        "name": "nyco/wp-assets",
+        "version": "0.0.4",
+        "version_normalized": "0.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/CityOfNewYork/nyco-wp-assets.git",
+            "reference": "69422920e79f57910135c337f40d5d23696e3103"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/CityOfNewYork/nyco-wp-assets/zipball/69422920e79f57910135c337f40d5d23696e3103",
+            "reference": "69422920e79f57910135c337f40d5d23696e3103",
+            "shasum": ""
+        },
+        "require-dev": {
+            "codeception/codeception": "^2.3",
+            "squizlabs/php_codesniffer": "3.*"
+        },
+        "time": "2018-01-12T19:26:21+00:00",
+        "type": "package",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-3.0+"
+        ],
+        "authors": [
+            {
+                "name": "Devon Hirth",
+                "email": "dehirth@nycopportunity.nyc.gov",
+                "homepage": "https://github.com/devowhippit"
+            }
+        ],
+        "description": "WordPress package for asset helpers.",
+        "homepage": "https://github.com/cityofnewyork/nyco-wp-assets",
+        "keywords": [
+            "assets",
+            "wordpress"
+        ]
+    }
+]

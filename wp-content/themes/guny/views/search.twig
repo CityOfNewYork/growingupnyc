@@ -2,33 +2,36 @@
 
 {% block head_extras %}
 <style>
-  .c-hero { background-color: #469BFF; background-image: url(/wp-content/themes/guny/assets/img/hero-full-splatter-2.svg); }
+  .c-hero {
+    background-color: #469BFF;
+    background-image: url(/wp-content/themes/guny/assets/img/hero-full-splatter-2.svg);
+  }
 </style>
 {% endblock %}
 
 {% block hero %}
-<header class="c-hero u-lg-gutter">
+<header class="c-hero u-lg-gutter" style="overflow:visible;position:relative;z-index:1">
   <div class="o-container-med">
-    <h1 class="show-for-screen-reader">Search Results</h1>
-    {{search}}
+    <h1 class="show-for-screen-reader">{{ __('Search Results', translation_domain) }}</h1>
+    <div class="c-hero__search">{{ search }}</div>
   </div>
 </header>
 {% endblock %}
 
 {% block list_sidebar %}
-<ol class="c-list-box c-list-box--quaternary facetwp-guny" data-multiselectable="false">
-  {{facet_post_type}}
+<ol class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
+  {{ facet_post_type }}
 </ol>
 {% endblock %}
 
 {% block post_list %}
-  <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
-    {{results}}
-  </section>
+<section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
+  {{ results }}
+</section>
 {% endblock %}
 
 {% block after_list %}
 <div class="o-content-container--compact">
-  {{pagination}}
+  {{ pagination }}
 </div>
 {% endblock %}

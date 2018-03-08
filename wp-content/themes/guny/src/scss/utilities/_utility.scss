@@ -14,6 +14,37 @@
   white-space: nowrap;
 }
 
+// These are mapped to Tailwind.css utilities. When we integrate those utils into
+// the patterns library for Growing Up we can remove these.
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.rounded {
+  border-radius: .25rem;
+}
+// End Tailwind Utility
+
 /**
 * Wordpress image alignment
 */

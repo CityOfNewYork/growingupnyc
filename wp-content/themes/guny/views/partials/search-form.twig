@@ -1,0 +1,37 @@
+<form role="search" method="get" class="search-form" action="{{ function('Search\\get_path') }}">
+  <div class="form-field__icon-container">
+
+    <input type="search" name="s" value="{{ s }}"
+           class="form-field form-field--large form-field--full-width c-hero__input"
+           placeholder="{{ __('Search', function('Search\\get_translation_domain')) }}"
+           data-js="search"
+           {% if ( function('Search\\enabled_suggestions') ) %}
+           data-js-search-suggestions='{{ function('Search\\get_suggested_terms') }}'
+           data-js-search-dropdown-class="form-field-dropdown--large"
+           {% endif %}
+           />
+
+    {% if post_type %}<input type="hidden" name="post_type" value="{{ post_type }}" />{% endif %}
+
+    <button type="submit" class="form-field__icon form-field__icon--large">
+      <svg class="icon">
+        <title>{{ __('Search', function('Search\\get_translation_domain')) }}</title>
+        <use xlink:href="#icon-search"></use>
+      </svg>
+    </button>
+
+    <a href="{{ function('Search\\get_path') }}/?s={% if post_type %}&post_type={{ post_type }}{% endif %}"
+       class="form-field__icon form-field__icon--large form-field__icon--weak"
+       {% if s == '' %}
+       style="display:none;"
+       aria-hidden="true"
+       {% endif %}
+       >
+      <svg class="icon">
+        <title>{{ __('Clear', function('Search\\get_translation_domain')) }}</title>
+        <use xlink:href="#icon-close"></use>
+      </svg>
+    </a>
+
+  </div>
+</form>

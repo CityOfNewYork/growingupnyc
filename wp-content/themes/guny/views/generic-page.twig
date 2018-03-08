@@ -1,30 +1,79 @@
-{% extends "microsite-base.twig" %}
+{% extends "base.twig" %}
 
 {% block content %}
 
-{% block head_extras %}
-<style>
-  .c-hero-ms__disclaimer { background-color: #7735b2; background-image: url(/wp-content/themes/guny/assets/img/hero-topics-landing.svg); }
-</style>
-{% endblock %}
+  {% block head_extras %}
+  <style>
+    .c-hero {
+      background-color: #469BFF;
+      background-image: url(/wp-content/themes/guny/assets/img/hero-programs.svg);
+    }
+  </style>
+  {% endblock %}
 
-{% block hero %}
-<div class="js-parallax">
-  <header class="c-hero c-hero-ms c-hero-ms__disclaimer js-parallax-content">
-    <div class="o-container js-parallax-text">
-      <!-- <p class="c-hero__tagline">{{post.title}}</p> -->
-    </div>
-  </header>
-</div>
-{% endblock %}
-<section class="o-container u-bottom-spacing">
-  <article class="o-content-container--compact o-article-ms__disclaimer">
-    <h1 class="c-hero__title u-bottom-spacing">{{post.title}}</h1>
-    {% if post.post_content %}
-      <div class="o-content-container--text s-wysiwyg">
-        {{post.content}}
-      </div> <!-- /.o-content-container-text -->
+  {% block hero %}
+  <div class="js-parallax">
+    <header class="c-hero c-hero--large c-hero--long-text js-parallax-content">
+      <div class="o-container js-parallax-text">
+        <h1 class="c-hero__title--long">
+          {{ post.title }} {# translation comes from page content #}
+        </h1>
+      </div>
+    </header>
+  </div> <!-- /.js-parallax -->
+  {% endblock %}
+
+  <article class="o-container u-bottom-spacing-small js-sticky-container">
+
+    {% if sections %}
+    <aside class="o-article-sidebar">
+      <div class="o-content-container--compact u-shift-up">
+        <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
+
+          {% for section in sections %}
+          {% if section.section_title %}
+          <li class="c-nav-list__item">
+            <a class="js-section c-nav-list__link" href="#section-{{ section.slug }}" data-section="section-{{ section.slug }}">
+              {{ section.section_title }} {# translation comes from page content #}
+              <svg aria-hidden="true" class="icon--caret">
+                <use xlink:href="#icon-caret-right"></use>
+              </svg>
+            </a>
+          </li>
+          {% endif %}
+          {% endfor %}
+
+        </ol>
+      </div>
+    </aside>
     {% endif %}
+
+    <div class="o-article js-sticky-article">
+      <div class="o-content-container--compact">
+
+        {% if post.content %}
+        <section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" id="section-summary">
+          {{ post.content }} {# translation comes from page content #}
+        </section>
+        {% endif %}
+
+        {% if sections %}
+          {% set section_previous = false %}
+          {% set section_no_divider_after = ['newsletter-signup'] %}
+          {% for key, section in sections %}
+
+            {% include 'partials/' ~ section.acf_fc_layout ~ '.twig' with {title: section.section_title, id: 'section-' ~ section.slug, class: ''} %}
+
+            {% if section_previous and section_previous in section_no_divider_after %}<hr>{% endif %}
+
+            {% set section_previous = section.acf_fc_layout %}
+
+          {% endfor %}
+        {% endif %}
+
+      </div>
+    </div>
+
   </article>
-</section> <!-- /.o-container.u-bottom-spacing -->
+
 {% endblock %}

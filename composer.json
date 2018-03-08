@@ -7,6 +7,9 @@
   ],
   "require": {
     "wpackagist-plugin/image-focus": "^0.9.2",
-    "wpackagist-plugin/gathercontent-import": "3.1.7"
+    "wpackagist-plugin/gathercontent-import": "3.1.7",
+    "wpackagist-plugin/relevanssi": "^4.0",
+    "filp/whoops": "^2.1",
+    "whoops/soap": "^1.0"
   }
 }

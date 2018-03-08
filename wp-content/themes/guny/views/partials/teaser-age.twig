@@ -1,8 +1,8 @@
 {% extends "partials/teaser.twig" %}
 
 {% block sticker %}
-<div class="c-card__sticker {{post.age_group.slug|sanitize}}-background sticker" aria-hidden="true">
-  <svg class="icon--large"><title>{{post.age_group}}</title><use xlink:href="#icon-{{post.age_group.slug|sanitize|replace({'es-':''}) }}"></use></svg>
+<div class="c-card__sticker {{ post.age_group.icon }}-background sticker" aria-hidden="true">
+  <svg class="icon--large"><title>{{ post.age_group }}</title><use xlink:href="#icon-{{ post.age_group.icon }}"></use></svg>
 </div>
 {% endblock %}
 

@@ -119,14 +119,14 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 .c-banner__nav {
   float: right;
   line-height: 1;
-  padding-top: rem-calc(18);
-  padding-bottom: rem-calc(18);
-  max-width: 65%;
+  padding-top: rem-calc(30);
+  padding-bottom: rem-calc(6);
+  // max-width: 65%;
 
   li {
     margin-left: 0;
-    margin-right: -8px;
-    margin-right: rem-calc(12);
+    // margin-right: -8px;
+    margin-right: rem-calc(6);
 
     &:last-child {
       margin-right: 0;
@@ -137,6 +137,12 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
       display: inline-block;
     }
   }
+
+  @include media($bp-small) {
+    padding-top: rem-calc(18);
+    padding-bottom: rem-calc(18);
+  }
+
   @include media($bp-medium) {
     padding-top: rem-calc(20);
     padding-bottom: 0;
@@ -227,7 +233,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
     text-align: right;
     z-index: 1;
     .wpml-ls-legacy-list-horizontal {
-      padding: 0 0 7px;
+      padding: 7px 0 0;
       li {
         margin-right: rem-calc(5);
         &:last-child {

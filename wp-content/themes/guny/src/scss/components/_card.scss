@@ -182,7 +182,7 @@
 // Styleguide 5.2.5
 .c-card__body {
   @include font-size-small;
-  margin: rem-calc(0 0 5);
+  margin: rem-calc(0 0 8);
   order: 6;
 }
 
@@ -210,6 +210,36 @@
       &:hover {
         color: $color-text;
       }
+    }
+  }
+}
+
+.c-card__cta-divider {
+  order: 8;
+  margin: rem-calc(24 0);
+}
+
+// Content Card Link
+//
+// markup:
+// <p class="c-card__cta"><a href="#">Link</a></p>
+//
+// Styleguide 5.2.6
+.c-card__cta {
+  font-family: $font-family-display;
+  font-weight: $font-weight-extrablack;
+  @include font-size(18);
+  order: 9;
+
+  color: inherit;
+
+  &:focus {
+    color: $color-text;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $color-text;
     }
   }
 }

@@ -59,6 +59,11 @@
   padding: rem-calc(40 15);
   text-align: center;
 
+  > * {
+    position: relative;
+    z-index: $z-index-hero-title;
+  }
+
   @include media($bp-mobile-only) {
     background: $color-primary;
     @include splatter(top, left);
@@ -92,8 +97,7 @@
 .c-side-hero__title {
   @include font-size-x-large;
   line-height: 1.2;
-  position: relative;
-  z-index: $z-index-hero-title;
+  margin-bottom: rem-calc(10);
 
   @include media($bp-large) {
     margin-bottom: rem-calc(20);

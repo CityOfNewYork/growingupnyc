@@ -103,10 +103,12 @@ class GunySite extends TimberSite {
 
   function add_to_context ( $context ) {
     $context['menu'] = new TimberMenu('header-menu');
-    $context['ms_menu'] = new TimberMenu('ms-header-menu');
-    $context['footer_menu_left'] = new TimberMenu('footer-menu-left');
+    $context['footer_menu_primary_additional'] = new TimberMenu('footer-menu-additional');
     $context['footer_menu_right'] = new TimberMenu('footer-menu-right');
+    $context['ms_menu'] = new TimberMenu('ms-header-menu');
+    $context['ms_footer_menu_primary_additional'] = new TimberMenu('ms-footer-menu-additional');
     $context['ms_footer_menu_right'] = new TimberMenu('ms-footer-menu-right');
+    $context['footer_menu_left'] = new TimberMenu('footer-menu-left');
     $context['site'] = $this;
     $context['age_menu'] = Timber::get_terms('age_group', array(
       'orderby' => 'term_order',
@@ -170,11 +172,13 @@ class GunySite extends TimberSite {
   function add_menus() {
     register_nav_menus(
       array(
-        'header-menu' => __( 'Header Menu' ),
-        'ms-header-menu' => __( 'MS Header Menu' ),
-        'ms-footer-menu-right' => __( 'MS Footer Menu (Right)' ),
-        'footer-menu-left' => __( 'Footer Menu (Left)' ),
-        'footer-menu-right' => __( 'Footer Menu (Right)' )
+        'header-menu' => __( 'Header and Footer Primary Menu' ),
+        'footer-menu-additional' => __( 'Footer Primary Additional [left]' ),
+        'footer-menu-right' => __( 'Footer Tertiary [right]' ),
+        'ms-header-menu' => __( 'MS Header and Footer Primary Menu' ),
+        'ms-footer-menu-additional' => __( 'MS Footer Primary Additional [left]' ),
+        'ms-footer-menu-right' => __( 'MS Footer Tertiary [right]' ),
+        'footer-menu-left' => __( 'Footer Secondary [left]' )
       )
     );
   }

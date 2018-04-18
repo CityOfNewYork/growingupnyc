@@ -15,12 +15,7 @@ wp-content/cache/supercache/*
 #####################
 wp-content/plugins/akismet/
 wp-content/plugins/akismet/*
-wp-content/themes/twentyfourteen
-wp-content/themes/twentyfourteen/*
-wp-content/themes/twentyfifteen
-wp-content/themes/twentyfifteen/*
-wp-content/themes/twentysixteen/
-wp-content/themes/twentysixteen/*
+wp-content/themes/twenty*/
 wp-content/plugins/hello.php
 /info.php
 

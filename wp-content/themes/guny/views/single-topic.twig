@@ -16,7 +16,7 @@
           </span>#}
           {{post.title}}
         </h1>
-        <p class="c-hero__tagline">{{post.sub_heading}}</p>
+        <p class="c-hero__tagline">{{post.get_field('sub_heading')}}</p>
       </div>
       {#<svg class="c-hero__frill {{post.age_group.slug|sanitize|replace({'-es':''})}}-svg" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 404 359" >
         <title>Paint Splatter</title>

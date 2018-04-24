@@ -153,10 +153,12 @@ if ( !empty( $eventDate ) ) {
 }
 
 if ( tribe_has_previous_event() && (int) get_query_var('paged') >= 2 ) {
-  $context['prev_url'] = esc_url( addFilterArgs( tribe_get_listview_prev_link(),  true ) );
+  // TO EDIT: this is a temporary fix
+  $context['prev_url'] = str_replace("lista", "list", esc_url( addFilterArgs( tribe_get_listview_prev_link(),  true ) ));
 }
 if ( tribe_has_next_event() ) {
-  $context['next_url'] = esc_url( addFilterArgs( tribe_get_listview_next_link(), true ) );
+  // TO EDIT: this is a temporary fix
+  $context['next_url'] = str_replace("lista", "list", esc_url( addFilterArgs( tribe_get_listview_next_link(), true ) ));
 }
 
 // Adding the language

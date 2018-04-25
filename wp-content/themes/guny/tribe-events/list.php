@@ -164,13 +164,13 @@ if ( tribe_has_next_event() ) {
 // Adding the language
 $context['language'] = ICL_LANGUAGE_CODE;
 
-$context['custom_switcher'] = Timber::compile(
-  array('partials/language-switcher.twig'),
-  array(
-    'languages' => Wpml\get_wpdb_languages(),
-    'current' => $context['language']
-  )
-);
+// $context['custom_switcher'] = Timber::compile(
+//   array('partials/language-switcher.twig'),
+//   array(
+//     'languages' => Wpml\get_wpdb_languages(),
+//     'current' => $context['language']
+//   )
+// );
 
 $templates = array( 'list-events.twig', 'index.twig' );
 

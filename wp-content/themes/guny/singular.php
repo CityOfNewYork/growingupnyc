@@ -23,30 +23,6 @@ if ( $post->post_type == 'age' ) {
   if( $age_groups ) {
     $post->age_group = $age_groups[0];
     $age_group_id=$post->age_group->id;
-
-    // reassign the age_group_id if on a spanish page
-    // TO EDIT: move away from hardcoded IDs
-    if ($post->age_group->slug == 'baby-es'){
-      $age_group_id=7;
-    }elseif ($post->age_group->slug == 'toddler-es'){
-      $age_group_id=8;
-    }elseif ($post->age_group->slug == 'pre-schooler-es'){
-      $age_group_id=9;
-    }elseif ($post->age_group->slug == 'grade-schooler-es'){
-      $age_group_id=10;
-    }elseif ($post->age_group->slug == 'pre-teen-es'){
-      $age_group_id=11;
-    }elseif ($post->age_group->slug == 'teen-es'){
-      $age_group_id=100;
-    }elseif ($post->age_group->slug == 'young-adult-es'){
-      $age_group_id=102;
-    }elseif ($post->age_group->slug == 'caregiver-es'){
-      $age_group_id=43;
-    }elseif ($post->age_group->slug == 'everyone-es'){
-      $age_group_id=47;
-    }
-    // end reassignment
-
     $context['age_group_id'] = $age_group_id;
   }
   $upcoming_events = GunySite::get_featured_events( 3, array(

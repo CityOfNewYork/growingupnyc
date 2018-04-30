@@ -139,12 +139,10 @@ function guny_facetwp_pager_html( $output, $params ) {
     return $output;
   }
   if ( 1 <= ( $page - 1 ) ) {
-    // $output .= '<a class="button--outline button--outline--gray alignleft" href="'.add_facet_pagers($_SERVER["HTTP_REFERER"] , ($page - 1)).'">Previous</button>';
-    $output .= '<button class="button--outline button--outline--gray alignleft" href="'.add_facet_pagers($_SERVER['REQUEST_SCHEME'].'://'.$_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"] , ($page - 1)).'">Previous</button>';
+    $output .= '<a class="button--outline button--outline--gray alignleft" href="'.add_facet_pagers($_SERVER['REQUEST_SCHEME'].'://'.$_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"] , ($page - 1)).'">'.__('Previous', 'guny').'</a>';
   }
   if ( $total_pages >= ( $page + 1 ) ) {
-    // $output .= '<a class="button--outline button--outline--gray alignright" href="'.add_facet_pagers($_SERVER["HTTP_REFERER"] , ($page + 1)). '">Next</button>';
-    $output .= '<button class="button--outline button--outline--gray alignright" href="'.add_facet_pagers($_SERVER['REQUEST_SCHEME'].'://'.$_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"] , ($page + 1)). '">Next</button>';
+    $output .= '<a class="button--outline button--outline--gray alignright" href="'.add_facet_pagers($_SERVER['REQUEST_SCHEME'].'://'.$_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"] , ($page + 1)).'">'.__('Next', 'guny').'</a>';
   }
   return $output;
 }

@@ -221,9 +221,9 @@
 
 		function tribe_display_week_view() {
 
-			var $week_events = $( ".tribe-grid-body .tribe-grid-content-wrap .column > div[id*='tribe-events-event-']" ),
-				grid_height = $( ".tribe-week-grid-inner-wrap" ).height(),
-				offset_top = 5000;
+			var $week_events = $( ".tribe-grid-body .tribe-grid-content-wrap .column > div[id*='tribe-events-event-']" );
+			var grid_height  = $( ".tribe-week-grid-inner-wrap" ).height();
+			var offset_top   = 5000;
 
 			$week_events.each( function() {
 
@@ -320,84 +320,78 @@
 				$( ".tribe-grid-body .tribe-grid-content-wrap .column" ).height( week_day_height );
 
 			}, 250 );
-
 		}
 
 		function tribe_mobile_load_events( date ) {
 
-			var $target = $( '.tribe-mobile-day[data-day="' + date + '"]' ),
-				$events = $( '.column[title="' + date + '"] .tribe-week-event' );
+			var $target = $( '.tribe-mobile-day[data-day="' + date + '"]' );
+			var $events = $( '.column[title="' + date + '"] .tribe-week-event' );
 
 			if ( $events.length ) {
-				$events
-					.each( function() {
+				$events.each( function() {
 
-						var $this = $( this );
+					var $this = $( this );
 
-						if ( $this.tribe_has_attr( 'data-tribejson' ) ) {
+					if ( $this.tribe_has_attr( 'data-tribejson' ) ) {
 
-							var data = $this.data( 'tribejson' );
+						var data = $this.data( 'tribejson' );
 
-							$target
-								.append( tribe_tmpl( 'tribe_tmpl_week_mobile', data ) );
-						}
+						$target.append( tribe_tmpl( 'tribe_tmpl_week_mobile', data ) );
+					}
 
-					} );
+				} );
 			}
-
 		}
 
 		function tribe_mobile_setup_day( date, day_attr ) {
 
-			var $container = $( '#tribe-mobile-container' ),
-				$target_day = $( '.tribe-mobile-day[data-day="' + date + '"]' );
+			var $container  = $( '#tribe-mobile-container' );
+			var $target_day = $( '.tribe-mobile-day[data-day="' + date + '"]' );
 
 			if ( $target_day.length ) {
 				$target_day.show();
-			}
-			else {
-				$container
-					.append( '<div class="tribe-mobile-day" data-day="' + date + '"></div>' );
-
+			} else {
+				$container.append( '<div class="tribe-mobile-day" data-day="' + date + '"></div>' );
 				tribe_mobile_load_events( date );
 			}
 
-			if ( !$target_day.length ) {
+			if ( ! $target_day.length ) {
 				$target_day = $( '.tribe-mobile-day[data-day="' + date + '"]' );
 			}
 
-			if ( !$target_day.find( 'h5' ).length && $target_day.find( '.tribe-events-mobile' ).length ) {
+			if ( ! $target_day.find( 'h5' ).length && $target_day.find( '.tribe-events-mobile' ).length ) {
 				$target_day.prepend( '<h5 class="tribe-mobile-day-date">' + day_attr + '</h5>' );
 			}
-
-
 		}
 
-		function tribe_mobile_week_setup() {
+		function tribe_mobile_week_setup( $tribe_grid ) {
 
-			var $mobile_days = $( '.tribe-events-mobile-day' ),
-				$tribe_grid = $( '#tribe-events-content > .tribe-events-grid' );
+			var $mobile_days = $( '.tribe-events-mobile-day' );
 
-			if ( !$( '#tribe-mobile-container' ).length ) {
+			if ( ! $( '#tribe-mobile-container' ).length ) {
 				$( '<div id="tribe-mobile-container" />' ).insertAfter( $tribe_grid );
 			}
 
+			$tribe_grid.hide();
+
 			$mobile_days.each( function() {
-				var $this = $( this ),
-					day_date = $this.attr( 'title' ),
-					$grid_day_col = $( '.tribe-grid-content-wrap .column[title="' + day_date + '"]' ),
-					day_attr = $grid_day_col.find( 'span' ).attr( 'data-full-date' );
+				var $this         = $( this );
+				var day_date      = $this.attr( 'title' );
+				var $grid_day_col = $( '.tribe-grid-content-wrap .column[title="' + day_date + '"]' );
+				var day_attr      = $grid_day_col.find( 'span' ).attr( 'data-full-date' );
 
 				tribe_mobile_setup_day( day_date, day_attr );
-			} );
-
+			});
 		}
 
 		function tribe_week_view_init() {
+			var $tribe_grid = $( '#tribe-events-content > .tribe-events-grid' );
+
 			if ( $body.is( '.tribe-mobile' ) ) {
-				tribe_mobile_week_setup();
-			}
-			else {
+				tribe_mobile_week_setup( $tribe_grid );
+			} else {
+				$tribe_grid.show();
+
 				tribe_set_allday_placeholder_height();
 				tribe_set_allday_spanning_events_width();
 				tribe_add_right_class();
@@ -566,9 +560,10 @@
 				}
 
 				ts.params = {
-					action   : 'tribe_week',
+					action: 'tribe_week',
 					eventDate: ts.date,
-					featured : tf.is_featured()
+					tribe_event_display: ts.view,
+					featured: tf.is_featured()
 				};
 
 				ts.url_params = {};
@@ -583,6 +578,11 @@
 					if( !ts.url_params.hasOwnProperty( 'eventDisplay' ) ){
 						ts.url_params['eventDisplay'] = ts.view;
 					}
+				}
+
+				// add shortcode display value
+				if ( ! ts.url_params.hasOwnProperty( 'tribe_event_display' ) ) {
+					ts.url_params['tribe_event_display'] = ts.view;
 				}
 
 				if ( ts.category ) {
@@ -614,6 +614,7 @@
 
 			}
 
+			var appended = false;
 			if ( tt.pushstate ) {
 
 				// @ifdef DEBUG
@@ -674,13 +675,14 @@
 							}
 
 							td.cur_url = td.cur_url + '?' + ts.url_params;
+							appended = true;
 						}
 
 						if ( ts.do_string ) {
 							history.pushState( {
 								"tribe_url_params": ts.url_params,
 								"tribe_params"    : ts.params
-							}, ts.page_title, td.cur_url + '?' + ts.url_params );
+							}, ts.page_title, appended ? td.cur_url : td.cur_url + '?' + ts.url_params );
 						}
 
 						if ( ts.pushstate ) {
@@ -705,7 +707,7 @@
 			}
 			else {
 				if ( ts.url_params.length ) {
-					window.location = td.cur_url + '?' + ts.url_params;
+					window.location = appended ? td.cur_url : td.cur_url + '?' + ts.url_params;
 				}
 				else {
 					window.location = td.cur_url;

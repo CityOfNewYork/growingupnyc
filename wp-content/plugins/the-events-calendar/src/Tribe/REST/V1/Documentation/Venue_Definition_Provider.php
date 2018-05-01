@@ -38,7 +38,7 @@ class Tribe__Events__REST__V1__Documentation__Venue_Definition_Provider
 				),
 				'date' => array(
 					'type' => 'string',
-					'description' => __( 'The venue creation date in the site timezone', 'the-events-calendar' ),
+					'description' => __( 'The venue creation date in the site time zone', 'the-events-calendar' ),
 				),
 				'date_utc' => array(
 					'type' => 'string',
@@ -46,7 +46,7 @@ class Tribe__Events__REST__V1__Documentation__Venue_Definition_Provider
 				),
 				'modified' => array(
 					'type' => 'string',
-					'description' => __( 'The venue last modification date in the site timezone', 'the-events-calendar' ),
+					'description' => __( 'The venue last modification date in the site time zone', 'the-events-calendar' ),
 				),
 				'modified_utc' => array(
 					'type' => 'string',
@@ -71,6 +71,10 @@ class Tribe__Events__REST__V1__Documentation__Venue_Definition_Provider
 				'excerpt' => array(
 					'type' => 'string',
 					'description' => __( 'The venue short description', 'the-events-calendar' ),
+				),
+				'slug' => array(
+					'type' => 'string',
+					'description' => __( 'The venue slug', 'the-events-calendar' ),
 				),
 				'image' => array(
 					'type' => 'string',

@@ -47,6 +47,10 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 	 * @return int|null
 	 */
 	public function create_local_post_job( $post_id, $target_language_code, $translator_id = null ) {
+		/**
+		 * @var $wpml_post_translations   WPML_Post_Translation
+		 * @var $iclTranslationManagement TranslationManagement
+		 */
 		global $wpml_post_translations, $iclTranslationManagement;
 
 		$source_language_code = $wpml_post_translations->get_element_lang_code( $post_id );
@@ -128,26 +132,12 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 	}
 
 	public function get_translation_jobs( array $args = array(), $only_ids = false, $as_job_instances = false ) {
-		global $wpdb;
+		$include_unassigned = isset( $args['include_unassigned'] ) ? $args['include_unassigned'] : false;
 
-		/** @var $order_by array */
-		/** @var $include_unassigned bool */
-		$include_unassigned = false;
-		$order_by           = array();
-
-		extract( $args, EXTR_OVERWRITE );
-
-		$order_by = is_scalar( $order_by ) ? array( $order_by ) : $order_by;
-		if ( $include_unassigned ) {
-			$order_by[] = 'j.translator_id DESC';
-		}
-		$order_by[] = ' j.job_id DESC ';
-		$order_by   = implode( ', ', $order_by );
-
-		$where = $this->build_where_clause( $args );
-
+		$order_by = $this->build_order_by_clause( $args, $include_unassigned );
+		$where    = $this->build_where_clause( $args );
 		$jobs_sql = $this->get_job_sql( $where, $order_by, $only_ids );
-		$jobs     = $wpdb->get_results( $jobs_sql );
+		$jobs     = $this->wpdb->get_results( $jobs_sql );
 		if ( $only_ids === false ) {
 			$jobs = $this->add_data_to_post_jobs( $jobs );
 		}
@@ -158,7 +148,47 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 		return $jobs;
 	}
 
-	private function add_data_to_post_jobs( $jobs ) {
+	/**
+	 * @param array $args
+	 * @param bool  $include_unassigned
+	 *
+	 * @return string
+	 */
+	private function build_order_by_clause( array $args, $include_unassigned ) {
+		$order_by = isset( $args['order_by'] ) ? $args['order_by'] : array();
+		$order    = isset( $args['order'] ) ? $args['order'] : false;
+
+		if ( $order_by && $order ) {
+
+			$order = 'desc' === $order ? 'DESC' : 'ASC';
+
+			switch ( $order_by ) {
+				case 'deadline':
+					$clause_items[] = "j.deadline_date $order";
+					break;
+
+				case 'job_id':
+					$clause_items[] = "j.job_id $order";
+					break;
+			}
+
+		} else {
+			$clause_items = is_scalar( $order_by ) ? array( $order_by ) : $order_by;
+		}
+
+		if ( $include_unassigned ) {
+			$clause_items[] = 'j.translator_id DESC';
+		}
+
+		$clause_items[] = 'j.job_id DESC';
+
+		return implode( ', ', $clause_items );
+	}
+
+	private function add_data_to_post_jobs( array $jobs ) {
+		/**
+		 * @var $iclTranslationManagement TranslationManagement
+		 */
 		global $iclTranslationManagement, $sitepress;
 
 		foreach ( $jobs as $job_index => $job ) {
@@ -172,11 +202,11 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 				$edit_url                 = get_edit_post_link( $doc->ID );
 
 				if ( $iclTranslationManagement->is_external_type( $job->element_type_prefix ) ) {
-					$post_title = $this->get_external_job_post_title( $job->job_id, $post_id );
+					$post_title = $job->title ? $job->title : $this->get_external_job_post_title( $job->job_id, $post_id );
 					$edit_url   = apply_filters( 'wpml_external_item_url', '', $post_id );
 					$edit_url   = apply_filters( 'wpml_document_edit_item_url', $edit_url, $doc->kind_slug, $doc->ID );
 				} else {
-					$post_title = $doc->post_title;
+					$post_title = $job->title ? $job->title : $doc->post_title;
 					$edit_url   = apply_filters( 'wpml_document_edit_item_url',
 						$edit_url,
 						$job->original_post_type,
@@ -231,7 +261,13 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 		$data_prepare = $wpdb->prepare( $data_query, $limit );
 		$data         = $wpdb->get_results( $data_prepare );
 
-		return (bool) $data === false ? array() : ( $limit === 1 ? $data[ 0 ] : $data );
+		if ( false === (bool) $data ) {
+			return array();
+		}
+		if ( 1 === $limit ) {
+			return $data[0];
+		}
+		return $data;
 	}
 
 	private function get_job_sql( $where, $order_by, $only_ids = false ) {
@@ -316,7 +352,10 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 				{$icl_translations_translated_alias}.source_language_code,
 				{$icl_translate_alias}.field_data AS original_doc_id,
 				{$icl_translate_alias}.job_id,
-				{$icl_translations_original_alias}.element_type AS original_post_type";
+				{$icl_translations_original_alias}.element_type AS original_post_type,
+				{$icl_translate_job_alias}.title,
+				{$icl_translate_job_alias}.deadline_date,
+				{$icl_translate_job_alias}.completed_date";
 	}
 
 	private function add_job_elements( $job, $include_non_translatable_elements ) {
@@ -324,11 +363,11 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 
 		$jelq = ! $include_non_translatable_elements ? ' AND field_translate = 1' : '';
 
-		$elements = $wpdb->get_results( $wpdb->prepare( " SELECT *
-                                                        FROM {$wpdb->prefix}icl_translate
-                                                        WHERE job_id = %d {$jelq}
-                                                        ORDER BY tid ASC",
-			$job->job_id ) );
+		$query    = "SELECT *
+						FROM {$wpdb->prefix}icl_translate
+						WHERE job_id = %d {$jelq}
+						ORDER BY tid ASC";
+		$elements = $wpdb->get_results( $wpdb->prepare( $query, $job->job_id ) );
 
 		// allow adding custom elements
 		$job->elements = apply_filters( 'icl_job_elements', $elements, $job->original_doc_id, $job->job_id );
@@ -340,24 +379,30 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 	 * @param $job_id
 	 * @param $post_id
 	 *
-	 * @return mixed|string|void
+	 * @return string
 	 */
 	private function get_external_job_post_title( $job_id, $post_id ) {
 		global $wpdb;
 
-		$title_and_name = $wpdb->get_row( $wpdb->prepare( "
-													 SELECT n.field_data AS name, t.field_data AS title
-													 FROM {$wpdb->prefix}icl_translate AS n
-													 JOIN {$wpdb->prefix}icl_translate AS t
-													  ON n.job_id = t.job_id
-													 WHERE n.job_id = %d
-													  AND n.field_type = 'name'
-													  AND t.field_type = 'title'
-													  LIMIT 1
-													  ",
-			$job_id ) );
+		$query          = "SELECT n.field_data AS name, t.field_data AS title
+							FROM {$wpdb->prefix}icl_translate AS n
+							JOIN {$wpdb->prefix}icl_translate AS t
+								ON n.job_id = t.job_id
+							WHERE n.job_id = %d
+								AND n.field_type = 'name'
+								AND t.field_type = 'title'
+							LIMIT 1";
+		$title_and_name = $wpdb->get_row( $wpdb->prepare( $query, $job_id ) );
 
-		$post_title = $title_and_name !== null ? base64_decode( $title_and_name->name ? $title_and_name->name : $title_and_name->title ) : '';
+		$post_title = '';
+		if ( $title_and_name !== null ) {
+			if ( $title_and_name->name ) {
+				$title = $title_and_name->name;
+			} else {
+				$title = $title_and_name->title;
+			}
+			$post_title = base64_decode( $title );
+		}
 		$post_title = apply_filters( 'wpml_tm_external_translation_job_title', $post_title, $post_id );
 
 		return $post_title;
@@ -374,13 +419,11 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 
 		//do we have a previous version
 		if ( $revisions > 0 ) {
-			$prev_version_job_id = $wpdb->get_var( $wpdb->prepare( "
-                                                                SELECT MAX(job_id)
-                                                                FROM {$wpdb->prefix}icl_translate_job
-                                                                WHERE rid=%d
-                                                                  AND job_id < %d",
-				$job->rid,
-				$job->job_id ) );
+			$query               = "SELECT MAX(job_id)
+									FROM {$wpdb->prefix}icl_translate_job
+									WHERE rid=%d
+										AND job_id < %d";
+			$prev_version_job_id = $wpdb->get_var( $wpdb->prepare( $query, $job->rid, $job->job_id ) );
 			if ( $prev_version_job_id ) {
 				$job->prev_version = $this->get_translation_job( $prev_version_job_id, false, $revisions - 1 );
 			}

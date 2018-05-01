@@ -280,11 +280,11 @@
 		line-height: 1.25;
 		position: absolute;
 		width: 94%;
-		z-index: 500;
+		z-index: 3;
 	}
 
 	div[id*='tribe-events-event-']:hover {
-		z-index: 800;
+		z-index: 4;
 	}
 }
 
@@ -403,6 +403,10 @@
 	text-align: left;
 }
 
+.tribe-week-grid-wrapper div[id*='tribe-events-tooltip-'] {
+	cursor: default !important;
+}
+
 .tribe-grid-body {
 	.tribe-events-tooltip .tribe-events-event-body {
 		position: relative;
@@ -432,7 +436,7 @@
 /* Week view grid background */
 .tribe-week-grid-outer-wrap {
 	position: relative;
-	z-index: 10;
+	z-index: 2;
 }
 
 .tribe-week-grid-inner-wrap {
@@ -1161,6 +1165,11 @@ h3.tribe-events-related-events-title {
 			margin-bottom: 0;
 			padding-bottom: 16px;
 
+			.tribe-event-image {
+				line-height: 0;
+				overflow: hidden;
+			}
+
 			.list-info {
 				margin-bottom: 0;
 			}
@@ -1518,4 +1527,16 @@ div.tribe-countdown-text {
 		padding: 10px;
 		width: 25%;
 	}
+}
+
+/* = "Month View" Generated from [tribe_events] Shortcode
+=========================================================*/
+.tribe-events-shortcode .tribe-events-month table .type-tribe_events {
+	border-bottom: 1px solid #e7e7e7;
+	margin: 0 5%;
+	padding: 6px 8px;
+}
+
+.tribe-events-shortcode .tribe-events-month table .tribe-events-last {
+	border-bottom: 0;
 }

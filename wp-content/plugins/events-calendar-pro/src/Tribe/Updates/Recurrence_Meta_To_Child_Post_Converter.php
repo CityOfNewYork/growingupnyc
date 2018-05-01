@@ -30,26 +30,50 @@ class Tribe__Events__Pro__Updates__Recurrence_Meta_To_Child_Post_Converter {
 			return;
 		}
 
+		$original = array_shift( $start_dates );
+		$duration = (int) get_post_meta( $event_id, '_EventDuration', true );
 
-		$original    = array_shift( $start_dates );
-		$start_dates = array_map( 'strtotime', $start_dates );
+		$prepared_start_dates = array();
+		foreach ( $start_dates as $start_date ) {
+			$prepared_start_dates[] = $this->build_sequence_entry( $start_date, $duration );
+		}
 
-		$prepared_start_dates = array_map( array( $this, 'start_date_to_sequence' ), $start_dates );
-		$sequence             = new Tribe__Events__Pro__Recurrence__Sequence( $prepared_start_dates, $event_id );
+		$sequence = new Tribe__Events__Pro__Recurrence__Sequence( $prepared_start_dates, $event_id );
+
+		$i = 0;
 
 		foreach ( $sequence->get_sorted_sequence() as $date ) {
 			if ( ! empty( $date ) ) {
 				set_time_limit( 30 );
 				$instance = new Tribe__Events__Pro__Recurrence__Instance( $event_id, $date, 0, $date['sequence'] );
 				$instance->save();
-				delete_post_meta( $event_id, '_EventStartDate', date( 'Y-m-d H:i:s', $date ) );
+
+				$original_meta_value = Tribe__Utils__Array::get( $start_dates, $i, false );
+
+				if ( false !== $original_meta_value ) {
+					delete_post_meta( $event_id, '_EventStartDate', $original_meta_value );
+				}
 			}
+
+			$i ++;
 		}
+
 		delete_post_meta( $event_id, '_EventStartDate' );
 		update_post_meta( $event_id, '_EventStartDate', $original );
 	}
 
-	private function start_date_to_sequence( $start_date ) {
-		return array( 'timestamp' => $start_date );
+	/**
+	 * Converts the start date and duration to the format expected by the sequence processor.
+	 *
+	 * @param string $start_date A `strtotime` parseable date
+	 * @param int    $duration   The event duration in seconds
+	 *
+	 * @return array
+	 */
+	protected function build_sequence_entry( $start_date, $duration ) {
+		return array(
+			'timestamp' => strtotime( $start_date ),
+			'duration'  => $duration,
+		);
 	}
 }

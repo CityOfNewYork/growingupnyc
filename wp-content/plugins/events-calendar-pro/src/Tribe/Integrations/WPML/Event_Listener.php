@@ -48,7 +48,7 @@ class Tribe__Events__Pro__Integrations__WPML__Event_Listener {
 	 */
 	public function __construct( array $handlers_map = null, Tribe__Log__Logger $logger = null, Tribe__Events__Pro__Integrations__WPML__WPML $wpml = null ) {
 		$this->handlers_map = $handlers_map ? $handlers_map : $this->get_handlers_map();
-		$this->logger       = $logger ? $logger : Tribe__Main::instance()->log()->get_current_logger();
+		$this->logger       = $logger ? $logger : tribe( 'logger' )->get_current_logger();
 		$this->wpml         = $wpml ? $wpml : Tribe__Events__Pro__Integrations__WPML__WPML::instance();
 	}
 

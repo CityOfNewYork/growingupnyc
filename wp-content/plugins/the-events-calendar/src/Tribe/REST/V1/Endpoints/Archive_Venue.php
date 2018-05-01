@@ -61,7 +61,7 @@ class Tribe__Events__REST__V1__Endpoints__Archive_Venue
 						'description' => __( 'One or more of the specified query variables has a bad format', 'the-events-calendar' ),
 					),
 					'404' => array(
-						'description' => __( 'No events match the query or the requested page was not found.', 'the-events-calendar' ),
+						'description' => __( 'The requested page was not found.', 'the-events-calendar' ),
 					),
 				),
 			),
@@ -124,22 +124,16 @@ class Tribe__Events__REST__V1__Endpoints__Archive_Venue
 			if ( ! empty( $matches ) ) {
 				$args['post__in'] = $matches;
 			} else {
-				$message = $this->messages->get_message( 'venue-archive-page-not-found' );
-
-				return new WP_Error( 'venue-archive-page-not-found', $message, array( 'status' => 404 ) );
+				$venues = array();
 			}
 		}
 
 		$posts_per_page = Tribe__Utils__Array::get( $args, 'posts_per_page', $this->get_default_posts_per_page() );
-		$venues         = tribe_get_venues( $only_with_upcoming, $posts_per_page, true, $args );
+		$venues = isset( $venues )
+			? $venues
+			: tribe_get_venues( $only_with_upcoming, $posts_per_page, true, $args );
 
 		unset( $args['fields'] );
-
-		if ( empty( $venues ) ) {
-			$message = $this->messages->get_message( 'venue-archive-page-not-found' );
-
-			return new WP_Error( 'venue-archive-page-not-found', $message, array( 'status' => 404 ) );
-		}
 
 		$ids = wp_list_pluck( $venues, 'ID' );
 
@@ -152,6 +146,12 @@ class Tribe__Events__REST__V1__Endpoints__Archive_Venue
 		$data['rest_url'] = $this->get_current_rest_url( $args );
 
 		$page = Tribe__Utils__Array::get( $args, 'paged', 1 );
+
+		if ( empty( $venues ) && (int) $page > 1 ) {
+			$message = $this->messages->get_message( 'venue-archive-page-not-found' );
+
+			return new WP_Error( 'venue-archive-page-not-found', $message, array( 'status' => 404 ) );
+		}
 
 		if ( $this->has_next( $args, $page, $only_with_upcoming ) ) {
 			$data['next_rest_url'] = $this->get_next_rest_url( $data['rest_url'], $page );
@@ -249,22 +249,26 @@ class Tribe__Events__REST__V1__Endpoints__Archive_Venue
 	}
 
 	/**
+	 * Returns the total number of posts matching the request.
+	 *
+	 * @since 4.6
+	 *
 	 * @param array $args
 	 * @param bool  $only_with_upcoming
 	 *
 	 * @return int
-	 *
-	 * @since 4.6
 	 */
 	protected function get_total( $args, $only_with_upcoming = false ) {
 		unset( $args['posts_per_page'] );
 
-		$this->total = count( tribe_get_venues( $only_with_upcoming, - 1, true,
+		$this->total = tribe_get_venues( $only_with_upcoming, - 1, true,
 			array_merge( $args, array(
-				'fields'                 => 'ids',
+				'found_posts' => true,
 				'update_post_meta_cache' => false,
 				'update_post_term_cache' => false,
-			) ) ) );
+			) ) );
+
+		$this->total = is_array( $this->total ) ? count( $this->total ) : $this->total;
 
 		return $this->total;
 	}
@@ -272,9 +276,9 @@ class Tribe__Events__REST__V1__Endpoints__Archive_Venue
 	/**
 	 * Returns the archive base REST URL
 	 *
-	 * @return string
-	 *
 	 * @since 4.6
+	 *
+	 * @return string
 	 */
 	protected function get_base_rest_url() {
 		$url = tribe_events_rest_url( 'venues/' );

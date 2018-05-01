@@ -9,6 +9,8 @@ tribe_events_pro_admin.recurrence = {
 ( function( $, my ) {
 	'use strict';
 
+	var $document = $( document );
+
 	my.init = function() {
 		this.init_recurrence();
 	};
@@ -18,19 +20,21 @@ tribe_events_pro_admin.recurrence = {
 	 */
 	my.init_recurrence = function() {
 		this.$recurrence_staging = $( '#tribe-recurrence-staging' );
-		this.$recurrence_tmpl = $( '#tmpl-tribe-recurrence' );
+		this.recurrence_tmpl = document.getElementById( 'tmpl-tribe-recurrence' );
 
-		if ( ! this.$recurrence_tmpl.length ) {
+		if ( ! this.recurrence_tmpl ) {
 			return;
 		}
 
-		this.recurrence_template = Handlebars.compile( this.$recurrence_tmpl.html() );
+		this.recurrence_template = Handlebars.compile( this.recurrence_tmpl.innerHTML );
 		this.$add_recurrence = $( '#tribe-add-recurrence' );
 		this.$recurrence_rules = $( '.tribe-event-recurrence-rule' );
+		this.$recurrence_row = $( '.recurrence-row.tribe-datetime-block' ).addClass( 'tribe-recurrence-exclusion-row--idle' );
 
 		this.$exclusion_staging = $( '#tribe-exclusion-staging' );
-		this.$exclusion_tmpl = $( '#tmpl-tribe-exclusion' );
-		this.exclusion_template = Handlebars.compile( this.$exclusion_tmpl.html() );
+		this.exclusion_tmpl = document.getElementById( 'tmpl-tribe-exclusion' );
+
+		this.exclusion_template = Handlebars.compile( this.exclusion_tmpl.innerHTML );
 		this.$add_exclusion = $( '#tribe-add-exclusion' );
 		this.$exclusion_rules = $( '.tribe-event-recurrence-exclusion' );
 
@@ -41,6 +45,7 @@ tribe_events_pro_admin.recurrence = {
 
 		this.date_format = tribe_datepicker_opts.dateFormat.toUpperCase();
 		this.date_format = this.date_format.replace( 'YY', 'YYYY' );
+		this.populate_recurrence( tribe_events_pro_recurrence_data );
 
 		window.Handlebars.registerHelper( {
 			tribe_recurrence_select: function( value, options ) {
@@ -89,9 +94,9 @@ tribe_events_pro_admin.recurrence = {
 				return -1 !== $.inArray( value, collection ) ? 'checked' : '';
 			}
 		} );
+	};
 
-		this.populate_recurrence( tribe_events_pro_recurrence_data );
-
+	my.attach_behaviors = function() {
 		$( '.eventForm' )
 			.on( 'submit', '.wp-admin.events-cal #post', this.event.submit_validation )
 			.on( 'change', '[data-field="type"]', this.event.recurrence_type_changed )
@@ -123,10 +128,15 @@ tribe_events_pro_admin.recurrence = {
 		$( '.recurrence_end, #EventStartDate, #EventEndDate' ).datepicker( 'option', 'onClose', this.event.datepicker_updated );
 
 		this.set_recurrence_end_min_date();
-	};
+		// It's important to trigger the Buttonset after setup of a Recurrence
+		this.init_buttonset();
+
+	}
 
 	my.init_dropdowns = function() {
-		$( '.recurrence-row .tribe-dropdown' ).tribe_dropdowns();
+		$( '.recurrence-row .tribe-dropdown' )
+			.not( '.dropdown-created' )
+			.tribe_dropdowns();
 	};
 
 	my.init_buttonset = function() {
@@ -213,9 +223,6 @@ tribe_events_pro_admin.recurrence = {
 			this.toggle_rule( $rule );
 		}
 
-		// It's important to trigger the Buttonset after setup of a Recurrence
-		this.init_buttonset();
-
 		// check active recurrence input to use for dependencies
 		$( '#tribe-recurrence-active.inactive' ).trigger( 'click' ).prop( 'checked', true ).removeClass( 'inactive' );
 	};
@@ -267,6 +274,12 @@ tribe_events_pro_admin.recurrence = {
 	my.setup_intervals = function( $rule ) {
 		var type = $rule.find( '[data-field="type"]' ).val();
 		var $interval = $rule.find( 'input.tribe-recurrence-rule-interval' );
+		var interval = $interval.get(0);
+
+		if ( interval.created ) {
+			return;
+		}
+
 		var i = 1;
 		var num = 6;
 		var autocomplete_options = [];
@@ -289,6 +302,8 @@ tribe_events_pro_admin.recurrence = {
 			.select2( 'destroy' )
 			.removeClass( 'select2-offscreen' )
 			.data( 'options', autocomplete_options );
+
+		interval.created = true;
 	};
 
 	/**
@@ -443,9 +458,6 @@ tribe_events_pro_admin.recurrence = {
 		if ( 'undefined' === typeof data ) {
 			this.toggle_rule( $rule );
 		}
-
-		// It's important to trigger the Buttonset after setup of a Recurrence
-		this.init_buttonset();
 	};
 
 	/**
@@ -453,21 +465,73 @@ tribe_events_pro_admin.recurrence = {
 	 */
 	my.populate_recurrence = function( data ) {
 		var i = 0;
+		my.operations_completed = 0;
+		my.total_operations = 0;
 
 		// if there aren't any rules defined, don't bother trying to populate recurrence until
 		// a rule is added
 		if ( 'undefined' === typeof data.rules || ! data.rules.length ) {
+			my.populate_completed();
 			return;
 		}
 
-		for ( i in data.rules ) {
-			this.add_recurrence( data.rules[ i ] );
-		}//end for
+		my.total_operations = 1;
+		my.async_operation( function( item, next ) {
+			my.add_recurrence( item );
+			next();
+		}, data.rules, function() {
+			my.operations_completed += 1;
+			my.populate_completed()
+		});
 
 		if ( 'undefined' !== typeof data.exclusions && data.exclusions.length ) {
-			for ( i in data.exclusions ) {
-				this.add_exclusion( data.exclusions[ i ] );
-			}//end for
+			my.total_operations += 1;
+			my.async_operation( function( item, next ) {
+				my.add_exclusion( item );
+				next();
+			}, data.exclusions, function() {
+				my.operations_completed += 1;
+				my.populate_completed();
+			} );
+		}
+	};
+
+	/**
+	 * Function executed once all the exclusion has been added into the UI thred.
+	 *
+	 * @since 4.4.23
+	 */
+	my.populate_completed = function() {
+		if ( my.operations_completed === my.total_operations ) {
+			setTimeout(function() {
+				my.attach_behaviors();
+				$document.trigger( 'tribe.dependencies-run' );
+				my.$recurrence_row.removeClass( 'tribe-recurrence-exclusion-row--idle' );
+			});
+		}
+	}
+
+	/**
+	 * Executes a function out of the UI thred to avoid block on loading.
+	 *
+	 * @param {Function} callback Function executed on each iteration
+	 * @param {Array} collection Collection of items from where iterate
+	 * @param {Function} done Function called  when all the iterations has been completed.
+	 * @param {int} index The index of the current iteration.
+	 *
+	 * @since 4.4.23
+	 */
+	my.async_operation = function( callback, collection, done, index ) {
+		var i = index || 0;
+		if ( i >= collection.length ) {
+			setTimeout( done );
+			return;
+		} else {
+			setTimeout( function() {
+				callback( collection[i], function() {
+					my.async_operation( callback, collection, done, i + 1 );
+				} );
+			} );
 		}
 	};
 
@@ -926,7 +990,8 @@ tribe_events_pro_admin.recurrence = {
 
 		my.init_dropdowns();
 
-		$( '.tribe-dependent:not(.tribe-dependency)' ).dependency();
+		var $container = $el.closest( '.tribe-buttonset' ).parent();
+		$container.find( '.tribe-dependent:not(.tribe-dependency)' ).dependency();
 
 		my.toggle_rule( $rule, 'open' );
 	};

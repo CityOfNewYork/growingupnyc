@@ -101,10 +101,16 @@ class Tribe__Cost_Utils {
 	 *
 	 * @param int|float|string $cost Cost to analyze
 	 *
-	 * return int|float|string
+	 * @return int|float|string
 	 */
 	public function maybe_replace_cost_with_free( $cost ) {
-		if ( '0' === (string) $cost ) {
+
+		$cost_with_period = $this->convert_decimal_separator( $cost );
+
+		if (
+			is_numeric( $cost_with_period )
+			&& '0.00' === number_format( $cost_with_period, 2, '.', ',' )
+		) {
 			return esc_html__( 'Free', 'the-events-calendar' );
 		}
 
@@ -128,9 +134,11 @@ class Tribe__Cost_Utils {
 		// be sure to account for european formats in decimals, and thousands separators
 		if ( is_numeric( str_replace( $this->get_separators(), '', $cost ) ) ) {
 			$reverse_position = null;
-			if ( null !== $currency_position ) {
+			// currency_position often gets passed as null or an empty string.
+			if ( ! empty( $currency_position ) ) {
 				$reverse_position = 'prefix' === $currency_position ? false : true;
 			}
+
 			$cost = tribe_format_currency( $cost, $event, $currency_symbol, $reverse_position );
 		}
 

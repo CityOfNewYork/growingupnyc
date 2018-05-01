@@ -54,17 +54,10 @@ class Tribe__Timezones {
 	 * @return string
 	 */
 	public static function wp_timezone_abbr( $date ) {
-		$abbr = get_transient( 'tribe_events_wp_timezone_abbr' );
+		$timezone_string = self::wp_timezone_string();
+		$abbr            = self::abbr( $date, $timezone_string );
 
-		if ( empty( $abbr ) ) {
-			$timezone_string = self::wp_timezone_string();
-			$abbr = self::abbr( $date, $timezone_string );
-			set_transient( 'tribe_events_wp_timezone_abbr', $abbr );
-		}
-
-		return empty( $abbr )
-			? $timezone_string
-			: $abbr;
+		return empty( $abbr ) ? $timezone_string : $abbr;
 	}
 
 	/**
@@ -104,11 +97,25 @@ class Tribe__Timezones {
 	 */
 	public static function abbr( $date, $timezone_string ) {
 		try {
-			return date_create( $date, new DateTimeZone( $timezone_string ) )->format( 'T' );
+			$abbr = date_create( $date, new DateTimeZone( $timezone_string ) )->format( 'T' );
+
+			// If PHP date "T" format is a -03 or +03, it's a bugged abbreviation, we can find it manually.
+			if ( 0 === strpos( $abbr, '-' ) || 0 === strpos( $abbr, '+' ) ) {
+				$abbreviations = timezone_abbreviations_list();
+
+				foreach ( $abbreviations as $abbreviation => $timezones ) {
+					foreach ( $timezones as $timezone ) {
+						if ( $timezone['timezone_id'] === $timezone_string ) {
+							return strtoupper( $abbreviation );
+						}
+					}
+				}
+			}
+		} catch ( Exception $e ) {
+			$abbr = '';
 		}
-		catch ( Exception $e ) {
-			return '';
-		}
+
+		return $abbr;
 	}
 
 	/**
@@ -310,9 +317,17 @@ class Tribe__Timezones {
 		}
 
 		// It's possible no adjustment will be needed
-		if ( 0 === $offset ) {
+		if ( 0 === (int) $offset ) {
 			return $datetime;
 		}
+
+		// if the offset contains fractions like :15, :30 or :45 convert them
+		$supported_offsets = array(
+			'/:15$/' => '.25',
+			'/:30$/' => '.5',
+			'/:45$/' => '.75',
+		);
+		$offset = preg_replace( array_keys( $supported_offsets ), array_values( $supported_offsets ), $offset );
 
 		// Convert the offset to minutes for easier handling of fractional offsets
 		$offset = (int) ( $offset * 60 );
@@ -484,6 +499,46 @@ class Tribe__Timezones {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Given a string in the form "UTC+2.5" returns the corresponding DateTimeZone object.
+	 *
+	 * If this is not possible or if $utc_offset_string does not match the expected pattern,
+	 * boolean false is returned.
+	 *
+	 * @since 4.6.3
+	 *
+	 * @param string $utc_offset_string
+	 *
+	 * @return DateTimeZone | bool
+	 */
+	public static function timezone_from_utc_offset( $utc_offset_string ) {
+		// Test for strings looking like "UTC-2" or "UTC+5.25" etc
+		if ( ! preg_match( '/^UTC[\-\+]{1}[0-9\.]{1,4}$/', $utc_offset_string ) ) {
+			return false;
+		}
+
+		// Breakdown into polarity, hours and minutes
+		$parts    = explode( '.', substr( $utc_offset_string, 4 ) );
+		$hours    = (int) $parts[ 0 ];
+		$fraction = isset( $parts[ 1 ] ) ? '0.' . (int) $parts[ 1 ] : 0;
+		$minutes  = $fraction * 60;
+		$polarity = substr( $utc_offset_string, 3, 1 );
+
+		// Reassemble in the form +/-hhmm (ie "-0200" or "+0930")
+		$utc_offset = sprintf( $polarity . "%'.02d%'.02d", $hours, $minutes );
+
+		if ( '+0000' === $utc_offset || '-0000' === $utc_offset ) {
+			$utc_offset = 'UTC';
+		}
+
+		// Use this to build a new DateTimeZone
+		try {
+			return new DateTimeZone( $utc_offset );
+		} catch ( Exception $e ) {
+			return false;
+		}
 	}
 }
 

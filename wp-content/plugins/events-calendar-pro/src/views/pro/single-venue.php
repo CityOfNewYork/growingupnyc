@@ -16,18 +16,21 @@
  *
  * @package TribeEventsCalendarPro
  *
- * @version 4.3.2
+ * @version 4.4.24
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
+if ( ! $wp_query = tribe_get_global_query_object() ) {
+    return;
+}
+
 $venue_id     = get_the_ID();
 $full_address = tribe_get_full_address();
 $telephone    = tribe_get_phone();
 $website_link = tribe_get_venue_website_link();
-global $wp_query;
 ?>
 <?php while ( have_posts() ) : the_post(); ?>
 <div class="tribe-events-venue">

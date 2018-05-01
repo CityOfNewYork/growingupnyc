@@ -94,11 +94,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 </tr>
 <tr class="venue tribe-linked-type-venue-state-province">
 	<?php
-	if ( ! isset( $_VenueStateProvince ) || $_VenueStateProvince == '' ) {
-		$_VenueStateProvince = - 1;
+	if ( 'auto-draft' === get_post_status()	&& empty( $_VenueStateProvince ) ) {
+		$currentState = tribe_get_default_value( 'state' );
+		$currentProvince = tribe_get_default_value( 'province' );
+	} else {
+		$currentProvince = $_VenueProvince;
+		$currentState    = $_VenueStateProvince;
 	}
-	$currentState = ( $_VenueStateProvince == - 1 ) ? tribe_get_default_value( 'state' ) : $_VenueStateProvince;
-	$currentProvince = empty( $_VenueProvince ) ? tribe_get_default_value( 'province' ) : $_VenueProvince;
+
 	?>
 	<td class='tribe-table-field-label'><?php esc_html_e( 'State or Province:', 'the-events-calendar' ); ?></td>
 	<td>
@@ -250,7 +253,7 @@ if ( $post->post_type != Tribe__Events__Main::VENUE_POST_TYPE ) {
 ?>
 <?php do_action( 'tribe_events_after_venue_metabox', $post ); ?>
 
-<script type="text/javascript">
+<script>
 	jQuery('[name=venue\\[Venue\\]]').blur(function () {
 		jQuery.post('<?php echo esc_url_raw( admin_url( 'admin-ajax.php' ) ); ?>',
 			{

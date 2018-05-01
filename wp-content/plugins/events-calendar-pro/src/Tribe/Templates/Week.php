@@ -277,15 +277,22 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Week' ) ) {
 		/**
 		 * Add header attributes for week view
 		 *
+		 * @param $attrs
+		 * @param $current_view
+		 *
 		 * @return string
 		 * @see 'tribe_events_header_attributes'
-		 * */
+		 */
 		public function header_attributes( $attrs, $current_view ) {
-			global $wp_query;
+			$wp_query = tribe_get_global_query_object();
+
 			$attrs['data-view']        = 'week';
 			$attrs['data-startofweek'] = get_option( 'start_of_week' );
 			$attrs['data-baseurl']     = tribe_get_week_permalink( null, false );
-			$attrs['data-date']        = date( 'Y-m-d', strtotime( $wp_query->get( 'start_date' ) ) );
+
+			if ( ! is_null( $wp_query ) ) {
+				$attrs['data-date'] = date( 'Y-m-d', strtotime( $wp_query->get( 'start_date' ) ) );
+			}
 
 			return apply_filters( 'tribe_events_pro_header_attributes', $attrs, $current_view );
 		}
@@ -307,10 +314,14 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Week' ) ) {
 		 * @see $this->setup_view()
 		 */
 		private function setup_days() {
-			global $wp_query;
-			$week_days      = array();
+			$wp_query = tribe_get_global_query_object();
 
-			$day = $wp_query->get( 'start_date' );
+			if ( is_null( $wp_query ) ) {
+				return;
+			}
+
+			$week_days = array();
+			$day       = $wp_query->get( 'start_date' );
 
 			// Array used for calculation of php strtotime relative dates
 			$weekday_array = array(

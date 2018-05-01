@@ -79,7 +79,7 @@ if ( ! function_exists( 'tribe_event_is_on_date' ) ) {
 			global $post;
 			$event = $post;
 			if ( empty( $event ) ) {
-				_doing_it_wrong( __FUNCTION__, esc_html__( 'The function needs to be passed an $event or used in the loop.', 'the-events-calendar' ) );
+				_doing_it_wrong( __FUNCTION__, esc_html__( 'The function needs to be passed an $event or used in the loop.', 'the-events-calendar' ), '3.10' );
 				return false;
 			}
 		}
@@ -105,5 +105,35 @@ if ( ! function_exists( 'tribe_event_is_on_date' ) ) {
 		$event_is_on_date = Tribe__Date_Utils::range_coincides( $start_of_day, $end_of_day, $event_start, $event_end );
 
 		return apply_filters( 'tribe_event_is_on_date', $event_is_on_date, $date, $event );
+	}
+}
+
+if ( ! function_exists( 'tribe_events_timezone_choice' ) ) {
+	/**
+	 * Event-specific wrapper for wp_timezone_choice().
+	 *
+	 * @since 4.6.5
+	 *
+	 * @param string $selected_zone
+	 * @param string $locale (optional)
+	 *
+	 * @return string
+	 */
+	function tribe_events_timezone_choice( $selected_zone, $locale = null ) {
+		/**
+		 * Opportunity to modify the timezone <option>s used within the timezone picker.
+		 *
+		 * @since 4.6.5
+		 *
+		 * @param string $html
+		 * @param string $selected_zone
+		 * @param string $locale
+		 */
+		return apply_filters(
+			'tribe_events_timezone_choice',
+			wp_timezone_choice( $selected_zone, $locale ),
+			$selected_zone,
+			$locale
+		);
 	}
 }

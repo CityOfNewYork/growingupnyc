@@ -43,6 +43,11 @@ class Tribe__Events__Pro__Recurrence__Instance {
 		$this->sequence_number = $sequence_number;
 	}
 
+	/**
+	 * Saves the recurrence instance and returns its post ID.
+	 *
+	 * @return int|\WP_Error
+	 */
 	public function save() {
 		$parent       = get_post( $this->parent_id );
 		$post_to_save = get_object_vars( $parent );
@@ -120,6 +125,8 @@ class Tribe__Events__Pro__Recurrence__Instance {
 		 * @param int $parent_id The updated recurring event instance `post_parent` post ID.
 		 */
 		do_action('tribe_events_pro_recurring_event_save_after', $this->post_id, $this->parent_id);
+
+		return $this->post_id;
 	}
 
 	/**

@@ -95,6 +95,63 @@ class Tribe__Events__Validator__Base extends Tribe__Validator__Base
 	}
 
 	/**
+	 * Whether the value is the post name of an existing event or not.
+	 *
+	 * @since 4.6.8
+	 *
+	 * @param string $event_slug
+	 *
+	 * @return bool
+	 */
+	public function is_event_slug( $event_slug ) {
+		if ( empty( $event_slug ) ) {
+			return false;
+		}
+
+		$event = get_page_by_path( $event_slug, OBJECT, Tribe__Events__Main::POSTTYPE );
+
+		return ! empty( $event ) && Tribe__Events__Main::POSTTYPE === $event->post_type;
+	}
+
+	/**
+	 * Whether the value is the post name of an existing organizer or not.
+	 *
+	 * @since 4.6.9
+	 *
+	 * @param string $organizer_slug
+	 *
+	 * @return bool
+	 */
+	public function is_organizer_slug( $organizer_slug ) {
+		if ( empty( $organizer_slug ) ) {
+			return false;
+		}
+
+		$organizer = get_page_by_path( $organizer_slug, OBJECT, Tribe__Events__Organizer::POSTTYPE );
+
+		return ! empty( $organizer ) && Tribe__Events__Organizer::POSTTYPE === $organizer->post_type;
+	}
+
+	/**
+	 * Whether the value is the post name of an existing venue or not.
+	 *
+	 * @since 4.6.9
+	 *
+	 * @param string $venue_slug
+	 *
+	 * @return bool
+	 */
+	public function is_venue_slug( $venue_slug ) {
+		if ( empty( $venue_slug ) ) {
+			return false;
+		}
+
+		$venue = get_page_by_path( $venue_slug, OBJECT, Tribe__Events__Venue::POSTTYPE );
+
+		return ! empty( $venue ) && Tribe__Events__Venue::POSTTYPE === $venue->post_type;
+	}
+
+	/**
 	 * Whether the string represents a valid PHP timezone or not.
 	 *
 	 * @since 4.6
@@ -105,6 +162,23 @@ class Tribe__Events__Validator__Base extends Tribe__Validator__Base
 	 */
 	public function is_timezone( $candidate ) {
 		return is_string( $candidate ) && Tribe__Timezones::is_valid_timezone( $candidate );
+	}
+
+	/**
+	 * Whether the string is empty or represents a valid PHP timezone.
+	 *
+	 * @since 4.6.13
+	 *
+	 * @param string $candidate
+	 *
+	 * @return bool
+	 */
+	public function is_timezone_or_empty( $candidate ) {
+		if ( empty( $candidate ) ) {
+			return true;
+		}
+
+		return $this->is_timezone( $candidate );
 	}
 
 	/**

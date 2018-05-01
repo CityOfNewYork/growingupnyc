@@ -33,7 +33,9 @@ class Tribe__Events__Pro__Recurrence__Event_Query {
 	 * @return void
 	 */
 	public function verify_all_page() {
-		global $wp_query;
+		if ( ! $wp_query = tribe_get_global_query_object() ) {
+			return;
+		}
 
 		/**
 		 * If we got this far and there are not posts we need to fetch at least the parent to

@@ -29,7 +29,7 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events__Month {
 
 	protected function set_current_month() {
 		$default = date_i18n( 'Y-m-d' );
-		$this->date = $this->shortcode->get_url_param( 'date' );
+		$this->date = $this->shortcode->get_url_param( 'tribe-bar-date' );
 
 		if ( empty( $this->date ) ) {
 			$this->date = $this->shortcode->get_attribute( 'date', $default );

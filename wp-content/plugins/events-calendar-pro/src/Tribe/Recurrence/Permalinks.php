@@ -29,6 +29,7 @@ class Tribe__Events__Pro__Recurrence__Permalinks {
 		$parent = $this->get_primary_event( $post );
 		$slug   = $parent->post_name;
 
+		$has_structure = false;
 		if ( '' === $permalink_structure ) {
 			$post_link = remove_query_arg( Tribe__Events__Main::POSTTYPE, $post_link );
 			$post_link = add_query_arg( array(
@@ -44,14 +45,25 @@ class Tribe__Events__Pro__Recurrence__Permalinks {
 			if ( !empty($sequence_number) && (is_numeric($sequence_number) && intval($sequence_number) > 1) ) {
 				$post_link = trailingslashit($post_link) . $sequence_number;
 			}
-			$post_link = str_replace( array( home_url( '/' ), site_url( '/' ) ), '', $post_link );
+			$home_url = home_url( '/' );
+			$post_link = str_replace( array( $home_url, site_url( '/' ) ), '', $post_link );
 			$post_link = home_url( user_trailingslashit( $post_link ) );
+			$has_structure = true;
 		}
 
-		// Add the Arguments back
-		$post_link = add_query_arg( $url_args, $post_link );
+		/**
+		 * Provides an opportunity to change the $post_link if the site has a permastruct.
+		 *
+		 * @since 4.4.23
+		 *
+		 * @param string $post_link
+		 * @param boolean $has_structure
+		 */
+		$post_link = apply_filters( 'tribe_events_pro_recurring_event_permalinks', $post_link, $has_structure );
 
-		return $post_link;
+
+		// Add the Arguments back
+		return add_query_arg( $url_args, $post_link );
 	}
 
 	protected function should_filter_permalink( $post, $sample ) {
@@ -64,10 +76,10 @@ class Tribe__Events__Pro__Recurrence__Permalinks {
 		}
 
 		$unpublished = isset( $post->post_status ) && in_array( $post->post_status, array(
-					'draft',
-					'pending',
-					'auto-draft',
-				) );
+			'draft',
+			'pending',
+			'auto-draft',
+		) );
 
 		if ( $unpublished && ! $sample ) {
 			return false;

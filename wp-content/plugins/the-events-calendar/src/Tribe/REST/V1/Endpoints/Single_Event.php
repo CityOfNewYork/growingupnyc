@@ -83,16 +83,6 @@ class Tribe__Events__REST__V1__Endpoints__Single_Event
 		/**
 		 * Filters the data that will be returned for a single event request.
 		 *
-		 * @since 4.6
-		 *
-		 * @param array           $data    The retrieved data.
-		 * @param WP_REST_Request $request The original request.
-		 */
-		$data = apply_filters( 'tribe_rest_single_event_data', $data, $request );
-
-		/**
-		 * Filters the data that will be returned for a single event request.
-		 *
 		 * @since 4.5.13
 		 *
 		 * @param array           $data    The retrieved data.
@@ -233,7 +223,7 @@ class Tribe__Events__REST__V1__Endpoints__Single_Event
 				'required'          => false,
 				'validate_callback' => array( $this->validator, 'is_time' ),
 				'type'              => 'string',
-				'description'       => __( 'The event publication date (UTC timezone)', 'the-events-calendar' ),
+				'description'       => __( 'The event publication date (UTC time zone)', 'the-events-calendar' ),
 			),
 			'title'              => array(
 				'required'          => true,
@@ -246,6 +236,12 @@ class Tribe__Events__REST__V1__Endpoints__Single_Event
 				'validate_callback' => array( $this->validator, 'is_string' ),
 				'type'              => 'string',
 				'description'       => __( 'The event description', 'the-events-calendar' ),
+			),
+			'slug'               => array(
+				'required'          => false,
+				'validate_callback' => array( $this->validator, 'is_string' ),
+				'type'              => 'string',
+				'description'       => __( 'The event slug', 'the-events-calendar' ),
 			),
 			'excerpt'            => array(
 				'required'          => false,
@@ -262,9 +258,9 @@ class Tribe__Events__REST__V1__Endpoints__Single_Event
 			// Event meta fields
 			'timezone'           => array(
 				'required'          => false,
-				'validate_callback' => array( $this->validator, 'is_timezone' ),
+				'validate_callback' => array( $this->validator, 'is_timezone_or_empty' ),
 				'type'              => 'string',
-				'description'       => __( 'The event timezone', 'the-events-calendar' ),
+				'description'       => __( 'The event time zone', 'the-events-calendar' ),
 			),
 			'all_day'            => array(
 				'required'    => false,
@@ -545,6 +541,7 @@ class Tribe__Events__REST__V1__Endpoints__Single_Event
 			'post_date'             => $post_date,
 			'post_date_gmt'         => $post_date_gmt,
 			'post_title'            => $request['title'],
+			'post_name'             => $request['slug'],
 			'post_content'          => $request['description'],
 			'post_excerpt'          => $request['excerpt'],
 			'post_status'           => $this->scale_back_post_status( $request['status'], Tribe__Events__Main::POSTTYPE ),
@@ -566,6 +563,14 @@ class Tribe__Events__REST__V1__Endpoints__Single_Event
 				'post_tag'  => Tribe__Terms::translate_terms_to_ids( $request['tags'], 'post_tag' ),
 			) ),
 		);
+
+		// If an empty EventTimezone was passed, lets unset it so it can be unset during event meta save
+		if ( empty( $postarr['EventTimezone'] ) ) {
+			unset( $postarr['EventTimezone'] );
+		} else {
+			// If we are changing a timezone, we need to ensure clear EventTimezoneAbbr so it gets correctly set.
+			$postarr['EventTimezoneAbbr'] = '';
+		}
 
 		$venue = $this->venue_endpoint->insert( $request['venue'] );
 
@@ -589,6 +594,11 @@ class Tribe__Events__REST__V1__Endpoints__Single_Event
 		$postarr['EventHideFromUpcoming'] = tribe_is_truthy( $request['hide_from_listings'] ) ? 'yes' : false;
 		$postarr['EventShowInCalendar']   = tribe_is_truthy( $request['sticky'] );
 		$postarr['feature_event']         = tribe_is_truthy( $request['featured'] );
+
+		// If we are scheduling an event and a date has been provided, WP requires an additional argument
+		if ( ! empty( $postarr['post_status'] ) && 'future' === $postarr['post_status'] && ! empty( $postarr['post_date'] ) ) {
+			$postarr['edit_date'] = true;
+		}
 
 		/**
 		 * Allow filtering of $postarr data with additional $request arguments.

@@ -9,7 +9,7 @@
  *
  * When the template is loaded, the following vars are set:
  *
- * @version 4.1.1
+ * @version 4.4.21
  *
  * @var string $start
  * @var string $end
@@ -54,11 +54,13 @@ if ( isset( $posts ) && $posts ) :
 
 	<?php endforeach ?>
 
+	<?php if ( ! empty( $link_to_all ) ) : ?>
 	<p class="tribe-events-widget-link">
 		<a href="<?php esc_attr_e( esc_url( $link_to_all ) ) ?>" rel="bookmark">
 			<?php esc_html_e( 'View More&hellip;', 'tribe-events-calendar-pro' ) ?>
 		</a>
 	</p>
+	<?php endif; ?>
 
 <?php
 // No Events were found.

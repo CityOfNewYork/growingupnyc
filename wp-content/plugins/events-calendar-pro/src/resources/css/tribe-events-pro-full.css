@@ -260,11 +260,11 @@
 	line-height: 1.25;
 	position: absolute;
 	width: 94%;
-	z-index: 500;
+	z-index: 3;
 }
 
 .tribe-grid-body div[id*='tribe-events-event-']:hover {
-	z-index: 800;
+	z-index: 4;
 }
 
 .tribe-week-grid-hours {
@@ -385,6 +385,10 @@
 	text-align: left;
 }
 
+.tribe-week-grid-wrapper div[id*='tribe-events-tooltip-'] {
+	cursor: default !important;
+}
+
 .tribe-grid-body .tribe-events-tooltip .tribe-events-event-body {
 	position: relative;
 }
@@ -414,7 +418,7 @@
 
 .tribe-week-grid-outer-wrap {
 	position: relative;
-	z-index: 10;
+	z-index: 2;
 }
 
 .tribe-week-grid-inner-wrap {
@@ -1212,6 +1216,11 @@ h3.tribe-events-related-events-title {
 	padding-bottom: 16px;
 }
 
+.tribe-mini-calendar-list-wrapper .tribe-event-featured .tribe-mini-calendar-event .tribe-event-image, .tribe-events-adv-list-widget .tribe-event-featured .tribe-mini-calendar-event .tribe-event-image {
+	line-height: 0;
+	overflow: hidden;
+}
+
 .tribe-mini-calendar-list-wrapper .tribe-event-featured .tribe-mini-calendar-event .list-info, .tribe-events-adv-list-widget .tribe-event-featured .tribe-mini-calendar-event .list-info {
 	margin-bottom: 0;
 }
@@ -1529,6 +1538,19 @@ div.tribe-countdown-text {
 	margin-left: 0;
 	padding: 10px;
 	width: 25%;
+}
+
+/* = "Month View" Generated from [tribe_events] Shortcode
+=========================================================*/
+
+.tribe-events-shortcode .tribe-events-month table .type-tribe_events {
+	border-bottom: 1px solid #e7e7e7;
+	margin: 0 5%;
+	padding: 6px 8px;
+}
+
+.tribe-events-shortcode .tribe-events-month table .tribe-events-last {
+	border-bottom: 0;
 }
 
 @media screen and (min-width: 59.6875em) {

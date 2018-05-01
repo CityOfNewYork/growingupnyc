@@ -45,10 +45,15 @@ class Tribe__Events__Pro__Custom_Meta {
 		add_action( 'wp_ajax_remove_option', array( __CLASS__, 'remove_meta_field' ) );
 		add_action( 'tribe_settings_after_content_tab_additional-fields', array( __CLASS__, 'event_meta_options' ) );
 		add_action( 'tribe_events_details_table_bottom', array( __CLASS__, 'single_event_meta' ) );
-		add_action( 'tribe_events_update_meta', array( __CLASS__, 'save_single_event_meta' ), 10, 2 );
+		self::add_save_single_meta_filter();
 		add_filter( 'tribe_settings_validate_tab_additional-fields', array( __CLASS__, 'force_save_meta' ) );
 		add_filter( 'tribe_events_csv_import_event_additional_fields', array( __CLASS__, 'import_additional_fields' ) );
 		add_filter( 'tribe_events_importer_event_column_names', array( __CLASS__, 'importer_column_mapping' ) );
+
+		// During EA imports the custom fields will not be modified so we suspend the class
+		// filters to avoid emptying them.
+		add_action( 'tribe_aggregator_before_insert_posts', array( __CLASS__, 'remove_save_single_meta_filter' ) );
+		add_action( 'tribe_aggregator_after_insert_posts', array( __CLASS__, 'add_save_single_meta_filter' ) );
 	}
 
 	/**
@@ -396,5 +401,23 @@ class Tribe__Events__Pro__Custom_Meta {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Adds the filter that will save the event custom meta.
+	 *
+	 * @since TBD
+	 */
+	public static function add_save_single_meta_filter() {
+		add_action( 'tribe_events_update_meta', array( __CLASS__, 'save_single_event_meta' ), 10, 2 );
+	}
+
+	/**
+	 * Removes the filter that will save the event custom meta.
+	 *
+	 * @since TBD
+	 */
+	public static function remove_save_single_meta_filter() {
+		remove_action( 'tribe_events_update_meta', array( __CLASS__, 'save_single_event_meta' ), 10 );
 	}
 }

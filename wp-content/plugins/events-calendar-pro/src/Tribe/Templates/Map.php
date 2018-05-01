@@ -119,12 +119,16 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Map' ) ) {
 				'view'        => $view_state,
 			);
 
+			global $wp_query;
+
 			// @TODO: clean this up / refactor the following conditional
 			if ( $have_events ) {
-				global $wp_query, $post;
-				$data                               = $query->posts;
-				$post                               = $query->posts[0];
-				$wp_query                           = $query;
+				global $post;
+
+				$data     = $query->posts;
+				$post     = $query->posts[0];
+				$wp_query = $query;
+
 				Tribe__Events__Main::instance()->displaying = 'map';
 
 				ob_start();
@@ -133,7 +137,6 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Map' ) ) {
 				$response['html'] .= ob_get_clean();
 				$response['markers'] = Tribe__Events__Pro__Geo_Loc::instance()->generate_markers( $data );
 			} else {
-				global $wp_query;
 				$wp_query = $query;
 				Tribe__Events__Main::instance()->setDisplay();
 

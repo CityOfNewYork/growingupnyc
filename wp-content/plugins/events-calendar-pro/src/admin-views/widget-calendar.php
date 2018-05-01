@@ -28,7 +28,6 @@ if ( empty( $instance['filters'] ) ) {
 	       value='<?php echo esc_attr( maybe_serialize( $instance['filters'] ) ); ?>' />
 
 	<ul class="calendar-widget-filter-list">
-
 		<?php
 		$disabled = array();
 		if ( ! empty( $instance['filters'] ) ) {
@@ -61,10 +60,20 @@ if ( empty( $instance['filters'] ) ) {
 	<p class="calendar-widget-filters-operand">
 		<label for="<?php echo esc_attr( $this->get_field_name( 'operand' ) ); ?>">
 			<input <?php checked( $instance['operand'], 'AND' ); ?> type="radio" name="<?php echo esc_attr( $this->get_field_name( 'operand' ) ); ?>" value="AND">
-			<?php esc_html_e( 'Match all', 'tribe-events-calendar-pro' ); ?></label><br />
+			<?php esc_html_e( 'Match all', 'tribe-events-calendar-pro' ); ?>
+		</label>
+
+		<br />
+
 		<label for="<?php echo esc_attr( $this->get_field_name( 'operand' ) ); ?>">
-			<input <?php checked( $instance['operand'], 'OR' ); ?> type="radio" name="<?php echo esc_attr( $this->get_field_name( 'operand' ) ); ?>" value="OR">
-			<?php esc_html_e( 'Match any', 'tribe-events-calendar-pro' ); ?></label>
+			<input
+				type="radio"
+				name="<?php echo esc_attr( $this->get_field_name( 'operand' ) ); ?>"
+				value="OR"
+				<?php checked( $instance['operand'], 'OR' ); ?>
+			>
+			<?php esc_html_e( 'Match any', 'tribe-events-calendar-pro' ); ?>
+		</label>
 	</p>
 </div>
 <p class="tribe-widget-term-filter">
@@ -73,7 +82,6 @@ if ( empty( $instance['filters'] ) ) {
 		type="hidden"
 		placeholder="<?php esc_attr_e( 'Select a Taxonomy Term', 'tribe-events-calendar-pro' ); ?>"
 		data-source="terms"
-		data-hide-search
 		data-prevent-clear
 		class="widefat calendar-widget-add-filter tribe-widget-select2"
 		id="<?php echo esc_attr( $this->get_field_id( 'selector' ) ); ?>"
@@ -82,7 +90,13 @@ if ( empty( $instance['filters'] ) ) {
 </p>
 <p>
 	<?php $jsonld_enable = ( isset( $instance['jsonld_enable'] ) && $instance['jsonld_enable'] ) || false === $this->updated; ?>
-	<input class="checkbox" type="checkbox" value="1" <?php checked( $jsonld_enable, '1' ); ?>
-	       id="<?php echo esc_attr( $this->get_field_id( 'jsonld_enable' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'jsonld_enable' ) ); ?>"/>
+	<input
+		class="checkbox"
+		type="checkbox"
+		value="1"
+		<?php checked( $jsonld_enable, '1' ); ?>
+		id="<?php echo esc_attr( $this->get_field_id( 'jsonld_enable' ) ); ?>"
+		name="<?php echo esc_attr( $this->get_field_name( 'jsonld_enable' ) ); ?>"
+	/>
 	<label for="<?php echo esc_attr( $this->get_field_id( 'jsonld_enable' ) ); ?>"><?php esc_html_e( 'Generate JSON-LD data', 'the-events-calendar-pro' ); ?></label>
 </p>

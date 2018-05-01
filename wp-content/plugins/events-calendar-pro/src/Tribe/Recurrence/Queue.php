@@ -245,8 +245,7 @@ class Tribe__Events__Pro__Recurrence__Queue {
 	public function save() {
 		if ( empty( $this->to_create ) && empty( $this->to_delete ) && empty( $this->to_update ) ) {
 			delete_post_meta( $this->event->ID, self::EVENT_QUEUE );
-		}
-		else {
+		} else {
 			update_post_meta( $this->event->ID, self::EVENT_QUEUE, array(
 				self::CREATE    => $this->to_create,
 				self::UPDATE    => $this->to_update,

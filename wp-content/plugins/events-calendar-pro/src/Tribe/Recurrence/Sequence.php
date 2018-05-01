@@ -32,7 +32,7 @@ class Tribe__Events__Pro__Recurrence__Sequence {
 	 * Tribe__Events__Pro__Recurrence__Sequence constructor.
 	 *
 	 * @param array $sequence
-	 * @param int   $parent_event_id
+	 * @param int $parent_event_id
 	 */
 	public function __construct( array $sequence, $parent_event_id ) {
 		if ( ! empty( $sequence ) ) {
@@ -114,25 +114,36 @@ class Tribe__Events__Pro__Recurrence__Sequence {
 			return $this->sorted_sequence;
 		}
 
-		$last_entry_timestamp = false;
-		$sequence_number      = 1;
-
-
 		$sequence = $this->sequence;
 		$output   = $sequence;
 
-		foreach ( $sequence as $key => $entry ) {
-			$same_start_date_and_time = $entry['timestamp'] === $last_entry_timestamp;
-			$is_part_of_sequence      = $same_start_date_and_time || $this->timestamps_are_in_same_day( $entry['timestamp'], $last_entry_timestamp );
+		/**
+		 * @todo Extract this function into a method for common as is used across multiple places.
+		 */
+		$format = 'Y-m-d';
+		$parent_event_timestamp = strtotime( get_post_meta( $this->parent_event_id, '_EventStartDate', true ) . '+00:00' );
+		$parent_event_start_date = Tribe__Date_Utils::date_only( $parent_event_timestamp, true, $format );
 
-			if ( ! $is_part_of_sequence ) {
-				$sequence_number = 1;
+		/**
+		 * $event_dates is an array that behaves like hash table that will help with the counting of sequences on the same
+		 * dates of events.
+		 */
+		$event_dates = array(
+			$parent_event_start_date => 1,
+		);
+
+		foreach ( $sequence as $key => $entry ) {
+			$start_date = Tribe__Date_Utils::date_only( $entry['timestamp'], true, $format );
+
+			// Increase count on the hash if is the same date or create a new counter if not present.
+			if ( isset( $event_dates[ $start_date ] ) && is_int( $event_dates[ $start_date ] ) ) {
+				$event_dates[ $start_date ] = $event_dates[ $start_date ] + 1;
 			} else {
-				++ $sequence_number;
+				$event_dates[ $start_date ] = 1;
 			}
 
+			$sequence_number = $event_dates[ $start_date ];
 			$output[ $key ]['sequence'] = $sequence_number;
-			$last_entry_timestamp       = $entry['timestamp'];
 		}
 
 		$this->sorted_sequence = $output;
@@ -159,27 +170,8 @@ class Tribe__Events__Pro__Recurrence__Sequence {
 	}
 
 	/**
-	 * @param int $a_timestamp
-	 * @param int $b_timestamp
-	 *
-	 * @return bool
-	 */
-	private function timestamps_are_in_same_day( $a_timestamp, $b_timestamp ) {
-		if ( false === $a_timestamp || false === $b_timestamp ) {
-			return false;
-		}
-
-		$timezone     = new DateTimeZone( $this->timezone_string );
-		$format       = DateTime::COOKIE;
-		$a_start_date = new DateTime( date( $format, $a_timestamp ), $timezone );
-		$b_start_date = new DateTime( date( $format, $b_timestamp ), $timezone );
-
-		return $a_start_date->format( 'Y-d-m' ) === $b_start_date->format( 'Y-d-m' );
-	}
-
-	/**
 	 * @param array $date_duration
-	 * @param int   $index
+	 * @param int $index
 	 */
 	protected function set_original_index( array &$date_duration, $index ) {
 		$date_duration['original_index'] = $index;

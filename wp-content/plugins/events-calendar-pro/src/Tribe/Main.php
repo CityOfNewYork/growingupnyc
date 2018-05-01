@@ -58,8 +58,8 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $shortcodes;
 
-		const REQUIRED_TEC_VERSION = '4.5.6';
-		const VERSION = '4.4.17';
+		const REQUIRED_TEC_VERSION = '4.6.12';
+		const VERSION = '4.4.25';
 
 		private function __construct() {
 			$this->pluginDir = trailingslashit( basename( EVENTS_CALENDAR_PRO_DIR ) );
@@ -68,10 +68,6 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			$this->pluginSlug = 'events-calendar-pro';
 
 			$this->loadTextDomain();
-
-			$this->all_slug = sanitize_title( __( 'all', 'tribe-events-calendar-pro' ) );
-			$this->weekSlug = sanitize_title( __( 'week', 'tribe-events-calendar-pro' ) );
-			$this->photoSlug = sanitize_title( __( 'photo', 'tribe-events-calendar-pro' ) );
 
 			require_once( $this->pluginPath . 'src/functions/template-tags/general.php' );
 			require_once( $this->pluginPath . 'src/functions/template-tags/week.php' );
@@ -220,10 +216,14 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 
 		/**
 		 * AJAX handler for the Widget Term Select2
+		 *
+		 * @todo   We need to mode this to use Tribe__Ajax__Dropdown class
+		 *
 		 * @return void
 		 */
 		public function ajax_widget_get_terms() {
 			$disabled = $_POST['disabled'];
+			$search = tribe_get_request_var( 'search', false );
 
 			$taxonomies = get_object_taxonomies( Tribe__Events__Main::POSTTYPE, 'objects' );
 			$taxonomies = array_reverse( $taxonomies );
@@ -242,6 +242,11 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 				}
 
 				foreach ( $terms as $term ) {
+					// This is a workout to make #93598 work
+					if ( $search && false === strpos( $term->name, $search ) ) {
+						continue;
+					}
+
 					$group['children'][] = array(
 						'id' => esc_attr( $term->term_id ),
 						'text' => esc_html( $term->name ),
@@ -418,7 +423,12 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @return string The modified html.
 		 */
 		public function events_before_html( $html ) {
-			global $wp_query;
+			$wp_query = tribe_get_global_query_object();
+
+			if ( is_null( $wp_query ) ) {
+				return $html;
+			}
+
 			if ( $wp_query->tribe_is_event_venue || $wp_query->tribe_is_event_organizer ) {
 				add_filter( 'tribe-events-bar-should-show', '__return_false' );
 			}
@@ -434,7 +444,12 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @return string The modified title.
 		 */
 		public function reset_page_title( $title, $depth = true ) {
-			global $wp_query;
+			$wp_query = tribe_get_global_query_object();
+
+			if ( is_null( $wp_query ) ) {
+				return $title;
+			}
+
 			$tec = Tribe__Events__Main::instance();
 			$date_format = apply_filters( 'tribe_events_pro_page_title_date_format', tribe_get_date_format( true ) );
 
@@ -501,9 +516,11 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @return mixed
 		 */
 		public function detect_recurrence_redirect() {
-			global $wp_query, $wp;
+			global $wp;
 
-			if ( ! isset( $wp_query->query_vars['eventDisplay'] ) ) {
+			$wp_query = tribe_get_global_query_object();
+
+			if ( is_null( $wp_query ) || ! isset( $wp_query->query_vars['eventDisplay'] ) ) {
 				return false;
 			}
 
@@ -514,7 +531,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 				case 'single-event':
 					// a recurrence event with a bad date will throw 404 because of WP_Query limiting by date range
 					if ( is_404() || empty( $wp_query->query['eventDate'] ) ) {
-						$recurrence_check = array_merge( array( 'posts_per_page' => -1 ), $wp_query->query );
+						$recurrence_check = array_merge( array( 'posts_per_page' => 1 ), $wp_query->query );
 						unset( $recurrence_check['eventDate'] );
 						unset( $recurrence_check['tribe_events'] );
 
@@ -556,7 +573,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 				$confirm_redirect = apply_filters( 'tribe_events_pro_detect_recurrence_redirect', true, $wp_query->query_vars['eventDisplay'] );
 				do_action( 'tribe_events_pro_detect_recurrence_redirect', $wp_query->query_vars['eventDisplay'] );
 				if ( $confirm_redirect ) {
-					Tribe__Main::instance()->log()->log_warning( sprintf(
+					tribe( 'logger' )->log_warning( sprintf(
 							_x( 'Invalid instance of a recurring event was requested ($1%s) redirecting to $2%s', 'debug recurrence', 'tribe-events-calendar-pro' ),
 							$problem,
 							$current_url
@@ -597,9 +614,13 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @return int
 		 */
 		public function get_last_recurrence_id( $event_list ) {
-			global $wp_query;
 
-			$event_list = empty( $event_list ) ? $wp_query->posts : $event_list;
+			$wp_query = tribe_get_global_query_object();
+
+			if ( ! is_null( $wp_query ) && empty( $event_list ) ) {
+				$event_list = $wp_query->posts;
+			}
+
 			$right_now = current_time( 'timestamp' );
 			$next_recurrence = 0;
 
@@ -719,12 +740,12 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 					$fields = Tribe__Main::array_insert_after_key(
 						'monthAndYearFormat', $fields, array(
 							'weekDayFormat' => array(
-								'type' => 'text',
-								'label' => __( 'Week Day Format', 'tribe-events-calendar-pro' ),
-								'tooltip' => __( 'Enter the format to use for week days. Used when showing days of the week in Week view.', 'tribe-events-calendar-pro' ),
-								'default' => 'D jS',
-								'size' => 'medium',
-								'validation_type' => 'html',
+								'type'            => 'text',
+								'label'           => __( 'Week Day Format', 'tribe-events-calendar-pro' ),
+								'tooltip'         => __( 'Enter the format to use for week days. Used when showing days of the week in Week view.', 'tribe-events-calendar-pro' ),
+								'default'         => 'D jS',
+								'size'            => 'medium',
+								'validation_type' => 'not_empty',
 							),
 						)
 					);
@@ -883,7 +904,11 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @TODO move this to template class
 		 */
 		public function body_class( $classes ) {
-			global $wp_query;
+			$wp_query = tribe_get_global_query_object();
+
+			if ( is_null( $wp_query ) ) {
+				return $classes;
+			}
 
 			// @TODO do we really need all these array_diff()s?
 
@@ -1074,7 +1099,8 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 				$parent_start_date = date( 'Y-m-d', strtotime( $parent_start ) );
 			}
 
-			if ( $parent_start_date == $date ) {
+			$sequence_number = $query->get( 'eventSequence' );
+			if ( $parent_start_date === $date && empty( $sequence_number )  ) {
 				$post_id = $parent_id;
 			} else {
 				/* Look for child posts taking place on the requested date (but not
@@ -1281,7 +1307,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		}
 
 		public function load_widget_assets( $hook = null ) {
-			if ( 'widgets.php' !== $hook ) {
+			if ( 'widgets.php' !== $hook && 'customize.php' !== $hook ) {
 				return;
 			}
 
@@ -1340,7 +1366,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 				$geoloc = Tribe__Events__Pro__Geo_Loc::instance();
 
 				$data = array(
-					'geocenter' => $geoloc->estimate_center_point(),
+					'geocenter' => $geoloc->get_min_max_coords(),
 					'map_tooltip_event' => esc_html( sprintf( _x( '%s: ', 'Event title map marker prefix', 'tribe-events-calendar-pro' ), tribe_get_event_label_singular() ) ),
 					'map_tooltip_address' => esc_html__( 'Address: ', 'tribe-events-calendar-pro' ),
 				);
@@ -1940,7 +1966,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @return string
 		 */
 		public function oembed_discovery_links_for_recurring_events( $output ) {
-			global $wp_query;
+			$wp_query = tribe_get_global_query_object();
 
 			if ( $output ) {
 				return $output;
@@ -1950,7 +1976,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 				return $output;
 			}
 
-			if ( empty( $wp_query->posts[0] ) ) {
+			if ( is_null( $wp_query ) || empty( $wp_query->posts[0] ) ) {
 				return $output;
 			}
 
@@ -1997,6 +2023,10 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * built calling the `tribe` function.
 		 */
 		public function on_plugins_loaded() {
+			$this->all_slug = sanitize_title( __( 'all', 'tribe-events-calendar-pro' ) );
+			$this->weekSlug = sanitize_title( __( 'week', 'tribe-events-calendar-pro' ) );
+			$this->photoSlug = sanitize_title( __( 'photo', 'tribe-events-calendar-pro' ) );
+
 			tribe_singleton( 'events-pro.admin.settings', 'Tribe__Events__Pro__Admin__Settings', array( 'hook' ) );
 			tribe_singleton( 'events-pro.customizer.photo-view', 'Tribe__Events__Pro__Customizer__Photo_View' );
 

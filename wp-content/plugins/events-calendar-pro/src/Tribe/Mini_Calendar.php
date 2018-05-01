@@ -285,12 +285,8 @@ class Tribe__Events__Pro__Mini_Calendar {
 					'is_tribe_widget'        => true,
 				);
 
-				// set end date if initial load, or ajax month switch
-				if ( Tribe__Main::instance()->doing_ajax() && 'tribe-mini-cal' === tribe_get_request_var( 'action' ) ) {
-					$query_args['end_date'] = substr_replace( $this->get_month( Tribe__Date_Utils::DBDATEFORMAT ), Tribe__Date_Utils::get_last_day_of_month( strtotime( $this->get_month() ) ), - 2 );
-					// @todo use tribe_events_end_of_day() ?
-					$query_args['end_date'] = tribe_end_of_day( $query_args['end_date'] );
-				}
+				$query_args['end_date'] = substr_replace( $this->get_month( Tribe__Date_Utils::DBDATEFORMAT ), Tribe__Date_Utils::get_last_day_of_month( strtotime( $this->get_month() ) ), - 2 );
+				$query_args['end_date'] = tribe_end_of_day( $query_args['end_date'] );
 
 				$wp_query = Tribe__Events__Query::getEvents( $query_args, true );
 			}

@@ -19,7 +19,7 @@
 
         {% for term in post.terms('tribe_events_cat') %}
         <a href="{{ event_link }}/?cat_id={{ function('Wpml\\get_translated_term_id', term.ID, 'tribe_events_cat') }}"
-          class="button--pill {% if term.slug == 'espanol' %}button--pill--es{% endif %}">
+          class="button--pill {% if 'espanol' in term.slug %}button--pill--es{% endif %}">
           {{ term.name }}
         </a>
         {% endfor %}

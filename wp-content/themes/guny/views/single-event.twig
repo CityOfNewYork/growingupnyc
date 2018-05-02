@@ -4,10 +4,10 @@
 
   {% if is_archive %}
     {% set event_link %}{{current_url}}{% endset %}
-  {% elseif language == 'es' %}
-    {% set event_link = '/es/events' %}
-  {% else %}
+  {% elseif language == 'en' %}
     {% set event_link = '/events' %}
+  {% else %}
+    {% set event_link = ['/',language,'/events']|join %}
   {% endif %}
 
   <header class="c-hero c-hero--light">

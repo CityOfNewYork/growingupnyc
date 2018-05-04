@@ -51,6 +51,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Filters
  */
 
+if ( isset( $instance['filters'] ) ) {
+	$instance['filters'] = $this->clear_filters( $instance['filters'] );
+}
+
 $class = '';
 if ( empty( $instance['filters'] ) ) {
 	$class = 'display:none;';
@@ -120,7 +124,7 @@ if ( empty( $instance['filters'] ) ) {
 
 <p>
 	<input id="<?php echo esc_attr( $this->get_field_id( 'no_upcoming_events' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'no_upcoming_events' ) ); ?>" type="checkbox" <?php checked( $instance['no_upcoming_events'], 1 ); ?> value="1" />
-	<label for="<?php echo esc_attr( $this->get_field_id( 'no_upcoming_events' ) ); ?>"><?php esc_html_e( 'Hide this widget if there are no upcoming events:', 'tribe-events-calendar-pro' ); ?></label>
+	<label for="<?php echo esc_attr( $this->get_field_id( 'no_upcoming_events' ) ); ?>"><?php esc_html_e( 'Hide this widget if there are no upcoming events', 'tribe-events-calendar-pro' ); ?></label>
 </p>
 <p>
 	<input id="<?php echo esc_attr( $this->get_field_id( 'featured_events_only' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'featured_events_only' ) ); ?>" type="checkbox" <?php checked( $instance['featured_events_only'], 1 ); ?> value="1" />

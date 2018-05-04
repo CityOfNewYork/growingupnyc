@@ -17,6 +17,11 @@ class Tribe__Events__Pro__Recurrence__Queries {
 	public static function collapse_sql( $sql, $query ) {
 		global $wpdb;
 
+		// If the SQL statement is empty because of caching bail.
+		if ( empty( $sql ) ) {
+			return '';
+		}
+		
 		// For month, week and day views we don't want to apply this logic - unless the current query
 		// belongs to a widget and just happens to be running inside one of those views
 		if ( ! isset( $query->query_vars['is_tribe_widget'] ) || ! $query->query_vars['is_tribe_widget'] ) {
@@ -80,6 +85,14 @@ class Tribe__Events__Pro__Recurrence__Queries {
 
 		$group_clause = $query->query_vars['fields'] == 'id=>parent' ? 'GROUP BY ID' : 'GROUP BY IF( post_parent = 0, ID, post_parent )';
 
+		// Do not try to order by EventStartDate unless that field is defined.
+		//
+		// Regarding the optional closing parentheses "\)?" after meta_value, this exists because
+		// wp_postmeta.meta_value *may* be passed as a parameter to MIN() or another function
+		$order_by_clause = preg_match( "/{$wpdb->postmeta}.meta_value\)? as EventStartDate/", $sql )
+			? "ORDER BY EventStartDate $direction"
+			: '';
+
 		return '
 			SELECT
 				SQL_CALC_FOUND_ROWS *
@@ -87,7 +100,7 @@ class Tribe__Events__Pro__Recurrence__Queries {
 				' . $sql . "
 			) a
 			$group_clause
-			ORDER BY EventStartDate $direction
+			$order_by_clause
 			{$limit}
 		";
 	}

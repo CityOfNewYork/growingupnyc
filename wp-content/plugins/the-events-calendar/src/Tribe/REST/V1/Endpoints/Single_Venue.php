@@ -218,7 +218,7 @@ class Tribe__Events__REST__V1__Endpoints__Single_Venue
 				'required'          => false,
 				'validate_callback' => array( $this->validator, 'is_time' ),
 				'type'              => 'string',
-				'description'       => __( 'The venue publication date (UTC timezone)', 'the-events-calendar' ),
+				'description'       => __( 'The venue publication date (UTC time zone)', 'the-events-calendar' ),
 			),
 			'venue'         => array(
 				'required'          => true,
@@ -352,6 +352,16 @@ class Tribe__Events__REST__V1__Endpoints__Single_Venue
 		if ( isset( $request['show_map_link'] ) ) {
 			$postarr['ShowMapLink'] = tribe_is_truthy( $request['show_map_link'] ) ? '1' : 'false';
 		}
+
+		/**
+		 * Allow filtering of $postarr data with additional $request arguments.
+		 *
+		 * @param array           $postarr Post array used for create/update
+		 * @param WP_REST_Request $request REST request object
+		 *
+		 * @since 4.6.9
+		 */
+		$postarr = apply_filters( 'tribe_events_rest_venue_prepare_postarr', $postarr, $request );
 
 		return $postarr;
 	}

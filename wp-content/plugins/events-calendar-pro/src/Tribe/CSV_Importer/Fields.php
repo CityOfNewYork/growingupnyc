@@ -34,7 +34,13 @@ class Tribe__Events__Pro__CSV_Importer__Fields {
 		$record_longitude = $importer->get_value_by_key( $record, 'venue_longitude' );
 		$overwrite_coords = empty( $record_latitude ) || empty( $record_longitude ) ? '0' : '1';
 
-		$venue['OverwriteCoords'] = $venue_id ? get_post_meta( $venue_id, '_VenueOverwriteCoords', true ) : $overwrite_coords;
+		if ( $venue_id ) {
+			$meta_overwrite_coords = get_post_meta( $venue_id, '_VenueOverwriteCoords', true );
+			// respect the meta value if it's set, else use the new one
+			$overwrite_coords      = '' !== $meta_overwrite_coords ? $meta_overwrite_coords : $overwrite_coords;
+		}
+
+		$venue['OverwriteCoords'] = $overwrite_coords;
 		$venue['Lat']             = $venue_id ? get_post_meta( $venue_id, '_VenueLat', true ) : $record_latitude;
 		$venue['Lng']             = $venue_id ? get_post_meta( $venue_id, '_VenueLng', true ) : $record_longitude;
 

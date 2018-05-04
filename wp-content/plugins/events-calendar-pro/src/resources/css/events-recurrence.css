@@ -171,6 +171,13 @@ input[data-field="custom-interval"] {
 
 .tribe-has-recurrence-rule .tribe-recurrence-exclusion-row {
 	display: table-row;
+	-webkit-transition: opacity 0.35s ease-in;
+	transition: opacity 0.35s ease-in;
+}
+
+.recurrence-row.tribe-recurrence-exclusion-row--idle {
+	opacity: 0.25;
+	pointer-events: none;
 }
 
 .tribe-event-recurrence-description {

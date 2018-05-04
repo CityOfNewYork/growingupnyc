@@ -5,18 +5,21 @@ class WPML_TM_Page_Builders_Hooks {
 	/* @var WPML_TM_Page_Builders $worker */
 	private $worker;
 
+	/** @var SitePress $sitepress */
+	private $sitepress;
+
 	/**
 	 * WPML_TM_Page_Builders constructor.
 	 *
 	 * @param WPML_TM_Page_Builders $worker
 	 */
-	public function __construct( WPML_TM_Page_Builders $worker = null ) {
-		$this->worker = $worker;
+	public function __construct( WPML_TM_Page_Builders $worker = null, SitePress $sitepress ) {
+		$this->worker    = $worker;
+		$this->sitepress = $sitepress;
 	}
 
 	public function init_hooks() {
 		add_filter( 'wpml_tm_translation_job_data',         array( $this, 'translation_job_data_filter' ), 10, 2 );
-		add_filter( 'wpml_tm_populate_prev_translation',    array( $this, 'populate_prev_translation' ), 10, 3 );
 		add_action( 'wpml_pro_translation_completed',       array( $this, 'pro_translation_completed_action' ), 10, 3 );
 		add_filter( 'wpml_tm_adjust_translation_fields',    array( $this, 'adjust_translation_fields_filter' ), 10, 2 );
 		add_filter( 'wpml_tm_job_layout',                   array( $this, 'job_layout_filter' ) );
@@ -33,18 +36,6 @@ class WPML_TM_Page_Builders_Hooks {
 	public function translation_job_data_filter( array $translation_package, $post ) {
 		$worker = $this->get_worker();
 		return $worker->translation_job_data_filter( $translation_package, $post );
-	}
-
-	/**
-	 * @param array  $previous_translation
-	 * @param array  $translation_package
-	 * @param string $language
-	 *
-	 * @return array
-	 */
-	public function populate_prev_translation( array $previous_translation, array $translation_package, $language ) {
-		$worker = $this->get_worker();
-		return $worker->populate_prev_translation( $previous_translation, $translation_package, $language );
 	}
 
 	/**
@@ -113,7 +104,7 @@ class WPML_TM_Page_Builders_Hooks {
 	 */
 	private function get_worker() {
 		if ( ! $this->worker ) {
-			$this->worker = new WPML_TM_Page_Builders();
+			$this->worker = new WPML_TM_Page_Builders( $this->sitepress );
 		}
 
 		return $this->worker;

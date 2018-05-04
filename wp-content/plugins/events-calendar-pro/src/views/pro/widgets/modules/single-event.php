@@ -8,7 +8,7 @@
  * You can override this template in your own theme by creating a file at
  * [your-theme]/tribe-events/pro/widgets/modules/single-event.php
  *
- * @version 4.4.3
+ * @version 4.4.18
  *
  * @package TribeEventsCalendarPro
  */
@@ -45,9 +45,26 @@ $has_address_details = ! empty( $city_name ) || ! empty( $region_name ) || ! emp
 		 * @param $size
 		 */
 		$thumbnail_size = apply_filters( 'tribe_events_list_widget_thumbnail_size', 'post-thumbnail' );
+				
+		/**
+		 * Filters whether the featured image link should be added to the Events List Widget
+		 *
+		 * @since 4.4.18
+		 *
+		 * @param bool $featured_image_link Whether the featured image link should be added or not
+		 */
+		$featured_image_link = apply_filters( 'tribe_events_list_widget_featured_image_link', true );
+		$post_thumbnail      = get_the_post_thumbnail( null, $thumbnail_size );
+
+		if ( $featured_image_link ) {
+		  $post_thumbnail = '<a href="' . esc_url( tribe_get_event_link() ) . '">' . $post_thumbnail . '</a>';
+		}
 		?>
 		<div class="tribe-event-image">
-			<?php the_post_thumbnail( $thumbnail_size ); ?>
+			<?php
+			// not escaped because it contains markup
+			echo $post_thumbnail;
+			?>
 		</div>
 		<?php
 

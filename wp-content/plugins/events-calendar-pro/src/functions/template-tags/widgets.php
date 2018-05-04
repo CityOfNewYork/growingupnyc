@@ -191,6 +191,10 @@ function tribe_events_get_list_widget_view_all_link( $instance ) {
 		$link_to_archive = false;
 		$link_to_all     = tribe_get_events_link();
 
+		if ( tribe_is_events_home() ) {
+			$link_to_all = '';
+		}
+
 		return apply_filters( 'tribe_events_get_list_widget_view_all_link', $link_to_all );
 	}
 
@@ -200,13 +204,32 @@ function tribe_events_get_list_widget_view_all_link( $instance ) {
 	} else {
 		$filters = json_decode( $instance['filters'], true );
 	}
-
 	// Is the filter restricted to a single taxonomy?
 	$single_taxonomy = ( is_array( $filters ) && 1 === count( $filters ) );
 	$single_term     = false;
 
-	// Pull the actual taxonomy and list of terms into scope
-	if ( $single_taxonomy ) foreach ( $filters as $taxonomy => $terms );
+	$operand = isset( $instance['operand'] ) ? $instance['operand'] : '';
+	$condition_counter = 0;
+	// Loop on all the filters as taxonomies and test if we still need a link if not will use the last one to create a new
+	// variable this will be useful when there is only a single taxonomy.
+	foreach ( $filters as $taxonomy => $terms ) {
+		// Is on the same page as the current taxonomy we don't need a link, make sure $terms is always fill with values.
+		if (
+			! empty( $terms )
+			&& ! empty( $operand )
+			&& ( is_tax( $taxonomy, $terms ) || is_tag( $terms ) )
+		) {
+			if ( 'OR' === $operand ) {
+				return apply_filters( 'tribe_events_get_list_widget_view_all_link', '' );
+			}
+			$condition_counter += 1;
+		}
+	}
+
+	// Return if operand is 'AND' on the filters and all conditions are marked as true
+	if ( 'AND' === $operand && $condition_counter === count( $filters ) ) {
+		return apply_filters( 'tribe_events_get_list_widget_view_all_link', '' );
+	}
 
 	// If we have a single taxonomy and a single term, the View All link should point to the relevant archive page
 	if ( $single_taxonomy && 1 === count( $terms ) ) {

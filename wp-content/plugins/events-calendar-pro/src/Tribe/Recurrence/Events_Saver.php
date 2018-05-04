@@ -28,7 +28,7 @@ class Tribe__Events__Pro__Recurrence__Events_Saver {
 	public function __construct( $event_id, $updated, Tribe__Events__Pro__Recurrence__Exclusions $exclusions = null ) {
 		$this->event_id        = $event_id;
 		$this->updated         = $updated;
-		$event_timezone_string = $this->get_event_timezone_string( $event_id );
+		$event_timezone_string = Tribe__Events__Timezones::get_event_timezone_string( $event_id );
 		$this->exclusions = $exclusions ?
 			$exclusions :
 			Tribe__Events__Pro__Recurrence__Exclusions::instance( $event_timezone_string );
@@ -121,29 +121,4 @@ class Tribe__Events__Pro__Recurrence__Events_Saver {
 
 		return true;
 	}
-
-	/**
-	 * Gets the timezone string associated with an event.
-	 *
-	 * Will fall back to WP timezone string and to system timezone string in this order.
-	 *
-	 * @param $event_id
-	 *
-	 * @return mixed|string|void
-	 */
-	protected function get_event_timezone_string( $event_id ) {
-		$event_timezone_string = get_post_meta( $event_id, '_EventTimezone', true );
-		if ( empty( $event_timezone_string ) ) {
-			$event_timezone_string = get_option( 'timezone_string', false );
-			if ( empty( $event_timezone_string ) ) {
-				$event_timezone_string = date_default_timezone_get();
-
-				return $event_timezone_string;
-			}
-
-			return $event_timezone_string;
-		}
-
-		return $event_timezone_string;
-	}//end saveEvents
 }

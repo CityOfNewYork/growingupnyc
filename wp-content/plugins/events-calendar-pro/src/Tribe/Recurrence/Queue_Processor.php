@@ -3,7 +3,7 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 	const SCHEDULED_TASK = 'tribe_events_pro_process_recurring_events';
 
 	/**
-	 *Number of event instances to be processed in a single batch.
+	 * Number of event instances to be processed in a single batch.
 	 *
 	 * @var int
 	 */
@@ -162,14 +162,16 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 		}
 
 		$this->current_queue->set_in_progress_flag();
-		$this->do_deletions();
-		$this->do_creations();
-		$this->do_updates();
+		$deleted = $this->do_deletions();
+		$created = $this->do_creations();
+		$updated = $this->do_updates();
 
 		$this->current_queue->save();
 		$this->current_queue->clear_in_progress_flag();
 
 		Tribe__Events__Dates__Known_Range::instance()->rebuild_known_range();
+
+		$this->update_cache( $created, $updated, $deleted );
 
 		return true;
 	}
@@ -193,6 +195,7 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 
 	protected function do_deletions() {
 		$instances_to_delete = $this->current_queue->instances_to_delete();
+		$deleted             = array();
 
 		foreach ( $instances_to_delete as $instance_id => $start_date ) {
 			// Don't process more than the current batch size allows
@@ -208,14 +211,18 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 
 			unset( $instances_to_delete[ $instance_id ] );
 			$this->processed++;
+			$deleted[ $instance_id ] = get_post_meta( $instance_id, '_EventStartDate', true );
 		}
 
 		// Update the "to delete" list
 		$this->current_queue->instances_to_delete( $instances_to_delete );
+
+		return $deleted;
 	}
 
 	protected function do_updates() {
 		$instances_to_update = $this->current_queue->instances_to_update();
+		$updated = array();
 
 		foreach ( $instances_to_update as $instance_id => $date_duration ) {
 			// Don't process more than the current batch size allows
@@ -232,15 +239,19 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 
 			unset( $instances_to_update[ $instance_id ] );
 			$this->processed++;
+			$updated[ $instance_id ] = get_post_meta( $instance_id, '_EventStartDate', true );
 		}
 
 		$this->current_queue->instances_to_update( $instances_to_update );
+
+		return $updated;
 	}
 
 	protected function do_creations() {
 		$exclusions = $this->current_queue->instances_to_exclude();
 
 		$instances_to_create = array_values( $this->current_queue->instances_to_create() );
+		$created             = array();
 
 		try {
 			$sequence = new Tribe__Events__Pro__Recurrence__Sequence( $instances_to_create, $this->current_event_id );
@@ -273,7 +284,8 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 			$instance        = new Tribe__Events__Pro__Recurrence__Instance( $this->current_event_id, $date_duration, 0, $sequence_number );
 
 			if ( ! $instance->already_exists() ) {
-				$instance->save();
+				$instance_post_id             = $instance->save();
+				$created[ $instance_post_id ] = get_post_meta( $instance_post_id, '_EventStartDate', true );
 			}
 
 			unset( $instances_to_create[ $date_duration['original_index'] ] );
@@ -281,6 +293,8 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 		}
 
 		$this->current_queue->instances_to_create( $instances_to_create );
+
+		return $created;
 	}
 
 	/**
@@ -294,5 +308,17 @@ class Tribe__Events__Pro__Recurrence__Queue_Processor {
 	 */
 	protected function batch_complete() {
 		return ( $this->processed >= $this->batch_size );
+	}
+
+	protected function update_cache( $created, $updated, $deleted ) {
+		$cache    = tribe( 'cache' );
+
+		$this_event_start_date = get_post_meta( $this->current_event_id, '_EventStartDate', false );
+		$dates                 = array_unique( array_merge( array_values( $created ), array_values( $updated ), $this_event_start_date ) );
+		$children              = array_unique( array_merge( array_keys( $created ), array_keys( $updated ) ) );
+		sort( $dates );
+		sort( $children );
+		$cache->set( 'event_dates_' . $this->current_event_id, $dates, Tribe__Cache::NO_EXPIRATION, 'save_post' );
+		$cache->set( 'child_events_' . $this->current_event_id, $children, Tribe__Cache::NO_EXPIRATION, 'save_post' );
 	}
 }

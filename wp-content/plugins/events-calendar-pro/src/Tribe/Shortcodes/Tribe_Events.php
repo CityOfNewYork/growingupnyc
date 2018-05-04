@@ -257,9 +257,17 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events {
 	 * Sets up the basic properties for an event view query.
 	 */
 	public function prepare_query() {
+
+		$eventDate_param = $this->get_attribute( 'date', $this->get_url_param( 'date' ) );
+
+		// If the Tribe Bar is active, then we can (and should) use the date from that.
+		if ( $this->is_attribute_truthy( 'tribe-bar' ) ) {
+			$eventDate_param = $this->get_attribute( 'date', $this->get_url_param( 'tribe-bar-date' ) );
+		}
+
 		$this->update_query( array(
 			'post_type'         => Tribe__Events__Main::POSTTYPE,
-			'eventDate'         => $this->get_attribute( 'date', $this->get_url_param( 'date' ) ),
+			'eventDate'         => $eventDate_param,
 			'eventDisplay'      => $this->get_attribute( 'view' ),
 			'tribe_events_cat'  => $this->atts[ 'category' ],
 			'featured'          => $this->is_attribute_truthy( 'featured' ),
@@ -270,8 +278,6 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events {
 	 * Take care of common setup needs including enqueing various assets required by the default views.
 	 */
 	public function prepare_default() {
-		global $wp_query;
-
 		/**
 		 * We overwrite the global $wp_query object to facilitate embedding the requested view (the
 		 * original will be restored during tribe_events_pro_tribe_events_shortcode_post_render):
@@ -281,6 +287,8 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events {
 		 * @see $this->reset_query()
 		 * @todo revise in a future release
 		 */
+		global $wp_query;
+
 		$wp_query = new WP_Query( $this->query_args );
 
 		// Assets required by all our supported views
@@ -425,7 +433,7 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events {
 		if ( 'past' === $display ) {
 			$this->update_query( array(
 				'eventDisplay' => 'past',
-				'order' => 'DESC',
+				'order'        => 'DESC',
 			) );
 		}
 	}
@@ -544,6 +552,8 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events {
 		$this->get_template_object()->add_input_hash();
 		$attributes[] = 'id="tribe-events"';
 		$attributes[] = 'class="' . $this->get_wrapper_classes() . '"';
+		$attributes[] = 'data-live_ajax="' . absint( tribe_get_option( 'liveFiltersUpdate', true ) ) . '"';
+		$attributes[] = 'data-datepicker_format="' . tribe_get_option( 'datepickerFormat' ) . '"';
 
 		if ( ! empty( $this->query_args['tribe_events_cat'] ) ) {
 			$attributes[] = 'data-category="' . esc_attr( $this->query_args['tribe_events_cat'] ) . '"';

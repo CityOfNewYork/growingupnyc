@@ -91,7 +91,7 @@ class Tribe__Events__Pro__Advanced_List_Widget extends Tribe__Events__List_Widge
 		$instance['organizer']            = $new_instance['organizer'];
 		$instance['tribe_is_list_widget'] = $new_instance['tribe_is_list_widget'];
 		$instance['operand']              = strip_tags( $new_instance['operand'] );
-		$instance['filters']              = maybe_unserialize( $new_instance['filters'] );
+		$instance['filters']              = maybe_unserialize( $this->clear_filters( $new_instance['filters'] ) );
 
 		// @todo remove after 3.7 (added for continuity when users transition from 3.5.x or earlier to this release)
 		if ( isset( $old_instance['category'] ) ) {
@@ -100,6 +100,28 @@ class Tribe__Events__Pro__Advanced_List_Widget extends Tribe__Events__List_Widge
 		}
 
 		return $instance;
+	}
+
+	/**
+	 * Function that removes all filters that contains empty strings as before was creating data structures such as:
+	 * {"tribe_events_cat":[]}, instead of just empty string.
+	 *
+	 * @since 4.4.21
+	 *
+	 * @param mixed $filters The filter taxonomies to be analized.
+	 *
+	 * @return string A string representation of the filters or empty string if all are empty.
+	 */
+	public function clear_filters( $filters ) {
+		$filters = maybe_unserialize( $filters );
+
+		if ( is_string( $filters ) ) {
+			$filters = json_decode( $filters, true );
+		}
+
+		$filters = array_filter( (array) $filters );
+
+		return empty( $filters ) ? '' : (string) json_encode( $filters );
 	}
 
 	public function form( $instance ) {

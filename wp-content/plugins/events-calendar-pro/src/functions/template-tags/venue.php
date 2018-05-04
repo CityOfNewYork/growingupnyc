@@ -38,7 +38,7 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		if ( $post_id ) {
 			$args = array(
 				'venue'          => $post_id,
-				'eventDisplay'   => 'list',
+				'eventDisplay'   => tribe_get_request_var( 'tribe_event_display', 'list' ),
 				'posts_per_page' => $events_per_page,
 				'paged'          => $page,
 			);
@@ -106,9 +106,8 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		}
 
 		// Grab Post IDs of events currently on the page to ensure they don't erroneously show up on the "Next" page.
-		global $wp_query;
-
-		$events_on_this_page = wp_list_pluck( $wp_query->posts, 'ID' );
+		$wp_query = tribe_get_global_query_object();
+		$events_on_this_page = is_null( $wp_query ) ? array() : wp_list_pluck( $wp_query->posts, 'ID' );
 
 		/**
 		 * Allow for cusotmizing the number of events that show on each single-venue page.
@@ -151,10 +150,6 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			return '';
 		}
 
-		if ( $direction === 'prev' && $page < 2 ) {
-			return '';
-		}
-
 		$post_id = Tribe__Main::post_id_helper( $venue_id );
 		if ( ! tribe_is_venue( $post_id ) ) {
 			return '';
@@ -162,8 +157,23 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 
 		$name = get_post( $venue_id )->post_name;
 
-		$page = $direction === 'next' ? $page + 1 : $page - 1;
+		$args = array(
+			'display' => 'list',
+			'page' => 1,
+		);
 
-		return add_query_arg( array( Tribe__Events__Venue::POSTTYPE => $name, 'page' => $page ), home_url() );
+		// Add a check in case plugins are not updated in order.
+		if ( function_exists( 'tribe_get_listview_args' ) ) {
+			$args = tribe_get_listview_args( $page, $direction );
+		}
+
+		return add_query_arg(
+			array(
+				Tribe__Events__Venue::POSTTYPE => $name,
+				'page' => $args['page'],
+				'tribe_event_display' => $args['display'],
+			),
+			home_url()
+		);
 	}
 }

@@ -89,14 +89,14 @@
 		 * @function tribe_test_location
 		 * @desc tribe_test_location clears the lat and lng values in event bar if needed. Also hides or shows the geofence filter if present.
 		 */
+		var $tribeBar = $( '#tribe-bar-geoloc' );
+		var $fence = $( '#tribe_events_filter_item_geofence' );
+		var $latlng = $( '#tribe-bar-geoloc-lat, #tribe-bar-geoloc-lng' );
 
 		function tribe_test_location() {
 
-			if ( $( '#tribe-bar-geoloc' ).length ) {
-				var val = $( '#tribe-bar-geoloc' ).val(),
-					$fence = $( "#tribe_events_filter_item_geofence" ),
-					$latlng = $( '#tribe-bar-geoloc-lat, #tribe-bar-geoloc-lng' );
-				if ( val.length ) {
+			if ( $tribeBar.length ) {
+				if ( $tribeBar.val() ) {
 					$fence.show();
 				}
 				else {
@@ -107,6 +107,18 @@
 				}
 			}
 		}
+
+		/**
+		 * Listen for either a key DOWN or UP to see if we have a value on the location field if the field is not empty
+		 * we display the $fence field which is the field with the distance dropdown so is available as son as there's
+		 * something to be displayed.
+		 *
+		 * @since 4.4.22
+		 */
+		$( '#tribe-bar-geoloc' ).on( 'keydown keyup', function( e ) {
+			$fence.toggle( this.value.trim() !== '' );
+		} );
+
 
 		tribe_test_location();
 
@@ -121,9 +133,23 @@
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
 
-		if ( document.getElementById( 'tribe-geo-map' ) ) {
-			tg.map = new google.maps.Map( document.getElementById( 'tribe-geo-map' ), options );
+		var mapEl = document.getElementById( 'tribe-geo-map' );
+		if ( mapEl ) {
+			tg.map = new google.maps.Map( mapEl, options );
 			tg.bounds = new google.maps.LatLngBounds();
+
+			/**
+			 * Trigger a new event when the Map is created in order to allow Users option to customize the map by listening
+			 * to the correct event and having an instance of the Map variable avialable to modify if required.
+			 *
+			 * @param {Object} map An instance of the Google Map.
+			 * @param {Element} el The DOM Element where the map is attached.
+			 * @param {Object} options The initial set of options for the map.
+			 * @param {Object} bounds An instance with the bounds of the Map.
+			 *
+			 * @since 4.4.22
+			 */
+			$( 'body' ).trigger( 'map-created.tribe', [ tg.map, mapEl, options, tg.bounds ] );
 
 			var minLatlng = new google.maps.LatLng( TribeEventsPro.geocenter.min_lat, TribeEventsPro.geocenter.min_lng );
 			tg.bounds.extend( minLatlng );

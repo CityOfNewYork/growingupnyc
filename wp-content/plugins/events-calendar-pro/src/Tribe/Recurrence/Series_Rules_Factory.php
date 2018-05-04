@@ -21,6 +21,13 @@ class Tribe__Events__Pro__Recurrence__Series_Rules_Factory {
 		return self::$instance;
 	}
 
+	public function __construct() {
+		tribe_register_error(
+			'pro:recurrence:invalid-meta-rules',
+			__( "Expected an array but received a variable of type '%s'", 'tribe-events-calendar-pro' ) )
+		;
+	}
+
 	/**
 	 * Builds and returns the date series rule needed to find the next occurences of the event.
 	 *
@@ -29,7 +36,11 @@ class Tribe__Events__Pro__Recurrence__Series_Rules_Factory {
 	 *
 	 * @return Tribe__Events__Pro__Date_Series_Rules__Rules_Interface|WP_Error A date series rule instance or a WP_Error on fail.
 	 */
-	public function build_from( array $recurrence, $rule_type = 'rules' ) {
+	public function build_from( $recurrence, $rule_type = 'rules' ) {
+		if ( ! is_array( $recurrence ) ) {
+			return tribe_error( 'pro:recurrence:invalid-meta-rules', array(), array( gettype( $recurrence ) ) );
+		}
+
 		if ( 'exclusions' === $rule_type ) {
 			$recurrence['type'] = Tribe__Events__Pro__Recurrence__Custom_Types::CUSTOM_TYPE;
 		}

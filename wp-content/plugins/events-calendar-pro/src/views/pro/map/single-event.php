@@ -3,9 +3,9 @@
  * Map View Single Event
  * This file contains one event in the map
  *
- * Override this template in your own theme by creating a file at [your-theme]/tribe-events/pro/map/single_event.php
+ * Override this template in your own theme by creating a file at [your-theme]/tribe-events/pro/map/single-event.php
  *
- * @version 4.4.12
+ * @version 4.4.20
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

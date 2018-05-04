@@ -267,11 +267,23 @@ do_action( 'tribe_events_pro_recurrence_before_metabox' );
 
 		<?php
 		// check input if recurring, new recurring events will check box with jQuery
-		$is_recurring = tribe_is_recurring_event( get_the_ID() );
+		$event_id     = get_the_ID();
+		$is_recurring = '';
+
+		if ( ! empty( $event_id ) ) {
+			$is_recurring = tribe_is_recurring_event( $event_id );
+		}
+
 		?>
+
+		<?php
+		// This should only show in the admin, not on the front-end (e.g. the Community Events submission form).
+		if ( ! tribe_is_frontend() ) : ?>
 		<label for="tribe-recurrence-active" class="tribe-recurrence-active-label">
 			<?php esc_html_e( 'Recurring Events Active', 'tribe-events-calendar-pro' ); ?>
 		</label>
+		<?php endif; ?>
+
 		<input
 			id="tribe-recurrence-active"
 			type="checkbox"

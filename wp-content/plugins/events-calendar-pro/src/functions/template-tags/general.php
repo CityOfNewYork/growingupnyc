@@ -15,8 +15,10 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 
 	if ( ! function_exists( 'tribe_get_mapview_link' ) ) {
 		function tribe_get_mapview_link( $term = null ) {
-			global $wp_query;
-			if ( isset( $wp_query->query_vars[ Tribe__Events__Main::TAXONOMY ] ) ) {
+
+			$wp_query = tribe_get_global_query_object();
+
+			if ( ! is_null( $wp_query ) && isset( $wp_query->query_vars[ Tribe__Events__Main::TAXONOMY ] ) ) {
 				$term = $wp_query->query_vars[ Tribe__Events__Main::TAXONOMY ];
 			}
 			$output = Tribe__Events__Main::instance()->getLink( 'map', null, $term );
@@ -39,7 +41,7 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 
 			$post_id = Tribe__Events__Main::postIdHelper( $post_id );
 
-			if ( ! $post_id ) {
+			if ( empty( $post_id ) ) {
 				_doing_it_wrong( __FUNCTION__, 'You need to pass a post ID or use it in the loop.', '3.10' );
 				return false;
 			}
@@ -516,13 +518,15 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 	 * @todo move logic to Tribe__Date_Utils
 	 */
 	function tribe_get_first_week_day( $date = null ) {
-		global $wp_query;
+
+		$wp_query = tribe_get_global_query_object();
+
 		$offset = 7 - get_option( 'start_of_week', 0 );
 
 		if ( tribe_is_ajax_view_request() ) {
 			$date = is_null( $date ) ? $_REQUEST['eventDate'] : $date;
 		} else {
-			$date = is_null( $date ) ? $wp_query->get( 'start_date' ) : $date;
+			$date = is_null( $date ) && ! is_null( $wp_query ) ? $wp_query->get( 'start_date' ) : $date;
 		}
 
 		$timezone = Tribe__Timezones::wp_timezone_string();
@@ -566,7 +570,7 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 	}
 
 	/**
-	 * Week Loop View Test
+	 * Photo Loop View Test
 	 *
 	 * @return bool
 	 */

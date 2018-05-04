@@ -123,7 +123,7 @@ class Tribe__Events__Venue extends Tribe__Events__Linked_Posts__Base {
 		add_filter( 'tribe_events_linked_post_id_field_index', array( $this, 'linked_post_id_field_index' ), 10, 2 );
 		add_filter( 'tribe_events_linked_post_name_field_index', array( $this, 'linked_post_name_field_index' ), 10, 2 );
 		add_filter( 'tribe_events_linked_post_type_container', array( $this, 'linked_post_type_container' ), 10, 2 );
-		add_filter( 'tribe_events_linked_post_create_' . self::POSTTYPE, array( $this, 'save' ), 10, 5 );
+		add_filter( 'tribe_events_linked_post_create_' . self::POSTTYPE, array( $this, 'save' ), 10, 4 );
 		add_filter( 'tribe_events_linked_post_meta_box_title', array( $this, 'meta_box_title' ), 5, 2 );
 		add_filter( 'tribe_events_linked_post_default', array( $this, 'linked_post_default' ), 10, 2 );
 		add_action( 'tribe_events_linked_post_new_form', array( $this, 'linked_post_new_form' ) );
@@ -297,6 +297,19 @@ class Tribe__Events__Venue extends Tribe__Events__Linked_Posts__Base {
 	 *
 	 */
 	public function save_meta( $venue_id, $data ) {
+		$venue = get_post( $venue_id );
+
+		/**
+		 * Allow hooking in prior to updating meta fields.
+		 *
+		 * @param int     $venue_id The venue ID we are modifying meta for.
+		 * @param array   $data     The meta fields we want saved.
+		 * @param WP_Post $venue    The venue itself.
+		 *
+		 * @since 4.6.9
+		 */
+		do_action( 'tribe_events_venue_save', $venue_id, $data, $venue );
+
 		// TODO: We should probably do away with 'StateProvince' and stick to 'State' and 'Province'.
 		if ( ! isset( $data['StateProvince'] ) || $data['StateProvince'] == '' ) {
 			if (
@@ -317,7 +330,6 @@ class Tribe__Events__Venue extends Tribe__Events__Linked_Posts__Base {
 			}
 		}
 
-
 		update_post_meta( $venue_id, '_EventShowMapLink', isset( $data['ShowMapLink'] ) ? $data['ShowMapLink'] : 'false' );
 		update_post_meta( $venue_id, '_EventShowMap', isset( $data['ShowMap'] ) ? $data['ShowMap'] : 'false' );
 		update_post_meta( $venue_id, '_VenueShowMapLink', isset( $data['ShowMapLink'] ) ? $data['ShowMapLink'] : 'false' );
@@ -333,6 +345,11 @@ class Tribe__Events__Venue extends Tribe__Events__Linked_Posts__Base {
 		unset( $data['Venue'] );
 
 		foreach ( $data as $key => $var ) {
+			// Prevent these WP_Post object fields from ending up in the meta.
+			if ( in_array( $key, array( 'post_title', 'post_excerpt', 'post_content', 'post_status' ) ) ) {
+				continue;
+			}
+
 			update_post_meta( $venue_id, '_Venue' . $key, sanitize_text_field( $var ) );
 		}
 	}
@@ -405,20 +422,42 @@ class Tribe__Events__Venue extends Tribe__Events__Linked_Posts__Base {
 				? wp_insert_post( array_filter( $postdata ), true )
 				: $found;
 
+			/**
+			 * Filters the default value to be set on the creation of a new venue.
+			 *
+			 * Useful as this might be fired or required by a third party plugin like community events that would like
+			 * to change the default value for the map fields.
+			 *
+			 * @param mixed $default_value    The default value to be applied on creation.
+			 *
+			 * @since 4.6.10
+			 */
+			$default_value = apply_filters( 'tribe_events_venue_created_map_default', true );
+
 			// By default, the show map and show map link options should be on
 			if ( isset( $data['ShowMap'] ) && ! tribe_is_truthy( $data['ShowMap'] ) ) {
 				unset( $data['ShowMap'] );
 			} else {
-				$data['ShowMap'] = true;
+				$data['ShowMap'] = $default_value;
 			}
+
 			if ( isset( $data['ShowMapLink'] ) && ! tribe_is_truthy( $data['ShowMapLink'] ) ) {
 				unset( $data['ShowMapLink'] );
 			} else {
-				$data['ShowMapLink'] = true;
+				$data['ShowMapLink'] = $default_value;
 			}
 
 			if ( ! is_wp_error( $venue_id ) ) {
+
 				$this->save_meta( $venue_id, $data );
+
+				/**
+				 * Runs right after a successful creation of a venue (including its meta being saved).
+				 *
+				 * @param int $venue_id The ID of the venue being created.
+				 * @param array $data The full array of data that was used to create the venue.
+				 */
+				do_action( 'tribe_events_venue_created', $venue_id, $data );
 
 				/**
 				 * Fires immediately after a venue has been created.
@@ -484,15 +523,15 @@ class Tribe__Events__Venue extends Tribe__Events__Linked_Posts__Base {
 		unset( $data['VenueID'] );
 
 		$args = array_filter( array(
-			                      'ID'            => $venue_id,
-			                      'post_title'    => Tribe__Utils__Array::get( $data, 'post_title', $data['Venue'] ),
-			                      'post_content'  => Tribe__Utils__Array::get( $data, 'post_content', $data['Description'] ),
-			                      'post_excerpt'  => Tribe__Utils__Array::get( $data, 'post_excerpt', $data['Excerpt'] ),
-			                      'post_author'   => $data['post_author'],
-			                      'post_date'     => $data['post_date'],
-			                      'post_date_gmt' => $data['post_date_gmt'],
-			                      'post_status'   => $data['post_status'],
-		                      ) );
+			'ID'            => $venue_id,
+			'post_title'    => Tribe__Utils__Array::get( $data, 'post_title', $data['Venue'] ),
+			'post_content'  => Tribe__Utils__Array::get( $data, 'post_content', $data['Description'] ),
+			'post_excerpt'  => Tribe__Utils__Array::get( $data, 'post_excerpt', $data['Excerpt'] ),
+			'post_author'   => $data['post_author'],
+			'post_date'     => $data['post_date'],
+			'post_date_gmt' => $data['post_date_gmt'],
+			'post_status'   => $data['post_status'],
+		) );
 
 		if ( count( $args ) > 1 ) {
 			$post_type = Tribe__Events__Main::VENUE_POST_TYPE;

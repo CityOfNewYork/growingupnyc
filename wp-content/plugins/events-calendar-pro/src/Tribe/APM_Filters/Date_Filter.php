@@ -50,8 +50,6 @@ class Tribe__Events__Pro__APM_Filters__Date_Filter {
 			return;
 		}
 
-		global $wp_query;
-
 		foreach ( $active as $key => $field ) {
 			if ( isset( $field['is_date_field'] ) ) {
 				$this->active[ $key ] = $field;

@@ -96,9 +96,8 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Photo' ) ) {
 				$args['order'] = 'DESC';
 			}
 
-
 			$query = Tribe__Events__Query::getEvents( $args, true );
-			$hash  = $query->query_vars;
+			$hash  = $args;
 
 			$hash['paged']      = null;
 			$hash['start_date'] = null;
@@ -119,7 +118,9 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Photo' ) ) {
 				'view'        => $view_state,
 			);
 
-			global $wp_query, $post;
+			global $post;
+			global $wp_query;
+
 			$wp_query = $query;
 			if ( ! empty( $query->posts ) ) {
 				$post = $query->posts[0];

@@ -80,7 +80,14 @@ class Tribe__Events__Aggregator__Admin_Bar {
 			return;
 		}
 
-		$service_response = Tribe__Events__Aggregator__Service::instance()->get_origins();
+		$transient_key = tribe( 'events-aggregator.main' )->KEY_CACHE_SERVICES;
+		$service_response = get_transient( $transient_key );
+
+		// Save HTTP request into a transient
+		if ( false === $service_response ) {
+			$service_response = Tribe__Events__Aggregator__Service::instance()->get_origins();
+			set_transient( $transient_key, $service_response, DAY_IN_SECONDS );
+		}
 
 		$origins = array(
 			(object) array(
@@ -88,6 +95,11 @@ class Tribe__Events__Aggregator__Admin_Bar {
 				'name' => esc_attr__( 'CSV File', 'the-events-calendar' ),
 			),
 		);
+
+		if ( ! is_array( $service_response ) || empty( $service_response['origin'] ) ) {
+			return;
+		}
+
 		$origins = array_merge( $origins, $service_response['origin'] );
 
 		foreach ( $origins as $origin ) {

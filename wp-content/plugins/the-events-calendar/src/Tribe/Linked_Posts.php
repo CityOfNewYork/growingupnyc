@@ -173,6 +173,34 @@ class Tribe__Events__Linked_Posts {
 	}
 
 	/**
+	 * Returns the meta key for linked post order
+	 *
+	 * @since 4.6.13
+	 *
+	 * @param string $post_type Post Type
+	 *
+	 * @return bool|string
+	 */
+	public function get_order_meta_key( $post_type ) {
+
+		if ( 'tribe_organizer' === $post_type ) {
+			return '_EventOrganizerID_Order';
+		}
+
+		/**
+		 * This allows for things like Extensions to hook in here and return their own key
+		 * See '_EventOrganizerID_Order' above for an example
+		 *
+		 * @since TBD
+		 *
+		 * @param bool false (not linked)
+		 * @param string $post_type current (potentially linked) post type
+		 * @return string
+		 */
+		return apply_filters( 'tribe_events_linked_post_type_meta_key', false, $post_type );
+	}
+
+	/**
 	 * Returns the post type's form field container name
 	 *
 	 * @since 4.2
@@ -377,7 +405,16 @@ class Tribe__Events__Linked_Posts {
 		$result = array();
 
 		if ( $linked_post_ids = get_post_meta( $post_id, $this->get_meta_key( $post_type ) ) ) {
-			$result = $this->get_linked_post_info( $post_type, array(), $linked_post_ids );
+			$args = array();
+			// Sort by drag-n-drop order
+			$linked_ids_order = get_post_meta( $post_id, $this->get_order_meta_key( $post_type ), true );
+			if ( ! empty( $linked_ids_order ) ) {
+				$linked_post_ids = $linked_ids_order;
+				$args['post__in'] = $linked_ids_order;
+				$args['orderby'] = 'post__in';
+			}
+
+			$result = $this->get_linked_post_info( $post_type, $args, $linked_post_ids );
 		}
 
 		/**
@@ -417,9 +454,9 @@ class Tribe__Events__Linked_Posts {
 	/**
 	 * Get Linked Post info
 	 *
-	 * @param string $linked_post_type Post type of linked post
-	 * @param array $args
-	 * @param int $linked_post_id post id
+	 * @param string    $linked_post_type Post type of linked post
+	 * @param array     $args             Extra WP Query args.
+	 * @param array|int $linked_post_id   Post ID(s).
 	 *
 	 * @return array
 	 */
@@ -569,6 +606,19 @@ class Tribe__Events__Linked_Posts {
 		}
 
 		return $linked_posts;
+	}
+
+	/**
+	 * Save Order of Linked Posts
+	 *
+	 * @since 4.6.13
+	 *
+	 * @param int $target_post_id post id to save meta from
+	 * @param string $post_type the post-type to get the key for
+	 * @param array $current_order an array of the linked post ids being saved
+	 */
+	public function order_linked_posts( $target_post_id, $post_type, $current_order ) {
+		update_post_meta( $target_post_id, $this->get_order_meta_key( $post_type ), $current_order );
 	}
 
 	/**
@@ -729,6 +779,11 @@ class Tribe__Events__Linked_Posts {
 			$linked_posts = array( $linked_posts[0] );
 		}
 
+		// if we allow multiples and there is more then one save current order
+		if ( $this->allow_multiple( $linked_post_type ) && count( $linked_posts ) > 1 ) {
+			$this->order_linked_posts( $event_id, $linked_post_type, $submission[ $linked_post_type_id_field ] );
+		}
+
 		$currently_linked_posts = $this->get_linked_posts_by_post_type( $event_id, $linked_post_type );
 		$currently_linked_posts = wp_list_pluck( $currently_linked_posts, 'ID' );
 
@@ -751,17 +806,17 @@ class Tribe__Events__Linked_Posts {
 	 * @param mixed  $current the current saved linked post item
 	 */
 	public function saved_linked_post_dropdown( $post_type, $current = null ) {
-		$post_type_object = get_post_type_object( $post_type );
+		$post_type_object           = get_post_type_object( $post_type );
 		$linked_post_type_container = $this->get_post_type_container( $post_type );
 		$linked_post_type_id_field  = $this->get_post_type_id_field_index( $post_type );
 		$name                       = "{$linked_post_type_container}[{$linked_post_type_id_field}][]";
 		$my_linked_post_ids         = array();
 		$current_user               = wp_get_current_user();
+		$can_edit_others_posts      = current_user_can( $post_type_object->cap->edit_others_posts );
 		$my_linked_posts            = false;
-		$my_linked_post_options     = '';
 
-		$plural_name = $this->linked_post_types[ $post_type ]['name'];
-		$singular_name = ! empty( $this->linked_post_types[ $post_type ]['singular_name'] ) ? $this->linked_post_types[ $post_type ]['singular_name'] : $plural_name;
+		$plural_name             = $this->linked_post_types[ $post_type ]['name'];
+		$singular_name           = ! empty( $this->linked_post_types[ $post_type ]['singular_name'] ) ? $this->linked_post_types[ $post_type ]['singular_name'] : $plural_name;
 		$singular_name_lowercase = ! empty( $this->linked_post_types[ $post_type ]['singular_name_lowercase'] ) ? $this->linked_post_types[ $post_type ]['singular_name_lowercase'] : $singular_name;
 
 		$options = (object) array(
@@ -836,15 +891,23 @@ class Tribe__Events__Linked_Posts {
 				foreach ( $my_linked_posts as $my_linked_post ) {
 					$my_linked_post_ids[] = $my_linked_post->ID;
 
-					$options->owned['children'][] = array(
+					$new_child = array(
 						'id' => $my_linked_post->ID,
 						'text' => wp_kses( get_the_title( $my_linked_post->ID ), array() ),
 					);
+
+					$edit_link = get_edit_post_link( $my_linked_post );
+
+					if ( ! empty( $edit_link ) ) {
+						$new_child['edit'] = $edit_link;
+					}
+
+					$options->available['children'][] = $new_child;
 				}
 			}
 		}
 
-		if ( current_user_can( $post_type_object->cap->edit_others_posts ) ) {
+		if ( $can_edit_others_posts ) {
 			$linked_posts = $this->get_linked_post_info(
 				$post_type,
 				array(
@@ -869,10 +932,18 @@ class Tribe__Events__Linked_Posts {
 
 		if ( $linked_posts ) {
 			foreach ( $linked_posts as $linked_post ) {
-				$options->available['children'][] = array(
+				$new_child = array(
 					'id' => $linked_post->ID,
 					'text' => wp_kses( get_the_title( $linked_post->ID ), array() ),
 				);
+
+				$edit_link = get_edit_post_link( $linked_post );
+
+				if ( ! empty( $edit_link ) ) {
+					$new_child['edit'] = $edit_link;
+				}
+
+				$options->available['children'][] = $new_child;
 			}
 		}
 
@@ -893,8 +964,8 @@ class Tribe__Events__Linked_Posts {
 			$data = array_values( (array) $options );
 		}
 
-		$user_can_create = ( ! empty( $post_type_object->cap->create_posts ) && current_user_can( $post_type_object->cap->create_posts ) );
-		$allowed_creation = ( ! empty( $this->linked_post_types[ $post_type ]['allow_creation'] ) && $this->linked_post_types[ $post_type ]['allow_creation'] );
+		$user_can_create         = ( ! empty( $post_type_object->cap->create_posts ) && current_user_can( $post_type_object->cap->create_posts ) );
+		$allowed_creation        = ( ! empty( $this->linked_post_types[ $post_type ]['allow_creation'] ) && $this->linked_post_types[ $post_type ]['allow_creation'] );
 
 		/**
 		 * Controls whether the UI to create new linked posts should be displayed.
@@ -907,27 +978,8 @@ class Tribe__Events__Linked_Posts {
 		 */
 		$creation_enabled = apply_filters( 'tribe_events_linked_posts_dropdown_enable_creation', $user_can_create && $allowed_creation, $post_type, $this );
 
-		$indefinite_article = _x( 'a', 'Indefinite article for the phrase "Find a {post type name}. Will be replaced with "an" if the {post type name} starts with a vowel.', 'the-events-calendar' );
-
-		$post_type_starts_with = substr( $singular_name, 0, 1 );
-		$post_type_starts_with = strtolower( $post_type_starts_with );
-		$english_vowels        = array( 'a', 'e', 'i', 'o', 'u' );
-
-		if ( in_array( $post_type_starts_with, $english_vowels ) ) {
-			$indefinite_article = _x( 'an', 'Indefinite article for the phrase "Find a {post type name}" when the {post type name} starts with a vowel, e.g. "Find an Organizer".', 'the-events-calendar' );
-		}
-
-		$placeholder = sprintf( esc_attr__( 'Find %1$s %2$s', 'the-events-calendar' ), $indefinite_article, $singular_name );
-
-		if ( $creation_enabled ) {
-			$placeholder = sprintf( esc_attr__( 'Create or Find %s', 'the-events-calendar' ), $singular_name );
-		}
-
-		$search_placeholder = sprintf( esc_attr__( 'Find %1$s %2$s', 'the-events-calendar' ), $indefinite_article, $singular_name );
-
-		if ( $creation_enabled ) {
-			$search_placeholder = sprintf( esc_attr__( 'Create or Find %s', 'the-events-calendar' ), $singular_name );
-		}
+		// Get the label to use in placeholder attrs.
+		$label = $this->get_create_or_find_labels( $post_type, $creation_enabled );
 
 		if ( $linked_posts || $my_linked_posts ) {
 			echo '<input
@@ -935,13 +987,12 @@ class Tribe__Events__Linked_Posts {
 				class="tribe-dropdown linked-post-dropdown"
 				name="' . esc_attr( $name ) . '"
 				id="saved_' . esc_attr( $post_type ) . '"
-				data-placeholder="' . $placeholder . '"
-				data-search-placeholder="' . $search_placeholder . '" ' .
+				data-placeholder="' . $label . '"
+				data-search-placeholder="' . $label . '" ' .
 				( $creation_enabled ?
 				'data-freeform
 				data-sticky-search
-				data-create-choice-template="' . __( 'Create: <b><%= term %></b>', 'the-events-calendar' ) . '"
-				data-allow-html ' : '' ) .
+				data-create-choice-template="' . __( 'Create: <b><%= term %></b>', 'the-events-calendar' ) . '" data-allow-html ' : '' ) .
 				'data-options="' . esc_attr( json_encode( $data ) ) . '"' .
 				( empty( $current ) ? '' : ' value="' . esc_attr( $current ) . '"' ) .
 			'>';
@@ -956,6 +1007,122 @@ class Tribe__Events__Linked_Posts {
 			$template = apply_filters( 'tribe_events_linked_post_meta_box_section', $this->main->plugin_path . 'src/admin-views/linked-post-section.php', $linked_post_type );
 			include $template;
 		}
+	}
+
+	/**
+	 * A several-step process that prints the "Create or Find {Linked Post Type Name}" labels.
+	 *
+	 * Numerous steps and caveats are covered in this method so that we can make these labels, which
+	 * are rather important, as translation-friendly as possible.
+	 *
+	 * @since 4.6.3
+	 *
+	 * @param object $post_type The linked post type whose label is being rendered.
+	 * @param boolean $creation_enabled Whether the current user can create post types. If false, they can only add existing ones.
+	 *
+	 * @return string
+	 */
+	public function get_create_or_find_labels( $post_type, $creation_enabled  ) {
+
+		$plural_name             = $this->linked_post_types[ $post_type ]['name'];
+		$singular_name           = ! empty( $this->linked_post_types[ $post_type ]['singular_name'] ) ? $this->linked_post_types[ $post_type ]['singular_name'] : $plural_name;
+		$singular_name_lowercase = ! empty( $this->linked_post_types[ $post_type ]['singular_name_lowercase'] ) ? $this->linked_post_types[ $post_type ]['singular_name_lowercase'] : $singular_name;
+
+		// First, determine what indefinite article we should use for the post type (important for English and several other languages).
+		$indefinite_article = _x( 'a', 'Indefinite article for the phrase "Find a {post type name}. Will be replaced with "an" if the {post type name} starts with a vowel.', 'the-events-calendar' );
+
+		$post_type_starts_with = substr( $singular_name, 0, 1 );
+		$post_type_starts_with = strtolower( $post_type_starts_with );
+		$english_vowels        = array( 'a', 'e', 'i', 'o', 'u' );
+
+		if ( in_array( $post_type_starts_with, $english_vowels ) ) {
+			$indefinite_article = _x( 'an', 'Indefinite article for the phrase "Find a {post type name}" when the {post type name} starts with a vowel, e.g. "Find an Organizer".', 'the-events-calendar' );
+		}
+
+		// Here we render the main label string. The "core" linked post types (venue and organizer) are explicitly named to make
+		// translation a bit easier for the many languages where the words *around* the post type name may need to be different
+		// based on the specific post type name. For non-"core" post types, we just dynamically populate the post type name.
+		switch ( $post_type ) {
+
+			// Organizers
+			case Tribe__Events__Organizer::POSTTYPE :
+
+				if ( tribe_is_organizer_label_customized() ) {
+					$label = esc_attr(
+						sprintf(
+							_x( 'Find %1$s %2$s', '"Find an Organizer", but when the word "Organizer" is customized to something else.', 'the-events-calendar' ),
+							$indefinite_article,
+							$singular_name
+						)
+					);
+
+					if ( $creation_enabled ) {
+						$label = esc_attr(
+							sprintf(
+								_x( 'Create or Find %s', '"Create or Find Organizer", but when the word "Organizer" is customized to something else.', 'the-events-calendar' ),
+								$singular_name
+							)
+						);
+					}
+				} else {
+					$label = $creation_enabled
+						? esc_attr__( 'Create or Find an Organizer', 'the-events-calendar' )
+						: esc_attr__( 'Find an Organizer', 'the-events-calendar' );
+				}
+
+				break;
+
+			// Venues
+			case Tribe__Events__Venue::POSTTYPE :
+
+				if ( tribe_is_venue_label_customized() ) {
+					$label = esc_attr(
+						sprintf(
+							_x( 'Find %1$s %2$s', '"Find a Venue", but when the word "Venue" is customized to something else.', 'the-events-calendar' ),
+							$indefinite_article,
+							$singular_name
+						)
+					);
+
+					if ( $creation_enabled ) {
+						$label = esc_attr(
+							sprintf(
+								_x( 'Create or Find %s', '"Create or Find Venue", but when the word "Venue" is customized to something else.', 'the-events-calendar' ),
+								$singular_name
+							)
+						);
+					}
+				} else {
+					$label = $creation_enabled
+						? esc_attr__( 'Create or Find a Venue', 'the-events-calendar' )
+						: esc_attr__( 'Find a Venue', 'the-events-calendar' );
+				}
+
+				break;
+
+			// Any other potential Linked Post types
+			default :
+				$label = esc_attr(
+					sprintf(
+						_x( 'Find %1$s %2$s', 'The "Find a {post type name}" label for custom linked post types that are *not* Venues or Organizers', 'the-events-calendar' ),
+						$indefinite_article,
+						$singular_name
+					)
+				);
+
+				if ( $creation_enabled ) {
+					$label = esc_attr(
+						sprintf(
+							_x( 'Create or Find %s', 'The "Create or Find {post type name}" label for custom linked post types that are *not* Venues or Organizers', 'the-events-calendar' ),
+							$singular_name
+						)
+					);
+				}
+
+				break;
+		}
+
+		return $label;
 	}
 
 	/**

@@ -3,14 +3,14 @@
 namespace Timber;
 
 use Timber\Helper;
-use Timber\PostsCollection;
+use Timber\PostCollection;
 
 // Exit if accessed directly
 if ( !defined('ABSPATH') ) {
 	exit;
 }
 
-class QueryIterator implements \Iterator {
+class QueryIterator implements \Iterator, \Countable {
 
 	/**
 	 *
@@ -63,9 +63,13 @@ class QueryIterator implements \Iterator {
 		return $this->_query->post_count;
 	}
 
+	public function get_pagination( $prefs ) {
+		return new Pagination($prefs, $this->_query);
+	}
+
 	public function get_posts( $return_collection = false ) {
 		if ( isset($this->_query->posts) ) {
-			$posts = new PostsCollection($this->_query->posts, $this->_posts_class);
+			$posts = new PostCollection($this->_query->posts, $this->_posts_class);
 			return ($return_collection) ? $posts : $posts->get_posts();
 		}
 	}
@@ -173,4 +177,16 @@ class QueryIterator implements \Iterator {
 		return $query;
 	}
 
+	/**
+	 * Count elements of an object.
+	 *
+	 * Necessary for some Twig `loop` variable properties.
+	 * @see http://twig.sensiolabs.org/doc/tags/for.html#the-loop-variable
+	 * @link  http://php.net/manual/en/countable.count.php
+	 * @return int The custom count as an integer.
+	 * The return value is cast to an integer.
+	 */
+	public function count() {
+		return $this->post_count();
+	}
 }

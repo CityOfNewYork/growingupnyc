@@ -15,11 +15,11 @@ class Helper {
 	 * @api
 	 * @example
 	 * ```php
-	 * $favorites = Timber::transient('user-'.$uid.'-favorites', function() use ($uid) {
+	 * $context = Timber::get_context();
+	 * $context['favorites'] = Timber\Helper::transient('user-' .$uid. '-favorites', function() use ($uid) {
 	 *  	//some expensive query here that's doing something you want to store to a transient
 	 *  	return $favorites;
 	 * }, 600);
-	 * Timber::context['favorites'] = $favorites;
 	 * Timber::render('single.twig', $context);
 	 * ```
 	 *
@@ -172,13 +172,17 @@ class Helper {
 	}
 
 	/**
-	 * @param mixed $function_name or array( $class( string|object ), $function_name )
-	 * @param array (optional) $defaults
-	 * @param bool (optional) $return_output_buffer Return function output instead of return value (default: false)
-	 * @return Timber\FunctionWrapper|mixed
+	 * @deprecated since 1.3.0
+	 *
+	 * @param mixed $function_name        String or array( $class( string|object ), $function_name ).
+	 * @param array $defaults             Optional.
+	 * @param bool  $return_output_buffer Optional. Return function output instead of return value. Default false.
+	 * @return FunctionWrapper|mixed
 	 */
 	public static function function_wrapper( $function_name, $defaults = array(), $return_output_buffer = false ) {
-		return new FunctionWrapper($function_name, $defaults, $return_output_buffer);
+		Helper::warn( 'function_wrapper is deprecated and will be removed in 1.4. Use {{ function( \'function_to_call\' ) }} instead or use FunctionWrapper directly. For more information refer to https://timber.github.io/docs/guides/functions/' );
+
+		return new FunctionWrapper( $function_name, $defaults, $return_output_buffer );
 	}
 
 	/**
@@ -205,7 +209,7 @@ class Helper {
 	public static function warn( $message ) {
 		return trigger_error($message, E_USER_WARNING);
 	}
-	
+
 	/**
 	 *
 	 *
@@ -218,83 +222,37 @@ class Helper {
 		return trim(wp_title($separator, false, $seplocation));
 	}
 
-	/* Text Utilities
-	======================== */
+	/* Text Utitilites */
 
-	/**
-	 *
-	 *
-	 * @param string  $text
-	 * @param int     $num_words
-	 * @param string|null|false  $more text to appear in "Read more...". Null to use default, false to hide
-	 * @param string  $allowed_tags
-	 * @return string
-	 */
-	public static function trim_words( $text, $num_words = 55, $more = null, $allowed_tags = 'p a span b i br blockquote' ) {
-		if ( null === $more ) {
-			$more = __('&hellip;');
-		}
-		$original_text = $text;
-		$allowed_tag_string = '';
-		foreach ( explode(' ', apply_filters('timber/trim_words/allowed_tags', $allowed_tags)) as $tag ) {
-			$allowed_tag_string .= '<'.$tag.'>';
-		}
-		$text = strip_tags($text, $allowed_tag_string);
-		/* translators: If your word count is based on single characters (East Asian characters), enter 'characters'. Otherwise, enter 'words'. Do not translate into your own language. */
-		if ( 'characters' == _x('words', 'word count: words or characters?') && preg_match('/^utf\-?8$/i', get_option('blog_charset')) ) {
-			$text = trim(preg_replace("/[\n\r\t ]+/", ' ', $text), ' ');
-			preg_match_all('/./u', $text, $words_array);
-			$words_array = array_slice($words_array[0], 0, $num_words + 1);
-			$sep = '';
-		} else {
-			$words_array = preg_split("/[\n\r\t ]+/", $text, $num_words + 1, PREG_SPLIT_NO_EMPTY);
-			$sep = ' ';
-		}
-		if ( count($words_array) > $num_words ) {
-			array_pop($words_array);
-			$text = implode($sep, $words_array);
-			$text = $text.$more;
-		} else {
-			$text = implode($sep, $words_array);
-		}
-		$text = self::close_tags($text);
-		return apply_filters('wp_trim_words', $text, $num_words, $more, $original_text);
-	}
 
-	/**
-	 *
-	 *
-	 * @param string  $html
-	 * @return string
-	 */
-	public static function close_tags( $html ) {
-		//put all opened tags into an array
-		preg_match_all('#<([a-z]+)(?: .*)?(?<![/|/ ])>#iU', $html, $result);
-		$openedtags = $result[1];
-		//put all closed tags into an array
-		preg_match_all('#</([a-z]+)>#iU', $html, $result);
-		$closedtags = $result[1];
-		$len_opened = count($openedtags);
-		// all tags are closed
-		if ( count($closedtags) == $len_opened ) {
-			return $html;
-		}
-		$openedtags = array_reverse($openedtags);
-		// close tags
-		for ( $i = 0; $i < $len_opened; $i++ ) {
-			if ( !in_array($openedtags[$i], $closedtags) ) {
-				$html .= '</'.$openedtags[$i].'>';
-			} else {
-				unset($closedtags[array_search($openedtags[$i], $closedtags)]);
-			}
-		}
-		$html = str_replace(array('</br>', '</hr>', '</wbr>'), '', $html);
-		$html = str_replace(array('<br>', '<hr>', '<wbr>'), array('<br />', '<hr />', '<wbr />'), $html);
-		return $html;
-	}
 
 	/* Object Utilities
 	======================== */
+
+	/**
+	 * @codeCoverageIgnore
+     * @deprecated since 1.2.0
+     * @see TextHelper::trim_words
+     * @param string  $text
+     * @param int     $num_words
+     * @param string|null|false  $more text to appear in "Read more...". Null to use default, false to hide
+     * @param string  $allowed_tags
+     * @return string
+     */
+    public static function trim_words( $text, $num_words = 55, $more = null, $allowed_tags = 'p a span b i br blockquote' ) {
+        return TextHelper::trim_words($text, $num_words, $more, $allowed_tags);
+    }
+
+     /**
+     * @deprecated since 1.2.0
+     * @see TextHelper::close_tags
+     * @param string  $html
+     * @return string
+     */
+
+    public static function close_tags( $html ) {
+    	return TextHelper::close_tags($html);
+    }
 
 	/**
 	 *
@@ -383,10 +341,10 @@ class Helper {
 					return $arr;
 				}
 			}
-		} else {
-			throw new \InvalidArgumentException('$array is not an array, got:');
-			Helper::error_log($array);
+			return false;
 		}
+		throw new \InvalidArgumentException('$array is not an array, got:');
+		Helper::error_log($array);
 	}
 
 	/**
@@ -444,6 +402,48 @@ class Helper {
 		return ($i % 2) != 0;
 	}
 
+	/**
+	 * Plucks the values of a certain key from an array of objects
+	 * @param array $array
+	 * @param string $key
+	 */
+	public static function pluck( $array, $key ) {
+		$return = array();
+		foreach ( $array as $obj ) {
+			if ( is_object($obj) && method_exists($obj, $key) ) {
+				$return[] = $obj->$key();
+			} elseif ( is_object($obj) && property_exists($obj, $key) ) {
+				$return[] = $obj->$key;
+			} elseif ( is_array($obj) && isset($obj[$key]) ) {
+				$return[] = $obj[$key];
+			}
+		}
+		return $return;
+	}
+
+	/**
+	 * Filters a list of objects, based on a set of key => value arguments.
+	 *
+	 * @since 1.5.3
+	 * @ticket #1594
+	 * @param array        $list to filter.
+	 * @param string|array $filter to search for.
+	 * @param string       $operator to use (AND, NOT, OR).
+	 * @return array
+	 */
+	public static function filter_array( $list, $args, $operator = 'AND' ) {
+		if ( ! is_array($args) ) {
+			$args = array( 'slug' => $args );
+		}
+
+		if ( ! is_array( $list ) && ! is_a( $list, 'Traversable' ) ) {
+			return array();
+		}
+
+		$util = new \WP_List_Util( $list );
+		return $util->filter( $args, $operator );
+	}
+
 	/* Links, Forms, Etc. Utilities
 	======================== */
 
@@ -460,7 +460,7 @@ class Helper {
 	}
 
 	/**
-	 *
+	 * @codeCoverageIgnore
 	 * @deprecated since 1.1.2
 	 * @param array  $args
 	 * @return array
@@ -471,6 +471,7 @@ class Helper {
 	}
 
 	/**
+	 * @codeCoverageIgnore
 	 * @return string
 	 */
 	public function get_current_url() {

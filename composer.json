@@ -11,7 +11,6 @@
     "wpackagist-plugin/media-cleaner": "4.6.3",
     "wpackagist-plugin/query-monitor": "3.0.0",
     "wpackagist-plugin/relevanssi": "^4.0",
-    "wpackagist-plugin/rollbar": "2.3.1",
     "wpackagist-plugin/shortpixel-image-optimiser": "4.10.4",
     "wpackagist-plugin/svg-support": "2.3.15",
     "wpackagist-plugin/taxonomy-terms-order": "1.5.3.2",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9e871dc283aedef7791528c69668880",
+    "content-hash": "90ad6d8adea5c209f0b22bdcca7d4978",
     "packages": [
         {
             "name": "composer/installers",
@@ -370,26 +370,6 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/relevanssi/"
-        },
-        {
-            "name": "wpackagist-plugin/rollbar",
-            "version": "2.3.1",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/rollbar/",
-                "reference": "tags/2.3.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/rollbar.2.3.1.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/rollbar/"
         },
         {
             "name": "wpackagist-plugin/shortpixel-image-optimiser",

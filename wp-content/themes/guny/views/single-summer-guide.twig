@@ -77,7 +77,7 @@
 
         {% if sections %}
           {% set section_previous = true %}
-          {% set section_no_divider_after = ['newsletter-signup'] %}
+          {% set section_no_divider_after = ['newsletter-signup', 'related-events'] %}
           {% for key, section in sections %}
 
             {% include 'partials/' ~ section.acf_fc_layout ~ '.twig' with {title: section.section_title, id: 'section-' ~ section.slug, class: ''} %}

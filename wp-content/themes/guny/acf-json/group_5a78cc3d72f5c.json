@@ -96,6 +96,79 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "5af21df309ca8": {
+                    "key": "5af21df309ca8",
+                    "name": "related-events",
+                    "label": "Related Events",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5af21e0109ca9",
+                            "label": "Section Title",
+                            "name": "section_title",
+                            "type": "text",
+                            "value": null,
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_5af3389adbc25",
+                            "label": "Section Text",
+                            "name": "section_text",
+                            "type": "text",
+                            "value": null,
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_5af21e1c09caa",
+                            "label": "Events",
+                            "name": "posts",
+                            "type": "post_object",
+                            "value": null,
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "post_type": [
+                                "tribe_events"
+                            ],
+                            "taxonomy": [],
+                            "allow_null": 0,
+                            "multiple": 1,
+                            "return_format": "id",
+                            "ui": 1
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "button_label": "Add Section",
@@ -134,5 +207,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1519946249
+    "modified": 1525889280
 }

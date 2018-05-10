@@ -109,8 +109,8 @@
                             "name": "section_title",
                             "type": "text",
                             "value": null,
-                            "instructions": "",
-                            "required": 0,
+                            "instructions": "Titles are required for the jump navigation to work.",
+                            "required": 1,
                             "conditional_logic": 0,
                             "wrapper": {
                                 "width": "",
@@ -144,12 +144,12 @@
                             "maxlength": ""
                         },
                         {
-                            "key": "field_5af21e1c09caa",
+                            "key": "field_5af49616723ea",
                             "label": "Events",
-                            "name": "posts",
-                            "type": "post_object",
+                            "name": "events",
+                            "type": "repeater",
                             "value": null,
-                            "instructions": "",
+                            "instructions": "Type in the field below to find an event. You will see parent events and a repeated list of child events. The child events are denoted with a dash \" - \" in front of them. When selecting an event post to display you may pick any child event or it's parent event. It doesn't matter because the source code will display the next upcoming event based on the date the user is visiting the page. You can include additional recurring events by adjusting the count field. By default it will pull up 1 post.",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
@@ -157,14 +157,58 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "post_type": [
-                                "tribe_events"
-                            ],
-                            "taxonomy": [],
-                            "allow_null": 0,
-                            "multiple": 1,
-                            "return_format": "id",
-                            "ui": 1
+                            "collapsed": "",
+                            "min": 1,
+                            "max": 0,
+                            "layout": "table",
+                            "button_label": "Add Event",
+                            "sub_fields": [
+                                {
+                                    "key": "field_5af49624723eb",
+                                    "label": "Event",
+                                    "name": "id",
+                                    "type": "post_object",
+                                    "value": null,
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "post_type": [
+                                        "tribe_events"
+                                    ],
+                                    "taxonomy": [],
+                                    "allow_null": 0,
+                                    "multiple": 0,
+                                    "return_format": "id",
+                                    "ui": 1
+                                },
+                                {
+                                    "key": "field_5af498b9723ec",
+                                    "label": "Count",
+                                    "name": "count",
+                                    "type": "number",
+                                    "value": null,
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": 1,
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "min": 1,
+                                    "max": "",
+                                    "step": 1
+                                }
+                            ]
                         }
                     ],
                     "min": "",
@@ -207,5 +251,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1525889280
+    "modified": 1525981059
 }

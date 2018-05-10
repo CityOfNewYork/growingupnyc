@@ -175,7 +175,17 @@ class GUPostTypes {
       'summer_programs_cat',
       array('summer-guide'),
       array(
-        'label' => __( 'Program Gategories' ),
+        'label' => __( 'Program Categories' ),
+        'hierarchical' => true,
+        'rewrite' => false
+      )
+    );
+
+    register_taxonomy(
+      'time',
+      array('summer-guide'),
+      array(
+        'label' => __( 'Times' ),
         'hierarchical' => true,
         'rewrite' => false
       )

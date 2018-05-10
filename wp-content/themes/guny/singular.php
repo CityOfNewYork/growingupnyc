@@ -77,10 +77,7 @@ $context['post'] = $post;
 $context['shareAction'] = admin_url( 'admin-ajax.php' );
 $context['shareHash'] = \SMNYC\hash($post->link);
 
-$url = '/';
-if(ICL_LANGUAGE_CODE != 'en'){
-  $url = $url.ICL_LANGUAGE_CODE.'/';
-}
-$context['eventslink'] = $url.'events';
-$context['programslink'] = $url.'programs';
+$context['eventslink'] = get_post_type_archive_link('tribe_events');
+$context['programslink'] = get_post_type_archive_link('program');
+
 Timber::render( $templates, $context );

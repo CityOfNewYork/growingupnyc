@@ -7,6 +7,7 @@
             "label": "Title",
             "name": "trip_landing_title",
             "type": "text",
+            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -26,7 +27,48 @@
             "label": "Tagline",
             "name": "trip_landing_tagline",
             "type": "text",
+            "value": null,
             "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5af5dfe324300",
+            "label": "Meta Description",
+            "name": "trip_landing_meta_desc",
+            "type": "text",
+            "value": null,
+            "instructions": "Enter a description for the Trips landing page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5af5e04724301",
+            "label": "Meta Keywords",
+            "name": "trip_landing_meta_keywords",
+            "type": "text",
+            "value": null,
+            "instructions": "Enter keywords for the Trips landing page, separated by commas.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -57,6 +99,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "modified": 1495628330
+    "description": ""
 }

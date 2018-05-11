@@ -65,4 +65,8 @@ $context['upcoming_events'] = $upcoming_events;
 
 $templates = array( 'list-trip-landing.twig', 'microsite-list.twig' );
 
+// meta tags
+$context['meta_desc'] = get_field('trip_landing_meta_desc', 'option');
+$context['meta_keywords'] = get_field('trip_landing_meta_keywords', 'option');
+
 Timber::render( $templates, $context );

@@ -5,6 +5,10 @@
 $context = Timber::get_context();
 $context['post'] = Timber::get_post();
 
+// meta tags
+$context['meta_desc'] = $post->meta_description;
+$context['meta_keywords'] = $post->meta_keywords;
+
 $featured_image = get_the_post_thumbnail_url($post);
 $context['featured_image'] = $featured_image;
 

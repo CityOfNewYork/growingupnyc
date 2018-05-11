@@ -176,4 +176,8 @@ $templates = array( 'list-events.twig', 'index.twig' );
 
 $context['top_widgets'] = Timber::get_widgets('top_widget');
 
+// meta tags
+$context['meta_desc'] = get_field('event_landing_meta_desc', 'option');
+$context['meta_keywords'] = get_field('event_landing_meta_keywords', 'option');
+
 Timber::render( $templates, $context );

@@ -19,12 +19,7 @@ $context['post'] = $post;
 // check the language
 $context['language'] = ICL_LANGUAGE_CODE;
 
-// $context['custom_switcher'] = Timber::compile(
-//   array('partials/language-switcher.twig'),
-//   array(
-//     'languages' => Wpml\get_wpdb_languages(),
-//     'current' => $context['language']
-//   )
-// );
+// top menu widget
+$context['top_widget'] = Timber::get_widgets('top_widget');
 
 Timber::render( $templates, $context );

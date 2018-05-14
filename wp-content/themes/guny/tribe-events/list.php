@@ -164,17 +164,10 @@ if ( tribe_has_next_event() ) {
 // Adding the language
 $context['language'] = ICL_LANGUAGE_CODE;
 
-// $context['custom_switcher'] = Timber::compile(
-//   array('partials/language-switcher.twig'),
-//   array(
-//     'languages' => Wpml\get_wpdb_languages(),
-//     'current' => $context['language']
-//   )
-// );
-
 $templates = array( 'list-events.twig', 'index.twig' );
 
-$context['top_widgets'] = Timber::get_widgets('top_widget');
+// top menu widget
+$context['top_widget'] = Timber::get_widgets('top_widget');
 
 // meta tags
 $context['meta_desc'] = get_field('event_landing_meta_desc', 'option');

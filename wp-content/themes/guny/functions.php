@@ -118,7 +118,7 @@ class GunySite extends TimberSite {
       'meta_value' => 1
     ) );
     $context['top_programs'] = Timber::get_widgets('top_programs_widgets');
-    $context['top_widget'] = Timber::get_widgets('top_widget');
+    // $context['top_widget'] = Timber::get_widgets('top_widget');
     $context['top_events'] = $this->get_featured_events(3);
     $context['options'] = get_fields('options');
     if (!empty($context['options']) && !empty($context['options']['current_banner'])) {
@@ -536,7 +536,6 @@ $includes = [
   ],
   [ // Wpml
     '/includes/term_translations.php', // Term translation helpers
-    '/includes/languages.php' // A custom language switcher
   ],
   [ // Admin
     '/includes/program_posts_column.php' // Add program name to post in the admin

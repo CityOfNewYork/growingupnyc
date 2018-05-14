@@ -66,7 +66,7 @@
       {% block header %}
         <header class="c-banner">
           <div class="o-container">
-            <a href="{{site.url}}" class="c-banner__logo-wrapper"><span class="c-banner__logo">{{site.name}}</span></a>
+            <a href="{{site.url}}" class="c-banner__logo-wrapper c-banner__logo-wrapper{% if not top_widget %}-no-menu{% endif %}"><span class="c-banner__logo c-banner__logo">{{site.name}}</span></a>
             <nav class="c-banner__nav" role="navigation" aria-label="Primary">
               <ul class="o-inline">
 

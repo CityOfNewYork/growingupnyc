@@ -118,7 +118,9 @@ class GunySite extends TimberSite {
       'meta_value' => 1
     ) );
     $context['top_programs'] = Timber::get_widgets('top_programs_widgets');
-    $context['top_widget'] = Timber::get_widgets('top_widget');
+    if (is_front_page()) {
+      $context['top_widget'] = Timber::get_widgets('top_widget');
+    }
     $context['top_events'] = $this->get_featured_events(3);
     $context['options'] = get_fields('options');
     if (!empty($context['options']) && !empty($context['options']['current_banner'])) {
@@ -461,14 +463,13 @@ function change_generation_title( $title ){
   }
   // if this is a landing page
   if ( !is_front_page() && !is_single() && in_array($page_type[0], $gen_pages) ) {
-    // if ( $page_type[0] == "youth"){
-    if ( $page_type[0] == "generationnyc"){
+    if ( $page_type[0] == "generationnyc" && count($page_type)<2){
       $title = "Generation NYC";
-    }elseif ( $page_type[0] == "inspirations"){
+    }elseif ( $page_type[1] == "inspirations"){
       $title = "Inspirations" . ' - ' . 'Generation NYC';
-    }elseif( $page_type[0] == "topics"){
+    }elseif( $page_type[1] == "topics"){
       $title = "Topics" . ' - ' . 'Generation NYC';
-    }elseif( $page_type[0] == "trips"){
+    }elseif( $page_type[1] == "trips"){
       $title = "Trips" . ' - ' . 'Generation NYC';
     }
   }
@@ -536,7 +537,6 @@ $includes = [
   ],
   [ // Wpml
     '/includes/term_translations.php', // Term translation helpers
-    '/includes/languages.php' // A custom language switcher
   ],
   [ // Admin
     '/includes/program_posts_column.php' // Add program name to post in the admin

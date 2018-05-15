@@ -32,8 +32,8 @@ class FacetWP_Display
      * Detect the loop container if the "facetwp-template" class is missing
      */
     function add_template_tag( $wp_query ) {
-        if ( true === $wp_query->get( 'facetwp' ) ) {
-            echo '<!--fwp-loop-->';
+        if ( true === $wp_query->get( 'facetwp' ) && did_action( 'wp_head' ) ) {
+            echo "<!--fwp-loop-->\n";
         }
     }
 
@@ -69,6 +69,7 @@ class FacetWP_Display
                 $output = '<div class="facetwp-template" data-name="' . $atts['template'] . '">';
                 $output .= $preload_data['template'];
                 $output .= '</div>';
+                $output .= $this->get_pager_seo();
 
                 $this->load_assets = true;
             }
@@ -100,6 +101,28 @@ class FacetWP_Display
 
 
     /**
+     * Build a basic hidden pager for SEO purposes
+     */
+    function get_pager_seo() {
+        $page = FWP()->facet->pager_args['page'];
+        $total_pages = FWP()->facet->pager_args['total_pages'];
+        $url_var = FWP()->helper->get_setting( 'prefix' ) . 'paged';
+
+        $prev_link = ( 2 === $page ) ? remove_query_arg( $url_var ) : add_query_arg( $url_var, $page - 1 );
+        $next_link = add_query_arg( $url_var, $page + 1 );
+        $output = '';
+
+        if ( 1 < $total_pages ) {
+            $output .= ( 1 < $page ) ? '<a href="' . $prev_link . '">Prev</a>' : '';
+            $output .= ( $page < $total_pages ) ? '<a href="' . $next_link . '">Next</a>' : '';
+            $output = '<div class="facetwp-seo">' . $output . '</div>';
+        }
+
+        return $output;
+    }
+
+
+    /**
      * Output facet scripts
      */
     function front_scripts() {
@@ -110,9 +133,7 @@ class FacetWP_Display
                 $this->assets['front.css'] = FACETWP_URL . '/assets/css/front.css';
             }
 
-            $this->assets['event-manager.js'] = FACETWP_URL . '/assets/js/src/event-manager.js';
-            $this->assets['front.js'] = FACETWP_URL . '/assets/js/front.js';
-            $this->assets['front-facets.js'] = FACETWP_URL . '/assets/js/front-facets.js';
+            $this->assets['front.js'] = FACETWP_URL . '/assets/js/dist/front.min.js';
 
             // Use the REST API?
             $ajaxurl = admin_url( 'admin-ajax.php' );
@@ -137,6 +158,7 @@ class FacetWP_Display
             $this->json['prefix'] = FWP()->helper->get_setting( 'prefix' );
             $this->json['no_results_text'] = __( 'No results found', 'fwp' );
             $this->json['ajaxurl'] = $ajaxurl;
+            $this->json['nonce'] = wp_create_nonce( 'wp_rest' );
 
             if ( apply_filters( 'facetwp_use_preloader', true ) ) {
                 $this->json['preload_data'] = $this->prepare_preload_data();
@@ -171,8 +193,8 @@ class FacetWP_Display
             echo $inline_scripts;
 ?>
 <script>
-var FWP_JSON = <?php echo json_encode( $this->json ); ?>;
-var FWP_HTTP = <?php echo json_encode( $http_params ); ?>;
+window.FWP_JSON = <?php echo json_encode( $this->json ); ?>;
+window.FWP_HTTP = <?php echo json_encode( $http_params ); ?>;
 </script>
 <?php
         }

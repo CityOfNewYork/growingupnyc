@@ -55,33 +55,6 @@ class FacetWP_Facet_Search extends FacetWP_Facet
 
 
     /**
-     * Output any admin scripts
-     */
-    function admin_scripts() {
-?>
-<script>
-(function($) {
-    wp.hooks.addAction('facetwp/load/search', function($this, obj) {
-        $this.find('.facet-search-engine').val(obj.search_engine);
-        $this.find('.facet-placeholder').val(obj.placeholder);
-    });
-
-    wp.hooks.addFilter('facetwp/save/search', function(obj, $this) {
-        obj['search_engine'] = $this.find('.facet-search-engine').val();
-        obj['placeholder'] = $this.find('.facet-placeholder').val();
-        return obj;
-    });
-
-    wp.hooks.addAction('facetwp/change/search', function($this) {
-        $this.closest('.facetwp-row').find('.name-source').hide();
-    });
-})(jQuery);
-</script>
-<?php
-    }
-
-
-    /**
      * Output admin settings HTML
      */
     function settings_html() {
@@ -102,6 +75,30 @@ class FacetWP_Facet_Search extends FacetWP_Facet
             <td><?php _e( 'Placeholder text', 'fwp' ); ?>:</td>
             <td><input type="text" class="facet-placeholder" value="" /></td>
         </tr>
+        <tr>
+            <td>
+                <?php _e('Auto refresh', 'fwp'); ?>:
+                <div class="facetwp-tooltip">
+                    <span class="icon-question">?</span>
+                    <div class="facetwp-tooltip-content"><?php _e( 'Automatically refresh the results while typing?', 'fwp' ); ?></div>
+                </div>
+            </td>
+            <td>
+                <label class="facetwp-switch">
+                    <input type="checkbox" class="facet-auto-refresh" />
+                    <span class="facetwp-slider"></span>
+                </label>
+            </td>
+        </tr>
 <?php
+    }
+
+
+    /**
+     * (Front-end) Attach settings to the AJAX response
+     */
+    function settings_js( $params ) {
+        $auto_refresh = empty( $params['facet']['auto_refresh'] ) ? 'no' : $params['facet']['auto_refresh'];
+        return array( 'auto_refresh' => $auto_refresh );
     }
 }

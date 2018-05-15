@@ -27,6 +27,7 @@ class FacetWP_Facet_Date_Range extends FacetWP_Facet
         if ( 'both' == $fields || 'end_date' == $fields ) {
             $output .= '<input type="text" class="facetwp-date facetwp-date-max" value="' . esc_attr( $value[1] ) . '" placeholder="' . __( 'End Date', 'fwp' ) . '" />';
         }
+
         return $output;
     }
 
@@ -41,21 +42,27 @@ class FacetWP_Facet_Date_Range extends FacetWP_Facet
         $values = $params['selected_values'];
         $where = '';
 
-        $start = empty( $values[0] ) ? false : $values[0];
-        $end = empty( $values[1] ) ? false : $values[1];
+        $min = empty( $values[0] ) ? false : $values[0];
+        $max = empty( $values[1] ) ? false : $values[1];
 
-        $is_dual = ! empty( $facet['source_other'] );
+        $fields = isset( $facet['fields'] ) ? $facet['fields'] : 'both';
         $compare_type = isset( $facet['compare_type'] ) ? $facet['compare_type'] : '';
 
-        if ( $is_dual ) {
-            $start = ( false !== $start ) ? $start : '0000-00-00';
-            $end = ( false !== $end ) ? $end : '3000-12-31';
+        $is_dual = ! empty( $facet['source_other'] );
+        $cond_both = ( 'both' == $fields && ( 'enclose' == $compare_type || 'intersect' == $compare_type ) );
+        $cond_min_or_max = ( ( 'min' == $fields || 'max' == $fields ) && 'intersect' == $compare_type );
+
+        if ( $is_dual && ( $cond_both || $cond_min_or_max ) ) {
+            $min = ( false !== $min ) ? $min : '0000-00-00';
+            $max = ( false !== $max ) ? $max : '3000-12-31';
 
             /**
-             * Single input, multiple data sources
+             * Enclose compare
+             * The post's range must surround the user-defined range
              */
-            if ( 'exact' == $facet['fields'] ) {
-                $end = $start;
+            if ( 'enclose' == $compare_type ) {
+                $where .= " AND LEFT(facet_value, 10) <= '$min'";
+                $where .= " AND LEFT(facet_display_value, 10) >= '$max'";
             }
 
             /**
@@ -63,29 +70,8 @@ class FacetWP_Facet_Date_Range extends FacetWP_Facet
              * @link http://stackoverflow.com/a/325964
              */
             if ( 'intersect' == $compare_type ) {
-                $where .= " AND (LEFT(facet_value, 10) <= '$end')";
-                $where .= " AND (LEFT(facet_display_value, 10) >= '$start')";
-            }
-
-            /**
-             * Enclose compare
-             * The post's range must surround the user-defined range
-             */
-            elseif ( 'enclose' == $compare_type ) {
-                $where .= " AND LEFT(facet_value, 10) <= '$start'";
-                $where .= " AND LEFT(facet_display_value, 10) >= '$end'";
-            }
-        }
-
-        /**
-         * Exact match
-         */
-        if ( 'exact' == $facet['fields'] && '' == $where ) {
-            if ( $start ) {
-                $where .= " AND LEFT(facet_value, 10) = '$start'";
-            }
-            if ( $end ) {
-                $where .= " AND LEFT(facet_display_value, 10) = '$end'";
+                $where .= " AND LEFT(facet_value, 10) <= '$max'";
+                $where .= " AND LEFT(facet_display_value, 10) >= '$min'";
             }
         }
 
@@ -93,12 +79,15 @@ class FacetWP_Facet_Date_Range extends FacetWP_Facet
          * Basic compare
          * The user-defined range must surround the post's range
          */
-        if ( '' == $where ) {
-            if ( $start ) {
-                $where .= " AND LEFT(facet_value, 10) >= '$start'";
+        else {
+            if ( 'exact' == $fields ) {
+                $max = $min;
             }
-            if ( $end ) {
-                $where .= " AND LEFT(facet_display_value, 10) <= '$end'";
+            if ( false !== $min ) {
+                $where .= " AND LEFT(facet_value, 10) >= '$min'";
+            }
+            if ( false !== $max ) {
+                $where .= " AND LEFT(facet_display_value, 10) <= '$max'";
             }
         }
 
@@ -110,54 +99,22 @@ class FacetWP_Facet_Date_Range extends FacetWP_Facet
 
 
     /**
-     * Output any admin scripts
-     */
-    function admin_scripts() {
-?>
-<script>
-(function($) {
-    wp.hooks.addAction('facetwp/load/date_range', function($this, obj) {
-        $this.find('.facet-source').val(obj.source);
-        $this.find('.facet-source-other').val(obj.source_other);
-        $this.find('.facet-compare-type').val(obj.compare_type);
-        $this.find('.facet-date-fields').val(obj.fields);
-        $this.find('.facet-format').val(obj.format);
-    });
-
-    wp.hooks.addFilter('facetwp/save/date_range', function(obj, $this) {
-        obj['source'] = $this.find('.facet-source').val();
-        obj['source_other'] = $this.find('.facet-source-other').val();
-        obj['compare_type'] = $this.find('.facet-compare-type').val();
-        obj['fields'] = $this.find('.facet-date-fields').val();
-        obj['format'] = $this.find('.facet-format').val();
-        return obj;
-    });
-
-    wp.hooks.addAction('facetwp/change/date_range', function($this) {
-        $this.closest('.facetwp-row').find('.facet-source-other').trigger('change');
-    });
-})(jQuery);
-</script>
-<?php
-    }
-
-
-    /**
      * Output any front-end scripts
      */
     function front_scripts() {
         $locale = get_locale();
         $locale = empty( $locale ) ? 'en' : substr( $locale, 0, 2 );
+        $locale = ( 'ca' == $locale ) ? 'cat' : $locale;
 
         FWP()->display->json['datepicker'] = array(
             'locale'    => $locale,
             'clearText' => __( 'Clear', 'fwp' ),
         );
-        FWP()->display->assets['flatpickr.css'] = FACETWP_URL . '/assets/js/flatpickr/flatpickr.css';
-        FWP()->display->assets['flatpickr.js'] = FACETWP_URL . '/assets/js/flatpickr/flatpickr.min.js';
+        FWP()->display->assets['flatpickr.css'] = FACETWP_URL . '/assets/vendor/flatpickr/flatpickr.css';
+        FWP()->display->assets['flatpickr.js'] = FACETWP_URL . '/assets/vendor/flatpickr/flatpickr.min.js';
 
         if ( 'en' != $locale ) {
-            FWP()->display->assets['flatpickr-l10n.js'] = FACETWP_URL . "/assets/js/flatpickr/l10n/$locale.js";
+            FWP()->display->assets['flatpickr-l10n.js'] = FACETWP_URL . "/assets/vendor/flatpickr/l10n/$locale.js";
         }
     }
 

@@ -78,6 +78,9 @@
 			e.$el.sortable({
 				handle: '.acf-sortable-handle',
 				connectWith: '.acf-field-list',
+				start: function(e, ui){
+			        ui.placeholder.height( ui.item.height() );
+			    },
 				update: function(event, ui){
 					
 					// vars
@@ -551,7 +554,7 @@
 			
 			
 			// update label
-			$handle.find('.li-field-label strong a').text( label );
+			$handle.find('.li-field-label strong a').html( label );
 			
 			
 			// update required
@@ -1249,41 +1252,29 @@
 			
 			
 			// get settings
-			var $settings = $tbody.children('.acf-field[data-setting="' + old_type + '"]'),
-				html = '';
-			
-			
-			// populate settings html
-			$settings.each(function(){
-				
-				html += $(this).outerHTML();
-				
-			});
-			
-			
-			// remove settings
-			$settings.remove();
-			
+			var $settings = $tbody.children('.acf-field[data-setting="' + old_type + '"]');
 			
 			// save field settings html
-			acf.update( key + '_settings_' + old_type, html );
-			
+			acf.update( key + '_settings_' + old_type, $settings );
+					
+			// remove settings
+			$settings.detach();
 			
 			// render field
 			this.render_field( $el );
 			
 			
 			// show field options if they already exist
-			html = acf.get( key + '_settings_' + new_type );
+			$newettings = acf.get( key + '_settings_' + new_type );
 			
-			if( html ) {
+			if( $newettings ) {
 				
 				// append settings
-				$tbody.children('.acf-field[data-name="conditional_logic"]').before( html );
+				$tbody.children('.acf-field[data-name="conditional_logic"]').before( $newettings );
 				
 				
 				// remove field settings html
-				acf.update( key + '_settings_' + new_type, '' );
+				acf.update( key + '_settings_' + new_type, false );
 				
 				
 				// trigger event
@@ -2028,6 +2019,10 @@
 			// duplicate
 			$tr2 = acf.duplicate( $tr );
 			
+			
+			// action
+			//acf.do_action('add_location_rule', $tr2);
+			
 		},
 		
 		
@@ -2048,23 +2043,24 @@
 			
 			// vars
 			var $tr = e.$el.closest('tr');
-
-			
-			// save field
-			$tr.find('select:first').trigger('change');
 			
 			
+			// action
+			//acf.do_action('remove_location_rule', $tr);
+			
+			
+			// remove
 			if( $tr.siblings('tr').length == 0 ) {
 				
 				// remove group
 				$tr.closest('.rule-group').remove();
 				
-			}
-			
-			
-			// remove tr
-			$tr.remove();
+			} else {
 				
+				// remove tr
+				$tr.remove();
+			
+			}
 			
 		},
 		
@@ -2099,6 +2095,14 @@
 			
 			// remove all tr's except the first one
 			$group2.find('tr:not(:first)').remove();
+			
+			
+			// vars
+			//var $tr = $group2.find('tr');
+			
+			
+			// action
+			//acf.do_action('add_location_rule', $tr);
 			
 		},
 		
@@ -2150,6 +2154,10 @@
 					
 					// update
 					$rule.replaceWith( html );
+					
+					
+					// action
+					//acf.do_action('change_location_rule', $rule);
 	
 				}
 			});

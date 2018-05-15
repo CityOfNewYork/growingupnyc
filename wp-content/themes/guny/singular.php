@@ -80,6 +80,10 @@ $context['shareHash'] = \SMNYC\hash($post->link);
 // top menu widget
 $context['top_widget'] = Timber::get_widgets('top_widget');
 
+// meta tags
+$context['meta_desc'] = get_field('meta_description', $post->id);
+$context['meta_keywords'] = get_field('meta_keywords', $post->id);
+
 $url = '/';
 if(ICL_LANGUAGE_CODE != 'en'){
   $url = $url.ICL_LANGUAGE_CODE.'/';

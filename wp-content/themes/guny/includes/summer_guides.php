@@ -80,6 +80,19 @@ const TAXONOMIES = array(
       'orderby' => 'NAME',
       'hide_empty' => false
     )
+  ),
+  'time' => array(
+    'name' => 'All Times',
+    'single' => 'time',
+    'plural' => 'times',
+    'default' => 'Select a Time', // these need to match
+    'prompt' => 'Select a Time', // these need to match
+    'config' => array(
+      'hierarchical' => true,
+      'depth' => 1,
+      'orderby' => 'NAME',
+      'hide_empty' => false
+    )
   )
 );
 
@@ -238,7 +251,7 @@ function get_filter($slug) {
   // Add the reset filter, the 'All ...' filter needs to be set to something
   // blank in order to show all results.
   array_unshift($filter, array(
-    'slug' => 'all_' . TAXONOMIES[$slug]['slug'],
+    'slug' => 'all_' . $slug,
     'name' => __(TAXONOMIES[$slug]['name'], TRANSLATION_DOMAIN),
     'link' => esc_url(add_query_arg($slug, '', remove_query_arg($slug)))
   ));
@@ -248,7 +261,7 @@ function get_filter($slug) {
 
 /**
  * Get all of the filters defined in the configuration
- * @return [array]                  The collection of filters
+ * @return [array] The collection of filters
  */
 function get_filters() {
   $filters = array();
@@ -262,7 +275,7 @@ function get_filters() {
       $prompt = ($term) ?
         $term -> name : __($value['prompt'], TRANSLATION_DOMAIN);
       // If the query var is there, but blank, use the 'All ...' name
-      $prompt = ($_GET[$key] === '') ?
+      $prompt = (isset($_GET[$key]) && $_GET[$key] === '') ?
         __($value['name'], TRANSLATION_DOMAIN) : $prompt;
       // Use the translated string for the name.
       $value['name'] = __($value['name'], TRANSLATION_DOMAIN);

@@ -1,0 +1,24 @@
+<section class="c-block-list c-block-list--shade o-content-container" id="section-{{ section.slug }}">
+
+  <h2>{{ section.section_title }}</h2> {# translation comes from page content #}
+
+  {% if section.section_text %}
+  <p class="c-block-list__text">{{ section.section_text }}</p> {# translation comes from page content #}
+  {% endif %}
+
+  <div class="c-block-list__inner">
+    {% for events in section.events %}
+    {% set event = function('Templating\\get_latest_recurring_event', events.id, events.count) %}
+    {% for e in event %}
+    <div class="c-block-list__item">
+      {% include ['partials/teaser-' ~ e.post_type ~ '.twig', 'partials/teaser.twig'] with {post: e} %}
+    </div>
+    {% endfor %}
+    {% endfor %}
+  </div>
+
+  <div class="text-center">
+    <a href="{{ events_link }}" class="button--outline button--outline--gray">{{ __('See all events', domain) }}</a>
+  </div>
+
+</section>

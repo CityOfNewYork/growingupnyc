@@ -70,7 +70,7 @@
             {{ filter.name }}
             {% if filter.count %}
               <span class="bg-vivid-orange rounded float-right"
-                    title="{{ filter.count }} {{ item.single }} {% if filter.count == 1 %}{{ __('program available for', domain) }}{% else %}{{ __('programs available for', domain) }}{% endif %} {{ filter.name }}">
+                    title="{{ filter.count }} {% if filter.count == 1 %}{{ __('program available for', domain) }}{% else %}{{ __('programs available for', domain) }}{% endif %} {{ filter.name }}">
                 &nbsp;&nbsp;{{ filter.count }}&nbsp;&nbsp;
               </span>
             {% endif %}

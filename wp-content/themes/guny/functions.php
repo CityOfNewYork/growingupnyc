@@ -520,6 +520,7 @@ $includes = [
   '/includes/guny_term_meta.php', // Add custom meta fields to taxonomies
   '/includes/guny_facetwp.php', // Customize Facet WP output
   '/includes/guny_filter_events.php', // Event filters
+  '/includes/hide_child_events.php', // Hide child events in WP Admin
   '/includes/routing.php', // Routing
   '/includes/search.php', // Search functions
   '/includes/summer_guides.php', // Summer guide functions
@@ -529,7 +530,8 @@ $includes = [
     '/includes/parameters.php', // Parameter functions for templates
     '/includes/flexible_content.php', // Working with ACF Flexible Content
     '/includes/location_description.php', // Date option custom field
-    '/includes/date_options.php' // Date option custom field
+    '/includes/date_options.php', // Date option custom field
+    '/includes/get_latest_recurring_event.php' // Get latest of a recurring event
   ],
   [ // Nyco
     '/vendor/nyco/wp-assets/dist/style.php', // Enqueue functions

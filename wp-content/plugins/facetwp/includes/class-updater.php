@@ -30,6 +30,8 @@ class FacetWP_Updater
                     'slug'      => 'facetwp',
                     'license'   => FWP()->helper->get_license_key(),
                     'host'      => FWP()->helper->get_http_host(),
+                    'wp_v'      => get_bloginfo( 'version' ),
+                    'fwp_v'     => FACETWP_VERSION,
                     'php_v'     => phpversion(),
                 )
             ) );

@@ -96,6 +96,11 @@
     width: 220px;
 }
 
+.facetwp-type-fselect .fs-wrap.fs-disabled .fs-option {
+    opacity: 0.4;
+    cursor: default;
+}
+
 /* Hierarchy */
 
 .facetwp-depth {
@@ -115,6 +120,7 @@
     cursor: pointer;
 }
 
+.facetwp-seo,
 .facetwp-hidden {
     display: none;
 }
@@ -173,7 +179,7 @@
 
 /* Proximity */
 
-#facetwp-location {
+.facetwp-location {
     padding-right: 28px;
 }
 
@@ -210,6 +216,34 @@
 .locate-me.f-reset:before {
     background: url(../images/icon-close.png) no-repeat;
     background-size: 20px 20px;
+}
+
+/* Rating */
+
+.facetwp-stars {
+    float: left;
+    line-height: 1;
+    padding-right: 4px;
+    user-select: none;
+}
+
+.facetwp-star {
+    float: right;
+    cursor: pointer;
+    font-size: 20px;
+    color: #ccc;
+}
+
+.facetwp-star:hover,
+.facetwp-star:hover ~ .facetwp-star,
+.facetwp-star.selected,
+.facetwp-star.selected ~ .facetwp-star {
+    color: #000;
+}
+
+.facetwp-star.selected:hover,
+.facetwp-star.selected:hover ~ .facetwp-star {
+    color: red;
 }
 
 /* CSS animations */

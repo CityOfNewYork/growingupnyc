@@ -15,29 +15,10 @@ class FacetWP_Facet_Dropdown extends FacetWP_Facet
         global $wpdb;
 
         $facet = $params['facet'];
-
-        // Apply filtering (ignore the facet's current selection)
-        if ( isset( FWP()->or_values ) && ( 1 < count( FWP()->or_values ) || ! isset( FWP()->or_values[ $facet['name'] ] ) ) ) {
-            $post_ids = array();
-            $or_values = FWP()->or_values; // Preserve the original
-            unset( $or_values[ $facet['name'] ] );
-
-            $counter = 0;
-            foreach ( $or_values as $name => $vals ) {
-                $post_ids = ( 0 == $counter ) ? $vals : array_intersect( $post_ids, $vals );
-                $counter++;
-            }
-
-            // Return only applicable results
-            $post_ids = array_intersect( $post_ids, FWP()->unfiltered_post_ids );
-        }
-        else {
-            $post_ids = FWP()->unfiltered_post_ids;
-        }
-
-        $post_ids = empty( $post_ids ) ? array( 0 ) : $post_ids;
-        $where_clause = ' AND post_id IN (' . implode( ',', $post_ids ) . ')';
         $from_clause = $wpdb->prefix . 'facetwp_index f';
+
+        // Facet in "OR" mode
+        $where_clause = $this->get_where_clause( $facet );
 
         // Orderby
         $orderby = $this->get_orderby( $facet );
@@ -119,37 +100,6 @@ class FacetWP_Facet_Dropdown extends FacetWP_Facet
         SELECT DISTINCT post_id FROM {$wpdb->prefix}facetwp_index
         WHERE facet_name = '{$facet['name']}' AND facet_value IN ('$selected_values')";
         return facetwp_sql( $sql, $facet );
-    }
-
-
-    /**
-     * Output any admin scripts
-     */
-    function admin_scripts() {
-?>
-<script>
-(function($) {
-    wp.hooks.addAction('facetwp/load/dropdown', function($this, obj) {
-        $this.find('.facet-source').val(obj.source);
-        $this.find('.facet-label-any').val(obj.label_any);
-        $this.find('.facet-parent-term').val(obj.parent_term);
-        $this.find('.facet-orderby').val(obj.orderby);
-        $this.find('.facet-hierarchical').val(obj.hierarchical);
-        $this.find('.facet-count').val(obj.count);
-    });
-
-    wp.hooks.addFilter('facetwp/save/dropdown', function(obj, $this) {
-        obj['source'] = $this.find('.facet-source').val();
-        obj['label_any'] = $this.find('.facet-label-any').val();
-        obj['parent_term'] = $this.find('.facet-parent-term').val();
-        obj['orderby'] = $this.find('.facet-orderby').val();
-        obj['hierarchical'] = $this.find('.facet-hierarchical').val();
-        obj['count'] = $this.find('.facet-count').val();
-        return obj;
-    });
-})(jQuery);
-</script>
-<?php
     }
 
 

@@ -14,6 +14,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="format-detection" content="telephone=no">
   <meta name="mobile-web-app-capable" content="yes">
+  <meta name="description" content="{{meta_desc}}">
+  <meta name="keywords" content="{{meta_keywords}}">
   <link rel="manifest" href="{{theme.path}}/manifest.json">
   <link rel="icon" type="image" href="{{theme.path}}/assets/img/growningup-favicon.png">
   <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{theme.path}}/assets/img/growningup-Icon-App-76x76@3x.png">
@@ -62,12 +64,9 @@
     <div class="o-offcanvas__main">
       {{top_widget}}
       {% block header %}
-
-        {{ custom_switcher }}
-
         <header class="c-banner">
           <div class="o-container">
-            <a href="{{site.url}}" class="c-banner__logo-wrapper"><span class="c-banner__logo">{{site.name}}</span></a>
+            <a href="{{site.url}}" class="c-banner__logo-wrapper c-banner__logo-wrapper{% if not top_widget %}-no-menu{% endif %}"><span class="c-banner__logo c-banner__logo">{{site.name}}</span></a>
             <nav class="c-banner__nav" role="navigation" aria-label="Primary">
               <ul class="o-inline">
 

@@ -15,29 +15,10 @@ class FacetWP_Facet_Radio_Core extends FacetWP_Facet
         global $wpdb;
 
         $facet = $params['facet'];
-
-        // Apply filtering (ignore the facet's current selection)
-        if ( isset( FWP()->or_values ) && ( 1 < count( FWP()->or_values ) || ! isset( FWP()->or_values[ $facet['name'] ] ) ) ) {
-            $post_ids = array();
-            $or_values = FWP()->or_values; // Preserve the original
-            unset( $or_values[ $facet['name'] ] );
-
-            $counter = 0;
-            foreach ( $or_values as $name => $vals ) {
-                $post_ids = ( 0 == $counter ) ? $vals : array_intersect( $post_ids, $vals );
-                $counter++;
-            }
-
-            // Return only applicable results
-            $post_ids = array_intersect( $post_ids, FWP()->unfiltered_post_ids );
-        }
-        else {
-            $post_ids = FWP()->unfiltered_post_ids;
-        }
-
-        $post_ids = empty( $post_ids ) ? array( 0 ) : $post_ids;
-        $where_clause = ' AND post_id IN (' . implode( ',', $post_ids ) . ')';
         $from_clause = $wpdb->prefix . 'facetwp_index f';
+
+        // Facet in "OR" mode
+        $where_clause = $this->get_where_clause( $facet );
 
         // Orderby
         $orderby = $this->get_orderby( $facet );
@@ -60,7 +41,11 @@ class FacetWP_Facet_Radio_Core extends FacetWP_Facet
         $output = $wpdb->get_results( $sql, ARRAY_A );
 
         // Show "ghost" facet choices
-        if ( FWP()->helper->facet_is( $facet, 'ghosts', 'yes' ) && ! empty( FWP()->unfiltered_post_ids ) ) {
+        // For performance gains, only run if facets are in use
+        $show_ghosts = FWP()->helper->facet_is( $facet, 'ghosts', 'yes' );
+        $is_filtered = FWP()->unfiltered_post_ids !== FWP()->facet->query_args['post__in'];
+
+        if ( $show_ghosts && $is_filtered && ! empty( FWP()->unfiltered_post_ids ) ) {
             $raw_post_ids = implode( ',', FWP()->unfiltered_post_ids );
 
             $sql = "
@@ -152,37 +137,6 @@ class FacetWP_Facet_Radio_Core extends FacetWP_Facet
 
 
     /**
-     * Output any admin scripts
-     */
-    function admin_scripts() {
-?>
-<script>
-(function($) {
-    wp.hooks.addAction('facetwp/load/radio', function($this, obj) {
-        $this.find('.facet-source').val(obj.source);
-        $this.find('.facet-parent-term').val(obj.parent_term);
-        $this.find('.facet-orderby').val(obj.orderby);
-        $this.find('.facet-ghosts').val(obj.ghosts);
-        $this.find('.facet-preserve-ghosts').val(obj.preserve_ghosts);
-        $this.find('.facet-count').val(obj.count);
-    });
-
-    wp.hooks.addFilter('facetwp/save/radio', function(obj, $this) {
-        obj['source'] = $this.find('.facet-source').val();
-        obj['parent_term'] = $this.find('.facet-parent-term').val();
-        obj['orderby'] = $this.find('.facet-orderby').val();
-        obj['ghosts'] = $this.find('.facet-ghosts').val();
-        obj['preserve_ghosts'] = $this.find('.facet-preserve-ghosts').val();
-        obj['count'] = $this.find('.facet-count').val();
-        return obj;
-    });
-})(jQuery);
-</script>
-<?php
-    }
-
-
-    /**
      * Output admin settings HTML
      */
     function settings_html() {
@@ -203,17 +157,6 @@ class FacetWP_Facet_Radio_Core extends FacetWP_Facet
             </td>
         </tr>
         <tr>
-            <td><?php _e('Sort by', 'fwp'); ?>:</td>
-            <td>
-                <select class="facet-orderby">
-                    <option value="count"><?php _e( 'Highest Count', 'fwp' ); ?></option>
-                    <option value="display_value"><?php _e( 'Display Value', 'fwp' ); ?></option>
-                    <option value="raw_value"><?php _e( 'Raw Value', 'fwp' ); ?></option>
-                    <option value="term_order"><?php _e( 'Term Order', 'fwp' ); ?></option>
-                </select>
-            </td>
-        </tr>
-        <tr>
             <td>
                 <?php _e('Show ghosts', 'fwp'); ?>:
                 <div class="facetwp-tooltip">
@@ -222,10 +165,10 @@ class FacetWP_Facet_Radio_Core extends FacetWP_Facet
                 </div>
             </td>
             <td>
-                <select class="facet-ghosts">
-                    <option value="no"><?php _e( 'No', 'fwp' ); ?></option>
-                    <option value="yes"><?php _e( 'Yes', 'fwp' ); ?></option>
-                </select>
+                <label class="facetwp-switch">
+                    <input type="checkbox" class="facet-ghosts" />
+                    <span class="facetwp-slider"></span>
+                </label>
             </td>
         </tr>
         <tr>
@@ -237,9 +180,20 @@ class FacetWP_Facet_Radio_Core extends FacetWP_Facet
                 </div>
             </td>
             <td>
-                <select class="facet-preserve-ghosts">
-                    <option value="no"><?php _e( 'No', 'fwp' ); ?></option>
-                    <option value="yes"><?php _e( 'Yes', 'fwp' ); ?></option>
+                <label class="facetwp-switch">
+                    <input type="checkbox" class="facet-preserve-ghosts" />
+                    <span class="facetwp-slider"></span>
+                </label>
+            </td>
+        </tr>
+        <tr>
+            <td><?php _e('Sort by', 'fwp'); ?>:</td>
+            <td>
+                <select class="facet-orderby">
+                    <option value="count"><?php _e( 'Highest Count', 'fwp' ); ?></option>
+                    <option value="display_value"><?php _e( 'Display Value', 'fwp' ); ?></option>
+                    <option value="raw_value"><?php _e( 'Raw Value', 'fwp' ); ?></option>
+                    <option value="term_order"><?php _e( 'Term Order', 'fwp' ); ?></option>
                 </select>
             </td>
         </tr>

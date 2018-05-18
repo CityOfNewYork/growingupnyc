@@ -6,14 +6,6 @@
 
 $context = Timber::get_context();
 
-$context['custom_switcher'] = Timber::compile(
-  array('partials/language-switcher.twig'),
-  array(
-    'languages' => Wpml\get_wpdb_languages(),
-    'current' => ICL_LANGUAGE_CODE
-  )
-);
-
 // pre_dump($context['request']->get);
 
 $context['posts'] = Timber::get_posts();

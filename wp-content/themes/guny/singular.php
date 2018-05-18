@@ -77,10 +77,19 @@ $context['post'] = $post;
 $context['shareAction'] = admin_url( 'admin-ajax.php' );
 $context['shareHash'] = \SMNYC\hash($post->link);
 
+// top menu widget
+$context['top_widget'] = Timber::get_widgets('top_widget');
+
+// meta tags
+$context['meta_desc'] = get_field('meta_description', $post->id);
+$context['meta_keywords'] = get_field('meta_keywords', $post->id);
+
 $url = '/';
 if(ICL_LANGUAGE_CODE != 'en'){
   $url = $url.ICL_LANGUAGE_CODE.'/';
 }
-$context['eventslink'] = $url.'events';
-$context['programslink'] = $url.'programs';
+
+$context['eventslink'] = get_post_type_archive_link('tribe_events');
+$context['programslink'] = get_post_type_archive_link('program');
+
 Timber::render( $templates, $context );

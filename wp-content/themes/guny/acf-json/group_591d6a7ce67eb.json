@@ -7,6 +7,7 @@
             "label": "Title",
             "name": "inspiration_landing_title",
             "type": "text",
+            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -26,6 +27,7 @@
             "label": "Tagline",
             "name": "inspiration_landing_tagline",
             "type": "text",
+            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -41,11 +43,52 @@
             "maxlength": ""
         },
         {
-            "key": "field_5951e95d41775",
+            "key": "field_59548c2b8d8b8",
             "label": "Other Inspirations Title",
             "name": "other_inspirations_title",
             "type": "text",
+            "value": null,
             "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5af5de3a0c4a3",
+            "label": "Meta Description",
+            "name": "inspiration_landing_meta_desc",
+            "type": "text",
+            "value": null,
+            "instructions": "Enter a description for the Inspirations landing page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5af5de4b0c4a4",
+            "label": "Meta Keywords",
+            "name": "inspiration_landing_meta_keywords",
+            "type": "text",
+            "value": null,
+            "instructions": "Enter keywords for the Inspirations landing page, separated by commas.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -76,6 +119,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "modified": 1498540396
+    "description": ""
 }

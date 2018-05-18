@@ -88,7 +88,7 @@ class FacetWP_Facet_Hierarchy extends FacetWP_Facet
         ORDER BY $orderby";
 
         $results = $wpdb->get_results( $sql, ARRAY_A );
-        $new_depth = $output[ count( $output ) - 1 ]['depth'] + 1;
+        $new_depth = empty( $output ) ? 0 : $output[ count( $output ) - 1 ]['depth'] + 1;
 
         foreach ( $results as $result ) {
             $result['depth'] = $new_depth;
@@ -175,31 +175,6 @@ class FacetWP_Facet_Hierarchy extends FacetWP_Facet
         SELECT DISTINCT post_id FROM {$wpdb->prefix}facetwp_index
         WHERE facet_name = '{$facet['name']}' AND facet_value IN ('$selected_values')";
         return facetwp_sql( $sql, $facet );
-    }
-
-
-    /**
-     * Output any admin scripts
-     */
-    function admin_scripts() {
-?>
-<script>
-(function($) {
-    wp.hooks.addAction('facetwp/load/hierarchy', function($this, obj) {
-        $this.find('.facet-source').val(obj.source);
-        $this.find('.facet-orderby').val(obj.orderby);
-        $this.find('.facet-count').val(obj.count);
-    });
-
-    wp.hooks.addFilter('facetwp/save/hierarchy', function(obj, $this) {
-        obj['source'] = $this.find('.facet-source').val();
-        obj['orderby'] = $this.find('.facet-orderby').val();
-        obj['count'] = $this.find('.facet-count').val();
-        return obj;
-    });
-})(jQuery);
-</script>
-<?php
     }
 
 

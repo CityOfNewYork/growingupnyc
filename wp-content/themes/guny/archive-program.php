@@ -7,10 +7,15 @@
 */
 $context = Timber::get_context();
 $context['posts'] = facetwp_display('template', 'programs');
+$context['top_widget'] = Timber::get_widgets('top_widget');
 $context['pagination'] = facetwp_display('pager');
 $context['facet_program_type'] = facetwp_display( 'facet', 'program_type' );
 $context['facet_ages'] = facetwp_display( 'facet', 'ages' );
 $templates = array( 'list-program.twig', 'list.twig' );
+
+// meta tags
+$context['meta_desc'] = get_field('program_landing_meta_desc', 'option');
+$context['meta_keywords'] = get_field('program_landing_meta_keywords', 'option');
 
 // check the language
 $context['language'] = ICL_LANGUAGE_CODE;

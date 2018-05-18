@@ -76,6 +76,18 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   }
 }
 
+// if there is no language switcher
+.c-banner__logo-wrapper-no-menu {
+  top: 0;
+  @include media($bp-small) {
+    height: rem-calc(80);
+  }
+
+  @include media($bp-medium) {
+    height: rem-calc(144);
+  }
+}
+
 // Banner Logo
 .c-banner__logo {
   // @include image-replace('/wp-content/themes/guny/assets/img/logo-gunyc-color@150px.png');

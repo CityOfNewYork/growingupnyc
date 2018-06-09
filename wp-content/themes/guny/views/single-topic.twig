@@ -38,7 +38,7 @@
           {% for top in post.get_field('page_top') %}
             {% if loop.index != 1 %}
             <li class="c-nav-list__item">
-              <a href="#{{top.page_top_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" data-section="{{top.page_top_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" class="js-section c-nav-list__link">{{top.page_top_content_heading}}<svg aria-hidden="true" class="o-accordion__caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+              <a href="#{{top.page_top_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" data-section="{{top.page_top_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" class="js-section c-nav-list__link">{{top.page_top_content_heading}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></a>
             </li>
             {% endif %}
           {% endfor %}

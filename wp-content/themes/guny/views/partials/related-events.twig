@@ -7,14 +7,12 @@
   {% endif %}
 
   <div class="c-block-list__inner">
-    {% set events = function('Templating\\get_latest_recurring_event', section.events) %}
+    {% set events = function('Templating\\get_related_events', section.events) %}
     {% for e in events %}
     <div class="c-block-list__item">
-      {{e[0].post_type}}
       {% include ['partials/teaser-' ~ e.post_type ~ '.twig', 'partials/teaser.twig'] with {post: e} %}
     </div>
     {% endfor %}
-
   </div>
 
   <div class="text-center">

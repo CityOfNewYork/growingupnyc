@@ -11,9 +11,9 @@ use GunyEvent;
  * @return array           Collection of posts, false if tribe_events are disabled
  */
 
+// get the related events
 function get_related_events($section_events) {
-  // empty array for events
-  $events=array();
+  $events=array(); // empty array for events
   if (!function_exists('tribe_get_events')) return false;
   
   // loop through each event
@@ -23,7 +23,7 @@ function get_related_events($section_events) {
 
     // Recurring
     if (tribe_is_recurring_event($ID)) {
-      // not parent
+      // get id of parent if not parent
       if(wp_get_post_parent_id($ID) !== 0) {
         $ID = wp_get_post_parent_id($ID);
       }
@@ -32,13 +32,14 @@ function get_related_events($section_events) {
       $event=get_single_event($ID);
       array_push($events, tribe_get_events($event)[0]);
 
-      if($event && $count > 1 ){
+      // get the other events in the series based on count
+      if($event && $count > 0 ){
         $recurring_events = get_latest_recurring_event($ID, $count);
         foreach ($recurring_events as &$recurring_event) {
           array_push($events, $recurring_event);
         }
       } 
-    } else{ //not recurring
+    } else { //not recurring
       $event = get_single_event($ID);
       if(tribe_get_events($event)){
         array_push($events, tribe_get_events($event)[0]);          
@@ -50,14 +51,22 @@ function get_related_events($section_events) {
   usort($events, function($a, $b) { 
     return strcmp($a->EventStartDate, $b->EventStartDate); 
   });
-  
+
+  // create the complete events array 
   foreach($events as $i => $event) {
-    $events[$i] = new GunyEvent($events[$i]);
+    if( $events[$i] !== NULL ){
+      $events[$i] = new GunyEvent($events[$i]);
+    }else{
+      // remove empty indices
+      unset($events[$i]);
+    }
   }
+
   return $events;
 }
 
-function get_latest_recurring_event($event_id, $number = 1) {
+// get the events in the series based on count
+function get_latest_recurring_event($event_id, $number = 1) {  
   // get the ids of the parent's children events
   $events = tribe_get_events(array(
     'post_parent' => $event_id,
@@ -67,21 +76,31 @@ function get_latest_recurring_event($event_id, $number = 1) {
     'posts_per_page' => $number,
     'start_date' => date('Y-m-d H:i:s')
   ));
+
   return $events;
 }
 
+// get the single, one-off events
 function get_single_event($event_id) {
-    $event = array(
-      'p' => $event_id,
-      'eventDisplay' => 'list',
-      'meta_query'=> array(
-        array(
-          'key' => '_EventStartDate',
-          'compare' => '>=', 
-          'value' => date('Y-m-d H:i:s'),
-          'type' => 'DATE'
-        )
+  $event = array(
+    'p' => $event_id,
+    'eventDisplay' => 'list',
+    'meta_query'=> array(
+      'relation' => 'AND',
+      array(
+        'key' => '_EventStartDate',
+        'compare' => '>=', 
+        'value' => date('Y-m-d H:i:s'),
+        'type' => 'DATE'
+      ),
+      array(
+        'key' => '_EventEndDate',
+        'compare' => '>=', 
+        'value' => date('Y-m-d H:i:s'),
+        'type' => 'DATE'
       )
-    );
+    )
+  );
+
   return $event;
 }

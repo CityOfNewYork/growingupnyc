@@ -420,8 +420,13 @@
       border-color: $purple;
     }
 
-    @include media($bp-x-small) {
-      padding-right: 28px !important;
+    .icon--caret {
+      height: rem-calc(22);
+      top: 50%;
+      margin-top: rem-calc(-11);
+      position: absolute;
+      right: rem-calc(14);
+      width: rem-calc(22);
     }
   }
 }

@@ -419,6 +419,10 @@
       background-color: $purple;
       border-color: $purple;
     }
+
+    @include media($bp-x-small) {
+      padding-right: 28px !important;
+    }
   }
 }
 

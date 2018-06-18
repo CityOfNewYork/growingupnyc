@@ -1,8 +1,2 @@
-test:
-  GOOGLE_ANALYTICS: 'UA-120627310-3'
-
 development:
-  SOME_VAR: someVarHere
-
-production:
-  SOME_VAR: someVarHere
+  GOOGLE_ANALYTICS: UA-120627310-3

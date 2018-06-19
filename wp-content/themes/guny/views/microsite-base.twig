@@ -41,7 +41,9 @@
   {{ function('Nyco\\Enqueue\\style', 'default') }}
   {{ function('Nyco\\Enqueue\\style', 'microsite') }}
   {{ function('wp_head') }}
-  {% block head_extras %}{% endblock %}
+  {% block head_scripts %}
+    {% include 'partials/scripts-google-analytics.twig' %}
+  {% endblock %}
 </head>
 
 <body class="{{body_class}}" data-template="base.twig">

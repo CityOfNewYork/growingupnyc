@@ -452,18 +452,19 @@ function my_acf_google_map_api( $api ){
 add_filter('acf/fields/google_map/api', 'my_acf_google_map_api');
 //End of the codes Amalan
 
-// Titles for Generation NYC pages - Topics, Inspirations, Trips
-function change_generation_title( $title ){
+// Replacing default titles
+function guny_titles( $title ){
   $gen_pages = array("generationnyc", "trips", "topics", "inspirations");
   $_post = get_queried_object();
-  // if this is a single page
+  // Generation single pages
   $page_type = explode("/", trim(parse_url(get_permalink(), PHP_URL_PATH), "/"));
   if ( !is_front_page() && is_single() && in_array($page_type[0], $gen_pages) ) {
     $title = $_post->post_title . ' - ' . 'Generation NYC';
   }
-  // if this is a landing page
+  // Generation Landings
+  // TO-EDIT: add landings as pages
   if ( !is_front_page() && !is_single() && in_array($page_type[0], $gen_pages) ) {
-    if ( $page_type[0] == "generationnyc" && count($page_type)<2){
+    if ( $page_type[0] == "generationnyc" && count($page_type) < 2){
       $title = "Generation NYC";
     }elseif ( $page_type[1] == "inspirations"){
       $title = "Inspirations" . ' - ' . 'Generation NYC';
@@ -472,11 +473,14 @@ function change_generation_title( $title ){
     }elseif( $page_type[1] == "trips"){
       $title = "Trips" . ' - ' . 'Generation NYC';
     }
+  }else if(is_single() && get_post_type() == "program"){
+    // set the title to the program name instead of plain language
+    $title=$_post->program_name . ' - ' . get_bloginfo('name', 'display');
   }
   return $title;
 }
-add_filter( 'pre_get_document_title', 'change_generation_title', 999, 1 );
-// end generation titles
+add_filter( 'pre_get_document_title', 'guny_titles', 999, 1 );
+// End of guny_titles
 
 
 // add validation on cta phone number on topics page

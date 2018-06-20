@@ -13,9 +13,6 @@ wp-content/advanced-cache.php
 wp-content/wp-cache-config.php
 wp-content/cache/*
 wp-content/cache/supercache/*
-wp-content/cache/supercache/*
-wp-content/mu-plugins/config/config.yml
-
 
 # Docker Image Adds #
 #####################

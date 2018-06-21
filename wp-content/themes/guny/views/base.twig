@@ -37,7 +37,8 @@
   </script>
   {{ function('Nyco\\Enqueue\\style', 'default') }}
   {{ function('wp_head') }}
-  {% block head_scripts %}
+  {% block head_extras %}{% endblock %}
+  {% block scripts_head %}
     {% include 'partials/scripts-google-analytics.twig' %}
   {% endblock %}
 </head>

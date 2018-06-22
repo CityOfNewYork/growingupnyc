@@ -54,8 +54,8 @@ if (file_exists($path . 'config.yml')) {
         if (!in_array($name, PROTECT)) {
           $decrypted = ($secret) ? $encrypter->decrypt($value) : $value;
           putenv("$name=$decrypted");
-          $_ENV[$name] = getenv($name);
-          define($name, getenv($name));
+          $_ENV[$name] = $decrypted;
+          define($name, $decrypted);
         }
       }
     }

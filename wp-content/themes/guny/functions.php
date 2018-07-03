@@ -511,6 +511,10 @@ function my_acf_validate_cta_button_phone( $valid, $value){
 }
 // end add validation
 
+// get the environment variable from config
+function get_env($value){
+  return $_ENV[$value];
+}
 
 /**
  * Includes

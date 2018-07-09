@@ -1,8 +1,5 @@
 <?php
 
-// Environments
-require_once(get_template_directory() . '/config/environments.php');
-
 // Notifications
 require_once(get_template_directory() . '/includes/notifications.php');
 

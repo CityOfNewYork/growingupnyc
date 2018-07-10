@@ -55,6 +55,7 @@
   },
   "dependencies": {
     "animate.scss": "0.0.6",
+    "axios": "^0.18.0",
     "bourbon": "^4.2.7",
     "bourbon-neat": "^1.8.0",
     "cleave.js": "^0.7.23",

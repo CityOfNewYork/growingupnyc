@@ -4,28 +4,31 @@
 * Expose custom fields to the rest api
 */
 
-add_filter('register_post_type_args', 'events_to_rest', 10, 2);
-function events_to_rest($args, $post_type){
-  if ($post_type == 'tribe_events'){
-    $args['show_in_rest'] = true;
-  }
+// Exposing custom fields and taxonomy to tribe/events endpoint
+add_filter( 'tribe_rest_event_data', 'get_rest_events_fields' );
+function get_rest_events_fields( array $event_data ) {
+  $event_id = $event_data['id'];
 
-  return $args;
-}
-
-function events_meta_to_rest() {
-	register_rest_field( 
-		'tribe_events',
-		'meta',
-		array(
-			'get_callback'    => 'get_events_meta',
-			'update_callback' => null,
-			'schema'          => null
-		)
+  $fields = array(
+		'featured_event',
+		'accessibility',
+		'summary',
+		'event_photo',
+		'location_details'
 	);
-}
-add_action( 'init', 'events_meta_to_rest' );
+  
+  foreach ($fields as &$field) { 
+    $event_data[$field] = get_post_meta( $event_id, $field, true );
+	}
 
-function get_events_meta( $object, $field_name, $request ) {
-	return get_post_meta($object['id']);
+	$taxonomies = array(
+		'age_group',
+		'borough',
+	);
+
+	foreach ($taxonomies as &$taxonomy) { 
+    $event_data[$taxonomy] = wp_get_post_terms( $event_id, $taxonomy );
+	}
+
+  return $event_data;
 }

@@ -513,6 +513,34 @@ function get_env($value){
   return $_ENV[$value];
 }
 
+function slug_register_venue_latlng() {
+  // echo '<pre>here</pre>';
+    register_rest_field( 'tribe_venue','latlng',
+        array(
+            'get_callback'    => 'slug_get_venue_latlng',
+            'schema'          => null
+        )
+    );
+}
+add_action( 'rest_api_init', 'slug_register_venue_latlng' );
+ 
+function slug_get_venue_latlng( $object, $field_name, $request ) {
+ 
+    $postId = $object[ 'id' ];
+ 
+        // Check if lat/lng exists for the venue post, otherwise, use zero.
+    if ( class_exists( 'Tribe__Events__Pro__Geo_Loc' ) ) {
+        $output[ 'lat' ] = (float) get_post_meta( $postId, Tribe__Events__Pro__Geo_Loc::LAT, true );
+        $output[ 'lng' ] = (float) get_post_meta( $postId, Tribe__Events__Pro__Geo_Loc::LNG, true );
+    } else {
+        $output = array(
+            'lat' => 0,
+            'lng' => 0
+        );
+    }
+    return $output;
+}
+
 /**
  * Includes
  */
@@ -529,6 +557,7 @@ $includes = [
   '/includes/routing.php', // Routing
   '/includes/search.php', // Search functions
   '/includes/summer_guides.php', // Summer guide functions
+  '/includes/guny_rest.php', // expose fields to rest API
   [ // Templating
     '/includes/get_focal_point.php', // Focal point functions
     '/includes/format_posts.php', // Format posts based on their type

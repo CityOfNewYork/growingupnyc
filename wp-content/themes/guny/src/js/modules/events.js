@@ -2,8 +2,6 @@
 import _ from 'underscore';
 import Vue from 'vue/dist/vue.common';
 import axios from 'axios';
-// import EventsFilter from 'events';
-
 
 class EventsList {
 

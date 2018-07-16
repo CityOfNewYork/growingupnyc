@@ -16,21 +16,29 @@
 {% endblock %}
 
 {% block list_sidebar %}
-  {# Event List Filters #}
   <div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
 
+    {# event categories #}
     <div class="c-list-box__item">
       <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{current_event_filter}}</h3>
       <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
         <li><a href="{{all_events.link}}" class="c-list-box__subitem">{{all_events.name}}</a></li>
         {% for event_type in event_filter %}
-        {# <li class="{{event_type.slug}}"><a href="{{event_type.link}}" class="c-list-box__subitem">{{event_type.name}}</a></li> #}
-        <li><a href="{{event_type.link}}" class="c-list-box__subitem">{{event_type.name}}</a></li>
+        <li><a href="{{event_type.id}}" class="c-list-box__subitem" 
+          v-on:click.prevent="getSelected">{{event_type.name}}</a></li>
         {% endfor %}
       </ul>
     </div>
 
-    <div class="c-list-box__item">
+    {# <div class="c-list-box__item">
+      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">All Event Types</h3>
+      <ul class="js-accordion__content c-list-box__content" id="type-filter-panel" v-for="event_type in eventsCat">
+          <li><a href="{{event_type.link}}" class="c-list-box__subitem">v{ event_type }</a></li>
+      </ul>
+    </div> #}
+
+    {# age group categories #}
+    {# <div class="c-list-box__item">
       <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{current_age_filter}}</h3>
       <ul class="js-accordion__content c-list-box__content" id="age-filter-panel">
         <li><a href="{{all_ages.link}}" class="c-list-box__subitem">{{all_ages.name}}</a></li>
@@ -38,9 +46,10 @@
         <li><a href="{{age.link}}" class="c-list-box__subitem">{{age.name}}</a></li>
         {% endfor %}
       </ul>
-    </div>
+    </div> #}
 
-    <div class="c-list-box__item">
+    {# borough categories #}
+   {#  <div class="c-list-box__item">
       <h3 class="js-accordion__header c-list-box__heading" id="borough-filter-heading">{{current_borough_filter}}</h3>
       <ul class="js-accordion__content c-list-box__content" id="borough-filter-panel">
         <li><a href="{{all_boroughs.link}}" class="c-list-box__subitem">{{all_boroughs.name}}</a></li>
@@ -49,8 +58,9 @@
         {% endfor %}
       </ul>
     </div>
-
+ #}
   </div>
+{# </div> #}
 {% endblock %}
 
 {% block before_list %}
@@ -77,40 +87,48 @@
 
   </h2>
 
-  {# Event List #}
-  {% for event in event_list %}
-
-  <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
-    <h3>{{ event.date_header }}</h3>
-    {% for post in event.posts %}
+  {# events cards #}
+  <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" v-for="post in events">
+    <h3>v{ post.start_date }</h3>
     <div class="c-block-list__item">
-      {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
+      <div class="c-card c-card--subtitle-first">
+        <a :href="post.url">
+        <div class="c-card__sticker sticker {% block classes_sticker %}{% endblock %}" aria-hidden="true">
+          v{post.start_date}
+        </div>
+        <h3 class="c-card__title">
+          <a :href="post.url" :title="post.title" rel="bookmark">
+            v{ post.title }
+          </a>
+        </h3>
+        <div class="c-card__subtitle">
+          <svg role="img" class="icon--xxsmall"><title>Time:</title><use xlink:href="#icon-clock-o"></use></svg>
+          {# TODO Add all day #}
+          <span class="nowrap">
+            v{ post.start_date_details.hour}:v{ post.start_date_details.minutes}
+          </span>
+          - <span class="nowrap">
+            v{ post.end_date_details.hour}:v{ post.end_date_details.minutes}
+          </span>
+        </div>
+        <div class="c-card__tags" v-if="post.categories">
+          <span v-for="term in post.categories"> 
+              <a :href="term.slug" class="button--pill button--pill--alt">v{ term.name }</a>
+            </span>
+        </div>
+        <div class="c-card__body">
+          v{ post.excerpt }
+        </div>
+        <p class="c-card__link" v-if="post.venue">
+          <svg role="img" class="icon--xxsmall"><use xlink:href="#icon-map-marker"></use></svg><a href="{{post.google_map_link}}" target="_blank">
+          v{ post.venue.venue },
+          v{ post.venue.city }
+          </a>
+        </p>
+      </a>
+
+      </div>
     </div>
-    {% endfor %}
-  </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-sm-gutter -->
+  </section>
 
-  {% else %}
-
-  <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-sm-gutter">
-    <p class="type--no-results">
-      {{ __('No events found for those filter options. Check for similar events in', 'guny-events') }} <a href="{{next_month_url}}" rel="next">{{next_month_text}}</a> {{ __('or', 'guny-events') }} <a href="{{reset_filters_url}}">{{ __('reset your filters', 'guny-events') }}</a>.</p>
-  </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-sm-gutter -->
-
-  {% endfor %}
-{% endblock %}
-
-{% block after_list %}
-  {{function('do_action', 'tribe_events_after_template')}}
-
-  <div class="o-content-container--compact">
-
-    {% if prev_url %}
-    <a href="{{prev_url}}" class="button--outline button--outline--gray alignleft">{{ __('Previous', 'guny') }}</a>
-    {% endif %}
-
-    {% if next_url %}
-    <a href="{{next_url}}" class="button--outline button--outline--gray alignright">{{ __('Next', 'guny') }}</a>
-    {% endif %}
-
-  </div>
 {% endblock %}

@@ -32,3 +32,66 @@ function get_rest_events_fields( array $event_data ) {
 
   return $event_data;
 }
+
+//###########################################
+// AGE GROUPS
+add_action( 'rest_api_init', 'register_age_group_route');
+function register_age_group_route() {
+	register_rest_route( 'tribe/events/v1', 'age_group', array(
+	    'methods'  => WP_REST_Server::READABLE,
+	    'callback' => 'get_event_age_groups',
+	    'args' => array(
+	    	'term_id' => array(
+	    		'type' => 'integer'
+	    	)
+	    )
+	));
+
+	// single age_group
+	register_rest_route( 'tribe/events/v1', 'age_group/(?P<id>\d+)', array(
+    'methods'  => WP_REST_Server::READABLE,
+    'callback' => 'get_single_age_group',
+	));
+}
+
+function get_event_age_groups() {
+
+	$categories = get_terms( array(
+    'taxonomy' => 'age_group',
+    'hide_empty' => false,
+	) );
+
+	$age_group['total'] = count($categories);
+	$age_group['age_group'] = $categories;
+
+	return $age_group;
+}
+
+function get_single_age_group($age_group) {
+
+	return get_term($age_group['id']);
+}
+
+
+//###########################################
+// BOROUGHS
+add_action( 'rest_api_init', 'register_borough_route');
+function register_borough_route() {
+	register_rest_route( 'tribe/events/v1', 'borough', array(
+	    'methods'  => WP_REST_Server::READABLE,
+	    'callback' => 'get_event_boroughs',
+	));
+}
+
+function get_event_boroughs() {
+
+	$categories = get_terms( array(
+    'taxonomy' => 'borough',
+    'hide_empty' => false,
+	) );
+
+	$borough['total'] = count($categories);
+	$borough['borough'] = $categories;
+
+	return $borough;
+}

@@ -19,20 +19,63 @@
 {% endblock %}
 
 {% block list_sidebar %}
-<ol class="c-list-box c-list-box--quaternary facetwp-guny" data-multiselectable="false">
-  {{facet_program_type}}
-  {{facet_ages}}
-</ol>
+  <div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
+
+    {# categories #}
+    <div class="c-list-box__item">
+      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">All Program Types</h3>
+      <ul class="js-accordion__content c-list-box__content" id="type-filter-panel" v-for="category in categories">
+        <li><a :href="category.id" class="c-list-box__subitem" v-on:click.prevent="getSelectedCat">v{ category.name }</a></li>
+      </ul>
+    </div>
+
+    {# age groups #}
+    <div class="c-list-box__item">
+      <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">All Ages</h3>
+      <ul class="js-accordion__content c-list-box__content" id="age-filter-panel" v-for="age in ages">
+        <li><a :href="age.id" class="c-list-box__subitem" v-on:click.prevent="getSelectedAge">v{ age.name }</a></li>
+      </ul>
+    </div>
+
+
+  </div>
 {% endblock %}
 
 {% block post_list %}
+
 <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
-  {{posts}}
+  <div class="c-block-list__item u-sm-gutter" v-for="post in programs">
+    <div class="c-card {{is_first ? "c-card--hero #{age_group.slug|sanitize|replace({'-es':''})}-gradient"}}">
+      <a :href="post.link">
+        <div class="c-card__sticker sticker" aria-hidden="true">
+          <svg class="icon--large"><title>{{ category.name }}</title><use xlink:href="#icon-{{ category.slug|replace({'-es':''}) }}"></use></svg>
+        </div>
+      </a>
+      <h3 class="c-card__title">
+        <a :href="post.link" :title="post.title" rel="bookmark">
+          v{ post.title.rendered }
+        </a>
+      </h3>
+      <div class="c-card__subtitle">
+        <p><strong>v{post.acf.program_name}</strong></p>
+        <p>v{post.acf.government_agency}</p>
+      </div>
+      <div class="c-card__tags" v-if="post.programs_cat">
+        <span v-for="term in post.programs_cat"> 
+          <a :href="term" class="button--pill">v{ term }</a>
+        </span>
+        <span v-for="term in post.age_group"> 
+          <a :href="term.slug" class="button--pill button--pill--alt">v{ term }</a>
+        </span>
+      </div>
+      <div class="c-card__body">
+        v{ post.excerpt.rendered }
+      </div>
+
+
+    </div>
+  </div>
 </section>
+
 {% endblock %}
 
-{% block after_list %}
-<div class="o-content-container--compact">
-  {{pagination}}
-</div>
-{% endblock %}

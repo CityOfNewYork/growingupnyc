@@ -95,3 +95,26 @@ function get_event_boroughs() {
 
 	return $borough;
 }
+
+//###########################################
+// PROGRAMS
+// register routes and fields for programs rest endpoint
+add_action( 'rest_api_init', 'register_rest_programs_routes' );
+function register_rest_programs_routes() {
+ 
+  register_rest_field( 'program', 'age_group', array(
+   'get_callback'    => 'get_rest_program_age_groups',
+   'schema'          => null,
+	));
+}
+ 
+function get_rest_program_age_groups( $object ) {
+  $post_id = $object['id'];
+ 
+  return wp_get_post_terms( $post_id, 'age_group' );
+}
+
+
+
+
+

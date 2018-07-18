@@ -67,20 +67,17 @@ ProgramsList.getPrograms = function() {
 // get the post category based on user selection
 ProgramsList.getSelectedCat = function(event) {
   let cat_id = event.target.getAttribute('href');
-  console.log(cat_id);
   this.category = cat_id;
 }
 
 // get the age group based on the user selection
 ProgramsList.getSelectedAge = function(event) {
   let age_id = event.target.getAttribute('href');
-  console.log(age_id);
   this.age = age_id;
 }
 
 // get the categories for the filter
 ProgramsList.getCategories = function() {
-  console.log(this.categoriesURL);
   axios
   .get(this.categoriesURL)
   .then(response => (this.categories = response.data))
@@ -89,7 +86,6 @@ ProgramsList.getCategories = function() {
 
 // get the categories for the filter
 ProgramsList.getAges = function() {
-  console.log(this.agesURL);
   axios
   .get(this.agesURL)
   .then(response => (this.ages = response.data))

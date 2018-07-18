@@ -25,7 +25,7 @@
     <div class="c-list-box__item">
       <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">All Program Types</h3>
       <ul class="js-accordion__content c-list-box__content" id="type-filter-panel" v-for="category in categories">
-        <li><a :href="category.id" class="c-list-box__subitem" v-on:click.prevent="getSelectedCat">v{ category.name }</a></li>
+        <li><a :href="category.term_id" class="c-list-box__subitem" v-on:click.prevent="getSelectedCat">v{ category.name }</a></li>
       </ul>
     </div>
 
@@ -48,7 +48,7 @@
     <div class="c-card {{is_first ? "c-card--hero #{age_group.slug|sanitize|replace({'-es':''})}-gradient"}}">
       <a :href="post.link">
         <div class="c-card__sticker sticker" aria-hidden="true">
-          <svg class="icon--large"><title>{{ category.name }}</title><use xlink:href="#icon-{{ category.slug|replace({'-es':''}) }}"></use></svg>
+          <svg class="icon--large"><title>v{ post.programs_cat[0].slug }</title><use :href="'#icon-' + post.programs_cat[0].slug" ></use></svg>
         </div>
       </a>
       <h3 class="c-card__title">
@@ -70,6 +70,7 @@
       </div>
       <div class="c-card__body">
         v{ post.excerpt.rendered }
+        
       </div>
 
 

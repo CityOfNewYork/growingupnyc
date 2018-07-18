@@ -99,22 +99,69 @@ function get_event_boroughs() {
 //###########################################
 // PROGRAMS
 // register routes and fields for programs rest endpoint
-add_action( 'rest_api_init', 'register_rest_programs_routes' );
-function register_rest_programs_routes() {
- 
+add_action( 'rest_api_init', 'register_rest_programs' );
+function register_rest_programs() {
   register_rest_field( 'program', 'age_group', array(
    'get_callback'    => 'get_rest_program_age_groups',
    'schema'          => null,
+	));
+
+	register_rest_field( 'program', 'programs_cat', array(
+   'get_callback'    => 'get_rest_program_cat',
+   'schema'          => null,
+	));
+
+
+	register_rest_route( 'wp/v2', 'programs_cat', array(
+	    'methods'  => WP_REST_Server::READABLE,
+	    'callback' => 'get_rest_programs_groups',
+	    'args' => array(
+	    	'term_id' => array(
+	    		'type' => 'integer'
+	    	)
+	    )
 	));
 }
  
 function get_rest_program_age_groups( $object ) {
   $post_id = $object['id'];
+
+  $terms = wp_get_post_terms( $post_id, 'age_group' );
+
+  foreach ($terms as &$term) { 
+	  $term->name = htmlspecialchars_decode($term->name);
+  }
  
-  return wp_get_post_terms( $post_id, 'age_group' );
+  return $terms;
 }
 
+function get_rest_program_cat( $object ) {
+  $post_id = $object['id'];
 
+  $terms = wp_get_post_terms( $post_id, 'programs_cat' );
 
+  foreach ($terms as &$term) { 
+	  $term->name = htmlspecialchars_decode($term->name);
+  }
+   
+  return $terms;
+}
 
+function get_rest_programs_groups() {
+	$terms = get_terms( array(
+    'taxonomy' => 'programs_cat',
+    'hide_empty' => true,
+	) );
 
+	$terms_cleaned = clean_terms($terms);
+
+	return $terms_cleaned;
+}
+
+// decode those tricky
+function clean_terms($terms_array) {
+	foreach ($terms_array as &$term) { 
+	  $term->name = htmlspecialchars_decode($term->name);
+  }
+  return $terms_array;
+}

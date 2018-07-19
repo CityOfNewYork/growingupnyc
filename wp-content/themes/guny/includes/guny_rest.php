@@ -154,11 +154,18 @@ function get_rest_programs_groups() {
 	) );
 
 	$terms_cleaned = clean_terms($terms);
+	usort($terms_cleaned, "sort_alpha");
 
 	return $terms_cleaned;
 }
 
-// decode those tricky
+function sort_alpha($a, $b)
+{
+  return strcmp($a->name, $b->name);
+}
+
+
+// decode special characters
 function clean_terms($terms_array) {
 	foreach ($terms_array as &$term) { 
 	  $term->name = htmlspecialchars_decode($term->name);

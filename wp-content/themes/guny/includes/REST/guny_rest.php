@@ -27,7 +27,7 @@ function get_rest_events_fields( array $event_data ) {
 	);
 
 	foreach ($taxonomies as &$taxonomy) { 
-    $event_data[$taxonomy] = wp_get_post_terms( $event_id, $taxonomy );
+    $event_data[$taxonomy.'_cat'] = wp_get_post_terms( $event_id, $taxonomy );
 	}
 
   return $event_data;
@@ -72,7 +72,6 @@ function get_single_age_group($age_group) {
 	return get_term($age_group['id']);
 }
 
-
 //###########################################
 // BOROUGHS
 add_action( 'rest_api_init', 'register_borough_route');
@@ -94,81 +93,4 @@ function get_event_boroughs() {
 	$borough['borough'] = $categories;
 
 	return $borough;
-}
-
-//###########################################
-// PROGRAMS
-// register routes and fields for programs rest endpoint
-add_action( 'rest_api_init', 'register_rest_programs' );
-function register_rest_programs() {
-  register_rest_field( 'program', 'age_group', array(
-   'get_callback'    => 'get_rest_program_age_groups',
-   'schema'          => null,
-	));
-
-	register_rest_field( 'program', 'programs_cat', array(
-   'get_callback'    => 'get_rest_program_cat',
-   'schema'          => null,
-	));
-
-
-	register_rest_route( 'wp/v2', 'programs_cat', array(
-	    'methods'  => WP_REST_Server::READABLE,
-	    'callback' => 'get_rest_programs_groups',
-	    'args' => array(
-	    	'term_id' => array(
-	    		'type' => 'integer'
-	    	)
-	    )
-	));
-}
- 
-function get_rest_program_age_groups( $object ) {
-  $post_id = $object['id'];
-
-  $terms = wp_get_post_terms( $post_id, 'age_group' );
-
-  foreach ($terms as &$term) { 
-	  $term->name = htmlspecialchars_decode($term->name);
-  }
- 
-  return $terms;
-}
-
-function get_rest_program_cat( $object ) {
-  $post_id = $object['id'];
-
-  $terms = wp_get_post_terms( $post_id, 'programs_cat' );
-
-  foreach ($terms as &$term) { 
-	  $term->name = htmlspecialchars_decode($term->name);
-  }
-   
-  return $terms;
-}
-
-function get_rest_programs_groups() {
-	$terms = get_terms( array(
-    'taxonomy' => 'programs_cat',
-    'hide_empty' => true,
-	) );
-
-	$terms_cleaned = clean_terms($terms);
-	usort($terms_cleaned, "sort_alpha");
-
-	return $terms_cleaned;
-}
-
-function sort_alpha($a, $b)
-{
-  return strcmp($a->name, $b->name);
-}
-
-
-// decode special characters
-function clean_terms($terms_array) {
-	foreach ($terms_array as &$term) { 
-	  $term->name = htmlspecialchars_decode($term->name);
-  }
-  return $terms_array;
 }

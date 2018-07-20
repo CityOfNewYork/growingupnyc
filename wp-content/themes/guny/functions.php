@@ -100,6 +100,7 @@ class GunySite extends TimberSite {
 
   function add_to_context ( $context ) {
     $context['menu'] = new TimberMenu('header-menu');
+    $context['language_code'] = ICL_LANGUAGE_CODE;
     $context['footer_menu_primary_additional'] = new TimberMenu('footer-menu-additional');
     $context['footer_menu_right'] = new TimberMenu('footer-menu-right');
     $context['ms_menu'] = new TimberMenu('ms-header-menu');

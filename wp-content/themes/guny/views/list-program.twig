@@ -23,7 +23,7 @@
 
     {# categories #}
     <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">All Program Types</h3>
+      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{ __('All Program Types', 'guny') }}</h3>
       <ul class="js-accordion__content c-list-box__content" id="type-filter-panel" v-for="category in programTypes">
         <li class="c-list-box__subitem">
           <input type="checkbox" :id="category.name" :value="category.term_id" v-model="checkedProgramType" >
@@ -34,7 +34,7 @@
 
     {# age groups #}
     <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">All Ages</h3>
+      <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{ __('All Ages', 'guny') }}</h3>
       <ul class="js-accordion__content c-list-box__content" id="age-filter-panel" v-for="age in ageGroups">
         <li class="c-list-box__subitem">
           <input type="checkbox" :id="age.name" :value="age.id" v-model="checkedAgeGroup" >
@@ -75,13 +75,17 @@
       </div>
       <div class="c-card__body">
         v{ post.excerpt }
-        
       </div>
-
-
     </div>
   </div>
 </section>
+{# pagination #}
 
+<div class="o-content-container--compact">
+  <button class="button--outline button--outline--gray alignleft">{{ __('Previous', 'guny') }}
+  </button>
+  <button class="button--outline button--outline--gray alignright" href="{{ next }}">{{ __('Next', 'guny') }}</button>
+
+</div>
 {% endblock %}
 

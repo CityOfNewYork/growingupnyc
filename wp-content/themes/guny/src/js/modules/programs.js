@@ -5,7 +5,11 @@ import axios from 'axios';
 
 class ProgramsList {
   constructor() {
-    this._baseURL = window.location.origin;
+    if(document.documentElement.lang != 'en'){
+      this._baseURL = window.location.origin + '/' + document.documentElement.lang;
+    }else{
+      this._baseURL = window.location.origin;
+    }
 
     this._programs = {
       delimiters: ['v{', '}'],
@@ -14,11 +18,9 @@ class ProgramsList {
         programsURL: this._baseURL + '/wp-json/wp/v2/program',
         programs: null,
         programTypeURL: this._baseURL + '/wp-json/wp/v2/programs_cat',
-        // categoriesQuery: '?programs_cat[]=',
         programTypes: null,
         programTypesFilter: null,
         ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group',
-        // ageQuery: '?age_group[]=',
         ageGroups: null,
         ageGroupFilter: null,
         checkedProgramType: [],
@@ -64,9 +66,9 @@ ProgramsList.getPrograms = function() {
     url = url + '?' + filters;
   }
   axios
-  .get(url)
-  .then(response => (this.programs = response.data))
-  .catch(error => console.log(error))
+    .get(url)
+    .then(response => (this.programs = response.data))
+    .catch(error => console.log(error))
 }
 
 // get the post programTypesFilter based on user selection
@@ -84,17 +86,17 @@ ProgramsList.getCheckedAgeGroup = function(event) {
 // get the categories for the filter
 ProgramsList.getProgramTypes = function() {
   axios
-  .get(this.programTypeURL)
-  .then(response => (this.programTypes = response.data))
-  .catch(error => console.log(error))
+    .get(this.programTypeURL)
+    .then(response => (this.programTypes = response.data))
+    .catch(error => console.log(error))
 }
 
 // get the categories for the filter
 ProgramsList.getAgeGroups = function() {
   axios
-  .get(this.ageGroupURL)
-  .then(response => (this.ageGroups = response.data))
-  .catch(error => console.log(error))
+    .get(this.ageGroupURL)
+    .then(response => (this.ageGroups = response.data))
+    .catch(error => console.log(error))
 }
 
 // generate the filter for types and age groups

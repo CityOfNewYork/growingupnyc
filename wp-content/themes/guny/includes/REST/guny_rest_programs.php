@@ -35,6 +35,8 @@ function register_rest_programs() {
 	    )
 	));
 }
+
+// ###############
  
 function get_rest_program_age_groups( $object ) {
   $post_id = $object['id'];
@@ -88,8 +90,6 @@ function get_rest_program_types() {
 	return $terms_cleaned;
 }
 
-
-
 // decode special characters
 function clean_terms($terms_array) {
 	foreach ($terms_array as &$term) { 
@@ -97,3 +97,5 @@ function clean_terms($terms_array) {
   }
   return $terms_array;
 }
+
+

@@ -24,19 +24,24 @@
     {# categories #}
     <div class="c-list-box__item">
       <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">All Program Types</h3>
-      <ul class="js-accordion__content c-list-box__content" id="type-filter-panel" v-for="category in categories">
-        <li><a :href="category.term_id" class="c-list-box__subitem" v-on:click.prevent="getSelectedCat">v{ category.name }</a></li>
+      <ul class="js-accordion__content c-list-box__content" id="type-filter-panel" v-for="category in programTypes">
+        <li class="c-list-box__subitem">
+          <input type="checkbox" :id="category.name" :value="category.term_id" v-model="checkedProgramType" >
+            <label :for="category.name">v{ category.name }</label>
+        </li>
       </ul>
     </div>
 
     {# age groups #}
     <div class="c-list-box__item">
       <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">All Ages</h3>
-      <ul class="js-accordion__content c-list-box__content" id="age-filter-panel" v-for="age in ages">
-        <li><a :href="age.id" class="c-list-box__subitem" v-on:click.prevent="getSelectedAge">v{ age.name }</a></li>
+      <ul class="js-accordion__content c-list-box__content" id="age-filter-panel" v-for="age in ageGroups">
+        <li class="c-list-box__subitem">
+          <input type="checkbox" :id="age.name" :value="age.id" v-model="checkedAgeGroup" >
+            <label :for="age.name">v{ age.name }</label>
+        </li>
       </ul>
     </div>
-
 
   </div>
 {% endblock %}

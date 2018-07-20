@@ -13,30 +13,35 @@ class ProgramsList {
       data: {
         programsURL: this._baseURL + '/wp-json/wp/v2/program',
         programs: null,
-        categoriesURL: this._baseURL + '/wp-json/wp/v2/programs_cat',
-        categoriesQuery: '?programs_cat[]=',
-        categories: null,
-        category: null,
-        agesURL: this._baseURL + '/wp-json/wp/v2/age_group',
-        ageQuery: '?age_group[]=',
-        ages: null,
-        age: null
+        programTypeURL: this._baseURL + '/wp-json/wp/v2/programs_cat',
+        // categoriesQuery: '?programs_cat[]=',
+        programTypes: null,
+        programTypesFilter: null,
+        ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group',
+        // ageQuery: '?age_group[]=',
+        ageGroups: null,
+        ageGroupFilter: null,
+        checkedProgramType: [],
+        checkedAgeGroup: []
       },
        watch: {
-        category: 'getPrograms',
-        age: 'getPrograms'
+        programTypesFilter: 'getPrograms',
+        ageGroupFilter: 'getPrograms',
+        checkedProgramType: 'getCheckedProgramType',
+        checkedAgeGroup: 'getCheckedAgeGroup',
       },
       mounted: function() {
         this.getPrograms(),
-        this.getCategories(),
-        this.getAges()
+        this.getProgramTypes(),
+        this.getAgeGroups()
       },
       methods: {
         getPrograms: ProgramsList.getPrograms,
-        getSelectedCat: ProgramsList.getSelectedCat,
-        getSelectedAge: ProgramsList.getSelectedAge,
-        getCategories: ProgramsList.getCategories,
-        getAges: ProgramsList.getAges,
+        getCheckedProgramType: ProgramsList.getCheckedProgramType,
+        getCheckedAgeGroup: ProgramsList.getCheckedAgeGroup,
+        getProgramTypes: ProgramsList.getProgramTypes,
+        getAgeGroups: ProgramsList.getAgeGroups,
+        generateFilterURL: ProgramsList.generateFilterURL
       }
     }
   }
@@ -52,11 +57,11 @@ class ProgramsList {
 // get the programs
 ProgramsList.getPrograms = function() {
   let url = this.programsURL;
-  if (this.category) {
-    url = this.programsURL + this.categoriesQuery + this.category;
-  }
-  if (this.age) {
-    url = this.programsURL + this.ageQuery + this.age;
+  let filters ='';
+  // add the query
+  if (this.programTypesFilter || this.ageGroupFilter){
+    filters = ProgramsList.generateFilterURL(this.programTypesFilter, this.ageGroupFilter);
+    url = url + '?' + filters;
   }
   axios
   .get(url)
@@ -64,32 +69,46 @@ ProgramsList.getPrograms = function() {
   .catch(error => console.log(error))
 }
 
-// get the post category based on user selection
-ProgramsList.getSelectedCat = function(event) {
-  let cat_id = event.target.getAttribute('href');
-  this.category = cat_id;
+// get the post programTypesFilter based on user selection
+ProgramsList.getCheckedProgramType = function(event) {
+  let prog_types= this.checkedProgramType.join("&programs_cat[]=");
+  this.programTypesFilter = prog_types;
 }
 
 // get the age group based on the user selection
-ProgramsList.getSelectedAge = function(event) {
-  let age_id = event.target.getAttribute('href');
-  this.age = age_id;
+ProgramsList.getCheckedAgeGroup = function(event) {
+  let ageGroups= this.checkedAgeGroup.join("&age_group[]=");
+  this.ageGroupFilter = ageGroups;
 }
 
 // get the categories for the filter
-ProgramsList.getCategories = function() {
+ProgramsList.getProgramTypes = function() {
   axios
-  .get(this.categoriesURL)
-  .then(response => (this.categories = response.data))
+  .get(this.programTypeURL)
+  .then(response => (this.programTypes = response.data))
   .catch(error => console.log(error))
 }
 
 // get the categories for the filter
-ProgramsList.getAges = function() {
+ProgramsList.getAgeGroups = function() {
   axios
-  .get(this.agesURL)
-  .then(response => (this.ages = response.data))
+  .get(this.ageGroupURL)
+  .then(response => (this.ageGroups = response.data))
   .catch(error => console.log(error))
 }
+
+// generate the filter for types and age groups
+ProgramsList.generateFilterURL = function(types, ages) {
+  let filters = '';
+  if( types && !ages){
+    filters = 'programs_cat[]=' + types;
+  }else if ( ages && !types){
+    filters = 'age_group[]=' + ages;
+  }else if( ages && types){
+    filters = 'programs_cat[]=' + types + '&' + 'age_group[]=' + ages;
+  }
+  return filters;
+}
+
 
 export default ProgramsList;

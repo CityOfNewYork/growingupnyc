@@ -82,9 +82,9 @@
 {# pagination #}
 
 <div class="o-content-container--compact">
-  <button class="button--outline button--outline--gray alignleft">{{ __('Previous', 'guny') }}
+  <button class="button--outline button--outline--gray alignleft" v-if="programPage > 1"  v-on:click="programPage -= 1" >{{ __('Previous', 'guny') }}
   </button>
-  <button class="button--outline button--outline--gray alignright" href="{{ next }}">{{ __('Next', 'guny') }}</button>
+  <button class="button--outline button--outline--gray alignright" href="{{ next }}" v-on:click="programPage += 1">{{ __('Next', 'guny') }}</button>
 
 </div>
 {% endblock %}

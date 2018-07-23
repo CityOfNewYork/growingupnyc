@@ -16,21 +16,24 @@ class ProgramsList {
       el: '#vue-programs',
       data: {
         programsURL: this._baseURL + '/wp-json/wp/v2/program',
-        programs: null,
         programTypeURL: this._baseURL + '/wp-json/wp/v2/programs_cat',
+        ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group',
+        programs: null,
         programTypes: null,
         programTypesFilter: null,
-        ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group',
         ageGroups: null,
         ageGroupFilter: null,
         checkedProgramType: [],
-        checkedAgeGroup: []
+        checkedAgeGroup: [],
+        programPage: 1,
+        programsCounter: 0
       },
        watch: {
         programTypesFilter: 'getPrograms',
         ageGroupFilter: 'getPrograms',
         checkedProgramType: 'getCheckedProgramType',
         checkedAgeGroup: 'getCheckedAgeGroup',
+        programPage: 'getPrograms'
       },
       mounted: function() {
         this.getPrograms(),
@@ -43,7 +46,7 @@ class ProgramsList {
         getCheckedAgeGroup: ProgramsList.getCheckedAgeGroup,
         getProgramTypes: ProgramsList.getProgramTypes,
         getAgeGroups: ProgramsList.getAgeGroups,
-        generateFilterURL: ProgramsList.generateFilterURL
+        generateFilterURL: ProgramsList.generateFilterURL,
       }
     }
   }
@@ -60,11 +63,13 @@ class ProgramsList {
 ProgramsList.getPrograms = function() {
   let url = this.programsURL;
   let filters ='';
+
   // add the query
-  if (this.programTypesFilter || this.ageGroupFilter){
-    filters = ProgramsList.generateFilterURL(this.programTypesFilter, this.ageGroupFilter);
+  if (this.programTypesFilter || this.ageGroupFilter || this.programPage ){
+    filters = ProgramsList.generateFilterURL(this.checkedProgramType, this.checkedAgeGroup, this.programPage);
     url = url + '?' + filters;
   }
+
   axios
     .get(url)
     .then(response => (this.programs = response.data))
@@ -100,15 +105,21 @@ ProgramsList.getAgeGroups = function() {
 }
 
 // generate the filter for types and age groups
-ProgramsList.generateFilterURL = function(types, ages) {
-  let filters = '';
-  if( types && !ages){
-    filters = 'programs_cat[]=' + types;
-  }else if ( ages && !types){
-    filters = 'age_group[]=' + ages;
-  }else if( ages && types){
-    filters = 'programs_cat[]=' + types + '&' + 'age_group[]=' + ages;
+ProgramsList.generateFilterURL = function(types, ages, page) {
+  let filters = [];
+
+  if ( types.length > 0 ){
+    filters.push('programs_cat[]=' + types.join('&programs_cat[]='));
   }
+  if ( ages.length > 0  ) {
+    filters.push('age_group[]=' + ages.join('&age_group[]='));
+  }
+  if (page > 1) {
+    filters.push('page=' + page);
+  }
+
+  filters = filters.join('&');
+  
   return filters;
 }
 

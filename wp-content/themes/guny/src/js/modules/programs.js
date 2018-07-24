@@ -20,19 +20,15 @@ class ProgramsList {
         ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group',
         programs: null,
         programTypes: null,
-        programTypesFilter: null,
         ageGroups: null,
-        ageGroupFilter: null,
         checkedProgramType: [],
         checkedAgeGroup: [],
         programPage: 1,
         programsCounter: 0
       },
        watch: {
-        programTypesFilter: 'getPrograms',
-        ageGroupFilter: 'getPrograms',
-        checkedProgramType: 'getCheckedProgramType',
-        checkedAgeGroup: 'getCheckedAgeGroup',
+        checkedProgramType: 'getPrograms',
+        checkedAgeGroup: 'getPrograms',
         programPage: 'getPrograms'
       },
       mounted: function() {
@@ -42,8 +38,6 @@ class ProgramsList {
       },
       methods: {
         getPrograms: ProgramsList.getPrograms,
-        getCheckedProgramType: ProgramsList.getCheckedProgramType,
-        getCheckedAgeGroup: ProgramsList.getCheckedAgeGroup,
         getProgramTypes: ProgramsList.getProgramTypes,
         getAgeGroups: ProgramsList.getAgeGroups,
         generateFilterURL: ProgramsList.generateFilterURL,
@@ -59,13 +53,15 @@ class ProgramsList {
   }
 }
 
-// get the programs
+/**
+ * Request to get the programs.
+ */
 ProgramsList.getPrograms = function() {
   let url = this.programsURL;
   let filters ='';
 
-  // add the query
-  if (this.programTypesFilter || this.ageGroupFilter || this.programPage ){
+  // add the filters
+  if (this.checkedProgramType.length > 0 || this.checkedAgeGroup.length > 0 || this.programPage > 1){
     filters = ProgramsList.generateFilterURL(this.checkedProgramType, this.checkedAgeGroup, this.programPage);
     url = url + '?' + filters;
   }
@@ -76,19 +72,9 @@ ProgramsList.getPrograms = function() {
     .catch(error => console.log(error))
 }
 
-// get the post programTypesFilter based on user selection
-ProgramsList.getCheckedProgramType = function(event) {
-  let prog_types= this.checkedProgramType.join("&programs_cat[]=");
-  this.programTypesFilter = prog_types;
-}
-
-// get the age group based on the user selection
-ProgramsList.getCheckedAgeGroup = function(event) {
-  let ageGroups= this.checkedAgeGroup.join("&age_group[]=");
-  this.ageGroupFilter = ageGroups;
-}
-
-// get the categories for the filter
+/**
+ * Request to get the program types to populate filter
+ */
 ProgramsList.getProgramTypes = function() {
   axios
     .get(this.programTypeURL)
@@ -96,7 +82,9 @@ ProgramsList.getProgramTypes = function() {
     .catch(error => console.log(error))
 }
 
-// get the categories for the filter
+/**
+ * Request to get the age groups to populate filter
+ */
 ProgramsList.getAgeGroups = function() {
   axios
     .get(this.ageGroupURL)
@@ -104,6 +92,13 @@ ProgramsList.getAgeGroups = function() {
     .catch(error => console.log(error))
 }
 
+/**
+ * Generate the string filter for all user chosen taxonomies
+ * @param {array} - array with the ids of program types
+ * @param {array} - array with the ids of age groups
+ * @param {integer} - page number
+ * @return {string} - string of all filters
+ */
 // generate the filter for types and age groups
 ProgramsList.generateFilterURL = function(types, ages, page) {
   let filters = [];

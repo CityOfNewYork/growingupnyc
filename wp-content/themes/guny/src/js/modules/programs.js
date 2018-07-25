@@ -2,6 +2,8 @@
 import _ from 'underscore';
 import Vue from 'vue/dist/vue.common';
 import axios from 'axios';
+import router from './router'
+
 
 class ProgramsList {
   constructor() {
@@ -14,17 +16,19 @@ class ProgramsList {
     this._programs = {
       delimiters: ['v{', '}'],
       el: '#vue-programs',
+      router,
       data: {
         programsURL: this._baseURL + '/wp-json/wp/v2/program',
         programTypeURL: this._baseURL + '/wp-json/wp/v2/programs_cat',
         ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group',
+        filters: window.location.search,
         programs: null,
         programTypes: null,
         ageGroups: null,
         checkedProgramType: [],
         checkedAgeGroup: [],
         programPage: 1,
-        programsCounter: 0
+        programsCounter: 0,
       },
        watch: {
         checkedProgramType: 'getPrograms',
@@ -32,9 +36,9 @@ class ProgramsList {
         programPage: 'getPrograms'
       },
       mounted: function() {
-        this.getPrograms(),
         this.getProgramTypes(),
-        this.getAgeGroups()
+        this.getAgeGroups(),
+        this.getPrograms()
       },
       methods: {
         getPrograms: ProgramsList.getPrograms,
@@ -43,6 +47,7 @@ class ProgramsList {
         generateFilterURL: ProgramsList.generateFilterURL,
       }
     }
+
   }
 
   /**
@@ -58,12 +63,19 @@ class ProgramsList {
  */
 ProgramsList.getPrograms = function() {
   let url = this.programsURL;
-  let filters ='';
+  let filters =this.filters;
 
-  // add the filters
-  if (this.checkedProgramType.length > 0 || this.checkedAgeGroup.length > 0 || this.programPage > 1){
-    filters = ProgramsList.generateFilterURL(this.checkedProgramType, this.checkedAgeGroup, this.programPage);
-    url = url + '?' + filters;
+  if (this.filters.length > 1){
+    // parse the filters
+  }else {
+    // listen and add the filters
+    if (this.checkedProgramType.length > 0 || this.checkedAgeGroup.length > 0 || this.programPage > 1) {
+      filters = ProgramsList.generateFilterURL(this.checkedProgramType, this.checkedAgeGroup, this.programPage);
+      url = url + '?' + filters;
+
+      // update the query param
+      this.$router.push({query: {programs_cat: this.checkedProgramType, age_group: this.checkedAgeGroup }});
+    }
   }
 
   axios

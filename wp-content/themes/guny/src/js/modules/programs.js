@@ -38,6 +38,7 @@ class ProgramsList {
       mounted: function() {
         this.getProgramTypes(),
         this.getAgeGroups(),
+        this.parseQuery(),
         this.getPrograms()
       },
       methods: {
@@ -45,9 +46,9 @@ class ProgramsList {
         getProgramTypes: ProgramsList.getProgramTypes,
         getAgeGroups: ProgramsList.getAgeGroups,
         generateFilterURL: ProgramsList.generateFilterURL,
+        parseQuery: ProgramsList.parseQuery,
       }
     }
-
   }
 
   /**
@@ -59,24 +60,16 @@ class ProgramsList {
 }
 
 /**
- * Request to get the programs.
+ * Request to get the programs and update router
  */
 ProgramsList.getPrograms = function() {
   let url = this.programsURL;
-  let filters =this.filters;
+  
+  let filters = ProgramsList.generateFilterURL(this.checkedProgramType, this.checkedAgeGroup, this.programPage);
+  url = url + '?' + filters;
 
-  if (this.filters.length > 1){
-    // parse the filters
-  }else {
-    // listen and add the filters
-    if (this.checkedProgramType.length > 0 || this.checkedAgeGroup.length > 0 || this.programPage > 1) {
-      filters = ProgramsList.generateFilterURL(this.checkedProgramType, this.checkedAgeGroup, this.programPage);
-      url = url + '?' + filters;
-
-      // update the query param
-      this.$router.push({query: {programs_cat: this.checkedProgramType, age_group: this.checkedAgeGroup }});
-    }
-  }
+  // update the query
+  this.$router.push({query: {programs_cat: this.checkedProgramType, age_group: this.checkedAgeGroup }});
 
   axios
     .get(url)
@@ -111,16 +104,18 @@ ProgramsList.getAgeGroups = function() {
  * @param {integer} - page number
  * @return {string} - string of all filters
  */
-// generate the filter for types and age groups
 ProgramsList.generateFilterURL = function(types, ages, page) {
   let filters = [];
 
+  // console.log(types);
   if ( types.length > 0 ){
     filters.push('programs_cat[]=' + types.join('&programs_cat[]='));
   }
+
   if ( ages.length > 0  ) {
     filters.push('age_group[]=' + ages.join('&age_group[]='));
   }
+
   if (page > 1) {
     filters.push('page=' + page);
   }
@@ -128,6 +123,29 @@ ProgramsList.generateFilterURL = function(types, ages, page) {
   filters = filters.join('&');
   
   return filters;
+}
+/**
+ * Updates the program type and age group array in the 
+ * query parameters
+ */
+ProgramsList.parseQuery = function() {
+  let query =this.$route.query;
+
+  if (_.isArray(query.programs_cat)){
+    this.checkedProgramType=query.programs_cat.map(Number);
+  }else {
+    if(query.programs_cat){
+      this.checkedProgramType.push(parseInt(query.programs_cat, 10));
+    }
+  }
+
+  if (_.isArray(query.age_group)){
+    this.checkedAgeGroup=query.age_group.map(Number);
+  }else {
+    if(query.age_group){
+      this.checkedAgeGroup.push(parseInt(query.age_group,10));
+    }
+  }
 }
 
 

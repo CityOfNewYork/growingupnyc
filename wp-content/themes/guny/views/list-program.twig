@@ -53,7 +53,7 @@
     <div class="c-card {{is_first ? "c-card--hero #{age_group.slug|sanitize|replace({'-es':''})}-gradient"}}">
       <a :href="post.link">
         <div class="c-card__sticker sticker" aria-hidden="true">
-          <svg class="icon--large"><title>v{ post.programs_cat[0].slug }</title><use :href="'#icon-' + post.programs_cat[0].slug" ></use></svg>
+          <svg class="icon--large"><title>v{ post.programs_cat[0].slug }</title><use :href="'#icon-' + post.programs_cat[0].slug.replace('-es','')" ></use></svg>
         </div>
       </a>
       <h3 class="c-card__title">

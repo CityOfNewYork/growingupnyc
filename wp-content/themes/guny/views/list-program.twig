@@ -67,10 +67,10 @@
       </div>
       <div class="c-card__tags" v-if="post.programs_cat">
         <span v-for="term in post.programs_cat"> 
-          <a :href="term.slug" class="button--pill">v{ term.name }</a>
+          <router-link :to="{ name: 'programs', query: { programs_cat: term.term_id }}" class="button--pill" @click.native="parseQuery">v{ term.name }</router-link>
         </span>
         <span v-for="term in post.age_group"> 
-          <a :href="term.slug" class="button--pill button--pill--alt">v{ term.name }</a>
+          <router-link :to="{ name: 'programs', query: { age_group: term.term_id }}" class="button--pill button--pill--alt" @click.native="parseQuery">v{ term.name }</router-link>
         </span>
       </div>
       <div class="c-card__body">

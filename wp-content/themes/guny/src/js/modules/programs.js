@@ -33,13 +33,14 @@ class ProgramsList {
        watch: {
         checkedProgramType: 'getPrograms',
         checkedAgeGroup: 'getPrograms',
-        programPage: 'getPrograms'
+        programPage: 'getPrograms',
       },
       mounted: function() {
         this.getProgramTypes(),
         this.getAgeGroups(),
         this.parseQuery(),
         this.getPrograms()
+        // this.checkPagination()
       },
       methods: {
         getPrograms: ProgramsList.getPrograms,
@@ -69,12 +70,12 @@ ProgramsList.getPrograms = function() {
   url = url + '?' + filters;
 
   // update the query
-  this.$router.push({query: {programs_cat: this.checkedProgramType, age_group: this.checkedAgeGroup }});
+  this.$router.push({query: {programs_cat: this.checkedProgramType, age_group: this.checkedAgeGroup, page: this.programPage }});
 
   axios
     .get(url)
     .then(response => (this.programs = response.data))
-    .catch(error => console.log(error))
+    .catch(error => console.log(error));
 }
 
 /**

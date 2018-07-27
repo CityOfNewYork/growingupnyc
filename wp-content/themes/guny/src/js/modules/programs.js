@@ -125,28 +125,35 @@ ProgramsList.generateFilterURL = function(types, ages, page) {
   return filters;
 }
 /**
- * Updates the program type and age group array in the 
- * query parameters
+ * Extracts the taxonomies from the url query
+ * and updates the program type and age group arrays accordingly
  */
 ProgramsList.parseQuery = function() {
   let query =this.$route.query;
 
   if (_.isArray(query.programs_cat)){
-    this.checkedProgramType=query.programs_cat.map(Number);
-  }else {
-    if(query.programs_cat){
-      this.checkedProgramType.push(parseInt(query.programs_cat, 10));
+    if(query.programs_cat.every( (val, i, arr) => val === arr[0] )){
+      query.programs_cat = query.programs_cat[0];
+    }else{
+      this.checkedProgramType=query.programs_cat.map(Number);
     }
+  }
+
+  if (!_.isArray(query.programs_cat) && query.programs_cat){
+    this.checkedProgramType.push(parseInt(query.programs_cat, 10));
   }
 
   if (_.isArray(query.age_group)){
-    this.checkedAgeGroup=query.age_group.map(Number);
-  }else {
-    if(query.age_group){
-      this.checkedAgeGroup.push(parseInt(query.age_group,10));
+    if(query.age_group.every( (val, i, arr) => val === arr[0] )){
+      query.age_group = query.age_group[0];
+    }else{
+      this.checkedAgeGroup=query.age_group.map(Number);
     }
   }
-}
 
+  if (!_.isArray(query.age_group) && query.age_group){
+    this.checkedAgeGroup.push(parseInt(query.age_group,10));
+  }
+}
 
 export default ProgramsList;

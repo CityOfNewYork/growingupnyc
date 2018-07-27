@@ -6,6 +6,7 @@ Vue.use(VueRouter);
 export default new VueRouter({
 	// mode: 'history',
 	routes: [{
-		path: '/programs'
+		name: 'programs',
+		path: ''
 	}]
 });

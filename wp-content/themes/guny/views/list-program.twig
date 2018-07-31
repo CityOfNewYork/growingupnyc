@@ -26,8 +26,11 @@
       <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{ __('All Program Types', 'guny') }}</h3>
       <ul class="js-accordion__content c-list-box__content" id="type-filter-panel" v-for="category in programTypes">
         <li class="c-list-box__subitem">
-          <input type="checkbox" :id="category.slug" :value="category.term_id" v-model="checkedProgramType" >
-          <label :for="category.slug">v{ category.name }</label>
+          <label class="checkbox" :for="category.slug">
+            <input type="checkbox"  :id="category.slug" :value="category.term_id" v-model="checkedProgramType" class="checkbox__field">
+            <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+            v{ category.name }
+          </label>
         </li>
       </ul>
     </div>
@@ -37,8 +40,11 @@
       <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{ __('All Ages', 'guny') }}</h3>
       <ul class="js-accordion__content c-list-box__content" id="age-filter-panel" v-for="age in ageGroups">
         <li class="c-list-box__subitem">
-          <input type="checkbox" :id="age.name" :value="age.id" v-model="checkedAgeGroup" >
-            <label :for="age.name">v{ age.name }</label>
+          <label class="checkbox" :for="age.name">
+            <input type="checkbox"  :id="age.name" :value="age.id" v-model="checkedAgeGroup" class="checkbox__field">
+            <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+            v{ age.name }
+          </label>
         </li>
       </ul>
     </div>
@@ -83,7 +89,7 @@
 {# pagination #}
 <div class="o-content-container--compact">
   <button class="button--outline button--outline--gray alignleft" v-if="programPage > 1"  v-on:click="programPage -= 1" >
-    <router-link :to="{ name: 'programs', query: { page: programPage-1 }}" @click.native="parseQuery">{{ __('Previous', 'guny') }}</router-link>    
+    <router-link v-if="programPage > 1" :to="{ name: 'programs', query: { page: programPage-1 }}" @click.native="parseQuery">{{ __('Previous', 'guny') }}</router-link>    
   </button>
   <button class="button--outline button--outline--gray alignright" v-on:click="programPage += 1">
     <router-link :to="{ name: 'programs', query: { page: programPage+1 }}" @click.native="parseQuery">{{ __('Next', 'guny') }}</router-link>

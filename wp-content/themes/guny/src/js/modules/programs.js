@@ -28,7 +28,7 @@ class ProgramsList {
         checkedProgramType: [],
         checkedAgeGroup: [],
         programPage: 1,
-        // programsCounter: 0,
+        errorMsg: false
       },
        watch: {
         url: 'getPrograms',
@@ -41,7 +41,6 @@ class ProgramsList {
         this.getAgeGroups(),
         this.parseQuery(),
         this.getPrograms()
-        // this.checkPagination()
       },
       methods: {
         getPrograms: ProgramsList.getPrograms,
@@ -69,7 +68,6 @@ ProgramsList.getPrograms = function() {
   
   let filters = ProgramsList.generateFilterURL(this.checkedProgramType, this.checkedAgeGroup, this.programPage);
   url = url + '?' + filters;
-  console.log('getprograms' + this.programPage)
 
   // update the query
   if ( this.programPage == 1){
@@ -80,7 +78,14 @@ ProgramsList.getPrograms = function() {
 
   axios
     .get(url)
-    .then(response => (this.programs = response.data))
+    .then(response => {
+      this.programs = response.data
+      if (this.programs.length == 0){
+        this.errorMsg = true;
+      }else {
+        this.errorMsg = false;
+      }
+    })
     .catch(error => {
       console.log(error)
       this.programPage =1
@@ -107,13 +112,13 @@ ProgramsList.getAgeGroups = function() {
     .catch(error => console.log(error))
 }
 
-/**
+/******************************************************
  * Generate the string filter for all user chosen taxonomies
  * @param {array} - array with the ids of program types
  * @param {array} - array with the ids of age groups
  * @param {integer} - page number
  * @return {string} - string of all filters
- */
+ ******************************************************/
 ProgramsList.generateFilterURL = function(types, ages, page) {
   let filters = [];
 
@@ -134,10 +139,10 @@ ProgramsList.generateFilterURL = function(types, ages, page) {
   
   return filters;
 }
-/**
+/******************************************************
  * Extracts the taxonomies from the url query
- * and updates the program type and age group arrays accordingly
- */
+ * and updates the program type and age group arrays 
+ ******************************************************/
 ProgramsList.parseQuery = function() {
   let query =this.$route.query;
 

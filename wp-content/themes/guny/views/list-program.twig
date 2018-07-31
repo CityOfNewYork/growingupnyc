@@ -84,6 +84,10 @@
       </div>
     </div>
   </div>
+
+  {# no results #}
+  <p class="type--no-results" v-if="errorMsg == true">
+    {{ __('Sorry. There are no programs found for those filter options.', 'guny') }}</p>
 </section>
 
 {# pagination #}
@@ -91,7 +95,7 @@
   <button class="button--outline button--outline--gray alignleft" v-if="programPage > 1" >
     <router-link v-if="programPage > 1" :to="{ name: 'programs', query: { page: programPage-1 }}" @click.native="parseQuery">{{ __('Previous', 'guny') }}</router-link>    
   </button>
-  <button class="button--outline button--outline--gray alignright">
+  <button class="button--outline button--outline--gray alignright" v-if="errorMsg == false">
     <router-link :to="{ name: 'programs', query: { page: programPage+1 }}" @click.native="parseQuery">{{ __('Next', 'guny') }}</router-link>
   </button>
 </div>

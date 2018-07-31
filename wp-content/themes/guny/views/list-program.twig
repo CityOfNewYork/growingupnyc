@@ -88,10 +88,10 @@
 
 {# pagination #}
 <div class="o-content-container--compact">
-  <button class="button--outline button--outline--gray alignleft" v-if="programPage > 1"  v-on:click="programPage -= 1" >
+  <button class="button--outline button--outline--gray alignleft" v-if="programPage > 1" >
     <router-link v-if="programPage > 1" :to="{ name: 'programs', query: { page: programPage-1 }}" @click.native="parseQuery">{{ __('Previous', 'guny') }}</router-link>    
   </button>
-  <button class="button--outline button--outline--gray alignright" v-on:click="programPage += 1">
+  <button class="button--outline button--outline--gray alignright">
     <router-link :to="{ name: 'programs', query: { page: programPage+1 }}" @click.native="parseQuery">{{ __('Next', 'guny') }}</router-link>
   </button>
 </div>

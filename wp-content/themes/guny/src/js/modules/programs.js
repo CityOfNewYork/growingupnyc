@@ -18,19 +18,20 @@ class ProgramsList {
       el: '#vue-programs',
       router,
       data: {
+        url: window.location.href,
         programsURL: this._baseURL + '/wp-json/wp/v2/program',
         programTypeURL: this._baseURL + '/wp-json/wp/v2/programs_cat',
         ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group',
-        filters: window.location.search,
         programs: null,
         programTypes: null,
         ageGroups: null,
         checkedProgramType: [],
         checkedAgeGroup: [],
         programPage: 1,
-        programsCounter: 0,
+        // programsCounter: 0,
       },
        watch: {
+        url: 'getPrograms',
         checkedProgramType: 'getPrograms',
         checkedAgeGroup: 'getPrograms',
         programPage: 'getPrograms',
@@ -68,19 +69,27 @@ ProgramsList.getPrograms = function() {
   
   let filters = ProgramsList.generateFilterURL(this.checkedProgramType, this.checkedAgeGroup, this.programPage);
   url = url + '?' + filters;
+  console.log('getprograms' + this.programPage)
 
   // update the query
-  this.$router.push({query: {programs_cat: this.checkedProgramType, age_group: this.checkedAgeGroup, page: this.programPage }});
+  if ( this.programPage == 1){
+    this.$router.push({query: {programs_cat: this.checkedProgramType, age_group: this.checkedAgeGroup }});
+  }else {
+    this.$router.push({query: {programs_cat: this.checkedProgramType, age_group: this.checkedAgeGroup, page: this.programPage }});
+  }
 
   axios
     .get(url)
     .then(response => (this.programs = response.data))
-    .catch(error => console.log(error));
+    .catch(error => {
+      console.log(error)
+      this.programPage =1
+    });
 }
 
-/**
+/******************************************************
  * Request to get the program types to populate filter
- */
+ ******************************************************/
 ProgramsList.getProgramTypes = function() {
   axios
     .get(this.programTypeURL)
@@ -132,6 +141,7 @@ ProgramsList.generateFilterURL = function(types, ages, page) {
 ProgramsList.parseQuery = function() {
   let query =this.$route.query;
 
+  // program type
   if (_.isArray(query.programs_cat)){
     if(query.programs_cat.every( (val, i, arr) => val === arr[0] )){
       query.programs_cat = query.programs_cat[0];
@@ -144,6 +154,7 @@ ProgramsList.parseQuery = function() {
     this.checkedProgramType.push(parseInt(query.programs_cat, 10));
   }
 
+  // age group
   if (_.isArray(query.age_group)){
     if(query.age_group.every( (val, i, arr) => val === arr[0] )){
       query.age_group = query.age_group[0];
@@ -155,6 +166,12 @@ ProgramsList.parseQuery = function() {
   if (!_.isArray(query.age_group) && query.age_group){
     this.checkedAgeGroup.push(parseInt(query.age_group,10));
   }
+
+  // page number
+  if(query.page){
+    this.programPage=query.page;
+  }
+
 }
 
 export default ProgramsList;

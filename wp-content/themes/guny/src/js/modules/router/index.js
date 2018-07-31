@@ -8,5 +8,10 @@ export default new VueRouter({
 	routes: [{
 		name: 'programs',
 		path: ''
-	}]
+		},
+		{
+			name: 'events',
+			path: '/events'
+		}
+	]
 });

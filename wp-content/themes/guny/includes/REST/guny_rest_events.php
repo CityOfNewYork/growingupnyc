@@ -53,6 +53,11 @@ function register_rest_events() {
    'get_callback'    => 'get_rest_events_excerpt',
    'schema'          => null,
 	));
+
+	register_rest_route( 'wp/v2', 'tribe_events_cat', array(
+	    'methods'  => WP_REST_Server::READABLE,
+	    'callback' => 'update_rest_tribe_events_cat',
+	));
 }
 
 // *********************************************
@@ -113,3 +118,19 @@ function get_rest_events_excerpt( $object ) {
    
   return $post_excerpt;
 }
+
+function update_rest_tribe_events_cat() { 
+ $terms = get_terms( array(
+    'taxonomy' => 'tribe_events_cat',
+    'hide_empty' => true,
+	) );
+
+	$terms_cleaned = clean_terms($terms);
+	usort($terms_cleaned, function($a, $b) { 
+    return strcmp($a->name, $b->name); 
+  });
+
+	return $terms_cleaned;
+}
+
+

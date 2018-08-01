@@ -531,7 +531,6 @@ $includes = [
   '/includes/search.php', // Search functions
   '/includes/summer_guides.php', // Summer guide functions
   [ // REST
-    '/includes/REST/guny_rest.php', // expose fields to rest API
     '/includes/REST/guny_rest_programs.php', // expose fields to rest API
     '/includes/REST/guny_rest_events.php', // expose fields to rest API
   ],

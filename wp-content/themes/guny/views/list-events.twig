@@ -16,26 +16,16 @@
 {% endblock %}
 
 {% block list_sidebar %}
+  {# v{ eventTypes } #}
   <div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
 
     {# event categories #}
     <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{current_event_filter}}</h3>
-      <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
-        <li><a href="{{all_events.link}}" class="c-list-box__subitem">{{all_events.name}}</a></li>
-        {% for event_type in event_filter %}
-        <li><a href="{{event_type.id}}" class="c-list-box__subitem" 
-          v-on:click.prevent="getSelected">{{event_type.name}}</a></li>
-        {% endfor %}
+      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{ __('All Event Types', 'guny-events') }}</h3>
+      <ul class="js-accordion__content c-list-box__content" id="type-filter-panel" v-for="category in eventTypes">
+        <li><a :href="category.slug" class="c-list-box__subitem" v-on:click.prevent="getSelected">v{ category.name }</a></li>
       </ul>
     </div>
-
-    {# <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">All Event Types</h3>
-      <ul class="js-accordion__content c-list-box__content" id="type-filter-panel" v-for="event_type in eventsCat">
-          <li><a href="{{event_type.link}}" class="c-list-box__subitem">v{ event_type }</a></li>
-      </ul>
-    </div> #}
 
     {# age group categories #}
     {# <div class="c-list-box__item">
@@ -61,74 +51,4 @@
  #}
   </div>
 {# </div> #}
-{% endblock %}
-
-{% block before_list %}
-  {{function('do_action', 'tribe_events_before_template')}}
-{% endblock %}
-
-{% block post_list %}
-  {# Pager #}
-  <h2 class="c-arrow-pager">
-
-    {% if prev_month_url %}
-    <a class="c-arrow-pager__arrow c-arrow-pager__arrow--left" href="{{prev_month_url}}" rel="prev">
-      <svg role="img" class="icon--xsmall"><title>{{ __('Previous Month', 'guny-events') }}</title><use xlink:href="#icon-caret-left"></use></svg>
-    </a>
-    {% endif %}
-
-    {{current_month_text}}
-
-    {% if next_month_url %}
-    <a class="c-arrow-pager__arrow c-arrow-pager__arrow--right" href="{{next_month_url}}" rel="next">
-      <svg role="img" class="icon--xsmall"><title>{{ __('Next Month', 'guny-events') }}</title><use xlink:href="#icon-caret-right"></use></svg>
-    </a>
-    {% endif %}
-
-  </h2>
-
-  {# events cards #}
-  <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" v-for="post in events">
-    <h3>v{ post.start_date }</h3>
-    <div class="c-block-list__item">
-      <div class="c-card c-card--subtitle-first">
-        <a :href="post.url">
-        <div class="c-card__sticker sticker {% block classes_sticker %}{% endblock %}" aria-hidden="true">
-          v{post.start_date}
-        </div>
-        <h3 class="c-card__title">
-          <a :href="post.url" :title="post.title" rel="bookmark">
-            v{ post.title }
-          </a>
-        </h3>
-        <div class="c-card__subtitle">
-          <svg role="img" class="icon--xxsmall"><title>Time:</title><use xlink:href="#icon-clock-o"></use></svg>
-          {# TODO Add all day #}
-          <span class="nowrap">
-            v{ post.start_date_details.hour}:v{ post.start_date_details.minutes}
-          </span>
-          - <span class="nowrap">
-            v{ post.end_date_details.hour}:v{ post.end_date_details.minutes}
-          </span>
-        </div>
-        <div class="c-card__tags" v-if="post.categories">
-          <span v-for="term in post.categories"> 
-              <a :href="term.slug" class="button--pill button--pill--alt">v{ term.name }</a>
-            </span>
-        </div>
-        <div class="c-card__body">
-          v{ post.excerpt }
-        </div>
-        <p class="c-card__link" v-if="post.venue">
-          <svg role="img" class="icon--xxsmall"><use xlink:href="#icon-map-marker"></use></svg><a href="{{post.google_map_link}}" target="_blank">
-          v{ post.venue.venue },
-          v{ post.venue.city }
-          </a>
-        </p>
-      </a>
-
-      </div>
-    </div>
-  </section>
-
 {% endblock %}

@@ -60,9 +60,9 @@ class ProgramsList {
   }
 }
 
-/**
+/******************************************************
  * Request to get the programs and update router
- */
+ ******************************************************/
 ProgramsList.getPrograms = function() {
   let url = this.programsURL;
   

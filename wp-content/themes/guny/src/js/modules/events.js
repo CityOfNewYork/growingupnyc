@@ -6,18 +6,23 @@ import axios from 'axios';
 class EventsList {
 
   constructor() {
-    this._baseURL = window.location.origin;
+    if(document.documentElement.lang != 'en'){
+      this._baseURL = window.location.origin + '/' + document.documentElement.lang;
+    }else{
+      this._baseURL = window.location.origin;
+    }
 
     this._events = {
       delimiters: ['v{', '}'],
       el: '#vue-events',
       data: {
-        // eventsURL: this._baseURL + '/wp-json/tribe/events/v1/events?start_date=today&after=today&order=asc',
-        eventsURL: this._baseURL + '/wp-json/tribe/events/v1/events',
-        eventsQuery: '?tribe_events_cat=',
-        catsQuery: '?categories[]=',
-        catsURL: this._baseURL + '/wp-json/tribe/events/v1/categories',
+        eventsURL: this._baseURL + '/wp-json/wp/v2/tribe_events',
+        eventTypeURL: this._baseURL + '/wp-json/wp/v2/tribe_events_cat',
+        ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group',
+        boroughURL: this._baseURL + '/wp-json/wp/v2/borough',
+        eventTypes: null,
         events: null,
+        ageGroups: null,
         postType: 'tribe_events',
         categories: null,
         category: null
@@ -27,12 +32,15 @@ class EventsList {
         category: 'getEvents'
       },
       mounted: function() {
+        this.getEventTypes(),
+        this.getAgeGroups(),
         this.getEvents()
       },
       methods: {
         getEvents: EventsList.getEvents,
         getSelected: EventsList.getSelected,
-        getCategories: EventsList.getCategories,
+        getEventTypes: EventsList.getEventTypes,
+        getAgeGroups: EventsList.getAgeGroups,
       }
     }
   }
@@ -48,12 +56,13 @@ class EventsList {
 // get the events
 EventsList.getEvents = function() {
   let url = this.eventsURL;
-  if (this.category) {
-    url = this.eventsURL + this.catsQuery + this.category;
-  }
+  console.log('url ' + url);
+  // if (this.category) {
+  //   url = this.eventsURL + this.catsQuery + this.category;
+  // }
   axios
   .get(url)
-  .then(response => (this.events = response.data.events))
+  .then(response => (this.events = response.data))
   .catch(error => console.log(error))
 }
 
@@ -64,10 +73,17 @@ EventsList.getSelected = function(event) {
 }
 
 // get the categories for the filter
-EventsList.getCategories = function() {
+EventsList.getEventTypes = function() {
   axios
-  .get(this.catsURL)
-  .then(response => (this.events = response.data.events))
+  .get(this.eventTypeURL)
+  .then(response => (this.eventTypes = response.data))
+  .catch(error => console.log(error))
+}
+
+EventsList.getAgeGroups = function() {
+  axios
+  .get(this.ageGroupURL)
+  .then(response => (this.ageGroups = response.data))
   .catch(error => console.log(error))
 }
 

@@ -148,7 +148,7 @@ function get_rest_events_city_state( $object ) {
 function get_rest_events_google_map_link( $object ) {
   $post_id = $object['id'];
 
-  return tribe_get_map_link($post_id);
+  return html_entity_decode(tribe_get_map_link($post_id));
 }
 
 function get_rest_events_excerpt( $object ) { 

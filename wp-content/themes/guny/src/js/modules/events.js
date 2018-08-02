@@ -33,7 +33,6 @@ class EventsList {
         eventPage: 0
       },
       watch: {
-        // category: 'updateEvents'
         category: 'getEvents',
         checkedEventType: 'getEvents',
         checkedAgeGroup: 'getEvents',
@@ -47,7 +46,6 @@ class EventsList {
       },
       methods: {
         getEvents: EventsList.getEvents,
-        // getSelected: EventsList.getSelected,
         getEventTypes: EventsList.getEventTypes,
         getAgeGroups: EventsList.getAgeGroups,
         getBoroughs: EventsList.getBoroughs,
@@ -67,27 +65,15 @@ class EventsList {
 // get the events
 EventsList.getEvents = function() {
   let url = this.eventsURL;
-  console.log('url ' + url);
-  console.log(this.checkedEventType);
 
   let filters = EventsList.generateFilterURL(this.checkedEventType, this.checkedAgeGroup, this.checkedBorough, this.eventPage);
   url = url + '?' + filters;
-  console.log('new url ' + url)
-  // if (this.category) {
-  //   url = this.eventsURL + this.catsQuery + this.category;
-  // }
+
   axios
   .get(url)
   .then(response => (this.events = response.data))
   .catch(error => console.log(error))
 }
-
-// get the post category based on user selection
-// EventsList.getSelected = function(event) {
-//   let cat_id = event.target.getAttribute('href');
-//   this.category = cat_id;
-// }
-
 
 EventsList.generateFilterURL = function(types, ages, borough, page) {
   let filters = [];
@@ -116,7 +102,6 @@ EventsList.getAgeGroups = function() {
 }
 
 EventsList.getBoroughs = function() {
-  console.log('getBoroughs')
   axios
   .get(this.boroughURL)
   .then(response => (this.boroughs = response.data))

@@ -54,15 +54,14 @@ class ProgramsList {
 
   /**
    * Initialize
-   */
+   **/
   init() {
     this._programs = new Vue(this._programs);
   }
 }
-
-/******************************************************
+/**
  * Request to get the programs and update router
- ******************************************************/
+ **/
 ProgramsList.getPrograms = function() {
   let url = this.programsURL;
   
@@ -80,21 +79,21 @@ ProgramsList.getPrograms = function() {
     .get(url)
     .then(response => {
       this.programs = response.data
-      if (this.programs.length == 0){
+      if (this.programs.length == 0) {
         this.errorMsg = true;
-      }else {
+      } else {
         this.errorMsg = false;
       }
     })
     .catch(error => {
-      console.log(error)
-      this.programPage =1
+      console.log(error);
+      this.programPage = 1;
     });
 }
 
-/******************************************************
+/**
  * Request to get the program types to populate filter
- ******************************************************/
+ */
 ProgramsList.getProgramTypes = function() {
   axios
     .get(this.programTypeURL)
@@ -112,18 +111,17 @@ ProgramsList.getAgeGroups = function() {
     .catch(error => console.log(error))
 }
 
-/******************************************************
+/**
  * Generate the string filter for all user chosen taxonomies
  * @param {array} - array with the ids of program types
  * @param {array} - array with the ids of age groups
  * @param {integer} - page number
  * @return {string} - string of all filters
- ******************************************************/
+ **/
 ProgramsList.generateFilterURL = function(types, ages, page) {
   let filters = [];
 
-  // console.log(types);
-  if ( types.length > 0 ){
+  if ( types.length > 0 ) {
     filters.push('programs_cat[]=' + types.join('&programs_cat[]='));
   }
 
@@ -139,16 +137,15 @@ ProgramsList.generateFilterURL = function(types, ages, page) {
   
   return filters;
 }
-/******************************************************
+/**
  * Extracts the taxonomies from the url query
  * and updates the program type and age group arrays 
- ******************************************************/
+ **/
 ProgramsList.parseQuery = function() {
   let query =this.$route.query;
 
-  // program type
   if (_.isArray(query.programs_cat)){
-    if(query.programs_cat.every( (val, i, arr) => val === arr[0] )){
+    if (query.programs_cat.every( (val, i, arr) => val === arr[0] )){
       query.programs_cat = query.programs_cat[0];
     }else{
       this.checkedProgramType=query.programs_cat.map(Number);
@@ -159,21 +156,19 @@ ProgramsList.parseQuery = function() {
     this.checkedProgramType.push(parseInt(query.programs_cat, 10));
   }
 
-  // age group
   if (_.isArray(query.age_group)){
-    if(query.age_group.every( (val, i, arr) => val === arr[0] )){
+    if (query.age_group.every( (val, i, arr) => val === arr[0] )) {
       query.age_group = query.age_group[0];
-    }else{
+    } else {
       this.checkedAgeGroup=query.age_group.map(Number);
     }
   }
 
-  if (!_.isArray(query.age_group) && query.age_group){
+  if (!_.isArray(query.age_group) && query.age_group) {
     this.checkedAgeGroup.push(parseInt(query.age_group,10));
   }
 
-  // page number
-  if(query.page){
+  if(query.page) {
     this.programPage=query.page;
   }
 

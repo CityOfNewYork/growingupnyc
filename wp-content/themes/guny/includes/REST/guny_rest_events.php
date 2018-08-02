@@ -54,6 +54,16 @@ function register_rest_events() {
    'schema'          => null,
 	));
 
+  register_rest_field( 'tribe_events', 'venue', array(
+   'get_callback'    => 'get_rest_events_venue',
+   'schema'          => null,
+  ));
+
+  register_rest_field( 'tribe_events', 'city_state', array(
+   'get_callback'    => 'get_rest_events_city_state',
+   'schema'          => null,
+  ));
+
 	register_rest_route( 'wp/v2', 'tribe_events_cat', array(
 	    'methods'  => WP_REST_Server::READABLE,
 	    'callback' => 'update_rest_tribe_events_cat',
@@ -111,6 +121,20 @@ function get_rest_events_title( $object ) {
   $post_title = html_entity_decode($object['title']['rendered']);
    
   return $post_title;
+}
+
+function get_rest_events_venue( $object ) {
+  $post_id = $object['id'];
+ 
+  return tribe_get_venue($post_id);
+}
+
+function get_rest_events_city_state( $object ) {
+  $post_id = $object['id'];
+  
+  $city_state = tribe_get_city($post_id).', '.tribe_get_state($post_id);
+
+  return $city_state;
 }
 
 function get_rest_events_excerpt( $object ) { 

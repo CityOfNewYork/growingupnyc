@@ -23,24 +23,35 @@ class EventsList {
         eventTypes: null,
         events: null,
         ageGroups: null,
+        boroughs: null,
+        checkedEventType: [],
+        checkedAgeGroup: [],
+        checkedBorough: [],
         postType: 'tribe_events',
         categories: null,
-        category: null
+        category: null,
+        eventPage: 0
       },
       watch: {
         // category: 'updateEvents'
-        category: 'getEvents'
+        category: 'getEvents',
+        checkedEventType: 'getEvents',
+        checkedAgeGroup: 'getEvents',
+        checkedBorough: 'getEvents'
       },
       mounted: function() {
         this.getEventTypes(),
         this.getAgeGroups(),
+        this.getBoroughs(),
         this.getEvents()
       },
       methods: {
         getEvents: EventsList.getEvents,
-        getSelected: EventsList.getSelected,
+        // getSelected: EventsList.getSelected,
         getEventTypes: EventsList.getEventTypes,
         getAgeGroups: EventsList.getAgeGroups,
+        getBoroughs: EventsList.getBoroughs,
+        generateFilterURL: EventsList.generateFilterURL,
       }
     }
   }
@@ -57,6 +68,11 @@ class EventsList {
 EventsList.getEvents = function() {
   let url = this.eventsURL;
   console.log('url ' + url);
+  console.log(this.checkedEventType);
+
+  let filters = EventsList.generateFilterURL(this.checkedEventType, this.checkedAgeGroup, this.checkedBorough, this.eventPage);
+  url = url + '?' + filters;
+  console.log('new url ' + url)
   // if (this.category) {
   //   url = this.eventsURL + this.catsQuery + this.category;
   // }
@@ -67,10 +83,22 @@ EventsList.getEvents = function() {
 }
 
 // get the post category based on user selection
-EventsList.getSelected = function(event) {
-  let cat_id = event.target.getAttribute('href');
-  this.category = cat_id;
+// EventsList.getSelected = function(event) {
+//   let cat_id = event.target.getAttribute('href');
+//   this.category = cat_id;
+// }
+
+
+EventsList.generateFilterURL = function(types, ages, borough, page) {
+  let filters = [];
+
+  if ( types.length > 0 ){
+    filters.push('tribe_events_cat=' + types.join('&tribe_events_cat='));
+  }
+
+  return filters;
 }
+
 
 // get the categories for the filter
 EventsList.getEventTypes = function() {
@@ -87,6 +115,13 @@ EventsList.getAgeGroups = function() {
   .catch(error => console.log(error))
 }
 
+EventsList.getBoroughs = function() {
+  console.log('getBoroughs')
+  axios
+  .get(this.boroughURL)
+  .then(response => (this.boroughs = response.data))
+  .catch(error => console.log(error))
+}
 
 
 export default EventsList;

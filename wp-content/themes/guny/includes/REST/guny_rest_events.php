@@ -1,8 +1,8 @@
 <?php
 
-// *********************************************
-// add tribe_events endpoint to the rest API
-// https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-rest-api-support-for-custom-content-types/
+/**
+ * add tribe_events endpoint to the rest API
+ */
 add_action( 'init', 'get_rest_tribe_events', 25 );
 
 function get_rest_tribe_events() {
@@ -14,9 +14,9 @@ function get_rest_tribe_events() {
     $wp_post_types['tribe_events']->rest_controller_class = 'WP_REST_Posts_Controller';
   }
 }
-
-// *********************************************
-// registering fields and routes for events
+/**
+ * registering fields and routes for events
+ */
 add_action( 'rest_api_init', 'register_rest_events' );
 function register_rest_events() {
   register_rest_field( 'tribe_events', 'age_group', array(
@@ -64,22 +64,27 @@ function register_rest_events() {
    'schema'          => null,
   ));
 
+  register_rest_field( 'tribe_events', 'google_map_link', array(
+   'get_callback'    => 'get_rest_events_google_map_link',
+   'schema'          => null,
+  ));
+
 	register_rest_route( 'wp/v2', 'tribe_events_cat', array(
 	    'methods'  => WP_REST_Server::READABLE,
 	    'callback' => 'update_rest_tribe_events_cat',
 	));
 }
-
-// *********************************************
-// updating the age_group field in the rest endpoint
+/**
+ * updating the age_group field in the rest endpoint
+ */
 function get_rest_events_age_groups( $object ) {
   $post_id = $object['id'];
 
   return wp_get_post_terms( $post_id, 'age_group' );
 }
-
-// *********************************************
-// updating the tribe_events_cat field in the rest endpoint
+/**
+ * updating the tribe_events_cat field in the rest endpoint
+ */
 function get_rest_events_tribe_events_cat( $object ) {
   $post_id = $object['id'];
 
@@ -91,26 +96,29 @@ function get_rest_events_tribe_events_cat( $object ) {
  
   return $terms;
 }
-
-// *********************************************
-// updating the age_group field in the rest endpoint
+/**
+ * updating the age_group field in the rest endpoint
+ */
 function get_rest_events_borough( $object ) {
   $post_id = $object['id'];
 
   return wp_get_post_terms( $post_id, 'borough' );
 }
 
-// *********************************************
-// 
 function get_rest_events_start_date( $object ) {
   $post_id = $object['id'];
- 
-  // return tribe_get_start_date($post_id, true, 'm-d-Y h:i:s');
-  return tribe_get_start_date($post_id, true, 'm-d-Y');
+  $date = tribe_get_start_date($post_id, true, 'm-d-Y h:i:s');
+
+  $dt = DateTime::createFromFormat('m-d-Y h:i:s', $date);
+
+  $start_date['datetime'] = $date;
+  $start_date['formatted'] = $dt->format('l, M j');
+  $start_date['day'] = $dt->format('l');
+  $start_date['month_date'] = $dt->format('M j');
+
+  return $start_date;
 }
 
-// *********************************************
-// 
 function get_rest_events_end_date( $object ) {
   $post_id = $object['id'];
  
@@ -135,6 +143,12 @@ function get_rest_events_city_state( $object ) {
   $city_state = tribe_get_city($post_id).', '.tribe_get_state($post_id);
 
   return $city_state;
+}
+
+function get_rest_events_google_map_link( $object ) {
+  $post_id = $object['id'];
+
+  return tribe_get_map_link($post_id);
 }
 
 function get_rest_events_excerpt( $object ) { 

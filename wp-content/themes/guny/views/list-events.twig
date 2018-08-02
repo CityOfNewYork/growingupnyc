@@ -91,12 +91,17 @@
 
   {# events cards #}
   <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" v-for="post in events">
-    <h3>v{ post.start_date }</h3>
+    <h3>v{ post.start_date.formatted }</h3>
     <div class="c-block-list__item">
       <div class="c-card c-card--subtitle-first">
-        <a :href="post.url">
+        <a :href="post.link">
         <div class="c-card__sticker sticker {% block classes_sticker %}{% endblock %}" aria-hidden="true">
-          v{post.start_date}
+          <span class="event-day">
+            v{post.start_date.day}
+          </span>
+          <span class="event-month-date">
+            v{post.start_date.month_date}
+          </span>
         </div>
         <h3 class="c-card__title">
           <a :href="post.link" :title="post.title" rel="bookmark">
@@ -121,7 +126,7 @@
           v{ post.excerpt }
         </div>
         <p class="c-card__link" v-if="post.venue">
-          <svg role="img" class="icon--xxsmall"><use xlink:href="#icon-map-marker"></use></svg><a href="{{post.google_map_link}}" target="_blank">
+          <svg role="img" class="icon--xxsmall"><use xlink:href="#icon-map-marker"></use></svg><a :href="post.google_map_link" target="_blank">
           v{ post.venue },
           v{ post.city_state }
           </a>

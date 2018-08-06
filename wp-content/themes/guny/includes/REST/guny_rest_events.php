@@ -32,11 +32,11 @@ function register_rest_events() {
 	register_rest_field( 'tribe_events', 'borough', array(
    'get_callback'    => 'get_rest_events_borough',
    'schema'          => null
-	));
+  ));
 
-	register_rest_field( 'tribe_events', 'start_date', array(
+  register_rest_field( 'tribe_events', 'start_date', array(
    'get_callback'    => 'get_rest_events_start_date',
-   'schema'          => null
+   'schema' => null
 	));
 
 	register_rest_field( 'tribe_events', 'end_date', array(
@@ -70,10 +70,12 @@ function register_rest_events() {
   ));
 
 	register_rest_route( 'wp/v2', 'tribe_events_cat', array(
-	    'methods'  => WP_REST_Server::READABLE,
-	    'callback' => 'update_rest_tribe_events_cat',
+    'methods'  => WP_REST_Server::READABLE,
+    'callback' => 'update_rest_tribe_events_cat',
 	));
+
 }
+
 /**
  * updating the age_group field in the rest endpoint
  */
@@ -107,23 +109,38 @@ function get_rest_events_borough( $object ) {
 
 function get_rest_events_start_date( $object ) {
   $post_id = $object['id'];
-  $date = tribe_get_start_date($post_id, true, 'm-d-Y h:i:s');
+  $date = tribe_get_start_date($post_id, true, 'm-d-Y H:i:');
 
-  $dt = DateTime::createFromFormat('m-d-Y h:i:s', $date);
+  $dt = DateTime::createFromFormat('m-d-Y H:i:', $date);
 
   $start_date['datetime'] = $date;
   $start_date['formatted'] = $dt->format('l, M j');
   $start_date['day'] = $dt->format('l');
   $start_date['month_date'] = $dt->format('M j');
+  $start_date['hour'] = $dt->format('g');
+  $start_date['minutes'] = $dt->format('i');
+  $start_date['am_pm'] = $dt->format('A');
 
   return $start_date;
 }
 
 function get_rest_events_end_date( $object ) {
   $post_id = $object['id'];
- 
-  return tribe_get_end_date($post_id, true, 'm-d-Y h:i:s');
-}
+
+  $date = tribe_get_end_date($post_id, true, 'm-d-Y H:i');
+
+  $dt = DateTime::createFromFormat('m-d-Y H:i', $date);
+
+  $end_date['datetime'] = $date;
+  $end_date['formatted'] = $dt->format('l, M j');
+  $end_date['day'] = $dt->format('l');
+  $end_date['month_date'] = $dt->format('M j');
+  $end_date['hour'] = $dt->format('g');
+  $end_date['minutes'] = $dt->format('i');
+  $end_date['am_pm'] = $dt->format('A');
+
+  return $end_date;
+ }
 
 function get_rest_events_title( $object ) { 
   $post_title = html_entity_decode($object['title']['rendered']);

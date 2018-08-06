@@ -108,20 +108,20 @@
             v{ post.title }
           </a>
         </h3>
-        {# <div class="c-card__subtitle">
+        <div class="c-card__subtitle">
           <svg role="img" class="icon--xxsmall"><title>Time:</title><use xlink:href="#icon-clock-o"></use></svg>
           <span class="nowrap">
-            v{ post.start_date_details.hour}:v{ post.start_date_details.minutes}
+            v{ post.start_date.hour}:v{ post.start_date.minutes} v{ post.start_date.am_pm}
           </span>
           - <span class="nowrap">
-            v{ post.end_date_details.hour}:v{ post.end_date_details.minutes}
+            v{ post.end_date.hour}:v{ post.end_date.minutes} v{ post.end_date.am_pm}
           </span>
         </div>
         <div class="c-card__tags" v-if="post.categories">
           <span v-for="term in post.categories"> 
               <a :href="term.slug" class="button--pill button--pill--alt">v{ term.name }</a>
             </span>
-        </div> #}
+        </div>
         <div class="c-card__body">
           v{ post.excerpt }
         </div>

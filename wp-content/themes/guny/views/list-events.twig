@@ -117,11 +117,17 @@
             v{ post.end_date.hour}:v{ post.end_date.minutes} v{ post.end_date.am_pm}
           </span>
         </div>
-        <div class="c-card__tags" v-if="post.categories">
-          <span v-for="term in post.categories"> 
-              <a :href="term.slug" class="button--pill button--pill--alt">v{ term.name }</a>
-            </span>
+
+        {# tags #}
+        <div class="c-card__tags">
+          <span v-if="post.tribe_events_cat" v-for="term in post.tribe_events_cat"> 
+            <a :href="term.slug" class="button--pill">v{ term.name }</a>
+          </span>
+          <span v-if="post.age_group" v-for="term in post.age_group"> 
+            <a :href="term.slug" class="button--pill button--pill--alt">v{ term.name }</a>
+          </span>
         </div>
+        
         <div class="c-card__body">
           v{ post.excerpt }
         </div>

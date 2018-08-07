@@ -169,7 +169,7 @@ function get_rest_events_google_map_link( $object ) {
 }
 
 function get_rest_events_excerpt( $object ) { 
-  $post_excerpt = strip_tags(htmlspecialchars_decode($object['excerpt']['rendered']));
+  $post_excerpt = strip_tags(html_entity_decode($object['excerpt']['rendered']));
    
   return $post_excerpt;
 }

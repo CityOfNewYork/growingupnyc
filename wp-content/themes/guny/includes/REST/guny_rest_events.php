@@ -151,7 +151,7 @@ function get_rest_events_title( $object ) {
 function get_rest_events_venue( $object ) {
   $post_id = $object['id'];
  
-  return tribe_get_venue($post_id);
+  return html_entity_decode(tribe_get_venue($post_id));
 }
 
 function get_rest_events_city_state( $object ) {
@@ -187,5 +187,3 @@ function update_rest_tribe_events_cat() {
 
 	return $terms_cleaned;
 }
-
-

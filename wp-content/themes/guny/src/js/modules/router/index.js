@@ -11,7 +11,7 @@ export default new VueRouter({
 		},
 		{
 			name: 'events',
-			path: '/events'
+			path: ''
 		}
 	]
 });

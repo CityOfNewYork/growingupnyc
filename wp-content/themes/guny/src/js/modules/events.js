@@ -77,9 +77,9 @@ EventsList.getEvents = function() {
 
   // update the query
   if ( this.eventPage == 1){
-    this.$router.push({name: 'events', query: {tribe_events_cat: this.checkedEventType, age_group: this.checkedAgeGroup, borough: this.checkedBorough }});
+    this.$router.push({name: 'events', query: {cat_id: this.checkedEventType, age_id: this.checkedAgeGroup, borough_id: this.checkedBorough }});
   }else {
-    this.$router.push({query: {tribe_events_cat: this.checkedEventType, age_group: this.checkedAgeGroup, borough: this.checkedBorough, page: this.eventPage }});
+    this.$router.push({query: {cat_id: this.checkedEventType, age_id: this.checkedAgeGroup, borough_id: this.checkedBorough, page: this.eventPage }});
   }
 
   axios
@@ -157,40 +157,40 @@ EventsList.generateFilterURL = function(types, ages, boroughs, page) {
 EventsList.parseQuery = function() {
   let query =this.$route.query;
 
-  if (_.isArray(query.tribe_events_cat)){
-    if (query.tribe_events_cat.every( (val, i, arr) => val === arr[0] )){
-      query.tribe_events_cat = query.tribe_events_cat[0];
+  if (_.isArray(query.cat_id)){
+    if (query.cat_id.every( (val, i, arr) => val === arr[0] )){
+      query.cat_id = query.cat_id[0];
     }else{
-      this.checkedEventType=query.tribe_events_cat.map(Number);
+      this.checkedEventType=query.cat_id.map(Number);
     }
   }
 
-  if (!_.isArray(query.tribe_events_cat) && query.tribe_events_cat){
-    this.checkedEventType.push(parseInt(query.tribe_events_cat, 10));
+  if (!_.isArray(query.cat_id) && query.cat_id){
+    this.checkedEventType.push(parseInt(query.cat_id, 10));
   }
 
-  if (_.isArray(query.age_group)){
-    if (query.age_group.every( (val, i, arr) => val === arr[0] )) {
-      query.age_group = query.age_group[0];
+  if (_.isArray(query.age_id)){
+    if (query.age_id.every( (val, i, arr) => val === arr[0] )) {
+      query.age_id = query.age_id[0];
     } else {
-      this.checkedAgeGroup=query.age_group.map(Number);
+      this.checkedAgeGroup=query.age_id.map(Number);
     }
   }
 
-  if (!_.isArray(query.age_group) && query.age_group) {
-    this.checkedAgeGroup.push(parseInt(query.age_group,10));
+  if (!_.isArray(query.age_id) && query.age_id) {
+    this.checkedAgeGroup.push(parseInt(query.age_id,10));
   }
 
-  if (_.isArray(query.borough)){
-    if (query.borough.every( (val, i, arr) => val === arr[0] )) {
-      query.borough = query.borough[0];
+  if (_.isArray(query.borough_id)){
+    if (query.borough_id.every( (val, i, arr) => val === arr[0] )) {
+      query.borough_id = query.borough_id[0];
     } else {
-      this.checkedBorough=query.borough.map(Number);
+      this.checkedBorough=query.borough_id.map(Number);
     }
   }
 
-  if (!_.isArray(query.borough) && query.borough) {
-    this.checkedBorough.push(parseInt(query.borough,10));
+  if (!_.isArray(query.borough_id) && query.borough_id) {
+    this.checkedBorough.push(parseInt(query.borough_id,10));
   }
 
   if(query.page) {

@@ -30,6 +30,7 @@ function ready(fn) {
   }
 }
 
+// intialize modules
 function init() {
   toggleOpen('is-open');
   alert('is-open');
@@ -64,9 +65,9 @@ window.accordion = accordion;
 (function(window, $) {
   'use strict';
 
-
   new EventsList().init();
   new ProgramsList().init();
+
   
   // Initialize share by email/sms forms.
   $(`.${ShareForm.CssClass.FORM}`).each((i, el) => {

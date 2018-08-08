@@ -22,8 +22,8 @@
     {# event categories #}
     <div class="c-list-box__item">
       <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{ __('All Event Types', 'guny-events') }}</h3>
-      <ul class="js-accordion__content c-list-box__content" id="type-filter-panel" v-for="category in eventTypes">
-         <li class="c-list-box__subitem">
+      <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
+         <li class="c-list-box__subitem" v-for="category in eventTypes">
           <label class="checkbox" :for="category.slug">
             <input type="checkbox"  :id="category.slug" :value="category.term_id" v-model="checkedEventType" class="checkbox__field">
             <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
@@ -36,8 +36,8 @@
     {# age group categories #}
     <div class="c-list-box__item">
       <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{ __('All Ages', 'guny-events') }}</h3>
-      <ul class="js-accordion__content c-list-box__content" id="age-filter-panel" v-for="age in ageGroups">
-        <li class="c-list-box__subitem">
+      <ul class="js-accordion__content c-list-box__content" id="age-filter-panel" >
+        <li class="c-list-box__subitem" v-for="age in ageGroups">
           <label class="checkbox" :for="age.slug">
             <input type="checkbox"  :id="age.slug" :value="age.id" v-model="checkedAgeGroup" class="checkbox__field">
             <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
@@ -50,8 +50,8 @@
     {# borough categories #}
     <div class="c-list-box__item">
       <h3 class="js-accordion__header c-list-box__heading" id="borough-filter-heading">{{ __('All Boroughs', 'guny-events') }}</h3>
-      <ul class="js-accordion__content c-list-box__content" id="borough-filter-panel" v-for="borough in boroughs">
-       <li class="c-list-box__subitem">
+      <ul class="js-accordion__content c-list-box__content" id="borough-filter-panel" >
+       <li class="c-list-box__subitem" v-for="borough in boroughs">
           <label class="checkbox" :for="borough.slug">
             <input type="checkbox"  :id="borough.slug" :value="borough.id" v-model="checkedBorough" class="checkbox__field">
             <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>

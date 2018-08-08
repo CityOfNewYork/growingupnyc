@@ -65,8 +65,14 @@ window.accordion = accordion;
 (function(window, $) {
   'use strict';
 
-  new EventsList().init();
-  new ProgramsList().init();
+  if (window.location.pathname.indexOf('programs') >= 0) {
+    new ProgramsList().init();
+  }
+
+  if (window.location.pathname.indexOf('events') >= 0) {
+    new EventsList().init();
+  }
+
 
   
   // Initialize share by email/sms forms.

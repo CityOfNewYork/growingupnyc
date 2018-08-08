@@ -46,6 +46,7 @@ class EventsList {
         this.getEventTypes(),
         this.getAgeGroups(),
         this.getBoroughs(),
+        this.parseQuery(),
         this.getEvents()
       },
       methods: {
@@ -76,7 +77,7 @@ EventsList.getEvents = function() {
 
   // update the query
   if ( this.eventPage == 1){
-    this.$router.push({query: {tribe_events_cat: this.checkedEventType, age_group: this.checkedAgeGroup, borough: this.checkedBorough }});
+    this.$router.push({name: 'events', query: {tribe_events_cat: this.checkedEventType, age_group: this.checkedAgeGroup, borough: this.checkedBorough }});
   }else {
     this.$router.push({query: {tribe_events_cat: this.checkedEventType, age_group: this.checkedAgeGroup, borough: this.checkedBorough, page: this.eventPage }});
   }
@@ -178,6 +179,18 @@ EventsList.parseQuery = function() {
 
   if (!_.isArray(query.age_group) && query.age_group) {
     this.checkedAgeGroup.push(parseInt(query.age_group,10));
+  }
+
+  if (_.isArray(query.borough)){
+    if (query.borough.every( (val, i, arr) => val === arr[0] )) {
+      query.borough = query.borough[0];
+    } else {
+      this.checkedBorough=query.borough.map(Number);
+    }
+  }
+
+  if (!_.isArray(query.borough) && query.borough) {
+    this.checkedBorough.push(parseInt(query.borough,10));
   }
 
   if(query.page) {

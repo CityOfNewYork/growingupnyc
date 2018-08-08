@@ -33,7 +33,8 @@ class EventsList {
         postType: 'tribe_events',
         categories: null,
         category: null,
-        eventPage: 1
+        eventPage: 1,
+        errorMsg: false
       },
       watch: {
         category: 'getEvents',
@@ -82,7 +83,15 @@ EventsList.getEvents = function() {
 
   axios
   .get(url)
-  .then(response => (this.events = response.data))
+  // .then(response => (this.events = response.data))
+  .then(response => {
+      this.events = response.data
+      if (this.events.length == 0) {
+        this.errorMsg = true;
+      } else {
+        this.errorMsg = false;
+      }
+    })
   .catch(error => console.log(error))
 }
 

@@ -138,9 +138,10 @@
           </a>
         </p>
       </a>
-
       </div>
     </div>
   </section>
-
+  <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" v-if="errorMsg == true">
+    <p class="type--no-results">{{ __('Sorry. There are no events found for those filter options.', 'guny') }}</p>
+  </section>
 {% endblock %}

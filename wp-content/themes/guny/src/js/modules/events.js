@@ -34,15 +34,20 @@ class EventsList {
         categories: null,
         category: null,
         eventPage: 1,
-        errorMsg: false
+        errorMsg: false,
+        // currentMonth: this.currentDate.getMonth()
+        // currentDate: new Date()
+        currentDate: ''
       },
       watch: {
         category: 'getEvents',
         checkedEventType: 'getEvents',
         checkedAgeGroup: 'getEvents',
-        checkedBorough: 'getEvents'
+        checkedBorough: 'getEvents',
+        eventPage: 'getEvents'
       },
       mounted: function() {
+        this.getCurrentMonth(),
         this.getEventTypes(),
         this.getAgeGroups(),
         this.getBoroughs(),
@@ -56,6 +61,7 @@ class EventsList {
         getBoroughs: EventsList.getBoroughs,
         generateFilterURL: EventsList.generateFilterURL,
         parseQuery: EventsList.parseQuery,
+        getCurrentMonth: EventsList.getCurrentMonth
       }
     }
   }
@@ -194,9 +200,17 @@ EventsList.parseQuery = function() {
   }
 
   if(query.page) {
-    this.programPage=query.page;
+    this.eventPage=query.page;
   }
+}
 
+// for the monthly pagination
+EventsList.getCurrentMonth = function() {
+  let eventDate = new Date();
+  this.currentDate = {
+    'month': eventDate.toLocaleString("en-us", { month: "long" }),
+    'year': eventDate.getFullYear()
+  }
 }
 
 

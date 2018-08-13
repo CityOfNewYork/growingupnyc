@@ -16,7 +16,6 @@
 {% endblock %}
 
 {% block list_sidebar %}
-  {# v{ boroughs } #}
   <div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
 
     {# event categories #}
@@ -62,7 +61,6 @@
     </div>
 
   </div>
-{# </div> #}
 {% endblock %}
 
 {# {% block before_list %}
@@ -70,8 +68,8 @@
 {% endblock %} #}
 
 {% block post_list %}
-  {# Pager #}
-  {# <h2 class="c-arrow-pager">
+  {# month pager #}
+  <h2 class="c-arrow-pager">
 
     {% if prev_month_url %}
     <a class="c-arrow-pager__arrow c-arrow-pager__arrow--left" href="{{prev_month_url}}" rel="prev">
@@ -79,7 +77,7 @@
     </a>
     {% endif %}
 
-    {{current_month_text}}
+    v{ currentDate.month } v{ currentDate.year }
 
     {% if next_month_url %}
     <a class="c-arrow-pager__arrow c-arrow-pager__arrow--right" href="{{next_month_url}}" rel="next">
@@ -87,7 +85,7 @@
     </a>
     {% endif %}
 
-  </h2> #}
+  </h2>
 
   {# events cards #}
   <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" v-for="post in events">
@@ -141,7 +139,23 @@
       </div>
     </div>
   </section>
+
+  {# no events #}
   <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" v-if="errorMsg == true">
     <p class="type--no-results">{{ __('Sorry. There are no events found for those filter options.', 'guny') }}</p>
   </section>
+
+{# pagination #}
+<div class="o-content-container--compact">
+  <button v-if="eventPage > 1" >
+    <router-link class="button--outline button--outline--gray alignleft" v-if="eventPage > 1" :to="{ name: 'events', query: { page: eventPage-1 }}" @click.native="parseQuery">{{ __('Previous', 'guny') }}</router-link>    
+  </button>
+
+
+  <button v-if="errorMsg == false">
+    <router-link class="button--outline button--outline--gray alignright" :to="{ name: 'events', query: { page: eventPage+1 }}" @click.native="parseQuery">{{ __('Next', 'guny') }}</router-link>
+  </button>
+</div>
 {% endblock %}
+
+

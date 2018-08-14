@@ -212,6 +212,16 @@ class GUPostTypes {
     );
 
     register_taxonomy(
+      'afterschool_programs_cat',
+      array('afterschool-guide'),
+      array(
+        'label' => __( 'Program Categories' ),
+        'hierarchical' => true,
+        'rewrite' => false
+      )
+    );
+
+    register_taxonomy(
       'time',
       array('summer-guide'),
       array(

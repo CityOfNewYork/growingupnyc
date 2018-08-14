@@ -174,7 +174,7 @@ class GUPostTypes {
   function create_taxonomies() {
     register_taxonomy(
       'borough',
-      array('tribe_events', 'summer-guide'),
+      array('tribe_events', 'summer-guide', 'afterschool-guide'),
       array(
         'label' => __( 'Event Location' ),
         'hierarchical' => true,
@@ -184,7 +184,7 @@ class GUPostTypes {
 
     register_taxonomy(
       'age_group',
-      array('age', 'tribe_events', 'program', 'summer-guide'),
+      array('age', 'tribe_events', 'program', 'summer-guide', 'afterschool-guide'),
       array(
         'label' => __( 'Age Groups' ),
         'hierarchical' => true,

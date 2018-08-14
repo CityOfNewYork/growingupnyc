@@ -139,6 +139,36 @@ class GUPostTypes {
         )
       )
     );
+
+    register_post_type(
+      'afterschool-guide',
+      array(
+        'labels' => array(
+          'name' => 'After School Guides',
+          'singular_name' => 'After School Guide',
+          'add_new_item' => 'Add New After School Guide',
+          'edit_item' => 'Edit After School Guide',
+          'new_item' => 'New After School Guide',
+          'view_item' => 'View After School Guide',
+          'search_items' => 'Search After School Guides',
+          'not_found' =>  'No After School Guides Found',
+          'not_found_in_trash' => 'No After School Guides found in trash',
+          'all_items' => 'All After School Guides',
+          'archives' => 'After School Guide Archives',
+          'insert_into_item' => 'Insert into After School Guide',
+          'uploaded_to_this_item' => 'Uploaded to this After School Guide'
+        ),
+        'public' => true,
+        'menu_position' => 24,
+        'menu_icon' => 'dashicons-awards',
+        'supports' => array('title', 'excerpt', 'editor'),
+        'has_archive' => true,
+        'rewrite' => array(
+          'slug' => 'afterschool',
+          'with_front' => false
+        )
+      )
+    );
   }
 
   function create_taxonomies() {

@@ -48,20 +48,16 @@ class EventsList {
       },
       mounted: function() {
         this.getCurrentMonth(),
-        this.getEventTypes(),
-        this.getAgeGroups(),
-        this.getBoroughs(),
+        this.getCategories(),
         this.parseQuery(),
         this.getEvents()
       },
       methods: {
         getEvents: EventsList.getEvents,
-        getEventTypes: EventsList.getEventTypes,
-        getAgeGroups: EventsList.getAgeGroups,
-        getBoroughs: EventsList.getBoroughs,
         generateFilterURL: EventsList.generateFilterURL,
         parseQuery: EventsList.parseQuery,
-        getCurrentMonth: EventsList.getCurrentMonth
+        getCurrentMonth: EventsList.getCurrentMonth,
+        getCategories: EventsList.getCategories
       }
     }
   }
@@ -90,7 +86,6 @@ EventsList.getEvents = function() {
 
   axios
   .get(url)
-  // .then(response => (this.events = response.data))
   .then(response => {
       this.events = response.data
       if (this.events.length == 0) {
@@ -102,29 +97,23 @@ EventsList.getEvents = function() {
   .catch(error => console.log(error))
 }
 
-
-// get the categories for the filter
-EventsList.getEventTypes = function() {
+// get the categories and their groups
+EventsList.getCategories = function() {
   axios
   .get(this.eventTypeURL)
   .then(response => (this.eventTypes = response.data))
   .catch(error => console.log(error))
-}
 
-EventsList.getAgeGroups = function() {
   axios
   .get(this.ageGroupURL)
   .then(response => (this.ageGroups = response.data))
   .catch(error => console.log(error))
-}
 
-EventsList.getBoroughs = function() {
   axios
   .get(this.boroughURL)
   .then(response => (this.boroughs = response.data))
   .catch(error => console.log(error))
 }
-
 /**
  * Generate the string filter for all user chosen taxonomies
  * @param {array} - array with the ids of event types

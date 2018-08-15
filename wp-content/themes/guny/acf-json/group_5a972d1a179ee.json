@@ -7,7 +7,6 @@
             "label": "",
             "name": "location_description",
             "type": "text",
-            "value": null,
             "instructions": "To add a link, use markdown syntax. Ex; \"Multiple locations, see [website](http:\/\/website.com) for details\"",
             "required": 0,
             "conditional_logic": 0,
@@ -30,6 +29,13 @@
                 "operator": "==",
                 "value": "summer-guide"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "afterschool-guide"
+            }
         ]
     ],
     "menu_order": 0,
@@ -39,6 +45,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "modified": 1520020516
+    "description": ""
 }

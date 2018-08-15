@@ -159,9 +159,9 @@ class GUPostTypes {
           'uploaded_to_this_item' => 'Uploaded to this After School Guide'
         ),
         'public' => true,
-        'menu_position' => 24,
+        'menu_position' => 25,
         'menu_icon' => 'dashicons-awards',
-        'supports' => array('title', 'excerpt', 'editor'),
+        'supports' => array('title', 'excerpt'),
         'has_archive' => true,
         'rewrite' => array(
           'slug' => 'afterschool',

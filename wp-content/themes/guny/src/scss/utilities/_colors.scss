@@ -94,4 +94,56 @@
 .hover\:text-white:hover {
   color: $white !important;
 }
+
+// 
+.bg-strong-blue,
+.hover\:bg-strong-blue:hover {
+  background-color: $strong-blue !important;
+}
+
+.border-strong-blue,
+.hover\:border-strong-blue:hover {
+  border-color: $strong-blue !important;
+}
+
+.text-strong-blue,
+.hover\:text-strong-blue:hover {
+  color: $strong-blue !important;
+}
+
+.fill-strong-blue,
+.hover\:fill-strong-blue:hover {
+  fill: $strong-blue !important;
+}
+
+.stop-color-strong-blue,
+.hover\:stop-color-strong-blue:hover {
+  stop-color: $strong-blue !important;
+}
+
+// 
+.bg-blue-2,
+.hover\:bg-blue-2:hover {
+  background-color: $blue-2 !important;
+}
+
+.border-blue-2,
+.hover\:border-blue-2:hover {
+  border-color: $blue-2 !important;
+}
+
+.text-blue-2,
+.hover\:text-blue-2:hover {
+  color: $blue-2 !important;
+}
+
+.fill-blue-2,
+.hover\:fill-blue-2:hover {
+  fill: $blue-2 !important;
+}
+
+.stop-color-blue-2,
+.hover\:stop-color-blue-2:hover {
+  stop-color: $blue-2 !important;
+}
 // End Tailwind Utility

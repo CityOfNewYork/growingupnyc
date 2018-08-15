@@ -7,7 +7,6 @@
             "label": "Title",
             "name": "cta_title",
             "type": "text",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -27,7 +26,6 @@
             "label": "Url",
             "name": "cta_href",
             "type": "text",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -47,7 +45,6 @@
             "label": "",
             "name": "cta_new_window",
             "type": "checkbox",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -74,6 +71,13 @@
                 "operator": "==",
                 "value": "summer-guide"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "afterschool-guide"
+            }
         ]
     ],
     "menu_order": 0,
@@ -83,6 +87,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "modified": 1520356591
+    "description": ""
 }

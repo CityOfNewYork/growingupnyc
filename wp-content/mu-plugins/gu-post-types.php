@@ -161,7 +161,7 @@ class GUPostTypes {
         'public' => true,
         'menu_position' => 25,
         'menu_icon' => 'dashicons-awards',
-        'supports' => array('title', 'excerpt'),
+        'supports' => array('title', 'excerpt', 'editor'),
         'has_archive' => true,
         'rewrite' => array(
           'slug' => 'afterschool',

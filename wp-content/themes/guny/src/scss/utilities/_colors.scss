@@ -122,6 +122,32 @@
 }
 
 // 
+.bg-very-strong-blue,
+.hover\:bg-very-strong-blue:hover {
+  background-color: $very-strong-blue !important;
+}
+
+.border-very-strong-blue,
+.hover\:border-very-strong-blue:hover {
+  border-color: $very-strong-blue !important;
+}
+
+.text-very-strong-blue,
+.hover\:text-very-strong-blue:hover {
+  color: $very-strong-blue !important;
+}
+
+.fill-very-strong-blue,
+.hover\:fill-very-strong-blue:hover {
+  fill: $very-strong-blue !important;
+}
+
+.stop-color-very-strong-blue,
+.hover\:stop-color-very-strong-blue:hover {
+  stop-color: $very-strong-blue !important;
+}
+
+// 
 .bg-blue-2,
 .hover\:bg-blue-2:hover {
   background-color: $blue-2 !important;
@@ -146,4 +172,5 @@
 .hover\:stop-color-blue-2:hover {
   stop-color: $blue-2 !important;
 }
+
 // End Tailwind Utility

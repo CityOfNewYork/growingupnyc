@@ -28,11 +28,11 @@
 {% block hero %}
 
   <div class="js-parallax">
-    <header class="c-hero c-hero--large bg-strong-blue js-parallax-content">
+    <header class="c-hero c-hero--large bg-blue-2 js-parallax-content">
 
       <div class="o-container js-parallax-text">
         <h1 class="c-hero__title">
-          <span class="c-hero__sticker sticker bg-very-strong-blue">
+          <span class="c-hero__sticker sticker bg-strong-blue">
             <svg aria-hidden="true" class="icon--medium"><use xlink:href="#icon-afterschool-guides"></use></svg>
           </span>
           {{ page_title }}
@@ -62,11 +62,11 @@
   <div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
     {% for item in filters %}
     <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading bg-strong-blue" id="type-filter-heading">{{ item.prompt }}</h3>
-      <ul class="js-accordion__content c-list-box__content bg-blue-2" id="type-filter-panel">
+      <h3 class="js-accordion__header c-list-box__heading bg-very-strong-blue" id="type-filter-heading">{{ item.prompt }}</h3>
+      <ul class="js-accordion__content c-list-box__content bg-strong-blue" id="type-filter-panel">
         {% for filter in item.filters %}
         <li>
-          <a href="{{ filter.link }}" class="c-list-box__subitem bg-blue-2 hover:bg-strong-blue">
+          <a href="{{ filter.link }}" class="c-list-box__subitem bg-strong-blue hover:bg-blue-2">
             {{ filter.name }}
             {% if filter.count %}
               <span class="bg-strong-blue rounded float-right"
@@ -102,7 +102,7 @@
   <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-sm-gutter">
     {% spaceless %}
     <p class="type--no-results">
-      {{ __('No summer events found for;', domain) }}
+      {{ __('No afterschool events found for;', domain) }}
       {% for value in filters %}
         {% if loop.last %}{{ __('and', domain) }} {% endif %}
         {% if value.prompt == value.default %}{{ value.name }}{% else %}{{ value.prompt }}{% endif %}{% if loop.last %}.{% else %},{% endif %}

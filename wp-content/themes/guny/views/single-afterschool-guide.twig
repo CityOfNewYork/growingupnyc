@@ -19,7 +19,8 @@
         <p class="c-hero__tagline"></p>
 
         <p class="c-hero__tagline">
-          {% set colors = ['strong-blue', 'very-dark-blue', 'strong-blue', 'very-dark-blue', 'strong-blue', 'very-dark-blue'] %}
+          {# {% set colors = ['strong-blue', 'very-dark-blue', 'strong-blue', 'very-dark-blue', 'strong-blue', 'very-dark-blue'] %} #}
+          {% set colors = ['very-dark-blue', 'strong-blue', 'very-dark-blue', 'strong-blue', 'very-dark-blue', 'strong-blue'] %}
           {% for key, value in taxonomies %}
 
             {% if key != 'borough' %}
@@ -51,7 +52,7 @@
           {% for section in sections %}
           {% if section.section_title %}
           <li class="c-nav-list__item">
-            <a class="js-section c-nav-list__link bg-very-strong-blue border-very-strong-blue hover:border-strong-blue hover:bg-strong-blue" href="#section-{{ section.slug }}" data-section="section-{{ section.slug }}">
+            <a class="js-section c-nav-list__link bg-very-dark-blue border-very-dark-blue hover:border-strong-blue hover:bg-strong-blue" href="#section-{{ section.slug }}" data-section="section-{{ section.slug }}">
               {{ section.section_title }} {# translation comes from page content #}
               <svg aria-hidden="true" class="icon--caret">
                 <use xlink:href="#icon-caret-right"></use>

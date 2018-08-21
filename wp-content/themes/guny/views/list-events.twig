@@ -148,12 +148,12 @@
 {# pagination #}
 <div class="o-content-container--compact">
   <button v-if="eventPage > 1" >
-    <router-link class="button--outline button--outline--gray alignleft" v-if="eventPage > 1" :to="{ name: 'events', query: { page: eventPage-1 }}" @click.native="parseQuery">{{ __('Previous', 'guny') }}</router-link>    
+    <router-link class="button--outline button--outline--gray alignleft" v-if="eventPage > 1" :to="{ query: { page: eventPage-1 }}" @click.native="parseQuery">{{ __('Previous', 'guny') }}</router-link>    
   </button>
 
 
   <button v-if="errorMsg == false">
-    <router-link class="button--outline button--outline--gray alignright" :to="{ name: 'events', query: { page: eventPage+1 }}" @click.native="parseQuery">{{ __('Next', 'guny') }}</router-link>
+    <router-link class="button--outline button--outline--gray alignright" :to="{  query: { page: eventPage+1 }}" @click.native="parseQuery">{{ __('Next', 'guny') }}</router-link>
   </button>
 </div>
 {% endblock %}

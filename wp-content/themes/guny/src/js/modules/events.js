@@ -79,7 +79,7 @@ EventsList.getEvents = function() {
 
   // update the query
   if ( this.eventPage == 1){
-    this.$router.push({name: 'events', query: {cat_id: this.checkedEventType, age_id: this.checkedAgeGroup, borough_id: this.checkedBorough }});
+    this.$router.push({query: {cat_id: this.checkedEventType, age_id: this.checkedAgeGroup, borough_id: this.checkedBorough }});
   }else {
     this.$router.push({query: {cat_id: this.checkedEventType, age_id: this.checkedAgeGroup, borough_id: this.checkedBorough, page: this.eventPage }});
   }

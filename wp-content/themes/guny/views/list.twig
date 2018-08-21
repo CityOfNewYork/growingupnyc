@@ -2,12 +2,10 @@
 
 {% block content %}
   
-  {% if is_archive %}
-    {% if 'events' in current_url %}
-      {% set v_page = 'events' %}
-    {% elseif 'programs' in current_url %}
-      {% set v_page = 'programs' %}
-    {% endif %}
+  {% if 'events' in current_url %}
+    {% set v_page = 'events' %}
+  {% elseif 'programs' in current_url %}
+    {% set v_page = 'programs' %}
   {% endif %}
 
   <div id="vue-{{v_page}}">

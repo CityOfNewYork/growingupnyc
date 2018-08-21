@@ -72,8 +72,6 @@ window.accordion = accordion;
   if (window.location.pathname.indexOf('events') >= 0) {
     new EventsList().init();
   }
-
-
   
   // Initialize share by email/sms forms.
   $(`.${ShareForm.CssClass.FORM}`).each((i, el) => {

@@ -6,6 +6,7 @@ import router from './router'
 
 
 class ProgramsList {
+
   constructor() {
     if(document.documentElement.lang != 'en'){
       this._baseURL = window.location.origin + '/' + document.documentElement.lang;
@@ -18,7 +19,6 @@ class ProgramsList {
       el: '#vue-programs',
       router,
       data: {
-        url: window.location.href,
         programsURL: this._baseURL + '/wp-json/wp/v2/program',
         programTypeURL: this._baseURL + '/wp-json/wp/v2/programs_cat',
         ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group',

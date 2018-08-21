@@ -73,10 +73,10 @@
       </div>
       <div class="c-card__tags" v-if="post.programs_cat">
         <span v-for="term in post.programs_cat"> 
-          <router-link :to="{ name: 'programs', query: { programs_cat: term.term_id }}" class="button--pill" @click.native="parseQuery">v{ term.name }</router-link>
+          <router-link :to="{ query: { programs_cat: term.term_id }}" class="button--pill" @click.native="parseQuery">v{ term.name }</router-link>
         </span>
         <span v-for="term in post.age_group"> 
-          <router-link :to="{ name: 'programs', query: { age_group: term.term_id }}" class="button--pill button--pill--alt" @click.native="parseQuery">v{ term.name }</router-link>
+          <router-link :to="{ query: { age_group: term.term_id }}" class="button--pill button--pill--alt" @click.native="parseQuery">v{ term.name }</router-link>
         </span>
       </div>
       <div class="c-card__body">
@@ -93,12 +93,12 @@
 {# pagination #}
 <div class="o-content-container--compact">
   <button v-if="programPage > 1" >
-    <router-link class="button--outline button--outline--gray alignleft" v-if="programPage > 1" :to="{ name: 'programs', query: { page: programPage-1 }}" @click.native="parseQuery">{{ __('Previous', 'guny') }}</router-link>    
+    <router-link class="button--outline button--outline--gray alignleft" v-if="programPage > 1" :to="{ query: { page: programPage-1 }}" @click.native="parseQuery">{{ __('Previous', 'guny') }}</router-link>    
   </button>
 
 
   <button v-if="errorMsg == false">
-    <router-link class="button--outline button--outline--gray alignright" :to="{ name: 'programs', query: { page: programPage+1 }}" @click.native="parseQuery">{{ __('Next', 'guny') }}</router-link>
+    <router-link class="button--outline button--outline--gray alignright" :to="{ query: { page: programPage+1 }}" @click.native="parseQuery">{{ __('Next', 'guny') }}</router-link>
   </button>
 </div>
 {% endblock %}

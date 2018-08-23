@@ -66,11 +66,11 @@ ProgramsList.getPrograms = function() {
   let url = this.programsURL;
   
   let filters = ProgramsList.generateFilterURL(this.checkedProgramType, this.checkedAgeGroup, this.programPage);
-  url = url + '?' + filters;
+  url = url + '?' + filters.typeIds + '&' + filters.ageIds + '&' + filters.pageId;
 
   // update the query
   if ( this.programPage == 1){
-    this.$router.push({query: {programs_cat: this.checkedProgramType, age_group: this.checkedAgeGroup }});
+    this.$router.push({query: {category: filters.typeSlugs, age: filters.ageSlugs }});
   }else {
     this.$router.push({query: {programs_cat: this.checkedProgramType, age_group: this.checkedAgeGroup, page: this.programPage }});
   }
@@ -119,21 +119,38 @@ ProgramsList.getAgeGroups = function() {
  * @return {string} - string of all filters
  **/
 ProgramsList.generateFilterURL = function(types, ages, page) {
-  let filters = [];
+  let filters = {
+    typeIds: [],
+    typeSlugs: [],
+    ageIds: [],
+    ageSlugs: [],
+    pageId: []
+  };
 
+  // populate the arrays based on filters
   if ( types.length > 0 ) {
-    filters.push('programs_cat[]=' + types.join('&programs_cat[]='));
+    let type_ids = types.map(a => a.id);
+    filters.typeIds.push('programs_cat[]=' + type_ids.join('&programs_cat[]='));
+
+    let type_slugs = types.map(a => a.slug);
+    filters.typeSlugs= type_slugs;
   }
 
   if ( ages.length > 0  ) {
-    filters.push('age_group[]=' + ages.join('&age_group[]='));
+    let age_ids = ages.map(a => a.id);
+    filters.ageIds.push('age_group[]=' + age_ids.join('&age_group[]='));
+
+    let age_slugs = ages.map(a => a.slug);
+    filters.ageSlugs= age_slugs;
   }
 
   if (page > 1) {
-    filters.push('page=' + page);
+    filters.pageId.push('page=' + page);
   }
 
-  filters = filters.join('&');
+  // join array elements
+  filters.ageIds = filters.ageIds.join('&');
+  filters.typeIds = filters.typeIds.join('&');
   
   return filters;
 }

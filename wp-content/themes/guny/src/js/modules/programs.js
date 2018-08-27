@@ -37,15 +37,19 @@ class ProgramsList {
         programPage: 'getPrograms',
       },
       mounted: function() {
-        this.getProgramTypes(),
-        this.getAgeGroups(),
-        this.parseQuery(),
-        this.getPrograms()
+        axios.all([
+          axios.get(this.programTypeURL),
+          axios.get(this.ageGroupURL)
+          ])
+          .then(axios.spread((catResponse, ageResponse) => {
+            this.programTypes = catResponse.data;
+            this.ageGroups = ageResponse.data;
+            this.parseQuery();
+            this.getPrograms();
+          }));
       },
       methods: {
         getPrograms: ProgramsList.getPrograms,
-        getProgramTypes: ProgramsList.getProgramTypes,
-        getAgeGroups: ProgramsList.getAgeGroups,
         generateFilterURL: ProgramsList.generateFilterURL,
         parseQuery: ProgramsList.parseQuery,
       }
@@ -89,26 +93,6 @@ ProgramsList.getPrograms = function() {
       console.log(error);
       this.programPage = 1;
     });
-}
-
-/**
- * Request to get the program types to populate filter
- */
-ProgramsList.getProgramTypes = function() {
-  axios
-    .get(this.programTypeURL)
-    .then(response => (this.programTypes = response.data))
-    .catch(error => console.log(error))
-}
-
-/**
- * Request to get the age groups to populate filter
- */
-ProgramsList.getAgeGroups = function() {
-  axios
-    .get(this.ageGroupURL)
-    .then(response => (this.ageGroups = response.data))
-    .catch(error => console.log(error))
 }
 
 /**
@@ -192,3 +176,5 @@ ProgramsList.parseQuery = function() {
 }
 
 export default ProgramsList;
+
+

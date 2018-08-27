@@ -7,7 +7,6 @@
             "label": "",
             "name": "sections",
             "type": "flexible_content",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -28,7 +27,6 @@
                             "label": "Section Title",
                             "name": "section_title",
                             "type": "text",
-                            "value": null,
                             "instructions": "Titles are required for the jump navigation to work.",
                             "required": 1,
                             "conditional_logic": 0,
@@ -48,7 +46,6 @@
                             "label": "Section Content",
                             "name": "section_content",
                             "type": "wysiwyg",
-                            "value": null,
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
@@ -78,7 +75,6 @@
                             "label": "Section Title",
                             "name": "section_title",
                             "type": "text",
-                            "value": null,
                             "instructions": "Titles are required for the jump navigation to work.",
                             "required": 1,
                             "conditional_logic": 0,
@@ -241,6 +237,13 @@
                 "operator": "==",
                 "value": "summer-guide"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "afterschool-guide"
+            }
         ]
     ],
     "menu_order": 0,
@@ -250,6 +253,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "modified": 1525981059
+    "description": ""
 }

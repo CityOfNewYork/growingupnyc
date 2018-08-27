@@ -35,7 +35,6 @@
 }
 
 //
-
 .bg-vivid-orange,
 .hover\:bg-vivid-orange:hover {
   background-color: $vivid-orange !important;
@@ -62,7 +61,6 @@
 }
 
 //
-
 .bg-bright-red,
 .hover\:bg-bright-red:hover {
   background-color: $bright-red !important;
@@ -79,7 +77,6 @@
 }
 
 //
-
 .bg-white,
 .hover\:bg-white:hover {
   background-color: $white !important;
@@ -93,5 +90,43 @@
 .text-white,
 .hover\:text-white:hover {
   color: $white !important;
+}
+
+// 
+.bg-strong-blue,
+.hover\:bg-strong-blue:hover {
+  background-color: $strong-blue !important;
+}
+
+.border-strong-blue,
+.hover\:border-strong-blue:hover {
+  border-color: $strong-blue !important;
+}
+
+// 
+.bg-very-dark-blue,
+.hover\:bg-very-dark-blue:hover {
+  background-color: $very-dark-blue !important;
+}
+
+.border-very-dark-blue,
+.hover\:border-very-dark-blue:hover {
+  border-color: $very-dark-blue !important;
+}
+
+.stop-color-very-dark-blue,
+.hover\:stop-color-very-dark-blue:hover {
+  stop-color: $very-dark-blue !important;
+}
+
+// 
+.bg-blue-2,
+.hover\:bg-blue-2:hover {
+  background-color: $blue-2 !important;
+}
+
+.stop-color-blue-2,
+.hover\:stop-color-blue-2:hover {
+  stop-color: $blue-2 !important;
 }
 // End Tailwind Utility

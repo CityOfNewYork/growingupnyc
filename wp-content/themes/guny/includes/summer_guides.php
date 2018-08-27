@@ -194,7 +194,7 @@ function get_filter($slug) {
   // for the different combinations of taxonomy filters.
   $context = Timber::get_context();
   $request = $context['request'] -> get;
-  $args = array('post_type' => SLUG, 'tax_query' => array());
+  $args = array('post_type' => SLUG, 'tax_query' => array(), 'posts_per_page' => -1);
 
   // Build the taxonomy query request as is in the wp_query format
   foreach ($request as $key => $value) {

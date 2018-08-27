@@ -7,7 +7,6 @@
             "label": "",
             "name": "date_options",
             "type": "radio",
-            "value": null,
             "instructions": "Choose your date option below. The dates are automatically formatted to display without the time or the year on the front-end. If you would like to change the format of the way the dates are displayed, you can do so in Custom Fields > Date Options. Changes in formatting will affect how all dates in any post type using this field are displayed on the front-end. You can see which post types use this field in Custom Fields > Date Options under Location.",
             "required": 0,
             "conditional_logic": 0,
@@ -35,7 +34,6 @@
             "label": "Single Date",
             "name": "single_date",
             "type": "date_time_picker",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": [
@@ -61,7 +59,6 @@
             "label": "Start Date",
             "name": "start_date",
             "type": "date_time_picker",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": [
@@ -87,7 +84,6 @@
             "label": "End Date",
             "name": "end_date",
             "type": "date_time_picker",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": [
@@ -113,7 +109,6 @@
             "label": "Multiple Dates",
             "name": "multiple_dates",
             "type": "repeater",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": [
@@ -141,7 +136,6 @@
                     "label": "Date",
                     "name": "date",
                     "type": "date_time_picker",
-                    "value": null,
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -161,7 +155,6 @@
             "label": "Multiple Date Ranges",
             "name": "multiple_date_ranges",
             "type": "repeater",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": [
@@ -189,7 +182,6 @@
                     "label": "Start Date",
                     "name": "start_date",
                     "type": "date_time_picker",
-                    "value": null,
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -207,7 +199,6 @@
                     "label": "End Date",
                     "name": "end_date",
                     "type": "date_time_picker",
-                    "value": null,
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -227,7 +218,6 @@
             "label": "Plain Text Date",
             "name": "plain_text_date",
             "type": "text",
-            "value": null,
             "instructions": "",
             "required": 0,
             "conditional_logic": [
@@ -258,6 +248,13 @@
                 "operator": "==",
                 "value": "summer-guide"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "afterschool-guide"
+            }
         ]
     ],
     "menu_order": 0,
@@ -267,6 +264,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "modified": 1520355740
+    "description": ""
 }

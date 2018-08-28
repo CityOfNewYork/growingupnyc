@@ -15,6 +15,8 @@ import ShareForm from './modules/share-form.js';
 import captchaResize from './modules/captchaResize.js';
 import rotatingTextAnimation from './modules/rotatingTextAnimation.js';
 import Search from './modules/search.js';
+import EventsList from './modules/events.js';
+import ProgramsList from './modules/programs.js';
 /* eslint-disable no-unused-vars */
 import toggleOpen from './modules/toggleOpen.js';
 import toggleMenu from './modules/toggleMenu.js';
@@ -28,6 +30,7 @@ function ready(fn) {
   }
 }
 
+// intialize modules
 function init() {
   toggleOpen('is-open');
   alert('is-open');
@@ -61,6 +64,15 @@ window.accordion = accordion;
 
 (function(window, $) {
   'use strict';
+
+  if (window.location.pathname.indexOf('programs') >= 0) {
+    new ProgramsList().init();
+  }
+
+  if (window.location.pathname.indexOf('events') >= 0) {
+    new EventsList().init();
+  }
+  
   // Initialize share by email/sms forms.
   $(`.${ShareForm.CssClass.FORM}`).each((i, el) => {
     const shareForm = new ShareForm(el);

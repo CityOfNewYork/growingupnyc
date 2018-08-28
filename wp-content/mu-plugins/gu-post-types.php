@@ -44,6 +44,7 @@ class GUPostTypes {
         'public' => true,
         'menu_position' => 21,
         'menu_icon' => 'dashicons-carrot',
+        'show_in_rest' => true,
         'supports' => array( 'title', 'excerpt' ),
         'has_archive' => true,
         'rewrite' => array(
@@ -178,7 +179,8 @@ class GUPostTypes {
       array(
         'label' => __( 'Event Location' ),
         'hierarchical' => true,
-        'rewrite' => false
+        'rewrite' => false,
+        'show_in_rest' => true
       )
     );
 
@@ -188,7 +190,8 @@ class GUPostTypes {
       array(
         'label' => __( 'Age Groups' ),
         'hierarchical' => true,
-        'rewrite' => false
+        'rewrite' => false,
+        'show_in_rest' => true
       )
     );
 
@@ -197,7 +200,8 @@ class GUPostTypes {
       array('program'),
       array(
         'label' => __( 'Program Categories' ),
-        'hierarchical' => true
+        'hierarchical' => true,
+        'show_in_rest' => true
       )
     );
 

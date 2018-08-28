@@ -227,7 +227,8 @@ gulp.task('scripts', ['clean (scripts)', 'pack'], function() {
   .pipe(rename({suffix: '.min'}))
   .pipe(size({showFiles: true}))
   .pipe(gulp.dest(dist + 'js'))
-  .pipe(browserSync.stream({match: '**/*.js'}));
+  .pipe(browserSync.stream({match: '**/*.js'}))
+  .pipe(notify({message: 'Scripts task complete'}))
 });
 
 

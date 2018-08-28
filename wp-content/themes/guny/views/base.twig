@@ -1,12 +1,18 @@
+{% if language_code == 'en' %}
+    {% set urlBase = '' %}
+{% else %}
+    {% set urlBase = '/' ~ language_code %}
+{% endif %}
+
 <!DOCTYPE html>
 <!--[if lte IE 8 ]>
-<html lang="en" class="no-js oldie">
+<html lang="{{language_code}}" class="no-js oldie">
 <![endif]-->
 <!--[if IE 9 ]>
-<html lang="en" class="no-js ie9">
+<html lang="{{language_code}}" class="no-js ie9">
 <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
-<html lang="en" class="no-js">
+<html lang="{{language_code}}" class="no-js">
 <!--<![endif]-->
 <head>
   <meta charset="utf-8">

@@ -52,6 +52,7 @@ class ProgramsList {
         getPrograms: ProgramsList.getPrograms,
         generateFilterURL: ProgramsList.generateFilterURL,
         parseQuery: ProgramsList.parseQuery,
+        getIds: ProgramsList.getIds,
       }
     }
   }
@@ -113,7 +114,7 @@ ProgramsList.generateFilterURL = function(types, ages, page) {
 
   // populate the arrays based on filters
   if ( types.length > 0 ) {
-    let type_ids = types.map(a => a.id);
+    let type_ids = types.map(a => a.term_id);
     filters.typeIds.push('programs_cat[]=' + type_ids.join('&programs_cat[]='));
 
     let type_slugs = types.map(a => a.slug);
@@ -145,16 +146,17 @@ ProgramsList.generateFilterURL = function(types, ages, page) {
 ProgramsList.parseQuery = function() {
   let query =this.$route.query;
 
-  if (_.isArray(query.programs_cat)){
-    if (query.programs_cat.every( (val, i, arr) => val === arr[0] )){
-      query.programs_cat = query.programs_cat[0];
+  if (_.isArray(query.category)){
+    // if an array with the same value in each element
+    if (query.category.every( (val, i, arr) => val === arr[0] )){
+      query.category = query.category[0];
     }else{
-      this.checkedProgramType=query.programs_cat.map(Number);
+      this.checkedProgramType=ProgramsList.getIds(this.programTypes, query.category.map(String));
     }
   }
 
-  if (!_.isArray(query.programs_cat) && query.programs_cat){
-    this.checkedProgramType.push(parseInt(query.programs_cat, 10));
+  if (!_.isArray(query.category) && query.category){
+    this.checkedProgramType.push(parseInt(query.category, 10));
   }
 
   if (_.isArray(query.age_group)){
@@ -173,6 +175,25 @@ ProgramsList.parseQuery = function() {
     this.programPage=query.page;
   }
 
+}
+
+/**
+ * Gets the id of the slug
+ **/
+ProgramsList.getIds = function(filter, slugs) {
+  let arrIds = [];
+  
+  // loop through each slug and get the index to capture the filter
+  slugs.forEach(function(slug) {
+    let index = filter.map(function(e) { return e.slug; }).indexOf(slug);
+    if (filter[index].id) {
+      arrIds.push(filter[index])
+    }else {
+      arrIds.push(filter[index])
+    }
+  });
+
+  return arrIds;
 }
 
 export default ProgramsList;

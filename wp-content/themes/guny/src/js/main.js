@@ -6,7 +6,8 @@ import stickNav from './modules/stickNav.js';
 import sectionHighlighter from './modules/sectionHighlighter.js';
 import staticColumn from './modules/staticColumn.js';
 import alert from './modules/alert.js';
-import bsdtoolsSignup from './modules/bsdtools-signup.js';
+// import bsdtoolsSignup from './modules/bsdtools-signup.js';
+import gunySignup from './modules/newsletter-signup.js';
 import formEffects from './modules/formEffects.js';
 import facets from './modules/facets.js';
 import owlSettings from './modules/owlSettings.js';
@@ -42,7 +43,8 @@ function init() {
   // Homepage
   staticColumn();
   stickNav();
-  bsdtoolsSignup();
+  // bsdtoolsSignup();
+  gunySignup();
   formEffects();
   owlSettings();
   iOS7Hack();

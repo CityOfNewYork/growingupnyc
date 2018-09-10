@@ -1,5 +1,7 @@
 'use strict';
+
 import _ from 'underscore';
+import $ from 'jquery';
 import Vue from 'vue/dist/vue.common';
 import axios from 'axios';
 import router from './router'
@@ -28,7 +30,8 @@ class ProgramsList {
         checkedProgramType: [],
         checkedAgeGroup: [],
         programPage: 1,
-        errorMsg: false
+        errorMsg: false,
+        loading: false
       },
        watch: {
         url: 'getPrograms',
@@ -80,6 +83,9 @@ ProgramsList.getPrograms = function() {
     this.$router.push({query: {programs_cat: this.checkedProgramType, age_group: this.checkedAgeGroup, page: this.programPage }});
   }
 
+  // loading background
+  $(this.$el).find('section.o-container').addClass('o-content-container__bg-blue');
+  
   axios
     .get(url)
     .then(response => {
@@ -88,6 +94,8 @@ ProgramsList.getPrograms = function() {
         this.errorMsg = true;
       } else {
         this.errorMsg = false;
+        this.loading = true;
+        $(this.$el).find('section.o-container').removeClass('o-content-container__bg-blue');
       }
     })
     .catch(error => {

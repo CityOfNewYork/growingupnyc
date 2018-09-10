@@ -39,3 +39,10 @@
     width: flex-grid(7, 8) + flex-gutter(8);
   }
 }
+
+.o-content-container__bg-blue {
+  background-color: #2793e0;
+  opacity: .5;
+  width: 100%;
+  height: 100%;
+}

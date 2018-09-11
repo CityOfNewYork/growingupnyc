@@ -53,7 +53,7 @@ export default function() {
       formData.find('.guny-error').html(`<p>${errorMsg}</p>`);
     } else {
       event.preventDefault();
-      submitSignup(fields)
+      submitSignup(fields);
 
     }
   }
@@ -63,9 +63,16 @@ export default function() {
   * @param {string} zip - zip code
   */
   function assignBorough(zip){
-    let index = zipcodes.findIndex(x => x.codes.indexOf(parseInt(zip)) >-1);
+    let borough = "";
+    let index = zipcodes.findIndex(x => x.codes.indexOf(parseInt(zip)) > -1);
 
-    return zipcodes[index].borough;
+    if(index === -1){
+      borough = "Manhattan";
+    }else {
+      borough = zipcodes[index].borough;
+    }
+
+    return borough;
   }
 
   /**

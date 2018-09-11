@@ -2,6 +2,7 @@
 * Validate a form and submit via the signup API
 */
 import _ from 'underscore';
+import zipcodes from './data/zipcodes.json'
   
 export default function() {
   const $signupForms = $('.guny-signup');
@@ -13,6 +14,9 @@ export default function() {
   * @param {object} event - event object
   */
   function validateFields(formData, event) {
+
+    event.preventDefault();
+
     const fields = formData.serializeArray().reduce((obj, item) => (obj[item.name] = item.value, obj) ,{})
     const requiredFields = formData.find('[required]');
     const emailRegex = new RegExp(/\S+@\S+\.\S+/);
@@ -35,18 +39,35 @@ export default function() {
       ) {
         hasErrors = true;
         $(this).addClass('is-error');
-      } 
+      }
+
+      // assign the correct borough to good zip
+      if((fieldName == "EMAIL" && emailRegex.test(fields.EMAIL))){
+        fields.BOROUGH = assignBorough(fields.ZIP);
+      }
     });
 
+
+    // if there are no errors, submit
     if (hasErrors) {
-      event.preventDefault();
       formData.find('.guny-error').html(`<p>${errorMsg}</p>`);
     } else {
       event.preventDefault();
       submitSignup(fields)
+
     }
   }
   
+  /**
+  * Assigns the borough based on the zip code
+  * @param {string} zip - zip code
+  */
+  function assignBorough(zip){
+    let index = zipcodes.findIndex(x => x.codes.indexOf(parseInt(zip)) >-1);
+
+    return zipcodes[index].borough;
+  }
+
   /**
   * Submits the form object to Mailchimp
   * @param {object} formData - form fields

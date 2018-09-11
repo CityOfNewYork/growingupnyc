@@ -18,6 +18,19 @@
         <input type="email" value="" name="EMAIL" class="email form-field signup-form__field" id="mce-EMAIL" required>
       </div>
 
+      {# BOROUGH #}
+      <div class="mc-field-group" style="display:none">
+        <select name="BOROUGH" class="required" id="mce-BOROUGH" >
+          <option value=""></option>
+          <option value="Bronx">Bronx</option>
+          <option value="Brooklyn">Brooklyn</option>
+          <option value="Manhattan">Manhattan</option>
+          <option value="Queens">Queens</option>
+          <option value="Staten Island">Staten Island</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
       {# ZIPCODE #}
       <div class="mc-field-group signup-form__input {% if full_width %}signup-form__input--full{% else %}signup-form__input--short{%endif %}">
 

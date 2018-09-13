@@ -5,7 +5,7 @@ import _ from 'underscore';
 import zipcodes from './data/zipcodes.json'
   
 export default function() {
-  const $signupForms = $('.guny-signup');
+  // const $signupForms = $('.guny-signup');
   const errorMsg = 'Please enter your email and zip code and select at least one age group.';
 
   /**
@@ -13,15 +13,15 @@ export default function() {
   * @param {object} formData - form fields
   * @param {object} event - event object
   */
-  function validateFields(formData, event) {
+  function validateFields(form, event) {
 
     event.preventDefault();
 
-    const fields = formData.serializeArray().reduce((obj, item) => (obj[item.name] = item.value, obj) ,{})
-    const requiredFields = formData.find('[required]');
+    const fields = form.serializeArray().reduce((obj, item) => (obj[item.name] = item.value, obj) ,{})
+    const requiredFields = form.find('[required]');
     const emailRegex = new RegExp(/\S+@\S+\.\S+/);
     const zipRegex = new RegExp(/^\d{5}(-\d{4})?$/i);
-    let ageSelected = Object.keys(fields).find(a =>a.includes("group"))? true : false;
+    let groupSeleted = Object.keys(fields).find(a =>a.includes("group"))? true : false;
     let hasErrors = false;
 
     // loop through each required field
@@ -29,31 +29,35 @@ export default function() {
       const fieldName = $(this).attr('name');
       $(this).removeClass('is-error');
 
-      if((typeof fields[fieldName] === 'undefined') && !ageSelected) {
+      if((typeof fields[fieldName] === 'undefined') && !groupSeleted) {
         hasErrors = true;
         $(this).addClass('is-error');
       }
 
-      if((fieldName == "EMAIL" && !emailRegex.test(fields.EMAIL)) || 
-        (fieldName == "ZIP" && !zipRegex.test(fields.ZIP)) 
+      if((fieldName == 'EMAIL' && !emailRegex.test(fields.EMAIL)) || 
+        (fieldName == 'ZIP' && !zipRegex.test(fields.ZIP)) 
       ) {
         hasErrors = true;
         $(this).addClass('is-error');
       }
 
       // assign the correct borough to good zip
-      if((fieldName == "EMAIL" && emailRegex.test(fields.EMAIL))){
+      if((fieldName == 'EMAIL' && emailRegex.test(fields.EMAIL))){
         fields.BOROUGH = assignBorough(fields.ZIP);
+      }
+
+      if((fieldName != 'EMAIL') && (fieldName != 'ZIP') && fields[fieldName] === ""
+      ) {
+        $(this).addClass('is-error');
       }
     });
 
 
     // if there are no errors, submit
     if (hasErrors) {
-      formData.find('.guny-error').html(`<p>${errorMsg}</p>`);
+      form.find('.guny-error').html(`<p>${errorMsg}</p>`);
     } else {
-      event.preventDefault();
-      submitSignup(fields);
+      submitSignup(form, fields);
 
     }
   }
@@ -63,7 +67,7 @@ export default function() {
   * @param {string} zip - zip code
   */
   function assignBorough(zip){
-    let borough = "";
+    let borough = '';
     let index = zipcodes.findIndex(x => x.codes.indexOf(parseInt(zip)) > -1);
 
     if(index === -1){
@@ -79,10 +83,10 @@ export default function() {
   * Submits the form object to Mailchimp
   * @param {object} formData - form fields
   */
-  function submitSignup(formData){
+  function submitSignup(form, formData){
     $.ajax({
-      url: $signupForms.attr('action'),
-      type: $signupForms.attr('method'),
+      url: form.attr('action'),
+      type: form.attr('method'),
       dataType: 'json',//no jsonp
       cache: false,
       data: formData,
@@ -90,16 +94,20 @@ export default function() {
       success: function(response) {
         if(response.result !== 'success'){
           if(response.msg.includes('too many recent signup requests')){
-            $signupForms.find('.guny-error').html('<p>There was a problem with your subscription.</p>');
+            form.find('.guny-error').html('<p>There was a problem with your subscription.</p>');
           }else if(response.msg.includes('already subscribed')){
-            $signupForms.find('.guny-error').html('<p>You are already signed up for updates! Check your email.</p>');
+            form.find('.guny-error').html('<p>You are already signed up for updates! Check your email.</p>');
           }
         }else {
-          $signupForms.html('<p class="c-signup-form__success">One more step! <br /> Please check your inbox and confirm your email address to start receiving updates. <br />Thanks for signing up!</p>');
+          if(form[0].className.indexOf('contact') > -1){
+            form.html('<p>Thank you for contacting us! Someone will respond to you shortly.</p>');
+          }else{
+            form.html('<p class="c-signup-form__success">One more step! <br /> Please check your inbox and confirm your email address to start receiving updates. <br />Thanks for signing up!</p>');
+          }
         }
       },
       error: function(response) {
-        $signupForms.find('.guny-error').html('<p>There was a problem with your subscription. Check back later.</p>');
+        form.find('.guny-error').html('<p>There was a problem with your subscription. Check back later.</p>');
       }
     });
   }
@@ -108,10 +116,22 @@ export default function() {
   * Triggers form validation and sends the form data to Mailchimp
   * @param {object} formData - form fields
   */
-  if ($signupForms.length) {
-    $signupForms.find('[type="submit"]').click(function(event){
-      validateFields($signupForms, event);
+  $('button[type="submit"]').click(function(event){
+   event.preventDefault();
+      let testForms = $(this).parent().parent().attr('class');
+      let $form = $('.' + testForms);
+      validateFields($form, event);
+
     })
 
-  }
+  /**
+  * Checking characters against the 255 char limit
+  */
+  $('.textarea').keyup(function(){
+    let v = 255 - $(this).val().length;
+    $('.char-count').text('Characters left: ' + v);
+    if(v < 0){
+      $('.char-count').css("color", '#d8006d');
+    }
+  });
 }

@@ -233,3 +233,33 @@ input[type="search"].form-field {
 .checkbox__field.is-error + .checkbox__indicator {
   border-color: $color-error;
 }
+
+// dark
+.checkbox__field-dark {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+.checkbox__indicator-dark {
+  background: $white;
+  border-radius: 3px;
+  border: 2px solid $bright-blue;
+  display: inline-block;
+  color: transparent;
+  height: rem-calc(20);
+  width: rem-calc(20);
+  vertical-align: middle;
+}
+
+.checkbox__field-dark:checked + .checkbox__indicator-dark {
+  color: $color-secondary;
+}
+
+.checkbox__field-dark:focus + .checkbox__indicator-dark {
+  border-color: $dark-gray;
+}
+
+.checkbox__field-dark.is-error + .checkbox__indicator-dark {
+  border-color: $color-error;
+}

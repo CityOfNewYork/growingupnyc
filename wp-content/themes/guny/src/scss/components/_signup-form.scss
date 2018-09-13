@@ -103,6 +103,11 @@
   }
 }
 
+.signup-form__field-dark {
+  @extend .signup-form__field;
+  border: 2px solid $bright-blue;
+}
+
 // Signup Form Label
 .signup-form__label {
   overflow: hidden;
@@ -187,6 +192,16 @@
   vertical-align: middle;
   @include span-columns(6 of 12);
   @include omega(even);
+}
+
+.signup-form__checkbox-dark {
+  //display: inline-block;
+  line-height: rem-calc(20);
+  //margin-right: rem-calc(20);
+  margin-top: rem-calc(10);
+  // vertical-align: middle;
+  // @include span-columns(6 of 12);
+  // @include omega(even);
 }
 
 // Signup Form Button

@@ -1,12 +1,17 @@
 {% extends "base.twig" %}
+
+
 {% block content %}
 
-<section class="o-container u-bottom-spacing u-top-spacing-small">
-	{% if post.parent%}
-		{% include 'partials/forms/forms-microsite-'~post.slug~'.twig' %}
-		{# {{post.parent}} #}
-	{% else %}
-		{% include 'partials/forms/forms-'~post.slug~'.twig' %}
-	{% endif %}
-</section>
+<div class="o-container u-top-spacing">
+  <div class="o-content-container">
+
+		{% if post.parent%}
+			{% include 'partials/forms/forms-microsite-'~post.slug~'.twig' %}
+		{% else %}
+			{% include 'partials/forms/forms-'~post.slug~'.twig' %}
+		{% endif %}
+
+	</div>
+</div>
 {% endblock %}

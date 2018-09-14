@@ -58,7 +58,6 @@ export default function() {
       form.find('.guny-error').html(`<p>${errorMsg}</p>`);
     } else {
       submitSignup(form, fields);
-
     }
   }
   
@@ -117,12 +116,11 @@ export default function() {
   * @param {object} formData - form fields
   */
   $('button[type="submit"]').click(function(event){
-   event.preventDefault();
-      let testForms = $(this).parent().parent().attr('class');
-      let $form = $('.' + testForms);
-      validateFields($form, event);
-
-    })
+    event.preventDefault();
+    let formClass = $(this).parents('form').attr('class');
+    let $form = $('.' + formClass);
+    validateFields($form, event);
+  });
 
   /**
   * Checking characters against the 255 char limit

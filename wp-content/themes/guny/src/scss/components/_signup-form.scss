@@ -209,6 +209,11 @@
   margin-top: rem-calc(20);
 }
 
+.signup-form__button-center {
+  @extend .signup-form__button;
+  margin: auto;
+}
+
 // Signup Form Success Message
 //
 // markup:
@@ -220,4 +225,11 @@
   @include font-size(21, 24);
   font-weight: $font-weight-extrablack;
   text-align: center;
+}
+
+.c-signup-form {
+  width: 100%;
+  @include media($bp-medium) {
+    width: 50%;
+  }
 }

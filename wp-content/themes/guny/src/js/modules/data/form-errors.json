@@ -1,0 +1,23 @@
+[
+	{
+  "EMAIL": "Please enter a valid email."
+	},
+	{
+  "FNAME": "Please enter your first name."
+	},
+	{
+  "LNAME": "Please enter your last name."
+	},
+	{
+  "ZIP": "Please enter a valid US zip code."
+	},
+	{
+  "PHONENUM": "Please enter a valid phone number."
+	},
+	{
+  "MESSAGE": "Please enter a message. Limited to 255 characters."
+	},
+	{
+  "GROUP": "Please select one."
+	}
+]

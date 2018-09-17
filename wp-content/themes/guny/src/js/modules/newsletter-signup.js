@@ -3,6 +3,7 @@
 */
 import _ from 'underscore';
 import zipcodes from './data/zipcodes.json'
+import formErrors from './data/form-errors.json'
   
 export default function() {
   // const $signupForms = $('.guny-signup');
@@ -21,6 +22,7 @@ export default function() {
     const requiredFields = form.find('[required]');
     const emailRegex = new RegExp(/\S+@\S+\.\S+/);
     const zipRegex = new RegExp(/^\d{5}(-\d{4})?$/i);
+    const phoneRegex = new RegExp(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im);
     let groupSeleted = Object.keys(fields).find(a =>a.includes("group"))? true : false;
     let hasErrors = false;
 
@@ -31,13 +33,17 @@ export default function() {
 
       if((typeof fields[fieldName] === 'undefined') && !groupSeleted) {
         hasErrors = true;
+        $(this).parents('fieldset').find('.guny-error-detailed').html('<p>Please select from the list below.</p>');;
+
         $(this).addClass('is-error');
       }
 
       if((fieldName == 'EMAIL' && !emailRegex.test(fields.EMAIL)) || 
-        (fieldName == 'ZIP' && !zipRegex.test(fields.ZIP)) 
+        (fieldName == 'ZIP' && !zipRegex.test(fields.ZIP)) ||
+        (fieldName == 'PHONENUM' && !phoneRegex.test(fields.PHONENUM) && fields.PHONENUM.length !=0)
       ) {
         hasErrors = true;
+        $(this).siblings('.guny-error-detailed').html('<p>' + formErrors.find(x => x[fieldName])[fieldName] + '</p>');
         $(this).addClass('is-error');
       }
 
@@ -46,12 +52,14 @@ export default function() {
         fields.BOROUGH = assignBorough(fields.ZIP);
       }
 
-      if((fieldName != 'EMAIL') && (fieldName != 'ZIP') && fields[fieldName] === ""
+      if((fieldName != 'EMAIL') && (fieldName != 'ZIP') && (fieldName != 'PHONENUM') && fields[fieldName] === ""
       ) {
+        hasErrors = true;
+        $(this).siblings('.guny-error-detailed').html('<p>' + formErrors.find(x => x[fieldName])[fieldName] + '</p>');
         $(this).addClass('is-error');
       }
-    });
 
+    });
 
     // if there are no errors, submit
     if (hasErrors) {
@@ -92,10 +100,14 @@ export default function() {
       contentType: "application/json; charset=utf-8",
       success: function(response) {
         if(response.result !== 'success'){
-          if(response.msg.includes('too many recent signup requests')){
-            form.find('.guny-error').html('<p>There was a problem with your subscription.</p>');
-          }else if(response.msg.includes('already subscribed')){
-            form.find('.guny-error').html('<p>You are already signed up for updates! Check your email.</p>');
+          if(form[0].className.indexOf('contact') > -1){
+            form.html('<p>Something went wrong. Try again later!</p>');
+          }else {
+            if(response.msg.includes('too many recent signup requests')){
+              form.find('.guny-error').html('<p>There was a problem with your subscription.</p>');
+            }else if(response.msg.includes('already subscribed')){
+              form.find('.guny-error').html('<p>You are already signed up for updates! Check your email.</p>');
+            }
           }
         }else {
           if(form[0].className.indexOf('contact') > -1){
@@ -104,13 +116,14 @@ export default function() {
             form.html('<p class="c-signup-form__success">One more step! <br /> Please check your inbox and confirm your email address to start receiving updates. <br />Thanks for signing up!</p>');
           }
         }
+        submitMsg(response);
       },
       error: function(response) {
         form.find('.guny-error').html('<p>There was a problem with your subscription. Check back later.</p>');
       }
     });
   }
-  
+
   /**
   * Triggers form validation and sends the form data to Mailchimp
   * @param {object} formData - form fields
@@ -126,10 +139,14 @@ export default function() {
   * Checking characters against the 255 char limit
   */
   $('.textarea').keyup(function(){
-    let v = 255 - $(this).val().length;
-    $('.char-count').text('Characters left: ' + v);
-    if(v < 0){
+    let charLen = 255 - $(this).val().length;
+    $('.char-count').text('Characters left: ' + charLen);
+    if(charLen < 0){
       $('.char-count').css("color", '#d8006d');
+      $(this).css("border-color", '#d8006d');
+    } else {
+      $('.char-count').css("color", '#333');
+      $(this).css("border-color", '#2793e0');
     }
   });
 }

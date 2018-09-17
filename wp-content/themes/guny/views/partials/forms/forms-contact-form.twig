@@ -3,27 +3,33 @@
 		<div id="mc_embed_signup_scroll">
 			<h2 class="text-center">{{post.title}}</h2>
 			<p class="text-center">{{post.content}}</p>
-	    <div class="signup-form__error guny-error"></div>
+	    {# <div class="signup-form__error guny-error"></div> #}
 
 			<div class="mc-field-group">
 				<label for="mce-EMAIL">Email  <span class="asterisk">*</span></label>
+		    {# <div class="guny-error-detailed">testetes</div> #}
+		    <div class="guny-error-detailed"></div>
         <input type="email" value="" name="EMAIL" class="email form-field signup-form__field-dark" id="mce-EMAIL" required>
 			</div>
 			<div class="mc-field-group">
 				<label for="mce-FNAME">First Name  <span class="asterisk">*</span></label>
-				<input type="text" value="" name="FNAME" class="required form-field signup-form__field-dark" id="mce-FNAME" required>
+		    <div class="guny-error-detailed"></div>
+				<input type="text" value="" name="FNAME" class="form-field signup-form__field-dark" id="mce-FNAME" required>
 			</div>
 			<div class="mc-field-group">
 				<label for="mce-LNAME">Last Name  <span class="asterisk">*</span></label>
-				<input type="text" value="" name="LNAME" class="required form-field signup-form__field-dark" id="mce-LNAME" required>
+		    <div class="guny-error-detailed"></div>
+				<input type="text" value="" name="LNAME" class="form-field signup-form__field-dark" id="mce-LNAME" required>
 			</div>
 			<div class="mc-field-group">
-				<label for="mce-ZIPCODE">Zip Code  <span class="asterisk">*</span></label>
-				<input type="text" value="" name="ZIPCODE" class="required form-field signup-form__field-dark" id="mce-ZIPCODE" required>
+				<label for="mce-ZIP">Zip Code  <span class="asterisk">*</span></label>
+		    <div class="guny-error-detailed"></div>
+				<input type="text" value="" name="ZIP" class="form-field signup-form__field-dark" id="mce-ZIP" required>
 			</div>
 			<div class="mc-field-group">
 				<label for="mce-PHONENUM">Phone Number </label>
-				<input type="text" name="PHONENUM" class=" form-field signup-form__field-dark" value="" id="mce-PHONENUM">
+		    <div class="guny-error-detailed"></div>
+				<input type="text" name="PHONENUM" class=" form-field signup-form__field-dark" value="" id="mce-PHONENUM" required>
 			</div>
 			<div class="mc-field-group">
 				<label for="mce-ORGWEBSITE">Organization Website </label>
@@ -31,15 +37,16 @@
 			</div>
 			<div class="mc-field-group">
 				<label for="mce-MESSAGE">Message (limit 255 characters)  <span class="asterisk">*</span></label>
+		    <div class="guny-error-detailed"></div>
 				{# <input type="text" value="" name="MESSAGE" class="required" id="mce-MESSAGE"> #}
-				<textarea type="text" value="" name="MESSAGE" class="required form-field signup-form__field-dark textarea" id="mce-MESSAGE" required></textarea>
+				<textarea type="text" value="" name="MESSAGE" class="form-field signup-form__field-dark textarea" id="mce-MESSAGE" required></textarea>
 				<p class="char-count text-right"></p>
 			</div>
 
 			{# checkboxes #}
 			<fieldset class="mc-field-group input-group">
 		    <legend>I'd like to: </legend>
-
+		    <div class="guny-error-detailed"></div>
 		    <p class="signup-form__checkbox-dark">
 		    	<label class="checkbox-dark" for="mce-group[431]-431-0">
 			    	<input type="checkbox" value="1" class="checkbox__field-dark" name="group[431][1]" id="mce-group[431]-431-0" required>

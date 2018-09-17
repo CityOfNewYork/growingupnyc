@@ -1,6 +1,7 @@
 <div id="mc_embed_signup" class="c-signup-form aligncenter">
 	<form action="https://twitter.us19.list-manage.com/subscribe/post-json?u=5eda3ff3b81179e054b712d63&amp;id=e84846ac41&c=?" method="get" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="guny-contact" target="_blank" novalidate>
 		<div id="mc_embed_signup_scroll">
+			
 			<h2 class="text-center">{{post.title}}</h2>
 			<p class="text-center">{{post.content}}</p>
 	    {# <div class="signup-form__error guny-error"></div> #}
@@ -34,13 +35,6 @@
 			<div class="mc-field-group">
 				<label for="mce-ORGWEBSITE">Organization Website </label>
 				<input type="url" value="" name="ORGWEBSITE" class="url form-field signup-form__field-dark" id="mce-ORGWEBSITE">
-			</div>
-			<div class="mc-field-group">
-				<label for="mce-MESSAGE">Message (limit 255 characters)  <span class="asterisk">*</span></label>
-		    <div class="guny-error-detailed"></div>
-				{# <input type="text" value="" name="MESSAGE" class="required" id="mce-MESSAGE"> #}
-				<textarea type="text" value="" name="MESSAGE" class="form-field signup-form__field-dark textarea" id="mce-MESSAGE" required></textarea>
-				<p class="char-count text-right"></p>
 			</div>
 
 			{# checkboxes #}
@@ -80,6 +74,15 @@
         </p>
 
 			</fieldset>
+
+			<div class="mc-field-group">
+				<label for="mce-MESSAGE">Message (limit 255 characters)  <span class="asterisk">*</span></label>
+		    <div class="guny-error-detailed"></div>
+				{# <input type="text" value="" name="MESSAGE" class="required" id="mce-MESSAGE"> #}
+				<textarea type="text" value="" name="MESSAGE" class="form-field signup-form__field-dark textarea" id="mce-MESSAGE" required></textarea>
+				<p class="char-count text-right"></p>
+			</div>
+
 
 			<div class="text-center">
 	      <button id="mc-embedded-subscribe" class="signup-form__button button--simple button--simple--alt" type="submit">Submit</button>

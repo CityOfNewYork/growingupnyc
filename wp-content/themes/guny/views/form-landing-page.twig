@@ -1,5 +1,5 @@
-{% extends "base.twig" %}
-
+{# {% extends "base.twig" %} #}
+{% extends parent ? "microsite-base.twig" : "base.twig" %}
 
 {% block content %}
 

@@ -103,9 +103,14 @@
   }
 }
 
-.signup-form__field-dark {
+.signup-form__field-blue {
   @extend .signup-form__field;
   border: 2px solid $bright-blue;
+}
+
+.signup-form__field-purple {
+  @extend .signup-form__field;
+  border: 2px solid $purple;
 }
 
 // Signup Form Label
@@ -194,14 +199,9 @@
   @include omega(even);
 }
 
-.signup-form__checkbox-dark {
-  //display: inline-block;
+.signup-form__checkbox-list {
   line-height: rem-calc(20);
-  //margin-right: rem-calc(20);
   margin-top: rem-calc(10);
-  // vertical-align: middle;
-  // @include span-columns(6 of 12);
-  // @include omega(even);
 }
 
 // Signup Form Button

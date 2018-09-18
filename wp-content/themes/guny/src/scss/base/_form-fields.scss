@@ -234,32 +234,26 @@ input[type="search"].form-field {
   border-color: $color-error;
 }
 
-// dark
-.checkbox__field-dark {
-  position: absolute;
-  opacity: 0;
-  z-index: -1;
-}
-
-.checkbox__indicator-dark {
-  background: $white;
-  border-radius: 3px;
+// blue
+.checkbox__indicator-blue {
+  @extend .checkbox__indicator;
   border: 2px solid $bright-blue;
-  display: inline-block;
-  color: transparent;
-  height: rem-calc(20);
-  width: rem-calc(20);
-  vertical-align: middle;
 }
 
-.checkbox__field-dark:checked + .checkbox__indicator-dark {
-  color: $color-secondary;
+// purple
+.checkbox__indicator-purple {
+  @extend .checkbox__indicator;
+  border: 2px solid $purple;
 }
 
-.checkbox__field-dark:focus + .checkbox__indicator-dark {
+.checkbox__field:checked + .checkbox__indicator-purple {
+  color: $dark-purple;
+}
+
+.checkbox__field:focus + .checkbox__indicator-purple {
   border-color: $dark-gray;
 }
 
-.checkbox__field-dark.is-error + .checkbox__indicator-dark {
+.checkbox__field.is-error + .checkbox__indicator-purple {
   border-color: $color-error;
 }

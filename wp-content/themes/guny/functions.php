@@ -458,7 +458,11 @@ function guny_titles( $title ){
   $_post = get_queried_object();
   // Generation single pages
   $page_type = explode("/", trim(parse_url(get_permalink(), PHP_URL_PATH), "/"));
+
   if ( !is_front_page() && is_single() && in_array($page_type[0], $gen_pages) ) {
+    $title = $_post->post_title . ' - ' . 'Generation NYC';
+  }
+  if ( !is_front_page() && is_page() && in_array($page_type[0], $gen_pages) ) {
     $title = $_post->post_title . ' - ' . 'Generation NYC';
   }
   // Generation Landings

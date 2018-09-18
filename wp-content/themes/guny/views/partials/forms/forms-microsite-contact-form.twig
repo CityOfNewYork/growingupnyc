@@ -1,8 +1,16 @@
 <div id="mc_embed_signup" class="c-signup-form aligncenter">
-	<form action="https://twitter.us19.list-manage.com/subscribe/post-json?u=5eda3ff3b81179e054b712d63&amp;id=2d001000fe&c=?" method="get" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="guny-contact" target="_blank" novalidate>		
-		<h2 class="text-center">{{post.title}}</h2>
+	<div class="signup-form-intro">
+		<div class="text-center">
+			<h2>{{post.title}}</h2>
+			{% if featured_image %}
+			<img src="{{featured_image}}" class="signup-form-logo">
+			{% endif %}
+		</div>
 		{{post.post_content}}
-  
+	</div>
+
+	<form action="https://twitter.us19.list-manage.com/subscribe/post-json?u=5eda3ff3b81179e054b712d63&amp;id=2d001000fe&c=?" method="get" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="guny-contact" target="_blank" novalidate>		
+		
     <div class="mc-field-group">
 			<label for="mce-EMAIL">Email  <span class="asterisk">*</span></label>
 	    <div class="guny-error-detailed"></div>

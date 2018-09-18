@@ -1,9 +1,16 @@
 <div id="mc_embed_signup" class="c-signup-form aligncenter">
-	<form action="https://twitter.us19.list-manage.com/subscribe/post-json?u=5eda3ff3b81179e054b712d63&amp;id=e84846ac41&c=?" method="get" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="guny-contact" target="_blank" novalidate>
-		<div id="mc_embed_signup_scroll">
-			<h2 class="text-center">{{post.title}}</h2>
-			{{post.post_content}}
+	<div class="signup-form-intro">
+		<div class="text-center">
+			<h2>{{post.title}}</h2>
+			{% if featured_image %}
+			<img src="{{featured_image}}" class="signup-form-logo">
+			{% endif %}
+		</div>
+		{{post.post_content}}
+	</div>
 
+	<form action="https://twitter.us19.list-manage.com/subscribe/post-json?u=5eda3ff3b81179e054b712d63&amp;id=e84846ac41&c=?" method="get" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="guny-contact" target="_blank" novalidate>
+			
 	    {# <div class="signup-form__error guny-error"></div> #}
 
 			<div class="mc-field-group">
@@ -85,6 +92,5 @@
 	      <button id="mc-embedded-subscribe" class="signup-form__button button--simple button--simple--alt" type="submit">Submit</button>
 			</div>
 
-    </div>
 	</form>
 </div>

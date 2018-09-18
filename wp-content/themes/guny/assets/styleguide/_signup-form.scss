@@ -204,3 +204,11 @@
   font-weight: $font-weight-extrablack;
   text-align: center;
 }
+
+.signup-form-logo {
+  width: rem-calc(150);
+}
+
+.signup-form-intro {
+  padding-bottom: rem-calc(15) !important;
+}

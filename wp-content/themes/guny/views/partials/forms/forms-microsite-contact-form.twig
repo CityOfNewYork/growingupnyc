@@ -1,61 +1,101 @@
-<form action="https://twitter.us19.list-manage.com/subscribe/post-json?u=5eda3ff3b81179e054b712d63&amp;id=2d001000fe&c=?" method="get" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="guny-contact" target="_blank" novalidate>		
-	<h2 class="text-center">{{post.title}}</h2>
-	<h2{% if full_width %} class="text-center"{% endif %}>
-    {% if title %}
-      {{ title }} {# translation comes from page content #}
-    {% else %}
-      {{ __('Get Updates', 'GUNY-Email-Signup') }}
-    {% endif %}
-  </h2>
+<div id="mc_embed_signup" class="c-signup-form aligncenter">
+	<form action="https://twitter.us19.list-manage.com/subscribe/post-json?u=5eda3ff3b81179e054b712d63&amp;id=2d001000fe&c=?" method="get" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="guny-contact" target="_blank" novalidate>		
+		<h2 class="text-center">{{post.title}}</h2>
+		<p class="text-center">{{post.content}}</p>
   
     <div class="signup-form__error guny-error"></div>
 
-		<div class="mc-field-group">
+    <div class="mc-field-group">
 			<label for="mce-EMAIL">Email  <span class="asterisk">*</span></label>
-			<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+	    <div class="guny-error-detailed"></div>
+      <input type="email" value="" name="EMAIL" class="email form-field signup-form__field-dark" id="mce-EMAIL" required>
+		</div>
+
+		
+		<div class="mc-field-group">
+			<label for="mce-FNAME">First Name  <span class="asterisk">*</span></label>
+	    <div class="guny-error-detailed"></div>
+			<input type="text" value="" name="FNAME" class="form-field signup-form__field-dark" id="mce-FNAME" required>
 		</div>
 
 		<div class="mc-field-group">
-      <input type="email" value="" name="EMAIL" class="email form-field signup-form__field-dark" id="mce-EMAIL" required>
+			<label for="mce-LNAME">Last Name  <span class="asterisk">*</span></label>
+	    <div class="guny-error-detailed"></div>
+			<input type="text" value="" name="LNAME" class="form-field signup-form__field-dark" id="mce-LNAME" required>
 		</div>
-		
+
 		<div class="mc-field-group">
-			<label for="mce-FNAME">First Name * </label>
-			<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
+			<label for="mce-ZIP">Zip Code  <span class="asterisk">*</span></label>
+	    <div class="guny-error-detailed"></div>
+			<input type="text" value="" name="ZIP" class="form-field signup-form__field-dark" id="mce-ZIP" required>
 		</div>
-		<div class="mc-field-group">
-			<label for="mce-LNAME">Last Name * </label>
-			<input type="text" value="" name="LNAME" class="" id="mce-LNAME">
-		</div>
+
 		<div class="mc-field-group">
 			<label for="mce-ZIPCODE">Zip Code *  <span class="asterisk">*</span>
 		</label>
 			<input type="text" value="" name="ZIPCODE" class="required" id="mce-ZIPCODE">
 		</div>
+
+		<div class="mc-field-group">
+			<label for="mce-PHONENUM">Phone Number </label>
+	    <div class="guny-error-detailed"></div>
+			<input type="text" name="PHONENUM" class=" form-field signup-form__field-dark" value="" id="mce-PHONENUM" required>
+		</div>
+
 		<div class="mc-field-group size1of2">
 			<label for="mce-MMERGE3">Phone Number </label>
 			<input type="text" name="MMERGE3" class="" value="" id="mce-MMERGE3">
 		</div>
-		<div class="mc-field-group">
-			<label for="mce-MESSAGE">Message *  <span class="asterisk">*</span>
-		</label>
-			<input type="text" value="" name="MESSAGE" class="required" id="mce-MESSAGE">
-		</div>
+
 		<div class="mc-field-group">
 			<label for="mce-ORGWEBSITE">Organization Website </label>
-			<input type="url" value="" name="ORGWEBSITE" class=" url" id="mce-ORGWEBSITE">
+			<input type="url" value="" name="ORGWEBSITE" class="url form-field signup-form__field-dark" id="mce-ORGWEBSITE">
 		</div>
 
-		<div class="mc-field-group input-group">
-	    <strong>I'd like to *: </strong>
-	    <ul><li><input type="checkbox" value="1" name="group[435][1]" id="mce-group[435]-435-0"><label for="mce-group[435]-435-0">Invite Generation NYC to an event</label></li>
-			<li><input type="checkbox" value="2" name="group[435][2]" id="mce-group[435]-435-1"><label for="mce-group[435]-435-1">Request materials to pick up</label></li>
-			<li><input type="checkbox" value="4" name="group[435][4]" id="mce-group[435]-435-2"><label for="mce-group[435]-435-2">Partner with Generation NYC</label></li>
-			<li><input type="checkbox" value="8" name="group[435][8]" id="mce-group[435]-435-3"><label for="mce-group[435]-435-3">General Inquiry</label></li>
-			</ul>
+		<div class="mc-field-group">
+			<label for="mce-MESSAGE">Message (limit 255 characters)  <span class="asterisk">*</span></label>
+	    <div class="guny-error-detailed"></div>
+			<textarea type="text" value="" name="MESSAGE" class="form-field signup-form__field-dark textarea" id="mce-MESSAGE" required></textarea>
+			<p class="char-count text-right"></p>
 		</div>
+
+		<fieldset class="mc-field-group input-group">
+	    <legend>I'd like to: </legend>
+	    <div class="guny-error-detailed"></div>
+	    <p class="signup-form__checkbox-dark">
+	    	<label class="checkbox-dark" for="mce-group[435]-435-0">
+		    	<input type="checkbox" value="1" class="checkbox__field-dark" name="group[435][1]" id="mce-group[435]-435-0" required>
+          <svg class="checkbox__indicator-dark"><use xlink:href="#icon-check"></use></svg>
+          Invite Generation NYC to an event
+        </label>
+      </p>
+
+      <p class="signup-form__checkbox-dark">
+	    	<label class="checkbox-dark" for="mce-group[435]-435-1">
+		    	<input type="checkbox" value="2" class="checkbox__field-dark" name="group[435][2]" id="mce-group[435]-435-1" required>
+          <svg class="checkbox__indicator-dark"><use xlink:href="#icon-check"></use></svg>
+          Request materials to pick up
+        </label>
+      </p>
+
+      <p class="signup-form__checkbox-dark">
+	    	<label class="checkbox-dark" for="mce-group[435]-435-2">
+		    	<input type="checkbox" value="4" class="checkbox__field-dark" name="group[435][4]" id="mce-group[435]-435-2" required>
+          <svg class="checkbox__indicator-dark"><use xlink:href="#icon-check"></use></svg>
+          Partner with Generation NYC
+        </label>
+      </p>
+
+      <p class="signup-form__checkbox-dark">
+	    	<label class="checkbox-dark" for="mce-group[435]-435-3">
+		    	<input type="checkbox" value="8" class="checkbox__field-dark" name="group[435][8]" id="mce-group[435]-435-3" required>
+          <svg class="checkbox__indicator-dark"><use xlink:href="#icon-check"></use></svg>
+          General Inquiry
+        </label>
+      </p>
+
+		</fieldset>
 		
     <button id="mc-embedded-subscribe" class="signup-form__button button--simple button--simple--alt" type="submit">Submit</button>
-</
-form>
-
+	</form>
+</div>

@@ -101,17 +101,17 @@ export default function() {
       success: function(response) {
         if(response.result !== 'success'){
           if(form[0].className.indexOf('contact') > -1){
-            form.html('<p>Something went wrong. Try again later!</p>');
+            form.html('<p class="text-center">Something went wrong. Try again later!</p>');
           }else {
             if(response.msg.includes('too many recent signup requests')){
-              form.find('.guny-error').html('<p>There was a problem with your subscription.</p>');
+              form.find('.guny-error').html('<p class="text-center">There was a problem with your subscription.</p>');
             }else if(response.msg.includes('already subscribed')){
-              form.find('.guny-error').html('<p>You are already signed up for updates! Check your email.</p>');
+              form.find('.guny-error').html('<p class="text-center">You are already signed up for updates! Check your email.</p>');
             }
           }
         }else {
           if(form[0].className.indexOf('contact') > -1){
-            form.html('<p>Thank you for contacting us! Someone will respond to you shortly.</p>');
+            form.html('<p class="text-center">Thank you for contacting us! Someone will respond to you shortly.</p>');
           }else{
             form.html('<p class="c-signup-form__success">One more step! <br /> Please check your inbox and confirm your email address to start receiving updates. <br />Thanks for signing up!</p>');
           }

@@ -17,8 +17,8 @@ export default function() {
   function validateFields(form, event) {
 
     event.preventDefault();
-
-    const fields = form.serializeArray().reduce((obj, item) => (obj[item.name] = item.value, obj) ,{})
+    
+    const fields = form.find('form').serializeArray().reduce((obj, item) => (obj[item.name] = item.value, obj) ,{})
     const requiredFields = form.find('[required]');
     const emailRegex = new RegExp(/\S+@\S+\.\S+/);
     const zipRegex = new RegExp(/^\d{5}(-\d{4})?$/i);
@@ -116,7 +116,6 @@ export default function() {
             form.html('<p class="c-signup-form__success">One more step! <br /> Please check your inbox and confirm your email address to start receiving updates. <br />Thanks for signing up!</p>');
           }
         }
-        submitMsg(response);
       },
       error: function(response) {
         form.find('.guny-error').html('<p>There was a problem with your subscription. Check back later.</p>');
@@ -130,8 +129,8 @@ export default function() {
   */
   $('button[type="submit"]').click(function(event){
     event.preventDefault();
-    let formClass = $(this).parents('form').attr('class');
-    let $form = $('.' + formClass);
+    let formClass = $(this).parents('form').parents('div').attr('class');
+    let $form = $('.' + formClass.replace(/ /g, '.'));
     validateFields($form, event);
   });
 

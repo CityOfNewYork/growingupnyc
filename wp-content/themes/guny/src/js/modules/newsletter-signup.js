@@ -115,7 +115,11 @@ export default function() {
           }
         }else {
           if(form[0].className.indexOf('contact') > -1){
-            form.html('<p class="text-center">Thank you for contacting us! Someone will respond to you shortly.</p>');
+            if(form[0].className.indexOf('unity') > -1){
+            form.html('<div class="text-center"><p class="u-bottom-spacing-small">Thank you for contacting the NYC Unity Project! Someone will respond to you shortly.</p><a class="button--primary button--primary__curved button--primary__purple" href="https://growingupnyc.cityofnewyork.us/generationnyc/topics/lgbtq">Go back to the Unity Project</a></div>');
+            }else{
+              form.html('<p class="text-center">Thank you for contacting us! Someone will respond to you shortly.</p>');
+            }
           }else{
             form.html('<p class="c-signup-form__success">One more step! <br /> Please check your inbox and confirm your email address to start receiving updates. <br />Thanks for signing up!</p>');
           }
@@ -147,6 +151,7 @@ export default function() {
     if(charLen < 0){
       $('.char-count').css("color", '#d8006d');
       $(this).css("border-color", '#d8006d');
+      // $('.char-count').addClass('.is-error');
     } else {
       $('.char-count').css("color", '#333');
       $(this).css("border-color", '#2793e0');

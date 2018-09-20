@@ -17,8 +17,8 @@ export default function() {
   function validateFields(form, event) {
 
     event.preventDefault();
-    
-    const fields = form.find('form').serializeArray().reduce((obj, item) => (obj[item.name] = item.value, obj) ,{})
+
+    const fields = form.serializeArray().reduce((obj, item) => (obj[item.name] = item.value, obj) ,{})
     const requiredFields = form.find('[required]');
     const emailRegex = new RegExp(/\S+@\S+\.\S+/);
     const zipRegex = new RegExp(/^\d{5}(-\d{4})?$/i);
@@ -101,7 +101,11 @@ export default function() {
       success: function(response) {
         if(response.result !== 'success'){
           if(form[0].className.indexOf('contact') > -1){
-            form.html('<p class="text-center">Something went wrong. Try again later!</p>');
+            if(response.msg.includes('already subscribed')){
+              form.html('<p class="text-center">You have already reached out to us. We will get back to you as soon as possible!</p>');
+            }else {
+              form.html('<p class="text-center">Something went wrong. Try again later!</p>');
+            }
           }else {
             if(response.msg.includes('too many recent signup requests')){
               form.find('.guny-error').html('<p class="text-center">There was a problem with your subscription.</p>');
@@ -129,8 +133,8 @@ export default function() {
   */
   $('button[type="submit"]').click(function(event){
     event.preventDefault();
-    let formClass = $(this).parents('form').parents('div').attr('class');
-    let $form = $('.' + formClass.replace(/ /g, '.'));
+    let formClass = $(this).parents('form').attr('class');
+    let $form = $('.' + formClass);
     validateFields($form, event);
   });
 

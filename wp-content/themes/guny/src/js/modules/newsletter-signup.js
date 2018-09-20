@@ -134,8 +134,16 @@ export default function() {
   /**
   * Triggers form validation and sends the form data to Mailchimp
   * @param {object} formData - form fields
+  * TO EDIT
   */
-  $('button[type="submit"]').click(function(event){
+  $('#mc-embedded-subscribe:button[type="submit"]').click(function(event){
+    event.preventDefault();
+    let formClass = $(this).parents('form').attr('class');
+    let $form = $('.' + formClass);
+    validateFields($form, event);
+  });
+
+  $('#mc-embedded-contact:button[type="submit"]').click(function(event){
     event.preventDefault();
     let formClass = $(this).parents('form').attr('class');
     let $form = $('.' + formClass);

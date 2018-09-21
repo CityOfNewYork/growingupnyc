@@ -103,6 +103,16 @@
   }
 }
 
+.signup-form__field-blue {
+  @extend .signup-form__field;
+  border: 2px solid $bright-blue;
+}
+
+.signup-form__field-purple {
+  @extend .signup-form__field;
+  border: 2px solid $purple;
+}
+
 // Signup Form Label
 .signup-form__label {
   overflow: hidden;
@@ -189,9 +199,19 @@
   @include omega(even);
 }
 
+.signup-form__checkbox-list {
+  line-height: rem-calc(20);
+  margin-top: rem-calc(10);
+}
+
 // Signup Form Button
 .signup-form__button {
   margin-top: rem-calc(20);
+}
+
+.signup-form__button-center {
+  @extend .signup-form__button;
+  margin: auto;
 }
 
 // Signup Form Success Message
@@ -205,4 +225,27 @@
   @include font-size(21, 24);
   font-weight: $font-weight-extrablack;
   text-align: center;
+}
+
+.c-signup-form {
+  width: 100%;
+  @include media($bp-medium) {
+    width: 50%;
+  }
+}
+
+.mc-field-group {
+  padding-bottom: rem-calc(15);
+}
+
+.guny-error-detailed {
+  color: $dark-pink;
+}
+
+.signup-form-logo {
+  width: rem-calc(150);
+}
+
+.signup-form-intro {
+  padding-bottom: rem-calc(15);
 }

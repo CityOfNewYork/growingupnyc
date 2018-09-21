@@ -233,3 +233,27 @@ input[type="search"].form-field {
 .checkbox__field.is-error + .checkbox__indicator {
   border-color: $color-error;
 }
+
+// blue
+.checkbox__indicator-blue {
+  @extend .checkbox__indicator;
+  border: 2px solid $bright-blue;
+}
+
+// purple
+.checkbox__indicator-purple {
+  @extend .checkbox__indicator;
+  border: 2px solid $purple;
+}
+
+.checkbox__field:checked + .checkbox__indicator-purple {
+  color: $dark-purple;
+}
+
+.checkbox__field:focus + .checkbox__indicator-purple {
+  border-color: $dark-gray;
+}
+
+.checkbox__field.is-error + .checkbox__indicator-purple {
+  border-color: $color-error;
+}

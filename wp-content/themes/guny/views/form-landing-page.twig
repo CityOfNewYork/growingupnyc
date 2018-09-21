@@ -1,0 +1,16 @@
+{% extends post.parent ? "microsite-base.twig" : "base.twig" %}
+
+{% block content %}
+
+<div class="o-container u-top-spacing">
+  <div class="o-content-container">
+
+		{% if post.parent%}
+			{% include 'partials/forms/forms-microsite-'~post.slug~'.twig' %}
+		{% else %}
+			{% include 'partials/forms/forms-'~post.slug~'.twig' %}
+		{% endif %}
+
+	</div>
+</div>
+{% endblock %}

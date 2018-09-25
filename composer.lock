@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e68f0a3feb9e22783208b54ba5cb84bd",
+    "content-hash": "efab26fca6bc2ce96b613afdf615eaa7",
     "packages": [
         {
             "name": "composer/installers",
@@ -995,15 +995,15 @@
         },
         {
             "name": "wpackagist-plugin/taxonomy-terms-order",
-            "version": "1.5.3.2",
+            "version": "1.5.4",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/taxonomy-terms-order/",
-                "reference": "tags/1.5.3.2"
+                "reference": "tags/1.5.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/taxonomy-terms-order.1.5.3.2.zip",
+                "url": "https://downloads.wordpress.org/plugin/taxonomy-terms-order.1.5.4.zip",
                 "reference": null,
                 "shasum": null
             },

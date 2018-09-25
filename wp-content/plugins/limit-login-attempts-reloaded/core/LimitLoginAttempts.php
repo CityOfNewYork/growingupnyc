@@ -6,6 +6,8 @@
 class Limit_Login_Attempts
 {
 	public $default_options = array(
+        'gdpr'              => 0,
+
 		/* Are we behind a proxy? */
 		'client_type'        => LLA_DIRECT_ADDR,
 
@@ -66,7 +68,7 @@ class Limit_Login_Attempts
 		add_filter( 'limit_login_blacklist_ip', array( $this, 'check_blacklist_ips' ), 10, 2 );
 		add_filter( 'limit_login_blacklist_usernames', array( $this, 'check_blacklist_usernames' ), 10, 2 );
 	}
-
+	
 	/**
 	* Hook 'plugins_loaded'
 	*/
@@ -77,13 +79,13 @@ class Limit_Login_Attempts
 
 		// Check if installed old plugin
 		$this->check_original_installed();
-
+		
 		if ( is_multisite() )
 			require_once ABSPATH.'wp-admin/includes/plugin.php';
-
+		
 		$this->network_mode = is_multisite() && is_plugin_active_for_network('limit-login-attempts-reloaded/limit-login-attempts-reloaded.php');
-
-
+		
+		
 		if ( $this->network_mode )
 		{
 			$this->allow_local_options = get_site_option( 'limit_login_allow_local_options', false );
@@ -94,7 +96,7 @@ class Limit_Login_Attempts
 			$this->allow_local_options = true;
 			$this->use_local_options = true;
 		}
-
+		
 
 		// Setup default plugin options
 		//$this->sanitize_options();
@@ -105,10 +107,10 @@ class Limit_Login_Attempts
 		add_filter( 'shake_error_codes', array( $this, 'failure_shake' ) );
 		add_action( 'login_head', array( $this, 'add_error_message' ) );
 		add_action( 'login_errors', array( $this, 'fixup_error_messages' ) );
-
+		
 		if ( $this->network_mode )
 			add_action( 'network_admin_menu', array( $this, 'network_admin_menu' ) );
-
+		
 		if ( $this->allow_local_options )
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 
@@ -125,18 +127,18 @@ class Limit_Login_Attempts
 		*/
 		add_action( 'wp_authenticate', array( $this, 'track_credentials' ), 10, 2 );
 		add_action( 'authenticate', array( $this, 'authenticate_filter' ), 5, 3 );
-
+		
 		if ( defined('XMLRPC_REQUEST') && XMLRPC_REQUEST )
 			add_action( 'init', array( $this, 'check_xmlrpc_lock' ) );
-
+		
 		add_action('wp_ajax_limit-login-unlock', array( $this, 'ajax_unlock' ) );
 	}
-
+	
 	public function check_xmlrpc_lock()
 	{
 		if ( is_user_logged_in() || $this->is_ip_whitelisted() )
 			return;
-
+			
 		if ( $this->is_ip_blacklisted() || !$this->is_limit_login_ok() )
 		{
 			header('HTTP/1.0 403 Forbidden');
@@ -157,9 +159,9 @@ class Limit_Login_Attempts
 	}
 
 	public function check_blacklist_usernames( $allow, $username ) {
-		return in_array( $username, (array) $this->get_option( 'blacklist_usernames' ) );
+            return in_array( $username, (array) $this->get_option( 'blacklist_usernames' ) );
 	}
-
+	
 	public function ip_in_range( $ip, $list )
 	{
 		foreach ( $list as $range )
@@ -174,20 +176,20 @@ class Limit_Login_Attempts
 			{
 				$low = ip2long( $range[0] );
 				$high = ip2long( $range[1] );
-				$ip = ip2long( $ip );
-
-				if ( $low === false || $high === false || $ip === false )
+				$needle = ip2long( $ip );
+				
+				if ( $low === false || $high === false || $needle === false )
 					continue;
-
+				
 				$low = (float)sprintf("%u",$low);
 				$high = (float)sprintf("%u",$high);
-				$ip = (float)sprintf("%u",$ip);
+				$needle = (float)sprintf("%u",$needle);
 
-				if ( $ip >= $low && $ip <= $high )
+				if ( $needle >= $low && $needle <= $high )
 					return true;
 			}
 		}
-
+		
 		return false;
 	}
 
@@ -216,16 +218,23 @@ class Limit_Login_Attempts
 			/* no retries at all */
 			return $error;
 		}
-		if ( ! isset( $retries[ $ip ] ) || ! isset( $valid[ $ip ] ) || time() > $valid[ $ip ] ) {
+		if (
+                (! isset( $retries[ $ip ] ) && ! isset( $retries[ $this->getHash($ip) ] )) ||
+                (! isset( $valid[ $ip ] ) && ! isset( $valid[ $this->getHash($ip) ] )) ||
+                (time() > $valid[ $ip ] && time() > $valid[ $this->getHash($ip) ])
+
+        ) {
 			/* no: no valid retries */
 			return $error;
 		}
-		if ( ( $retries[ $ip ] % $this->get_option( 'allowed_retries' ) ) == 0 ) {
-			/* no: already been locked out for these retries */
+		if (
+                ( ((isset($retries[ $ip ]) ? $retries[ $ip ] : 0) + (isset($retries[ $this->getHash($ip) ]) ? $retries[ $this->getHash($ip) ] : 0)) % $this->get_option( 'allowed_retries' ) ) == 0
+            ) {
+			//* no: already been locked out for these retries */
 			return $error;
 		}
 
-		$remaining = max( ( $this->get_option( 'allowed_retries' ) - ( $retries[ $ip ] % $this->get_option( 'allowed_retries' ) ) ), 0 );
+		$remaining = max( ( $this->get_option( 'allowed_retries' ) - ( ((isset($retries[ $ip ]) ? $retries[ $ip ] : 0) + (isset($retries[ $this->getHash($ip) ]) ? $retries[ $this->getHash($ip) ] : 0)) % $this->get_option( 'allowed_retries' ) ) ), 0 );
 
 		return new IXR_Error( 403, sprintf( _n( "<strong>%d</strong> attempt remaining.", "<strong>%d</strong> attempts remaining.", $remaining, 'limit-login-attempts-reloaded' ), $remaining ) );
 	}
@@ -326,7 +335,7 @@ class Limit_Login_Attempts
 	{
 		add_submenu_page( 'settings.php', 'Limit Login Attempts', 'Limit Login Attempts', 'manage_options', $this->_options_page_slug, array( $this, 'options_page' ) );
 	}
-
+	
 	public function admin_menu()
 	{
 		add_options_page( 'Limit Login Attempts', 'Limit Login Attempts', 'manage_options', $this->_options_page_slug, array( $this, 'options_page' ) );
@@ -341,7 +350,7 @@ class Limit_Login_Attempts
 	{
 		if ( is_network_admin() )
 			return network_admin_url( 'settings.php?page=limit-login-attempts' );
-
+		
 		return menu_page_url( $this->_options_page_slug, false );
 	}
 
@@ -352,43 +361,43 @@ class Limit_Login_Attempts
 	*
 	* @return null
 	*/
-	public function get_option( $option_name, $local = null )
+	public function get_option( $option_name, $local = null ) 
 	{
 		if ( is_null( $local ) )
 			$local = $this->use_local_options;
-
+		
 		$option = 'limit_login_'.$option_name;
-
+		
 		$func = $local ? 'get_option' : 'get_site_option';
 		$value = $func( $option, null );
-
+		
 		if ( is_null( $value ) && isset( $this->default_options[ $option_name ] ) )
 			$value = $this->default_options[ $option_name ];
-
+		
 		return $value;
 	}
-
+	
 	public function update_option( $option_name, $value, $local = null )
 	{
 		if ( is_null( $local ) )
 			$local = $this->use_local_options;
-
+		
 		$option = 'limit_login_'.$option_name;
-
+		
 		$func = $local ? 'update_option' : 'update_site_option';
-
+		
 		return $func( $option, $value );
 	}
-
+	
 	public function add_option( $option_name, $value, $local=null )
 	{
 		if ( is_null( $local ) )
 			$local = $this->use_local_options;
-
+		
 		$option = 'limit_login_'.$option_name;
-
+		
 		$func = $local ? 'add_option' : 'add_site_option';
-
+		
 		return $func( $option, $value, '', 'no' );
 	}
 
@@ -406,11 +415,11 @@ class Limit_Login_Attempts
 		}
 		if ( $this->get_option('notify_email_after') > $this->get_option( 'allowed_lockouts' ) )
 			$this->update_option( 'notify_email_after', $this->get_option( 'allowed_lockouts' ) );
-
+		
 		$args         = explode( ',', $this->get_option( 'lockout_notify' ) );
 		$args_allowed = explode( ',', LLA_LOCKOUT_NOTIFY_ALLOWED );
 		$new_args     = array_intersect( $args, $args_allowed );
-
+		
 		$this->update_option( 'lockout_notify', implode( ',', $new_args ) );
 
 		$ctype = $this->get_option( 'client_type' );
@@ -435,7 +444,12 @@ class Limit_Login_Attempts
 		/* lockout active? */
 		$lockouts = $this->get_option( 'lockouts' );
 
-		return ( ! is_array( $lockouts ) || ! isset( $lockouts[ $ip ] ) || time() >= $lockouts[ $ip ] );
+        $a = $this->checkKey($lockouts, $ip);
+        $b = $this->checkKey($lockouts, $this->getHash($ip));
+		return (
+                ! is_array( $lockouts ) ||
+                (! isset( $lockouts[ $ip ] ) && ! isset( $lockouts[ $this->getHash($ip) ] )) ||
+                (time() >= $a && time() >= $b ));
 	}
 
 	/**
@@ -452,6 +466,7 @@ class Limit_Login_Attempts
 	public function limit_login_failed( $username ) {
 
 		$ip = $this->get_address();
+		$ipHash = $this->getHash($this->get_address());
 
 		/* if currently locked-out, do not add to retries */
 		$lockouts = $this->get_option( 'lockouts' );
@@ -460,7 +475,7 @@ class Limit_Login_Attempts
 			$lockouts = array();
 		}
 
-		if ( isset( $lockouts[ $ip ] ) && time() < $lockouts[ $ip ] ) {
+		if ( (isset( $lockouts[ $ip ] ) && time() < $lockouts[ $ip ]) || (isset( $lockouts[ $ipHash ] ) && time() < $lockouts[ $ipHash ] )) {
 			return;
 		}
 
@@ -478,8 +493,10 @@ class Limit_Login_Attempts
 			$this->add_option( 'retries_valid', $valid );
 		}
 
+        $gdpr = $this->get_option('gdpr');
+        $ip = ($gdpr ? $ipHash : $ip);
 		/* Check validity and add one to retries */
-		if ( isset( $retries[ $ip ] ) && isset( $valid[ $ip ] ) && time() < $valid[ $ip ] ) {
+		if ( isset( $retries[ $ip ] ) && isset( $valid[ $ip ] ) && time() < $valid[ $ip ]) {
 			$retries[ $ip ] ++;
 		} else {
 			$retries[ $ip ] = 1;
@@ -498,9 +515,7 @@ class Limit_Login_Attempts
 		}
 
 		/* lockout! */
-
 		$whitelisted = $this->is_ip_whitelisted( $ip );
-
 		$retries_long = $this->get_option( 'allowed_retries' ) * $this->get_option( 'allowed_lockouts' );
 
 		/*
@@ -515,16 +530,18 @@ class Limit_Login_Attempts
 		} else {
 			global $limit_login_just_lockedout;
 			$limit_login_just_lockedout = true;
+            $gdpr = $this->get_option('gdpr');
+            $index = ($gdpr ? $ipHash : $ip);
 
 			/* setup lockout, reset retries as needed */
-			if ( $retries[ $ip ] >= $retries_long ) {
+			if ( (isset($retries[ $ip ]) ? $retries[ $ip ] : 0) >= $retries_long || (isset($retries[ $ipHash ]) ? $retries[ $ipHash ] : 0) >= $retries_long ) {
 				/* long lockout */
-				$lockouts[ $ip ] = time() + $this->get_option( 'long_duration' );
-				unset( $retries[ $ip ] );
-				unset( $valid[ $ip ] );
+				$lockouts[ $index ] = time() + $this->get_option( 'long_duration' );
+				unset( $retries[ $index ] );
+				unset( $valid[ $index ] );
 			} else {
 				/* normal lockout */
-				$lockouts[ $ip ] = time() + $this->get_option( 'lockout_duration' );
+				$lockouts[ $index ] = time() + $this->get_option( 'lockout_duration' );
 			}
 		}
 
@@ -582,12 +599,15 @@ class Limit_Login_Attempts
 		}
 
 		/* check if we are at the right nr to do notification */
-		if ( isset( $retries[ $ip ] ) && ( ( $retries[ $ip ] / $this->get_option( 'allowed_retries' ) ) % $this->get_option( 'notify_email_after' ) ) != 0 ) {
+		if (
+                (isset( $retries[ $ip ] ) || isset( $retries[ $this->getHash($ip) ] ))
+                &&
+                ( ( intval($retries[ $ip ] + $retries[ $this->getHash($ip) ]) / $this->get_option( 'allowed_retries' ) ) % $this->get_option( 'notify_email_after' ) ) != 0 ) {
 			return;
 		}
 
 		/* Format message. First current lockout duration */
-		if ( ! isset( $retries[ $ip ] ) ) {
+		if ( !isset( $retries[ $ip ] ) && !isset( $retries[ $this->getHash($ip) ] ) ) {
 			/* longer lockout */
 			$count    = $this->get_option( 'allowed_retries' )
 						* $this->get_option( 'allowed_lockouts' );
@@ -596,8 +616,8 @@ class Limit_Login_Attempts
 			$when     = sprintf( _n( '%d hour', '%d hours', $time, 'limit-login-attempts-reloaded' ), $time );
 		} else {
 			/* normal lockout */
-			$count    = $retries[ $ip ];
-			$lockouts = floor( $count / $this->get_option( 'allowed_retries' ) );
+			$count    = $retries[ $ip ] + $retries[ $this->getHash($ip) ];
+			$lockouts = floor( ($count) / $this->get_option( 'allowed_retries' ) );
 			$time     = round( $this->get_option( 'lockout_duration' ) / 60 );
 			$when     = sprintf( _n( '%d minute', '%d minutes', $time, 'limit-login-attempts-reloaded' ), $time );
 		}
@@ -630,10 +650,9 @@ class Limit_Login_Attempts
 
 		$admin_email = $this->use_local_options ? get_option( 'admin_email' ) : get_site_option( 'admin_email' );
 
-		//var_dump( $blogname, $subject ); exit;
 		@wp_mail( $admin_email, $subject, $message );
 	}
-
+	
 	/**
 	* Logging of lockout (if configured)
 	*
@@ -653,20 +672,21 @@ class Limit_Login_Attempts
 		}
 		$ip = $this->get_address();
 
+        $index = ($this->get_option('gdpr') ? $this->getHash($ip) : $ip );
 		/* can be written much simpler, if you do not mind php warnings */
-		if ( !isset( $log[ $ip ] ) )
-			$log[ $ip ] = array();
-
-		if ( !isset( $log[ $ip ][ $user_login ] ) )
-			$log[ $ip ][ $user_login ] = array( 'counter' => 0 );
-
-		elseif ( !is_array( $log[ $ip ][ $user_login ] ) )
-			$log[ $ip ][ $user_login ] = array(
-				'counter' => $log[ $ip ][ $user_login ],
+		if ( !isset( $log[ $index ] ) )
+			$log[ $index ] = array();
+		
+		if ( !isset( $log[ $index ][ $user_login ] ) )
+			$log[ $index ][ $user_login ] = array( 'counter' => 0 );
+		
+		elseif ( !is_array( $log[ $index ][ $user_login ] ) )
+			$log[ $index ][ $user_login ] = array(
+				'counter' => $log[ $index ][ $user_login ],
 			);
-
-		$log[ $ip ][ $user_login ]['counter']++;
-		$log[ $ip ][ $user_login ]['date'] = time();
+		
+		$log[ $index ][ $user_login ]['counter']++;
+		$log[ $index ][ $user_login ]['date'] = time();
 
 		if ( isset( $_POST['woocommerce-login-nonce'] ) ) {
 			$gateway = 'WooCommerce';
@@ -676,7 +696,7 @@ class Limit_Login_Attempts
 			$gateway = 'WP Login';
 		}
 
-		$log[ $ip ][ $user_login ]['gateway'] = $gateway;
+		$log[ $index ][ $user_login ]['gateway'] = $gateway;
 
 		if ( $option === false ) {
 			$this->add_option( 'logged', $log );
@@ -834,17 +854,23 @@ class Limit_Login_Attempts
 	public function error_msg() {
 		$ip       = $this->get_address();
 		$lockouts = $this->get_option( 'lockouts' );
+        $a = $this->checkKey($lockouts, $ip);
+        $b = $this->checkKey($lockouts, $this->getHash($ip));
 
 		$msg = __( '<strong>ERROR</strong>: Too many failed login attempts.', 'limit-login-attempts-reloaded' ) . ' ';
 
-		if ( ! is_array( $lockouts ) || ! isset( $lockouts[ $ip ] ) || time() >= $lockouts[ $ip ] ) {
+		if (
+            ! is_array( $lockouts ) ||
+            ( ! isset( $lockouts[ $ip ] ) && ! isset( $lockouts[$this->getHash($ip)]) ) ||
+            (time() >= $a && time() >= $b)
+        ){
 			/* Huh? No timeout active? */
 			$msg .= __( 'Please try again later.', 'limit-login-attempts-reloaded' );
 
 			return $msg;
 		}
 
-		$when = ceil( ( $lockouts[ $ip ] - time() ) / 60 );
+		$when = ceil( ( ($a > $b ? $a : $b) - time() ) / 60 );
 		if ( $when > 60 ) {
 			$when = ceil( $when / 60 );
 			$msg .= sprintf( _n( 'Please try again in %d hour.', 'Please try again in %d hours.', $when, 'limit-login-attempts-reloaded' ), $when );
@@ -971,23 +997,33 @@ class Limit_Login_Attempts
 		$ip      = $this->get_address();
 		$retries = $this->get_option( 'retries' );
 		$valid   = $this->get_option( 'retries_valid' );
+        $a = $this->checkKey($retries, $ip);
+        $b = $this->checkKey($retries, $this->getHash($ip));
+        $c = $this->checkKey($valid, $ip);
+        $d = $this->checkKey($valid, $this->getHash($ip));
 
 		/* Should we show retries remaining? */
-
 		if ( ! is_array( $retries ) || ! is_array( $valid ) ) {
 			/* no retries at all */
 			return '';
 		}
-		if ( ! isset( $retries[ $ip ] ) || ! isset( $valid[ $ip ] ) || time() > $valid[ $ip ] ) {
+		if (
+            (! isset( $retries[ $ip ] ) && ! isset( $retries[ $this->getHash($ip) ] )) ||
+            (! isset( $valid[ $ip ] ) && ! isset( $valid[ $this->getHash($ip) ] )) ||
+            ( time() > $c && time() > $d )
+        ) {
 			/* no: no valid retries */
 			return '';
 		}
-		if ( ( $retries[ $ip ] % $this->get_option( 'allowed_retries' ) ) == 0 ) {
+		if (
+            ( $a % $this->get_option( 'allowed_retries' ) ) == 0 &&
+            ( $b % $this->get_option( 'allowed_retries' ) ) == 0
+        ) {
 			/* no: already been locked out for these retries */
 			return '';
 		}
 
-		$remaining = max( ( $this->get_option( 'allowed_retries' ) - ( $retries[ $ip ] % $this->get_option( 'allowed_retries' ) ) ), 0 );
+        $remaining = max( ( $this->get_option( 'allowed_retries' ) - ( ($a + $b) % $this->get_option( 'allowed_retries' ) ) ), 0 );
 
 		return sprintf( _n( "<strong>%d</strong> attempt remaining.", "<strong>%d</strong> attempts remaining.", $remaining, 'limit-login-attempts-reloaded' ), $remaining );
 	}
@@ -999,15 +1035,23 @@ class Limit_Login_Attempts
 	*
 	* @return string
 	*/
-	public function get_address( $type_name = '' ) {
+	public function get_address() {
 
-		if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) && ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-			return $_SERVER['HTTP_X_FORWARDED_FOR'];
-		} elseif ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
-			return $_SERVER['REMOTE_ADDR'];
-		} else {
-			return '';
-		}
+		if ( !empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) && filter_var( $_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP ) )
+			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+
+		elseif ( !empty( $_SERVER['HTTP_X_SUCURI_CLIENTIP'] ) && filter_var( $_SERVER['HTTP_X_SUCURI_CLIENTIP'], FILTER_VALIDATE_IP ) )
+			$ip = $_SERVER['HTTP_X_SUCURI_CLIENTIP'];
+
+		elseif ( isset( $_SERVER['REMOTE_ADDR'] ) )
+			$ip = $_SERVER['REMOTE_ADDR'];
+
+		else
+			$ip = '';
+
+		$ip = preg_replace('/^(\d+\.\d+\.\d+\.\d+):\d+$/', '\1', $ip);
+
+		return $ip;
 	}
 
 	/**
@@ -1062,18 +1106,27 @@ class Limit_Login_Attempts
 	public function options_page() {
 		$this->use_local_options = !is_network_admin();
 		$this->cleanup();
-
+		
 		if( !empty( $_POST ) )
 		{
 			check_admin_referer( 'limit-login-attempts-options' );
-
+			
 			if ( is_network_admin() )
 				$this->update_option( 'allow_local_options', !empty($_POST['allow_local_options']) );
-
+			
 			elseif ( $this->network_mode )
 				$this->update_option( 'use_local_options', empty($_POST['use_global_options']) );
 
-			/* Should we clear log? */
+			/* Should we support GDPR */
+			if( isset( $_POST[ 'gdpr' ] ) )
+			{
+				$this->update_option( 'gdpr', 1 );
+			}
+            else {
+                $this->update_option( 'gdpr', 0 );
+            }
+
+            /* Should we clear log? */
 			if( isset( $_POST[ 'clear_log' ] ) )
 			{
 				$this->update_option( 'logged', '' );
@@ -1104,7 +1157,7 @@ class Limit_Login_Attempts
 				$this->update_option('long_duration',      (int)$_POST['long_duration'] * 3600 );
 				$this->update_option('notify_email_after', (int)$_POST['email_after'] );
 
-				$white_list_ips = ( !empty( $_POST['lla_whitelist_ips'] ) ) ? explode("\n", str_replace("\r", "", $_POST['lla_whitelist_ips'] ) ) : array();
+				$white_list_ips = ( !empty( $_POST['lla_whitelist_ips'] ) ) ? explode("\n", str_replace("\r", "", stripslashes($_POST['lla_whitelist_ips']) ) ) : array();
 
 				if( !empty( $white_list_ips ) ) {
 					foreach( $white_list_ips as $key => $ip ) {
@@ -1115,7 +1168,7 @@ class Limit_Login_Attempts
 				}
 				$this->update_option('whitelist', $white_list_ips );
 
-				$white_list_usernames = ( !empty( $_POST['lla_whitelist_usernames'] ) ) ? explode("\n", str_replace("\r", "", $_POST['lla_whitelist_usernames'] ) ) : array();
+				$white_list_usernames = ( !empty( $_POST['lla_whitelist_usernames'] ) ) ? explode("\n", str_replace("\r", "", stripslashes($_POST['lla_whitelist_usernames']) ) ) : array();
 
 				if( !empty( $white_list_usernames ) ) {
 					foreach( $white_list_usernames as $key => $ip ) {
@@ -1126,18 +1179,22 @@ class Limit_Login_Attempts
 				}
 				$this->update_option('whitelist_usernames', $white_list_usernames );
 
-				$black_list_ips = ( !empty( $_POST['lla_blacklist_ips'] ) ) ? explode("\n", str_replace("\r", "", $_POST['lla_blacklist_ips'] ) ) : array();
+				$black_list_ips = ( !empty( $_POST['lla_blacklist_ips'] ) ) ? explode("\n", str_replace("\r", "", stripslashes($_POST['lla_blacklist_ips']) ) ) : array();
 
 				if( !empty( $black_list_ips ) ) {
 					foreach( $black_list_ips as $key => $ip ) {
+                        $range = array_map('trim', explode('-', $ip) );
+                        if ( count( $range ) > 1 && (float)sprintf("%u",ip2long($range[0])) > (float)sprintf("%u",ip2long($range[1]))) {
+                            $this->show_error( __( 'The "'. $ip .'" IP range is invalid', 'limit-login-attempts-reloaded' ) );
+                        }
 						if( '' == $ip ) {
 							unset( $black_list_ips[ $key ] );
 						}
 					}
 				}
-				$this->update_option('blacklist', $black_list_ips );
+                $this->update_option('blacklist', $black_list_ips );
 
-				$black_list_usernames = ( !empty( $_POST['lla_blacklist_usernames'] ) ) ? explode("\n", str_replace("\r", "", $_POST['lla_blacklist_usernames'] ) ) : array();
+				$black_list_usernames = ( !empty( $_POST['lla_blacklist_usernames'] ) ) ? explode("\n", str_replace("\r", "", stripslashes($_POST['lla_blacklist_usernames']) ) ) : array();
 
 				if( !empty( $black_list_usernames ) ) {
 					foreach( $black_list_usernames as $key => $ip ) {
@@ -1147,7 +1204,7 @@ class Limit_Login_Attempts
 					}
 				}
 				$this->update_option('blacklist_usernames', $black_list_usernames );
-
+				
 				$notify_methods = array();
 				if( isset( $_POST[ 'lockout_notify_log' ] ) ) {
 					$notify_methods[] = 'log';
@@ -1156,44 +1213,44 @@ class Limit_Login_Attempts
 					$notify_methods[] = 'email';
 				}
 				$this->update_option('lockout_notify', implode( ',', $notify_methods ) );
-
+				
 				$this->sanitize_options();
-
+				
 				$this->show_error( __( 'Options saved.', 'limit-login-attempts-reloaded' ) );
 			}
 		}
-
+		
 		include_once( LLA_PLUGIN_DIR . '/views/options-page.php' );
 	}
-
+	
 	public function ajax_unlock()
 	{
 		check_ajax_referer('limit-login-unlock', 'sec');
 		$ip = (string)@$_POST['ip'];
-
+		
 		$lockouts = (array)$this->get_option('lockouts');
-
+		
 		if ( isset( $lockouts[ $ip ] ) )
 		{
 			unset( $lockouts[ $ip ] );
 			$this->update_option( 'lockouts', $lockouts );
 		}
-
+		
 		//save to log
 		$user_login = @(string)$_POST['username'];
 		$log = $this->get_option( 'logged' );
-
+		
 		if ( @$log[ $ip ][ $user_login ] )
 		{
 			if ( !is_array( $log[ $ip ][ $user_login ] ) )
-			$log[ $ip ][ $user_login ] = array(
+			$log[ $ip ][ $user_login ] = array( 
 				'counter' => $log[ $ip ][ $user_login ],
 			);
 			$log[ $ip ][ $user_login ]['unlocked'] = true;
-
+			
 			$this->update_option( 'logged', $log );
 		}
-
+		
 		header('Content-Type: application/json');
 		echo 'true';
 		exit;
@@ -1208,4 +1265,21 @@ class Limit_Login_Attempts
 		LLA_Helpers::show_error( $msg );
 	}
 
+    /**
+     * returns IP with its md5 value
+     */
+    private function getHash($str)
+    {
+        return md5($str);
+    }
+
+    /**
+     * @param $arr - array
+     * @param $k - key
+     * @return int array value at given index or zero
+     */
+    private function checkKey($arr, $k)
+    {
+        return isset($arr[$k]) ? $arr[$k] : 0;
+    }
 }

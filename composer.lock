@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "efab26fca6bc2ce96b613afdf615eaa7",
+    "content-hash": "cc0c6577a0e4cc66b6a7439ee5683f93",
     "packages": [
         {
             "name": "composer/installers",
@@ -912,6 +912,26 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/image-focus/"
+        },
+        {
+            "name": "wpackagist-plugin/limit-login-attempts-reloaded",
+            "version": "2.7.1",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/limit-login-attempts-reloaded/",
+                "reference": "tags/2.7.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/limit-login-attempts-reloaded.2.7.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/limit-login-attempts-reloaded/"
         },
         {
             "name": "wpackagist-plugin/media-cleaner",

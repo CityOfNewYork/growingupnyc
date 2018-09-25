@@ -15,6 +15,7 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events__Month {
 	}
 
 	protected function hooks() {
+		add_filter( 'tribe_events_pro_tribe_events_shortcode_title_bar', array( $this, 'title_bar' ) );
 		add_filter( 'tribe_get_next_month_link', array( $this, 'next_month_url' ) );
 		add_filter( 'tribe_get_previous_month_link', array( $this, 'prev_month_url' ) );
 	}
@@ -23,7 +24,7 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events__Month {
 		Tribe__Events__Main::instance()->displaying = 'month';
 		$this->set_current_month();
 		$this->shortcode->prepare_default();
-		Tribe__Events__Template_Factory::asset_package( 'ajax-calendar' );
+		tribe_asset_enqueue( 'tribe-events-ajax-calendar' );
 		$this->shortcode->set_template_object( new Tribe__Events__Template__Month( $this->shortcode->get_query_args() ) );
 	}
 
@@ -47,6 +48,16 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events__Month {
 		$this->shortcode->update_query( array(
 			'eventDate' => $this->date,
 		) );
+	}
+
+	/**
+	 * Add Title Bar to Month View Shortcode
+	 *
+	 * @since 4.4.31
+	 *
+	 */
+	public function title_bar() {
+		tribe_get_template_part( 'month/title-bar' );
 	}
 
 	/**

@@ -432,8 +432,63 @@ if ( Object.prototype.hasOwnProperty.call( window, 'tribe_ev' ) ) {
 			}
 		} );
 
+		/**
+		 * Transform from a string into an object with key / value pairs. Transforms string from type:
+		 * key=value&ket_2=value2  into an object of type { key: value, key_2: value2 }
+		 *
+		 * @since 4.4.31
+		 *
+		 * @param params
+		 * @returns {object}
+		 */
+		function deserialize( params ) {
+			return params
+				.split( '&' )
+				.map( function ( item ) {
+					return item.split( '=' );
+				} )
+				.filter( function ( item ) {
+					return item.length === 2;
+				} ).reduce( function ( obj, current ) {
+					// If the object key already exists
+					if ( obj[ current[ 0 ] ] ) {
+						// Add multi value fields to an array
+						if( ! obj[ current[ 0 ] ].push ) {
+							obj[ current[ 0 ] ] = [ obj[ current[ 0 ] ] ];
+						}
+						obj[ current[ 0 ] ].push( current[ 1 ] );
+					} else {
+						// Else, assign obj.key = value
+						obj[ current[ 0 ] ] = current[ 1 ];
+					}
+					return obj;
+				}, {} );
+		}
+
+		/**
+		 * Add a new parameter before the data is serialized and the request to be fired.
+		 *
+		 * @since 4.2.26
+		 */
+		var isRecurrence = $tribe_container.data( 'recurrence-list' ) === 1;
+
+		// only deserialize on /all/ page to prevent conflicts with shortcode navigation
+		if ( isRecurrence ) {
+			$( te ).on( 'tribe_ev_ajaxStart', function () {
+				if ( typeof ts.params === 'string' ) {
+					ts.params = deserialize( decodeURIComponent( ts.params.replace( /\+/g, '%20' ) ) );
+				}
+				ts.params.is_recurrence_list = isRecurrence;
+				var value = $tribe_container.data( 'tribe_post_parent' );
+				if ( value ) {
+					ts.params.tribe_post_parent = value;
+				}
+				ts.params = $.param( ts.params );
+
+			} );
+		}
 		// @ifdef DEBUG
-		dbug && debug.info( 'TEC Debug: tribe-events-pro.js successfully loaded' );
+		dbug && tec_debug.info( 'TEC Debug: tribe-events-pro.js successfully loaded' );
 		// @endif
 
 	} );

@@ -92,7 +92,7 @@ class Tribe__Events__Pro__Widgets {
 			wp_enqueue_style( Tribe__Events__Main::POSTTYPE . '-widget-calendar-pro-style', $style_url, array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
 		}
 
-		if ( $style_override_url ) {
+		if ( $style_override_url && $style_url !== $style_override_url ) {
 			wp_enqueue_style( Tribe__Events__Main::POSTTYPE . '--widget-calendar-pro-override-style', $style_override_url, array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
 		}
 	}

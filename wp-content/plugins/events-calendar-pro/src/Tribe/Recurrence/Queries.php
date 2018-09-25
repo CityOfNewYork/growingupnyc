@@ -41,13 +41,13 @@ class Tribe__Events__Pro__Recurrence__Queries {
 		}
 
 		// If looking just for fields then let's replace the .ID with *
-		if ( $query->query_vars['fields'] == 'ids' ) {
+		if ( $query->query_vars['fields'] === 'ids' ) {
 			$sql = preg_replace( "/(^SELECT\\s+DISTINCT\\s{$wpdb->posts}.)(ID)/",
 				"$1*, {$wpdb->postmeta}.meta_value as 'EventStartDate'",
 				$sql );
 		}
 
-		if ( $query->query_vars['fields'] == 'id=>parent' ) {
+		if ( $query->query_vars['fields'] === 'id=>parent' ) {
 			$sql = preg_replace( "/(^SELECT\\s+DISTINCT\\s{$wpdb->posts}.ID,\\s{$wpdb->posts}.post_parent)/",
 				"$1, {$wpdb->postmeta}.meta_value as 'EventStartDate'",
 				$sql );
@@ -83,15 +83,29 @@ class Tribe__Events__Pro__Recurrence__Queries {
 			$limit = '';
 		}
 
-		$group_clause = $query->query_vars['fields'] == 'id=>parent' ? 'GROUP BY ID' : 'GROUP BY IF( post_parent = 0, ID, post_parent )';
+		$groupby = '';
+
+		if ( $query->query_vars['fields'] === 'id=>parent' ) {
+			$groupby = 'ID';
+		} elseif ( ! empty( $query->tribe_is_multi_posttype ) ) {
+			$groupby = $wpdb->prepare( 'IF( post_parent = 0 OR post_type != %s, ID, post_parent )', Tribe__Events__Main::POSTTYPE );
+		} else {
+			$groupby = 'IF( post_parent = 0, ID, post_parent )';
+		}
+
+		$group_clause = 'GROUP BY ' . $groupby;
 
 		// Do not try to order by EventStartDate unless that field is defined.
 		//
 		// Regarding the optional closing parentheses "\)?" after meta_value, this exists because
 		// wp_postmeta.meta_value *may* be passed as a parameter to MIN() or another function
-		$order_by_clause = preg_match( "/{$wpdb->postmeta}.meta_value\)? as EventStartDate/", $sql )
-			? "ORDER BY EventStartDate $direction"
-			: '';
+		$order_by_clause = '';
+		if (
+			preg_match( "/{$wpdb->postmeta}.meta_value\)? as EventStartDate/", $sql )
+			|| preg_match( "/AS EventStartDate/", $sql )
+		) {
+			$order_by_clause = "ORDER BY EventStartDate $direction";
+		}
 
 		return '
 			SELECT

@@ -6,6 +6,7 @@
  * Override this template in your own theme by creating a file at [your-theme]/tribe-events/pro/week/loop-grid.php
  *
  * @package TribeEventsCalendar
+ * @version 4.4.28
  *
  */
 
@@ -14,6 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }?>
 
 <div class="tribe-events-grid clearfix">
+
+	<h2 class="tribe-events-visuallyhidden"><?php printf( esc_html__( 'Calendar of %s', 'the-events-calendar-pro' ), tribe_get_event_label_plural() ); ?></h2>
+
 	<div class="tribe-grid-header clearfix">
 		<div class="column first">
 			<span class="tribe-events-visuallyhidden"><?php esc_html_e( 'Hours', 'tribe-events-calendar-pro' ); ?></span>

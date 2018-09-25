@@ -51,6 +51,7 @@ class Tribe__Events__Pro__Recurrence__Events_Saver {
 		$possible_next_pending = array();
 		$earliest_date         = strtotime( Tribe__Events__Pro__Recurrence__Meta::$scheduler->get_earliest_date() );
 		$latest_date           = strtotime( Tribe__Events__Pro__Recurrence__Meta::$scheduler->get_latest_date() );
+		$rule_count            = 0;
 
 		foreach ( $recurrences['rules'] as &$recurrence ) {
 			if ( ! $recurrence ) {
@@ -58,11 +59,12 @@ class Tribe__Events__Pro__Recurrence__Events_Saver {
 			}
 			$recurrence->setMinDate( $earliest_date );
 			$recurrence->setMaxDate( $latest_date );
-			$to_create = array_merge( $to_create, $recurrence->getDates() );
+			$to_create = array_merge( $to_create, $recurrence->getDates( $rule_count ) );
 
 			if ( $recurrence->constrainedByMaxDate() !== false ) {
 				$possible_next_pending[] = $recurrence->constrainedByMaxDate();
 			}
+			$rule_count++;
 		}
 
 		$to_create = tribe_array_unique( $to_create );

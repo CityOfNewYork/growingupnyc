@@ -10,6 +10,14 @@ class Tribe__Events__Pro__Date_Series_Rules__Year implements Tribe__Events__Pro_
 	private $months_of_year;
 	private $week_of_month;
 	private $day_of_week;
+	/**
+	 * Set the day of the month directly instead
+	 *
+	 * @since 4.4.26
+	 *
+	 * @var null
+	 */
+	private $day_of_the_month;
 
 	/**
 	 * The class constructor.
@@ -19,11 +27,12 @@ class Tribe__Events__Pro__Date_Series_Rules__Year implements Tribe__Events__Pro_
 	 * @param int   $week_of_month  The week of the month on which occurrences occur.
 	 * @param int   $day_of_week    The day of the week on which occurrences occur.
 	 */
-	public function __construct( $years_between = 1, $months_of_year = array(), $week_of_month = null, $day_of_week = null ) {
+	public function __construct( $years_between = 1, $months_of_year = array(), $week_of_month = null, $day_of_week = null, $day_of_the_month = null ) {
 		$this->years_between = $years_between;
 		$this->months_of_year = $months_of_year;
 		$this->week_of_month = $week_of_month;
 		$this->day_of_week = $day_of_week;
+		$this->day_of_the_month = $day_of_the_month;
 
 		sort( $this->months_of_year );
 	}
@@ -46,8 +55,11 @@ class Tribe__Events__Pro__Date_Series_Rules__Year implements Tribe__Events__Pro_
 		if ( $this->week_of_month && $this->day_of_week ) {
 			// 4th wednesday of next month
 			return $this->getNthDayOfMonth( $curdate, $this->day_of_week, $this->week_of_month, $next_month_of_year );
-		} else // normal date based recurrence
-		{
+		} elseif ( $this->day_of_the_month ) {
+			// 17 of february
+			return $this->get_date_from_month( $curdate, $this->day_of_the_month, $next_month_of_year );
+		} else {
+			// normal date based recurrence
 			$nextdate = $this->advanceDate( $curdate, $next_month_of_year );
 
 			// TODO: TEST AHEAD FOR INVALID RECURSIONS (ie every February 29 or September 31 which will result in an infinite loop)
@@ -149,6 +161,42 @@ class Tribe__Events__Pro__Date_Series_Rules__Year implements Tribe__Events__Pro_
 	}
 
 	/**
+	 * Generate a timestamp for a date inside of a month having the month as a boundary to avoid overflow of the days on
+	 * month by going to the start of the month.
+	 *
+	 * @since 4.4.26
+	 *
+	 * @param $current_date
+	 * @param $day
+	 * @param $current_month
+	 *
+	 * @return bool|false|int
+	 */
+	public function get_date_from_month( $current_date, $day, $current_month ) {
+		$months = (array) $current_month;
+		$this->sort_and_rotate_int_array( $months, (int) date( 'n', $current_date ) );
+
+		$current_year = (int) date( 'Y', $current_date );
+		$years        = array( $current_year, $current_year + $this->years_between );
+		foreach ( $years as $year ) {
+			foreach ( $months as $month ) {
+				$start_of_month = mktime( 0, 0, 0, $month, 1, $year );
+				$total_days     = date( 't', $start_of_month );
+				// Prevent overflow of the month
+				$day_of_the_month = $day > $total_days && $total_days > 0 ? $day % $total_days : $day;
+
+				$timestamp = mktime( 0, 0, 0, $month, $day_of_the_month, $year );
+
+				if ( $timestamp && $timestamp > $current_date ) {
+					return $timestamp;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Get the index of the next month of the year on which an occurrence occurs.
 	 *
 	 * @param int $curMonth The index of the current month.
@@ -225,6 +273,17 @@ class Tribe__Events__Pro__Date_Series_Rules__Year implements Tribe__Events__Pro_
 	 */
 	public function get_day_of_week() {
 		return $this->day_of_week;
+	}
+
+	/**
+	 * Return the day of the month if present
+	 *
+	 * @since 4.4.26
+	 *
+	 * @return int|null
+	 */
+	public function get_day_of_the_month() {
+		return $this->day_of_the_month;
 	}
 }
 

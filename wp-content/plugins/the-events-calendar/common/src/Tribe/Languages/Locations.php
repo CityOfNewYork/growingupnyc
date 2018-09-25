@@ -80,7 +80,7 @@ class Tribe__Languages__Locations {
 			'BM' => esc_html__( 'Bermuda', 'tribe-common' ),
 			'BT' => esc_html__( 'Bhutan', 'tribe-common' ),
 			'BO' => esc_html__( 'Bolivia', 'tribe-common' ),
-			'BA' => esc_html__( 'Bosnia and Herzegowina', 'tribe-common' ),
+			'BA' => esc_html__( 'Bosnia and Herzegovina', 'tribe-common' ),
 			'BW' => esc_html__( 'Botswana', 'tribe-common' ),
 			'BV' => esc_html__( 'Bouvet Island', 'tribe-common' ),
 			'BR' => esc_html__( 'Brazil', 'tribe-common' ),
@@ -303,7 +303,7 @@ class Tribe__Languages__Locations {
 		/**
 		 * Filter that allows to change the list and the output of the countries names.
 		 *
-		 * @since TBD
+		 * @since 4.7.12
 		 *
 		 * @param array associative array with: Country Code => Country Name
 		 */
@@ -380,7 +380,7 @@ class Tribe__Languages__Locations {
 		/**
 		 * Filter that allows to change the names of US states before output.
 		 *
-		 * @since TBD
+		 * @since 4.7.12
 		 *
 		 * @param array Associative array with the format: State Code => State Name
 		 */

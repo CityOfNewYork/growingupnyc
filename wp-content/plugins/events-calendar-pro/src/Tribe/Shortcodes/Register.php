@@ -16,6 +16,15 @@ class Tribe__Events__Pro__Shortcodes__Register {
 		'view' => 'default',
 	);
 
+	/**
+	 * Variable that holds the name of the option being created
+	 *
+	 * @since 4.4.26
+	 *
+	 * @var string
+	 */
+	private $main_calendar_option = 'tribe-shortcode-main-calendar-id';
+
 	public function __construct() {
 		add_shortcode( 'tribe_mini_calendar', array( $this, 'mini_calendar' ) );
 		add_shortcode( 'tribe_events_list', array( $this, 'events_list' ) );
@@ -24,7 +33,22 @@ class Tribe__Events__Pro__Shortcodes__Register {
 		add_shortcode( 'tribe_this_week', array( $this, 'this_week' ) );
 		add_shortcode( 'tribe_events', array( $this, 'tribe_events' ) );
 		add_shortcode( 'tribe_event_inline', array( $this, 'tribe_inline' ) );
+
+		$this->hook();
+	}
+
+	/**
+	 * Function used to attach the hooks associated with this class.
+	 *
+	 * @since 4.4.26
+	 */
+	public function hook() {
 		add_action( 'tribe_events_ical_before', array( $this, 'search_shortcodes' ) );
+		// Hooks attached to the main calendar attribute on the shortcodes
+		add_filter( 'tribe_events_get_link', array( $this, 'shortcode_main_calendar_link' ), 10, 2 );
+		add_action( 'save_post', array( $this, 'update_shortcode_main_calendar' ) );
+		add_action( 'trashed_post', array( $this, 'maybe_reset_main_calendar' ) );
+		add_action( 'deleted_post', array( $this, 'maybe_reset_main_calendar' ) );
 	}
 
 	public function mini_calendar( $atts ) {
@@ -231,5 +255,102 @@ class Tribe__Events__Pro__Shortcodes__Register {
 			}
 		}
 		return '';
+	}
+
+	/**
+	 * If the post has a shortcode [tribe_events] with the main calendar attribute on it we need to store
+	 * the ID of the post to use it for later usages on the All Events Link page.
+	 *
+	 * @since 4.4.26
+	 *
+	 * @param $post_id
+	 */
+	public function update_shortcode_main_calendar( $post_id ) {
+		$content = get_post_field( 'post_content', $post_id );
+
+		// If does not have any shortcode any more
+		if ( ! has_shortcode( $content, 'tribe_events' ) ) {
+			$this->maybe_reset_main_calendar( $post_id );
+			return;
+		}
+
+		if ( 'publish' !== get_post_status( $post_id ) ) {
+			$this->maybe_reset_main_calendar( $post_id );
+			return;
+		}
+
+		$shortcode = $this->get_shortcode( $content );
+		$attrs = wp_parse_args( (array) shortcode_parse_atts( $shortcode ), array(
+			'main-calendar' => false,
+		) );
+
+		if ( tribe_is_truthy( $attrs['main-calendar'] ) ) {
+			tribe_update_option( $this->main_calendar_option, $post_id );
+			return;
+		}
+
+		$this->maybe_reset_main_calendar( $post_id );
+	}
+
+	/**
+	 * Maybe reset the ID of option that stores the main calendar post ID if is the same ID, useful for times
+	 * when the post is removed
+	 *
+	 * @since 4.4.26
+	 *
+	 * @param $post_id
+	 */
+	public function maybe_reset_main_calendar( $post_id ) {
+		$main_calendar_id = tribe_get_option( $this->main_calendar_option, 0 );
+		// If the shortcode has been removed
+		if ( $main_calendar_id === $post_id ) {
+			tribe_update_option( $this->main_calendar_option, 0 );
+		}
+	}
+
+	/**
+	 * Constructs a new Link for the Home of the calendar if is on the singular view of the events page
+	 *
+	 * @since 4.4.26
+	 *
+	 * @param $link
+	 * @param $type
+	 *
+	 * @return string
+	 */
+	public function shortcode_main_calendar_link( $link, $type ) {
+		if ( 'home' !== $type )  {
+			return $link;
+		}
+
+		/**
+		 * This will prevent to change the main home link in all the site and just changed on the single event view
+		 */
+		if ( ! is_single() ) {
+			return $link;
+		}
+
+		$wp_query = tribe_get_global_query_object();
+		$post_parent = 0;
+		$displaying = '';
+		if ( null !== $wp_query && $wp_query->is_main_query() ) {
+			$post_parent = $wp_query->get( 'post_parent' );
+			$displaying = $wp_query->get( 'eventDisplay' );
+		}
+		$is_recurrence_single = $post_parent && 'all' == $displaying;
+
+		$is_valid_page = is_singular( Tribe__Events__Main::POSTTYPE ) || $is_recurrence_single;
+		if ( ! $is_valid_page ) {
+			return $link;
+		}
+
+		$main_calendar_id = tribe_get_option( $this->main_calendar_option, 0 );
+
+		if ( $main_calendar_id ) {
+			$home_link = get_permalink( $main_calendar_id );
+			return $home_link ? $home_link : $link;
+		}
+
+		return $link;
 	}
 }

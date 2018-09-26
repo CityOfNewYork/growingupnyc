@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cc0c6577a0e4cc66b6a7439ee5683f93",
+    "content-hash": "68440f81b73942c22541175bf539845b",
     "packages": [
         {
             "name": "composer/installers",
@@ -935,15 +935,15 @@
         },
         {
             "name": "wpackagist-plugin/media-cleaner",
-            "version": "4.6.3",
+            "version": "5.0.2",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/media-cleaner/",
-                "reference": "tags/4.6.3"
+                "reference": "trunk"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/media-cleaner.4.6.3.zip",
+                "url": "https://downloads.wordpress.org/plugin/media-cleaner.zip?timestamp=1534807003",
                 "reference": null,
                 "shasum": null
             },

@@ -108,6 +108,9 @@ class Tribe__Events__Pro__Shortcodes__Inline__Parser {
 	 */
 	protected function process() {
 
+		// Prevents unbalanced tags (and thus broken HTML) on final shortcode output.
+		$this->content = force_balance_tags( $this->content );
+
 		$this->organizer_id = tribe_get_organizer_ids( $this->id );
 
 		foreach ( $this->placeholders as $tag => $handler ) {

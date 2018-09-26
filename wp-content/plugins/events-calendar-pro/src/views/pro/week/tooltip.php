@@ -5,51 +5,51 @@
  * Override this template in your own theme by creating a file at:
  *
  *     [your-theme]/tribe-events/pro/week/tooltip.php
- * @version 4.4
+ * @version 4.4.30
  */
 ?>
 
 <script type="text/html" id="tribe_tmpl_tooltip">
 	<div id="tribe-events-tooltip-[[=eventId]]" class="tribe-events-tooltip">
-		<h4 class="tribe-event-title">[[=raw title]]</h4>
+		<h3 class="tribe-event-title">[[=raw title]]<\/h3>
 
 		<div class="tribe-events-event-body">
 			<div class="tribe-event-duration">
-				<abbr class="tribe-events-abbr tribe-event-date-start">[[=dateDisplay]] </abbr>
-			</div>
+				<abbr class="tribe-events-abbr tribe-event-date-start">[[=dateDisplay]] <\/abbr>
+			<\/div>
 			[[ if(imageTooltipSrc.length) { ]]
 			<div class="tribe-events-event-thumb">
-				<img src="[[=imageTooltipSrc]]" alt="[[=title]]" />
-			</div>
+				<img src="[[=imageTooltipSrc]]" alt="[[=title]]" \/>
+			<\/div>
 			[[ } ]]
 			[[ if(excerpt.length) { ]]
-			<div class="tribe-event-description">[[=raw excerpt]]</div>
+			<div class="tribe-event-description">[[=raw excerpt]]<\/div>
 			[[ } ]]
-			<span class="tribe-events-arrow"></span>
-		</div>
-	</div>
+			<span class="tribe-events-arrow"><\/span>
+		<\/div>
+	<\/div>
 </script>
 
 <script type="text/html" id="tribe_tmpl_tooltip_featured">
 	<div id="tribe-events-tooltip-[[=eventId]]" class="tribe-events-tooltip tribe-event-featured">
 		[[ if(imageTooltipSrc.length) { ]]
 			<div class="tribe-events-event-thumb">
-				<img src="[[=imageTooltipSrc]]" alt="[[=title]]" />
-			</div>
+				<img src="[[=imageTooltipSrc]]" alt="[[=title]]" \/>
+			<\/div>
 		[[ } ]]
 
-		<h4 class="tribe-event-title">[[=raw title]]</h4>
+		<h3 class="tribe-event-title">[[=raw title]]<\/h3>
 
 		<div class="tribe-events-event-body">
 
 			<div class="tribe-event-duration">
-				<abbr class="tribe-events-abbr tribe-event-date-start">[[=dateDisplay]] </abbr>
-			</div>
+				<abbr class="tribe-events-abbr tribe-event-date-start">[[=dateDisplay]] <\/abbr>
+			<\/div>
 
 			[[ if(excerpt.length) { ]]
-			<div class="tribe-event-description">[[=raw excerpt]]</div>
+			<div class="tribe-event-description">[[=raw excerpt]]<\/div>
 			[[ } ]]
-			<span class="tribe-events-arrow"></span>
-		</div>
-	</div>
+			<span class="tribe-events-arrow"><\/span>
+		<\/div>
+	<\/div>
 </script>

@@ -7,6 +7,7 @@
  *
  * @package TribeEventsCalendar
  *
+ * @version 4.4.26
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
@@ -32,10 +33,8 @@ $mini_cal_widget_id = Tribe__Events__Utils__Id_Generator::generate_id( 'tribe-mi
 				</div>
 			</td>
 		</tr>
-		</thead>
 		<?php do_action( 'tribe_events_mini_cal_after_header' ); ?>
 		<?php do_action( 'tribe_events_mini_cal_before_the_grid' ); ?>
-		<thead>
 		<tr>
 			<?php foreach ( $days_of_week as $day ) : ?>
 				<th class="tribe-mini-calendar-dayofweek"><?php echo $day ?></th>
@@ -43,7 +42,6 @@ $mini_cal_widget_id = Tribe__Events__Utils__Id_Generator::generate_id( 'tribe-mi
 
 		</tr>
 		</thead>
-
 
 		<tbody>
 

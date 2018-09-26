@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php $displayoptions = array(
 		'cost'      => __( 'Price', 'tribe-events-calendar-pro' ),
 		'venue'     => __( 'Venue', 'tribe-events-calendar-pro' ),
-		'address'   => __( 'Address', 'tribe-events-calendar-pro' ),
+		'street'    => __( 'Street', 'tribe-events-calendar-pro' ),
 		'city'      => __( 'City', 'tribe-events-calendar-pro' ),
 		'region'    => __( 'State (US) Or Province (Int)', 'tribe-events-calendar-pro' ),
 		'zip'       => __( 'Postal Code', 'tribe-events-calendar-pro' ),
@@ -38,6 +38,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 		'phone'     => __( 'Phone', 'tribe-events-calendar-pro' ),
 		'organizer' => __( 'Organizer', 'tribe-events-calendar-pro' ),
 	);
+
+	/**
+	 * Enable the street checkbox if address was checked on version 4.4.26 or earlier.
+	 *
+	 * @todo remove after 4.6.0 (added for continuity when users transition from 4.4.26 or earlier to this release)
+	 *
+	 * @version 4.4.27
+	 */
+	if ( isset( $instance['address'] ) && tribe_is_truthy( $instance['address'] ) ) {
+		$instance['street']  = true;
+		$instance['address'] = false;
+	}
+
 	foreach ( $displayoptions as $option => $label ) {
 		?>
 		<input class="checkbox" type="checkbox" value="1" <?php checked( $instance[ $option ], true ); ?> id="<?php echo esc_attr( $this->get_field_id( $option ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( $option ) ); ?>" style="margin-left:5px" />

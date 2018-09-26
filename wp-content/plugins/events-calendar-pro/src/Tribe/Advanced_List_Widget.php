@@ -28,7 +28,7 @@ class Tribe__Events__Pro__Advanced_List_Widget extends Tribe__Events__List_Widge
 		add_filter( 'tribe_events_list_widget_query_args', array( $this, 'taxonomy_filters' ) );
 
 		// Do not enqueue if the widget is inactive
-		if ( is_active_widget( false, false, $this->id_base, true ) ) {
+		if ( is_active_widget( false, false, $this->id_base, true ) || is_customize_preview() ) {
 			add_action( 'init', array( $this, 'enqueue_stylesheet' ), 100 );
 		}
 	}
@@ -62,7 +62,21 @@ class Tribe__Events__Pro__Advanced_List_Widget extends Tribe__Events__List_Widge
 		$ecp            = Tribe__Events__Pro__Main::instance();
 		$tooltip_status = $ecp->recurring_info_tooltip_status();
 		$ecp->disable_recurring_info_tooltip();
+
 		$this->instance_defaults( $instance );
+
+		/**
+		 * Do things pre-render like: optionally enqueue assets if we're not in a sidebar
+		 * This has to be done in widget() because we have to be able to access
+		 * the queried object for some plugins
+		 *
+		 * @since 4.4.29
+		 *
+		 * @param string __CLASS__ the widget class
+		 * @param array  $args     the widget args
+		 * @param array  $instance the widget instance
+		 */
+		do_action( 'tribe_events_pro_widget_render', __CLASS__, $args, $instance );
 
 		// @todo remove after 3.7 (continuity helper for upgrading users)
 		if ( isset( $this->instance['category'] ) ) {
@@ -82,6 +96,8 @@ class Tribe__Events__Pro__Advanced_List_Widget extends Tribe__Events__List_Widge
 
 		$instance['venue']                = $new_instance['venue'];
 		$instance['country']              = $new_instance['country'];
+		$instance['street']               = $new_instance['street'];
+		//@todo remove $instance['address'] after 4.6 (continuity helper for upgrading users)
 		$instance['address']              = $new_instance['address'];
 		$instance['city']                 = $new_instance['city'];
 		$instance['region']               = $new_instance['region'];
@@ -93,10 +109,10 @@ class Tribe__Events__Pro__Advanced_List_Widget extends Tribe__Events__List_Widge
 		$instance['operand']              = strip_tags( $new_instance['operand'] );
 		$instance['filters']              = maybe_unserialize( $this->clear_filters( $new_instance['filters'] ) );
 
-		// @todo remove after 3.7 (added for continuity when users transition from 3.5.x or earlier to this release)
-		if ( isset( $old_instance['category'] ) ) {
-			$this->include_cat_id( $instance['filters'], $old_instance['category'] );
-			unset( $instance['category'] );
+		if ( isset( $new_instance['jsonld_enable'] ) && $new_instance['jsonld_enable'] == true ) {
+			$instance['jsonld_enable'] = 1;
+		} else {
+			$instance['jsonld_enable'] = 0;
 		}
 
 		return $instance;
@@ -156,6 +172,8 @@ class Tribe__Events__Pro__Advanced_List_Widget extends Tribe__Events__List_Widge
 			'featured_events_only' => false,
 			'venue'                => false,
 			'country'              => true,
+			'street'               => false,
+			//@todo remove 'address' after 4.6 (continuity helper for upgrading users)
 			'address'              => false,
 			'city'                 => true,
 			'region'               => true,
@@ -172,6 +190,8 @@ class Tribe__Events__Pro__Advanced_List_Widget extends Tribe__Events__List_Widge
 		if ( $empty_values ) {
 			$defaults = array_map( '__return_empty_string', $defaults );
 		}
+
+
 
 		return wp_parse_args( (array) $instance, $defaults );
 	}

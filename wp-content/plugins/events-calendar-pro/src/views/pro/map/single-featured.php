@@ -5,7 +5,7 @@
  *
  * Override this template in your own theme by creating a file at [your-theme]/tribe-events/pro/map/single-featured.php
  *
- * @version 4.4.12
+ * @version 4.4.28
  *
  */
 
@@ -30,11 +30,11 @@ echo tribe_event_featured_image( null, 'large' );
 <!-- Event Distance -->
 <?php echo tribe_event_distance(); ?>
 
-<h2 class="tribe-events-map-event-title">
+<h3 class="tribe-events-map-event-title">
 	<a class="tribe-event-url" href="<?php echo esc_url( tribe_get_event_link() ); ?>" title="<?php the_title() ?>" rel="bookmark">
 		<?php the_title() ?>
 	</a>
-</h2>
+</h3>
 <?php do_action( 'tribe_events_after_the_event_title' ) ?>
 
 <!-- Event Meta -->

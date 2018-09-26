@@ -13,15 +13,14 @@
  *
  */
 
+.tribe-events-page-title {
+	padding-left: 0;
+}
 
 /* Events Loop */
 .tribe-events-loop {
 	.tribe-events-loop .type-tribe_events {
 		margin: 0;
-	}
-
-	h2.tribe-events-page-title {
-		padding-left: 0;
 	}
 
 	.published {
@@ -512,7 +511,7 @@
 }
 
 .tribe-events-list {
-	#tribe-events-photo-events .tribe-events-event-details h2 {
+	#tribe-events-photo-events .tribe-events-event-details .tribe-events-list-event-title {
 		padding-right: 0;
 	}
 
@@ -555,19 +554,21 @@
 }
 
 /* tribe geo location option links (displayed when multiple locations found) */
-#tribe-geo-results h2,
-#tribe-geo-options h2 {
-	color: #222;
-	font-size: 18px;
-	font-weight: bold;
-	line-height: 1em;
-	margin: 0 0 6px;
-	padding: 0;
-}
+#tribe-geo-results,
+#tribe-geo-options {
 
-#tribe-geo-results h2 a,
-#tribe-geo-options h2 a {
-	color: #222;
+	.tribe-events-map-event-title {
+		color: #222;
+		font-size: 18px;
+		font-weight: bold;
+		line-height: 1em;
+		margin: 0 0 6px;
+		padding: 0;
+
+		a {
+			color: #222;
+		}
+	}
 }
 
 #tribe-geo-links {
@@ -675,13 +676,14 @@
 }
 
 .tribe-geo-result-entry {
-	.tribe-geo-result-excerpt p {
-		font-size: 14px;
-	}
 
-	h2 {
+	.tribe-events-map-event-title {
 		float: left;
 		width: 80%;
+	}
+
+	.tribe-geo-result-excerpt p {
+		font-size: 14px;
 	}
 }
 
@@ -769,7 +771,7 @@ ul.related-events {
 	text-transform: uppercase;
 }
 
-h3.tribe-events-related-events-title {
+.tribe-events-related-events-title {
 	margin-bottom: 4%;
 }
 

@@ -72,7 +72,7 @@ class Tribe__Events__Pro__This_Week {
 			wp_enqueue_style( Tribe__Events__Main::POSTTYPE . '-widget-this-week-pro-style', $style_url, array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
 		}
 
-		if ( $style_override_url && $style_override_url != $style_url ) {
+		if ( $style_override_url && $style_override_url !== $style_url ) {
 			wp_enqueue_style( Tribe__Events__Main::POSTTYPE . '--widget-this-week-pro-override-style', $style_override_url, array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
 		}
 
@@ -264,9 +264,15 @@ class Tribe__Events__Pro__This_Week {
 		//Todays Date According to WordPress
 		$timestamp_today = strtotime( current_time( Tribe__Date_Utils::DBDATEFORMAT ) );
 
-		//Date Formats from The Events Calendar
-		$display_date_format  = apply_filters( 'tribe_events_this_week_date_format', 'jS' );
-		$display_day_format  = apply_filters( 'tribe_events_this_week_day_format', 'D ' );
+		/**
+		 * Date Formats from The Events Calendar.
+		 * Filter the date format, by default the ones from the settings ('D jS')
+		 *
+		 * @since 4.4.26
+		 *
+		 * @param string The TEC week day format.
+		 */
+		$display_date_format  = apply_filters( 'tribe_events_this_week_date_format', tribe_get_option( 'weekDayFormat', 'D jS' ) );
 
 		// Array used for calculation of php strtotime relative dates
 		$weekday_array = array(
@@ -324,16 +330,14 @@ class Tribe__Events__Pro__This_Week {
 				$this_week_events = array_merge( $this_week_events_sticky, $this_week_events );
 			}
 
-			$formatted_date  = date_i18n( $display_date_format, strtotime( $date ) );
-			$formatted_day  = date_i18n( $display_day_format, strtotime( $date ) );
-			$timestamp_date  = strtotime( $date );
+			$formatted_date = date_i18n( $display_date_format, strtotime( $date ) );
+			$timestamp_date = strtotime( $date );
 
 			// create the "day" element to do display in the template
 			$week_days[] = array(
 				'date'             => $date,
 				'day_number'       => $day_number,
 				'formatted_date'   => $formatted_date,
-				'formatted_day'    => $formatted_day,
 				'is_today'         => ( $timestamp_date == $timestamp_today ) ? true : false,
 				'is_past'          => ( $timestamp_date < $timestamp_today ) ? true : false,
 				'is_future'        => ( $timestamp_date > $timestamp_today ) ? true : false,

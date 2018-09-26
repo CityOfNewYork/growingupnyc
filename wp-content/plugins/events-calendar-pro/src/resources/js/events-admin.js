@@ -167,6 +167,31 @@ var tribe_events_pro_admin = {
 
 			setTimeout( start );
 		}
+
+		// show state/province input based on first option in countries list, or based on user input of country
+		$( 'body' ).on( 'change', '#defaultCountry-select', function () {
+			var $country        = $( this );
+			var $state          = $( '#tribe-field-eventsDefaultState' );
+			var $province       = $( '.tribe-settings-form-wrap #tribe-field-eventsDefaultProvince' );
+			var $state_desc     = $( 'p.tribe-saved-state' );
+			var $province_desc  = $( 'p.tribe-saved-province' );
+			var country         = $( this ).val();
+
+			if ( 'US' === country || 'United States' === country ) {
+				$province.hide();
+				$province_desc.hide();
+				$state.show();
+				$state_desc.show();
+			} else {
+
+				$state.hide();
+				$state_desc.hide();
+				$province.show();
+				$province_desc.show();
+			}
+		} )
+		.find( '#defaultCountry-select' ).trigger( 'change' );
+
 	};
 
 	/**

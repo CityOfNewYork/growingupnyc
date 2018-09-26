@@ -14,6 +14,7 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events__Photo {
 	}
 
 	protected function hooks() {
+		add_filter( 'tribe_events_pro_tribe_events_shortcode_title_bar', array( $this, 'title_bar' ) );
 		add_action( 'tribe_events_pro_tribe_events_shortcode_pre_render', array( $this, 'shortcode_pre_render' ) );
 		add_action( 'tribe_events_pro_tribe_events_shortcode_post_render', array( $this, 'shortcode_post_render' ) );
 	}
@@ -24,8 +25,8 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events__Photo {
 		$this->shortcode->prepare_default();
 
 		Tribe__Events__Pro__Main::instance()->enqueue_pro_scripts();
-		Tribe__Events__Pro__Template_Factory::asset_package( 'events-pro-css' );
-		Tribe__Events__Pro__Template_Factory::asset_package( 'ajax-photoview' );
+		tribe_asset_enqueue_group( 'events-pro-styles' );
+		tribe_asset_enqueue( 'tribe-events-pro-photo' );
 
 		$this->shortcode->set_template_object( new Tribe__Events__Pro__Templates__Photo( $this->shortcode->get_query_args() ) );
 
@@ -40,6 +41,16 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events__Photo {
 	 */
 	public function filter_baseurl( $url ) {
 		return trailingslashit( get_home_url( null, $GLOBALS['wp']->request ) );
+	}
+
+	/**
+	 * Add Title Bar to Photo View Shortcode
+	 *
+	 * @since 4.4.31
+	 *
+	 */
+	public function title_bar() {
+		tribe_get_template_part( 'pro/photo/title-bar' );
 	}
 
 	public function shortcode_pre_render() {

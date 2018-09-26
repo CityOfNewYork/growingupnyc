@@ -52,28 +52,10 @@ class Tribe__Events__Pro__Recurrence__Exclusions {
 	 * @return array
 	 */
 	public function remove_exclusions( array $date_durations, array $exclusion_dates ) {
+
 		$date_default_timezone = date_default_timezone_get();
 
-		$timezone_identifier = $this->timezone_string;
-
-		$matches = array();
-		preg_match( '/^UTC(\\+|-)+(\\d+)+(\\.(\\d+)*)*/', $this->timezone_string, $matches );
-		if ( $matches ) {
-			$signum             = $matches[1];
-			$hrs_in_seconds     = intval( $matches[2] ) * 3600;
-			$minutes_in_seconds = floatval( empty( $matches[3] ) ? 0 : $matches[3] ) * 60;
-
-			$seconds = $hrs_in_seconds + $minutes_in_seconds;
-			$seconds = $signum == '+' ? $seconds : - $seconds;
-			// Get timezone name from seconds
-			$timezone_identifier = timezone_name_from_abbr( '', $seconds, 1 );
-			// Workaround for bug #44780
-			if ( $timezone_identifier === false ) {
-				$timezone_identifier = timezone_name_from_abbr( '', $seconds, 0 );
-			}
-		}
-
-		date_default_timezone_set( $timezone_identifier );
+		date_default_timezone_set( $this->get_timezone() );
 
 		$exclusion_timestamps = array();
 
@@ -101,5 +83,18 @@ class Tribe__Events__Pro__Recurrence__Exclusions {
 		date_default_timezone_set( $date_default_timezone );
 
 		return $date_durations;
+	}
+
+	/**
+	 * Return the name of the Timezone being modified
+	 *
+	 * @since 4.4.26
+	 *
+	 * @return string
+	 */
+	public function get_timezone() {
+		return class_exists( 'Tribe__Timezones' )
+			? Tribe__Timezones::generate_timezone_string_from_utc_offset( $this->timezone_string )
+			: 'UTC';
 	}
 }

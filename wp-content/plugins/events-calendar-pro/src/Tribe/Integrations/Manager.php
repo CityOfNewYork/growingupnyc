@@ -59,6 +59,25 @@ class Tribe__Events__Pro__Integrations__Manager {
 		return true;
 	}
 
+	/**
+	 * Loads Site Origin integration classes and event listeners.
+	 *
+	 * @since 4.4.29
+	 *
+	 * @return bool
+	 */
+	private function load_site_origin_integration() {
+		if ( ! class_exists( 'SiteOrigin_Panels' ) ) {
+			return false;
+		}
+
+		tribe_singleton( 'pro.integrations.site-origin', 'Tribe__Events__Pro__Integrations__Site_Origin__Page_Builder', array( 'hook' ) );
+		tribe( 'pro.integrations.site-origin' );
+
+
+		return true;
+	}
+
 
 	/**
 	 * Conditionally loads the classes needed to integrate with third-party plugins.
@@ -69,5 +88,6 @@ class Tribe__Events__Pro__Integrations__Manager {
 	public function load_integrations() {
 		$this->load_wpml_integration();
 		$this->load_wpseo_integration();
+		$this->load_site_origin_integration();
 	}
 }

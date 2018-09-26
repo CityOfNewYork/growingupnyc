@@ -23,7 +23,7 @@
  *
  * List of optional information attributes:
  *
- *     address, city, cost, country, organizer, phone, region, venue, zip
+ *     street, city, cost, country, organizer, phone, region, venue, zip
  *
  */
 class Tribe__Events__Pro__Shortcodes__Events_List extends Tribe__Events__Pro__Shortcodes__Filtered_Shortcode {
@@ -69,6 +69,7 @@ class Tribe__Events__Pro__Shortcodes__Events_List extends Tribe__Events__Pro__Sh
 		'venue'     => '',
 		'country'   => '',
 		'address'   => '',
+		'street'    => '',
 		'city'      => '',
 		'region'    => '',
 		'zip'       => '',

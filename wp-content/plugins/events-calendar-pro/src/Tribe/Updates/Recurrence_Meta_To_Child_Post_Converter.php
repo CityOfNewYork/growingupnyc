@@ -44,7 +44,7 @@ class Tribe__Events__Pro__Updates__Recurrence_Meta_To_Child_Post_Converter {
 
 		foreach ( $sequence->get_sorted_sequence() as $date ) {
 			if ( ! empty( $date ) ) {
-				set_time_limit( 30 );
+				tribe_set_time_limit( 30 );
 				$instance = new Tribe__Events__Pro__Recurrence__Instance( $event_id, $date, 0, $date['sequence'] );
 				$instance->save();
 

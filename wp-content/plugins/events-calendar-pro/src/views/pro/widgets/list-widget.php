@@ -14,7 +14,7 @@
  * @var string $start
  * @var string $end
  * @var string $venue
- * @var string $address
+ * @var string $street
  * @var string $city
  * @var string $state
  * @var string $province

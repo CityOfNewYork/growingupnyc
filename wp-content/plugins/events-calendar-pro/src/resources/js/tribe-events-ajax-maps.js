@@ -403,7 +403,9 @@
 					if ( tt.pushstate ) {
 
 						ts.page_title = $( '#tribe-events-header' ).data( 'title' );
+						ts.view_title = $( '#tribe-events-header' ).data( 'viewtitle' );
 						document.title = ts.page_title;
+						$( '.tribe-events-page-title' ).html( ts.view_title );
 
 						if ( ts.do_string ) {
 							// strip the baseurl from the push state URL
@@ -686,12 +688,12 @@
 				}
 			} );
 			// @ifdef DEBUG
-			ts.view && dbug && debug.timeEnd( 'Tribe JS Init Timer' );
+			ts.view && dbug && tec_debug.timeEnd( 'Tribe JS Init Timer' );
 			// @endif
 		}
 
 		// @ifdef DEBUG
-		dbug && debug.info( 'TEC Debug: tribe-events-ajax-maps.js successfully loaded' );
+		dbug && tec_debug.info( 'TEC Debug: tribe-events-ajax-maps.js successfully loaded' );
 		// @endif
 
 	} );

@@ -42,7 +42,6 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			$post_id = Tribe__Events__Main::postIdHelper( $post_id );
 
 			if ( empty( $post_id ) ) {
-				_doing_it_wrong( __FUNCTION__, 'You need to pass a post ID or use it in the loop.', '3.10' );
 				return false;
 			}
 
@@ -382,7 +381,7 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		$option = Tribe__Events__Main::instance()->defaults()->state();
 		$option = empty( $option ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option;
 		$option = esc_html( $option );
-		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description">' . sprintf( __( 'The current default state is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
+		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description tribe-saved-state">' . sprintf( __( 'The current default state/province is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
 	}
 
 	/**
@@ -397,7 +396,7 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		$option = Tribe__Events__Main::instance()->defaults()->province();
 		$option = empty( $option ) ? __( 'No default set', 'tribe-events-calendar-pro' ) : $option;
 		$option = esc_html( $option );
-		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description">' . sprintf( __( 'The current default province is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
+		echo '<p class="tribe-field-indent tribe-field-description venue-default-info description tribe-saved-province">' . sprintf( __( 'The current default state/province is: %s', 'tribe-events-calendar-pro' ), '<strong>' . $option . '</strong>' ) . '</p>';
 	}
 
 	/**
@@ -452,21 +451,13 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 	 * @param $distance_in_kms
 	 *
 	 * @return mixed
-	 * @todo remove tribe_formatted_distance filter in 3.11
 	 */
 	function tribe_get_distance_with_unit( $distance_in_kms ) {
-
-		$tec = Tribe__Events__Main::instance();
 
 		$unit     = Tribe__Settings_Manager::get_option( 'geoloc_default_unit', 'miles' );
 		$distance = round( tribe_convert_units( $distance_in_kms, 'kms', $unit ), 2 );
 
-		if ( has_filter( 'tribe_formatted_distance' ) ) {
-			_deprecated_function( "The 'tribe_formatted_distance' filter", '3.9', " the 'tribe_get_distance_with_unit' filter" );
-			$distance = apply_filters( 'tribe_formatted_distance', $distance . ' ' . $unit );
-	}
-
-		return apply_filters( 'tribe_get_distance_with_unit', $distance, $distance_in_kms, $unit );
+		return apply_filters( 'tribe_get_distance_with_unit', $distance . ' ' . $unit, $distance, $distance_in_kms, $unit );
 	}
 
 	/**
@@ -524,7 +515,12 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		$offset = 7 - get_option( 'start_of_week', 0 );
 
 		if ( tribe_is_ajax_view_request() ) {
+
 			$date = is_null( $date ) ? $_REQUEST['eventDate'] : $date;
+
+			// get the first value if we receiv an array
+			$date = is_array( $date ) ? Tribe__Utils__Array::get( $date, array( 0 ) ) : $date;
+
 		} else {
 			$date = is_null( $date ) && ! is_null( $wp_query ) ? $wp_query->get( 'start_date' ) : $date;
 		}
@@ -559,37 +555,70 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 	}
 
 	/**
-	 * Week Loop View Test
+	 * Week View Test
+	 *
+	 * Returns true when on the "real" Week View itself, but not in other secondary instances of the
+	 * Week View like instance of the [tribe_events] shortcode.
 	 *
 	 * @return bool
 	 */
 	function tribe_is_week() {
-		$is_week = ( Tribe__Events__Main::instance()->displaying == 'week' ) ? true : false;
+		$is_week = ( 'week' === Tribe__Events__Main::instance()->displaying ) ? true : false;
 
-		return apply_filters( 'tribe_is_week', $is_week );
+		/**
+		 * Allows filtering of the tribe_is_week boolean value.
+		 *
+		 * @since 4.4.26 Added inline documentation for this filter.
+		 *
+		 * @param boolean $is_week Whether you're on the main Week View or not
+		 * @param Tribe__Events__Main $tribe_ecp The current Tribe__Events__Main instance.
+		 */
+		return apply_filters( 'tribe_is_week', $is_week, Tribe__Events__Main::instance() );
 	}
 
 	/**
-	 * Photo Loop View Test
+	 * Photo View Test
+	 *
+	 * Returns true when on the "real" Photo View itself, but not in other secondary instances of the
+	 * Photo View like instance of the [tribe_events] shortcode.
 	 *
 	 * @return bool
 	 */
 	function tribe_is_photo() {
-		$is_photo = ( Tribe__Events__Main::instance()->displaying == 'photo' ) ? true : false;
+		$is_photo = ( 'photo' === Tribe__Events__Main::instance()->displaying ) ? true : false;
 
-		return apply_filters( 'tribe_is_photo', $is_photo );
+		/**
+		 * Allows filtering of the tribe_is_photo boolean value.
+		 *
+		 * @since 4.4.26 Added inline documentation for this filter.
+		 *
+		 * @param boolean $is_photo Whether you're on the main Photo View or not
+		 * @param Tribe__Events__Main $tribe_ecp The current Tribe__Events__Main instance.
+		 */
+		return apply_filters( 'tribe_is_photo', $is_photo, Tribe__Events__Main::instance() );
 	}
 
 	/**
-	 * Map Loop View Test
+	 * Map View Test
+	 *
+	 * Returns true when on the "real" Map View itself, but not in other secondary instances of the
+	 * Map View like instance of the [tribe_events] shortcode.
 	 *
 	 * @return bool
 	 */
 	function tribe_is_map() {
 		$tribe_ecp = Tribe__Events__Main::instance();
-		$is_map    = ( $tribe_ecp->displaying == 'map' ) ? true : false;
+		$is_map    = ( 'map' === $tribe_ecp->displaying ) ? true : false;
 
-		return apply_filters( 'tribe_is_map', $is_map );
+		/**
+		 * Allows filtering of the tribe_is_map boolean value.
+		 *
+		 * @since 4.4.26 Added inline documentation for this filter.
+		 *
+		 * @param boolean $is_map Whether you're on the main Map View or not
+		 * @param Tribe__Events__Main $tribe_ecp The current Tribe__Events__Main instance.
+		 */
+		return apply_filters( 'tribe_is_map', $is_map, $tribe_ecp );
 	}
 
 	/**
@@ -697,18 +726,19 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 	 * @return array the related posts.
 	 */
 	function tribe_get_related_posts( $count = 3, $post = false ) {
-		$post_id = Tribe__Events__Main::postIdHelper( $post );
-		$tags = wp_get_post_tags( $post_id, array( 'fields' => 'ids' ) );
+		$post_id    = Tribe__Events__Main::postIdHelper( $post );
+		$tags       = wp_get_post_tags( $post_id, array( 'fields' => 'ids' ) );
 		$categories = wp_get_object_terms( $post_id, Tribe__Events__Main::TAXONOMY, array( 'fields' => 'ids' ) );
 		if ( ! $tags && ! $categories ) {
 			return;
 		}
 		$args = array(
 			'posts_per_page' => $count,
-			'post__not_in' => array( $post_id ),
-			'eventDisplay' => 'list',
-			'tax_query' => array( 'relation' => 'OR' ),
-			'orderby' => 'rand',
+			'post__not_in'   => array( $post_id ),
+			'eventDisplay'   => 'list',
+			'tax_query'      => array( 'relation' => 'OR' ),
+			'meta_key'       => '_EventStartDate',
+			'orderby'        => 'meta_value',
 		);
 		if ( $tags ) {
 			$args['tax_query'][] = array( 'taxonomy' => 'post_tag', 'field' => 'id', 'terms' => $tags );

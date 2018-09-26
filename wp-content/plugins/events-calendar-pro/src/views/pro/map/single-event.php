@@ -5,7 +5,7 @@
  *
  * Override this template in your own theme by creating a file at [your-theme]/tribe-events/pro/map/single-event.php
  *
- * @version 4.4.20
+ * @version 4.4.28
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,11 +27,11 @@ $has_venue_address = ( ! empty( $venue_details['address'] ) ) ? ' location' : ''
 <!-- Event Distance -->
 <?php echo tribe_event_distance(); ?>
 
-<h2 class="tribe-events-map-event-title">
+<h3 class="tribe-events-map-event-title">
 	<a class="tribe-event-url" href="<?php echo esc_url( tribe_get_event_link() ); ?>" title="<?php the_title() ?>" rel="bookmark">
 		<?php the_title() ?>
 	</a>
-</h2>
+</h3>
 <?php do_action( 'tribe_events_after_the_event_title' ) ?>
 
 <!-- Event Meta -->

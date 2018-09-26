@@ -20,8 +20,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<select data-no-search='1' class="widefat js-tribe-condition" data-tribe-conditional-field="type" id="<?php echo esc_attr( $this->get_field_id( 'type' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'type' ) ); ?>">
 				<option <?php selected( $instance['type'], 'single-event' ); ?> value="single-event"><?php esc_html_e( 'Single Event', 'tribe-events-calendar-pro' ); ?></option>
 				<option <?php selected( $instance['type'], 'next-event' ); ?> value="next-event"><?php esc_html_e( 'Next Event', 'tribe-events-calendar-pro' ); ?></option>
+				<option <?php selected( $instance['type'], 'future-event' ); ?> value="future-event"><?php esc_html_e( 'Future Event', 'tribe-events-calendar-pro' ); ?></option>
 			</select>
 		</label>
+	</p>
+
+	<p>
+		<small class="js-tribe-conditional" data-tribe-conditional-field="type" data-tribe-conditional-value="future-event"><?php esc_html_e( 'On &#8220;Future Event&#8221; type of countdown, it will go to the next event after the current event starts.', 'tribe-events-calendar-pro' ); ?></small>
 	</p>
 
 	<p class="js-tribe-conditional" data-tribe-conditional-field="type" data-tribe-conditional-value="single-event">

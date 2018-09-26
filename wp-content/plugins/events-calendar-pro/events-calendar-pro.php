@@ -2,7 +2,7 @@
 /*
 Plugin Name: The Events Calendar PRO
 Description: The Events Calendar PRO, a premium add-on to the open source The Events Calendar plugin (required), enables recurring events, custom attributes, venue pages, new widgets and a host of other premium features.
-Version: 4.4.25
+Version: 4.4.31
 Author: Modern Tribe, Inc.
 Author URI: http://m.tri.be/20
 Text Domain: tribe-events-calendar-pro
@@ -57,6 +57,7 @@ function Tribe_ECP_Load() {
 	}
 	if ( ! $version_ok ) {
 		add_action( 'admin_notices', 'tribe_show_fail_message' );
+		add_action( 'network_admin_notices', 'tribe_show_fail_message' );
 	}
 }
 

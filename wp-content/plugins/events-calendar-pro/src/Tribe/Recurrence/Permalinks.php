@@ -42,8 +42,8 @@ class Tribe__Events__Pro__Recurrence__Permalinks {
 			}
 			$post_link = trailingslashit( $post_link ) . $date;
 			$sequence_number = get_post_meta( $post->ID, '_EventSequence', true );
-			if ( !empty($sequence_number) && (is_numeric($sequence_number) && intval($sequence_number) > 1) ) {
-				$post_link = trailingslashit($post_link) . $sequence_number;
+			if ( ! empty( $sequence_number ) && ( is_numeric( $sequence_number ) && intval( $sequence_number ) > 1 ) ) {
+				$post_link = trailingslashit( $post_link ) . $sequence_number;
 			}
 			$home_url = home_url( '/' );
 			$post_link = str_replace( array( $home_url, site_url( '/' ) ), '', $post_link );

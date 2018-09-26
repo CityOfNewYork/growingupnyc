@@ -52,27 +52,27 @@ for ( $i = 1; $i <= 12; $i++ ) {
 	<span class="tribe-field-inline-text first-label-in-line">
 		<?php esc_html_e( 'On', 'tribe-events-calendar-pro' ); ?>
 	</span>
-	<select
-		name="recurrence[rules][][custom][year][filter]"
-		id="<?php echo esc_attr( $rule_prefix ); ?>_rule_--_year_same_day"
-		class="tribe-dropdown tribe-same-day-select"
-		data-hide-search
-		data-field="year-same-day"
-	>
-		{{#tribe_recurrence_select custom.year.filter}}
-		<option value="0"><?php esc_html_e( 'the same day', 'tribe-events-calendar-pro' ); ?></option>
-		<option value="1"><?php esc_html_e( 'a different day:', 'tribe-events-calendar-pro' ); ?></option>
-		{{/tribe_recurrence_select}}
-	</select>
+    <select
+   		name="recurrence[<?php echo esc_attr( $rule_type ); ?>][][custom][year][same-day]"
+   		id="<?php echo esc_attr( $rule_prefix ); ?>_rule_--_year_same_day"
+   		class="tribe-dropdown tribe-same-day-select"
+   		data-hide-search
+   		data-field="year-same-day"
+   	>
+   		{{#tribe_recurrence_select custom.year.[same-day]}}
+   			<option value="yes"><?php esc_html_e( 'the same day:', 'tribe-events-calendar-pro' ); ?></option>
+   			<option value="no"><?php esc_html_e( 'a different day:', 'tribe-events-calendar-pro' ); ?></option>
+   		{{/tribe_recurrence_select}}
+   	</select>
 	<span
 		class="tribe-field-inline-text recurrence-same-day-text tribe-dependent"
 		data-depends="#<?php echo esc_attr( $rule_prefix ); ?>_rule_--_year_same_day"
-		data-condition-not="1"
+        data-condition="yes"
 	></span>
 	<span
 		class="tribe-dependent"
 		data-depends="#<?php echo esc_attr( $rule_prefix ); ?>_rule_--_year_same_day"
-		data-condition="1"
+		data-condition="no"
 	>
 			<span
 				class="tribe-field-inline-text tribe-dependent"

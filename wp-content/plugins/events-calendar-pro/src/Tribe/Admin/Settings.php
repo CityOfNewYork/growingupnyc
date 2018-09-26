@@ -54,6 +54,7 @@ class Tribe__Events__Pro__Admin__Settings {
 	 * @return array
 	 */
 	public function include_mobile_default_view( $attrs ) {
+		$attrs['data-redirected-view'] = tribe_get_request_var( 'tribe_redirected' );
 		$attrs['data-default-mobile-view'] = tribe_get_mobile_default_view();
 		$attrs['data-default-view'] = Tribe__Events__Main::instance()->default_view();
 

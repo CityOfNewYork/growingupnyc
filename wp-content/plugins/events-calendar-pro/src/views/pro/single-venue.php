@@ -16,7 +16,7 @@
  *
  * @package TribeEventsCalendarPro
  *
- * @version 4.4.24
+ * @version 4.4.28
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -42,7 +42,7 @@ $website_link = tribe_get_venue_website_link();
 	<div class="tribe-events-venue-meta tribe-clearfix">
 		<!-- Venue Title -->
 		<?php do_action( 'tribe_events_single_venue_before_title' ) ?>
-		<h2 class="tribe-venue-name"><?php echo tribe_get_venue( $venue_id ); ?></h2>
+		<h1 class="tribe-venue-name"><?php echo tribe_get_venue( $venue_id ); ?></h1>
 		<?php do_action( 'tribe_events_single_venue_after_title' ) ?>
 
 		<?php if ( tribe_embed_google_map() && tribe_address_exists() ) : ?>

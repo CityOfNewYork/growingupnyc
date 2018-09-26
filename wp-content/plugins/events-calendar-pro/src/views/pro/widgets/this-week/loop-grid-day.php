@@ -16,7 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="tribe-this-week-widget-day tribe-this-week-widget-day-<?php echo esc_attr( $day['day_number'] ) ?> <?php echo esc_attr( tribe_get_this_week_day_class( $day ) ); ?>">
 
 	<div class="tribe-this-week-widget-header-date">
-		<span class="day"><?php echo esc_html( $day['formatted_day'] ); ?></span>
 		<span class="date"><?php echo esc_html( $day['formatted_date'] ); ?></span>
 	</div>
 

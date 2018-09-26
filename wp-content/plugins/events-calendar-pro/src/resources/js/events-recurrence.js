@@ -255,7 +255,7 @@ tribe_events_pro_admin.recurrence = {
 		format = format.replace( 'm', 'MM' ).replace( 'd', 'DD' ).replace( 'Y', 'YYYY' );
 
 		var start_month = moment( $start_date.val(), format ).format( 'M' );
-		var $select = $rule.find( '[data-field="custom-year-month"]' );
+		var $select     = $rule.find( '[data-field="custom-year-month"]' );
 
 		// When you already have content we bail
 		if ( $select.val() ) {
@@ -315,9 +315,8 @@ tribe_events_pro_admin.recurrence = {
 			var $same_day_text = $rule.find( '.recurrence-same-day-text' );
 
 			var $start_date = $( document.getElementById( 'EventStartDate' ) );
-			var format = my.convert_date_format_php_to_moment( tribe_dynamic_help_text.datepicker_format );
-
-			var start_day = moment( $start_date.val(), format ).format( 'D' );
+			var format      = my.convert_date_format_php_to_moment( tribe_dynamic_help_text.datepicker_format );
+			var start_day   = moment( $start_date.val(), format ).format( 'D' );
 
 			$same_day_text.html( tribe_events_pro_recurrence_strings.recurrence['same-day-month-' + start_day] );
 		} );
@@ -435,8 +434,9 @@ tribe_events_pro_admin.recurrence = {
 
 		$rule.find( '.tribe-datepicker' ).datepicker( tribe_datepicker_opts );
 		$rule.insertBefore( this.$exclusion_staging );
+		this.set_recurrence_end_min_date();
 
-		this.set_recurrence_data_attributes($rule);
+		this.set_recurrence_data_attributes( $rule );
 		this.maybe_relocate_end_date( $rule );
 		this.adjust_rule_helper_text( $rule );
 		this.update_rule_recurrence_text( $rule );
@@ -734,6 +734,10 @@ tribe_events_pro_admin.recurrence = {
 		this.$recurrence_rules.each( function() {
 			my.update_rule_recurrence_text( $( this ) );
 		} );
+
+		this.$exclusion_rules.each( function() {
+			my.update_rule_recurrence_text( $( this ) );
+		} );
 	};
 
 	/**
@@ -741,7 +745,13 @@ tribe_events_pro_admin.recurrence = {
 	 */
 	my.convert_date_format_php_to_moment = function( format ) {
 		// this format conversion is pretty fragile, but the best we can do at the moment
-		return format.replace( 'j', 'D' ).replace( 'F', 'MMMM' ).replace( 'Y', 'YYYY' ).replace( 'm', 'MM' ).replace( 'd', 'DD' );
+		return format
+			.replace( 'S', 'o' )
+			.replace( 'j', 'D' )
+			.replace( 'F', 'MMMM' )
+			.replace( 'Y', 'YYYY' )
+			.replace( 'm', 'MM' )
+			.replace( 'd', 'DD' );
 	};
 
 	my.update_rule_recurrence_text = function( $rule ) {
@@ -834,12 +844,14 @@ tribe_events_pro_admin.recurrence = {
 				month_day_description = month_day_description.replace( '%1$s', tribe_events_pro_recurrence_strings.date.weekdays[ parseInt( month_day, 10 ) - 1 ] );
 			}
 		} else if ( 'yearly' === type ) {
+			var same_day = $rule.find( '[data-field="year-same-day"] option:selected' ).val();
 			var month_number = $rule.find( '[data-field="custom-year-month-number"]' ).val();
 			var month_day = $rule.find( '[data-field="custom-year-month-day"]' ).val();
 
 			var months = [];
+			var month_values = $rule.find( '[data-field="custom-year-month"]' ).val().split(',');
 
-			$.each( $rule.find( '[data-field="custom-year-month"]' ).select2( 'val' ), function( i, month ) {
+			$.each( month_values, function( i, month ) {
 				months.push( tribe_events_pro_recurrence_strings.date.months[ parseInt( month, 10 ) - 1 ] );
 			} );
 
@@ -853,33 +865,23 @@ tribe_events_pro_admin.recurrence = {
 				month_names = month_names.replace( /(.*),/, '$1, ' + tribe_events_pro_recurrence_strings.date.collection_joiner );
 			}
 
-			var same_day = $rule.find( '[data-field="year-same-day"] option:selected' ).val();
-
-			if ( '0' === same_day ) {
+			if ( 'yes' === same_day || ! isNaN( month_number ) ) {
 				month_number = day_number;
 				key += '-numeric';
-			}
+			}  else {
+				day_number = month_number;
 
-			// if the month number IS a number, then set the 'day' to blank so it doesn't display
-			if ( isNaN( parseInt( month_number, 10 ) ) ) {
 				month_day_description = tribe_events_pro_recurrence_strings.date[ month_number.toLowerCase() + '_x' ];
-
-				if ( ! isNaN( month_day ) && month_day > 0 ) {
-					month_day_description = month_day_description.replace( '%1$s', tribe_events_pro_recurrence_strings.date.weekdays[ parseInt( month_day, 10 ) - 1 ] );
-				} else if ( ! isNaN( month_day ) ) {
-					month_day_description = month_day_description.replace( '%1$s', tribe_events_pro_recurrence_strings.date.day );
-				} else {
-					month_day_description = month_day_description.replace( '%1$s', tribe_events_pro_recurrence_strings.date.day_placeholder );
-				}
-			} else {
-				month_day_description = tribe_events_pro_recurrence_strings.date.day_of_month.replace( '%1$s', parseInt( month_number, 10 ) );
+				month_day_description = month_day_description.replace( '%1$s', tribe_events_pro_recurrence_strings.date.weekdays[ parseInt( month_day, 10 ) - 1 ] );
 			}
+
 		} else if ( 'date' === type ) {
 			var single_date = $rule.find( 'input.tribe-datepicker' ).val();
 
-			// If the date for this rule has not yet been set, default to the event's start date
+			// If the date for this rule has not yet been set, clean the description
 			if ( ! single_date ) {
-				single_date = start_date;
+				$rule.find( '.tribe-event-recurrence-description' ).html( '' );
+				return;
 			}
 
 			var single_moment = moment( single_date, date_format );
@@ -973,6 +975,15 @@ tribe_events_pro_admin.recurrence = {
 		var end_count = parseInt( $rule.find( '.recurrence_end_count' ).val(), 10 );
 		var type_text = $el.data( 'plural' );
 
+		// clean the input from other characters and set the int value
+		$rule.find( '.recurrence_end_count' ).val( end_count );
+
+		// prevent the end_count to be empty or a non positive int
+		if ( isNaN( end_count ) || ( 0 >= end_count ) ) {
+			$rule.find( '.recurrence_end_count' ).val( 1 );
+			end_count = 1;
+		}
+
 		if ( 1 === end_count ) {
 			type_text = $el.data( 'single' );
 		}
@@ -1021,7 +1032,7 @@ tribe_events_pro_admin.recurrence = {
 	 */
 	my.event.recurrence_end_count_changed = function() {
 		var $el = $( this );
-		var $rule = $el.closest( '.tribe-event-recurrence' );
+		var $rule = $el.closest( '.tribe-event-recurrence, .tribe-event-exclusion' );
 
 		$rule.find( '[data-field="type"]' ).change();
 	};

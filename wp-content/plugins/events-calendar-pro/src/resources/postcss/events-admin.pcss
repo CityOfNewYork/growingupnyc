@@ -42,10 +42,123 @@
     max-width: 100%;
 }
 
-.tribe-customizer-select2 {
+.tribe-customizer-select2,
+.so-panels-dialog-wrapper ~ .select2-drop {
 	z-index: 100000000;
+}
+
+.so-content.panel-dialog.widget {
+	margin-bottom: 0;
 }
 
 .recurrence_end_count {
 	width: 4rem;
+}
+
+.tribe-additional-fields {
+	table {
+		tbody {
+			tr:first-child {
+				.tribe-field-heading {
+					border-top: none;
+				}
+			}
+		}
+
+		&.has-fields {
+			tbody {
+				tr:last-child {
+					display: none;
+				}
+			}
+		}
+
+		&#additional-field-table tbody tr {
+			height: auto;
+
+			td {
+				padding: 0;
+			}
+		}
+
+		.tribe-field-row {
+			padding: 10px 0;
+		}
+
+		.tribe-field-heading {
+			border-bottom: 1px solid #eee;
+			border-top: 1px solid #dedede;
+			padding: 0 10px;
+
+			h3 {
+				cursor: pointer;
+				font-size: 13px;
+				margin: 10px 0;
+			}
+
+			span.tribe-toggle {
+				float: right;
+				i {
+					font-size: 14px;
+					line-height: 20px;
+					vertical-align: middle;
+				}
+			}
+
+			&.closed {
+				border-bottom: none;
+				span.tribe-toggle {
+					-webkit-transform: rotate(180deg);
+					-moz-transform: rotate(180deg);
+					-ms-transform: rotate(180deg);
+					-o-transform: rotate(180deg);
+					transform: rotate(180deg);
+				}
+			}
+
+			.tribe-field-type {
+				text-transform: capitalize;
+			}
+
+			.tribe-field-label {
+				color: #888;
+			}
+
+		}
+
+		.tribe-field-content {
+			padding: 10px;
+			position: relative;
+
+			.tribe-dropdown {
+				min-width: 202px;
+			}
+
+			label {
+				float: left;
+				font-weight: 600;
+				min-width: 175px;
+			}
+
+			.tribe-field-options {
+				display: none;
+			}
+
+			.add-remove-actions {
+				position: absolute;
+				right: 10px;
+				top: 15px;
+				a {
+					cursor: pointer;
+				}
+			}
+
+		}
+
+		.add-another-field {
+			i {
+				line-height: 28px;
+			}
+		}
+	}
 }

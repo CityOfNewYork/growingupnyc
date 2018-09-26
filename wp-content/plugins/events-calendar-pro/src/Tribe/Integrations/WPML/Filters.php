@@ -198,23 +198,17 @@ class Tribe__Events__Pro__Integrations__WPML__Filters {
 	}
 
 	/**
-	 * Make sure to replace the home_url value with the value passed to the filter wpml_home_url as home_url does not
-	 * return the correct value on the admin to point to the correct URL of each event.
+	 * Attach language information to recurring event permalinks.
 	 *
 	 * @since 4.4.23
 	 *
-	 * @see https://wpml.org/wpml-hook/wpml_home_url/ Documentation of wpml_home_url
+	 * @see https://wpml.org/wpml-hook/wpml_permalink/ Documentation of wpml_permalink
 	 *
 	 * @param string $post_link
 	 * @param boolean $has_structure
 	 * @return string
 	 */
 	public function filter_recurring_event_permalinks( $post_link, $has_structure ) {
-		if ( is_admin() && $has_structure ) {
-			$home_url = trailingslashit( home_url( '/' ) );
-			$translated_url = trailingslashit( apply_filters( 'wpml_home_url', get_option( 'home' ) ) );
-			return str_replace( $home_url, $translated_url, $post_link );
-		}
-		return $post_link;
+		return apply_filters( 'wpml_permalink', $post_link );
 	}
 }

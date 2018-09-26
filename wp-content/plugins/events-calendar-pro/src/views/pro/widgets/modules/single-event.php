@@ -26,6 +26,15 @@ $region_name = ! empty( $region ) ? tribe_get_region() : '';
 $zip_text    = ! empty( $zip ) ? tribe_get_zip() : '';
 
 $has_address_details = ! empty( $city_name ) || ! empty( $region_name ) || ! empty( $zip_text );
+
+/**
+ * Migrate the existing address value to street value.
+ *
+ * @version 4.4.27
+ */
+if ( isset( $address ) && $address && tribe_get_address() != '' ) {
+	$street = $address;
+}
 ?>
 
 <div class="tribe-mini-calendar-event event-<?php esc_attr_e( $mini_cal_event_atts['current_post'] ); ?> <?php esc_attr_e( $mini_cal_event_atts['class'] ); ?>">
@@ -45,7 +54,7 @@ $has_address_details = ! empty( $city_name ) || ! empty( $region_name ) || ! emp
 		 * @param $size
 		 */
 		$thumbnail_size = apply_filters( 'tribe_events_list_widget_thumbnail_size', 'post-thumbnail' );
-				
+
 		/**
 		 * Filters whether the featured image link should be added to the Events List Widget
 		 *
@@ -129,13 +138,13 @@ $has_address_details = ! empty( $city_name ) || ! empty( $region_name ) || ! emp
 				</div>
 			<?php endif ?>
 
-			<!-- // Price, Venue Name, Address, City, State or Province, Postal Code, Country, Venue Phone, Organizer Name-->
+			<!-- // Price, Venue Name, Street, City, State or Province, Postal Code, Country, Venue Phone, Organizer Name-->
 			<?php ob_start(); ?>
 			<?php if ( isset( $venue ) && $venue && tribe_get_venue() != '' ) : ?>
 				<span class="tribe-events-venue"><?php echo tribe_get_venue_link(); ?></span>
 			<?php endif ?>
 
-			<?php if ( isset( $address ) && $address && tribe_get_address() != '' ): ?>
+			<?php if ( isset( $street ) && $street && tribe_get_address() != '' ) : ?>
 				<div class="tribe-street-address"><?php echo tribe_get_address(); ?></div>
 			<?php endif ?>
 

@@ -25,7 +25,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 			$instance = $old_instance;
 			$instance['title'] = strip_tags( $new_instance['title'] );
 			$instance['show_seconds'] = ( isset( $new_instance['show_seconds'] ) ? 1 : 0 );
-			if ( isset( $new_instance['type'] ) && in_array( $new_instance['type'], array( 'next-event', 'single-event' ) ) ) {
+			if ( isset( $new_instance['type'] ) && in_array( $new_instance['type'], array( 'next-event', 'single-event', 'future-event' ) ) ) {
 				$instance['type'] = $new_instance['type'];
 			} else {
 				$instance['type'] = 'single-event';
@@ -33,7 +33,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 			$instance['complete'] = $new_instance['complete'] == '' ? $old_instance['complete'] : $new_instance['complete'];
 
 			$instance['event_ID'] = $instance['event'] = absint( $new_instance['event'] );
-			$instance['event_date'] = tribe_get_start_date( $instance['event_ID'], false, Tribe__Date_Utils::DBDATETIMEFORMAT );
+			$instance['event_date'] = tribe_get_start_date( $instance['event_ID'], false, Tribe__Date_Utils::DBDATETIMEFORMAT, 'event' );
 
 			if ( isset( $new_instance['jsonld_enable'] ) && $new_instance['jsonld_enable'] == true ) {
 				$instance['jsonld_enable'] = 1;
@@ -109,6 +109,19 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 			$instance = wp_parse_args( (array) $instance, $defaults );
 			wp_enqueue_script( 'tribe-events-countdown-widget', tribe_events_pro_resource_url( 'widget-countdown.js' ), array( 'jquery' ), apply_filters( 'tribe_events_pro_js_version', Tribe__Events__Pro__Main::VERSION ), true );
 
+			/**
+			 * Do things pre-render like: optionally enqueue assets if we're not in a sidebar
+			 * This has to be done in widget() because we have to be able to access
+			 * the queried object for some plugins
+			 *
+			 * @since 4.4.29
+			 *
+			 * @param string __CLASS__ the widget class
+			 * @param array  $args     the widget args
+			 * @param array  $instance the widget instance
+			 */
+			do_action( 'tribe_events_pro_widget_render', __CLASS__, $args, $instance );
+
 			// Setup required variables
 			if ( empty( $instance['event'] ) ) {
 				$instance['event'] = $instance['event_ID'];
@@ -140,10 +153,14 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 		 * @return string
 		 */
 		public function get_output( $instance, $deprecated = null, $deprecated_ = null, $deprecated__ = null ) {
-			if ( 'next-event' === $instance['type'] ) {
+			$time = Tribe__Timezones::localize_date( Tribe__Date_Utils::DBDATETIMEFORMAT, current_time( 'timestamp' ) );
+
+			if ( 'next-event' === $instance['type'] || 'future-event' === $instance['type'] ) {
+				$upcoming_event = 'future-event' === $instance['type'] ? 'future' : 'list';
 				$event = tribe_get_events( array(
-					'eventDisplay' => 'list',
+					'eventDisplay'   => $upcoming_event,
 					'posts_per_page' => 1,
+					'start_date'     => $time,
 				) );
 				$event = reset( $event );
 			} else {
@@ -157,11 +174,19 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 			$hourformat = ob_get_clean();
 
 			if ( $event instanceof WP_Post ) {
-				// Get the event start date.
-				$startdate = tribe_get_start_date( $event->ID, false, Tribe__Date_Utils::DBDATETIMEFORMAT );
+
+				// Get the event start date and time zone
+				$startdate = new DateTime( tribe_get_start_date( $event->ID, false, Tribe__Date_Utils::DBTZDATETIMEFORMAT, 'event' ) );
+				$use_tz = $startdate->getTimeZone();//Tribe__Events__Timezones::get_event_timezone_string( $event->ID );
+
+				// Get current time, make both times use the same timezone
+				$now = new DateTime( 'now', new DateTimeZone( $use_tz->getName() ) );
+				$startdate->setTimezone( new DateTimeZone( $use_tz->getName() ) );
 
 				// Get the number of seconds remaining until the date in question.
-				$seconds = strtotime( $startdate ) - current_time( 'timestamp' );
+				// Note: can't use $startdate->getTimestamp() as that negates all the TZ work we just did!
+				$seconds = strtotime( $startdate->format( Tribe__Date_Utils::DBTZDATETIMEFORMAT ) ) - strtotime( $now->format( Tribe__Date_Utils::DBTZDATETIMEFORMAT ) );
+
 			} else {
 				$seconds = 0;
 			}

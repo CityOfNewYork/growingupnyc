@@ -60,6 +60,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 				init_color_picker( $( this ) );
 			} );
 		} );
+
+		// For SO Page Builder Integration
+		// @TODO: we should move this out of here?
+		$( document ).on(
+			'panelsopen',
+			function ( e ) {
+				$( '.so-content.panel-dialog[id^="widget-tribe-"]:has(.tribe-color-picker)' ).each( function () {
+					init_color_picker( $( this ) );
+				} );
+			}
+		);
 	}( jQuery ) );
 </script>
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "68440f81b73942c22541175bf539845b",
+    "content-hash": "06fba4b615e750b8930087814d6a4697",
     "packages": [
         {
             "name": "composer/installers",
@@ -955,15 +955,15 @@
         },
         {
             "name": "wpackagist-plugin/query-monitor",
-            "version": "3.0.0",
+            "version": "3.1.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/query-monitor/",
-                "reference": "tags/3.0.0"
+                "reference": "tags/3.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/query-monitor.3.0.0.zip",
+                "url": "https://downloads.wordpress.org/plugin/query-monitor.3.1.1.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1035,15 +1035,15 @@
         },
         {
             "name": "wpackagist-plugin/timber-library",
-            "version": "1.7.0",
+            "version": "1.7.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/timber-library/",
-                "reference": "tags/1.7.0"
+                "reference": "tags/1.7.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/timber-library.1.7.0.zip",
+                "url": "https://downloads.wordpress.org/plugin/timber-library.1.7.1.zip",
                 "reference": null,
                 "shasum": null
             },

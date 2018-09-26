@@ -1,10 +1,11 @@
 === WPS Hide Login ===
 
 Contributors: tabrisrp, WPServeur, nicolaskulka
+Donate link : https://www.paypal.me/donateWPServeur
 Tags: rename, login, wp-login, wp-login.php, custom login url
 Requires at least: 4.1
 Tested up to: 4.9
-Stable tag: 1.3.3
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +22,7 @@ Ce plugin vous est gentiment proposé par <a href="https://www.wpserveur.net/?re
 Découvrez également nos autres extensions gratuites :
 - <a href="https://fr.wordpress.org/plugins/wps-limit-login/" target="_blank">WPS Limit Login</a> pour bloquer les attaques par force brute.
 - <a href="https://fr.wordpress.org/plugins/wps-bidouille/" target="_blank">WPS Bidouille</a> pour optimiser votre WordPress et faire le plein d'infos.
+- <a href="https://fr.wordpress.org/plugins/wps-cleaner/">WPS Cleaner</a> pour nettoyer votre site WordPress.
 
 Ce plugin est seulement maintenu, ce qui signifie que nous ne garantissons pas un support gratuit. Envisagez de signaler un problème et soyez patient.
 
@@ -33,6 +35,7 @@ This plugin is kindly proposed by <a href="https://www.wpserveur.net/?refwps=14&
 Discover also our other free extensions:
 - <a href="https://wordpress.org/plugins/wps-limit-login/" target="_blank">WPS Limit Login</a> to block brute force attacks.
 - <a href="https://wordpress.org/plugins/wps-bidouille/" target="_blank">WPS Bidouille</a> to optimize your WordPress and get more info.
+- <a href="https://wordpress.org/plugins/wps-cleaner/" target="_blank">WPS Cleaner</a> to clean your WordPress site.
 
 This plugin is only maintained, which means we do not guarantee free support. Consider reporting a problem and be patient.
 
@@ -139,6 +142,28 @@ This case can come from plugins modifying your .htaccess files to add or change 
 First step is to check your .htaccess file and compare it to a regular one, to see if the problem comes from it.
 
 == Changelog ==
+
+= 1.4.3 =
+* Fix : Fatal Error with multisite WP
+
+= 1.4.2 =
+* Fix : Error with library for compat WordPress and PHP
+
+= 1.4.1 =
+* Fix : Remove message review if PHP is too old
+
+= 1.4 =
+* Enhancement code with composer, namespace and autoload
+
+= 1.3.4.2 =
+* Fix : Remove message review if PHP is too old
+
+= 1.3.4.1 =
+* Fix : Deprecated method
+
+= 1.3.4 =
+* Add : Review message
+* Fix : Redirect url wp-admin/options.php
 
 = 1.3.3 =
 * Add : Filter hook for enable wp-signup (@sumobi)

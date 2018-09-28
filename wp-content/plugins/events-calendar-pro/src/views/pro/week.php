@@ -7,7 +7,7 @@
  *
  * @package TribeEventsCalendar
  *
- * @version 4.3.2
+ * @version 4.4.28
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,6 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 
 <?php do_action( 'tribe_events_before_template' ) ?>
+
+	<!-- Title Bar -->
+<?php tribe_get_template_part( 'pro/week/title-bar' ); ?>
 
 	<!-- Tribe Bar -->
 <?php tribe_get_template_part( 'modules/bar' ); ?>

@@ -1,20 +1,21 @@
 === Query Monitor ===
 Contributors: johnbillion
-Tags: ajax, debug, debug-bar, debugging, development, developer, performance, profiler, profiling, queries, query monitor, rest-api
+Tags: debug, debug-bar, debugging, development, developer, performance, profiler, queries, query monitor, rest-api
 Requires at least: 3.7
 Tested up to: 4.9
-Stable tag: 3.0.0
+Stable tag: 3.1.1
 License: GPLv2 or later
+Requires PHP: 5.3
 
-Query Monitor is the Developer Tools panel for WordPress.
+Query Monitor is the developer tools panel for WordPress.
 
 == Description ==
 
-Query Monitor is the Developer Tools panel for WordPress. It includes some advanced features not available in other debugging plugins, including Ajax and REST API debugging, and the ability to narrow down its output by plugin or theme.
+Query Monitor is the developer tools panel for WordPress. It includes some advanced features such as Ajax and REST API debugging, and the ability to narrow down its output by plugin or theme.
 
-Query Monitor focuses heavily on presenting its information in a useful manner. It adds an admin toolbar menu showing an overview of the current page, with complete data shown in a panel once you select an item.
+Query Monitor focuses heavily on presenting its information in a useful manner. For example, aggregate database query information is made available, allowing you to quickly determine poorly performing plugins, themes, or functions. It adds an admin toolbar menu showing an overview of the current page, with complete data shown in a panel once you select a menu item.
 
-For complete information, please see [Query Monitor's GitHub repo](https://github.com/johnbillion/query-monitor).
+For complete information, please see [the Query Monitor website](https://querymonitor.com/).
 
 Here's an overview of some of what's shown:
 
@@ -75,9 +76,9 @@ Filtering queries by component or calling function makes it easy to see which pl
 
  * Whenever a redirect occurs, Query Monitor adds an `X-QM-Redirect` HTTP header containing the call stack, so you can use your favourite HTTP inspector or browser developer tools to easily trace where a redirect has come from
 
-= AJAX =
+= Ajax =
 
-The response from any jQuery AJAX request on the page will contain various debugging information in its headers. Any errors also get output to the developer console. No hooking required.
+The response from any jQuery Ajax request on the page will contain various debugging information in its headers. Any errors also get output to the developer console. No hooking required.
 
 Currently this includes PHP errors and some overview information such as memory usage, but this will be built upon in future versions.
 
@@ -92,6 +93,12 @@ Currently this includes PHP errors and some overview information such as memory 
 By default, Query Monitor's output is only shown to Administrators on single-site installs, and Super Admins on Multisite installs.
 
 In addition to this, you can set an authentication cookie which allows you to view Query Monitor output when you're not logged in (or if you're logged in as a non-administrator). See the bottom of Query Monitor's output for details.
+
+= Privacy Statement =
+
+Query Monitor does not persistently store any of the data that it collects. It does not send data to any third party, nor does it include any third party resources.
+
+[Query Monitor's full privacy statement can be found here](https://github.com/johnbillion/query-monitor/wiki/Privacy-Statement).
 
 == Screenshots ==
 

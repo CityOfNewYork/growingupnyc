@@ -132,6 +132,7 @@ class Tribe__Events__Pro__Geo_Loc {
 		add_filter( 'tribe_events_importer_venue_column_names', array( $this, 'filter_aggregator_add_overwrite_geolocation_column' ) );
 
 		add_action( 'admin_notices', array( $this, 'maybe_notify_about_google_over_limit' ) );
+		add_filter( 'tribe_events_google_map_link', array( $this, 'google_map_link' ), 10, 2 );
 	}
 
 	/**
@@ -155,7 +156,7 @@ class Tribe__Events__Pro__Geo_Loc {
 				|| tribe_is_map()
 			)
 		) {
-			Tribe__Events__Pro__Template_Factory::asset_package( 'ajax-maps' );
+			tribe_asset_enqueue( 'tribe-events-pro-map' );
 		}
 	}
 
@@ -550,7 +551,7 @@ class Tribe__Events__Pro__Geo_Loc {
 		}
 
 		// Remove remaining spaces from any of the pieces of the address.
-		$pieces = array_map( 'trim', array( $_address, $_province, $_city, $_state, $_zip, $_country ) );
+		$pieces = array_map( 'trim', compact( '_address', '_province', '_city', '_state', '_zip', '_country' ) );
 		$address = implode( ' ', array_filter( $pieces ) );
 		// Remove any parenthesis from the address and his content as well
 		$address = preg_replace( '/\(.*\)/', '', $address );
@@ -604,12 +605,27 @@ class Tribe__Events__Pro__Geo_Loc {
 			return false;
 		}
 
-		if ( ! empty( $data_arr->results[0]->geometry->location->lat ) ) {
-			update_post_meta( $venueId, self::LAT, (string) $data_arr->results[0]->geometry->location->lat );
-		}
+		if ( ! empty( $data_arr->results[0] ) ) {
+			$geo_result = $data_arr->results[0];
 
-		if ( ! empty( $data_arr->results[0]->geometry->location->lng ) ) {
-			update_post_meta( $venueId, self::LNG, (string) $data_arr->results[0]->geometry->location->lng );
+			if ( ! empty( $geo_result->geometry->location->lat ) ) {
+				update_post_meta( $venueId, self::LAT, (string) $geo_result->geometry->location->lat );
+			}
+
+			if ( ! empty( $geo_result->geometry->location->lng ) ) {
+				update_post_meta( $venueId, self::LNG, (string) $geo_result->geometry->location->lng );
+			}
+
+			/**
+			 * Allows further processing of geodata for Venue.
+			 *
+			 * @since 4.4.31
+			 *
+			 * @param int    $venueId    Venue ID.
+			 * @param object $geo_result Geo result object.
+			 * @param array  $pieces     User provided address pieces.
+			 */
+			do_action( 'tribe_geoloc_save_venue_geodata', $venueId, $geo_result, $pieces );
 		}
 
 		// Saving the aggregated address so we don't need to ping google on every save
@@ -1211,7 +1227,7 @@ class Tribe__Events__Pro__Geo_Loc {
 	 */
 	public function generate_geopoints_for_all_venues() {
 
-		set_time_limit( 5 * 60 );
+		tribe_set_time_limit( 5 * 60 );
 
 		$venues = $this->get_venues_without_geoloc_info( true );
 
@@ -1247,5 +1263,49 @@ class Tribe__Events__Pro__Geo_Loc {
 		}
 
 		return self::$instance;
+	}
+
+	/**
+	 * Update the Google Map Link to add the coordinates if present to increase accuracy on it.
+	 *
+	 * @since 4.4.26
+	 *
+	 * @param $link
+	 * @param $post_id
+	 *
+	 * @return string
+	 */
+	public function google_map_link( $link, $post_id ) {
+		$venue_id = function_exists( 'tribe_get_venue_id' ) ? tribe_get_venue_id( $post_id ) : $post_id;
+		$is_venue = function_exists( 'tribe_is_venue' ) ? tribe_is_venue( $venue_id ) : false;
+
+		/**
+		 * Disable the behavior to add the coordinates if present on the Google Map Link
+		 *
+		 * @since 4.4.26
+		 *
+		 * @param $disable true to disable the behavior / false to keep doing it
+		 * @param $post_id The ID of the post being modified
+		 *
+		 * @return boolean
+		 */
+		$disable_behavior = apply_filters( 'tribe_events_pro_google_map_link_disable_coordinates', false, $post_id );
+
+		if ( ! $is_venue || $disable_behavior ) {
+			return $link;
+		}
+
+		$coordinates = tribe_get_coordinates( $post_id );
+		if ( empty( $coordinates['lat'] ) || empty( $coordinates['lng'] ) || ! function_exists( 'tribe_is_venue' ) ) {
+			return $link;
+		}
+
+		return add_query_arg(
+			array(
+				'api'   => 1,
+				'query' => urlencode( $coordinates['lat'] . ',' . $coordinates['lng'] ),
+			),
+			'https://www.google.com/maps/search/'
+		);
 	}
 }

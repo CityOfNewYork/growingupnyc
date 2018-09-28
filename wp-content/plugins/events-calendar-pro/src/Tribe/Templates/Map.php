@@ -34,6 +34,9 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Map' ) ) {
 		 **/
 		protected function hooks() {
 			parent::hooks();
+
+			tribe_asset_enqueue( 'tribe-events-pro-geoloc' );
+
 			add_filter( 'tribe_events_header_attributes', array( $this, 'header_attributes' ) );
 			add_action( 'tribe_events_list_before_the_event_title', array( $this, 'add_event_distance' ) );
 		}

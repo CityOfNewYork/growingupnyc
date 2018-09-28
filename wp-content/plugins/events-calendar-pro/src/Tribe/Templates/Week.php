@@ -22,7 +22,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Week' ) ) {
 		 *
 		 * @var array
 		 */
-		protected $asset_packages = array( 'ajax-weekview' );
+		protected $asset_packages = array();
 
 		/**
 		 * Array of days currently being displayed in the week
@@ -217,13 +217,13 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Week' ) ) {
 		 * */
 		protected function hooks() {
 			parent::hooks();
+
+			tribe_asset_enqueue( 'tribe-events-pro-week' );
+
 			add_filter( 'tribe_events_header_attributes', array( $this, 'header_attributes' ), 10, 2 );
 			add_action( 'tribe_events_week_pre_setup_event', array( $this, 'manage_sensitive_info' ) );
 			add_action( 'tribe_pre_get_template_part_pro/week/loop', array( $this, 'rewind_days' ) );
-			add_action( 'tribe_post_get_template_part_pro/week/single-event', array(
-				$this,
-				'set_previous_event',
-			), 10, 3 );
+			add_action( 'tribe_post_get_template_part_pro/week/single-event', array( $this, 'set_previous_event' ), 10, 3 );
 			add_action( 'tribe_pre_get_template_part_pro/week/single-event', array( $this, 'set_global_post' ), 10, 3 );
 		}
 

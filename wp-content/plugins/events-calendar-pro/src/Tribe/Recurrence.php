@@ -63,9 +63,11 @@ class Tribe__Events__Pro__Recurrence {
 	 * If the duration is -1 then it can be taken as equal to the parent event's
 	 * duration.
 	 *
+	 * @param int $rule_count current recurrence rule processing
+	 *
 	 * @return array An array of all dates in the series
 	 */
-	public function getDates() {
+	public function getDates( $rule_count = null ) {
 		$this->last_request_constrained = false;
 
 		if ( $this->series_rules && ! is_wp_error( $this->series_rules ) ) {
@@ -73,7 +75,8 @@ class Tribe__Events__Pro__Recurrence {
 			$cur_date = $this->start_date;
 
 			$i = 0;
-			while ( $cur_date = $this->getNextDate( $cur_date ) ) {
+			while ( $cur_date = $this->getNextDate( $cur_date, $i, $rule_count ) ) {
+
 				$i++;
 
 				if ( $cur_date > $this->maxDate ) {
@@ -117,10 +120,21 @@ class Tribe__Events__Pro__Recurrence {
 	 * Get the next date in the series
 	 *
 	 * @param int $current_date
+	 * @param int $count current event count for rule
+	 * @param int $rule_count the current rule number
 	 *
 	 * @return bool|int The date, as a timestamp, or FALSE if it exceeds the system's max int
 	 */
-	private function getNextDate( $current_date ) {
+	private function getNextDate( $current_date, $count = null, $rule_count = null ) {
+
+		if ( 0 !== $rule_count && 0 === $count ) {
+			/**
+			 * return the $current_date on the first run of the 2nd rule and later to
+			 * enable events to start on the parent's date without duplicating initial event
+			 */
+			return $current_date;
+		}
+
 		$next_date = $this->series_rules->getNextDate( $current_date );
 
 		if ( intval( $next_date ) < $current_date ) { // bit overflow

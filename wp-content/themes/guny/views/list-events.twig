@@ -16,59 +16,49 @@
 {% endblock %}
 
 {% block list_sidebar %}
+  {# Event List Filters #}
   <div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
 
-    {# event categories #}
     <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{ __('All Event Types', 'guny-events') }}</h3>
+      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{current_event_filter}}</h3>
       <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
-         <li class="c-list-box__subitem" v-for="category in eventTypes">
-          <label class="checkbox" :for="category.slug">
-            <input type="checkbox"  :id="category.slug" :value="category.term_id" v-model="checkedEventType" class="checkbox__field">
-            <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
-            v{ category.name }
-          </label>
-        </li>
+        <li><a href="{{all_events.link}}" class="c-list-box__subitem">{{all_events.name}}</a></li>
+        {% for event_type in event_filter %}
+        {# <li class="{{event_type.slug}}"><a href="{{event_type.link}}" class="c-list-box__subitem">{{event_type.name}}</a></li> #}
+        <li><a href="{{event_type.link}}" class="c-list-box__subitem">{{event_type.name}}</a></li>
+        {% endfor %}
       </ul>
     </div>
 
-    <!-- age categories -->
     <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{ __('All Ages', 'guny-events') }}</h3>
-      <ul class="js-accordion__content c-list-box__content" id="age-filter-panel" >
-        <li class="c-list-box__subitem" v-for="age in ageGroups">
-          <label class="checkbox" :for="age.slug">
-            <input type="checkbox"  :id="age.slug" :value="age.id" v-model="checkedAgeGroup" class="checkbox__field">
-            <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
-            v{ age.name }
-          </label>
-        </li> 
+      <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{current_age_filter}}</h3>
+      <ul class="js-accordion__content c-list-box__content" id="age-filter-panel">
+        <li><a href="{{all_ages.link}}" class="c-list-box__subitem">{{all_ages.name}}</a></li>
+        {% for age in age_filter %}
+        <li><a href="{{age.link}}" class="c-list-box__subitem">{{age.name}}</a></li>
+        {% endfor %}
       </ul>
     </div>
 
-    <!-- borough categories -->
     <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="borough-filter-heading">{{ __('All Boroughs', 'guny-events') }}</h3>
-      <ul class="js-accordion__content c-list-box__content" id="borough-filter-panel" >
-       <li class="c-list-box__subitem" v-for="borough in boroughs">
-          <label class="checkbox" :for="borough.slug">
-            <input type="checkbox"  :id="borough.slug" :value="borough.id" v-model="checkedBorough" class="checkbox__field">
-            <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
-            v{ borough.name }
-          </label>
-        </li> 
+      <h3 class="js-accordion__header c-list-box__heading" id="borough-filter-heading">{{current_borough_filter}}</h3>
+      <ul class="js-accordion__content c-list-box__content" id="borough-filter-panel">
+        <li><a href="{{all_boroughs.link}}" class="c-list-box__subitem">{{all_boroughs.name}}</a></li>
+        {% for borough in borough_filter %}
+        <li><a href="{{borough.link}}" class="c-list-box__subitem">{{borough.name}}</a></li>
+        {% endfor %}
       </ul>
     </div>
 
   </div>
 {% endblock %}
 
-{# {% block before_list %}
+{% block before_list %}
   {{function('do_action', 'tribe_events_before_template')}}
-{% endblock %} #}
+{% endblock %}
 
 {% block post_list %}
-  {# month pager #}
+  {# Pager #}
   <h2 class="c-arrow-pager">
 
     {% if prev_month_url %}
@@ -77,7 +67,7 @@
     </a>
     {% endif %}
 
-    v{ currentDate.month } v{ currentDate.year }
+    {{current_month_text}}
 
     {% if next_month_url %}
     <a class="c-arrow-pager__arrow c-arrow-pager__arrow--right" href="{{next_month_url}}" rel="next">
@@ -87,75 +77,40 @@
 
   </h2>
 
-  {# events cards #}
-  <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" v-for="post in events">
-    <h3>v{ post.start_date.formatted }</h3>
+  {# Event List #}
+  {% for event in event_list %}
+
+  <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
+    <h3>{{ event.date_header }}</h3>
+    {% for post in event.posts %}
     <div class="c-block-list__item">
-      <div class="c-card c-card--subtitle-first">
-        <a :href="post.link">
-        <div class="c-card__sticker sticker {% block classes_sticker %}{% endblock %}" aria-hidden="true">
-          <span class="event-day">
-            v{post.start_date.day}
-          </span>
-          <span class="event-month-date">
-            v{post.start_date.month_date}
-          </span>
-        </div>
-        <h3 class="c-card__title">
-          <a :href="post.link" :title="post.title" rel="bookmark">
-            v{ post.title }
-          </a>
-        </h3>
-        <div class="c-card__subtitle">
-          <svg role="img" class="icon--xxsmall"><title>Time:</title><use xlink:href="#icon-clock-o"></use></svg>
-          <span class="nowrap">
-            v{ post.start_date.hour}:v{ post.start_date.minutes} v{ post.start_date.am_pm}
-          </span>
-          - <span class="nowrap">
-            v{ post.end_date.hour}:v{ post.end_date.minutes} v{ post.end_date.am_pm}
-          </span>
-        </div>
-
-        {# tags #}
-        <div class="c-card__tags">
-          <span v-if="post.tribe_events_cat" v-for="term in post.tribe_events_cat"> 
-            <a :href="term.slug" class="button--pill">v{ term.name }</a>
-          </span>
-          <span v-if="post.age_group" v-for="term in post.age_group"> 
-            <a :href="term.slug" class="button--pill button--pill--alt">v{ term.name }</a>
-          </span>
-        </div>
-        
-        <div class="c-card__body">
-          v{ post.excerpt }
-        </div>
-        <p class="c-card__link" v-if="post.venue">
-          <svg role="img" class="icon--xxsmall"><use xlink:href="#icon-map-marker"></use></svg><a :href="post.google_map_link" target="_blank">
-          v{ post.venue },
-          v{ post.city_state }
-          </a>
-        </p>
-      </a>
-      </div>
+      {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
     </div>
-  </section>
+    {% endfor %}
+  </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-sm-gutter -->
 
-  {# no events #}
-  <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" v-if="errorMsg == true">
-    <p class="type--no-results">{{ __('Sorry. There are no events found for those filter options.', 'guny') }}</p>
-  </section>
+  {% else %}
 
-{# pagination #}
-<div class="o-content-container--compact">
-  <button v-if="eventPage > 1" >
-    <router-link class="button--outline button--outline--gray alignleft" v-if="eventPage > 1" :to="{ query: { page: eventPage-1 }}" @click.native="parseQuery">{{ __('Previous', 'guny') }}</router-link>    
-  </button>
+  <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-sm-gutter">
+    <p class="type--no-results">
+      {{ __('No events found for those filter options. Check for similar events in', 'guny-events') }} <a href="{{next_month_url}}" rel="next">{{next_month_text}}</a> {{ __('or', 'guny-events') }} <a href="{{reset_filters_url}}">{{ __('reset your filters', 'guny-events') }}</a>.</p>
+  </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-sm-gutter -->
 
-
-  <button v-if="errorMsg == false">
-    <router-link class="button--outline button--outline--gray alignright" :to="{  query: { page: eventPage+1 }}" @click.native="parseQuery">{{ __('Next', 'guny') }}</router-link>
-  </button>
-</div>
+  {% endfor %}
 {% endblock %}
 
+{% block after_list %}
+  {{function('do_action', 'tribe_events_after_template')}}
 
+  <div class="o-content-container--compact">
+
+    {% if prev_url %}
+    <a href="{{prev_url}}" class="button--outline button--outline--gray alignleft">{{ __('Previous', 'guny') }}</a>
+    {% endif %}
+
+    {% if next_url %}
+    <a href="{{next_url}}" class="button--outline button--outline--gray alignright">{{ __('Next', 'guny') }}</a>
+    {% endif %}
+
+  </div>
+{% endblock %}

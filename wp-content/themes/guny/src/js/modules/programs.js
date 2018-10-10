@@ -1,7 +1,6 @@
 'use strict';
 
 import _ from 'underscore';
-import $ from 'jquery';
 import Vue from 'vue/dist/vue.common';
 import axios from 'axios';
 import router from './router'
@@ -32,10 +31,9 @@ class ProgramsList {
         checkedAgeGroup: [],
         programPage: 1,
         errorMsg: false,
-        loading: false
+        isLoading: true
       },
        watch: {
-        url: 'getPrograms',
         checkedProgramType: 'getPrograms',
         checkedAgeGroup: 'getPrograms',
         programPage: 'getPrograms',
@@ -57,6 +55,8 @@ class ProgramsList {
         generateFilterURL: ProgramsList.generateFilterURL,
         parseQuery: ProgramsList.parseQuery,
         getIds: ProgramsList.getIds,
+        showLoader: ProgramsList.showLoader,
+        hideLoader: ProgramsList.hideLoader,
       }
     }
   }
@@ -73,8 +73,10 @@ class ProgramsList {
  **/
 ProgramsList.getPrograms = function() {
   let url = this.programsURL;
-  
+  console.log('getPrograms')
+  console.log(this.$el)
 
+  // determine the filters
   let filters = ProgramsList.generateFilterURL(this.checkedProgramType, this.checkedAgeGroup, this.programPage, this.programTypes, this.ageGroups);
   // url = url + '?' + filters.typeIds + '&' + filters.ageIds + '&' + filters.pageId;
   url = url + '?' + filters;
@@ -87,20 +89,18 @@ ProgramsList.getPrograms = function() {
     // this.$router.push({query: {category: this.checkedProgramType, age: this.checkedAgeGroup, page: this.programPage }});
   }
 
-  // loading background
-  $(this.$el).find('section.o-container').addClass('o-content-container__bg-blue');
-  
+  ProgramsList.showLoader(this.$el)
+
   axios
     .get(url)
     .then(response => {
       this.programs = response.data
       if (this.programs.length == 0) {
         this.errorMsg = true;
-        $(this.$el).find('section.o-container').removeClass('o-content-container__bg-blue');
       } else {
         this.errorMsg = false;
-        this.loading = true;
-        $(this.$el).find('section.o-container').removeClass('o-content-container__bg-blue');
+        this.isLoading = false;
+        ProgramsList.hideLoader(this.$el)
       }
     })
     .catch(error => {
@@ -207,6 +207,28 @@ ProgramsList.getIds = function(filter, slugs) {
 
   return arrIds;
 }
+
+/**
+ * Shows the loader
+ * @param {HTMLElement} - vue element
+ **/
+ProgramsList.showLoader = function(el){
+  let sh = $(el).find('.o-article-sidebar').height();
+
+  $(el).find('.programs-content').hide();
+  $(el).find('.c-block-list--blue').css({'height' : sh});
+  $(el).find('section.c-block-list.c-block-list--blue').show();
+}
+
+/**
+ * Hides the loader
+ * @param {HTMLElement} - vue element
+ **/
+ProgramsList.hideLoader = function(el, status){
+    $(el).find('.programs-content').show();
+    $(el).find('section.c-block-list.c-block-list--blue').hide();
+}
+
 export default ProgramsList;
 
 

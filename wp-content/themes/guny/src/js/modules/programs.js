@@ -25,10 +25,9 @@ class ProgramsList {
         ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group',
         programs: null,
         programTypes: null,
-        ageGroups: null,
         checkedProgramType: [],
-        checkedProgramTypeIds: [],
         checkedAgeGroup: [],
+        ageGroups: null,
         programPage: 1,
         errorMsg: false,
         isLoading: true
@@ -73,23 +72,19 @@ class ProgramsList {
  **/
 ProgramsList.getPrograms = function() {
   let url = this.programsURL;
-  console.log('getPrograms')
-  console.log(this.$el)
 
-  // determine the filters
+  ProgramsList.showLoader(this.$el)
+
   let filters = ProgramsList.generateFilterURL(this.checkedProgramType, this.checkedAgeGroup, this.programPage, this.programTypes, this.ageGroups);
-  // url = url + '?' + filters.typeIds + '&' + filters.ageIds + '&' + filters.pageId;
   url = url + '?' + filters;
 
   // update the query
   if ( this.programPage == 1){
     this.$router.push({query: {category: this.checkedProgramType, age_group: this.checkedAgeGroup}});
   }else {
-    // this.$router.push({query: {programs_cat: this.checkedProgramType, age_group: this.checkedAgeGroup, page: this.programPage }});
-    // this.$router.push({query: {category: this.checkedProgramType, age: this.checkedAgeGroup, page: this.programPage }});
+    this.$router.push({query: {category: this.checkedProgramType, age: this.checkedAgeGroup, page: this.programPage }});
   }
 
-  ProgramsList.showLoader(this.$el)
 
   axios
     .get(url)
@@ -97,6 +92,7 @@ ProgramsList.getPrograms = function() {
       this.programs = response.data
       if (this.programs.length == 0) {
         this.errorMsg = true;
+        ProgramsList.hideLoader(this.$el)
       } else {
         this.errorMsg = false;
         this.isLoading = false;
@@ -121,14 +117,14 @@ ProgramsList.generateFilterURL = function(types, ages, page, allTypes, allAges) 
   let filters = [];
   let arrIds = [];
 
-  // program types
   if ( types.length > 0 ){
     arrIds = ProgramsList.getIds(allTypes, types).map(value => value.term_id)
     filters.push('programs_cat[]=' + arrIds.join('&programs_cat[]='));
   }
 
   if ( ages.length > 0  ) {
-    filters.push('age_group[]=' + ages.join('&age_group[]='));
+    arrIds = ProgramsList.getIds(allAges, ages).map(value => value.id)
+    filters.push('age_group[]=' + arrIds.join('&age_group[]='));
   }
 
   if (page > 1) {
@@ -147,43 +143,37 @@ ProgramsList.parseQuery = function() {
   let query =this.$route.query;
   let queryArr = [];
 
-  if(!_.isEmpty(query)){
-
+  if(!_.isEmpty(query.category)){
     if (_.isArray(query.category)){
-      // if an array with the same value in each element
       if (query.category.every( (val, i, arr) => val === arr[0] )){
         query.category = query.category[0];
       }else{
         queryArr=ProgramsList.getIds(this.programTypes, query.category.map(String));
         this.checkedProgramType = queryArr.map(value => value.slug)
-        this.checkedProgramTypeIds = queryArr.map(value => value.term_id)
       }
     }else{
       let index = this.programTypes.map(function(e) { return e.slug; }).indexOf(query.category);
       this.checkedProgramType.push(this.programTypes[index].slug);
-      this.checkedProgramTypeIds.push(this.programTypes[index].term_id);
     }
   }
 
-  // if (!_.isArray(query.category) && query.category){
-  //   this.checkedProgramType.push(parseInt(query.category, 10));
-  // }
+  if(!_.isEmpty(query.age_group)){
+    if (_.isArray(query.age_group)){
+      if (query.age_group.every( (val, i, arr) => val === arr[0] )) {
+        query.age_group = query.age_group[0];
+      } else {
+        queryArr=ProgramsList.getIds(this.ageGroups, query.age_group.map(String));
+        this.checkedAgeGroup = queryArr.map(value => value.slug)
+      }
+    }else{
+      let index = this.ageGroups.map(function(e) { return e.slug; }).indexOf(query.age_group);
+      this.checkedAgeGroup.push(this.ageGroups[index].slug);
+    }
+  }
 
-  // if (_.isArray(query.age_group)){
-  //   if (query.age_group.every( (val, i, arr) => val === arr[0] )) {
-  //     query.age_group = query.age_group[0];
-  //   } else {
-  //     this.checkedAgeGroup=query.age_group.map(Number);
-  //   }
-  // }
-
-  // if (!_.isArray(query.age_group) && query.age_group) {
-  //   this.checkedAgeGroup.push(parseInt(query.age_group,10));
-  // }
-
-  // if(query.page) {
-  //   this.programPage=query.page;
-  // }
+  if(query.page) {
+    this.programPage=query.page;
+  }
 
 }
 
@@ -194,8 +184,7 @@ ProgramsList.parseQuery = function() {
  **/
 ProgramsList.getIds = function(filter, slugs) {
   let arrIds = [];
-  
-  // loop through each slug and get the index to capture the filter
+
   slugs.forEach(function(slug) {
     let index = filter.map(function(e) { return e.slug; }).indexOf(slug);
     if (filter[index].id) {

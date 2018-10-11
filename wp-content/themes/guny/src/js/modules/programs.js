@@ -29,6 +29,7 @@ class ProgramsList {
         checkedAgeGroup: [],
         ageGroups: null,
         programPage: 1,
+        maxPages: 1,
         errorMsg: false,
         isLoading: true
       },
@@ -82,7 +83,7 @@ ProgramsList.getPrograms = function() {
   if ( this.programPage == 1){
     this.$router.push({query: {category: this.checkedProgramType, age_group: this.checkedAgeGroup}});
   }else {
-    this.$router.push({query: {category: this.checkedProgramType, age: this.checkedAgeGroup, page: this.programPage }});
+    this.$router.push({query: {category: this.checkedProgramType, age_group: this.checkedAgeGroup, page: this.programPage }});
   }
 
 
@@ -92,11 +93,13 @@ ProgramsList.getPrograms = function() {
       this.programs = response.data
       if (this.programs.length == 0) {
         this.errorMsg = true;
-        ProgramsList.hideLoader(this.$el)
+        this.isLoading = false;
+        ProgramsList.hideLoader(this.$el);
       } else {
+        this.maxPages = response.headers['x-wp-totalpages'];
         this.errorMsg = false;
         this.isLoading = false;
-        ProgramsList.hideLoader(this.$el)
+        ProgramsList.hideLoader(this.$el);
       }
     })
     .catch(error => {
@@ -170,6 +173,7 @@ ProgramsList.parseQuery = function() {
       this.checkedAgeGroup.push(this.ageGroups[index].slug);
     }
   }
+
 
   if(query.page) {
     this.programPage=query.page;

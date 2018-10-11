@@ -57,7 +57,7 @@
 <section class="c-block-list c-block-list--blue o-content-container u-sm-gutter animated infinite pulse slow" v-show="isLoading">
 </section>
 
-<section class="c-block-list c-block-list--shade o-content-container u-sm-gutter animate programs-content" v-if="!isLoading">
+<section class="c-block-list c-block-list--shade o-content-container u-sm-gutter programs-content" v-if="!isLoading">
   <div class="c-block-list__item u-sm-gutter" v-for="post in programs">
     <div class="c-card {{is_first ? "c-card--hero #{age_group.slug|sanitize|replace({'-es':''})}-gradient"}}">
       <a :href="post.link">
@@ -88,20 +88,19 @@
     </div>
   </div>
 
-  {# no results #}
-  <p class="type--no-results" v-if="errorMsg == true">
-    {{ __('Sorry. There are no programs found for those filter options.', 'guny') }}</p>
+  <p class="type--no-results" v-if="errorMsg">{{ __('Sorry. There are no programs found for those filter options.', 'guny') }}</p>
 </section>
 
 {# pagination #}
 <div class="o-content-container--compact programs-content" v-if="!isLoading">
-  <button v-if="programPage > 1" >
+  
+  <button v-if="programPage <= maxPages" >
     <router-link class="button--outline button--outline--gray alignleft" v-if="programPage > 1" :to="{ query: { page: programPage-1 }}" @click.native="parseQuery">{{ __('Previous', 'guny') }}</router-link>    
   </button>
 
 
-  <button v-if="errorMsg == false">
-    <router-link class="button--outline button--outline--gray alignright" :to="{ query: { page: programPage+1 }}" @click.native="parseQuery">{{ __('Next', 'guny') }}</router-link>
+  <button v-if="programPage < maxPages">
+    <router-link class="button--outline button--outline--gray alignright" :to="{ query: { page: (programPage*1)+1 }}" @click.native="parseQuery">{{ __('Next', 'guny') }}</router-link>
   </button>
 </div>
 {% endblock %}

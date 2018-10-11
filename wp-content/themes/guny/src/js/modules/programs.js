@@ -5,7 +5,6 @@ import Vue from 'vue/dist/vue.common';
 import axios from 'axios';
 import router from './router'
 
-
 class ProgramsList {
 
   constructor() {
@@ -57,6 +56,9 @@ class ProgramsList {
         getIds: ProgramsList.getIds,
         showLoader: ProgramsList.showLoader,
         hideLoader: ProgramsList.hideLoader,
+        scrollToTop() {
+          window.scrollTo(0,0);
+       }
       }
     }
   }
@@ -94,6 +96,7 @@ ProgramsList.getPrograms = function() {
       if (this.programs.length == 0) {
         this.errorMsg = true;
         this.isLoading = false;
+        this.maxPages = 1;
         ProgramsList.hideLoader(this.$el);
       } else {
         this.maxPages = response.headers['x-wp-totalpages'];
@@ -173,7 +176,6 @@ ProgramsList.parseQuery = function() {
       this.checkedAgeGroup.push(this.ageGroups[index].slug);
     }
   }
-
 
   if(query.page) {
     this.programPage=query.page;

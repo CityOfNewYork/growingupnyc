@@ -16,12 +16,21 @@
 // </div>
 //
 // Styleguide 3.2
+.c-block-list {
+  position: relative;
+}
+
 .c-block-list--shade {
   background: $color-background-shade;
 }
 
 .c-block-list--blue {
   background: $bright-blue;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: .5;
+  z-index: 1;
   display: none;
 }
 

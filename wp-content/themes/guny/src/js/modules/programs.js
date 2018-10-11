@@ -76,7 +76,7 @@ class ProgramsList {
 ProgramsList.getPrograms = function() {
   let url = this.programsURL;
 
-  ProgramsList.showLoader(this.$el)
+  ProgramsList.showLoader(this.$el, this.programs)
 
   let filters = ProgramsList.generateFilterURL(this.checkedProgramType, this.checkedAgeGroup, this.programPage, this.programTypes, this.ageGroups);
   url = url + '?' + filters;
@@ -97,12 +97,12 @@ ProgramsList.getPrograms = function() {
         this.errorMsg = true;
         this.isLoading = false;
         this.maxPages = 1;
-        ProgramsList.hideLoader(this.$el);
+        ProgramsList.hideLoader(this.$el, this.programs);
       } else {
         this.maxPages = response.headers['x-wp-totalpages'];
         this.errorMsg = false;
         this.isLoading = false;
-        ProgramsList.hideLoader(this.$el);
+        ProgramsList.hideLoader(this.$el, this.programs);
       }
     })
     .catch(error => {
@@ -206,13 +206,21 @@ ProgramsList.getIds = function(filter, slugs) {
 /**
  * Shows the loader
  * @param {HTMLElement} - vue element
+ * @param {array} - array of programs
  **/
-ProgramsList.showLoader = function(el){
+ProgramsList.showLoader = function(el, programs){
   let sh = $(el).find('.o-article-sidebar').height();
 
-  $(el).find('.programs-content').hide();
-  $(el).find('.c-block-list--blue').css({'height' : sh});
-  $(el).find('section.c-block-list.c-block-list--blue').show();
+  if (programs == null) {
+    $(el).find('.loader').css({'height' : sh});
+    $(el).find('.loader').addClass('animated pulse');
+  }else {
+    $(el).find('.loader').css({'height' : '100%'});
+    $(el).find('.loader').removeClass('animated pulse');
+  }
+
+  $(el).find('.pagination').hide();
+  $(el).find('.loader').show();
 }
 
 /**
@@ -220,8 +228,8 @@ ProgramsList.showLoader = function(el){
  * @param {HTMLElement} - vue element
  **/
 ProgramsList.hideLoader = function(el, status){
-    $(el).find('.programs-content').show();
-    $(el).find('section.c-block-list.c-block-list--blue').hide();
+    $(el).find('.loader').hide();
+    $(el).find('.pagination').show();
 }
 
 export default ProgramsList;

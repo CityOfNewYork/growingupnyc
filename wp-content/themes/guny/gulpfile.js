@@ -111,7 +111,8 @@ gulp.task('styles (dev)', ['lint-css'], function() {
   .pipe(hashFilename())
   .pipe(sourcemaps.write('./'))
   .pipe(gulp.dest('./'))
-  .pipe(browserSync.stream({match: '**/*.css'}));
+  .pipe(browserSync.stream({match: '**/*.css'}))
+  .pipe(notify({message: 'Styles (Dev) task complete'}));
 });
 
 gulp.task('styles', ['lint-css'], function() {

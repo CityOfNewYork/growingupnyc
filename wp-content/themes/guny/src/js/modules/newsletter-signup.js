@@ -4,7 +4,7 @@
 import _ from 'underscore';
 import zipcodes from './data/zipcodes.json'
 import formErrors from './data/form-errors.json'
-  
+
 export default function() {
   // const $signupForms = $('.guny-signup');
   const errorMsg = 'Please enter your email and zip code and select at least one age group.';
@@ -38,7 +38,7 @@ export default function() {
         $(this).addClass('is-error');
       }
 
-      if((fieldName == 'EMAIL' && !emailRegex.test(fields.EMAIL)) || 
+      if((fieldName == 'EMAIL' && !emailRegex.test(fields.EMAIL)) ||
         (fieldName == 'ZIP' && !zipRegex.test(fields.ZIP)) ||
         (fieldName == 'PHONENUM' && !phoneRegex.test(fields.PHONENUM) && fields.PHONENUM.length !=0)
       ) {
@@ -68,7 +68,7 @@ export default function() {
       submitSignup(form, fields);
     }
   }
-  
+
   /**
   * Assigns the borough based on the zip code
   * @param {string} zip - zip code
@@ -116,9 +116,9 @@ export default function() {
         }else {
           if(form[0].className.indexOf('contact') > -1){
             if(form[0].className.indexOf('unity') > -1){
-            form.html('<div class="text-center"><p class="u-bottom-spacing-small">Thank you for contacting the NYC Unity Project! Someone will respond to you shortly.</p><a class="button--primary button--primary__curved button--primary__purple" href="https://growingupnyc.cityofnewyork.us/generationnyc/topics/lgbtq">Go back to the Unity Project</a></div>');
+              form.html('<div class="text-center"><p class="u-bottom-spacing-small">Thank you for contacting the NYC Unity Project! Someone will respond to you shortly.</p><a class="button--primary button--primary__curved button--primary__purple" href="https://growingupnyc.cityofnewyork.us/generationnyc/topics/lgbtq">Go back to the Unity Project</a></div>');
             }else{
-              form.html('<p class="text-center">Thank you for contacting us! Someone will respond to you shortly.</p>');
+              form.html('<div class="text-center"><p class="u-bottom-spacing-small">Thank you for contacting us! Someone will respond to you shortly.</p><a class="button--simple button--simple--alt" href="https://growingupnyc.cityofnewyork.us/">Continue Exploring Growing Up NYC</a></div>');
             }
           }else{
             form.html('<p class="c-signup-form__success">One more step! <br /> Please check your inbox and confirm your email address to start receiving updates. <br />Thanks for signing up!</p>');

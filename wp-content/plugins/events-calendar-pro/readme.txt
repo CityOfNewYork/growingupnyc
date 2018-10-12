@@ -4,8 +4,8 @@ Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tr
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, modern tribe, tribe, widget, pro
 Donate link: http://m.tri.be/29
 Requires at least: 4.5
-Tested up to: 4.9.4
-Stable tag: 4.4.25
+Tested up to: 4.9.8
+Stable tag: 4.4.31
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -149,6 +149,7 @@ The plugin is produced by <a href="http://m.tri.be/45">Modern Tribe Inc</a>.
 <a href="https://profiles.wordpress.org/roblagatta">Rob La Gatta</a>
 <a href="https://profiles.wordpress.org/reid.peifer">Reid Peifer</a>
 <a href="https://profiles.wordpress.org/shane.pearlman">Shane Pearlman</a>
+<a href="https://profiles.wordpress.org/camwyn">Stephen Page</a>
 <a href="https://profiles.wordpress.org/thatdudebutch">Wayne Stratton</a>
 <a href="https://profiles.wordpress.org/zbtirrell">Zachary Tirrell</a>
 
@@ -203,8 +204,118 @@ Our Premium Plugins:
 
 == Changelog ==
 
+= [4.4.31] 2018-08-22 =
+
+* Fix - Enable recurrence rules to work on the initial date of recurrence, thanks to Matt for bringing this up. [44449]
+* Fix - Fix month view shortcode to url when changing between months, thanks to ltcalendar for reporting [108963]
+* Fix - Fix the view shortcodes to display the view titles, thanks to templodoser for the first report [109931]
+* Fix - Modified the REST API root url for `/all` to query for all events belonging to a series [94326]
+* Fix - Fix the Mini Calendar and Events Lists widgets styles in the customizer when previewed for the first time [111479]
+* Fix - Not being able to disable Generate JSON-LD data for the Advanded Event List Widget, thanks Craig for the report of this  [105174]
+* Fix - Yearly exclusions description along with the different date option, thanks for the report Thomas [77501]
+* Tweak - Utilize future event display on the Countdown Widget to go to the next event once the current event starts  [70769]
+* Tweak - Namespace javascript debug function to prevent conflicts causing a function found, thanks to Tom-Mulvey for the fix [110462]
+* Tweak - Updated the "Additional fields" settings page, improving the UX [109813]
+* Add - New action after saving venue geodata to the database [111353]
+
+= [4.4.30.1] 2018-08-09 =
+
+* Fix - Add back 3rd parameter to existing filter to prevent fatal errors with Yoast SEO and other 3rd party coding, thanks Laura [112058]
+
+= [4.4.30] 2018-08-01 =
+
+* Fix - Fix month view shortcode to retain category when changing between months, thanks to Robert Young and other for reporting [92891]
+* Fix - Fix permalinks regeneration when editing recurring events on same day. Thanks @ajoranger for flagging this! [104566]
+* Fix - Fix problems with filters not working when the value contains a space for the filterbar. Thanks @steviger, Sarah and others for flagging this [108811]
+* Fix - Escape each closing html element in week view tooltip to prevent PHP parser from exposing html, thanks to Karen for a solution [64834]
+* Fix - Fix Moment JS library deprecation warning when creating recurring events [107333]
+* Fix - Fix WPML wrong URL in the language switcher for the recurring events [110976]
+* Tweak - Use event id to get title of event in Week view [110531]
+* Tweak - Manage plugin assets via `tribe_assets()` [40267]
+* Deprecated - Tribe__Events__Pro__Asset__Ajax_Maps in favor of using `tribe_asset`
+* Deprecated - Tribe__Events__Pro__Asset__Ajax_Photoview in favor of using `tribe_asset`
+* Deprecated - Tribe__Events__Pro__Asset__Ajax_Weekview in favor of using `tribe_asset`
+* Deprecated - Tribe__Events__Pro__Asset__Events_Pro_Css_Default in favor of using `tribe_asset`
+* Deprecated - Tribe__Events__Pro__Asset__Events_Pro_Css_Full in favor of using `tribe_asset`
+* Deprecated - Tribe__Events__Pro__Asset__Events_Pro_Css_Skeleton in favor of using `tribe_asset`
+* Deprecated - Tribe__Events__Pro__Asset__Events_Pro_Css in favor of using `tribe_asset`
+* Deprecated - Tribe__Events__Pro__Asset__Factory in favor of using `tribe_asset`
+
+= [4.4.29.2] 2018-07-12 =
+
+* Fix - A conflict with select2 loading on the editors for WooCommerce Membership causing an ‘ajax’ error in the console [110441]
+
+= [4.4.29.1] 2018-07-10 =
+
+* Fix - Fix week view pagination not working [110276]
+
+= [4.4.29] 2018-07-09 =
+
+* Fix - Redirect to the main event series page when trying to access a nonexistent event recurrence [64294]
+* Fix - Display the time of recurring event when previewing the event. Thanks Sumaiya for flagging this! [62459]
+* Fix - Integrate the events list and mini calendar widgets with Site Origin's Page Builder. Thanks @tommy, @simon, and @david.longdon for flagging this! [95542][66031]
+* Fix - Add validation to the recurrence exclusion "on" and "after" fields. Thanks James for reporting! [73912]
+* Fix - Make sure recurring event instances will always show in REST API responses [89571]
+* Tweak - Harden the sanitizing of values on the mini calendar [106000]
+* Tweak - Manage plugin assets via `tribe_assets()` [40267]
+
+= [4.4.28] 2018-06-20 =
+
+* Add - Accessibility repair: new title-bar template for loop views included above the filter bar and content containing the page title in a `h1` tag.
+* Fix - Category Title in Photo View Loses Parameter After Navigating Previous/Next [90010]
+* Fix - Make sure the recurring events series "after" field is not empty and a valid number. Thanks @versi for flagging this! [43855]
+* Fix - Resolved customizer inconsistencies with month/week views and full styles [69758]
+* Fix - Resolved the datepicker losing state after visiting an event and hitting the "back" button on week view. Props to Joel for reporting! [69707]
+* Tweak - Accessibility repair: heading hierarchy improvements throughout.
+* Tweak - Accessibility repair: make sure all elements have unique `id` attributes.
+* Tweak - Accessibility repair: remove redundant tab stops on feature image links.
+* Tweak - Accessibility repair: hide Google Map embeds from screen readers.
+* Tweak - Added the unit to the distance output [70874]
+
+= [4.4.27] 2018-05-29 =
+
+* Fix - Resolved problems with date parameter for the week view of `[tribe_events]` [69297]
+* Fix - Ignore empty exclusions in recurring events [62724]
+* Fix - Parsing of ordinals format in to the recurring section (thanks to Steve for reporting this problem) [77061]
+* Fix - Modify time-frame limitations to "Related Events" (props @cliffy, @coachsuper and others for flagging this!)[41216]
+* Tweak - Add tribe_redirected parameter to enable a visitor to select another view after default mobile redirect, thanks to Marcella for notifying us [102743]
+* Fix - Allow optionally showing the Before/After HTML from Event Settings on shortcode-generated calendars (thanks to Ria for reporting this problem in our Help Desk) [73541]
+* Fix - Hide any errors generated by servers that don't support `set_time_limit()` (Thanks to Jörg for notifying us) [64183]
+* Fix - Ensured the "This Week" widget use the date display settings from the settings panel (props to Miguel and @wleideckw for reporting this problem) [45168]
+* Fix - Display the "loading wheel" when navigating events using `[tribe_events]` shortcode (Thanks to @atoohill for notifying us!) [69186]
+* Fix - Prevent week view event links to require "double tap" on iPads (props to @sschuler for reporting this problem!) [66107]
+* Fix - Add Filter Bar checkboxes compatibility (props @barberaprode-nl, @kentyn and others for flagging this!) [106683]
+* Tweak - Correct behavior of State/Province field on Settings > Default Content screen [64631]
+* Tweak - Replaced the address attribute with a street attribute in `[tribe_events_list]` shortcode and List Widget (Thanks to Sebastien for notifying us!) [73626]
+* Language - 7 new strings added, 126 updated, 1 fuzzied, and 3 obsoleted
+
+= [4.4.26] 2018-05-09 =
+
+* Feature - Added two new actions to control the shortcodes HTML, `tribe_events_pro_tribe_events_shortcode_before_render` and `tribe_events_pro_tribe_events_shortcode_after_render` [73412]
+* Feature - Added a new attribute to the `[tribe_events]` shortcode, `main-calendar` so that you can control whether the "All Events" link on a single event will return the main calendar page or to the page with the `[tribe_events]` shortcode [69192]
+* Fix - Prevent unbalanced HTML tags from being output by the `[tribe_event_inline]` shortcode [77943]
+* Fix - Resolved some problems with translations in tooltips on recurring events [67870]
+* Fix - Prevent PHP errors when saving an event with the UTC + 9.5 time zone (thanks to Ross in the Help Desk for flagging this problem!) [101973]
+* Fix - Prevent PHP errors when saving a recurring event with mulitple recurrences in the same day [101973]
+* Fix - Prevent 404 errors on recurrence feed pages (thanks to Ranjan and others in the Help Desk for reporting this problem!) [72077]
+* Fix - Fixed the default value for the front-end recurring event instances toggle [36559]
+* Fix - Make sure that hidden events are not displayed on the Mini Calendar Widget [65688]
+* Fix - Added support for custom days on yearly recurrence rules (thanks to Ross for reporting this problem in our Help Desk) [101973]
+* Fix - Prevent navigation on recurring events on pages that don't exist (thanks to Jay and others in the Help Desk for reporting this problem) [43925]
+* Fix - Ensure the `[tribe_event]` shortcode uses the default view in the Event Settings if there's no defined `view` attribute in the shortcode [68689]
+* Fix - Avoid some "not found" errors on recurring event list pages when the number of pages is 2 [105490]
+* Fix - Fixed navigation problems on recurring events when the parent event is in the past or the future relative the currently-viewed event [93104]
+* Tweak - Added coordinates to the Google Map Link for Venues instead of the address to improve accuracy [61152]
+* Tweak - Ensure maps honor the content around the `[tribe_events]` shortcode instead of rendering the map above all content (thanks to Francesco and others for flagging this problem!) [73412]
+* Tweak - Improved default styles for the Venue Widget [39251]
+* Tweak - Improved Week View user experience in small viewports [69856]
+* Tweak - Added notice about required dependencies on network installations [68598]
+* Tweak - Ensure event countdowns use the event's timezone [76618]
+* Language - 0 new strings added, 123 updated, 0 fuzzied, and 0 obsoleted
+
 = [4.4.25] 2018-04-18 =
 
+* Fix - Make sure order clause for EventStartDate is present on the SQL query [97829]
 * Fix - Make sure Additional Fields are not emptied when an Event Aggregator import updates an event [98015]
 * Tweak - Prevent unnecessary recurring-events labels from showing up on Community Events submission form [98934]
 * Tweak - Make sure country names don't contain parentheses before being sent to the Google Maps API [79880]

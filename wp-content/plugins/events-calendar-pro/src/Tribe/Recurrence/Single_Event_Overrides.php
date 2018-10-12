@@ -97,6 +97,12 @@ class Tribe__Events__Pro__Recurrence__Single_Event_Overrides {
 			return $formatted_time;
 		}
 
+		// if the event haven't, been published the rest of the recurrences are not yet created.
+		// hence, we return the value so it can be viewed on the preview.
+		if ( 'publish' !== get_post_status( $event_id ) ) {
+			return $formatted_time;
+		}
+
 		$date = tribe_get_start_date( $event_id, false, Tribe__Date_Utils::DBDATEFORMAT );
 		$time_format = get_option( 'time_format', Tribe__Date_Utils::TIMEFORMAT );
 		$time_range_separator = tribe_get_option( 'timeRangeSeparator', ' - ' );

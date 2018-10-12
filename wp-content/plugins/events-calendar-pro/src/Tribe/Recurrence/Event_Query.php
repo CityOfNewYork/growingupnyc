@@ -18,14 +18,11 @@ class Tribe__Events__Pro__Recurrence__Event_Query {
 	 *
 	 * @param WP_Query $query
 	 */
-	public function __construct( WP_Query $query ) {
-		$this->query = $query;
-		$this->slug = $query->get( 'name' );
-
-		if ( ! empty( $this->slug ) ) {
-			$this->setup();
+	public function __construct( WP_Query $query = null ) {
+		if ( $query instanceof WP_Query ) {
+			$this->query = $query;
+			$this->slug = $query->get( 'name' );
 		}
-
 	}
 
 	/**
@@ -46,7 +43,19 @@ class Tribe__Events__Pro__Recurrence__Event_Query {
 				get_post( $wp_query->query_vars['post_parent'] ),
 			);
 		}
+	}
 
+	/**
+	 * Attach all the hooks associated with this class
+	 *
+	 * @since 4.4.26
+	 */
+	public function hook() {
+		if ( empty( $this->slug ) ) {
+			return;
+		}
+
+		$this->setup();
 	}
 
 	/**
@@ -98,6 +107,17 @@ class Tribe__Events__Pro__Recurrence__Event_Query {
 		) );
 
 		$this->parent_event = reset( $posts );
+	}
+
+	/**
+	 * Set from the outside the parent event associated with this event
+	 *
+	 * @since 4.4.26
+	 *
+	 * @param $parent_post
+	 */
+	public function set_parent_event( WP_Post $parent_post ) {
+		$this->parent_event = $parent_post;
 	}
 
 	/**

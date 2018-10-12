@@ -165,7 +165,14 @@ class Tribe__Events__Pro__Recurrence__Meta {
 				// set the end too to stick with new format
 				$exclusion['end'] = $formatted;
 			} else {
-				$exclusion['end'] = date( $datepicker_format, strtotime( $exclusion['end'] ) );
+				if ( isset( $exlcusion['end'] ) ) {
+					$exclusion['end'] = date( $datepicker_format, strtotime( $exclusion['end'] ) );
+				}
+			}
+
+			// If there's no value, clean the output of the custom date
+			if ( isset( $exclusion['custom']['date']['date'] ) && ! $exclusion['custom']['date']['date'] ) {
+				$exclusion = Tribe__Utils__Array::set( $exclusion, array( 'custom', 'date', 'date' ), '' );
 			}
 		}
 
@@ -195,7 +202,8 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		if ( ! $menu_parent ) {
 			return;
 		}
-		if ( current_user_can( 'edit_post', $post->ID ) ) {
+		// We need to make sure we're editing the correct post (in cases where we show events on venue pages, etc), and the user can do so.
+		if ( get_edit_post_link( $post->ID ) === $menu_parent->href && current_user_can( 'edit_post', $post->ID ) ) {
 			$wp_admin_bar->add_node( array(
 				'id'     => 'edit-series',
 				'title'  => __( 'Edit Series', 'tribe-events-calendar-pro' ),
@@ -1541,14 +1549,14 @@ class Tribe__Events__Pro__Recurrence__Meta {
 
 			// If the events are single events, use the dates of those single instances.
 			if ( 'date' === $type && isset( $rule['custom']['date']['date'] ) ) {
-				$series_end = date( tribe_get_date_format( true ), strtotime( $rule['custom']['date']['date'] ) );
+				$series_end = date_i18n( tribe_get_date_format( true ), strtotime( $rule['custom']['date']['date'] ) );
 
 			// Otherwise there's no end date specified.
 			} else {
 				$series_end = _x( 'an unspecified date', 'An unspecified end date', 'tribe-events-calendar-pro' );
 			}
 		} else {
-			$series_end = date( tribe_get_date_format( true ), strtotime( $rule['end'] ) );
+			$series_end = date_i18n( tribe_get_date_format( true ), strtotime( $rule['end'] ) );
 		}
 
 		$text = str_replace( array(

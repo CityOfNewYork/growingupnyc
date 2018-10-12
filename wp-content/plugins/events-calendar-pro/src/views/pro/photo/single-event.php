@@ -6,7 +6,7 @@
  * Override this template in your own theme by creating a file at [your-theme]/tribe-events/pro/photo/single-event.php
  *
  * @package TribeEventsCalendar
- * @version 4.4.8
+ * @version 4.4.28
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,11 +27,11 @@ global $post;
 
 		<!-- Event Title -->
 		<?php do_action( 'tribe_events_before_the_event_title' ); ?>
-		<h2 class="tribe-events-list-event-title">
+		<h3 class="tribe-events-list-event-title">
 			<a class="tribe-event-url" href="<?php echo esc_url( tribe_get_event_link() ); ?>" title="<?php the_title() ?>" rel="bookmark">
 				<?php the_title(); ?>
 			</a>
-		</h2>
+		</h3>
 		<?php do_action( 'tribe_events_after_the_event_title' ); ?>
 
 		<!-- Event Meta -->

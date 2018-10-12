@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Events Calendar Pro package.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2017-01-27 16:27:59+0000\n"
+"PO-Revision-Date: 2018-06-19 03:22:08+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -11,65 +11,102 @@ msgstr ""
 "Language: tr\n"
 "Project-Id-Version: Events Calendar Pro\n"
 
-#: src/Tribe/Recurrence/Meta.php:1704
-msgid "Allow users to decide whether to show all instances of a recurring event on list-style views."
+#: src/views/pro/week/loop-grid.php:18
+msgid "Calendar of %s"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:1014
-msgid "Enter your API Key"
+#: src/views/pro/map/loop.php:24 src/views/pro/photo/loop.php:23
+msgid "List of %s"
 msgstr ""
+
+#: src/admin-views/widget-admin-advanced-list.php:33
+msgid "Street"
+msgstr "Sokak"
+
+#: src/admin-views/tribe-options-defaults.php:132
+#: src/admin-views/tribe-options-defaults.php:145
+msgid "Default state/province"
+msgstr "Varsayılan eyalet/bölge"
+
+#: src/Tribe/Shortcodes/Tribe_Events.php:580
+msgid "Loading %s"
+msgstr "Yükleniyor %s"
+
+#: src/Tribe/Main.php:799
+msgid "Check this to show the After HTML from the text area below on events displayed via shortcode."
+msgstr "Etkinliklerden sonra HTML kodunun gözükmesi için bunu işaretleyiniz."
+
+#: src/Tribe/Main.php:798
+msgid "Enable the After HTML (below) on shortcodes."
+msgstr "Yazı sonraı HTML kodunu etkinleştir."
+
+#: src/Tribe/Main.php:786
+msgid "Check this to show the Before HTML from the text area below on events displayed via shortcode."
+msgstr ""
+
+#: src/Tribe/Main.php:785
+msgid "Enable the Before HTML (below) on shortcodes."
+msgstr "Yazı öncesi HTML kodunu etkinleştir."
+
+#: src/Tribe/Recurrence/Meta.php:1712
+msgid "Allow users to decide whether to show all instances of a recurring event on list-style views."
+msgstr "Liste görünümünde kullanıcının tüm tekrarlayan etkinliklerini göstermesine izin ver"
+
+#: src/Tribe/Geo_Loc.php:643
+msgid "Enter your API Key"
+msgstr "API anahtarını giriniz"
 
 #: src/Tribe/Recurrence/Series_Rules_Factory.php:27
 msgid "Expected an array but received a variable of type '%s'"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:652
+#: src/Tribe/Geo_Loc.php:306
 msgid "Venue Overwrite Coordinates"
-msgstr ""
+msgstr "Mekan Koordinatlarının Üzerine Yaz"
 
-#: src/admin-views/event-recurrence.php:277
+#: src/admin-views/event-recurrence.php:283
 msgid "Recurring Events Active"
-msgstr ""
+msgstr "Tekrar Eden Etkinlikler Etkin"
 
 #: src/admin-views/widget-calendar.php:8
 msgid "Number of events to list below the mini calendar:"
-msgstr ""
+msgstr "Mini takvimde görüntülecek etkinlik sayısı:"
 
-#: src/admin-views/widget-admin-advanced-list.php:127
+#: src/admin-views/widget-admin-advanced-list.php:140
 #: src/admin-views/widget-admin-venue.php:37
 msgid "Hide this widget if there are no upcoming events"
-msgstr ""
+msgstr "Eğer yaklaşan etkinlik yoksa bileşeni gizle"
 
-#: src/Tribe/Main.php:1364
+#: src/Tribe/Main.php:1422
 msgctxt "Event title map marker prefix"
 msgid "%s: "
-msgstr ""
+msgstr "%s: "
 
-#: src/admin-views/widget-admin-advanced-list.php:131
+#: src/admin-views/widget-admin-advanced-list.php:144
 msgctxt "events list widget setting"
 msgid "Limit to featured events only"
-msgstr ""
+msgstr "Sadece öne çıkan etkinliklerle sınırla"
 
 #: src/admin-views/recurrence/years.php:63
 msgid "the same day"
-msgstr ""
+msgstr "aynı gün"
 
 #: src/admin-views/recurrence/years.php:37
 msgid "Which month will the event recur in?"
-msgstr ""
+msgstr "Etkinlik tekrar hangi ayda gerçekleşecek?"
 
 #: src/admin-views/recurrence/years.php:36
 msgctxt "Begins the line indicating on which month the event will occur"
 msgid "in"
-msgstr ""
+msgstr "tarihinde"
 
 #: src/admin-views/recurrence/years.php:30
 msgid "years"
-msgstr ""
+msgstr "yıllar"
 
 #: src/admin-views/recurrence/years.php:27
 msgid "year"
-msgstr ""
+msgstr "yıl"
 
 #: src/admin-views/recurrence/weeks.php:7
 msgctxt "Begins the line indicating what day of the week the event will occur on"
@@ -78,7 +115,7 @@ msgstr ""
 
 #: src/admin-views/recurrence/weeks.php:5
 msgid "Event Series Recurrence Day of Week"
-msgstr ""
+msgstr "Etkinlik Haftanın Şu Günleri Tekrar Ediyor"
 
 #: src/admin-views/recurrence/time.php:73
 msgctxt "custom recurrence time/date separator"
@@ -93,47 +130,47 @@ msgstr ""
 #: src/admin-views/recurrence/time.php:30
 msgctxt "number suffix for numbers ending in something other than 1, 2, or 3"
 msgid "%1$sth day"
-msgstr ""
+msgstr "%1$s. gün"
 
 #: src/admin-views/recurrence/time.php:25
 msgctxt "number suffix for numbers ending in 3"
 msgid "%1$srd day"
-msgstr ""
+msgstr "%1$s. gün"
 
 #: src/admin-views/recurrence/time.php:20
 msgctxt "number suffix for numbers ending in 2"
 msgid "%1$snd day"
-msgstr ""
+msgstr "%1$s. gün"
 
 #: src/admin-views/recurrence/time.php:15
 msgctxt "number suffix for numbers ending in 1"
 msgid "%1$sst day"
-msgstr ""
+msgstr "%1$s. gün"
 
 #: src/admin-views/recurrence/time.php:12
 msgid "next day"
-msgstr ""
+msgstr "ertesi gün"
 
 #: src/admin-views/recurrence/time.php:10
 #: src/admin-views/recurrence/time.php:84
 msgid "same day"
-msgstr ""
+msgstr "aynı gün"
 
 #: src/admin-views/recurrence/months.php:99
 #: src/admin-views/recurrence/years.php:145
 msgctxt "As in: day 12 of the month"
 msgid "of the month"
-msgstr ""
+msgstr "ayının"
 
 #: src/admin-views/recurrence/months.php:62
 #: src/admin-views/recurrence/years.php:108
 msgid "Use date:"
-msgstr ""
+msgstr "Şu tariih kullan:"
 
 #: src/admin-views/recurrence/months.php:54
 #: src/admin-views/recurrence/years.php:100
 msgid "Use pattern:"
-msgstr ""
+msgstr "Şu şablonu kullan:"
 
 #: src/admin-views/recurrence/months.php:37
 #: src/admin-views/recurrence/years.php:89
@@ -145,64 +182,64 @@ msgstr ""
 #: src/admin-views/recurrence/years.php:82
 msgctxt "Qualifying the \"different day\". Example: \"day\" in \"day 12 of the month\""
 msgid "day"
-msgstr ""
+msgstr "gün"
 
 #: src/admin-views/recurrence/months.php:12
 #: src/admin-views/recurrence/years.php:64
 msgid "a different day:"
-msgstr ""
+msgstr "farklı bir gün:"
 
 #: src/admin-views/recurrence/months.php:11
 msgid "the same day:"
-msgstr ""
+msgstr "aynı gün:"
 
-#: src/admin-views/event-recurrence.php:499
+#: src/admin-views/event-recurrence.php:507
 msgid "Recurrence Description"
-msgstr ""
+msgstr "Tekrarlama Açıklaması"
 
-#: src/admin-views/event-recurrence.php:296
+#: src/admin-views/event-recurrence.php:304
 msgid "Event will not occur:"
-msgstr ""
+msgstr "Etkinlik şu tarihte gerçekleşmiyor:"
 
 #: src/admin-views/event-recurrence.php:264
 msgid "Add more events"
-msgstr ""
+msgstr "Daha fazla etkinlik ekle"
 
 #: src/admin-views/event-recurrence.php:261
 msgid "Schedule multiple events"
-msgstr ""
+msgstr "Birden fazla etkinlik zamanla"
 
 #: src/admin-views/event-recurrence.php:252
-#: src/admin-views/event-recurrence.php:486
+#: src/admin-views/event-recurrence.php:494
 msgid "Hide Details"
-msgstr ""
+msgstr "Detayları Gizle"
 
 #: src/admin-views/event-recurrence.php:251
-#: src/admin-views/event-recurrence.php:485
+#: src/admin-views/event-recurrence.php:493
 msgid "Show Details"
-msgstr ""
+msgstr "Detayları Göster"
 
 #: src/admin-views/event-recurrence.php:223
 msgid "Series ends on this date"
-msgstr ""
+msgstr "Seri etkinlikler şu tarihte sona eriyor"
 
 #: src/admin-views/event-recurrence.php:204
-#: src/admin-views/event-recurrence.php:427
+#: src/admin-views/event-recurrence.php:435
 msgid "on"
 msgstr ""
 
 #: src/admin-views/event-recurrence.php:195
-#: src/admin-views/event-recurrence.php:417
+#: src/admin-views/event-recurrence.php:425
 msgid "Series ends"
-msgstr ""
+msgstr "Seri etkinliklerin bitişi"
 
 #: src/admin-views/event-recurrence.php:167
 msgid "a different time:"
-msgstr ""
+msgstr "farklı bir zaman:"
 
 #: src/admin-views/event-recurrence.php:166
 msgid "the same time:"
-msgstr ""
+msgstr "aynı zaman:"
 
 #: src/admin-views/event-recurrence.php:156
 msgctxt "Begins the line indicating when a recurrence time starts"
@@ -210,35 +247,35 @@ msgid "At"
 msgstr ""
 
 #: src/admin-views/event-recurrence.php:115
-#: src/admin-views/event-recurrence.php:371
+#: src/admin-views/event-recurrence.php:379
 msgid "months"
-msgstr ""
+msgstr "aylar"
 
 #: src/admin-views/event-recurrence.php:112
-#: src/admin-views/event-recurrence.php:368
+#: src/admin-views/event-recurrence.php:376
 msgid "month"
 msgstr "ay"
 
 #: src/admin-views/event-recurrence.php:107
-#: src/admin-views/event-recurrence.php:363
+#: src/admin-views/event-recurrence.php:371
 msgid "weeks"
-msgstr ""
+msgstr "haftalar"
 
 #: src/admin-views/event-recurrence.php:42
 msgid "Delete This"
-msgstr ""
+msgstr "Bunu Sil"
 
 #: src/admin-views/event-recurrence.php:13
 msgid "Event Series:"
-msgstr ""
+msgstr "Etkinlik Serisi"
 
 #: src/admin-views/event-recurrence.php:27
 msgid "Are you sure you want to delete this exclusion?"
-msgstr ""
+msgstr "Bu istisnayı silmek istediğinizden emin misiniz?"
 
 #: src/admin-views/event-recurrence.php:26
 msgid "Are you sure you want to delete these events?"
-msgstr ""
+msgstr "Bu etkinlikleri silmek istediğinizden emin misiniz?"
 
 #: src/Tribe/Recurrence/Validator.php:146
 msgid "Yearly custom recurrences with a different day must have either a date or day specified."
@@ -586,7 +623,7 @@ msgstr ""
 
 #: src/Tribe/Recurrence/Strings.php:63
 msgid "An all day event every [interval] day(s), happening [count] times"
-msgstr ""
+msgstr "Tüm gün süren etkinlik ve her [interval] günü, [count] kez gerçekleşiyor"
 
 #: src/Tribe/Recurrence/Strings.php:62
 msgid "An event every [interval] day(s) that begins at [start_time], happening [count] times"
@@ -634,392 +671,392 @@ msgstr ""
 
 #: src/Tribe/Recurrence/Strings.php:45
 msgid "the 31st day of the month"
-msgstr ""
+msgstr "ayın 31. günü"
 
 #: src/Tribe/Recurrence/Strings.php:44
 msgid "the 30th day of the month"
-msgstr ""
+msgstr "ayın 30. günü"
 
 #: src/Tribe/Recurrence/Strings.php:43
 msgid "the 29th day of the month"
-msgstr ""
+msgstr "ayın 29. günü"
 
 #: src/Tribe/Recurrence/Strings.php:42
 msgid "the 28th day of the month"
-msgstr ""
+msgstr "ayın 28. günü"
 
 #: src/Tribe/Recurrence/Strings.php:41
 msgid "the 27th day of the month"
-msgstr ""
+msgstr "ayın 27. günü"
 
 #: src/Tribe/Recurrence/Strings.php:40
 msgid "the 26th day of the month"
-msgstr ""
+msgstr "ayın 26. günü"
 
 #: src/Tribe/Recurrence/Strings.php:39
 msgid "the 25th day of the month"
-msgstr ""
+msgstr "ayın 25. günü"
 
 #: src/Tribe/Recurrence/Strings.php:38
 msgid "the 24th day of the month"
-msgstr ""
+msgstr "ayın 24. günü"
 
 #: src/Tribe/Recurrence/Strings.php:37
 msgid "the 23rd day of the month"
-msgstr ""
+msgstr "ayın 23. günü"
 
 #: src/Tribe/Recurrence/Strings.php:36
 msgid "the 22nd day of the month"
-msgstr ""
+msgstr "ayın 22. günü"
 
 #: src/Tribe/Recurrence/Strings.php:35
 msgid "the 21st day of the month"
-msgstr ""
+msgstr "ayın 21. günü"
 
 #: src/Tribe/Recurrence/Strings.php:34
 msgid "the 20th day of the month"
-msgstr ""
+msgstr "ayın 20. günü"
 
 #: src/Tribe/Recurrence/Strings.php:33
 msgid "the 19th day of the month"
-msgstr ""
+msgstr "ayın 19. günü"
 
 #: src/Tribe/Recurrence/Strings.php:32
 msgid "the 18th day of the month"
-msgstr ""
+msgstr "ayın 18. günü"
 
 #: src/Tribe/Recurrence/Strings.php:31
 msgid "the 17th day of the month"
-msgstr ""
+msgstr "ayın 17. günü"
 
 #: src/Tribe/Recurrence/Strings.php:30
 msgid "the 16th day of the month"
-msgstr ""
+msgstr "ayın 16. günü"
 
 #: src/Tribe/Recurrence/Strings.php:29
 msgid "the 15th day of the month"
-msgstr ""
+msgstr "ayın 15. günü"
 
 #: src/Tribe/Recurrence/Strings.php:28
 msgid "the 14th day of the month"
-msgstr ""
+msgstr "ayın 14. günü"
 
 #: src/Tribe/Recurrence/Strings.php:27
 msgid "the 13th day of the month"
-msgstr ""
+msgstr "ayın 13. günü"
 
 #: src/Tribe/Recurrence/Strings.php:26
 msgid "the 12th day of the month"
-msgstr ""
+msgstr "ayın 12. günü"
 
 #: src/Tribe/Recurrence/Strings.php:25
 msgid "the 11th day of the month"
-msgstr ""
+msgstr "ayın 11. günü"
 
 #: src/Tribe/Recurrence/Strings.php:24
 msgid "the 10th day of the month"
-msgstr ""
+msgstr "ayın 10. günü"
 
 #: src/Tribe/Recurrence/Strings.php:23
 msgid "the 9th day of the month"
-msgstr ""
+msgstr "ayın 9. günü"
 
 #: src/Tribe/Recurrence/Strings.php:22
 msgid "the 8th day of the month"
-msgstr ""
+msgstr "ayın 8. günü"
 
 #: src/Tribe/Recurrence/Strings.php:21
 msgid "the 7th day of the month"
-msgstr ""
+msgstr "ayın 7. günü"
 
 #: src/Tribe/Recurrence/Strings.php:20
 msgid "the 6th day of the month"
-msgstr ""
+msgstr "ayın 6. günü"
 
 #: src/Tribe/Recurrence/Strings.php:19
 msgid "the 5th day of the month"
-msgstr ""
+msgstr "ayın 5. günü"
 
 #: src/Tribe/Recurrence/Strings.php:18
 msgid "the 4th day of the month"
-msgstr ""
+msgstr "ayın 4. günü"
 
 #: src/Tribe/Recurrence/Strings.php:17
 msgid "the 3rd day of the month"
-msgstr ""
+msgstr "ayın 3. günü"
 
 #: src/Tribe/Recurrence/Strings.php:16
 msgid "the 2nd day of the month"
-msgstr ""
+msgstr "ayın 2. günü"
 
 #: src/Tribe/Recurrence/Strings.php:15
 msgid "the 1st day of the month"
-msgstr ""
+msgstr "ayın 1. günü"
 
 #: src/Tribe/Recurrence/Strings.php:14
 msgid "%1$s"
-msgstr ""
+msgstr "%1$s"
 
 #: src/Tribe/Recurrence/Strings.php:13
 msgid "All day"
-msgstr ""
+msgstr "Tüm gün"
 
-#: src/Tribe/Recurrence/Meta.php:1290
+#: src/Tribe/Recurrence/Meta.php:1298
 msgctxt "placeholder used where the true day of the day is determined dynamically"
 msgid "day"
-msgstr ""
+msgstr "gün"
 
 #: src/views/pro/list/venue-nav.php:40
 msgid "Next %s"
-msgstr ""
+msgstr "Sonraki %s"
 
 #: src/views/pro/list/venue-nav.php:32
 msgid "Previous %s"
-msgstr ""
+msgstr "Önceki %s"
 
-#: src/admin-views/widget-admin-advanced-list.php:115
+#: src/admin-views/widget-admin-advanced-list.php:128
 #: src/admin-views/widget-admin-this-week.php:147
 #: src/admin-views/widget-calendar.php:83
 msgid "Select a Taxonomy Term"
-msgstr ""
+msgstr "Bir Sınıflama Terimi Seçiniz"
 
-#: src/admin-views/widget-admin-advanced-list.php:137
+#: src/admin-views/widget-admin-advanced-list.php:150
 #: src/admin-views/widget-admin-countdown.php:57
 #: src/admin-views/widget-admin-this-week.php:161
 #: src/admin-views/widget-admin-venue.php:43
 #: src/admin-views/widget-calendar.php:101
 msgid "Generate JSON-LD data"
-msgstr ""
+msgstr "JSON-LD verisi oluştur"
 
 #: src/admin-views/tribe-options-mobile.php:33
 msgid "Change the default view for Mobile users."
-msgstr ""
+msgstr "Mobil kullanıcılar için varsayılan görüntülemeyi değiştir."
 
 #: src/admin-views/tribe-options-mobile.php:32
 msgid "Default mobile view"
-msgstr ""
+msgstr "Varsayılan mobil görünümü"
 
 #: src/admin-views/tribe-options-mobile.php:19
 msgid "Use Default View"
-msgstr ""
+msgstr "Varsayılan Görünümü Kullan"
 
-#: src/Tribe/Templates/Mods/List_View.php:16
+#: src/Tribe/Templates/Mods/List_View.php:19
 msgid "All %s"
 msgstr "Tümü %s"
 
-#: src/Tribe/Shortcodes/Tribe_Events.php:506
+#: src/Tribe/Shortcodes/Tribe_Events.php:512
 msgid "$template_object is expected to be an actual object"
 msgstr ""
 
-#: src/Tribe/Main.php:2022
+#: src/Tribe/Main.php:2078
 msgid "all"
-msgstr ""
+msgstr "tümü"
 
-#: src/Tribe/Main.php:575
+#: src/Tribe/Main.php:583
 msgctxt "debug recurrence"
 msgid "Invalid instance of a recurring event was requested ($1%s) redirecting to $2%s"
 msgstr ""
 
-#: src/Tribe/Main.php:553
+#: src/Tribe/Main.php:561
 msgctxt "debug recurrence"
 msgid "incorrect slug"
-msgstr ""
+msgstr "geçersiz yazı kısa adı"
 
-#: src/Tribe/Main.php:540
+#: src/Tribe/Main.php:548
 msgctxt "debug recurrence"
 msgid "invalid date"
-msgstr ""
+msgstr "geçersiz tarih"
 
-#: src/Tribe/Main.php:526
+#: src/Tribe/Main.php:534
 msgctxt "debug recurrence"
 msgid "Unknown"
-msgstr ""
+msgstr "Bilinmeyen"
 
-#: src/Tribe/Geo_Loc.php:934
+#: src/Tribe/Geo_Loc.php:586
 msgctxt "debug geodata"
 msgid "empty response"
-msgstr ""
+msgstr "boş yanıt"
 
-#: src/Tribe/Geo_Loc.php:933
+#: src/Tribe/Geo_Loc.php:585
 msgctxt "debug geodata"
 msgid "Geocode request failed ($1%s - $2%s)"
 msgstr ""
 
 #: src/Tribe/CSV_Importer/Fields.php:26
 msgid "Venue Longitude"
-msgstr ""
+msgstr "Mekan boylamı"
 
 #: src/Tribe/CSV_Importer/Fields.php:25
 msgid "Venue Latitude"
-msgstr ""
+msgstr "Mekanın Enlemi"
 
 #: src/Tribe/Recurrence/Validator.php:164
 msgid "Recurrence meta should not be empty."
-msgstr ""
+msgstr "Tekrarlama verisi boş bırakılamaz."
 
 #: src/Tribe/Recurrence/Validator.php:41
 msgid "Not an event post."
-msgstr ""
+msgstr "Etkinlik yazısı değil"
 
 #: src/Tribe/Recurrence/Single_Event_Overrides.php:82
 msgid "Times:"
-msgstr ""
+msgstr "Zaman"
 
-#: src/Tribe/Main.php:1916
+#: src/Tribe/Main.php:1974
 msgid "Events Calendar PRO"
-msgstr ""
+msgstr "Events Calendar PRO"
 
-#: src/Tribe/Geo_Loc.php:1010
+#: src/Tribe/Geo_Loc.php:639
 msgid "The latitude and longitude for your venue could not be fetched. The Google Maps API daily query limit has been reached!. %1$s "
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:213
+#: src/Tribe/Geo_Loc.php:190
 msgid "Distance unit"
-msgstr ""
+msgstr "Mesafe birimi"
 
-#: src/Tribe/Geo_Loc.php:134
+#: src/Tribe/Geo_Loc.php:112
 msgid "map"
-msgstr ""
+msgstr "harita"
 
 #: src/Tribe/APM_Filters/APM_Filters.php:175
 msgid "Pssst! Looking for the filters? They live in a separate plugin now | %s | %s"
-msgstr ""
+msgstr "Hey! Filtrelemeye mi ihtiyacınız var? Ayrı eklenti olarak indirebilirsiniz. | %s | %s"
 
 #: src/Tribe/APM_Filters/APM_Filters.php:171
 msgid "Dismiss"
-msgstr ""
+msgstr "Yoksay"
 
 #: src/Tribe/APM_Filters/APM_Filters.php:165
 msgid "Download for free"
-msgstr ""
+msgstr "Ücretsiz indir"
 
 #: src/views/pro/widgets/this-week/nav.php:15
 msgid "This Week Navigation"
-msgstr ""
+msgstr "Bu Hafta Navigasyonu"
 
-#: src/views/pro/widgets/this-week/loop-grid-day.php:67
+#: src/views/pro/widgets/this-week/loop-grid-day.php:66
 msgid "No Events Today"
-msgstr ""
+msgstr "Bugün Etkinlik Bulunamadı"
 
-#: src/views/pro/widgets/this-week/loop-grid-day.php:49
+#: src/views/pro/widgets/this-week/loop-grid-day.php:48
 msgid "View %1$s %2$s"
 msgid_plural "View All %1$s %2$s"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Göster %1$s %2$s"
+msgstr[1] "Tümünü Göster %1$s %2$s"
 
-#: src/views/pro/widgets/modules/single-event.php:194
+#: src/views/pro/widgets/modules/single-event.php:203
 msgctxt "list separator for final two elements"
 msgid "and"
-msgstr ""
+msgstr "ve"
 
 #: src/functions/template-tags/widgets.php:294
 msgid "<span class=\"tribe-nav-label\">Next</span> <span>&raquo;</span>"
-msgstr ""
+msgstr "<span class=\"tribe-nav-label\">Sonraki</span> <span>&raquo;</span>"
 
 #: src/functions/template-tags/widgets.php:274
 msgid "<span>&laquo;</span> <span class=\"tribe-nav-label\">Previous</span>"
-msgstr ""
+msgstr "<span>&laquo;</span> <span class=\"tribe-nav-label\">Önceki</span>"
 
 #: src/admin-views/widget-admin-this-week.php:68
 msgid "Number of events to show per day:"
-msgstr ""
+msgstr "Gün başına gösterilecek etkinlik sayısı"
 
 #: src/admin-views/widget-admin-this-week.php:36
 msgid "Highlight Color:"
-msgstr ""
+msgstr "Vurgu Rengi:"
 
 #: src/admin-views/widget-admin-this-week.php:30
 msgid "Horizontal Layout"
-msgstr ""
+msgstr "Yatay Görünüm"
 
 #: src/admin-views/widget-admin-this-week.php:29
 msgid "Vertical Layout"
-msgstr ""
+msgstr "Dikey Görünüm"
 
 #: src/admin-views/widget-admin-this-week.php:22
 msgid "Layout:"
-msgstr ""
+msgstr "Yerleşim:"
 
 #: src/admin-views/widget-admin-countdown.php:46
 msgid "On &#8220;Next Event&#8221; type of countdown, this text will only show when there are no events to show."
-msgstr ""
+msgstr "&#8220;Sonraki Etkinlik&#8221; sayaç türü, sadece gösterilecke etkinlik olmadığında gözükecektir."
 
 #: src/admin-views/widget-admin-countdown.php:22
 msgid "Next Event"
-msgstr ""
+msgstr "Sonraki Etkinlik"
 
 #: src/admin-views/widget-admin-countdown.php:19
 msgid "Type:"
-msgstr ""
+msgstr "Tür:"
 
 #: src/admin-views/tribe-options-defaults.php:213
 msgid "If fields are left empty when they're submitted, automatically fill them in with these values."
-msgstr ""
+msgstr "Eğer veri alanlarına değr atanmamışsa o alanları otomatik olarak şu değerlerle doldur."
 
-#: src/admin-views/event-recurrence.php:502
+#: src/admin-views/event-recurrence.php:510
 msgid "Use this field if you want to override the auto-generated descriptions of event recurrence"
-msgstr ""
+msgstr "Bu alanı tekrarlayan etkinlikler otomatik olarak oluşturulmuş verileri düzenlemek için kullanabilirsiniz."
 
 #: src/Tribe/This_Week_Widget.php:22
 msgid "This Week Events"
-msgstr ""
+msgstr "Bu Haftanın Etkinlikleri"
 
 #: src/Tribe/This_Week_Widget.php:19
 msgid "Displays events by day for the week."
-msgstr ""
+msgstr "Etkinlikleri haftanın günlerine göre göster"
 
-#: src/Tribe/Recurrence/Meta.php:1548
+#: src/Tribe/Recurrence/Meta.php:1556
 msgctxt "An unspecified end date"
 msgid "an unspecified date"
-msgstr ""
+msgstr "tarih belirtilmemiş"
 
 #: src/admin-views/widget-admin-countdown.php:21
 msgid "Single Event"
-msgstr ""
+msgstr "Tek Etkinlik"
 
 #: src/Tribe/Customizer/Photo_View.php:106
 msgid "Photo Background Color"
-msgstr ""
+msgstr "Foto Arka Plan Rengi"
 
 #: src/Tribe/Customizer/Photo_View.php:74
 msgid "Photo View"
-msgstr ""
+msgstr "Foto Görünümü"
 
-#: src/Tribe/Main.php:201
+#: src/Tribe/Main.php:207
 msgid "Month/Week View"
-msgstr ""
+msgstr "Ay/Hafta Görünümü"
 
 #: src/Tribe/Customizer/Photo_View.php:75
 msgid "Options selected here will override what was selected in the \"General Theme\" and \"Global Elements\" sections"
-msgstr ""
+msgstr "Burada tercih seçenekler \"Genel Tema\" ve \"Ana Tema\" üzerindeki seçeneklerin geçersiz kılacaktır"
 
 #: src/Tribe/Countdown_Widget.php:53 src/Tribe/Countdown_Widget.php:102
 msgid "Hooray!"
-msgstr ""
+msgstr "Yaşasın!"
 
 #: src/Tribe/Admin/Custom_Meta_Tools.php:115
 msgctxt "additional field update"
 msgid "Working&hellip;"
-msgstr ""
+msgstr "İşleniyor&hellip;"
 
 #: src/Tribe/Admin/Custom_Meta_Tools.php:114
 msgctxt "additional field update"
 msgid "An unexpected error stopped the update from completing."
-msgstr ""
+msgstr "Belenmeyen bir hata işlemin tamamlanmasına engel oldu."
 
 #: src/Tribe/Admin/Custom_Meta_Tools.php:113
 msgctxt "additional field update"
 msgid "All fields have been updated!"
-msgstr ""
+msgstr "Tüm alanlar güncellendi"
 
 #: src/Tribe/Admin/Custom_Meta_Tools.php:100
 msgctxt "additional fields update trigger"
 msgid "Click here to run the updater."
-msgstr ""
+msgstr "Güncellemeyi çalıştırmak için buraya tıklayın."
 
 #: src/Tribe/Admin/Custom_Meta_Tools.php:96
 msgid "We need to update the additional field data for some of your events."
-msgstr ""
+msgstr "Bazı etkinlikler için ek alan bilgilerini güncellmememiz gerekiyor."
 
 #: src/Tribe/Admin/Custom_Meta_Tools.php:95
 msgid "Some additional field data still needs to be updated (unfortunately, we were unable to continue to update things automatically)."
@@ -1027,7 +1064,7 @@ msgstr ""
 
 #. Author URI of the plugin/theme
 msgid "http://m.tri.be/20"
-msgstr ""
+msgstr "http://m.tri.be/20"
 
 #. Author of the plugin/theme
 msgid "Modern Tribe, Inc."
@@ -1039,111 +1076,111 @@ msgstr ""
 
 #. Plugin Name of the plugin/theme
 msgid "The Events Calendar PRO"
-msgstr ""
+msgstr "The Events Calendar PRO"
 
 #: src/views/pro/widgets/venue-widget.php:89
 msgid "View all %1$s at this %2$s"
-msgstr ""
+msgstr "%2$s tüm %1$s görüntülensin"
 
-#: src/admin-views/event-recurrence.php:492
+#: src/admin-views/event-recurrence.php:500
 msgid "Add Exclusion"
-msgstr ""
+msgstr "İstisna Ekle"
 
 #: src/admin-views/event-recurrence.php:63
-#: src/admin-views/event-recurrence.php:321
+#: src/admin-views/event-recurrence.php:329
 msgid "Once"
-msgstr ""
+msgstr "Bir kez"
 
-#: src/Tribe/Recurrence/Meta.php:1316
+#: src/Tribe/Recurrence/Meta.php:1324
 msgctxt "Used when displaying the word \"day\" in \"the last day\" or \"the first day\""
 msgid "day"
-msgstr ""
+msgstr "gün"
 
-#: src/Tribe/Recurrence/Meta.php:1315
+#: src/Tribe/Recurrence/Meta.php:1323
 msgctxt "Used when displaying: \"the last Monday\" or \"the last day\""
 msgid "the last %1$s"
-msgstr ""
+msgstr "son %1$s"
 
-#: src/Tribe/Recurrence/Meta.php:1314
+#: src/Tribe/Recurrence/Meta.php:1322
 msgctxt "Used when displaying: \"the fifth Monday\" or \"the fifth day\""
 msgid "the fifth %1$s"
-msgstr ""
+msgstr "beşinci %1$s"
 
-#: src/Tribe/Recurrence/Meta.php:1313
+#: src/Tribe/Recurrence/Meta.php:1321
 msgctxt "Used when displaying: \"the fourth Monday\" or \"the fourth day\""
 msgid "the fourth %1$s"
-msgstr ""
+msgstr "dörüdncü %1$s"
 
-#: src/Tribe/Recurrence/Meta.php:1312
+#: src/Tribe/Recurrence/Meta.php:1320
 msgctxt "Used when displaying: \"the third Monday\" or \"the third day\""
 msgid "the third %1$s"
-msgstr ""
+msgstr "üçüncü %1$s"
 
-#: src/Tribe/Recurrence/Meta.php:1311
+#: src/Tribe/Recurrence/Meta.php:1319
 msgctxt "Used when displaying: \"the second Monday\" or \"the second day\""
 msgid "the second %1$s"
-msgstr ""
+msgstr "ikinci %1$s"
 
-#: src/Tribe/Recurrence/Meta.php:1310
+#: src/Tribe/Recurrence/Meta.php:1318
 msgctxt "Used when displaying: \"the first Monday\" or \"the first day\""
 msgid "the first %1$s"
-msgstr ""
+msgstr "ilk %1$s"
 
-#: src/Tribe/Recurrence/Meta.php:1309
+#: src/Tribe/Recurrence/Meta.php:1317
 msgctxt "Describes a day of the month (e.g. \"day 5\" or \"day 27\")"
 msgid "day %1$s"
-msgstr ""
+msgstr "%1$s gün"
 
-#: src/Tribe/Recurrence/Meta.php:1308
+#: src/Tribe/Recurrence/Meta.php:1316
 msgctxt "Placeholder text for a month (or months) before the user has selected any"
 msgid "[month]"
-msgstr ""
+msgstr "[ay]"
 
-#: src/Tribe/Recurrence/Meta.php:1307
+#: src/Tribe/Recurrence/Meta.php:1315
 msgctxt "Placeholder text for a day of the week (or days of the week) before the user has selected any"
 msgid "[day]"
-msgstr ""
+msgstr "[gün]"
 
-#: src/Tribe/Recurrence/Meta.php:1306
+#: src/Tribe/Recurrence/Meta.php:1314
 msgctxt "Joins the last item in a list of items (i.e. the \"and\" in Monday, Tuesday, and Wednesday)"
 msgid "and"
-msgstr ""
+msgstr "ve"
 
-#: src/Tribe/Recurrence/Meta.php:868 src/Tribe/Recurrence/Validator.php:110
+#: src/Tribe/Recurrence/Meta.php:876 src/Tribe/Recurrence/Validator.php:110
 msgid "Custom recurrences must have all data present."
-msgstr ""
+msgstr "Özel yinelenen etkinliklerde tüm varsayılan veriler girilmelidir."
 
-#: src/Tribe/Recurrence/Meta.php:859 src/Tribe/Recurrence/Validator.php:101
+#: src/Tribe/Recurrence/Meta.php:867 src/Tribe/Recurrence/Validator.php:101
 msgid "Custom recurrences must have a type selected."
-msgstr ""
+msgstr "Farklı yinelemeler için bir tür seçmelisiniz."
 
-#: src/Tribe/Recurrence/Queue_Processor.php:187
+#: src/Tribe/Recurrence/Queue_Processor.php:189
 msgid "Could not process queue for event %1$d: %2$s"
-msgstr ""
+msgstr "Etkinlik işlenemedi %1$d: %2$s"
 
-#: src/Tribe/Main.php:459
+#: src/Tribe/Main.php:469
 msgid "%1$s for week of %2$s"
-msgstr ""
+msgstr "%2$s haftası için %1$s"
 
-#: src/Tribe/Main.php:453
+#: src/Tribe/Main.php:463
 msgid "All %1$s for %2$s"
-msgstr ""
+msgstr "%2$s için tüm %1$s"
 
 #: src/admin-views/event-meta-options.php:71
 msgid "tutorial that will walk you through the process"
-msgstr ""
+msgstr "bu süreçte size yardımcı olacak yardımcı belgeye"
 
-#: src/Tribe/Main.php:771
+#: src/Tribe/Main.php:817
 msgid "Thanks for buying Events Calendar PRO! From all of us at Modern Tribe, we sincerely appreciate it. If you're looking for help with Events Calendar PRO, you've come to the right place. We are committed to helping make your calendar be spectacular... and hope the resources provided below will help get you there."
-msgstr ""
+msgstr "Event Calendar PRO'yu satın aldığınız için teşekkür ederiz. Modern Tribe ailesi olarak sizi de aramızda görmekten çok mutluyuz. Eğer Event Calendar PRO ile ilgili yardıma ihtiyacınız varsa şu an doğru yerdesiniz. Takviminizin harika olması için size yardıma hazırız... Umarız aşağıdaki kaynaklar size yardımcı olacaktır."
 
 #: src/views/pro/widgets/venue-widget.php:38
 msgid "No upcoming %s."
-msgstr ""
+msgstr "Gelecek %s yok."
 
 #: src/views/pro/widgets/list-widget.php:69
 msgid "There are no upcoming %s at this time."
-msgstr ""
+msgstr "Yaklaşan %s bulunamadı."
 
 #: src/views/pro/widgets/list-widget.php:60
 msgid "View More&hellip;"
@@ -1162,7 +1199,7 @@ msgid "hours"
 msgstr "zamanlar"
 
 #: src/admin-views/event-recurrence.php:99
-#: src/admin-views/event-recurrence.php:355
+#: src/admin-views/event-recurrence.php:363
 #: src/views/pro/widgets/countdown-widget.php:20
 msgid "days"
 msgstr "günler"
@@ -1171,7 +1208,7 @@ msgstr "günler"
 msgid "Week Navigation"
 msgstr "Hafta navigasyonu"
 
-#: src/views/pro/week/loop-grid.php:19
+#: src/views/pro/week/loop-grid.php:22
 msgid "Hours"
 msgstr "Saatler:"
 
@@ -1181,11 +1218,11 @@ msgstr "Tüm gün"
 
 #: src/views/pro/single-organizer.php:32 src/views/pro/single-venue.php:39
 msgid "&larr; Back to %s"
-msgstr ""
+msgstr "&larr; %s sayfasına geri dön"
 
 #: src/views/pro/related-events.php:26
 msgid "Related %s"
-msgstr ""
+msgstr "İlgili %s"
 
 #: src/views/pro/map/single-event.php:74
 #: src/views/pro/map/single-featured.php:73 src/views/pro/week/mobile.php:24
@@ -1194,18 +1231,18 @@ msgstr "Daha fazlası için"
 
 #: src/views/pro/map/nav.php:32 src/views/pro/photo/nav.php:31
 msgid "Next %s <span>&raquo;</span>"
-msgstr ""
+msgstr "Sonraki %s <span>&raquo;</span>"
 
 #: src/views/pro/map/nav.php:25 src/views/pro/photo/nav.php:25
 msgid "<span>&laquo;</span> Previous %s"
-msgstr ""
+msgstr "<span>&laquo;</span> Önceki %s"
 
 #: src/views/pro/list/venue-nav.php:26 src/views/pro/map/nav.php:20
 #: src/views/pro/photo/nav.php:20
 msgid "%s List Navigation"
-msgstr ""
+msgstr "%s Liste Dolaşımı"
 
-#: src/functions/template-tags/week.php:233
+#: src/functions/template-tags/week.php:232
 msgid "Next Week <span>&raquo;</span>"
 msgstr "Gelecek Hafta <span>&raquo;</span>"
 
@@ -1213,70 +1250,67 @@ msgstr "Gelecek Hafta <span>&raquo;</span>"
 msgid "<span>&laquo;</span> Previous Week"
 msgstr "<span>&laquo;</span> Önceki Hafta"
 
-#: src/functions/template-tags/general.php:761
+#: src/functions/template-tags/general.php:783
 msgid "(See all)"
 msgstr "(Hepsini görüntüle)"
 
-#: src/functions/template-tags/general.php:758
+#: src/functions/template-tags/general.php:780
 msgid "Recurring %s"
-msgstr ""
+msgstr "Tekrarlayan %s"
 
-#: src/functions/template-tags/general.php:614
-#: src/functions/template-tags/general.php:637
+#: src/functions/template-tags/general.php:635
+#: src/functions/template-tags/general.php:658
 msgid "Date out of range."
 msgstr "Tarih kapsam dışında"
 
-#: src/functions/template-tags/general.php:447
+#: src/functions/template-tags/general.php:445
 msgid "The current default phone is: %s"
 msgstr "Aktif varsayılan telefon: %s"
 
-#: src/functions/template-tags/general.php:432
+#: src/functions/template-tags/general.php:430
 msgid "The current default country is: %s"
 msgstr "Aktif varsayılan ülke: %s"
 
-#: src/functions/template-tags/general.php:417
+#: src/functions/template-tags/general.php:415
 msgid "The current default postal code/zip code is: %s"
 msgstr "Aktif varsayılan posta kodu: %s"
 
-#: src/functions/template-tags/general.php:402
-msgid "The current default province is: %s"
-msgstr "Aktif Varsayılan şehir: %s"
+#: src/functions/template-tags/general.php:385
+#: src/functions/template-tags/general.php:400
+msgid "The current default state/province is: %s"
+msgstr ""
 
-#: src/functions/template-tags/general.php:387
-msgid "The current default state is: %s"
-msgstr "Şu anki varsayılan eyalet: %s"
-
-#: src/functions/template-tags/general.php:372
+#: src/functions/template-tags/general.php:370
 msgid "The current default city is: %s"
 msgstr "Aktif Varsayılan ilçe: %s"
 
-#: src/functions/template-tags/general.php:357
+#: src/functions/template-tags/general.php:355
 msgid "The current default address is: %s"
 msgstr "Aktif Varsayılan adres: %s"
 
-#: src/functions/template-tags/general.php:342
+#: src/functions/template-tags/general.php:340
 msgid "The current default venue is: %s"
 msgstr "Aktif Varsayılan mekan: %s"
 
-#: src/functions/template-tags/general.php:327
+#: src/functions/template-tags/general.php:325
 msgid "The current default organizer is: %s"
 msgstr "Aktif Varsayılan organizatör: %s"
 
-#: src/functions/template-tags/general.php:325
-#: src/functions/template-tags/general.php:340
-#: src/functions/template-tags/general.php:355
-#: src/functions/template-tags/general.php:370
-#: src/functions/template-tags/general.php:385
-#: src/functions/template-tags/general.php:400
-#: src/functions/template-tags/general.php:415
-#: src/functions/template-tags/general.php:430
-#: src/functions/template-tags/general.php:445
+#: src/functions/template-tags/general.php:323
+#: src/functions/template-tags/general.php:338
+#: src/functions/template-tags/general.php:353
+#: src/functions/template-tags/general.php:368
+#: src/functions/template-tags/general.php:383
+#: src/functions/template-tags/general.php:398
+#: src/functions/template-tags/general.php:413
+#: src/functions/template-tags/general.php:428
+#: src/functions/template-tags/general.php:443
 msgid "No default set"
 msgstr "Aktif Varsayılan ayarlanmadı"
 
-#: src/functions/template-tags/general.php:145
+#: src/functions/template-tags/general.php:143
 msgid "Show only the first upcoming instance of recurring %s"
-msgstr ""
+msgstr "Tekrarlayan %s için sadece ilk gelecek etkinliği göster"
 
 #: src/admin-views/widget-admin-venue.php:17
 msgid "Venue:"
@@ -1294,31 +1328,31 @@ msgstr ""
 msgid "Event:"
 msgstr "Etkinlik:"
 
-#: src/admin-views/widget-admin-advanced-list.php:112
+#: src/admin-views/widget-admin-advanced-list.php:125
 #: src/admin-views/widget-admin-this-week.php:144
 #: src/admin-views/widget-calendar.php:80
 msgid "Add a filter"
 msgstr "Filtre ekle"
 
-#: src/admin-views/widget-admin-advanced-list.php:108
+#: src/admin-views/widget-admin-advanced-list.php:121
 #: src/admin-views/widget-admin-this-week.php:140
 #: src/admin-views/widget-calendar.php:75
 msgid "Match any"
 msgstr "Eşleşen herhangi biri"
 
-#: src/admin-views/widget-admin-advanced-list.php:105
+#: src/admin-views/widget-admin-advanced-list.php:118
 #: src/admin-views/widget-admin-this-week.php:135
 #: src/admin-views/widget-calendar.php:63
 msgid "Match all"
 msgstr "Tüm eşleşenler"
 
-#: src/admin-views/widget-admin-advanced-list.php:92
+#: src/admin-views/widget-admin-advanced-list.php:105
 #: src/admin-views/widget-admin-this-week.php:120
 #: src/admin-views/widget-calendar.php:47
 msgid "remove"
 msgstr "kaldır"
 
-#: src/admin-views/widget-admin-advanced-list.php:66
+#: src/admin-views/widget-admin-advanced-list.php:79
 #: src/admin-views/widget-admin-this-week.php:93
 #: src/admin-views/widget-calendar.php:24
 msgid "Filters"
@@ -1374,21 +1408,13 @@ msgstr "Format her satırda bir ülke şeklinde olmalıdır: <br/>TR, Türkiye <
 msgid "Default phone"
 msgstr "Varsayılan telefon"
 
-#: src/admin-views/tribe-options-defaults.php:158
+#: src/admin-views/tribe-options-defaults.php:119
 msgid "Default country"
 msgstr "Varsayılan ülke"
 
-#: src/admin-views/tribe-options-defaults.php:145
+#: src/admin-views/tribe-options-defaults.php:158
 msgid "Default postal code/zip code"
 msgstr "Varsayılan posta kodu"
-
-#: src/admin-views/tribe-options-defaults.php:132
-msgid "Default province"
-msgstr "Varsayılan şehir"
-
-#: src/admin-views/tribe-options-defaults.php:119
-msgid "Default state"
-msgstr "Varsayılan Eyalet"
 
 #: src/admin-views/tribe-options-defaults.php:106
 msgid "Default city"
@@ -1403,7 +1429,6 @@ msgid "You can use this setting to set specific, individual defaults for any new
 msgstr "Brug denne indstilling til at tilføje individuelle standardYou can use this setting to set specific, individual defaults for any new Venue you create (these will not be used for your default venue).er for nye steder, som oprettes (disse standarder vil ikke bruges til dit standard sted)."
 
 #: src/admin-views/tribe-options-defaults.php:85
-#: src/admin-views/widget-admin-advanced-list.php:33
 msgid "Address"
 msgstr "Adres"
 
@@ -1450,7 +1475,7 @@ msgstr "Eyalet Seçiniz"
 msgid "No Default"
 msgstr "Varsayılan yok"
 
-#: src/admin-views/event-recurrence.php:497
+#: src/admin-views/event-recurrence.php:505
 msgid "Recurrence Description:"
 msgstr "Yineleme açıklaması"
 
@@ -1479,59 +1504,59 @@ msgstr ""
 msgid "first"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:472
+#: src/admin-views/event-recurrence.php:480
 msgid "Frequency of recurring event must be a number"
 msgstr "Yinelenen etkinlik sıklığı rakam olmalıdır"
 
 #: src/admin-views/event-recurrence.php:81
-#: src/admin-views/event-recurrence.php:338
+#: src/admin-views/event-recurrence.php:346
 #: src/admin-views/recurrence/years.php:12
 msgid "Every"
 msgstr "Her"
 
 #: src/admin-views/event-recurrence.php:62
-#: src/admin-views/event-recurrence.php:320
+#: src/admin-views/event-recurrence.php:328
 msgid "Yearly"
 msgstr "Yıllık"
 
 #: src/admin-views/event-recurrence.php:61
-#: src/admin-views/event-recurrence.php:319
+#: src/admin-views/event-recurrence.php:327
 msgid "Monthly"
 msgstr "Aylık"
 
 #: src/admin-views/event-recurrence.php:60
-#: src/admin-views/event-recurrence.php:318
+#: src/admin-views/event-recurrence.php:326
 msgid "Weekly"
 msgstr "Haftalık"
 
 #: src/admin-views/event-recurrence.php:59
-#: src/admin-views/event-recurrence.php:317
+#: src/admin-views/event-recurrence.php:325
 msgid "Daily"
 msgstr "Günlük"
 
 #: src/admin-views/event-recurrence.php:242
-#: src/admin-views/event-recurrence.php:464
+#: src/admin-views/event-recurrence.php:472
 msgid "You must select a recurrence end date"
 msgstr "Yineleme bitiş tarihi seçmelisiniz."
 
 #: src/admin-views/event-recurrence.php:239
-#: src/admin-views/event-recurrence.php:461
+#: src/admin-views/event-recurrence.php:469
 msgctxt "occurence count text"
 msgid "events"
-msgstr ""
+msgstr "etkinlikler"
 
 #: src/admin-views/event-recurrence.php:206
-#: src/admin-views/event-recurrence.php:429
+#: src/admin-views/event-recurrence.php:437
 msgid "never"
 msgstr ""
 
 #: src/admin-views/event-recurrence.php:205
-#: src/admin-views/event-recurrence.php:428
+#: src/admin-views/event-recurrence.php:436
 msgid "after"
 msgstr ""
 
 #: src/admin-views/event-recurrence.php:68
-#: src/admin-views/event-recurrence.php:326
+#: src/admin-views/event-recurrence.php:334
 #: src/admin-views/recurrence/months.php:2
 #: src/admin-views/recurrence/years.php:53
 msgid "On"
@@ -1542,18 +1567,18 @@ msgid "None"
 msgstr "Hiçbiri"
 
 #: src/admin-views/event-recurrence.php:56
-#: src/admin-views/event-recurrence.php:314
+#: src/admin-views/event-recurrence.php:322
 msgid "events"
 msgstr "etkinlikler"
 
 #: src/admin-views/event-recurrence.php:55
-#: src/admin-views/event-recurrence.php:313
+#: src/admin-views/event-recurrence.php:321
 msgid "event"
 msgstr "etkinlik"
 
 #: src/admin-views/event-meta.php:17
 msgid "Additional %1$s Fields"
-msgstr ""
+msgstr "Ek %1$s Alanları"
 
 #: src/admin-views/event-meta-options.php:116
 msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
@@ -1593,7 +1618,7 @@ msgstr "Link"
 
 #: src/admin-views/event-meta-options.php:54
 msgid "Text Area"
-msgstr ""
+msgstr "Metin Alanı"
 
 #: src/admin-views/event-meta-options.php:53
 msgid "Text"
@@ -1731,153 +1756,153 @@ msgstr ""
 msgid "You are currently editing all events in a recurring series."
 msgstr "Şu anda tekrarlayan serideki tüm etkinlikleri düzenlemektesiniz."
 
-#: src/Tribe/Recurrence/Meta.php:1741
+#: src/Tribe/Recurrence/Meta.php:1749
 msgid " months"
 msgstr "aylar"
 
-#: src/Tribe/Recurrence/Meta.php:1720
+#: src/Tribe/Recurrence/Meta.php:1728
 msgid "Recurring events will be created this far in advance"
 msgstr "Tekrar eden etkinlikler bu tarihe kadar sürecek"
 
-#: src/Tribe/Recurrence/Meta.php:1719
+#: src/Tribe/Recurrence/Meta.php:1727
 msgid "Create recurring events in advance for"
 msgstr "Tekrar eden etkinlikleri şu tarihe kadar kaydet"
 
-#: src/Tribe/Recurrence/Meta.php:1712
+#: src/Tribe/Recurrence/Meta.php:1720
 msgid "Automatically remove recurring event instances older than this"
 msgstr "Bu tarihten eskiye uzanan tekrarlanan etkinlikleri kaldır"
 
-#: src/Tribe/Recurrence/Meta.php:1711
+#: src/Tribe/Recurrence/Meta.php:1719
 msgid "Clean up recurring events after"
 msgstr "Belirli bir süreden sonra tekrarlayan etkinliklikleri temize"
 
-#: src/Tribe/Recurrence/Meta.php:1703
+#: src/Tribe/Recurrence/Meta.php:1711
 msgid "Front-end recurring event instances toggle"
 msgstr "Front-end yinelenen etkinliklerde geçiş"
 
-#: src/Tribe/Recurrence/Meta.php:1697
+#: src/Tribe/Recurrence/Meta.php:1705
 msgid "Show only the first instance of each recurring event (only affects list-style views)."
 msgstr "Tekrarlanan etkinliklerde sadece ilkini göster. (Liste görünümü için geçerli)"
 
-#: src/Tribe/Recurrence/Meta.php:1696
+#: src/Tribe/Recurrence/Meta.php:1704
 msgid "Recurring event instances"
 msgstr "Yinelenen etkinlik durumları"
 
-#: src/Tribe/Recurrence/Meta.php:1670
+#: src/Tribe/Recurrence/Meta.php:1678
 msgid ", "
 msgstr ","
 
-#: src/Tribe/Recurrence/Meta.php:1668
+#: src/Tribe/Recurrence/Meta.php:1676
 msgid " and "
 msgstr "ve"
 
-#: src/Tribe/Recurrence/Meta.php:1666
+#: src/Tribe/Recurrence/Meta.php:1674
 msgid ", and "
 msgstr ", ve"
 
-#: src/Tribe/Recurrence/Meta.php:1304 src/Tribe/Recurrence/Meta.php:1659
+#: src/Tribe/Recurrence/Meta.php:1312 src/Tribe/Recurrence/Meta.php:1667
 msgid "December"
 msgstr "Aralık"
 
-#: src/Tribe/Recurrence/Meta.php:1303 src/Tribe/Recurrence/Meta.php:1658
+#: src/Tribe/Recurrence/Meta.php:1311 src/Tribe/Recurrence/Meta.php:1666
 msgid "November"
 msgstr "Kasım"
 
-#: src/Tribe/Recurrence/Meta.php:1302 src/Tribe/Recurrence/Meta.php:1657
+#: src/Tribe/Recurrence/Meta.php:1310 src/Tribe/Recurrence/Meta.php:1665
 msgid "October"
 msgstr "Ekim"
 
-#: src/Tribe/Recurrence/Meta.php:1301 src/Tribe/Recurrence/Meta.php:1656
+#: src/Tribe/Recurrence/Meta.php:1309 src/Tribe/Recurrence/Meta.php:1664
 msgid "September"
 msgstr "Eylül"
 
-#: src/Tribe/Recurrence/Meta.php:1300 src/Tribe/Recurrence/Meta.php:1655
+#: src/Tribe/Recurrence/Meta.php:1308 src/Tribe/Recurrence/Meta.php:1663
 msgid "August"
 msgstr "Ağustos"
 
-#: src/Tribe/Recurrence/Meta.php:1299 src/Tribe/Recurrence/Meta.php:1654
+#: src/Tribe/Recurrence/Meta.php:1307 src/Tribe/Recurrence/Meta.php:1662
 msgid "July"
 msgstr "Temmuz"
 
-#: src/Tribe/Recurrence/Meta.php:1298 src/Tribe/Recurrence/Meta.php:1653
+#: src/Tribe/Recurrence/Meta.php:1306 src/Tribe/Recurrence/Meta.php:1661
 msgid "June"
 msgstr "Haziran"
 
-#: src/Tribe/Recurrence/Meta.php:1297 src/Tribe/Recurrence/Meta.php:1652
+#: src/Tribe/Recurrence/Meta.php:1305 src/Tribe/Recurrence/Meta.php:1660
 msgid "May"
 msgstr "Mayıs"
 
-#: src/Tribe/Recurrence/Meta.php:1296 src/Tribe/Recurrence/Meta.php:1651
+#: src/Tribe/Recurrence/Meta.php:1304 src/Tribe/Recurrence/Meta.php:1659
 msgid "April"
 msgstr "Nisan"
 
-#: src/Tribe/Recurrence/Meta.php:1295 src/Tribe/Recurrence/Meta.php:1650
+#: src/Tribe/Recurrence/Meta.php:1303 src/Tribe/Recurrence/Meta.php:1658
 msgid "March"
 msgstr "Mart"
 
-#: src/Tribe/Recurrence/Meta.php:1294 src/Tribe/Recurrence/Meta.php:1649
+#: src/Tribe/Recurrence/Meta.php:1302 src/Tribe/Recurrence/Meta.php:1657
 msgid "February"
 msgstr "Şubat"
 
-#: src/Tribe/Recurrence/Meta.php:1293 src/Tribe/Recurrence/Meta.php:1648
+#: src/Tribe/Recurrence/Meta.php:1301 src/Tribe/Recurrence/Meta.php:1656
 msgid "January"
 msgstr "Ocak"
 
-#: src/Tribe/Recurrence/Meta.php:1630
+#: src/Tribe/Recurrence/Meta.php:1638
 msgid ","
 msgstr ","
 
-#: src/Tribe/Recurrence/Meta.php:1628
+#: src/Tribe/Recurrence/Meta.php:1636
 msgid "and"
 msgstr "ve"
 
-#: src/Tribe/Recurrence/Meta.php:1626
+#: src/Tribe/Recurrence/Meta.php:1634
 msgid ", and"
 msgstr ", ve"
 
-#: src/Tribe/Recurrence/Meta.php:1289 src/Tribe/Recurrence/Meta.php:1619
+#: src/Tribe/Recurrence/Meta.php:1297 src/Tribe/Recurrence/Meta.php:1627
 #: src/admin-views/recurrence/months.php:88
 #: src/admin-views/recurrence/weeks.php:8
 #: src/admin-views/recurrence/years.php:134
 msgid "Sunday"
 msgstr "Pazar"
 
-#: src/Tribe/Recurrence/Meta.php:1288 src/Tribe/Recurrence/Meta.php:1618
+#: src/Tribe/Recurrence/Meta.php:1296 src/Tribe/Recurrence/Meta.php:1626
 #: src/admin-views/recurrence/months.php:87
 #: src/admin-views/recurrence/weeks.php:74
 #: src/admin-views/recurrence/years.php:133
 msgid "Saturday"
 msgstr "Cumartesi"
 
-#: src/Tribe/Recurrence/Meta.php:1287 src/Tribe/Recurrence/Meta.php:1617
+#: src/Tribe/Recurrence/Meta.php:1295 src/Tribe/Recurrence/Meta.php:1625
 #: src/admin-views/recurrence/months.php:86
 #: src/admin-views/recurrence/weeks.php:63
 #: src/admin-views/recurrence/years.php:132
 msgid "Friday"
 msgstr "Cuma"
 
-#: src/Tribe/Recurrence/Meta.php:1286 src/Tribe/Recurrence/Meta.php:1616
+#: src/Tribe/Recurrence/Meta.php:1294 src/Tribe/Recurrence/Meta.php:1624
 #: src/admin-views/recurrence/months.php:85
 #: src/admin-views/recurrence/weeks.php:52
 #: src/admin-views/recurrence/years.php:131
 msgid "Thursday"
 msgstr "Perşembe"
 
-#: src/Tribe/Recurrence/Meta.php:1285 src/Tribe/Recurrence/Meta.php:1615
+#: src/Tribe/Recurrence/Meta.php:1293 src/Tribe/Recurrence/Meta.php:1623
 #: src/admin-views/recurrence/months.php:84
 #: src/admin-views/recurrence/weeks.php:41
 #: src/admin-views/recurrence/years.php:130
 msgid "Wednesday"
 msgstr "Çarşamba"
 
-#: src/Tribe/Recurrence/Meta.php:1284 src/Tribe/Recurrence/Meta.php:1614
+#: src/Tribe/Recurrence/Meta.php:1292 src/Tribe/Recurrence/Meta.php:1622
 #: src/admin-views/recurrence/months.php:83
 #: src/admin-views/recurrence/weeks.php:30
 #: src/admin-views/recurrence/years.php:129
 msgid "Tuesday"
 msgstr "Salı"
 
-#: src/Tribe/Recurrence/Meta.php:1283 src/Tribe/Recurrence/Meta.php:1613
+#: src/Tribe/Recurrence/Meta.php:1291 src/Tribe/Recurrence/Meta.php:1621
 #: src/admin-views/recurrence/months.php:82
 #: src/admin-views/recurrence/weeks.php:19
 #: src/admin-views/recurrence/years.php:128
@@ -1891,102 +1916,102 @@ msgstr "son"
 
 #: src/admin-views/event-recurrence.php:59
 #: src/admin-views/event-recurrence.php:96
-#: src/admin-views/event-recurrence.php:317
-#: src/admin-views/event-recurrence.php:352
+#: src/admin-views/event-recurrence.php:325
+#: src/admin-views/event-recurrence.php:360
 #: src/admin-views/recurrence/months.php:90
 #: src/admin-views/recurrence/years.php:136
 msgid "day"
 msgstr "gün"
 
-#: src/Tribe/Recurrence/Meta.php:888 src/Tribe/Recurrence/Validator.php:158
+#: src/Tribe/Recurrence/Meta.php:896 src/Tribe/Recurrence/Validator.php:158
 msgid "Yearly custom recurrences cannot have a dash set as the day to occur on."
 msgstr "Yıllık özel yinelemeler günlükler gibi ayarlanmış bir çizgiye sahip olamaz."
 
-#: src/Tribe/Recurrence/Meta.php:879 src/Tribe/Recurrence/Validator.php:133
+#: src/Tribe/Recurrence/Meta.php:887 src/Tribe/Recurrence/Validator.php:133
 msgid "Monthly custom recurrences cannot have a dash set as the day to occur on."
 msgstr "Aylık özel yinelemeler günlükler gibi ayarlanmış bir çizgiye sahip olamaz."
 
-#: src/Tribe/Recurrence/Meta.php:307
+#: src/Tribe/Recurrence/Meta.php:315
 msgid "Restore Series"
 msgstr "Serileri geri al"
 
-#: src/Tribe/Recurrence/Meta.php:305
+#: src/Tribe/Recurrence/Meta.php:313
 msgid "Restore all events in this series from the Trash"
 msgstr "Bu serideki tüm etkinlikleri çöpten geri al"
 
-#: src/Tribe/Recurrence/Meta.php:298
+#: src/Tribe/Recurrence/Meta.php:306
 msgid "Delete Series Permanently"
 msgstr "Serileri kalıcı olarak sil"
 
-#: src/Tribe/Recurrence/Meta.php:297
+#: src/Tribe/Recurrence/Meta.php:305
 msgid "Delete all events in this series permanently"
 msgstr "Bu serideki tüm etkinlikleri kalıcı olarak sil"
 
-#: src/Tribe/Recurrence/Meta.php:294
+#: src/Tribe/Recurrence/Meta.php:302
 msgid "Trash Series"
 msgstr "Serileri temizle"
 
-#: src/Tribe/Recurrence/Meta.php:294
+#: src/Tribe/Recurrence/Meta.php:302
 msgid "Move all events in this series to the Trash"
 msgstr "Bu serideki tüm etkinlikleri çöpe taşı"
 
-#: src/Tribe/Recurrence/Meta.php:288
+#: src/Tribe/Recurrence/Meta.php:296
 msgid "Edit All"
 msgstr "Hepsini düzenle"
 
-#: src/Tribe/Recurrence/Meta.php:287
+#: src/Tribe/Recurrence/Meta.php:295
 msgid "Edit all events in this series"
 msgstr "Bu serideki tüm etkinlikleri düzenle"
 
-#: src/Tribe/Recurrence/Meta.php:277
+#: src/Tribe/Recurrence/Meta.php:285
 msgid "Edit Upcoming"
 msgstr "Yaklaşanı düzenle"
 
-#: src/Tribe/Recurrence/Meta.php:276
+#: src/Tribe/Recurrence/Meta.php:284
 msgid "Split the series in two at this point, creating a new series out of this and all subsequent events"
 msgstr "Seriyi bu noktadan itibaren ikiye böl, bu etkinlik ve sonra gelen etkinlikleri içeren bir seri oluşturur"
 
-#: src/Tribe/Recurrence/Meta.php:271
+#: src/Tribe/Recurrence/Meta.php:279
 msgid "Edit Single"
 msgstr "Tekini düzenle"
 
-#: src/Tribe/Recurrence/Meta.php:270
+#: src/Tribe/Recurrence/Meta.php:278
 msgid "Break this event out of its series and edit it independently"
 msgstr "Bu etkinliği tüm serilerden çıkar ve bağımsız olarak düzenle"
 
-#: src/Tribe/Recurrence/Meta.php:239
+#: src/Tribe/Recurrence/Meta.php:247
 msgid "—"
 msgstr "—"
 
-#: src/Tribe/Recurrence/Meta.php:217
+#: src/Tribe/Recurrence/Meta.php:225
 msgid "Edit Future Events"
 msgstr "Gelecek etkinlikleri düzenle"
 
-#: src/Tribe/Recurrence/Meta.php:207
+#: src/Tribe/Recurrence/Meta.php:215
 msgid "Break from Series"
 msgstr "Seriden çıkar"
 
-#: src/Tribe/Recurrence/Meta.php:201
+#: src/Tribe/Recurrence/Meta.php:209
 msgid "Edit Series"
 msgstr "Serileri düzenle"
 
 #: src/Tribe/Recurrence/Queue_Realtime.php:168
 msgid "Unable to continue processing recurring event data. Please reload this page to continue/try again."
-msgstr ""
+msgstr "Tekrarlayan etkinlik için veriler işlenemedi. Lütfen bu sayfayı yenileyin ya da tekrar deneyin."
 
 #: src/Tribe/Recurrence/Queue_Realtime.php:103
 msgid "Recurring event data is still being generated for this event. Don&#146;t worry, you can safely navigate away &ndash; the process will resume in a bit in the background."
-msgstr ""
+msgstr "Bu etkinlik için tekrarlayan etkinlik verileri oluşturuluyor. Bu sayfayı güvenli bir şekilde kapayabilir ya da başka sayfaya geçebilirsiniz. İşlem arka planda devam edecektir."
 
 #: src/Tribe/Recurrence/Queue_Realtime.php:83
 #: src/Tribe/Recurrence/Queue_Realtime.php:106
 #: src/Tribe/Recurrence/Queue_Realtime.php:185
 msgid "%d%% complete"
-msgstr ""
+msgstr "%d%% tamamlandı"
 
 #: src/Tribe/Recurrence/Queue_Realtime.php:81
 msgid "Completed!"
-msgstr ""
+msgstr "Tamamlandı!"
 
 #: src/Tribe/Mini_Calendar_Widget.php:11 src/Tribe/Mini_Calendar_Widget.php:28
 #: src/Tribe/Mini_Calendar_Widget.php:77
@@ -1997,158 +2022,158 @@ msgstr "Etkinlikler Takvimi"
 msgid "The events calendar mini calendar widget"
 msgstr "The events calendar mini takvit bileşeni"
 
-#: src/Tribe/Main.php:1851
+#: src/Tribe/Main.php:1909
 msgid "Week Of"
 msgstr "Haftası"
 
-#: src/Tribe/Main.php:1834
+#: src/Tribe/Main.php:1892
 msgid "Photo"
 msgstr "Foto"
 
-#: src/Tribe/Main.php:1816
+#: src/Tribe/Main.php:1874
 msgid "Week"
 msgstr "Hafta"
 
-#: src/Tribe/Main.php:1587
+#: src/Tribe/Main.php:1645
 msgid "View All Add-Ons"
 msgstr "Tüm Eklentileri Görüntüle"
 
-#: src/Tribe/Main.php:1585
+#: src/Tribe/Main.php:1643
 msgid "Support"
 msgstr "Destek"
 
-#: src/Tribe/Main.php:1525
+#: src/Tribe/Main.php:1583
 msgid "Organizer draft updated. <a target=\"_blank\" href=\"%s\">Preview organizer</a>"
 msgstr "Organizatör taslağı güncellendi. <a target=\"_blank\" href=\"%s\">Organizatör önizleme</a>"
 
-#: src/Tribe/Main.php:1521
+#: src/Tribe/Main.php:1579
 msgid "Organizer scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview organizer</a>"
 msgstr "Organizatör <strong>%1$s</strong> için ayrıldı. <a target=\"_blank\" href=\"%2$s\">Organizatör önizleme</a>"
 
-#: src/Tribe/Main.php:1519
+#: src/Tribe/Main.php:1577
 msgid "Organizer submitted. <a target=\"_blank\" href=\"%s\">Preview organizer</a>"
 msgstr "Organizatör girildi. <a target=\"_blank\" href=\"%s\">Organizatör önizleme</a>"
 
-#: src/Tribe/Main.php:1518
+#: src/Tribe/Main.php:1576
 msgid "Organizer published. <a href=\"%s\">View organizer</a>"
 msgstr "Organizatör yayımlandı. <a href=\"%s\">Organizatörü görüntüle</a>"
 
-#: src/Tribe/Main.php:1517
+#: src/Tribe/Main.php:1575
 msgid "Organizer updated. <a href=\"%s\">View organizer</a>"
 msgstr "Organizatör güncellendi. <a href=\"%s\">Organizatörü görüntüle</a>"
 
-#: src/Tribe/Main.php:1515
+#: src/Tribe/Main.php:1573
 msgid "Venue draft updated. <a target=\"_blank\" href=\"%s\">Preview venue</a>"
 msgstr "Mekan taslağı güncellendi. <a target=\"_blank\" href=\"%s\">Mekanı önizleme</a>"
 
 #. translators: Publish box date format, see http://php.net/date
-#: src/Tribe/Main.php:1513 src/Tribe/Main.php:1523
+#: src/Tribe/Main.php:1571 src/Tribe/Main.php:1581
 msgid "M j, Y @ G:i"
 msgstr "M j, Y @ G:i"
 
-#: src/Tribe/Main.php:1511
+#: src/Tribe/Main.php:1569
 msgid "Venue scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview venue</a>"
 msgstr "Mekan <strong>%1$s</strong> için ayrıldı. <a target=\"_blank\" href=\"%2$s\">Mekanı önizleme</a>"
 
-#: src/Tribe/Main.php:1509
+#: src/Tribe/Main.php:1567
 msgid "Venue submitted. <a target=\"_blank\" href=\"%s\">Preview venue</a>"
 msgstr "Mekan girildi. <a target=\"_blank\" href=\"%s\">Mekanı önizleme</a>"
 
 #. translators: %s: date and time of the revision
-#: src/Tribe/Main.php:1508
+#: src/Tribe/Main.php:1566
 msgid "Venue published. <a href=\"%s\">View venue</a>"
 msgstr "Mekan yayımlandı. <a href=\"%s\">Mekanı görüntüle</a>"
 
-#: src/Tribe/Main.php:1506
+#: src/Tribe/Main.php:1564
 msgid "Venue updated. <a href=\"%s\">View venue</a>"
 msgstr "Mekan güncellendi. <a href=\"%s\">Mekanı görüntüle</a>"
 
-#: src/Tribe/Main.php:1478
+#: src/Tribe/Main.php:1536
 msgid "Settings"
 msgstr "Ayarlar"
 
-#: src/Tribe/Main.php:1365
+#: src/Tribe/Main.php:1423
 msgid "Address: "
 msgstr "Adres:"
 
-#: src/Tribe/Main.php:808
+#: src/Tribe/Main.php:854
 msgid "Before posting a new thread, please do a search to make sure your issue hasn't already been addressed. When posting please make sure to provide as much detail about the problem as you can (with screenshots or screencasts if feasible), and make sure that you've identified whether a plugin / theme conflict could be at play in your initial message."
 msgstr "Yeni bir başlık açmadan önce, lütfen bir arama yaparak sorununuzun daha önce yazılmadığından emin olun. Yazarken problemle ilgili her türlü detaydan bahsetmeye dikkat edin (ekran görüntüleri veya videoları ile, mümkünse), ve eğer bir eklenti veya tema ile çakışma tespit ettinizse, bunu ilk mesajınızda belirttiğinize emin olun. "
 
-#: src/Tribe/Main.php:807
+#: src/Tribe/Main.php:853
 msgid "Our number one goal is helping you succeed, and to whatever extent possible, we'll help troubleshoot and guide your customizations or tweaks. While we won't build your site for you, and we can't guarantee we'll be able to get you 100% integrated with every theme or plugin out there, we'll do all we can to point you in the right direction and to make you -- and your client, as is often more importantly the case -- satisfied."
 msgstr "Birinci hedefimiz sizin başarılı olmanıza yardımcı olmak, ve olabildiği kadar sorunlarınızı çözebilmeniz için size yol göstermektir. Sizin için sitenizi geliştirmesek de, ve her tema veya eklenti ile %100 entegre çalışabileceğinizi garanti edemesek de, yapabileceğimizin en iyisini yapıp sizi doğru noktaya yönlendirecek ve sizi (ve daha da önemlisi müşterilerinizi) memnun etmeye çalışacağız."
 
-#: src/Tribe/Main.php:806
+#: src/Tribe/Main.php:852
 msgid "Users who have purchased an Events Calendar PRO license are granted total access to our %spremium support forums%s. Unlike at the %sWordPress.org support forum%s, where our involvement is limited to identifying and patching bugs, we have a dedicated support team for PRO users. We're on the PRO forums daily throughout the business week, and no thread should go more than 24-hours without a response."
 msgstr "Events Calendar PRO'yu satın alan kullanıcıların, %sayrıcalıklı destek forumlarına%s giriş hakları vardır. %sWordpress.org destek forumlarında%s sorunları bulmak ve çözmemiz zor olsa da, PRO kullanıcıları için kendini adamış bir destek ekibimiz bulunmaktadır. Haftaiçi iş saatlerinde PRO forumlarındayız, ve hiçbir sorunuz 24 saat içerisinde cevapsız kalmayacaktır."
 
-#: src/Tribe/Main.php:805
+#: src/Tribe/Main.php:851
 msgid "Written documentation can only take things so far...sometimes, you need help from a real person. This is where our %ssupport forums%s come into play."
 msgstr "Rehberler bir yere kadar yardımcı olur, bazen gerçek bir insana ihtiyacınız olacaktır. Bunun için %sdestek forumlarımız%s var."
 
-#: src/Tribe/Main.php:792
+#: src/Tribe/Main.php:838
 msgid "Otherwise, if you're feeling adventurous, you can get started by heading to the Events menu and adding your first event."
 msgstr "Bunun dışında, kendinizi maceraya hazır hissediyorsanız, Etkinlikler menüsüne girerek ilk etkinliğinizi ekleyebilirsiniz."
 
-#: src/Tribe/Main.php:790
+#: src/Tribe/Main.php:836
 msgid "Take care of your license key. Though not required to create your first event, you'll want to get it in place as soon as possible to guarantee your access to support and upgrades. %sHere's how to find your license key%s, if you don't have it handy."
 msgstr "Lisans numaranızı not edin. İlk etkinliğinizi yaratmak için ihtiyacınız olmasa da, destek alma ve güncellemeler sırasında bu numara gerekli. Eğer bulamıyorsanız, %sburada nasıl lisans numaranızı bulacağınız anlatılıyor%s."
 
-#: src/Tribe/Main.php:788
+#: src/Tribe/Main.php:834
 msgid "%sInstallation/Setup FAQs%s from our support page can help give an overview of what the plugin can and cannot do. This section of the FAQs may be helpful as it aims to address any basic install questions not addressed by the new user primer."
 msgstr "Destek sayfamızdaki %sKurulum SSSı%s bölümü bu eklentinin yapabileceklerini öğrenebileceğiniz bir alan. Yeni Kullanıcı Rehberinin kapsamadığı noktalara değinen bu alanda kurulumda aklınıza gelen soruların karşılığını bulabilirsiniz."
 
-#: src/Tribe/Main.php:786
+#: src/Tribe/Main.php:832
 msgid "%sOur New User Primer%s was designed for folks in your exact position. Featuring both step-by-step videos and written walkthroughs that feature accompanying screenshots, the primer aims to take you from zero to hero in no time."
 msgstr "%sYeni Kullanıcı Rehberimiz%s özel olarak sizler için hazırlandı. Adım adım anlatım videoları ve ekran görüntüleriyle donatılı yazılı anlatımlar ile sıfırdan zirveye tırmanmanız hiç zaman almayacak."
 
-#: src/Tribe/Main.php:783
+#: src/Tribe/Main.php:829
 msgid "If this is your first time using The Events Calendar Pro, you're in for a treat and are already well on your way to creating a first event. Here are some basics we've found helpful for users jumping into it for the first time:"
 msgstr "Eğer The Events Calendar PRO'yu ilk kez kullanıyorsanız, memnun kalacaksınız ve ilk etkinliğinizi yaratmak için iyi görünüyorsunuz. Yeni kullanıcılar için faydalı olacağını düşündüğümüz temel bilgileri burada bulabilirsiniz."
 
-#: src/Tribe/Main.php:753
+#: src/Tribe/Main.php:773
 msgid "Check this to only show weekdays on Week View"
-msgstr ""
+msgstr "Hafta görünümünde sadece hafta içi günleri göstermek için bunu işaretleyin"
 
-#: src/Tribe/Main.php:752
+#: src/Tribe/Main.php:772
 msgid "Hide weekends on Week View"
-msgstr ""
+msgstr "Hafta Görünümünde hafta sonlarını gizle"
 
-#: src/Tribe/Main.php:741
+#: src/Tribe/Main.php:759
 msgid "Enter the format to use for week days. Used when showing days of the week in Week view."
 msgstr "Kullanılacak gün formatını girin. Haftalık görünümde günleri gösterirken kullanılacaktır."
 
-#: src/Tribe/Main.php:740
+#: src/Tribe/Main.php:758
 msgid "Week Day Format"
 msgstr "Gün Formatı"
 
-#: src/Tribe/Main.php:730
+#: src/Tribe/Main.php:746
 msgid "Remove related events from the single event view"
 msgstr "Alakalı etkinlikleri tek etkinlik görünümünden kaldır."
 
-#: src/Tribe/Main.php:729
+#: src/Tribe/Main.php:745
 msgid "Hide related events"
 msgstr "Benzer Etkinlikleri Gizle"
 
-#: src/Tribe/Main.php:714 src/admin-views/event-meta-options.php:3
+#: src/Tribe/Main.php:728 src/admin-views/event-meta-options.php:3
 msgid "Additional Fields"
 msgstr "Ek Alanlar"
 
-#: src/Tribe/Main.php:712 src/admin-views/tribe-options-defaults.php:35
+#: src/Tribe/Main.php:726 src/admin-views/tribe-options-defaults.php:35
 msgid "Default Content"
 msgstr "Varsayılan İçerik"
 
 #: src/functions/template-tags/widgets.php:257
 msgid "%s for week of %s"
-msgstr ""
+msgstr "%s haftası için %s"
 
-#: src/Tribe/Main.php:2024
+#: src/Tribe/Main.php:2080
 msgid "photo"
 msgstr "foto"
 
-#: src/Tribe/Main.php:2023 src/admin-views/event-recurrence.php:104
-#: src/admin-views/event-recurrence.php:360
+#: src/Tribe/Main.php:2079 src/admin-views/event-recurrence.php:104
+#: src/admin-views/event-recurrence.php:368
 msgid "week"
 msgstr "hafta"
 
@@ -2168,83 +2193,83 @@ msgstr "Tür: %s %s"
 msgid "%d %s"
 msgstr "%d %s"
 
-#: src/Tribe/Geo_Loc.php:1583
+#: src/Tribe/Geo_Loc.php:1202
 msgid "Fixed geolocation data for %d venues"
 msgstr "%d mekan için  yer bilgileri fix edilmiş veriler."
 
-#: src/Tribe/Geo_Loc.php:1557
+#: src/Tribe/Geo_Loc.php:1176
 msgid "You have venues for which we don't have Geolocation information. <a href='%s'>Click here to generate it</a>."
 msgstr "Yer bilgisi içermeyen mekanlarınız bulunmakta. <a href='%s'>Yer bilgilerini oluşturmak için tıklayınız.</a>."
 
-#: src/Tribe/Geo_Loc.php:1512
+#: src/Tribe/Geo_Loc.php:1132
 msgid "Fix venues data"
 msgstr "Mekan verisini fixle"
 
-#: src/Tribe/Geo_Loc.php:715
+#: src/Tribe/Geo_Loc.php:369
 msgid "Longitude"
-msgstr ""
+msgstr "Boylam"
 
-#: src/Tribe/Geo_Loc.php:714
+#: src/Tribe/Geo_Loc.php:368
 msgid "Latitude"
-msgstr ""
+msgstr "Enlem"
 
-#: src/Tribe/Geo_Loc.php:710
+#: src/Tribe/Geo_Loc.php:364
 msgid "Use latitude + longitude"
-msgstr ""
+msgstr "Enlem ve boylamı kullan"
 
-#: src/Tribe/Geo_Loc.php:685
+#: src/Tribe/Geo_Loc.php:339
 msgid "Location"
 msgstr "Yer"
 
-#: src/Tribe/Geo_Loc.php:684
+#: src/Tribe/Geo_Loc.php:338
 msgid "Near"
 msgstr "Yakınında"
 
-#: src/Tribe/Geo_Loc.php:617
+#: src/Tribe/Geo_Loc.php:268
 msgid "Map"
 msgstr "Harita"
 
-#: src/Tribe/Geo_Loc.php:236
+#: src/Tribe/Geo_Loc.php:213
 msgid "Removes location search field from the events bar on all views except for map view."
 msgstr "Yer araması alanını harita görünümü hariç etkinlik barından kaldırır."
 
-#: src/Tribe/Geo_Loc.php:235
+#: src/Tribe/Geo_Loc.php:212
 msgid "Hide location search"
 msgstr "Yer aramasını gizle"
 
-#: src/Tribe/Geo_Loc.php:226
+#: src/Tribe/Geo_Loc.php:203
 msgid "You have %d venues for which we don't have geolocation data. We need to use the Google Maps API to get that information. Doing this may take a while (approximately 1 minute for every 200 venues)."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:226
+#: src/Tribe/Geo_Loc.php:203
 msgid "Fix geolocation data"
 msgstr "Coğrafi konum verilerini fixle"
 
-#: src/Tribe/Geo_Loc.php:220 src/Tribe/Geo_Loc_Filter.php:26
+#: src/Tribe/Geo_Loc.php:197 src/Tribe/Geo_Loc_Filter.php:26
 msgid "Kilometers"
 msgstr "Kilometre"
 
-#: src/Tribe/Geo_Loc.php:219 src/Tribe/Geo_Loc_Filter.php:23
+#: src/Tribe/Geo_Loc.php:196 src/Tribe/Geo_Loc_Filter.php:23
 msgid "Miles"
 msgstr "Mil"
 
-#: src/Tribe/Geo_Loc.php:206
+#: src/Tribe/Geo_Loc.php:183
 msgid "Set the distance that the location search covers (find events within X distance units of location search input)."
 msgstr "Set the distance that the location search covers (find events within X distance units of location search input)."
 
-#: src/Tribe/Geo_Loc.php:204
+#: src/Tribe/Geo_Loc.php:181
 msgid "Map view search distance limit"
 msgstr "Harita görünümü mesafe limiti"
 
-#: src/Tribe/Geo_Loc.php:164
+#: src/Tribe/Geo_Loc.php:143
 msgid "Distance"
 msgstr "Mesafe"
 
-#: src/Tribe/Custom_Meta.php:145
+#: src/Tribe/Custom_Meta.php:150
 msgid "Remove"
 msgstr "Kaldır"
 
-#: src/Tribe/Custom_Meta.php:144
+#: src/Tribe/Custom_Meta.php:149
 msgid "Add another"
 msgstr "Başka ekle"
 
@@ -2258,13 +2283,13 @@ msgstr "Belirlenen etkinliğe kalan zamanı gösterir."
 
 #: src/Tribe/Community_Modifications.php:31
 msgid "Recurrence Count"
-msgstr ""
+msgstr "Tekrarlayan Sayısı"
 
 #: src/Tribe/Community_Modifications.php:28
 msgid "Recurrence End Date"
-msgstr ""
+msgstr "Yineleme Bitiş Tarihi"
 
-#: src/Tribe/Advanced_List_Widget.php:153
+#: src/Tribe/Advanced_List_Widget.php:155
 msgid "Upcoming Events"
 msgstr "Yaklaşan Etkinlikler"
 
@@ -2284,7 +2309,7 @@ msgstr "Ara"
 msgid "No"
 msgstr "Hayır"
 
-#: src/Tribe/APM_Filters/Recur_Filter.php:15 src/Tribe/Recurrence/Meta.php:237
+#: src/Tribe/APM_Filters/Recur_Filter.php:15 src/Tribe/Recurrence/Meta.php:245
 msgid "Yes"
 msgstr "Evet"
 
@@ -2310,7 +2335,7 @@ msgstr "Öyle"
 msgid "Description"
 msgstr "Açıklama"
 
-#: src/Tribe/APM_Filters/APM_Filters.php:97 src/Tribe/Recurrence/Meta.php:229
+#: src/Tribe/APM_Filters/APM_Filters.php:97 src/Tribe/Recurrence/Meta.php:237
 msgid "Recurring"
 msgstr "Yinelenen"
 
@@ -2334,10 +2359,10 @@ msgstr "Bitiş Tarihi"
 msgid "Start Date"
 msgstr "Başlangıç Tarihi"
 
-#: events-calendar-pro.php:86
+#: events-calendar-pro.php:87
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "Events Calendar Pro'yu kullanmak için, lütfen <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>'ın son versyonunu indiriniz."
 
-#: events-calendar-pro.php:85
+#: events-calendar-pro.php:86
 msgid "The Events Calendar"
 msgstr "Etkinlikler Takvimi"

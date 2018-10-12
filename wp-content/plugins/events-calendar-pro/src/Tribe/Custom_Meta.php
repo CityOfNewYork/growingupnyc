@@ -406,7 +406,7 @@ class Tribe__Events__Pro__Custom_Meta {
 	/**
 	 * Adds the filter that will save the event custom meta.
 	 *
-	 * @since TBD
+	 * @since 4.4.26
 	 */
 	public static function add_save_single_meta_filter() {
 		add_action( 'tribe_events_update_meta', array( __CLASS__, 'save_single_event_meta' ), 10, 2 );
@@ -415,7 +415,7 @@ class Tribe__Events__Pro__Custom_Meta {
 	/**
 	 * Removes the filter that will save the event custom meta.
 	 *
-	 * @since TBD
+	 * @since 4.4.26
 	 */
 	public static function remove_save_single_meta_filter() {
 		remove_action( 'tribe_events_update_meta', array( __CLASS__, 'save_single_event_meta' ), 10 );

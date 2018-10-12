@@ -6,6 +6,7 @@
  * [your-theme]/tribe-events/pro/modules/meta/additional-fields.php
  *
  * @package TribeEventsCalendarPro
+ * @version 4.4.28
  */
 
 if ( ! isset( $fields ) || empty( $fields ) || ! is_array( $fields ) ) {
@@ -15,7 +16,7 @@ if ( ! isset( $fields ) || empty( $fields ) || ! is_array( $fields ) ) {
 ?>
 
 <div class="tribe-events-meta-group tribe-events-meta-group-other">
-	<h3 class="tribe-events-single-section-title"> <?php esc_html_e( 'Other', 'tribe-events-calendar-pro' ) ?> </h3>
+	<h2 class="tribe-events-single-section-title"> <?php esc_html_e( 'Other', 'tribe-events-calendar-pro' ) ?> </h2>
 	<dl>
 		<?php foreach ( $fields as $name => $value ): ?>
 			<dt> <?php echo esc_html( $name );  ?> </dt>

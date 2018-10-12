@@ -102,7 +102,10 @@ class Tribe__Events__Pro__Recurrence__Instance {
 			add_post_meta( $this->post_id, '_EventDuration', $this->duration );
 
 			if ( ! empty( $this->sequence_number ) && 1 !== $this->sequence_number ) {
-				add_post_meta( $this->post_id, '_EventSequence', $this->sequence_number );
+
+				$sequence_number = max( $this->sequence_number, $this->get_next_sequence_number( $this->parent_id ) );
+
+				add_post_meta( $this->post_id, '_EventSequence', $sequence_number );
 			}
 
 			/**
@@ -124,7 +127,7 @@ class Tribe__Events__Pro__Recurrence__Instance {
 		 * @param int $post_id The updated recurring event instance post ID.
 		 * @param int $parent_id The updated recurring event instance `post_parent` post ID.
 		 */
-		do_action('tribe_events_pro_recurring_event_save_after', $this->post_id, $this->parent_id);
+		do_action( 'tribe_events_pro_recurring_event_save_after', $this->post_id, $this->parent_id );
 
 		return $this->post_id;
 	}
@@ -184,6 +187,42 @@ class Tribe__Events__Pro__Recurrence__Instance {
 		}
 
 		return (int) $venue;
+	}
+
+	/**
+	 * Return the next sequence number according to the
+	 * number of child events.
+	 *
+	 * @param int $parent_id Parent post ID
+	 *
+	 * @since 4.4.30
+	 *
+	 * @return int The next sequence number
+	 */
+	public function get_next_sequence_number( $parent_id ) {
+		global $wpdb;
+
+		// Get the child events
+		$child_events = Tribe__Events__Pro__Recurrence__Children_Events::instance()->get_ids( $parent_id );
+
+		// Bail if there are no child events
+		if ( ! $child_events ) {
+			return 0;
+		}
+
+		// get the child event IDs
+		$child_events_ids = implode( ',', array_map( 'intval', $child_events ) );
+
+		// Get the max _EventSequence for the child events of $parent_id
+		$sequence = $wpdb->get_col(
+			"SELECT max(meta_value) FROM {$wpdb->postmeta} WHERE meta_key = '_EventSequence' AND post_id IN ({$child_events_ids})"
+		);
+
+		// if we get results, add one and return
+		if ( ! empty( $sequence ) ) {
+			return max( $sequence ) + 1;
+		}
+
 	}
 
 	private function copy_meta() {

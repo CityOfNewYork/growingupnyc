@@ -117,6 +117,8 @@ export default function() {
           if(form[0].className.indexOf('contact') > -1){
             if(form[0].className.indexOf('unity') > -1){
               form.html('<div class="text-center"><p class="u-bottom-spacing-small">Thank you for contacting the NYC Unity Project! Someone will respond to you shortly.</p><a class="button--primary button--primary__curved button--primary__purple" href="https://growingupnyc.cityofnewyork.us/generationnyc/topics/lgbtq">Go back to the Unity Project</a></div>');
+            }else if(form[0].className.indexOf('generation') > -1){
+              form.html('<div class="text-center"><p class="u-bottom-spacing-small">Thank you for contacting us! Someone will respond to you shortly.</p><a class="button--primary button--primary__curved button--primary__purple" href="https://growingupnyc.cityofnewyork.us/generationnyc/">Continue Exploring Generation NYC</a></div>');
             }else{
               form.html('<div class="text-center"><p class="u-bottom-spacing-small">Thank you for contacting us! Someone will respond to you shortly.</p><a class="button--simple button--simple--alt" href="https://growingupnyc.cityofnewyork.us/">Continue Exploring Growing Up NYC</a></div>');
             }

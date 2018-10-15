@@ -83,7 +83,7 @@ ProgramsList.getPrograms = function() {
   
   ProgramsList.showLoader(this.$el, this.programs)
 
-  let filters = ProgramsList.generateFilterURL(this.checkedProgramType, this.checkedAgeGroup, this.programPage, this.programTypes, this.ageGroups);
+  let filters = ProgramsList.generateFilterURL(this);
   url = url + '?' + filters;
 
   // update the query
@@ -117,31 +117,27 @@ ProgramsList.getPrograms = function() {
 
 /**
  * Generate the string filter for all user chosen taxonomies
- * @param {array} - array with the ids of program types
- * @param {array} - array with the ids of age groups
- * @param {integer} - page number
- * @param {array} - array of objects containing program types
- * @param {array} - array of objects containing age groups
+ * @param {obj} - data object
  * @return {string} - string of all filters
  **/
-ProgramsList.generateFilterURL = function(types, ages, page, allTypes, allAges) {
+ProgramsList.generateFilterURL = function(data) {
   let filters = [];
   let arrIds = [];
 
-  if ( types.length > 0 ){
-    arrIds = ProgramsList.getIds(allTypes, types).map(value => value.term_id)
+  if ( data.checkedProgramType.length > 0 ){
+    arrIds = ProgramsList.getIds(data.programTypes, data.checkedProgramType).map(value => value.term_id)
     filters.push('programs_cat[]=' + arrIds.join('&programs_cat[]='));
-    if(_.difference(allTypes.map(a => a.slug), types).length > 0) {
-      this.checkedAllTypes = false;
-    }
+    // if(_.difference(allTypes.map(a => a.slug), types).length > 0) {
+    //   this.checkedAllTypes = false;
+    // }
   }
 
-  if ( ages.length > 0  ) {
-    arrIds = ProgramsList.getIds(allAges, ages).map(value => value.id)
+  if ( data.checkedAgeGroup.length > 0  ) {
+    arrIds = ProgramsList.getIds(data.ageGroups, data.checkedAgeGroup).map(value => value.id)
     filters.push('age_group[]=' + arrIds.join('&age_group[]='));
   }
 
-  if (page > 1) {
+  if (data.programPage > 1) {
     filters.push('page=' + page);
   }
 

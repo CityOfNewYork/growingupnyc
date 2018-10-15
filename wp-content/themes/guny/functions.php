@@ -126,6 +126,9 @@ class GunySite extends TimberSite {
     if (!empty($context['options']) && !empty($context['options']['current_banner'])) {
       $context['options']['current_banner'] = new TimberPost($context['options']['current_banner']);
     }
+    if (!empty($context['options']) && !empty($context['options']['current_banner_generation'])) {
+      $context['options']['current_banner_generation'] = new TimberPost($context['options']['current_banner_generation']);
+    }
     $context['is_archive'] = is_archive();
     $context['current_url'] = strtok($_SERVER["REQUEST_URI"],'?');
     return $context;

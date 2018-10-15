@@ -1,11 +1,11 @@
 {
-    "key": "group_57acc960199aa",
-    "title": "Banner - Growing Up",
+    "key": "group_5bb501a8edd91",
+    "title": "Banner - Topic",
     "fields": [
         {
-            "key": "field_57acc9f64cedd",
+            "key": "field_5bb501a92fc3e",
             "label": "Show Banner",
-            "name": "show_banner",
+            "name": "show_banner_topic",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -16,19 +16,41 @@
                 "id": ""
             },
             "message": "Show banner at bottom of screen",
-            "default_value": 0
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
         },
         {
-            "key": "field_57ae0b16d3897",
-            "label": "Current Banner - Growing Up",
-            "name": "current_banner",
+            "key": "field_5bb626c595538",
+            "label": "Disable Generation Banner",
+            "name": "disable_generation_banner",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Disable global Generation banner",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5bb501a92fd36",
+            "label": "Current Banner - Topic",
+            "name": "current_banner_topic",
             "type": "post_object",
             "instructions": "",
             "required": 1,
             "conditional_logic": [
                 [
                     {
-                        "field": "field_57acc9f64cedd",
+                        "field": "field_5bb501a92fc3e",
                         "operator": "==",
                         "value": "1"
                     }
@@ -52,9 +74,9 @@
     "location": [
         [
             {
-                "param": "options_page",
+                "param": "post_type",
                 "operator": "==",
-                "value": "theme-general-settings"
+                "value": "topic"
             }
         ]
     ],
@@ -66,5 +88,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1539185245
+    "modified": 1539195209
 }

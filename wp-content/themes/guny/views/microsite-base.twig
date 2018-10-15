@@ -26,7 +26,7 @@
   <script>
     (function(d) {
       var config = {
-        kitId: 'ywl0xbs',
+        kitId: 'wty8eeo',
         scriptTimeout: 3000,
         async: true,
         active: function() {
@@ -228,6 +228,17 @@
         </div>
         <div class="c-footer__reached"></div>
       </footer> <!-- /.c-footer -->
+      {% block banner_topic %}{% endblock %}
+      {% if options.show_banner_generation and not disable_generation_banner %}
+        <div class="c-alert js-alert" data-cookie="{{options.current_banner_generation.slug}}" id="banner-{{options.current_banner_generation.slug}}">
+          <button type="button" class="c-alert__button" data-toggle="banner-{{options.current_banner_generation.slug}}"><svg role="img" class="icon--small"><title>Close</title><use xlink:href="#icon-close"></use></svg></button>
+          <div class="c-alert__banner">
+            <div class="o-container">
+              {{options.current_banner_generation.get_field('banner_content')}}
+            </div>
+          </div>
+        </div>
+      {% endif %}
       <a class="o-offcanvas__overlay" data-toggle="offcanvas-ages" aria-hidden="true"></a>
     </div> <!-- /.o-offcanvas__main -->
   </div> <!-- /.o-offcanvas -->

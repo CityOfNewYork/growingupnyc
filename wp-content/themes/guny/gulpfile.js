@@ -295,7 +295,7 @@ gulp.task('styleguide:generate', ['styles'], function() {
       rootPath: dist + 'styleguide',
       appRoot: appRoot + 'styleguide',
       overviewPath: 'styleguide-overview.md',
-      extraHead: '<script src="//use.typekit.net/gyh3xur.js"></script><script>try{Typekit.load({ async: true });}catch(e){}</script>',
+      extraHead: '<script src="//use.typekit.net/wty8eeo.js"></script><script>try{Typekit.load({ async: true });}catch(e){}</script>',
       commonClass: 'styleguide'
     }))
     .pipe(gulp.dest(dist + 'styleguide'))

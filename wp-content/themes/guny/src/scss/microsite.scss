@@ -428,6 +428,25 @@ button {
   }
 }
 
+// Alert Banner
+.js .c-alert.is-open {
+  padding: 0;
+
+  .c-alert__banner {
+    border-radius: 0;
+    background-color: $dark-blue;
+  }
+
+  a {
+    color: inherit;
+
+    &:hover,
+    &:focus {
+      color: $light-gray-2;
+    }
+  }
+}
+
 // Trips page styles
 @import "microsite/trips";
 

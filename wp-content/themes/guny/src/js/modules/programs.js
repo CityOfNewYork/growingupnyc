@@ -30,12 +30,16 @@ class ProgramsList {
         programPage: 1,
         maxPages: 1,
         errorMsg: false,
-        isLoading: true
+        isLoading: true,
+        checkedAllTypes: false,
+        checkedAllAges: false
       },
        watch: {
         checkedProgramType: 'getPrograms',
         checkedAgeGroup: 'getPrograms',
         programPage: 'getPrograms',
+        checkedAllTypes: 'selectAll',
+        checkedAllAges: 'selectAll'
       },
       mounted: function() {
         axios.all([
@@ -58,7 +62,8 @@ class ProgramsList {
         hideLoader: ProgramsList.hideLoader,
         scrollToTop() {
           window.scrollTo(0,0);
-       }
+        },
+        selectAll: ProgramsList.selectAll
       }
     }
   }
@@ -75,7 +80,7 @@ class ProgramsList {
  **/
 ProgramsList.getPrograms = function() {
   let url = this.programsURL;
-
+  
   ProgramsList.showLoader(this.$el, this.programs)
 
   let filters = ProgramsList.generateFilterURL(this.checkedProgramType, this.checkedAgeGroup, this.programPage, this.programTypes, this.ageGroups);
@@ -126,6 +131,9 @@ ProgramsList.generateFilterURL = function(types, ages, page, allTypes, allAges) 
   if ( types.length > 0 ){
     arrIds = ProgramsList.getIds(allTypes, types).map(value => value.term_id)
     filters.push('programs_cat[]=' + arrIds.join('&programs_cat[]='));
+    if(_.difference(allTypes.map(a => a.slug), types).length > 0) {
+      this.checkedAllTypes = false;
+    }
   }
 
   if ( ages.length > 0  ) {
@@ -212,11 +220,9 @@ ProgramsList.showLoader = function(el, programs){
   let sh = $(el).find('.o-article-sidebar').height();
 
   if (programs == null) {
-    $(el).find('.loader').css({'height' : sh});
-    $(el).find('.loader').addClass('animated pulse');
+    $(el).find('.loader').css({'height' : sh}).addClass('animated pulse');
   }else {
-    $(el).find('.loader').css({'height' : '100%'});
-    $(el).find('.loader').removeClass('animated pulse');
+    $(el).find('.loader').css({'height' : '100%'}).removeClass('animated pulse');
   }
 
   $(el).find('.pagination').hide();
@@ -228,8 +234,27 @@ ProgramsList.showLoader = function(el, programs){
  * @param {HTMLElement} - vue element
  **/
 ProgramsList.hideLoader = function(el, status){
-    $(el).find('.loader').hide();
-    $(el).find('.pagination').show();
+  $(el).find('.loader').hide();
+  $(el).find('.pagination').show();
+}
+
+
+/**
+ * Toggle the select all for filters
+ **/
+ProgramsList.selectAll = function() {
+  if(this.checkedAllTypes){
+    this.checkedProgramType = this.programTypes.map(a => a.slug);
+  }else {
+    this.checkedAllTypes = false;
+    this.checkedProgramType = [];
+  }
+  if(this.checkedAllAges){
+    this.checkedAgeGroup = this.ageGroups.map(a => a.slug);
+  }else {
+    this.checkedAllAges = false;
+    this.checkedAgeGroup = [];
+  }
 }
 
 export default ProgramsList;

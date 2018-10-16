@@ -24,13 +24,13 @@
 
     {# categories #}
     <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{ __('All Program Types', 'guny') }}</h3>
+      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{ __('Program Types', 'guny') }}</h3>
       <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
         <li class="c-list-box__subitem">
           <label class="checkbox" >
             <input type="checkbox" value="true" v-model="checkedAllTypes" class="checkbox__field">
             <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
-            {{ __('All Program Types', 'guny') }}
+            {{ __('Select All', 'guny') }}
           </label>
         </li>
         <li class="c-list-box__subitem" v-for="category in programTypes">
@@ -45,7 +45,7 @@
 
     {# age groups #}
     <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{ __('All Ages', 'guny') }}</h3>
+      <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{ __('Ages', 'guny') }}</h3>
       <ul class="js-accordion__content c-list-box__content" id="age-filter-panel">
 
 
@@ -53,7 +53,7 @@
           <label class="checkbox" >
             <input type="checkbox" value="true" v-model="checkedAllAges" class="checkbox__field">
             <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
-            {{ __('All Ages', 'guny') }}
+            {{ __('Select All', 'guny') }}
           </label>
         </li>
 

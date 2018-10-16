@@ -138,7 +138,7 @@ ProgramsList.generateFilterURL = function(data) {
   }
 
   if (data.programPage > 1) {
-    filters.push('page=' + page);
+    filters.push('page=' + data.programPage);
   }
 
   filters = filters.join('&');

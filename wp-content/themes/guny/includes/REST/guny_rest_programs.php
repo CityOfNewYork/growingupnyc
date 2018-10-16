@@ -57,7 +57,7 @@ function get_rest_program_title( $object ) {
 }
 
 function get_rest_program_excerpt( $object ) { 
-  $post_excerpt = strip_tags(htmlspecialchars_decode($object['excerpt']['rendered']));
+  $post_excerpt = strip_tags(html_entity_decode($object['excerpt']['rendered']));
    
   return $post_excerpt;
 }

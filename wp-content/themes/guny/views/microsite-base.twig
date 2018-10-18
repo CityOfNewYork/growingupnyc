@@ -48,12 +48,7 @@
 </head>
 
 <body class="{{body_class}}" data-template="base.twig">
-  {# TODO: testing GTM - temp placement #}
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WCX2L8G"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-
+  {% include 'partials/scripts-google-tag-manager.twig' %}
   {% include 'partials/svg-sprite.twig' %}
   <div class="o-offcanvas js-offcanvas" id="offcanvas-ages">
     <a href="#main" class="show-for-keyboard">Skip to main content</a>

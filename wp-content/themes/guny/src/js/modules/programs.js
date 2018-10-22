@@ -38,8 +38,8 @@ class ProgramsList {
         checkedProgramType: 'getPrograms',
         checkedAgeGroup: 'getPrograms',
         programPage: 'getPrograms',
-        checkedAllTypes: 'selectAll',
-        checkedAllAges: 'selectAll'
+        checkedAllTypes: 'selectAllTypes',
+        checkedAllAges: 'selectAllAges'
       },
       mounted: function() {
         axios.all([
@@ -63,7 +63,8 @@ class ProgramsList {
         scrollToTop() {
           window.scrollTo(0,0);
         },
-        selectAll: ProgramsList.selectAll
+        selectAllTypes: ProgramsList.selectAllTypes,
+        selectAllAges: ProgramsList.selectAllAges
       }
     }
   }
@@ -127,9 +128,6 @@ ProgramsList.generateFilterURL = function(data) {
   if ( data.checkedProgramType.length > 0 ){
     arrIds = ProgramsList.getIds(data.programTypes, data.checkedProgramType).map(value => value.term_id)
     filters.push('programs_cat[]=' + arrIds.join('&programs_cat[]='));
-    // if(_.difference(allTypes.map(a => a.slug), types).length > 0) {
-    //   this.checkedAllTypes = false;
-    // }
   }
 
   if ( data.checkedAgeGroup.length > 0  ) {
@@ -238,13 +236,16 @@ ProgramsList.hideLoader = function(el, status){
 /**
  * Toggle the select all for filters
  **/
-ProgramsList.selectAll = function() {
+ProgramsList.selectAllTypes = function() {
   if(this.checkedAllTypes){
     this.checkedProgramType = this.programTypes.map(a => a.slug);
   }else {
     this.checkedAllTypes = false;
     this.checkedProgramType = [];
   }
+}
+
+ProgramsList.selectAllAges = function() {  
   if(this.checkedAllAges){
     this.checkedAgeGroup = this.ageGroups.map(a => a.slug);
   }else {

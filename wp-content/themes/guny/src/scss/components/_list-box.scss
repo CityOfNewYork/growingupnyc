@@ -186,7 +186,14 @@
 // to the a element rather than the li element.
 .c-list-box__subitem {
   display: block;
+  width: 50%;
+  float: left;
   text-decoration: none;
+  padding: rem-calc(10 16) !important;
+  @include media($bp-large) {
+    width: 100%;
+    padding: rem-calc(16 28);
+  }
 }
 
 .c-list-box--primary .c-list-box__subitem {
@@ -229,7 +236,7 @@
 .c-list-box--quaternary .c-list-box__subitem {
   color: $color-text-invert;
   @include font-size-small;
-  padding: rem-calc(16 28);
+  // padding: rem-calc(16 28);
 }
 
 .c-list-box--tertiary .c-list-box__subitem {

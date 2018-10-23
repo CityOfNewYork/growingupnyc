@@ -73,7 +73,12 @@
 {% block post_list %}
   <section class="c-block-list" v-cloak>
     <div class="c-block-list--blue o-content-container u-sm-gutter loader"></div>
-    <div class="c-block-list--shade o-content-container u-sm-gutter" v-if="!isLoading">
+    <div class="c-block-list--blue o-content-container u-sm-gutter loader-mobile text-center">
+      <button>
+      <a href="#programs-loaded" class="button--outline button--outline--white aligncenter">See v{ totalResults } programs</a>
+      </button>
+    </div>
+    <div id="programs-loaded" class="c-block-list--shade o-content-container u-sm-gutter" v-if="!isLoading">
       <div class="c-block-list__item u-sm-gutter" v-for="post in programs">
         <div class="c-card {{is_first ? "c-card--hero #{age_group.slug|sanitize|replace({'-es':''})}-gradient"}}">
           <a :href="post.link">

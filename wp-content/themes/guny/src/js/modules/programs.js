@@ -32,7 +32,8 @@ class ProgramsList {
         errorMsg: false,
         isLoading: true,
         checkedAllTypes: false,
-        checkedAllAges: false
+        checkedAllAges: false,
+        totalResults: ''
       },
        watch: {
         checkedProgramType: 'getPrograms',
@@ -74,6 +75,14 @@ class ProgramsList {
    **/
   init() {
     this._programs = new Vue(this._programs);
+
+    $(window).on('resize', function(){
+      console.log('resize')
+      console.log()
+      if($(window).width() >=1024){
+        $('.loader-mobile').hide();
+      }
+    })
   }
 }
 /**
@@ -106,6 +115,7 @@ ProgramsList.getPrograms = function() {
         ProgramsList.hideLoader(this.$el, this.programs);
       } else {
         this.maxPages = response.headers['x-wp-totalpages'];
+        this.totalResults = response.headers['x-wp-total'];
         this.errorMsg = false;
         this.isLoading = false;
         ProgramsList.hideLoader(this.$el, this.programs);
@@ -213,14 +223,19 @@ ProgramsList.getIds = function(filter, slugs) {
 ProgramsList.showLoader = function(el, programs){
   let sh = $(el).find('.o-article-sidebar').height();
 
-  if (programs == null) {
-    $(el).find('.loader').css({'height' : sh}).addClass('animated pulse');
-  }else {
-    $(el).find('.loader').css({'height' : '100%'}).removeClass('animated pulse');
+  if($(window).width() >= 1024){
+    if (programs == null) {
+      $(el).find('.loader').css({'height' : sh}).addClass('animated pulse');
+    }else {
+      $(el).find('.loader').css({'height' : '100%'}).removeClass('animated pulse');
+    }
+    $(el).find('.pagination').hide();
+    $(el).find('.loader').show();
+  }else{
+    $(el).find('.loader').hide();
+    $(el).find('.loader-mobile').show();
   }
 
-  $(el).find('.pagination').hide();
-  $(el).find('.loader').show();
 }
 
 /**

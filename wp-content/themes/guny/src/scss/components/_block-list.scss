@@ -25,13 +25,23 @@
 }
 
 .c-block-list--blue {
-  background: $bright-blue;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: .5;
-  z-index: 1;
   display: none;
+  background: $gray;
+  position: fixed;
+  margin-bottom: 0 !important;
+  width: 100%;
+  z-index: 1;
+  bottom: 0;
+  padding: rem-calc(16 0);
+  @include media($bp-large) {
+    background: $bright-blue;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: .5;
+    bottom: auto;
+    display: none;
+  }
 }
 
 // Block List Heading

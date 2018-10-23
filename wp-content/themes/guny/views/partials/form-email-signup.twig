@@ -1,5 +1,5 @@
 <form action="https://cityofnewyork.us18.list-manage.com/subscribe/post-json?u=d04b7b607bddbd338b416fa89&amp;id=a02dc5e68b&c=?" method="get" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="guny-signup" target="_blank" novalidate>
-  <div class ="signup-form">
+  <div class="signup-form">
     <h2{% if full_width %} class="text-center"{% endif %}>
       {% if title %}
         {{ title }}
@@ -8,13 +8,13 @@
       {% endif %}
     </h2>
   </div>
-  
+
   <div class="signup-form__error guny-error"></div>
 
   {# EMAIL #}
   <div class="signup-form__input {% if full_width %}signup-form__input--full{% else %}signup-form__input--long{% endif %}">
     <label for="mce-EMAIL" class="signup-form__label">
-      <span class="signup-form__label-content" data-content="Email">{{ __('Email', 'GUNY-Email-Signup') }}</span>
+      <span class="signup-form__label-content" data-content="{{ __('Email', 'GUNY-Email-Signup') }}" title="{{ __('Email', 'GUNY-Email-Signup') }}">{{ __('Email', 'GUNY-Email-Signup') }}</span>
     </label>
     <input type="email" value="" name="EMAIL" class="email form-field signup-form__field" id="mce-EMAIL" required>
   </div>
@@ -35,7 +35,7 @@
   <div class="signup-form__input {% if full_width %}signup-form__input--full{% else %}signup-form__input--short{%endif %}">
 
     <label for="mce-ZIP" class="signup-form__label">
-      <span class="signup-form__label-content" data-content="Zip code">{{ __('Zip code', 'GUNY-Email-Signup') }}</span>
+      <span class="signup-form__label-content" data-content="{{ __('Zip code', 'GUNY-Email-Signup') }}" title="{{ __('Zip code', 'GUNY-Email-Signup') }}">{{ __('Zip code', 'GUNY-Email-Signup') }}</span>
     </label>
     <input name="ZIP" id="mce-ZIP" type="tel" class="form-field signup-form__field" required>
   </div>

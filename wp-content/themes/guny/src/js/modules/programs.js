@@ -83,7 +83,13 @@ class ProgramsList {
     });
 
     $(window).on('scroll', function(){
-      $('.loader-mobile').hide();
+      let ww = $(window).scrollTop()
+      let cw = $('#programs-loaded').offset().top;
+      if( ww >= cw-50){
+        $('.loader-mobile').fadeOut();
+      }else{
+        $('.loader-mobile').fadeIn();
+      }
     });
   }
 }
@@ -239,7 +245,7 @@ ProgramsList.showLoader = function(obj, programs){
     $(el).find('.loader').hide();
     if(obj.checkedProgramType.length > 0 || obj.checkedAgeGroup.length > 0){
       $('.c-alert__banner').hide();
-      $(el).find('.loader-mobile').show();
+      $(el).find('.loader-mobile').fadeIn();
     }
   }
 }

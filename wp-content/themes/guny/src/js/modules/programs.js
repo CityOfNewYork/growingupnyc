@@ -77,12 +77,14 @@ class ProgramsList {
     this._programs = new Vue(this._programs);
 
     $(window).on('resize', function(){
-      console.log('resize')
-      console.log()
       if($(window).width() >=1024){
         $('.loader-mobile').hide();
       }
-    })
+    });
+
+    $(window).on('scroll', function(){
+      $('.loader-mobile').hide();
+    });
   }
 }
 /**
@@ -91,7 +93,8 @@ class ProgramsList {
 ProgramsList.getPrograms = function() {
   let url = this.programsURL;
   
-  ProgramsList.showLoader(this.$el, this.programs)
+  // ProgramsList.showLoader(this.$el, this.programs)
+  ProgramsList.showLoader(this, this.programs)
 
   let filters = ProgramsList.generateFilterURL(this);
   url = url + '?' + filters;
@@ -220,7 +223,8 @@ ProgramsList.getIds = function(filter, slugs) {
  * @param {HTMLElement} - vue element
  * @param {array} - array of programs
  **/
-ProgramsList.showLoader = function(el, programs){
+ProgramsList.showLoader = function(obj, programs){
+  let el = obj.$el;
   let sh = $(el).find('.o-article-sidebar').height();
 
   if($(window).width() >= 1024){
@@ -233,9 +237,11 @@ ProgramsList.showLoader = function(el, programs){
     $(el).find('.loader').show();
   }else{
     $(el).find('.loader').hide();
-    $(el).find('.loader-mobile').show();
+    if(obj.checkedProgramType.length > 0 || obj.checkedAgeGroup.length > 0){
+      $('.c-alert__banner').hide();
+      $(el).find('.loader-mobile').show();
+    }
   }
-
 }
 
 /**

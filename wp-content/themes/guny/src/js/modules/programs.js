@@ -110,9 +110,9 @@ ProgramsList.getPrograms = function() {
 
   // update the query
   if ( this.programPage == 1){
-    this.$router.push({query: {category: this.checkedProgramType, age_group: this.checkedAgeGroup}});
+    this.$router.push({query: {category: this.checkedProgramType, ages: this.checkedAgeGroup}});
   }else {
-    this.$router.push({query: {category: this.checkedProgramType, age_group: this.checkedAgeGroup, page: this.programPage }});
+    this.$router.push({query: {category: this.checkedProgramType, ages: this.checkedAgeGroup, page: this.programPage }});
   }
 
 
@@ -187,16 +187,16 @@ ProgramsList.parseQuery = function() {
     }
   }
 
-  if(!_.isEmpty(query.age_group)){
-    if (_.isArray(query.age_group)){
-      if (query.age_group.every( (val, i, arr) => val === arr[0] )) {
-        query.age_group = query.age_group[0];
+  if(!_.isEmpty(query.ages)){
+    if (_.isArray(query.ages)){
+      if (query.ages.every( (val, i, arr) => val === arr[0] )) {
+        query.ages = query.ages[0];
       } else {
-        queryArr=ProgramsList.getIds(this.ageGroups, query.age_group.map(String));
+        queryArr=ProgramsList.getIds(this.ageGroups, query.ages.map(String));
         this.checkedAgeGroup = queryArr.map(value => value.slug)
       }
     }else{
-      let index = this.ageGroups.map(function(e) { return e.slug; }).indexOf(query.age_group);
+      let index = this.ageGroups.map(function(e) { return e.slug; }).indexOf(query.ages);
       this.checkedAgeGroup.push(this.ageGroups[index].slug);
     }
   }

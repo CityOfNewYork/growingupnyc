@@ -99,7 +99,6 @@ class ProgramsList {
 ProgramsList.getPrograms = function() {
   let url = this.programsURL;
   
-  // ProgramsList.showLoader(this.$el, this.programs)
   ProgramsList.showLoader(this, this.programs)
 
   let filters = ProgramsList.generateFilterURL(this);

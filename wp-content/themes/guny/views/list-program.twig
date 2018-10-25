@@ -73,7 +73,7 @@
 {% block post_list %}
   <section class="c-block-list" v-cloak>
     <div class="c-block-list--blue o-content-container u-sm-gutter loader"></div>
-    <div class="c-block-list--blue o-content-container u-sm-gutter loader-mobile text-center">
+    <div class="c-block-list--blue o-content-container u-sm-gutter loader-mobile text-center" v-if="!errorMsg">
       <button>
       <a href="#programs-loaded" class="button--outline button--outline--white aligncenter">See v{ totalResults } programs</a>
       </button>
@@ -97,10 +97,10 @@
           </div>
           <div class="c-card__tags" v-if="post.programs_cat">
             <span v-for="term in post.programs_cat"> 
-              <router-link :to="{ query: { category: term.slug }}" class="button--pill" @click.native="parseQuery">v{ term.name }</router-link>
+              <a :href="'/programs/?category=' + term.slug" class="button--pill">v{ term.name }</a>
             </span>
             <span v-for="term in post.age_group"> 
-              <router-link :to="{ query: { age_group: term.slug }}" class="button--pill button--pill--alt" @click.native="parseQuery">v{ term.name }</router-link>
+              <a :href="'/programs/?age_group=' + term.slug" class="button--pill button--pill--alt">v{ term.name }</a>
             </span>
           </div>
           <div class="c-card__body">
@@ -108,7 +108,7 @@
           </div>
         </div>
       </div>
-      <p class="type--no-results" v-if="errorMsg">{{ __('Sorry. There are no programs found for those filter options.', 'guny') }}</p>
+      <p class="type--no-results" v-if="errorMsg">{{ __('Sorry, we don’t have any programs that match those filters. For more results, try different filters or <a href="/programs">reset your filters</a>.', 'guny') }}</p>
     </div>
   </section>
 

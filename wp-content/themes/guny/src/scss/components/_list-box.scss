@@ -86,10 +86,6 @@
   @include media($bp-large) {
     padding: rem-calc(28 40);
   }
-  @include media($bp-x-small) {
-    padding: rem-calc(12 40 12 12);
-  }
-
 }
 
 .c-list-box--secondary .c-list-box__heading,
@@ -185,15 +181,8 @@
 // Item within a sublist. If the sublist is a list of links, this class may be applied
 // to the a element rather than the li element.
 .c-list-box__subitem {
-  // display: block;
-  // width: 50%;
-  // float: left;
-  // text-decoration: none;
-  padding: rem-calc(5 16) !important;
-  @include media($bp-large) {
-    width: 100%;
-    padding: rem-calc(16 28);
-  }
+  display: block;
+  text-decoration: none;
 }
 
 .c-list-box--primary .c-list-box__subitem {
@@ -236,7 +225,7 @@
 .c-list-box--quaternary .c-list-box__subitem {
   color: $color-text-invert;
   @include font-size-small;
-  // padding: rem-calc(16 28);
+  padding: rem-calc(16 28);
 }
 
 .c-list-box--tertiary .c-list-box__subitem {
@@ -275,13 +264,4 @@
 .c-list-box__border {
   border-radius: 3px;
   padding: rem-calc(5 0);
-}
-
-//Hide list item call Espanol
-.o-article-sidebar {
-  .c-list-box__content {
-    li.espanol {
-      display: none;
-    }
-  }
 }

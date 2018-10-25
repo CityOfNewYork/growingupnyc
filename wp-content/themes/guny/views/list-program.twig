@@ -5,6 +5,10 @@
   .c-hero { background-color: #2793E0; background-image: url(/wp-content/themes/guny/assets/img/hero-program-landing.svg); }
   .facetwp-seo { display: none; }
   [v-cloak] { display: none; }
+  .previous {
+    float: left;
+    padding-right: 5px;
+  }
 </style>
 {% endblock %}
 
@@ -114,13 +118,13 @@
 
   {# pagination #}
   <div class="o-content-container--compact pagination" v-if="!isLoading" v-cloak>
-    <button id="paginate" v-if="programPage <= maxPages" >
+    <div id="paginate" class="previous" v-if="programPage <= maxPages" >
       <router-link class="button--outline button--outline--gray alignleft" v-if="programPage > 1" :to="{ query: { page: programPage-1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Previous', 'guny') }}</router-link>    
-    </button>
+    </div>
 
-    <button class="paginate" v-if="programPage < maxPages">
+    <div class="paginate" v-if="programPage < maxPages">
       <router-link class="button--outline button--outline--gray alignright paginate" :to="{ query: { page: (programPage*1)+1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Next', 'guny') }}</router-link>
-    </button>
+    </div>
   </div>
 {% endblock %}
 

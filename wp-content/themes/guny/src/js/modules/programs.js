@@ -84,15 +84,17 @@ class ProgramsList {
 
     $(window).on('scroll', function(){
       let ww = $(window).scrollTop()
-      let cw = $('#programs-loaded').offset().top;
-      if( $(window).width() < 1024 ){
-        if(ww >= cw-50){
-          $('.loader-mobile').fadeOut();
+      if($('#programs-loaded').length){
+        let cw = $('#programs-loaded').offset().top;
+        if( $(window).width() < 1024 ){
+          if(ww >= cw-50){
+            $('.loader-mobile').fadeOut();
+          }else{
+            $('.loader-mobile').fadeIn();
+          }
         }else{
-          $('.loader-mobile').fadeIn();
+          $('.loader-mobile').hide();
         }
-      }else{
-        $('.loader-mobile').hide();
       }
     });
   }

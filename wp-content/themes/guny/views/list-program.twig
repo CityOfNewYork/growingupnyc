@@ -101,10 +101,10 @@
           </div>
           <div class="c-card__tags" v-if="post.programs_cat">
             <span v-for="term in post.programs_cat"> 
-              <a :href="'/programs/?category=' + term.slug" class="button--pill">v{ term.name }</a>
+              <a :href="'?category=' + term.slug" class="button--pill">v{ term.name }</a>
             </span>
             <span v-for="term in post.age_group"> 
-              <a :href="'/programs/?ages=' + term.slug" class="button--pill button--pill--alt">v{ term.name }</a>
+              <a :href="'?ages=' + term.slug" class="button--pill button--pill--alt">v{ term.name }</a>
             </span>
           </div>
           <div class="c-card__body">

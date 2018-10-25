@@ -4,6 +4,7 @@
 <style>
   .c-hero { background-color: #2793E0; background-image: url(/wp-content/themes/guny/assets/img/hero-program-landing.svg); }
   .facetwp-seo { display: none; }
+  [v-cloak] { display: none; }
 </style>
 {% endblock %}
 
@@ -19,20 +20,107 @@
 {% endblock %}
 
 {% block list_sidebar %}
-<ol class="c-list-box c-list-box--quaternary facetwp-guny" data-multiselectable="false">
-  {{facet_program_type}}
-  {{facet_ages}}
-</ol>
+  <div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false" v-cloak>
+
+    {# categories #}
+    <div class="c-list-box__item">
+      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{ __('Program Types', 'guny') }}</h3>
+      <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
+        <li class="c-list-box__subitem">
+          <label class="checkbox" >
+            <input type="checkbox" value="true" v-model="checkedAllTypes" class="checkbox__field">
+            <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+            {{ __('Select All', 'guny') }}
+          </label>
+        </li>
+        <li class="c-list-box__subitem" v-for="category in programTypes">
+          <label class="checkbox" :for="category.slug">
+            <input type="checkbox"  :id="category.slug" :value="category.slug" v-model="checkedProgramType" class="checkbox__field">
+            <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+            v{ category.name }
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    {# age groups #}
+    <div class="c-list-box__item">
+      <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{ __('Ages', 'guny') }}</h3>
+      <ul class="js-accordion__content c-list-box__content" id="age-filter-panel">
+
+
+        <li class="c-list-box__subitem">
+          <label class="checkbox" >
+            <input type="checkbox" value="true" v-model="checkedAllAges" class="checkbox__field">
+            <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+            {{ __('Select All', 'guny') }}
+          </label>
+        </li>
+
+        <li class="c-list-box__subitem" v-for="age in ageGroups">
+          <label class="checkbox" :for="age.slug">
+            <input type="checkbox" :id="age.slug" :value="age.slug" v-model="checkedAgeGroup" class="checkbox__field">
+            <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+            v{ age.name }
+          </label>
+        </li>
+      </ul>
+    </div>
+
+  </div>
 {% endblock %}
 
 {% block post_list %}
-<section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
-  {{posts}}
-</section>
+  <section class="c-block-list" v-cloak>
+    <div class="c-block-list--blue o-content-container u-sm-gutter loader"></div>
+    <div class="c-block-list--blue o-content-container u-sm-gutter loader-mobile text-center" v-if="!errorMsg">
+      <button>
+      <a href="#programs-loaded" class="button--outline button--outline--white aligncenter">See v{ totalResults } programs</a>
+      </button>
+    </div>
+    <div id="programs-loaded" class="c-block-list--shade o-content-container u-sm-gutter" v-if="!isLoading">
+      <div class="c-block-list__item u-sm-gutter" v-for="post in programs">
+        <div class="c-card {{is_first ? "c-card--hero #{age_group.slug|sanitize|replace({'-es':''})}-gradient"}}">
+          <a :href="post.link">
+            <div class="c-card__sticker sticker" aria-hidden="true">
+              <svg class="icon--large"><title>v{ post.programs_cat[0].slug }</title><use :xlink:href="'#icon-' + post.programs_cat[0].slug.replace('-es','')" ></use></svg>
+            </div>
+          </a>
+          <h3 class="c-card__title">
+            <a :href="post.link" :title="post.title" rel="bookmark">
+              v{ post.title }
+            </a>
+          </h3>
+          <div class="c-card__subtitle">
+            <p><strong>v{post.acf.program_name}</strong></p>
+            <p>v{post.acf.government_agency}</p>
+          </div>
+          <div class="c-card__tags" v-if="post.programs_cat">
+            <span v-for="term in post.programs_cat"> 
+              <a :href="'/programs/?category=' + term.slug" class="button--pill">v{ term.name }</a>
+            </span>
+            <span v-for="term in post.age_group"> 
+              <a :href="'/programs/?age_group=' + term.slug" class="button--pill button--pill--alt">v{ term.name }</a>
+            </span>
+          </div>
+          <div class="c-card__body">
+            v{ post.excerpt }
+          </div>
+        </div>
+      </div>
+      <p class="type--no-results" v-if="errorMsg">{{ __('Sorry, we don’t have any programs that match those filters. For more results, try different filters or <a href="/programs">reset your filters</a>.', 'guny') }}</p>
+    </div>
+  </section>
+
+  {# pagination #}
+  <div class="o-content-container--compact pagination" v-if="!isLoading" v-cloak>
+    <button id="paginate" v-if="programPage <= maxPages" >
+      <router-link class="button--outline button--outline--gray alignleft" v-if="programPage > 1" :to="{ query: { page: programPage-1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Previous', 'guny') }}</router-link>    
+    </button>
+
+    <button class="paginate" v-if="programPage < maxPages">
+      <router-link class="button--outline button--outline--gray alignright paginate" :to="{ query: { page: (programPage*1)+1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Next', 'guny') }}</router-link>
+    </button>
+  </div>
 {% endblock %}
 
-{% block after_list %}
-<div class="o-content-container--compact">
-  {{pagination}}
-</div>
-{% endblock %}

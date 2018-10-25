@@ -111,7 +111,8 @@ gulp.task('styles (dev)', ['lint-css'], function() {
   .pipe(hashFilename())
   .pipe(sourcemaps.write('./'))
   .pipe(gulp.dest('./'))
-  .pipe(browserSync.stream({match: '**/*.css'}));
+  .pipe(browserSync.stream({match: '**/*.css'}))
+  .pipe(notify({message: 'Styles (Dev) task complete'}));
 });
 
 gulp.task('styles', ['lint-css'], function() {
@@ -227,7 +228,8 @@ gulp.task('scripts', ['clean (scripts)', 'pack'], function() {
   .pipe(rename({suffix: '.min'}))
   .pipe(size({showFiles: true}))
   .pipe(gulp.dest(dist + 'js'))
-  .pipe(browserSync.stream({match: '**/*.js'}));
+  .pipe(browserSync.stream({match: '**/*.js'}))
+  .pipe(notify({message: 'Scripts task complete'}))
 });
 
 

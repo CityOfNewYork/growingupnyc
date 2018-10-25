@@ -70,3 +70,11 @@ function search() {
     wp_redirect($path . '/?' . http_build_query($query)); exit;
   }
 } add_action('template_redirect', 'search');
+
+/**
+ * Programs
+ * Load the program archive to the /programs
+ */
+Routes::map('/programs', function($params) {
+  Routes::load('archive-program.php', $params, null, 200);
+});

@@ -65,7 +65,11 @@ class ProgramsList {
           window.scrollTo(0,0);
         },
         selectAllTypes: ProgramsList.selectAllTypes,
-        selectAllAges: ProgramsList.selectAllAges
+        selectAllAges: ProgramsList.selectAllAges,
+        mobileScroll: ProgramsList.mobileScroll
+      },
+      created () {
+        window.addEventListener('scroll', this.mobileScroll);
       }
     }
   }
@@ -79,22 +83,6 @@ class ProgramsList {
     $(window).on('resize', function(){
       if($(window).width() >=1024){
         $('.loader-mobile').hide();
-      }
-    });
-
-    $(window).on('scroll', function(){
-      let ww = $(window).scrollTop()
-      if($('#programs-loaded').length){
-        let cw = $('#programs-loaded').offset().top;
-        if( $(window).width() < 1024 ){
-          if(ww >= cw-50){
-            $('.loader-mobile').fadeOut();
-          }else{
-            $('.loader-mobile').fadeIn();
-          }
-        }else{
-          $('.loader-mobile').hide();
-        }
       }
     });
   }
@@ -116,7 +104,6 @@ ProgramsList.getPrograms = function() {
   }else {
     this.$router.push({query: {category: this.checkedProgramType, ages: this.checkedAgeGroup, page: this.programPage }});
   }
-
 
   axios
     .get(url)
@@ -286,6 +273,28 @@ ProgramsList.selectAllAges = function() {
   }
 }
 
+/**
+ * Toogles filter jump button on mobile
+ **/
+ProgramsList.mobileScroll = function() {  
+  if(this.checkedProgramType.length > 0 || this.checkedAgeGroup.length >0){
+    let ww = $(window).scrollTop()
+    if($('#programs-loaded').length){
+      let cw = $('#programs-loaded').offset().top;
+      if( $(window).width() < 1024 ){
+        if(ww >= cw-50){
+          $('.loader-mobile').fadeOut();
+        }else{
+          $('.loader-mobile').fadeIn();
+        }
+      }else{
+        $('.loader-mobile').fadeOut();
+      }
+    }
+  }else{
+    $('.loader-mobile').fadeOut();
+  }
+}
 export default ProgramsList;
 
 

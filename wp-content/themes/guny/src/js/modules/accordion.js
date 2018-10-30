@@ -67,7 +67,7 @@ export default function() {
   function togglePanel($panelElem, makeVisible) {
     $panelElem.attr('aria-hidden', !makeVisible);
     if (makeVisible) {
-      $panelElem.css('height', $panelElem.data('height') + 'px');
+      // $panelElem.css('height', $panelElem.data('height') + 'px');
       $panelElem.find('a, button, [tabindex]').attr('tabindex', 0);
     } else {
       $panelElem.css('height', '');

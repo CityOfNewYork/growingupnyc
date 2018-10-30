@@ -147,7 +147,10 @@
 .signup-form__label-content {
   color: $color-secondary;
   display: block;
+  overflow: hidden;
   position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   width: 100%;
 }
 
@@ -178,6 +181,8 @@
 
 .csstransforms3d .is-filled .signup-form__label-content,
 .styleguide .is-filled .signup-form__label-content {
+  color: transparent;
+  overflow: visible;
   transform: translate3d(0, 100%, 0);
 }
 

@@ -144,4 +144,17 @@
         {% endif %}
       </div> <!-- /.o-article -->
     </article>
-  {% endblock %}
+{% endblock %}
+
+{% block banner_topic %}
+  {% if current_banner_topic and show_banner_topic %}
+    <div class="c-alert js-alert" data-cookie="{{current_banner_topic.slug}}" id="banner-{{current_banner_topic.slug}}">
+      <button type="button" class="c-alert__button" data-toggle="banner-{{current_banner_topic.slug}}"><svg role="img" class="icon--small"><title>Close</title><use xlink:href="#icon-close"></use></svg></button>
+      <div class="c-alert__banner">
+        <div class="o-container">
+          {{current_banner_topic.get_field('banner_content')}}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

@@ -21,6 +21,7 @@
     "wpackagist-plugin/limit-login-attempts-reloaded": "2.7.1",
     "filp/whoops": "^2.1",
     "whoops/soap": "^1.0",
-    "nyco/wp-config": "^0.0.5"
+    "nyco/wp-config": "^0.0.5",
+    "wpackagist-plugin/acf-to-rest-api": "3.1.0"
   }
 }

@@ -217,9 +217,13 @@ input[type="search"].form-field {
   border: 2px solid $white;
   display: inline-block;
   color: transparent;
-  height: rem-calc(20);
-  width: rem-calc(20);
+  height: rem-calc(15);
+  width: rem-calc(15);
   vertical-align: middle;
+  @include media($bp-large) {
+    height: rem-calc(20);
+    width: rem-calc(20);
+  }
 }
 
 .checkbox__field:checked + .checkbox__indicator {

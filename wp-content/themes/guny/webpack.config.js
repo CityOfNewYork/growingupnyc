@@ -1,6 +1,6 @@
 var webpack = require('webpack');
 
-module.exports = {
+const config= {
   module: {
     loaders: [
       {
@@ -40,3 +40,21 @@ module.exports = {
   ],
   devtool: 'inline-source-map'
 };
+
+// define additional plugins
+config.plugins = config.plugins||[];
+if (process.env.NODE_ENV === 'production') {
+  config.plugins.push(new webpack.DefinePlugin({
+    'process.env': {
+      'NODE_ENV': `"production"`
+    }
+  }));
+} else {
+  config.plugins.push(new webpack.DefinePlugin({
+    'process.env': {
+      'NODE_ENV': `"development"`
+    }
+  }));
+}
+
+module.exports = config;

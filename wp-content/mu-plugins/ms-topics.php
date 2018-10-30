@@ -60,7 +60,8 @@ function ms_topics_create() {
         'slug' => 'other-category',
         'with_front' => false
       ),
-      'hierarchical' => true
+      'hierarchical' => true,
+      'show_in_rest' => true,
     )
   );
 }

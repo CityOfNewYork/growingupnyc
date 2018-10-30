@@ -1,8 +1,5 @@
 <?php
 
-// Environments
-require_once(get_template_directory() . '/config/environments.php');
-
 // Notifications
 require_once(get_template_directory() . '/includes/notifications.php');
 
@@ -103,6 +100,7 @@ class GunySite extends TimberSite {
 
   function add_to_context ( $context ) {
     $context['menu'] = new TimberMenu('header-menu');
+    $context['language_code'] = ICL_LANGUAGE_CODE;
     $context['footer_menu_primary_additional'] = new TimberMenu('footer-menu-additional');
     $context['footer_menu_right'] = new TimberMenu('footer-menu-right');
     $context['ms_menu'] = new TimberMenu('ms-header-menu');
@@ -125,6 +123,9 @@ class GunySite extends TimberSite {
     $context['options'] = get_fields('options');
     if (!empty($context['options']) && !empty($context['options']['current_banner'])) {
       $context['options']['current_banner'] = new TimberPost($context['options']['current_banner']);
+    }
+    if (!empty($context['options']) && !empty($context['options']['current_banner_generation'])) {
+      $context['options']['current_banner_generation'] = new TimberPost($context['options']['current_banner_generation']);
     }
     $context['is_archive'] = is_archive();
     $context['current_url'] = strtok($_SERVER["REQUEST_URI"],'?');
@@ -537,6 +538,10 @@ $includes = [
   '/includes/search.php', // Search functions
   '/includes/summer_guides.php', // Summer guide functions
   '/includes/afterschool_guides.php', // Afterschool guide functions
+  [ // REST
+    '/includes/REST/guny_rest_programs.php', // expose fields to rest API
+    '/includes/REST/guny_rest_events.php', // expose fields to rest API
+  ],
   [ // Templating
     '/includes/get_focal_point.php', // Focal point functions
     '/includes/format_posts.php', // Format posts based on their type

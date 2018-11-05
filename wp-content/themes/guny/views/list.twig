@@ -5,7 +5,9 @@
   {% if 'events' in current_url %}
     {% set v_page = 'events' %}
   {% elseif 'programs' in current_url %}
-    {% set v_page = 'programs' %}
+    {% set v_page = 'program' %}
+  {% elseif 'afterschool' in current_url %}
+    {% set v_page = 'afterschool-guide' %}
   {% endif %}
 
   <div id="vue-{{v_page}}">

@@ -541,6 +541,7 @@ $includes = [
   [ // REST
     '/includes/REST/guny_rest_programs.php', // expose fields to rest API
     '/includes/REST/guny_rest_events.php', // expose fields to rest API
+    '/includes/REST/guny_rest_afterschool.php', // expose fields to rest API
   ],
   [ // Templating
     '/includes/get_focal_point.php', // Focal point functions

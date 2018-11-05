@@ -18,4 +18,4 @@ $context['archive_link'] = AfterschoolGuides\get_archive_link();
 $context['reset_link'] = AfterschoolGuides\get_reset_link();
 $context['pagination'] = AfterschoolGuides\get_pagination();
 
-Timber::render(array('filter-afterschool-guide.twig'), $context);
+Timber::render(array('list-afterschool-guide.twig'), $context);

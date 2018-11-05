@@ -14,42 +14,60 @@ class ProgramsList {
       this._baseURL = window.location.origin;
     }
 
+    this._el = '#' + $('div').find('[id^=vue]').attr('id');
+
+    this._posttype = this._el.replace(new RegExp("^" + '#vue-'), '')
+     
     this._programs = {
       delimiters: ['v{', '}'],
-      el: '#vue-programs',
+      el: this._el,
       router,
       data: {
-        programsURL: this._baseURL + '/wp-json/wp/v2/program',
-        programTypeURL: this._baseURL + '/wp-json/wp/v2/programs_cat',
-        ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group',
+        posttype: this._posttype,
+        programsURL: this._baseURL + '/wp-json/wp/v2/' + this._posttype,
         programs: null,
+        programTypeURL: this._baseURL + '/wp-json/wp/v2/programs_cat',
         programTypes: null,
         checkedProgramType: [],
-        checkedAgeGroup: [],
+        checkedAllTypes: false,
+        ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group',
         ageGroups: null,
+        checkedAgeGroup: [],
+        checkedAllAges: false,
+        boroughURL: this._baseURL + '/wp-json/wp/v2/borough',
+        boroughNames: null,
+        checkedBorough: [],
+        afterschoolTypeURL: this._baseURL + '/wp-json/wp/v2/afterschool_programs_cat',
+        afterschoolTypes: null,
+        checkedAfterschoolType: [],
+        checkedAllBoroughs: false,
         programPage: 1,
         maxPages: 1,
         errorMsg: false,
         isLoading: true,
-        checkedAllTypes: false,
-        checkedAllAges: false,
-        totalResults: ''
+        totalResults: '',
       },
        watch: {
         checkedProgramType: 'getPrograms',
         checkedAgeGroup: 'getPrograms',
+        checkedBorough: 'getPrograms',
         programPage: 'getPrograms',
+        checkedAfterschoolType: 'getPrograms',
         checkedAllTypes: 'selectAllTypes',
         checkedAllAges: 'selectAllAges'
       },
       mounted: function() {
         axios.all([
           axios.get(this.programTypeURL),
-          axios.get(this.ageGroupURL)
+          axios.get(this.ageGroupURL),
+          axios.get(this.boroughURL),
+          axios.get(this.afterschoolTypeURL)
           ])
-          .then(axios.spread((catResponse, ageResponse) => {
+          .then(axios.spread((catResponse, ageResponse, boroughResponse, afterschoolResponse) => {
             this.programTypes = catResponse.data;
             this.ageGroups = ageResponse.data;
+            this.boroughNames = boroughResponse.data;
+            this.afterschoolTypes = afterschoolResponse.data;
             this.parseQuery();
             this.getPrograms();
           }));
@@ -80,6 +98,7 @@ class ProgramsList {
   init() {
     this._programs = new Vue(this._programs);
 
+
     $(window).on('resize', function(){
       if($(window).width() >=1024){
         $('.loader-mobile').hide();
@@ -100,9 +119,9 @@ ProgramsList.getPrograms = function() {
 
   // update the query
   if ( this.programPage == 1){
-    this.$router.push({query: {category: this.checkedProgramType, ages: this.checkedAgeGroup}});
+    this.$router.push({query: {category: this.checkedProgramType, ages: this.checkedAgeGroup, afterschool_category: this.checkedAfterschoolType, boroughs: this.checkedBorough}});
   }else {
-    this.$router.push({query: {category: this.checkedProgramType, ages: this.checkedAgeGroup, page: this.programPage }});
+    this.$router.push({query: {category: this.checkedProgramType, ages: this.checkedAgeGroup, afterschool_category: this.checkedAfterschoolType, boroughs: this.checkedBorough, page: this.programPage }});
   }
 
   axios
@@ -146,6 +165,16 @@ ProgramsList.generateFilterURL = function(data) {
     filters.push('age_group[]=' + arrIds.join('&age_group[]='));
   }
 
+  if ( data.checkedAfterschoolType.length > 0  ) {
+    arrIds = ProgramsList.getIds(data.afterschoolTypes, data.checkedAfterschoolType).map(value => value.id)
+    filters.push('afterschool_programs_cat[]=' + arrIds.join('&afterschool_programs_cat[]='));
+  }
+
+  if ( data.checkedBorough.length > 0  ) {
+    arrIds = ProgramsList.getIds(data.boroughNames, data.checkedBorough).map(value => value.id)
+    filters.push('borough[]=' + arrIds.join('&borough[]='));
+  }
+
   if (data.programPage > 1) {
     filters.push('page=' + data.programPage);
   }
@@ -187,6 +216,34 @@ ProgramsList.parseQuery = function() {
     }else{
       let index = this.ageGroups.map(function(e) { return e.slug; }).indexOf(query.ages);
       this.checkedAgeGroup.push(this.ageGroups[index].slug);
+    }
+  }
+
+  if(!_.isEmpty(query.afterschool_category)){
+    if (_.isArray(query.afterschool_category)){
+      if (query.afterschool_category.every( (val, i, arr) => val === arr[0] )) {
+        query.afterschool_category = query.afterschool_category[0];
+      } else {
+        queryArr=ProgramsList.getIds(this.afterschoolTypes, query.afterschool_category.map(String));
+        this.checkedAfterschoolType = queryArr.map(value => value.slug)
+      }
+    }else{
+      let index = this.afterschoolTypes.map(function(e) { return e.slug; }).indexOf(query.afterschool_category);
+      this.checkedAfterschoolType.push(this.afterschoolTypes[index].slug);
+    }
+  }
+
+  if(!_.isEmpty(query.boroughs)){
+    if (_.isArray(query.boroughs)){
+      if (query.boroughs.every( (val, i, arr) => val === arr[0] )) {
+        query.boroughs = query.boroughs[0];
+      } else {
+        queryArr=ProgramsList.getIds(this.boroughNames, query.boroughs.map(String));
+        this.checkedBorough = queryArr.map(value => value.slug)
+      }
+    }else{
+      let index = this.boroughNames.map(function(e) { return e.slug; }).indexOf(query.boroughs);
+      this.checkedBorough.push(this.boroughNames[index].slug);
     }
   }
 

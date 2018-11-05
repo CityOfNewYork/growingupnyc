@@ -40,6 +40,7 @@ class ProgramsList {
         afterschoolTypeURL: this._baseURL + '/wp-json/wp/v2/afterschool_programs_cat',
         afterschoolTypes: null,
         checkedAfterschoolType: [],
+        checkedAllAfterschoolTypes: false,
         checkedAllBoroughs: false,
         programPage: 1,
         maxPages: 1,
@@ -55,6 +56,7 @@ class ProgramsList {
         checkedAfterschoolType: 'getPrograms',
         checkedAllTypes: 'selectAllTypes',
         checkedAllAges: 'selectAllAges',
+        checkedAllAfterschoolTypes: 'selectAllAfterschoolTypes',
         checkedAllBoroughs: 'selectAllBoroughs'
       },
       mounted: function() {
@@ -85,6 +87,7 @@ class ProgramsList {
         },
         selectAllTypes: ProgramsList.selectAllTypes,
         selectAllAges: ProgramsList.selectAllAges,
+        selectAllAfterschoolTypes: ProgramsList.selectAllAfterschoolTypes,
         selectAllBoroughs: ProgramsList.selectAllBoroughs,
         mobileScroll: ProgramsList.mobileScroll
       },
@@ -310,7 +313,6 @@ ProgramsList.hideLoader = function(el, status){
   $(el).find('.pagination').show();
 }
 
-
 /**
  * Toggle the select all for filters
  **/
@@ -332,6 +334,15 @@ ProgramsList.selectAllAges = function() {
   }
 }
 
+ProgramsList.selectAllAfterschoolTypes = function() {  
+  if(this.checkedAllAfterschoolTypes){
+    this.checkedAfterschoolType = this.afterschoolTypes.map(a => a.slug);
+  }else {
+    this.checkedAllAfterschoolTypes = false;
+    this.checkedAfterschoolType = [];
+  }
+}
+
 ProgramsList.selectAllBoroughs = function() {  
   if(this.checkedAllBoroughs){
     this.checkedBorough = this.boroughNames.map(a => a.slug);
@@ -345,7 +356,11 @@ ProgramsList.selectAllBoroughs = function() {
  * Toogles filter jump button on mobile
  **/
 ProgramsList.mobileScroll = function() {  
-  if(this.checkedProgramType.length > 0 || this.checkedAgeGroup.length >0){
+  if(this.checkedProgramType.length > 0 || 
+     this.checkedAgeGroup.length > 0 ||
+     this.checkedAfterschoolType.length > 0 ||
+     this.checkedBorough.length > 0
+  ){
     let ww = $(window).scrollTop()
     if($('#programs-loaded').length){
       let cw = $('#programs-loaded').offset().top;
@@ -363,6 +378,7 @@ ProgramsList.mobileScroll = function() {
     $('.loader-mobile').fadeOut();
   }
 }
+
 export default ProgramsList;
 
 

@@ -81,12 +81,13 @@
 
           <a :href="post.link">
             <div class="c-card__sticker sticker bg-strong-blue" aria-hidden="true">
-              <svg aria-hidden="true" class="icon--large"><use xlink:href="#icon-afterschool-guides"></use></svg>
+              <svg aria-hidden="true" class="icon--large"><title>v{post.afterschool_programs_cat[0].name}</title>
+                <use xlink:href="#icon-afterschool-guides"></use></svg>
             </div>
           </a>
 
           <h3 class="c-card__title">
-            <a href="post.link" title="post.title" rel="bookmark">
+            <a :href="post.link" title="post.title" rel="bookmark">
               v{ post.title }
             </a>
           </h3>
@@ -126,7 +127,7 @@
           </p>
         </div>
       </div>
-      <p class="type--no-results" v-if="errorMsg">{{ __('Sorry, we don’t have any programs that match those filters. For more results, try different filters or <a href="/programs">reset your filters</a>.', 'guny') }}</p>
+      <p class="type--no-results" v-if="errorMsg">{{ __('Sorry, we don’t have any programs that match those filters. For more results, try different filters or <a href="/afterschool">reset your filters</a>.', 'guny') }}</p>
     </div>
   </section>
 

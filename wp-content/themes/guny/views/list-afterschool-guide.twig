@@ -68,13 +68,13 @@
 {% block post_list %}
   <section class="c-block-list" v-cloak>
     <div class="c-block-list--blue o-content-container u-sm-gutter loader"></div>
-    <div class="c-block-list--blue o-content-container u-sm-gutter loader-mobile text-center" >
+    <div class="c-block-list--blue o-content-container u-sm-gutter loader-mobile text-center" v-if="!errorMsg">
       <button>
       <a href="#programs-loaded" class="button--outline button--outline--white aligncenter">See v{ totalResults } programs</a>
       </button>
     </div>
 
-    <div id="programs-loaded" class="c-block-list--shade o-content-container u-sm-gutter">
+    <div id="programs-loaded" class="c-block-list--shade o-content-container u-sm-gutter" v-if="!isLoading">
       <div class="c-block-list__item" v-for="post in programs">
 
         <div class="c-card c-card--subtitle-first">
@@ -126,25 +126,20 @@
           </p>
         </div>
       </div>
+      <p class="type--no-results" v-if="errorMsg">{{ __('Sorry, we don’t have any programs that match those filters. For more results, try different filters or <a href="/programs">reset your filters</a>.', 'guny') }}</p>
     </div>
   </section>
 
+{# pagination #}
+  <div class="o-content-container--compact pagination" v-if="!isLoading" v-cloak>
+    <div id="paginate" class="previous" v-if="programPage <= maxPages" >
+      <router-link class="button--outline button--outline--gray alignleft" v-if="programPage > 1" :to="{ query: { page: programPage-1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Previous', 'guny') }}</router-link>    
+    </div>
 
-  {# <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-sm-gutter">
-    {% spaceless %}
-    <p class="type--no-results">
-      {{ __('No afterschool events found for;', domain) }}
-      {% for value in filters %}
-        {% if loop.last %}{{ __('and', domain) }} {% endif %}
-        {% if value.prompt == value.default %}{{ value.name }}{% else %}{{ value.prompt }}{% endif %}{% if loop.last %}.{% else %},{% endif %}
-      {% endfor %}
-      {{ __('Try choosing different filters or ', domain) }}
-      <a href="{{ reset_link }}">{{ __('reset them by clicking this link', domain) }}</a>.
-    </p>
-    {% endspaceless %}
-  </section> #}
-
-
+    <div class="paginate" v-if="programPage < maxPages">
+      <router-link class="button--outline button--outline--gray alignright paginate" :to="{ query: { page: (programPage*1)+1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Next', 'guny') }}</router-link>
+    </div>
+  </div>
 
 {% endblock %}
 

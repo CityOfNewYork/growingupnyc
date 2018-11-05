@@ -54,7 +54,8 @@ class ProgramsList {
         programPage: 'getPrograms',
         checkedAfterschoolType: 'getPrograms',
         checkedAllTypes: 'selectAllTypes',
-        checkedAllAges: 'selectAllAges'
+        checkedAllAges: 'selectAllAges',
+        checkedAllBoroughs: 'selectAllBoroughs'
       },
       mounted: function() {
         axios.all([
@@ -84,6 +85,7 @@ class ProgramsList {
         },
         selectAllTypes: ProgramsList.selectAllTypes,
         selectAllAges: ProgramsList.selectAllAges,
+        selectAllBoroughs: ProgramsList.selectAllBoroughs,
         mobileScroll: ProgramsList.mobileScroll
       },
       created () {
@@ -327,6 +329,15 @@ ProgramsList.selectAllAges = function() {
   }else {
     this.checkedAllAges = false;
     this.checkedAgeGroup = [];
+  }
+}
+
+ProgramsList.selectAllBoroughs = function() {  
+  if(this.checkedAllBoroughs){
+    this.checkedBorough = this.boroughNames.map(a => a.slug);
+  }else {
+    this.checkedAllBoroughs = false;
+    this.checkedBorough = [];
   }
 }
 

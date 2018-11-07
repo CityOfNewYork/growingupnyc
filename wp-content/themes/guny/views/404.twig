@@ -1,12 +1,14 @@
+{% extends 'base.twig' %}
+
 {# global 404 page template #}
-{% block content %}
+{% block content %}	
 <div class="s-404">
     {# Side Hero #}
     <section class="o-static-column o-static-column--left c-side-hero js-static">
       <div class="c-side-hero__content u-top-spacing">
         <h1 class="c-side-hero__title u-sm-gutter">
           <span class="c-side-hero__title__large text-bright-blue">404</span>
-          <p class="c-side-hero__tagline">Sorry, that page doesn't exist</p>
+          <p class="c-side-hero__tagline">{{post.post_content}}</p>
         </h1>
         <a href="#" class="button--outline button--outline--gray">Return to home</a>
       </div> <!--/.c-side-hero__content -->

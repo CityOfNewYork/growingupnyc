@@ -129,7 +129,7 @@ class GunySite extends TimberSite {
     }
     $context['is_archive'] = is_archive();
     $context['current_url'] = strtok($_SERVER["REQUEST_URI"],'?');
-    $context['is_404'] = is_404();
+    
     return $context;
   }
 

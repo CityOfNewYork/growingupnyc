@@ -8,9 +8,6 @@
     {% set v_page = 'programs' %}
   {% endif %}
 
-  {% if is_404 %}
-    {% include 'partials/404.twig' %}
-  {% else %}
     <div id="vue-{{v_page}}">
       {% block hero %}
       {% endblock %}
@@ -34,5 +31,4 @@
         </div> <!-- /.o-article -->
       </section> <!-- /.o-layout--large -->
     </div>
-  {% endif %}
 {% endblock %}

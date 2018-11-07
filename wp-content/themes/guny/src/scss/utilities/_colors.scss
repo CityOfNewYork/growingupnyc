@@ -77,6 +77,12 @@
 }
 
 //
+.text-bright-blue,
+.hover\:text-bright-blue:hover {
+  color: $bright-blue !important;
+}
+
+//
 .bg-white,
 .hover\:bg-white:hover {
   background-color: $white !important;
@@ -92,7 +98,7 @@
   color: $white !important;
 }
 
-// 
+//
 .bg-strong-blue,
 .hover\:bg-strong-blue:hover {
   background-color: $strong-blue !important;
@@ -103,7 +109,7 @@
   border-color: $strong-blue !important;
 }
 
-// 
+//
 .bg-very-dark-blue,
 .hover\:bg-very-dark-blue:hover {
   background-color: $very-dark-blue !important;
@@ -119,7 +125,7 @@
   stop-color: $very-dark-blue !important;
 }
 
-// 
+//
 .bg-blue-2,
 .hover\:bg-blue-2:hover {
   background-color: $blue-2 !important;

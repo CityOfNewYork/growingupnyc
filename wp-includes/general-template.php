@@ -969,7 +969,7 @@ function wp_get_document_title() {
 
 	// If it's a 404 page, use a "Page not found" title.
 	if ( is_404() ) {
-		$title['title'] = __( 'Page not found' );
+		$title['title'] = __( 'Page Not Found' );
 
 	// If it's a search, use a dynamic search results title.
 	} elseif ( is_search() ) {

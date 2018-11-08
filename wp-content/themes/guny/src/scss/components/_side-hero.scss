@@ -115,3 +115,13 @@
     width: 100%;
   }
 }
+
+.c-side-hero__tagline {
+  font-size: rem-calc($font-size-xx-large * $font-size-ratio);
+  margin-top: rem-calc(10);
+  margin-bottom: rem-calc(15);
+
+  @include media($bp-medium) {
+    font-size: rem-calc($font-size-xx-large);
+  }
+}

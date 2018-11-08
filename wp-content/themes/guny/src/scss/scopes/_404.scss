@@ -3,9 +3,19 @@
 .s-404 {
   background-color: $color-background-shade;
 
+  .o-container {
+    @include media($bp-small) {
+      padding: 0;
+    }
+  }
+
+  .o-static-column--left {
+    border-color: $color-background-shade;
+  }
+
   .c-side-hero__content {
     background-color: inherit;
-    color: black;
+    color: $black;
 
     &::after,
     &::before {

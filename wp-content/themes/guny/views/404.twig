@@ -1,40 +1,38 @@
 {% extends 'base.twig' %}
 
 {# global 404 page template #}
-{% block content %}	
+{% block content %}
 <div class="s-404">
+  <div class="o-container">
     {# Side Hero #}
     <section class="o-static-column o-static-column--left c-side-hero js-static">
       <div class="c-side-hero__content u-top-spacing">
         <h1 class="c-side-hero__title u-sm-gutter">
-          <span class="c-side-hero__title__large text-bright-blue">404</span>
-          <p class="c-side-hero__tagline">{{post.post_content}}</p>
+          <span class="c-side-hero__title__large text-bright-blue">{{post.side_hero_header}}</span>
+          <p class="c-side-hero__tagline">{{post.side_hero_tagline}}</p>
         </h1>
-        <a href="#" class="button--outline button--outline--gray">Return to home</a>
+        {% if post.side_hero_button_url %}
+          <a href="{{post.side_hero_button_url}}" class="button--outline button--outline--gray">{{post.side_hero_button_text}}</a>
+        {% endif %}
       </div> <!--/.c-side-hero__content -->
     </section> <!-- /.o-static-column.o-static-column--left -->
 
-    {# Links Menu #}
+    {# Side Menu #}
     <section class="o-scroll-column o-scroll-column--right">
       <div class="c-list-box c-list-box--primary">
         <div class="c-list-box__item bg-strong-blue">
-          <h2 class="c-list-box__heading bg-strong-blue">Helpful links</h2>
+          <h2 class="c-list-box__heading bg-strong-blue">{{post.side_menu_header}}</h2>
+
           <ul class="c-list-box__content bg-strong-blue">
-            <li class="c-list-box__subitem">
-              <a href="#" class="button--full-width button--primary button--primary--blue button--primary__curved">Events</a>
-            </li>
-            <li class="c-list-box__subitem">
-              <a href="#" class="button--full-width button--primary button--primary--blue button--primary__curved">Programs</a>
-            </li>
-            <li class="c-list-box__subitem">
-              <a href="#" class="button--full-width button--primary button--primary--blue button--primary__curved">After</a>
-            </li>
-            <li class="c-list-box__subitem">
-              <a href="#" class="button--full-width button--primary button--primary--blue button--primary__curved">Contact Us</a>
-            </li>
+            {% for item in side_menu_categories %}
+              <li class="c-list-box__subitem">
+                <a href="{{item.button_link}}" class="button--full-width button--primary button--primary--blue button--primary__curved">{{item.button_text}}</a>
+              </li>
+            {% endfor %}
           </ul>
         </div>
       </div>
     </section> <!-- /.o-scroll-column.o-scroll-column--right -->
   </div>
+</div>
 {% endblock %}

@@ -129,7 +129,7 @@ class GunySite extends TimberSite {
     }
     $context['is_archive'] = is_archive();
     $context['current_url'] = strtok($_SERVER["REQUEST_URI"],'?');
-    
+
     return $context;
   }
 
@@ -585,4 +585,26 @@ function pre_dump($var) {
   echo '<pre>';
   var_dump($var);
   echo '</pre>';
+}
+
+/**
+ * Render 404 template for pages containing "404" in
+ * their title. This uses same logic in 404.php
+ */
+add_action('template_redirect', 'page_not_found_redirect');
+
+function page_not_found_redirect() {
+  if ( preg_match('/404/', $_SERVER['REQUEST_URI']) > 0 && !is_404() ) {
+    $context = Timber::get_context();
+    $context['top_widget'] = Timber::get_widgets('top_widget');
+
+    $post_id = icl_object_id(get_page_by_title( '404' )->ID, 'page', FALSE, ICL_LANGUAGE_CODE);
+    $post = get_page($post_id);
+
+    $context['post'] = $post;
+    $context['side_menu_categories'] = get_field('side_menu_categories', $post->id);
+
+    Timber::render(array('404.twig'), $context);
+    exit;
+  }
 }

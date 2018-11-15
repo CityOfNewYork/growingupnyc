@@ -1,9 +1,9 @@
 {
-    "key": "group_5be47a73328a6",
+    "key": "group_5bec762f0295a",
     "title": "404 Page Content",
     "fields": [
         {
-            "key": "field_5be47a736591f",
+            "key": "field_5bec7aeb26db1",
             "label": "Side Hero Header",
             "name": "side_hero_header",
             "type": "text",
@@ -22,7 +22,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_5be47d6e805b9",
+            "key": "field_5bec81c4fae9a",
             "label": "Side Hero Tagline",
             "name": "side_hero_tagline",
             "type": "text",
@@ -41,7 +41,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_5be47a7365adc",
+            "key": "field_5bec81d1fae9b",
             "label": "Side Hero Button Text",
             "name": "side_hero_button_text",
             "type": "text",
@@ -60,26 +60,26 @@
             "maxlength": ""
         },
         {
-            "key": "field_5be47a7365ba5",
+            "key": "field_5bec81dbfae9c",
             "label": "Side Hero Button URL",
             "name": "side_hero_button_url",
-            "type": "page_link",
+            "type": "text",
             "instructions": "",
-            "required": 1,
-            "conditional_logic": null,
+            "required": 0,
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "post_type": "",
-            "taxonomy": "",
-            "allow_null": 0,
-            "allow_archives": 1,
-            "multiple": 0
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         },
         {
-            "key": "field_5be47ae6d9db9",
+            "key": "field_5bec81e6fae9d",
             "label": "Side Menu Header",
             "name": "side_menu_header",
             "type": "text",
@@ -98,7 +98,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_5be47a7365c89",
+            "key": "field_5bec81f6fae9e",
             "label": "Side Menu Categories",
             "name": "side_menu_categories",
             "type": "repeater",
@@ -111,13 +111,13 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": 2,
+            "min": 0,
             "max": 0,
             "layout": "table",
             "button_label": "",
             "sub_fields": [
                 {
-                    "key": "field_5be483a1c8b5b",
+                    "key": "field_5bec8215fae9f",
                     "label": "Button Text",
                     "name": "button_text",
                     "type": "text",
@@ -136,10 +136,10 @@
                     "maxlength": ""
                 },
                 {
-                    "key": "field_5be483aac8b5c",
+                    "key": "field_5bec8221faea0",
                     "label": "Button Link",
                     "name": "button_link",
-                    "type": "page_link",
+                    "type": "text",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -148,11 +148,11 @@
                         "class": "",
                         "id": ""
                     },
-                    "post_type": "",
-                    "taxonomy": "",
-                    "allow_null": 0,
-                    "allow_archives": 1,
-                    "multiple": 0
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
                 }
             ]
         }
@@ -162,19 +162,16 @@
             {
                 "param": "page",
                 "operator": "==",
-                "value": "13599"
+                "value": "14420"
             }
         ]
     ],
     "menu_order": 0,
     "position": "normal",
-    "style": "seamless",
+    "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
-    "hide_on_screen": [
-        "the_content"
-    ],
+    "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "modified": 1541702795
+    "description": ""
 }

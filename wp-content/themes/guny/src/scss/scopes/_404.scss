@@ -21,6 +21,11 @@
     &::before {
       display: none;
     }
+
+    @include media($bp-large) {
+      top: 0;
+      margin: rem-calc(30 0);
+    }
   }
 
   .c-hero__tagline {

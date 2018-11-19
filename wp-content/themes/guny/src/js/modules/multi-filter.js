@@ -41,6 +41,7 @@ class ProgramsList {
         afterschoolTypes: null,
         checkedAfterschoolType: [],
         checkedAllAfterschoolTypes: false,
+        allAfterschoolTypes: false,
         checkedAllBoroughs: false,
         programPage: 1,
         maxPages: 1,
@@ -56,7 +57,7 @@ class ProgramsList {
         checkedAfterschoolType: 'getPrograms',
         checkedAllTypes: 'selectAllTypes',
         checkedAllAges: 'selectAllAges',
-        checkedAllAfterschoolTypes: 'selectAllAfterschoolTypes',
+        // checkedAllAfterschoolTypes: 'selectAllAfterschoolTypes',
         checkedAllBoroughs: 'selectAllBoroughs'
       },
       mounted: function() {
@@ -116,7 +117,6 @@ class ProgramsList {
  **/
 ProgramsList.getPrograms = function() {
   let url = this.programsURL;
-  
   ProgramsList.showLoader(this, this.programs)
 
   let filters = ProgramsList.generateFilterURL(this);
@@ -124,7 +124,15 @@ ProgramsList.getPrograms = function() {
 
   // update the query
   if ( this.programPage == 1){
-    this.$router.push({query: {category: this.checkedProgramType, ages: this.checkedAgeGroup, afterschool_category: this.checkedAfterschoolType, boroughs: this.checkedBorough}});
+    this.$router.push({query: 
+      {
+        category: this.checkedProgramType, 
+        ages: this.checkedAgeGroup, 
+        afterschool_category: this.checkedAfterschoolType.length < this.afterschoolTypes.length ? this.checkedAfterschoolType : 'all', 
+        boroughs: this.checkedBorough
+      }
+    });
+
   }else {
     this.$router.push({query: {category: this.checkedProgramType, ages: this.checkedAgeGroup, afterschool_category: this.checkedAfterschoolType, boroughs: this.checkedBorough, page: this.programPage }});
   }
@@ -171,6 +179,9 @@ ProgramsList.generateFilterURL = function(data) {
   }
 
   if ( data.checkedAfterschoolType.length > 0  ) {
+    if( data.checkedAfterschoolType.length != data.afterschoolTypes.length){
+      data.checkedAllAfterschoolTypes = false;
+    }
     arrIds = ProgramsList.getIds(data.afterschoolTypes, data.checkedAfterschoolType).map(value => value.id)
     filters.push('afterschool_programs_cat[]=' + arrIds.join('&afterschool_programs_cat[]='));
   }
@@ -224,7 +235,12 @@ ProgramsList.parseQuery = function() {
     }
   }
 
-  if(!_.isEmpty(query.afterschool_category)){
+  if(query.afterschool_category == 'all'){
+    this.checkedAllAfterschoolTypes = true;
+    this.checkedAfterschoolType = this.afterschoolTypes.map(a => a.slug);
+  }
+  if(!_.isEmpty(query.afterschool_category) && query.afterschool_category != 'all'){
+    this.checkedAllAfterschoolTypes = false;
     if (_.isArray(query.afterschool_category)){
       if (query.afterschool_category.every( (val, i, arr) => val === arr[0] )) {
         query.afterschool_category = query.afterschool_category[0];
@@ -334,12 +350,13 @@ ProgramsList.selectAllAges = function() {
   }
 }
 
-ProgramsList.selectAllAfterschoolTypes = function() {  
+ProgramsList.selectAllAfterschoolTypes = function() {
   if(this.checkedAllAfterschoolTypes){
-    this.checkedAfterschoolType = this.afterschoolTypes.map(a => a.slug);
-  }else {
     this.checkedAllAfterschoolTypes = false;
     this.checkedAfterschoolType = [];
+  }else {
+    this.checkedAllAfterschoolTypes = true;
+    this.checkedAfterschoolType = this.afterschoolTypes.map(a => a.slug);
   }
 }
 

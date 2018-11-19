@@ -148,13 +148,14 @@
 
 {% block banner_topic %}
   {% if current_banner_topic and show_banner_topic %}
-    <div class="c-alert js-alert" data-cookie="{{current_banner_topic.slug}}" id="banner-{{current_banner_topic.slug}}">
-      <button type="button" class="c-alert__button" data-toggle="banner-{{current_banner_topic.slug}}"><svg role="img" class="icon--small"><title>Close</title><use xlink:href="#icon-close"></use></svg></button>
-      <div class="c-alert__banner">
+    <div class="c-alert js-alert" data-cookie="{{current_banner_topic.slug}}" id="banner-{{current_banner_topic.slug}}" role="dialog" aria-labelledby="dialog-title-{{options.current_banner.slug}}" aria-describedby="dialog-desc-{{options.current_banner.slug}}">
+      <div class="show-for-screen-reader" id="dialog-title-{{options.current_banner.slug}}">Notification Banner</div>
+      <div class="c-alert__banner" id="dialog-desc-{{options.current_banner.slug}}">
         <div class="o-container">
           {{current_banner_topic.get_field('banner_content')}}
         </div>
       </div>
+      <button type="button" class="c-alert__button" data-toggle="banner-{{current_banner_topic.slug}}" aria-label="close"><svg role="img" class="icon--small"><title>Close</title><use xlink:href="#icon-close"></use></svg></button>
     </div>
   {% endif %}
 {% endblock %}

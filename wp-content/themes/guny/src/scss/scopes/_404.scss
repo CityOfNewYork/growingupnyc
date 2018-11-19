@@ -1,0 +1,45 @@
+// 404 page styles
+
+.s-404 {
+  background-color: $color-background-shade;
+
+  .o-container {
+    @include media($bp-small) {
+      padding: 0;
+    }
+  }
+
+  .o-static-column--left {
+    border-color: $color-background-shade;
+  }
+
+  .c-side-hero__content {
+    background-color: inherit;
+    color: $black;
+
+    &::after,
+    &::before {
+      display: none;
+    }
+
+    @include media($bp-large) {
+      top: 0;
+      margin: rem-calc(30 0);
+    }
+  }
+
+  .c-hero__tagline {
+    width: 100%;
+  }
+
+  @include media($bp-mobile-only) {
+    .c-side-hero__title {
+      padding-left: rem-calc($outer-gutter-large + 20);
+      padding-right: rem-calc($outer-gutter-large + 20);
+    }
+
+    .c-list-box__item {
+      padding: rem-calc(2);
+    }
+  }
+}

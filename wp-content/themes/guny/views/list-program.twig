@@ -5,10 +5,6 @@
   .c-hero { background-color: #2793E0; background-image: url(/wp-content/themes/guny/assets/img/hero-program-landing.svg); }
   .facetwp-seo { display: none; }
   [v-cloak] { display: none; }
-  .previous {
-    float: left;
-    padding-right: 5px;
-  }
 </style>
 {% endblock %}
 
@@ -87,7 +83,7 @@
         <div class="c-card {{is_first ? "c-card--hero #{age_group.slug|sanitize|replace({'-es':''})}-gradient"}}">
           <a :href="post.link">
             <div class="c-card__sticker sticker" aria-hidden="true">
-              <svg class="icon--large"><title>v{ post.programs_cat[0].slug }</title><use :xlink:href="'#icon-' + post.programs_cat[0].slug.replace('-es','')" ></use></svg>
+              <svg class="icon--large"><title>v{ post.programs_cat[0].name }</title><use :xlink:href="'#icon-' + post.programs_cat[0].slug.replace('-es','')" ></use></svg>
             </div>
           </a>
           <h3 class="c-card__title">
@@ -95,10 +91,12 @@
               v{ post.title }
             </a>
           </h3>
+
           <div class="c-card__subtitle">
             <p><strong>v{post.acf.program_name}</strong></p>
             <p>v{post.acf.government_agency}</p>
           </div>
+          
           <div class="c-card__tags" v-if="post.programs_cat">
             <span v-for="term in post.programs_cat"> 
               <a :href="'?category=' + term.slug" class="button--pill">v{ term.name }</a>
@@ -107,6 +105,7 @@
               <a :href="'?ages=' + term.slug" class="button--pill button--pill--alt">v{ term.name }</a>
             </span>
           </div>
+          
           <div class="c-card__body">
             v{ post.excerpt }
           </div>

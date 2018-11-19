@@ -1,0 +1,35 @@
+{% extends 'base.twig' %}
+
+{# global 404 page template #}
+{% block content %}
+<div class="s-404">
+    {# Side Hero #}
+    <section class="o-static-column o-static-column--left c-side-hero js-static">
+    <div class="c-side-hero__content u-top-spacing">
+      <h1 class="c-side-hero__title u-sm-gutter">
+        <span class="c-side-hero__title__large text-bright-blue">{{post.side_hero_header}}</span>
+        <p class="c-side-hero__tagline">{{post.side_hero_tagline}}</p>
+      </h1>
+      {% if post.side_hero_button_url %}
+        <a href="{{post.side_hero_button_url}}" class="button--outline button--outline--gray">{{post.side_hero_button_text}}</a>
+      {% endif %}
+    </div> <!--/.c-side-hero__content -->
+  </section> <!-- /.o-static-column.o-static-column--left -->
+
+    {# Side Menu #}
+    <section class="o-scroll-column o-scroll-column--right">
+      <div class="c-list-box c-list-box--primary">
+        <div class="c-list-box__item bg-strong-blue">
+          <h2 class="c-list-box__heading bg-strong-blue">{{post.side_menu_header}}</h2>
+          <ul class="c-list-box__content bg-strong-blue">
+            {% for item in post.get_field('side_menu_categories') %}
+              <li class="c-list-box__subitem">
+                <a href="{{item.button_link}}" class="button--full-width button--primary button--primary--blue button--primary__curved">{{item.button_text}}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </section> <!-- /.o-scroll-column.o-scroll-column--right -->
+</div>
+{% endblock %}

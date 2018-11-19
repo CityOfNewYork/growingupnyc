@@ -17,7 +17,7 @@ import captchaResize from './modules/captchaResize.js';
 import rotatingTextAnimation from './modules/rotatingTextAnimation.js';
 import Search from './modules/search.js';
 // import EventsList from './modules/events.js';
-import ProgramsList from './modules/programs.js';
+import ProgramsList from './modules/multi-filter.js';
 /* eslint-disable no-unused-vars */
 import toggleOpen from './modules/toggleOpen.js';
 import toggleMenu from './modules/toggleMenu.js';
@@ -67,7 +67,9 @@ window.accordion = accordion;
 (function(window, $) {
   'use strict';
 
-  if (window.location.pathname.indexOf('programs') >= 0) {
+  if ((window.location.pathname.indexOf('programs') >= 0) ||
+      (window.location.pathname.indexOf('afterschool') >= 0)
+    ) {
     new ProgramsList().init();
   }
 

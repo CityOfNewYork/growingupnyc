@@ -28,7 +28,7 @@
 
         <li class="c-list-box__subitem">
           <label class="checkbox" >
-            <input type="checkbox" value="true" v-model="checkedAllAges" class="checkbox__field">
+            <input type="checkbox" v-model="checkedAllAges" class="checkbox__field" @click="selectAllAges">
             <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
             {{ __('Select All', 'guny') }}
           </label>
@@ -51,7 +51,7 @@
 
         <li class="c-list-box__subitem">
           <label class="checkbox" >
-            <input type="checkbox" value="true" v-model="checkedAllBoroughs" class="checkbox__field">
+            <input type="checkbox" v-model="checkedAllBoroughs" class="checkbox__field" @click="selectAllBoroughs">
             <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
             {{ __('Select All', 'guny') }}
           </label>

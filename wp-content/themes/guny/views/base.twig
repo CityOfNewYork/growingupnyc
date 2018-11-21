@@ -61,7 +61,7 @@
       <ol class="js-s-accordion c-list-box c-list-box--secondary" data-multiselectable="true">
         {% for age_group in age_menu %}
           <li class="c-list-box__item">
-            <h3 class="js-s-accordion__header c-list-box__heading" id="ages-heading-{{loop.index}}">{{age_group.name}}</h3>
+            <h3 class="js-s-accordion__header c-list-box__heading" id="ages-heading-{{loop.index}}" tabindex="0">{{age_group.name}}</h3>
             <ol class="js-s-accordion__content c-list-box__content" id="ages-panel-{{loop.index}}">
               {% for post in age_group.posts('numberposts=-1&post_type=age&meta_key=numeric_age&orderby=meta_value_num&order=ASC') %}
                 <li><a href="{{post.link}}" class="c-list-box__subitem">{{post.title}}</a></li>
@@ -70,6 +70,9 @@
           </li>
         {% endfor %}
       </ol>
+      <div class="u-top-spacing-small text-center">
+        <a href="#ages" data-toggle="offcanvas-ages" class="show-for-keyboard">Close Resources by Age</a>
+      </div>
     </nav>
 
     <div class="o-offcanvas__main">

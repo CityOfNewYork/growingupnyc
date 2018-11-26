@@ -46,7 +46,7 @@ export default function() {
       'aria-selected': false,
       'aria-controls': $relatedPanel.get(0).id,
       'aria-expanded': false,
-      'role': 'heading'
+      // 'role': 'heading'
     }).addClass('o-accordion__header');
 
     $headerElem.on('click.accordion', function(event) {

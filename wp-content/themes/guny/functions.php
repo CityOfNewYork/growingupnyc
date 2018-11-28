@@ -141,9 +141,10 @@ class GunySite extends TimberSite {
       wp_enqueue_script( 'modernizr', get_template_directory_uri() . '/assets/js/modernizr.js', array(), '3.0.0', false );
       wp_enqueue_script( 'jquery', get_template_directory_uri() . '/src/js/vendor/jquery.js', array(), '2.1.14', false );
       wp_enqueue_script( 'owl-js', get_template_directory_uri() . '/src/js/vendor/owl.carousel.min.js', array(), '2.2.1', true );
-      // Main 'source' script is enqueued in template base
-      wp_enqueue_script( 'google-map', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDrvNnQZBiASAH3JI7LNFewrX9jeYZlMWo', array(), '3', true );
-      wp_enqueue_script( 'google-map-init', get_template_directory_uri() . '/src/js/vendor/google-maps.js', array('google-map', 'jquery'), '0.1', true );
+      if( explode("/",$_SERVER["REQUEST_URI"])[1] == 'generationnyc'){
+        wp_enqueue_script( 'google-map', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCt1i2Y7wnOQooLwKhxKqbe6IWJl02dtyM', array(), '3', true );
+        wp_enqueue_script( 'google-map-init', get_template_directory_uri() . '/src/js/vendor/google-maps.js', array('google-map', 'jquery'), '0.1', true );
+      }
     }
   }
 
@@ -521,6 +522,13 @@ function my_acf_validate_cta_button_phone( $valid, $value){
 function get_env($value){
   return $_ENV[$value];
 }
+
+// TEC suggested fix for Google Maps API error
+function tribe_events_map_apis() {
+  if (tribe_is_event() || is_singular( 'tribe_events' ));
+    wp_dequeue_script( 'tribe-events-pro-geoloc' );
+  }
+add_action( 'wp_enqueue_scripts', 'tribe_events_map_apis' );
 
 /**
  * Includes

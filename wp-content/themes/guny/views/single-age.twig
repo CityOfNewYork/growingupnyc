@@ -79,8 +79,8 @@
 
       {# Upcoming Events #}
       {% if upcoming_events %}
-      <section class="c-block-list c-block-list--shade o-content-container{% if not post.tip %} u-sm-gutter{% endif %}" id="section-events">
-        <h2 tabindex="0">{{ __('Events', 'GUNY-Single-Age') }}</h2>
+      <section class="c-block-list c-block-list--shade o-content-container{% if not post.tip %} u-sm-gutter{% endif %}" data-id="section-events">
+        <h2>{{ __('Events', 'GUNY-Single-Age') }}</h2>
         {% if post.events_text %}
           <p class="c-block-list__text">{{post.events_text}}</p>
         {% endif %}
@@ -120,8 +120,8 @@
 
       {# Programs #}
       {% if post.featured_programs %}
-      <section class="c-block-list c-block-list--shade o-content-container" id="section-programs">
-        <h2 tabindex="0">{{ __('Programs', 'GUNY-Single-Age') }}</h2>
+      <section class="c-block-list c-block-list--shade o-content-container" data-id="section-programs">
+        <h2>{{ __('Programs', 'GUNY-Single-Age') }}</h2>
         {% if post.programs_text %}
           <p class="c-block-list__text">{{post.programs_text}}</p>
         {% endif %}
@@ -150,8 +150,8 @@
       </aside> #}
 
       {# Milestones #}
-      <section class="o-content-container--compact u-top-spacing u-bottom-spacing" id="section-milestones">
-        <h2 tabindex="0">{{ __('Milestones', 'GUNY-Single-Age') }}</h2>
+      <section class="o-content-container--compact u-top-spacing u-bottom-spacing" data-id="section-milestones">
+        <h2>{{ __('Milestones', 'GUNY-Single-Age') }}</h2>
         <div class="o-content-container--text u-sm-gutter">
           <p>{{post.milestones_pretext}}</p>
         </div>

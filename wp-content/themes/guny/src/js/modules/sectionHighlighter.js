@@ -12,7 +12,17 @@ export default function() {
   //var eTop = $('#free-day-trips').offset().top;
 
   $sections.each(function() {
-    sectionIdTonavigationLink[$(this).attr('id')] = $('.js-section-set > li > a[href="#' + $(this).attr('id') + '"]');
+    var section = $(this);
+
+    // fallback for acf_fc_layout sections
+    if (!section.attr('data-id') && section.attr('id')) {
+      section.attr('data-id', section.attr('id'));
+      section.removeAttr('id');
+    }
+
+    section.children(':first').attr('id', section.attr('data-id'));
+
+    sectionIdTonavigationLink[section.attr('data-id')] = $('.js-section-set > li > a[href="#' + section.attr('data-id') + '"]');
   });
 
   function optimized() {
@@ -28,7 +38,7 @@ export default function() {
       // }
 
       if (scrollPosition >= sectionTop || (currentSection.is('section:first-child') && sectionTop > scrollPosition)) {
-        var id = currentSection.attr('id');
+        var id = currentSection.attr('data-id');
         var $navigationLink = sectionIdTonavigationLink[id];
         if (!$navigationLink.hasClass('is-active') || !$('section').hasClass('o-content-container--compact')) {
             $navigationLinks.removeClass('is-active');

@@ -49,7 +49,7 @@
     <div class="o-article o-article-ms o-article-ms__topics js-sticky-article">
       {# Section One #}
       {% for top in post.get_field('page_top') %}
-        <section id="{{top.page_top_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" class="o-content-container--compact u-top-spacing u-bottom-spacing s-wysiwyg">
+        <section data-id="{{top.page_top_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" class="o-content-container--compact u-top-spacing u-bottom-spacing s-wysiwyg">
           {% if top.section_heading_show == 'Yes' %}
           <h2>{{top.page_top_content_heading}}</h2>
           {% endif %}

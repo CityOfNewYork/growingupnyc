@@ -37,11 +37,12 @@ class ProgramsList {
         boroughURL: this._baseURL + '/wp-json/wp/v2/borough',
         boroughNames: null,
         checkedBorough: [],
+        checkedAllBoroughs: false,
         afterschoolTypeURL: this._baseURL + '/wp-json/wp/v2/afterschool_programs_cat',
         afterschoolTypes: null,
         checkedAfterschoolType: [],
         checkedAllAfterschoolTypes: false,
-        checkedAllBoroughs: false,
+        allAfterschoolTypes: false,
         programPage: 1,
         maxPages: 1,
         errorMsg: false,
@@ -54,10 +55,10 @@ class ProgramsList {
         checkedBorough: 'getPrograms',
         programPage: 'getPrograms',
         checkedAfterschoolType: 'getPrograms',
-        checkedAllTypes: 'selectAllTypes',
-        checkedAllAges: 'selectAllAges',
-        checkedAllAfterschoolTypes: 'selectAllAfterschoolTypes',
-        checkedAllBoroughs: 'selectAllBoroughs'
+        // checkedAllTypes: 'selectAllTypes',
+        // checkedAllAges: 'selectAllAges',
+        // checkedAllAfterschoolTypes: 'selectAllAfterschoolTypes',
+        // checkedAllBoroughs: 'selectAllBoroughs'
       },
       mounted: function() {
         axios.all([
@@ -116,7 +117,6 @@ class ProgramsList {
  **/
 ProgramsList.getPrograms = function() {
   let url = this.programsURL;
-  
   ProgramsList.showLoader(this, this.programs)
 
   let filters = ProgramsList.generateFilterURL(this);
@@ -124,7 +124,14 @@ ProgramsList.getPrograms = function() {
 
   // update the query
   if ( this.programPage == 1){
-    this.$router.push({query: {category: this.checkedProgramType, ages: this.checkedAgeGroup, afterschool_category: this.checkedAfterschoolType, boroughs: this.checkedBorough}});
+    this.$router.push({query: 
+      {
+        category: this.checkedProgramType.length < this.programTypes.length ? this.checkedProgramType : 'all', 
+        ages: this.checkedAgeGroup.length < this.ageGroups.length ? this.checkedAgeGroup : 'all', 
+        afterschool_category: this.checkedAfterschoolType.length < this.afterschoolTypes.length ? this.checkedAfterschoolType : 'all', 
+        boroughs: this.checkedBorough.length < this.boroughNames.length ? this.checkedBorough : 'all'
+      }
+    });
   }else {
     this.$router.push({query: {category: this.checkedProgramType, ages: this.checkedAgeGroup, afterschool_category: this.checkedAfterschoolType, boroughs: this.checkedBorough, page: this.programPage }});
   }
@@ -161,21 +168,25 @@ ProgramsList.generateFilterURL = function(data) {
   let arrIds = [];
 
   if ( data.checkedProgramType.length > 0 ){
+    data.checkedProgramType.length != data.programTypes.length ? data.checkedAllTypes = false : data.checkedAllTypes = true;
     arrIds = ProgramsList.getIds(data.programTypes, data.checkedProgramType).map(value => value.term_id)
     filters.push('programs_cat[]=' + arrIds.join('&programs_cat[]='));
   }
 
   if ( data.checkedAgeGroup.length > 0  ) {
+    data.checkedAgeGroup.length != data.ageGroups.length ? data.checkedAllAges = false : data.checkedAllAges = true;
     arrIds = ProgramsList.getIds(data.ageGroups, data.checkedAgeGroup).map(value => value.id)
     filters.push('age_group[]=' + arrIds.join('&age_group[]='));
   }
 
   if ( data.checkedAfterschoolType.length > 0  ) {
+    data.checkedAfterschoolType.length != data.afterschoolTypes.length ? data.checkedAllAfterschoolTypes = false : data.checkedAllAfterschoolTypes = true;
     arrIds = ProgramsList.getIds(data.afterschoolTypes, data.checkedAfterschoolType).map(value => value.id)
     filters.push('afterschool_programs_cat[]=' + arrIds.join('&afterschool_programs_cat[]='));
   }
 
   if ( data.checkedBorough.length > 0  ) {
+    data.checkedBorough.length != data.boroughNames.length ? data.checkedAllBoroughs = false : data.checkedAllBoroughs = true;
     arrIds = ProgramsList.getIds(data.boroughNames, data.checkedBorough).map(value => value.id)
     filters.push('borough[]=' + arrIds.join('&borough[]='));
   }
@@ -196,7 +207,12 @@ ProgramsList.parseQuery = function() {
   let query =this.$route.query;
   let queryArr = [];
 
-  if(!_.isEmpty(query.category)){
+  if(query.category == 'all'){
+    this.checkedAllTypes = true;
+    this.checkedProgramType = this.programTypes.map(a => a.slug);
+  }
+  if(!_.isEmpty(query.category)  && query.category != 'all'){
+    this.checkedAllTypes = false;
     if (_.isArray(query.category)){
       if (query.category.every( (val, i, arr) => val === arr[0] )){
         query.category = query.category[0];
@@ -210,7 +226,12 @@ ProgramsList.parseQuery = function() {
     }
   }
 
-  if(!_.isEmpty(query.ages)){
+  if(query.ages == 'all'){
+    this.checkedAllAges = true;
+    this.checkedAgeGroup = this.ageGroups.map(a => a.slug);
+  }
+  if(!_.isEmpty(query.ages) && query.ages != 'all'){
+    this.checkedAllAges = false;
     if (_.isArray(query.ages)){
       if (query.ages.every( (val, i, arr) => val === arr[0] )) {
         query.ages = query.ages[0];
@@ -224,7 +245,12 @@ ProgramsList.parseQuery = function() {
     }
   }
 
-  if(!_.isEmpty(query.afterschool_category)){
+  if(query.afterschool_category == 'all'){
+    this.checkedAllAfterschoolTypes = true;
+    this.checkedAfterschoolType = this.afterschoolTypes.map(a => a.slug);
+  }
+  if(!_.isEmpty(query.afterschool_category) && query.afterschool_category != 'all'){
+    this.checkedAllAfterschoolTypes = false;
     if (_.isArray(query.afterschool_category)){
       if (query.afterschool_category.every( (val, i, arr) => val === arr[0] )) {
         query.afterschool_category = query.afterschool_category[0];
@@ -238,6 +264,10 @@ ProgramsList.parseQuery = function() {
     }
   }
 
+  if(query.boroughs == 'all'){
+    this.checkedAllBoroughs = true;
+    this.checkedBorough = this.boroughNames.map(a => a.slug);
+  }
   if(!_.isEmpty(query.boroughs)){
     if (_.isArray(query.boroughs)){
       if (query.boroughs.every( (val, i, arr) => val === arr[0] )) {
@@ -318,37 +348,41 @@ ProgramsList.hideLoader = function(el, status){
  **/
 ProgramsList.selectAllTypes = function() {
   if(this.checkedAllTypes){
-    this.checkedProgramType = this.programTypes.map(a => a.slug);
-  }else {
     this.checkedAllTypes = false;
     this.checkedProgramType = [];
+  }else {
+    this.checkedAllTypes = true;
+    this.checkedProgramType = this.programTypes.map(a => a.slug);
   }
 }
 
-ProgramsList.selectAllAges = function() {  
+ProgramsList.selectAllAges = function() {
   if(this.checkedAllAges){
-    this.checkedAgeGroup = this.ageGroups.map(a => a.slug);
-  }else {
     this.checkedAllAges = false;
     this.checkedAgeGroup = [];
+  }else {
+    this.checkedAllAges = true;
+    this.checkedAgeGroup = this.ageGroups.map(a => a.slug);
   }
 }
 
-ProgramsList.selectAllAfterschoolTypes = function() {  
+ProgramsList.selectAllAfterschoolTypes = function() {
   if(this.checkedAllAfterschoolTypes){
-    this.checkedAfterschoolType = this.afterschoolTypes.map(a => a.slug);
-  }else {
     this.checkedAllAfterschoolTypes = false;
     this.checkedAfterschoolType = [];
+  }else {
+    this.checkedAllAfterschoolTypes = true;
+    this.checkedAfterschoolType = this.afterschoolTypes.map(a => a.slug);
   }
 }
 
 ProgramsList.selectAllBoroughs = function() {  
   if(this.checkedAllBoroughs){
-    this.checkedBorough = this.boroughNames.map(a => a.slug);
-  }else {
     this.checkedAllBoroughs = false;
     this.checkedBorough = [];
+  }else {
+    this.checkedAllBoroughs = true;
+    this.checkedBorough = this.boroughNames.map(a => a.slug);
   }
 }
 

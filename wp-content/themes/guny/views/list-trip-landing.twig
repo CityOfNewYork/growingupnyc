@@ -36,7 +36,7 @@ js-sticky-container
 {% endblock %}
 
 {% block post_list %}
-    <section id="free-day-trips" class="c-block-list c-block-list-ms__trips c-block-list-ms__trips--day c-block-list--shade o-content-container u-sm-gutter">
+    <section data-id="free-day-trips" class="c-block-list c-block-list-ms__trips c-block-list-ms__trips--day c-block-list--shade o-content-container u-sm-gutter">
       <h3 class="c-block-list-trips__title">Free Day Trips</h3>
       <div class="c-block-list__inner">
         {% for post in free_day_trip %}
@@ -50,7 +50,7 @@ js-sticky-container
       </div>
     </section>
 
-    <section id="free-this-week" class="c-block-list c-block-list-ms__trips c-block-list-ms__trips--week c-block-list--shade o-content-container u-sm-gutter">
+    <section data-id="free-this-week" class="c-block-list c-block-list-ms__trips c-block-list-ms__trips--week c-block-list--shade o-content-container u-sm-gutter">
       <h3 class="c-block-list-trips__title">Free this week</h3>
       <div class="c-block-list__inner">
         {% for post in free_this_week_trip %}
@@ -64,7 +64,7 @@ js-sticky-container
       </div>
     </section>
 
-    <section id="events" class="c-block-list c-block-list-ms__trips c-block-list-ms__trips--week c-block-list--shade o-content-container u-sm-gutter">
+    <section data-id="events" class="c-block-list c-block-list-ms__trips c-block-list-ms__trips--week c-block-list--shade o-content-container u-sm-gutter">
       <h3 class="c-block-list-trips__title">Events</h3>
       <div class="c-block-list__inner">
         {% for post in upcoming_events %}

@@ -58,7 +58,7 @@
       <ol class="js-s-accordion c-list-box c-list-box--secondary" data-multiselectable="true">
         {% for age_group in age_menu %}
           <li class="c-list-box__item">
-            <h3 class="js-s-accordion__header c-list-box__heading" id="ages-heading-{{loop.index}}">{{age_group.name}}</h3>
+            <h3 class="js-s-accordion__header c-list-box__heading" id="ages-heading-{{loop.index}}" tabindex="0">{{age_group.name}}</h3>
             <ol class="js-s-accordion__content c-list-box__content" id="ages-panel-{{loop.index}}">
               {% for post in age_group.posts('numberposts=-1&post_type=age&meta_key=numeric_age&orderby=meta_value_num&order=ASC') %}
                 <li><a href="{{post.link}}" class="c-list-box__subitem">{{post.title}}</a></li>
@@ -67,6 +67,9 @@
           </li>
         {% endfor %}
       </ol>
+      <div class="u-top-spacing-small text-center">
+        <a href="#ages" data-toggle="offcanvas-ages" class="show-for-keyboard">Close Resources by Age</a>
+      </div>
     </nav>
 
     <div class="o-offcanvas__main">
@@ -231,13 +234,14 @@
       </footer> <!-- /.c-footer -->
       {% block banner_topic %}{% endblock %}
       {% if options.show_banner_generation and not disable_generation_banner %}
-        <div class="c-alert js-alert" data-cookie="{{options.current_banner_generation.slug}}" id="banner-{{options.current_banner_generation.slug}}">
-          <button type="button" class="c-alert__button" data-toggle="banner-{{options.current_banner_generation.slug}}"><svg role="img" class="icon--small"><title>Close</title><use xlink:href="#icon-close"></use></svg></button>
-          <div class="c-alert__banner">
+        <div class="c-alert js-alert" data-cookie="{{options.current_banner_generation.slug}}" id="banner-{{options.current_banner_generation.slug}}" role="dialog" aria-labelledby="dialog-title-{{options.current_banner.slug}}" aria-describedby="dialog-desc-{{options.current_banner.slug}}">
+          <div class="show-for-screen-reader" id="dialog-title-{{options.current_banner.slug}}">Notification Banner</div>
+          <div class="c-alert__banner" id="dialog-desc-{{options.current_banner.slug}}">
             <div class="o-container">
               {{options.current_banner_generation.get_field('banner_content')}}
             </div>
           </div>
+          <button type="button" class="c-alert__button" data-toggle="banner-{{options.current_banner_generation.slug}}" aria-label="close"><svg role="img" class="icon--small"><title>Close</title><use xlink:href="#icon-close"></use></svg></button>
         </div>
       {% endif %}
       <a class="o-offcanvas__overlay" data-toggle="offcanvas-ages" aria-hidden="true"></a>

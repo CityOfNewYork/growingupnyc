@@ -33,4 +33,23 @@ export default function() {
       }, false);
     });
   }
+
+  /**
+  * Keyboard Customization:
+  * "Resources by Age" menu
+  * (a) store reference to link which triggered menu to open
+  * (b) when menu is closed draw focus to trigger link allowing user to continue from initial point
+  */
+  let triggerLink = null;
+  $('.c-banner__nav [data-toggle="offcanvas-ages"]').on('keydown', function (e) {
+    if (e.which === 13) {
+      triggerLink = $(this)[0];
+    }
+  });
+
+  $('nav#ages [data-toggle="offcanvas-ages"]').on('click', function (e) {
+    if (triggerLink !== null) {
+      $(triggerLink).focus();
+    }
+  });
 }

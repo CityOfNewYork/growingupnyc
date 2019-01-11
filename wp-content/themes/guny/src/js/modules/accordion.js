@@ -46,7 +46,7 @@ export default function() {
       'aria-selected': false,
       'aria-controls': $relatedPanel.get(0).id,
       'aria-expanded': false,
-      'role': 'heading'
+      // 'role': 'heading'
     }).addClass('o-accordion__header');
 
     $headerElem.on('click.accordion', function(event) {
@@ -67,11 +67,11 @@ export default function() {
   function togglePanel($panelElem, makeVisible) {
     $panelElem.attr('aria-hidden', !makeVisible);
     if (makeVisible) {
-      // $panelElem.css('height', $panelElem.data('height') + 'px');
-      $panelElem.find('a, button, [tabindex]').attr('tabindex', 0);
+      $panelElem.css('height', $panelElem.data('height') + 'px');
+      $panelElem.find('a, button, [tabindex], input[type=checkbox]').attr('tabindex', 0);
     } else {
       $panelElem.css('height', '');
-      $panelElem.find('a, button, [tabindex]').attr('tabindex', -1);
+      $panelElem.find('a, button, [tabindex], input[type=checkbox]').attr('tabindex', -1);
     }
   }
 
@@ -168,6 +168,7 @@ export default function() {
     $accordionElem.children().each(function() {
       initializeAccordionItem($(this));
     });
+
     /**
      * Handle changeState events on accordion headers.
      * Close the open accordion item and open the new one.
@@ -186,6 +187,16 @@ export default function() {
         }
       }
     }, this));
+    
+    /**
+     * Handle events on accordion content.
+     * Initialize accordion items after loaded.
+     * @function
+     * @param {object} event - The event object
+     */
+    $accordionElem.on('DOMNodeInserted', function(event) {
+      reInitialize($accordionElem);
+    });
   }
 
   /**

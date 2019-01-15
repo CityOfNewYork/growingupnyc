@@ -129,8 +129,8 @@
 			$method = "";
 			$table_scan = $wpdb->prefix . "mclean_scan";
 			$table_refs = $wpdb->prefix . "mclean_refs";
-			if ( $wpdb->get_var("SHOW TABLES LIKE '$table_scan'") != $table_scan ||
-				$wpdb->get_var("SHOW TABLES LIKE '$table_refs'") != $table_refs ) {
+			if ( strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_scan'" ) ) != strtolower( $table_scan ) ||
+				strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_refs'" ) ) != strtolower( $table_refs ) ) {
 					_e( "<div class='notice notice-error'><p><b>The database is not ready for Media Cleaner. The scan will not work.</b> Click on the <b>Reset</b> button, it re-creates the tables required by Media Cleaner. If this message still appear, contact the support.</p></div>", 'media-cleaner' );
 			}
 			else {
@@ -145,7 +145,7 @@
 				}
 
 				if ( !MEDIA_TRASH ) {
-					_e( "<div class='notice notice-warning'><p>The trash for the Media Library is disabled. Any media removed by the plugin will be <b>permanently deleted</b>. To enable it, modify your wp-config.php file and add this line (preferably at the top):<br /><b>define( 'MEDIA_TRASH', true );</b></p></div>", 'media-cleaner' );
+					_e( "<div class='notice notice-warning'><p>The trash for the Media Library is disabled. Any media removed by the plugin will be <b>permanently deleted</b>. To enable it, modify your wp-config.php file and add this line (preferably at the top): <b>define( 'MEDIA_TRASH', true );</b></p></div>", 'media-cleaner' );
 				}
 			}
 

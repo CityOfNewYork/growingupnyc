@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./src/styles/additional-fields/frontend.pcss"],"names":[],"mappings":"AAAA,+BAA+B,eAAe,gC","file":"src/resources/css/app/additional-fields/frontend.min.css","sourcesContent":[".tribe-block__additional-field{padding:15px 0;border-bottom:1px solid #e5e5e5}"],"sourceRoot":""}

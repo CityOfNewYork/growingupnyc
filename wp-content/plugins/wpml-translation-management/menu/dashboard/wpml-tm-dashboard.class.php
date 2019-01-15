@@ -213,7 +213,7 @@ class WPML_TM_Dashboard {
 		}
 
 		if ( ! empty( $post_language ) ) {
-			$where .= $this->wpdb->prepare( " AND t.trid IN (SELECT trid FROM {$translations_table_name} 
+			$where .= $this->wpdb->prepare( " AND wpml_translations.trid IN (SELECT trid FROM {$translations_table_name} 
 			WHERE {$translations_table_name}.language_code='%s')", $post_language );
 		}
 
@@ -328,7 +328,7 @@ class WPML_TM_Dashboard {
 		$translations_table_name = $this->wpdb->prefix . 'icl_translations';
 		$where = '';
 		if ( ICL_TM_NEEDS_UPDATE === $post_translation_status ) {
-			$where .= " AND t.trid IN (SELECT trid FROM {$translations_table_name} WHERE {$translations_table_name}.translation_id IN ";
+			$where .= " AND wpml_translations.trid IN (SELECT trid FROM {$translations_table_name} WHERE {$translations_table_name}.translation_id IN ";
 			$where .= "(SELECT {$translation_status_table}.translation_id FROM {$translation_status_table} WHERE {$translation_status_table}.needs_update=1 ) )";
 		} else {
 			$status = false;
@@ -339,7 +339,7 @@ class WPML_TM_Dashboard {
 			} elseif ( in_array( $post_translation_status, array( ICL_TM_IN_PROGRESS, ICL_TM_WAITING_FOR_TRANSLATOR ) ) ) {
 				$status = wpml_prepare_in( array( ICL_TM_IN_PROGRESS, ICL_TM_WAITING_FOR_TRANSLATOR ), '%d' );
 			} else {
-				$where .= $this->wpdb->prepare( " AND t.trid IN ( SELECT trid FROM {$translations_table_name} iclt  
+				$where .= $this->wpdb->prepare( " AND wpml_translations.trid IN ( SELECT trid FROM {$translations_table_name} iclt  
 					LEFT OUTER JOIN {$translation_status_table} tls ON iclt.translation_id = tls.translation_id 
 					WHERE 
 					element_type NOT LIKE 'tax_%%' 
@@ -352,13 +352,13 @@ class WPML_TM_Dashboard {
 							FROM 
 								{$translations_table_name} 
 							WHERE 
-								trid = t.trid
+								trid = wpml_translations.trid
 							) < %d
 						)
 					) ", count( $this->sitepress->get_active_languages() ) );
 			}
 			if ( $status ) {
-				$where .= " AND t.trid IN (SELECT trid FROM {$translations_table_name} WHERE {$translations_table_name}.translation_id IN ";
+				$where .= " AND wpml_translations.trid IN (SELECT trid FROM {$translations_table_name} WHERE {$translations_table_name}.translation_id IN ";
 				$where .= "(SELECT {$translation_status_table}.translation_id 
 							FROM {$translation_status_table} 
 							WHERE {$translation_status_table}.status IN (" . $status . ") ) )";

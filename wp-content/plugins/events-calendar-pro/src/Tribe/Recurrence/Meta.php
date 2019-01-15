@@ -585,6 +585,25 @@ class Tribe__Events__Pro__Recurrence__Meta {
 			return; // don't show recurrence fields for instances of a recurring event
 		}
 
+		/**
+		 * Control if the recurrence meta is displayed
+		 *
+		 * @since 4.4.35
+		 *
+		 * @param bool $display By default is true
+		 * @param int $post_id The ID of the post where the meta box is being included
+		 */
+		$show_recurrence_meta = apply_filters( 'tribe_events_pro_show_recurrence_meta_box', true, $post_id );
+
+		/**
+		 * On version hotfix 4.5.2.1 we implemented a simpler fix for C#119912 with `has_blocks`
+		 *
+		 * @todo  Remove has_blocks on version release/B19.01
+		 */
+		if ( ! $show_recurrence_meta || has_blocks( $post ) ) {
+			return;
+		}
+
 		$recurrence = array();
 		if ( $post_id ) {
 			$recurrence = self::getRecurrenceMeta( $post_id );
@@ -1310,6 +1329,16 @@ class Tribe__Events__Pro__Recurrence__Meta {
 				__( 'October' ),
 				__( 'November' ),
 				__( 'December' ),
+			),
+			'time_spans' => array(
+				'day'               => _x( 'day', 'Used when displaying the word "day" in "the last day" or "the first day"', 'tribe-events-calendar-pro' ),
+				'days'              => _x( 'days', 'Used when displaying the word "days" in e.g. "every 3 days"', 'tribe-events-calendar-pro' ),
+				'week'              => _x( 'week', 'Used when displaying the word "week" in "the last week" or "the first week"', 'tribe-events-calendar-pro' ),
+				'weeks'             => _x( 'weeks', 'Used when displaying the word "weeks" in e.g. "every 3 weeks"', 'tribe-events-calendar-pro' ),
+				'month'             => _x( 'month', 'Used when displaying the word "month" in e.g. "every month"', 'tribe-events-calendar-pro' ),
+				'months'            => _x( 'months', 'Used when displaying the word "months" in e.g. "every 3 months"', 'tribe-events-calendar-pro' ),
+				'year'              => _x( 'year', 'Used when displaying the word "year" in e.g. "every year"', 'tribe-events-calendar-pro' ),
+				'years'             => _x( 'years', 'Used when displaying the word "years" in e.g. "every 2 years"', 'tribe-events-calendar-pro' ),
 			),
 			'collection_joiner' => _x( 'and', 'Joins the last item in a list of items (i.e. the "and" in Monday, Tuesday, and Wednesday)', 'tribe-events-calendar-pro' ),
 			'day_placeholder'   => _x( '[day]', 'Placeholder text for a day of the week (or days of the week) before the user has selected any', 'tribe-events-calendar-pro' ),

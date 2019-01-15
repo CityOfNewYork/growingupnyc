@@ -6,7 +6,6 @@
 class WPML_TM_Xliff_Writer extends WPML_TM_Job_Factory_User {
 	private $xliff_version;
 	const TAB = "\t";
-	const FIELD_FINISHED = '1';
 
 	/**
 	 * WPML_TM_xliff constructor.
@@ -213,7 +212,7 @@ class WPML_TM_Xliff_Writer extends WPML_TM_Job_Factory_User {
 					}
 					// check for untranslated fields and copy the original if required.
 					if ( ! null === $field_data_translated || '' === $field_data_translated ) {
-						$field_data_translated = $this->remove_etx_char( $field_data );
+						$field_data_translated = $this->remove_invalid_chars( $field_data );
 					}
 					if ( $this->is_valid_unit_content( $field_data ) ) {
 						$translation_units[] = $this->get_translation_unit_data( $element->field_type,
@@ -241,7 +240,7 @@ class WPML_TM_Xliff_Writer extends WPML_TM_Job_Factory_User {
 		foreach ( $elements as &$element ) {
 			$element->translated_from_memory = false;
 
-			if ( self::FIELD_FINISHED !== $element->field_finished && preg_match( '/^package-string/', $element->field_type ) ) {
+			if ( preg_match( '/^package-string/', $element->field_type ) ) {
 				$strings_to_translate[ $element->tid ] = base64_decode( $element->field_data );
 			}
 		}
@@ -252,8 +251,7 @@ class WPML_TM_Xliff_Writer extends WPML_TM_Job_Factory_User {
 
 			foreach ( $elements as &$element ) {
 
-				if ( self::FIELD_FINISHED !== $element->field_finished
-				     && array_key_exists( $element->tid, $strings_to_translate )
+				if ( array_key_exists( $element->tid, $strings_to_translate )
 				     && array_key_exists( $strings_to_translate[ $element->tid ], $original_translated_map )
 				) {
 					$element->field_data_translated  = base64_encode( $original_translated_map[ $strings_to_translate[ $element->tid ] ] );
@@ -268,7 +266,7 @@ class WPML_TM_Xliff_Writer extends WPML_TM_Job_Factory_User {
 	private function get_translation_unit_data( $field_id, $field_name, $field_data, $field_data_translated, $is_translated_from_memory = false ) {
 		global $sitepress;
 
-		$field_data = $this->remove_etx_char( $field_data );
+		$field_data = $this->remove_invalid_chars( $field_data );
 
 		$translation_unit = array();
 
@@ -306,11 +304,6 @@ class WPML_TM_Xliff_Writer extends WPML_TM_Job_Factory_User {
 		return str_replace( array( "\n", "\r" ), array( '<br class="xliff-newline" />', '' ), $string );
 	}
 
-	/**
-	 * @param string $string
-	 *
-	 * @return string
-	 */
 	private function remove_line_breaks_inside_tags( $string ) {
 		return preg_replace_callback( '/(<[^>]*>)/m', array( $this, 'remove_line_breaks_inside_tag_callback' ), $string );
 	}
@@ -329,10 +322,14 @@ class WPML_TM_Xliff_Writer extends WPML_TM_Job_Factory_User {
 	/**
 	 * @param string $string
 	 *
+	 * Remove all characters below 0x20 except for 0x09, 0x0A and 0x0D
+	 * @see https://www.w3.org/TR/xml/#charsets
+	 *
 	 * @return string
 	 */
-	private function remove_etx_char( $string ) {
-		return preg_replace('/[\x03\x05\x11]/', '', $string);
+
+	private function remove_invalid_chars( $string ) {
+		return preg_replace( '/[\x00-\x08\x0B-\x0C\x0E-\x1F]/', '', $string );
 	}
 
 	/**
@@ -369,11 +366,14 @@ class WPML_TM_Xliff_Writer extends WPML_TM_Job_Factory_User {
 
 	private function get_shortcodes() {
 		global $shortcode_tags;
+
+		$shortcodes = array();
+
 		if ( $shortcode_tags ) {
-			return array_keys( $shortcode_tags );
+			$shortcodes = array_keys( $shortcode_tags );
 		}
 
-		return array();
+		return apply_filters( 'wpml_shortcode_list', $shortcodes );
 	}
 
 	/**

@@ -64,7 +64,19 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events__Map {
 	 * @since 4.4.26
 	 */
 	public function load_map_container() {
-		tribe_get_template_part( 'pro/map/gmap-container' );
+		if ( tribe_is_using_basic_gmaps_api() ) {
+			$embed_url = tribe_events_get_map_view_basic_embed_url();
+
+			if ( $embed_url ) {
+			    tribe_get_template_part( 'modules/map-basic', null, array(
+			        'width'     => '100%',
+			        'height'    => '440px',
+			        'embed_url' => $embed_url,
+			    ) );
+			}
+		} else {
+			tribe_get_template_part( 'pro/map/gmap-container' );
+		}
 	}
 
 	public function shortcode_pre_render() {

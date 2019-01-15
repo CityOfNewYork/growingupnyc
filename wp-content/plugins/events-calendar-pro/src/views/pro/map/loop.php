@@ -5,7 +5,7 @@
  *
  * Override this template in your own theme by creating a file at [your-theme]/tribe-events/pro/map/loop.php
  *
- * @version 4.4.28
+ * @version 4.4.32
  * @package TribeEventsCalendar
  *
  */
@@ -21,7 +21,7 @@ $more = false;
 
 ?>
 
-<h2 class="tribe-events-visuallyhidden"><?php printf( esc_html__( 'List of %s', 'the-events-calendar' ), tribe_get_event_label_plural() ); ?></h2>
+<h2 class="tribe-events-visuallyhidden"><?php printf( esc_html__( 'List of %s', 'tribe-events-calendar-pro' ), tribe_get_event_label_plural() ); ?></h2>
 
 <?php while ( have_posts() ) : the_post(); ?>
 	<?php do_action( 'tribe_events_inside_before_loop' ); ?>

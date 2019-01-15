@@ -270,4 +270,9 @@ class WPML_ST_String {
 
 		return $this->wpdb->get_var( $sql ) > 0;
 	}
+
+	/** @return string|null */
+	public function get_context() {
+		return $this->wpdb->get_var( "SELECT context " . $this->from_where_snippet() . " LIMIT 1" );
+	}
 }

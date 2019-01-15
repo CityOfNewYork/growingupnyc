@@ -16,7 +16,7 @@ class WPML_TM_Translation_Roles_Section_Factory implements IWPML_TM_Admin_Sectio
 
 		$translator_settings = new WPML_Translator_Settings(
 			new WPML_Translator_Records( $wpdb, $user_query_factory ),
-			new WPML_Language_Collection( $sitepress ),
+			new WPML_Language_Collection( $sitepress, array_keys( $sitepress->get_active_languages() ) ),
 			new WPML_TM_AMS_Translator_Activation_Records( new WPML_WP_User_Factory() )
 		);
 

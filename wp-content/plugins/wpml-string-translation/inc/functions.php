@@ -12,16 +12,6 @@ function icl_st_init(){
     add_action('update_option_blogname', 'icl_st_update_blogname_actions',5,2);
     add_action('update_option_blogdescription', 'icl_st_update_blogdescription_actions',5,2);
 
-    if(isset($_GET['icl_action']) && $_GET['icl_action'] == 'view_string_in_page'){
-        icl_st_string_in_page($_GET['string_id']);
-        exit;
-    }
-
-    if ( isset( $_GET['icl_action'], $_GET['nonce'] ) && $_GET['icl_action'] == 'view_string_in_source' && wp_verify_nonce( $_GET['nonce'], 'view_string_in_source' ) ) {
-        icl_st_string_in_source($_GET['string_id']);
-        exit;
-    }
-
     if ( get_magic_quotes_gpc() && isset($_GET['page']) && $_GET['page'] === WPML_ST_FOLDER . '/menu/string-translation.php'){
         $_POST = stripslashes_deep( $_POST );
     }
@@ -619,18 +609,30 @@ function icl_sw_filters_widget_text($val){
 }
 
 /**
- * @param string     $translation String This parameter is not important to the filter since we filter before other filters.
- * @param string     $text
- * @param string     $domain
- * @param boo|string $name
+ * @param string $translation String This parameter is not important to the filter since we filter before other filters.
+ * @param string $text
+ * @param string|array $domain
+ * @param bool|string $name
  *
  * @return string
  */
 function icl_sw_filters_gettext( $translation, $text, $domain, $name = false ) {
-    /** @var WPML_ST_Gettext_Hooks $st_gettext_hooks */global $sitepress_settings, $st_gettext_hooks;
+	/** @var WPML_ST_Gettext_Hooks $st_gettext_hooks */
+	global $sitepress_settings, $st_gettext_hooks;
+
+	list( $domain_key, $context_key ) = wpml_st_extract_context_parameters( $domain );
+	$key = md5( $translation . $text . $domain_key . $context_key . $name );
+
+	$found           = false;
+	$ret_translation = WPML_Non_Persistent_Cache::get( $key, 'icl_sw_filters_gettext', $found );
+
+	if ( $found ) {
+
+		return $ret_translation;
+	}
 
 	$has_translation = null;
-    $ret_translation = null;
+	$ret_translation = null;
 
 	if ( ! defined( 'ICL_STRING_TRANSLATION_DYNAMIC_CONTEXT' ) ) {
 		define( 'ICL_STRING_TRANSLATION_DYNAMIC_CONTEXT', 'wpml_string' );
@@ -655,9 +657,9 @@ function icl_sw_filters_gettext( $translation, $text, $domain, $name = false ) {
 		$name = md5( $text );
 	}
 
-    if ( $st_gettext_hooks->should_gettext_filters_be_turned_on() ) {
-	    $ret_translation = icl_translate( $domain, $name, $text, false, $has_translation );
-    }
+	if ( $st_gettext_hooks->should_gettext_filters_be_turned_on() ) {
+		$ret_translation = icl_translate( $domain, $name, $text, false, $has_translation );
+	}
 
 	if ( ! $has_translation ) {
 		$ret_translation = $translation;
@@ -668,6 +670,8 @@ function icl_sw_filters_gettext( $translation, $text, $domain, $name = false ) {
 	     && stripslashes( $_GET['icl_string_track_value'] ) === $text ) {
 		$ret_translation = '<span style="background-color:' . esc_attr( $sitepress_settings['st']['hl_color'] ) . '">' . $ret_translation . '</span>';
 	}
+
+	WPML_Non_Persistent_Cache::set( $key, $ret_translation, 'icl_sw_filters_gettext' );
 
 	return $ret_translation;
 }
@@ -828,44 +832,6 @@ function icl_st_generate_po_file( $strings ) {
 	$po = WPML_PO_Parser::create_po( $strings );
 
 	return $po;
-}
-
-function icl_st_string_in_page($string_id){
-    global $wpdb;
-    // get urls
-    $urls = $wpdb->get_col($wpdb->prepare("SELECT position_in_page 
-                            FROM {$wpdb->prefix}icl_string_positions 
-                            WHERE string_id = %d AND kind = %d", $string_id, ICL_STRING_TRANSLATION_STRING_TRACKING_TYPE_PAGE));
-    if(!empty($urls)){
-        $string = $wpdb->get_row($wpdb->prepare("SELECT context, value FROM {$wpdb->prefix}icl_strings WHERE id=%d", $string_id));
-        echo '<div id="icl_show_source_top">';
-        for($i = 0; $i < count($urls); $i++){
-            $c = $i+1;
-            if(strpos($urls[$i], '?') !== false){
-                $urls[$i] .= '&icl_string_track_value=' . $string->value;
-            }else{
-                $urls[$i] .= '?icl_string_track_value=' . $string->value;
-            }
-            $urls[$i] .= '&icl_string_track_context=' . $string->context;
-
-            echo '<a href="#" onclick="jQuery(\'#icl_string_track_frame_wrap iframe\').attr(\'src\',\''.esc_url($urls[$i]).'\');jQuery(\'#icl_string_track_url a\').html(\''.esc_url($urls[$i]).'\').attr(\'href\',  \''.esc_url($urls[$i]).'\'); return false;">'.$c.'</a><br />';
-
-        }
-        echo '</div>';
-        echo '<div id="icl_string_track_frame_wrap">';
-        echo '<iframe onload="iclResizeIframe()" src="'.$urls[0].'" width="10" height="10" frameborder="0" marginheight="0" marginwidth="0"></iframe>';
-        echo '<div id="icl_string_track_url" class="icl_string_track_url"><a href="'.esc_url($urls[0]).'">' . esc_html($urls[0]) . "</a></div>\n";
-        echo '</div>';
-    }else{
-        _e('No records found', 'wpml-string-translation');
-    }
-}
-
-function icl_st_string_in_source( $string_id ){
-	global $sitepress;
-
-	$positions_in_source = new WPML_ST_String_Positions_In_Source( $sitepress );
-	$positions_in_source->dialog_render( $string_id );
 }
 
 function _icl_st_get_options_writes($path){

@@ -10,6 +10,40 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 		parent::__construct( $prefix, $mainfile, $domain );
 		add_action( 'admin_menu', array( $this, 'app_menu' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+		add_filter( 'pre_update_option', array( $this, 'pre_update_option' ), 10, 3 );
+	}
+
+	/**
+	 * Filters and performs validation for certain options
+	 * @param mixed $value Option value
+	 * @param string $option Option name
+	 * @param mixed $old_value The current value of the option
+	 * @return mixed The actual value to be stored
+	 */
+	function pre_update_option( $value, $option, $old_value ) {
+		if ( strpos( $option, 'wpmc_' ) !== 0 ) return $value; // Never touch extraneous options
+		$validated = $this->validate_option( $option, $value );
+		if ( $validated instanceof WP_Error ) {
+			// TODO: Show warning for invalid option value
+			return $old_value;
+		}
+		return $validated;
+	}
+
+	/**
+	 * Validates certain option values
+	 * @param string $option Option name
+	 * @param mixed $value Option value
+	 * @return mixed|WP_Error Validated value if no problem
+	 */
+	function validate_option( $option, $value ) {
+		switch ( $option ) {
+		case 'wpmc_dirs_filter':
+		case 'wpmc_files_filter':
+			if ( $value && @preg_match( $value, '' ) === false ) return new WP_Error( 'invalid_option', __( "Invalid Regular-Expression", 'media-cleaner' ) );
+			break;
+		}
+		return $value;
 	}
 
 	function admin_notices() {
@@ -76,6 +110,22 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 				array( $this, 'admin_thumbnails_only_callback' ),
 				'wpmc_filters_settings-menu', 'wpmc_filters_settings' );
 
+			add_settings_field(
+				'wpmc_dirs_filter',
+				'Directories Filter',
+				array( $this, 'admin_dirs_filter_callback' ),
+				'wpmc_filters_settings-menu',
+				'wpmc_filters_settings'
+			);
+
+			add_settings_field(
+				'wpmc_files_filter',
+				'Files Filter',
+				array( $this, 'admin_files_filter_callback' ),
+				'wpmc_filters_settings-menu',
+				'wpmc_filters_settings'
+			);
+
 			// SUBMENU > Settings > UI
 			add_settings_section( 'wpmc_ui_settings', null, null, 'wpmc_ui_settings-menu' );
 			add_settings_field( 'wpmc_hide_thumbnails', "Thumbnails",
@@ -113,8 +163,9 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 		register_setting( 'wpmc_settings', 'wpmc_postmeta' );
 		register_setting( 'wpmc_settings', 'wpmc_debuglogs' );
 
-		
 		register_setting( 'wpmc_filters_settings', 'wpmc_thumbnails_only' );
+		register_setting( 'wpmc_filters_settings', 'wpmc_dirs_filter' );
+		register_setting( 'wpmc_filters_settings', 'wpmc_files_filter' );
 
 		register_setting( 'wpmc_ui_settings', 'wpmc_hide_thumbnails' );
 		register_setting( 'wpmc_ui_settings', 'wpmc_hide_warning' );
@@ -380,6 +431,22 @@ HTML;
 			checked( 1, get_option( 'wpmc_thumbnails_only' ), false ) . '/>';
     $html .= '<label>Enable</label><br /><small>Restrict the filesystem scan to thumbnails (files containing the resolution). If none of the checks above are selected, you will get the list of all the thumbnails and be able to remove them.</small>';
     echo $html;
+	}
+
+	function admin_dirs_filter_callback( $args ) {
+		$value = get_option( 'wpmc_dirs_filter', '' );
+		$invalid = @preg_match( $value, '' ) === false;
+		?>
+<input type="text" id="wpmc_dirs_filter" name="wpmc_dirs_filter" value="<?php echo $value; ?>" placeholder="/regex/" autocomplete="off" data-needs-validation style="font-family: monospace;">
+<?php
+	}
+
+	function admin_files_filter_callback( $args ) {
+		$value = get_option( 'wpmc_files_filter', '' );
+		$invalid = @preg_match( $value, '' ) === false;
+		?>
+<input type="text" id="wpmc_files_filter" name="wpmc_files_filter" value="<?php echo $value; ?>" placeholder="/regex/" autocomplete="off" data-needs-validation style="font-family: monospace;">
+<?php
 	}
 
 	/**

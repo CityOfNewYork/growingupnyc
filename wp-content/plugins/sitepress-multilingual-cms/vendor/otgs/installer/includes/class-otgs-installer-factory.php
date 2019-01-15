@@ -138,6 +138,17 @@ class OTGS_Installer_Factory {
 		return $this->installer_php_functions;
 	}
 
+	public function create_debug_info_hook() {
+		return new OTGS_Installer_Debug_Info( $this->get_installer() );
+	}
+
+	/**
+	 * @return OTGS_Installer_Plugins_Update_Cache_Cleaner
+	 */
+	public function create_plugins_update_cache_cleaner() {
+		return new OTGS_Installer_Plugins_Update_Cache_Cleaner();
+	}
+
 	/**
 	 * @return WP_Installer
 	 */

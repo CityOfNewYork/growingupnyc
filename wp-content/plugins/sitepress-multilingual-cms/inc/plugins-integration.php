@@ -63,6 +63,10 @@ function wpml_plugins_integration_setup() {
 		$factories_to_load[] = 'WPML_Compatibility_Plugin_Fusion_Hooks_Factory';
 	}
 
+	if ( class_exists( 'Tiny_Plugin' ) ) {
+		$factories_to_load[] = 'WPML_Compatibility_Tiny_Compress_Images_Factory';
+	}
+
 	$action_filter_loader = new WPML_Action_Filter_Loader();
 	$action_filter_loader->load( $factories_to_load );
 }

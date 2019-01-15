@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit67900280dbde2bdefca10ff1884e2eb3
+class ComposerStaticInite4d49de92ae36606e3597c7f1293d43b
 {
     public static $files = array (
         'b45b351e6b6f7487d819961fef2fda77' => __DIR__ . '/..' . '/jakeasmith/http_build_url/src/http_build_url.php',
@@ -159,6 +159,7 @@ class ComposerStaticInit67900280dbde2bdefca10ff1884e2eb3
         'WPML_TM_Emails_Settings' => __DIR__ . '/../..' . '/classes/menu/translation-notifications/class-wpml-tm-emails-settings.php',
         'WPML_TM_Emails_Settings_Factory' => __DIR__ . '/../..' . '/classes/menu/translation-notifications/class-wpml-tm-emails-settings-factory.php',
         'WPML_TM_Field_Content_Action' => __DIR__ . '/../..' . '/classes/translation-jobs/class-wpml-tm-field-content-action.php',
+        'WPML_TM_Field_Type_Encoding' => __DIR__ . '/../..' . '/classes/translation-jobs/class-wpml-tm-field-type-encoding.php',
         'WPML_TM_Field_Type_Sanitizer' => __DIR__ . '/../..' . '/classes/menu/translation-editor/class-wpml-tm-field-type-sanitizer.php',
         'WPML_TM_General_Xliff_Import' => __DIR__ . '/../..' . '/classes/xliff/class-wpml-tm-general-xliff-import.php',
         'WPML_TM_General_Xliff_Reader' => __DIR__ . '/../..' . '/classes/xliff/class-wpml-tm-general-xliff-reader.php',
@@ -208,7 +209,13 @@ class ComposerStaticInit67900280dbde2bdefca10ff1884e2eb3
         'WPML_TM_MCS_ATE' => __DIR__ . '/../..' . '/classes/menu/mcsetup/class-wpml-tm-mcs-ate.php',
         'WPML_TM_MCS_ATE_Strings' => __DIR__ . '/../..' . '/classes/menu/mcsetup/class-wpml-tm-mcs-ate-strings.php',
         'WPML_TM_MCS_Custom_Field_Settings_Menu' => __DIR__ . '/../..' . '/classes/menu/mcsetup/class-wpml-tm-mcs-custom-field-settings-menu.php',
+        'WPML_TM_MCS_Pagination_Ajax' => __DIR__ . '/../..' . '/classes/menu/mcsetup/class-wpml-tm-mcs-pagination-ajax.php',
+        'WPML_TM_MCS_Pagination_Ajax_Factory' => __DIR__ . '/../..' . '/classes/menu/mcsetup/class-wpml-tm-mcs-pagination-ajax-factory.php',
+        'WPML_TM_MCS_Pagination_Render' => __DIR__ . '/../..' . '/classes/menu/mcsetup/class-wpml-tm-mcs-pagination-render.php',
+        'WPML_TM_MCS_Pagination_Render_Factory' => __DIR__ . '/../..' . '/classes/menu/mcsetup/class-wpml-tm-mcs-pagination-render-factory.php',
         'WPML_TM_MCS_Post_Custom_Field_Settings_Menu' => __DIR__ . '/../..' . '/classes/menu/mcsetup/class-wpml-tm-mcs-post-custom-field-settings-menu.php',
+        'WPML_TM_MCS_Search_Factory' => __DIR__ . '/../..' . '/classes/menu/mcsetup/class-wpml-tm-mcs-search-factory.php',
+        'WPML_TM_MCS_Search_Render' => __DIR__ . '/../..' . '/classes/menu/mcsetup/class-wpml-tm-mcs-search-render.php',
         'WPML_TM_MCS_Section_UI' => __DIR__ . '/../..' . '/classes/menu/mcsetup/class-wpml-tm-mcs-section-ui.php',
         'WPML_TM_MCS_Term_Custom_Field_Settings_Menu' => __DIR__ . '/../..' . '/classes/menu/mcsetup/class-wpml-tm-mcs-term-custom-field-settings-menu.php',
         'WPML_TM_Mail_Notification' => __DIR__ . '/../..' . '/classes/emails/wpml-tm-mail-notification.php',
@@ -257,6 +264,8 @@ class ComposerStaticInit67900280dbde2bdefca10ff1884e2eb3
         'WPML_TM_Requirements' => __DIR__ . '/../..' . '/classes/class-wpml-tm-requirements.php',
         'WPML_TM_Resources_Factory' => __DIR__ . '/../..' . '/classes/class-wpml-tm-resources-factory.php',
         'WPML_TM_Scripts_Factory' => __DIR__ . '/../..' . '/classes/menu/class-wpml-tm-scripts-factory.php',
+        'WPML_TM_Serialized_Custom_Field_Package_Handler' => __DIR__ . '/../..' . '/classes/settings/class-wpml-tm-serialized-custom-field-package-handler.php',
+        'WPML_TM_Serialized_Custom_Field_Package_Handler_Factory' => __DIR__ . '/../..' . '/classes/settings/class-wpml-tm-serialized-custom-field-package-handler-factory.php',
         'WPML_TM_Service_Activation_AJAX' => __DIR__ . '/../..' . '/classes/class-wpml-tm-service-activation-ajax.php',
         'WPML_TM_Services_Layout_Template_Builder' => __DIR__ . '/../..' . '/classes/menu/translation-services/class-wpml-tm-services-layout-template-builder.php',
         'WPML_TM_Services_List_Template' => __DIR__ . '/../..' . '/classes/menu/translation-services/class-wpml-tm-services-list-template.php',
@@ -470,8 +479,8 @@ class ComposerStaticInit67900280dbde2bdefca10ff1884e2eb3
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixesPsr0 = ComposerStaticInit67900280dbde2bdefca10ff1884e2eb3::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit67900280dbde2bdefca10ff1884e2eb3::$classMap;
+            $loader->prefixesPsr0 = ComposerStaticInite4d49de92ae36606e3597c7f1293d43b::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInite4d49de92ae36606e3597c7f1293d43b::$classMap;
 
         }, null, ClassLoader::class);
     }

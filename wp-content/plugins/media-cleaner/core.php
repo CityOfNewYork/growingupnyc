@@ -819,7 +819,7 @@ function wpmc_reset () {
 	if ( !is_writable( $basedir ) ) {
 		echo '<div class="error"><p>' . __( 'The directory for uploads is not writable. Media Cleaner will only be able to scan.', 'media-cleaner' ) . '</p></div>';
 	}
-	
+
 }
 
 function wpmc_install() {

@@ -89,12 +89,11 @@ if ( empty( $instance['filters'] ) ) {
 	/>
 </p>
 <p>
-	<?php $jsonld_enable = ( isset( $instance['jsonld_enable'] ) && $instance['jsonld_enable'] ) || false === $this->updated; ?>
 	<input
 		class="checkbox"
 		type="checkbox"
 		value="1"
-		<?php checked( $jsonld_enable, '1' ); ?>
+		<?php checked( $instance['jsonld_enable'], true ); ?>
 		id="<?php echo esc_attr( $this->get_field_id( 'jsonld_enable' ) ); ?>"
 		name="<?php echo esc_attr( $this->get_field_name( 'jsonld_enable' ) ); ?>"
 	/>

@@ -217,7 +217,7 @@ var WPMLTranslationServicesDialog = function () {
 		});
 	};
 
-	self.buildCustomFieldsUI = function( customFields, customFieldsWrapper ) {
+	self.buildCustomFieldsUI = function (customFields, customFieldsWrapper) {
 		var firstInput = false;
 
 		customFieldsWrapper.empty();
@@ -229,21 +229,13 @@ var WPMLTranslationServicesDialog = function () {
 			customFieldsListItem.appendTo(customFieldsWrapper);
 
 			itemId = 'custom_field_' + item.name;
-			if ('hidden' !== item.type) {
+
+			if (item.type.trim().toLowerCase() !== 'hidden') {
 				itemLabel = jQuery('<label for="' + itemId + '">' + item.label + ':</label>');
 				itemLabel.appendTo(customFieldsListItem);
 			}
-			switch (item.type) {
-				case 'text':
-					itemInput = jQuery('<input type="text" id="' + itemId + '" class="custom_fields" name="' + item.name + '" />');
-					break;
-				case 'checkbox':
-					itemInput = jQuery('<input type="checkbox" id="' + itemId + '" class="custom_fields" name="' + item.name + '" />');
-					break;
-				default:
-					itemInput = jQuery('<input type="hidden" id="' + itemId + '" class="custom_fields" name="' + item.name + '" />');
-					break;
-			}
+			itemInput = jQuery('<input type="' + item.type + '" id="' + itemId + '" class="custom_fields" name="' + item.name + '" />');
+
 			itemInput.appendTo(customFieldsListItem);
 			if (!firstInput) {
 				itemInput.focus();

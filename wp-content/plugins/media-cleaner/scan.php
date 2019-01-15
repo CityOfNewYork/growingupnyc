@@ -3,15 +3,10 @@
 class MeowApps_WPMC_Scan {
 
 	private $core = null;
-	private $likes = "";
 	private $metakeys = array( '%gallery%', '%ids%' );
 
 	public function __construct( $core  ) {
 		$this->core = $core;
-
-		// Prepare likes for SQL
-		foreach ( $this->metakeys as $metakey )
-			$this->likes .= "OR meta_key LIKE '$metakey' ";
 
 		// Detect values in the general (known, based on %like%) Meta Keys
 		add_action( 'wpmc_scan_postmeta', array( $this, 'scan_postmeta' ) );
@@ -67,10 +62,17 @@ class MeowApps_WPMC_Scan {
 
 	public function scan_postmeta( $id ) {
 		global $wpdb;
-		$query = $wpdb->prepare( "SELECT meta_value FROM $wpdb->postmeta
-			WHERE post_id = %d
-			AND meta_key = '_thumbnail_id' ", $id ) . $this->likes;
-		$metas = $wpdb->get_col( $query );
+
+		$likes = array ();
+		foreach ( $this->metakeys as $metakey ) $likes[] = "OR meta_key LIKE '{$metakey}'";
+		$likes = implode( ' ', $likes );
+
+		$q = <<< SQL
+SELECT meta_value FROM {$wpdb->postmeta}
+WHERE post_id = %d
+AND (meta_key = '_thumbnail_id' {$likes})
+SQL;
+		$metas = $wpdb->get_col( $wpdb->prepare( $q, $id ) );
 		if ( count( $metas ) > 0 ) {
 			$postmeta_images_ids = array();
 			$postmeta_images_urls = array();

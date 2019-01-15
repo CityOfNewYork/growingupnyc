@@ -127,15 +127,15 @@ class Tribe__Events__Pro__Recurrence {
 	 */
 	private function getNextDate( $current_date, $count = null, $rule_count = null ) {
 
-		if ( 0 !== $rule_count && 0 === $count ) {
+		$next_date = $this->series_rules->getNextDate( $current_date );
+
+		if ( 0 !== $rule_count && 0 === $count && ( $next_date === $current_date ) ) {
 			/**
 			 * return the $current_date on the first run of the 2nd rule and later to
 			 * enable events to start on the parent's date without duplicating initial event
 			 */
 			return $current_date;
 		}
-
-		$next_date = $this->series_rules->getNextDate( $current_date );
 
 		if ( intval( $next_date ) < $current_date ) { // bit overflow
 			return false;

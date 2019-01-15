@@ -29,16 +29,8 @@ class Tribe__Events__Pro__Advanced_List_Widget extends Tribe__Events__List_Widge
 
 		// Do not enqueue if the widget is inactive
 		if ( is_active_widget( false, false, $this->id_base, true ) || is_customize_preview() ) {
-			add_action( 'init', array( $this, 'enqueue_stylesheet' ), 100 );
+			add_action( 'tribe_events_pro_widget_render', array( 'Tribe__Events__Pro__Widgets', 'enqueue_calendar_widget_styles' ), 100 );
 		}
-	}
-
-	/**
-	 * If the widget is active then enqueue our stylesheet.
-	 */
-	public function enqueue_stylesheet() {
-		// Load the calendar widget CSS (the list widget inherits much of the same)
-		Tribe__Events__Pro__Widgets::enqueue_calendar_widget_styles();
 	}
 
 	public function taxonomy_filters( $query ) {
@@ -94,9 +86,9 @@ class Tribe__Events__Pro__Advanced_List_Widget extends Tribe__Events__List_Widge
 		$instance = parent::update( $new_instance, $old_instance );
 		$new_instance = $this->default_instance_args( $new_instance, true );
 
-		$instance['venue']                = $new_instance['venue'];
-		$instance['country']              = $new_instance['country'];
-		$instance['street']               = $new_instance['street'];
+		$instance['venue']   = $new_instance['venue'];
+		$instance['country'] = $new_instance['country'];
+		$instance['street']  = $new_instance['street'];
 		//@todo remove $instance['address'] after 4.6 (continuity helper for upgrading users)
 		$instance['address']              = $new_instance['address'];
 		$instance['city']                 = $new_instance['city'];
@@ -108,12 +100,7 @@ class Tribe__Events__Pro__Advanced_List_Widget extends Tribe__Events__List_Widge
 		$instance['tribe_is_list_widget'] = $new_instance['tribe_is_list_widget'];
 		$instance['operand']              = strip_tags( $new_instance['operand'] );
 		$instance['filters']              = maybe_unserialize( $this->clear_filters( $new_instance['filters'] ) );
-
-		if ( isset( $new_instance['jsonld_enable'] ) && $new_instance['jsonld_enable'] == true ) {
-			$instance['jsonld_enable'] = 1;
-		} else {
-			$instance['jsonld_enable'] = 0;
-		}
+		$instance['jsonld_enable']        = ( ! empty( $new_instance['jsonld_enable'] ) ? 1 : 0 );
 
 		return $instance;
 	}
@@ -184,6 +171,7 @@ class Tribe__Events__Pro__Advanced_List_Widget extends Tribe__Events__List_Widge
 			'tribe_is_list_widget' => true,
 			'operand'              => 'OR',
 			'filters'              => '',
+			'jsonld_enable'        => true,
 			'instance'             => &$this->instance,
 		);
 

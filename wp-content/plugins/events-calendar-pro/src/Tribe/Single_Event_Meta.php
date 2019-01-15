@@ -41,6 +41,11 @@ class Tribe__Events__Pro__Single_Event_Meta {
 	 * Render additional field data within the single event view meta section.
 	 */
 	public function additional_fields() {
+		// Don't render old additional fields template if the post has blocks
+		if ( has_blocks( get_the_ID() ) ) {
+			return;
+		}
+
 		tribe_get_template_part( 'pro/modules/meta/additional-fields', null, array(
 			'fields' => tribe_get_custom_fields(),
 		) );

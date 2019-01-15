@@ -19,41 +19,43 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 			$control_ops = array( 'id_base' => 'tribe-events-countdown-widget' );
 
 			parent::__construct( 'tribe-events-countdown-widget', __( 'Events Countdown', 'tribe-events-calendar-pro' ), $widget_ops, $control_ops );
+
+			// Do not enqueue if the widget is inactive
+			if ( is_active_widget( false, false, $this->id_base, true ) || is_customize_preview() ) {
+				add_action( 'tribe_events_pro_widget_render', array( 'Tribe__Events__Pro__Widgets', 'enqueue_calendar_widget_styles' ), 100 );
+			}
 		}
 
 		public function update( $new_instance, $old_instance ) {
+
 			$instance = $old_instance;
 			$instance['title'] = strip_tags( $new_instance['title'] );
 			$instance['show_seconds'] = ( isset( $new_instance['show_seconds'] ) ? 1 : 0 );
+
+			$instance['type'] = 'single-event';
 			if ( isset( $new_instance['type'] ) && in_array( $new_instance['type'], array( 'next-event', 'single-event', 'future-event' ) ) ) {
 				$instance['type'] = $new_instance['type'];
-			} else {
-				$instance['type'] = 'single-event';
 			}
-			$instance['complete'] = $new_instance['complete'] == '' ? $old_instance['complete'] : $new_instance['complete'];
 
-			$instance['event_ID'] = $instance['event'] = absint( $new_instance['event'] );
-			$instance['event_date'] = tribe_get_start_date( $instance['event_ID'], false, Tribe__Date_Utils::DBDATETIMEFORMAT, 'event' );
-
-			if ( isset( $new_instance['jsonld_enable'] ) && $new_instance['jsonld_enable'] == true ) {
-				$instance['jsonld_enable'] = 1;
-			} else {
-				$instance['jsonld_enable'] = 0;
-			}
+			$instance['complete']      = '' === $new_instance['complete'] ? $old_instance['complete'] : $new_instance['complete'];
+			$instance['event_ID']      = $instance['event'] = absint( $new_instance['event'] );
+			$instance['event_date']    = tribe_get_start_date( $instance['event_ID'], false, Tribe__Date_Utils::DBDATETIMEFORMAT, 'event' );
+			$instance['jsonld_enable'] = ( ! empty( $new_instance['jsonld_enable'] ) ? 1 : 0 );
 
 			return $instance;
 		}
 
 		public function form( $instance ) {
 			$defaults = array(
-				'title' => '',
-				'type' => 'single-event',
-				'event' => null,
-				'show_seconds' => true,
-				'complete' => esc_attr__( 'Hooray!', 'tribe-events-calendar-pro' ),
+				'title'         => '',
+				'type'          => 'single-event',
+				'event'         => null,
+				'show_seconds'  => true,
+				'complete'      => esc_attr__( 'Hooray!', 'tribe-events-calendar-pro' ),
+				'jsonld_enable' => true,
 
 				// Legacy Elements
-				'event_ID' => null,
+				'event_ID'   => null,
 				'event_date' => null,
 			);
 
@@ -107,7 +109,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 			);
 
 			$instance = wp_parse_args( (array) $instance, $defaults );
-			wp_enqueue_script( 'tribe-events-countdown-widget', tribe_events_pro_resource_url( 'widget-countdown.js' ), array( 'jquery' ), apply_filters( 'tribe_events_pro_js_version', Tribe__Events__Pro__Main::VERSION ), true );
+			tribe_asset_enqueue( 'tribe-events-countdown-widget' );
 
 			/**
 			 * Do things pre-render like: optionally enqueue assets if we're not in a sidebar
@@ -180,8 +182,12 @@ if ( ! class_exists( 'Tribe__Events__Pro__Countdown_Widget' ) ) {
 				$use_tz = $startdate->getTimeZone();//Tribe__Events__Timezones::get_event_timezone_string( $event->ID );
 
 				// Get current time, make both times use the same timezone
-				$now = new DateTime( 'now', new DateTimeZone( $use_tz->getName() ) );
-				$startdate->setTimezone( new DateTimeZone( $use_tz->getName() ) );
+				try {
+					$now = new DateTime( 'now', new DateTimeZone( $use_tz->getName() ) );
+					$startdate->setTimezone( new DateTimeZone( $use_tz->getName() ) );
+				} catch ( Exception $e ) {
+					$now = new DateTime( 'now' );
+				}
 
 				// Get the number of seconds remaining until the date in question.
 				// Note: can't use $startdate->getTimestamp() as that negates all the TZ work we just did!

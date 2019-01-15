@@ -335,7 +335,8 @@ class WPML_Translation_Management {
 				array(), WPML_TM_VERSION );
 
 			//TODO Load only in translation editor && taxonomy transaltion
-			wp_enqueue_style( 'wpml-dialog');
+			wp_enqueue_style( 'wpml-dialog' );
+			wp_enqueue_style( 'otgs-ui' );
 		}
 	}
 

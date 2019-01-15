@@ -40,6 +40,8 @@ include_once $installer_plugin_path . '/includes/class-otgs-installer-factory.ph
 include_once $installer_plugin_path . '/includes/class-otgs-installer-plugin.php';
 include_once $installer_plugin_path . '/includes/class-otgs-installer-plugin-factory.php';
 include_once $installer_plugin_path . '/includes/class-otgs-installer-plugin-finder.php';
+include_once $installer_plugin_path . '/includes/class-otgs-installer-debug-info.php';
+include_once $installer_plugin_path . '/includes/class-otgs-installer-plugins-update-cache-cleaner.php';
 
 include_once $installer_plugin_path . '/includes/functions-templates.php';
 include_once $installer_plugin_path . '/includes/class-otgs-twig-autoloader.php';
@@ -51,15 +53,19 @@ WP_Installer_Channels();
 $installer_factory = get_OTGS_Installer_Factory();
 
 $installer_factory->create_resources()
-				  ->add_hooks();
+                  ->add_hooks();
 $installer_factory->create_settings_hooks()
-				  ->add_hooks();
+                  ->add_hooks();
 $installer_factory->create_wp_components_hooks()
-				  ->add_hooks();
+                  ->add_hooks();
 $installer_factory->create_local_components_ajax_setting()
-				  ->add_hooks();
+                  ->add_hooks();
 $installer_factory->create_filename_hooks()
-				  ->add_hooks();
+                  ->add_hooks();
 $installer_factory->create_icons()
-				  ->add_hooks();
+                  ->add_hooks();
+$installer_factory->create_debug_info_hook()
+                  ->add_hooks();
+$installer_factory->create_plugins_update_cache_cleaner()
+                  ->add_hooks();
 

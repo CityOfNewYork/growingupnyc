@@ -36,10 +36,26 @@
 		public function getNextDate( $curdate ) {
 			$next_day_of_month = date( 'j', $curdate );
 
-			if ( $this->week_of_month && $this->day_of_week ) {
+			if ( $this->week_of_month && $this->day_of_week && 7 >= $this->day_of_week ) {
 				return $this->getNthDayOfWeek( $curdate, $this->day_of_week, $this->week_of_month );
-			} else // normal date based recurrence
-			{
+			} else {
+				// if we select "day' for $this->day_of_week then $this->week_of_month is actually
+				// the "day", and we DON'T want to pass "8" to getNextDayOfMonth() - ∞!
+				if ( $this->week_of_month && $this->day_of_week && 7 < $this->day_of_week ) {
+					// If we select "last" we get "-1" which we can't use - get the last day of the next month
+					$new_day = $this->week_of_month > 0 ? $this->week_of_month : date( 't', strtotime( 'last day of next month', $curdate ) );
+
+					return mktime(
+						date( 'H', $curdate ),
+						date( 'i', $curdate ),
+						date( 's', $curdate ),
+						date( 'n', $curdate ) + $this->months_between,
+						$new_day,
+						date( 'Y', $curdate )
+					);
+				}
+
+				// normal date based recurrence
 				if ( count( $this->days_of_month ) > 0 ) {
 					$next_day_of_month = $this->getNextDayOfMonth( $next_day_of_month );
 
@@ -51,15 +67,39 @@
 
 				if ( $next_day_of_month > date( 'j', $curdate ) ) {
 					// no need to jump ahead stay in current month
-					return mktime( date( 'H', $curdate ), date( 'i', $curdate ), date( 's', $curdate ), date( 'n', $curdate ), $next_day_of_month, date( 'Y', $curdate ) );
+					return mktime( date( 'H', $curdate ),
+						date( 'i', $curdate ),
+						date( 's', $curdate ),
+						date( 'n', $curdate ),
+						$next_day_of_month,
+						date( 'Y', $curdate )
+					);
 				} else {
-					$nextdate = mktime( date( 'H', $curdate ), date( 'i', $curdate ), date( 's', $curdate ), date( 'n', $curdate ) + $this->months_between, 1, date( 'Y', $curdate ) );
+					$nextdate = mktime(
+						date( 'H', $curdate ),
+						date( 'i', $curdate ),
+						date( 's', $curdate ),
+						date( 'n', $curdate ) + $this->months_between,
+						1,
+						date( 'Y', $curdate )
+					);
 
 					while ( Tribe__Date_Utils::get_last_day_of_month( $nextdate ) < $next_day_of_month ) {
-						$nextdate = mktime( date( 'H', $curdate ), date( 'i', $curdate ), date( 's', $curdate ), date( 'n', $nextdate ) + $this->months_between, 1, date( 'Y', $nextdate ) );
+						$nextdate = mktime( date( 'H', $curdate ),
+						date( 'i', $curdate ),
+						date( 's', $curdate ),
+						date( 'n', $nextdate ) + $this->months_between,
+						1,
+						date( 'Y', $nextdate ) );
 					}
 
-					return mktime( date( 'H', $curdate ), date( 'i', $curdate ), date( 's', $curdate ), date( 'n', $nextdate ), $next_day_of_month, date( 'Y', $nextdate ) );
+					return mktime( date( 'H', $curdate ),
+						date( 'i', $curdate ),
+						date( 's', $curdate ),
+						date( 'n', $nextdate ),
+						$next_day_of_month,
+						date( 'Y', $nextdate )
+					);
 				}
 			}
 		}

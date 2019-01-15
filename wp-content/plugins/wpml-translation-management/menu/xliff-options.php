@@ -1,6 +1,22 @@
 <?php
 global $sitepress;
+
+$xliff_newlines = (int) $sitepress->get_setting( 'xliff_newlines' );
+if ( ! $xliff_newlines ) {
+	$xliff_newlines = WPML_XLIFF_TM_NEWLINES_ORIGINAL;
+}
+
+$new_line_labels = array(
+	WPML_XLIFF_TM_NEWLINES_ORIGINAL => __(
+		'Do nothing - all new line characters will stay untouched.', 'wpml-translation-management'
+	),
+	WPML_XLIFF_TM_NEWLINES_REPLACE => sprintf(
+		__( 'All new lines should be replaced by HTML element %s. Use this option if translation tool used by translator does not support new lines characters (for example Virtaal software)', 'wpml-translation-management' )
+		, '<br class="xliff-newline" />'
+	),
+);
 ?>
+
 <div class="wpml-section" id="ml-content-setup-sec-5-1">
 
     <div class="wpml-section-header">
@@ -38,29 +54,20 @@ global $sitepress;
 
 	        <div class="wpml-section-content-inner">
 
-		        <?php
-		        $xliff_newlines = $sitepress->get_setting('xliff_newlines') ? intval($sitepress->get_setting('xliff_newlines')) : WPML_XLIFF_TM_NEWLINES_REPLACE;
-		        ?>
 		        <h4><?php _e('New lines character', 'wpml-translation-management') ?></h4>
 				<p>
 	                <?php _e('How new lines characters in XLIFF files should be handled?', 'wpml-translation-management'); ?>
 	            </p>
 
-							<p>
-	                <label>
-	                    <input type="radio" name="icl_xliff_newlines" value="<?php echo WPML_XLIFF_TM_NEWLINES_REPLACE ?>" <?php if ( $xliff_newlines == WPML_XLIFF_TM_NEWLINES_REPLACE ): ?>checked<?php endif ?>/>
-	                    <?php printf(
-															__('All new lines should be replaced by HTML element %s. Use this option if translation tool used by translator does not support new lines characters (for example Virtaal software)', 'wpml-translation-management')
-															, '&lt;br class="xliff-newline" />'); ?>
-	                </label>
-	            </p>
-						
-				<p>
-                <label>
-                    <input type="radio" name="icl_xliff_newlines" value="<?php echo WPML_XLIFF_TM_NEWLINES_ORIGINAL ?>"<?php if ( $xliff_newlines == WPML_XLIFF_TM_NEWLINES_ORIGINAL ): ?>checked<?php endif ?>/>
-                    <?php _e('Do nothing. If you will select this, all new line characters will stay untouched.', 'wpml-translation-management'); ?>
-                </label>
-            </p>
+				<?php foreach ( $new_line_labels as $mode => $label ) { ?>
+					<p>
+						<label>
+							<input type="radio" name="icl_xliff_newlines"
+								   value="<?php echo $mode ?>"<?php checked( $xliff_newlines, $mode ) ?>/>
+							<?php echo esc_html( $label ); ?>
+						</label>
+					</p>
+				<?php } ?>
 
 			</div>
             <p class="buttons-wrap">

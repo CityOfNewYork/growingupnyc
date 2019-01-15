@@ -5,7 +5,7 @@
  *
  * Override this template in your own theme by creating a file at [your-theme]/tribe-events/pro/photo/loop.php
  *
- * @version 4.4.28
+ * @version 4.4.32
  * @package TribeEventsCalendar
  */
 
@@ -20,7 +20,7 @@ $more = false;
 
 <div class="tribe-events-loop tribe-clearfix" id="tribe-events-photo-events">
 
-	<h2 class="tribe-events-visuallyhidden"><?php printf( esc_html__( 'List of %s', 'the-events-calendar' ), tribe_get_event_label_plural() ); ?></h2>
+	<h2 class="tribe-events-visuallyhidden"><?php printf( esc_html__( 'List of %s', 'tribe-events-calendar-pro' ), tribe_get_event_label_plural() ); ?></h2>
 
 	<div class="tribe-events-photo-grid-sizer">
 		<!-- .tribe-events-photo-grid-sizer empty element, only used for element sizing -->

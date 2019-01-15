@@ -315,8 +315,6 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events {
 			remove_action( 'tribe_events_bar_before_template', tribe_callback( 'tec.bar', 'disabled_bar_before' ) );
 			remove_action( 'tribe_events_bar_after_template', tribe_callback( 'tec.bar', 'disabled_bar_after' ) );
 
-			tribe_asset_enqueue( 'tribe-events-pro-geoloc' );
-
 			add_action( 'tribe_events_bar_before_template', tribe_callback( 'tec.bar', 'disabled_bar_before' ) );
 			add_action( 'tribe_events_bar_after_template', tribe_callback( 'tec.bar', 'disabled_bar_after' ) );
 
@@ -354,6 +352,7 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events {
 	 */
 	public function enable_tribe_bar() {
 		remove_filter( 'tribe-events-bar-should-show', array( $this, 'enable_tribe_bar' ) );
+		remove_filter( 'tribe_get_template_part_path_modules/bar.php', '__return_false' );
 		return true;
 	}
 
@@ -505,7 +504,7 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events {
 	 */
 	public function set_template_object( $template_object ) {
 		if ( ! is_object( $template_object ) ) {
-			_doing_it_wrong( __METHOD__, __( '$template_object is expected to be an actual object', 'the-events-calendar' ), '4.3' );
+			_doing_it_wrong( __METHOD__, __( '$template_object is expected to be an actual object', 'tribe-events-calendar-pro' ), '4.3' );
 			return;
 		}
 
@@ -573,7 +572,7 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events {
 
 		?>
 		<span class="tribe-events-ajax-loading">
-			<img class="tribe-events-spinner-medium" src="<?php esc_attr_e( tribe_events_resource_url( 'images/tribe-loading.gif' ) ); ?>" alt="<?php printf( esc_attr__( 'Loading %s', 'the-events-calendar' ), $events_label_plural ); ?>" />
+			<img class="tribe-events-spinner-medium" src="<?php echo esc_url( tribe_events_resource_url( 'images/tribe-loading.gif' ) ); ?>" alt="<?php printf( esc_attr__( 'Loading %s', 'tribe-events-calendar-pro' ), $events_label_plural ); ?>" />
 		</span>
 		<?php
 

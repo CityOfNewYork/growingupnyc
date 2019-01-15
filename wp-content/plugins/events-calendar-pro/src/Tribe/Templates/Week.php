@@ -483,10 +483,13 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Week' ) ) {
 					$duration = ( $end_of_day_timestamp - $event_start_timestamp ) / 60;
 
 				} else {
-
 					// for a default event continue as everything is normal
 					$remaining_minutes_in_day = ( $end_of_day_timestamp - $event_start_timestamp / 60 );
-					$duration                 = get_post_meta( $event->ID, '_EventDuration', true ) / 60;
+					$duration_meta = get_post_meta( $event->ID, '_EventDuration', true );
+					$duration = 0;
+					if ( ! empty( $duration_meta ) && is_numeric( $duration_meta ) ) {
+						$duration = $duration_meta / 60;
+					}
 
 					if ( $duration > $remaining_minutes_in_day ) {
 						// this will happen in the case of a multi-day event that extends beyond the end of the day

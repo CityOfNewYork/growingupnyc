@@ -12,6 +12,8 @@
  *
  */
 
+@import "common/_presentational.pcss";
+
 :root {
 	--featured-event-bg: #0ea0d7;
 }
@@ -46,47 +48,6 @@
 				color: rgba( 255, 255, 255, .9 );
 			}
 		}
-	}
-}
-
-/**
- * Presentational classes to separate elements in a list-like view.
- * The 's', 'm' and 'l' suffixes indicate the size of the spacing between the elements: small,
- * medium and large.
- */
-.tribe-section-s {
-	padding: 5px 0;
-
-	&:first-of-type {
-		padding-top: 0;
-	}
-
-	&:last-of-type {
-		padding-bottom: 0;
-	}
-}
-
-.tribe-section-m {
-	padding: 10px 0;
-
-	&:first-of-type {
-		padding-top: 0;
-	}
-
-	&:last-of-type {
-		padding-bottom: 0;
-	}
-}
-
-.tribe-section-l {
-	padding: 20px 0;
-
-	&:first-of-type {
-		padding-top: 0;
-	}
-
-	&:last-of-type {
-		padding-bottom: 0;
 	}
 }
 
@@ -530,55 +491,6 @@
 
 		.tribe-events-event-image {
 			margin: 0;
-		}
-	}
-}
-
-.tribe-events-venue-widget {
-	@mixin featured-list-styles;
-
-	ol li {
-		list-style: none;
-		margin-bottom: .5rem;
-	}
-
-	.tribe-list-widget {
-		margin-left: 0;
-	}
-
-	.type-tribe_events {
-		border: 0;
-		border-bottom  : 1px dotted #2f2f2f;
-		padding-bottom : 10px;
-		margin-bottom  : 5px;
-		padding: 0;
-	}
-
-	.tribe-venue-widget-list {
-		font-size: 13px;
-		line-height: 1.6;
-	}
-
-	.tribe-event-title {
-		font-size: 14px;
-		font-weight: bold;
-		line-height: 18px;
-		margin-top: 0;
-		margin-bottom: 10px;
-		padding-top: .75em;
-	}
-
-	.duration {
-		font-weight: bold;
-	}
-
-	.tribe-event-featured {
-		background: var(--featured-event-bg);
-		padding-bottom: .75em;
-
-		.tribe-event-image {
-			margin-left: -1.5em;
-			margin-right: -1.5em;
 		}
 	}
 }
@@ -1096,165 +1008,6 @@ ul.related-events {
 	}
 }
 
-/* = Events Calendar Widget Styles (Sidebar)
-   @ Template: widgets/list-widget.php
-=============================================*/
-
-.tribe-mini-calendar-list-wrapper .type-tribe_events {
-	margin: 0;
-	padding: 0;
-}
-
-.tribe-mini-calendar-list-wrapper,
-.tribe-events-adv-list-widget {
-	@mixin featured-list-styles;
-
-	ol li {
-		list-style: none;
-		margin-bottom: 30px;
-	}
-
-	.tribe-venue {
-		display: block;
-		margin-top: 10px;
-	}
-
-	.tribe-events-organizer,
-	.tribe-events-location {
-		&:empty {
-			display: none;
-		}
-	}
-
-	.list-info {
-		margin-bottom: .25rem;
-	}
-
-	.tribe-organizer {
-		display: block;
-	}
-
-	.tribe-events-event-cost {
-		display: inline;
-	}
-
-	.duration {
-		display: inline;
-	}
-
-	.event-is-recurring .tribe-events-divider {
-		display: none;
-	}
-
-	.event-is-recurring {
-		color: inherit;
-	}
-
-	.type-tribe_events {
-		margin: 0 0 .25rem 0;
-		padding: 0;
-	}
-
-	.tribe-event-title {
-		margin-top: .75rem;
-	}
-
-	.tribe-event-featured {
-		border-bottom: 1px dotted #2f2f2f;
-		margin-top: .75rem;
-		padding-bottom: .75rem;
-
-		&:first-of-type {
-			margin-top: 0;
-		}
-
-		&:last-of-type {
-			border-bottom: 0;
-		}
-
-		.list-date {
-			display: none;
-		}
-
-		.list-info {
-			display: block;
-			padding: 0 1.5rem;
-			width: 100%;
-		}
-
-		.tribe-mini-calendar-event {
-			background: var(--featured-event-bg);
-			border: 0;
-			margin-bottom: 0;
-			padding-bottom: 16px;
-
-			.tribe-event-image {
-				line-height: 0;
-				overflow: hidden;
-			}
-
-			.list-info {
-				margin-bottom: 0;
-			}
-
-			.tribe-events-title a {
-				color: white;
-
-				&:hover {
-					color: rgba( 255, 255, 255, .9 );
-				}
-			}
-		}
-	}
-}
-
-/* = Events Countdown Widget
-   @ Template: widgets/countdown-widget.php
-=============================================*/
-.tribe-countdown-timer {
-	span.tribe-countdown-seconds,
-	span.format,
-	h3.tribe-countdown-complete {
-		display: none;
-	}
-}
-
-div.tribe-countdown-timer {
-	line-height: 1.5em;
-	min-height: 60px;
-	padding-top: 10px;
-	text-align: center;
-}
-
-div.tribe-countdown-number {
-	color: #000;
-	float: left;
-	font-size: 2.4em;
-}
-
-span.tribe-countdown-under {
-	color: #666;
-	font-size: 10px;
-	font-weight: 500;
-	text-transform: uppercase;
-}
-
-div.tribe-countdown-colon {
-	color: #666;
-	float: left;
-	font-size: 1.5em;
-	padding: 0 4px;
-}
-
-div.tribe-countdown-right {
-	float: left;
-}
-
-div.tribe-countdown-text {
-	clear: both;
-	margin: 0 0 10px 0;
-}
-
 /* Twenty Thirteen compat
 ========================================================================== */
 
@@ -1262,81 +1015,10 @@ div.tribe-countdown-text {
 	padding: 4px;
 }
 
-/* Twenty Thirteen Footer Widget */
-.tribe-theme-twentythirteen #secondary div.tribe-countdown-number,
-.tribe-theme-twentyfourteen #primary-sidebar div.tribe-countdown-number,
-.tribe-theme-twentyfourteen #footer-sidebar div.tribe-countdown-number {
-	color: #fff;
-	text-shadow: 1px 1px #000;
-}
-
-.tribe-theme-twentythirteen #secondary span.tribe-countdown-under {
-	color: #fff;
-}
-
-/* Twenty Fourteen Compat
-========================================================================== */
-.tribe-theme-twentyfourteen {
-	#primary-sidebar div.tribe-countdown-number {
-		font-size: 24px;
-	}
-
-	.widget .tribe-mini-calendar-event .list-info h2 {
-		font-size: 14px;
-	}
-}
-
-
 /* Twenty Fifteen Compat
 ========================================================================== */
 
 .tribe-theme-twentyfifteen {
-	.tribe-events-adv-list-widget {
-		.type-tribe_events.hentry {
-			box-shadow: none;
-			margin-left: 0;
-			margin-right: 0;
-		}
-
-		.tribe-mini-calendar-event {
-			border-bottom: 0;
-		}
-	}
-
-	.tribe-events-venue-widget {
-		.hentry {
-			box-shadow: none;
-			display: inline-block;
-			margin-left: 0;
-			margin-right: 0;
-
-			.entry-title {
-				font-size: 1.2em;
-			}
-		}
-	}
-
-	.tribe-venue-widget-wrapper {
-		ul.tribe-venue-widget-list {
-			list-style-type: none;
-		}
-
-		h4 {
-			font-size: 14px;
-		}
-
-		.date-start,
-		.date-end,
-		.end-time,
-		.tribe-events-event-cost {
-			font-size: 13px;
-		}
-
-		.date-end {
-			display: block;
-		}
-	}
-
 	#tribe-events-content.tribe-events-photo #tribe-events-photo-events {
 		.tribe-events-list-event-title {
 			line-height: 1.2;
@@ -1394,12 +1076,6 @@ div.tribe-countdown-text {
 	}
 }
 
-@media screen and (min-width: 59.6875em) {
-	.tribe-theme-twentyfifteen .tribe-events-countdown-widget div.tribe-countdown-number {
-		font-size: 2.1em;
-	}
-}
-
 /* Twenty Sixteen Compat
 ========================================================================== */
 
@@ -1422,11 +1098,6 @@ div.tribe-countdown-text {
 		color: white;
 	}
 
-	.tribe-venue-widget-list {
-		margin-left: 0;
-		list-style: none;
-	}
-
 	.tribe-events-list-photo-description ul,
 	.tribe-events-list-photo-description ol {
 		margin-left: 1.25em;
@@ -1439,57 +1110,6 @@ div.tribe-countdown-text {
 
 .tribe-events-list-photo-description {
 	width: 100%;
-}
-
-
-/* Twenty Seventeen Compat
-========================================================================== */
-
-.tribe-mini-calendar-list-wrapper,
-.tribe-events-adv-list-widget {
-	.tribe-event-featured .tribe-mini-calendar-event a {
-		box-shadow: none;
-	}
-}
-
-
-
-/* = Events Venue Widget
-   @ Template: widgets/venue-widget.php
-=============================================*/
-.tribe-venue-widget-venue {
-	margin-bottom: 20px;
-
-	.tribe-venue-widget-venue-name a {
-		font-weight: bold;
-	}
-}
-
-.tribe-venue-widget-list {
-
-	.tribe-events-event-schedule-details {
-		display: inline;
-		font-weight: bold;
-	}
-
-	.entry-title {
-		margin: 0 0 5px;
-	}
-
-	.type-tribe_events {
-		margin-bottom: 10px;
-		padding-bottom: 15px;
-	}
-}
-
-.tribe-venue-widget-thumbnail {
-	margin: 10px 0 20px 0;
-
-	img {
-		display: block;
-		height: auto;
-		max-width: 100%;
-	}
 }
 
 /* = Events Calendar Tribe Bar Styles

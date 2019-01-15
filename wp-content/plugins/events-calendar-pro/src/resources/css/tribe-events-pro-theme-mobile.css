@@ -58,14 +58,14 @@
 =============================================*/
 
 .tribe-events-venue .tribe-events-venue-meta {
-	padding: 0 0 12px;
-}
+		padding: 0 0 12px;
+	}
 
 .tribe-events-venue .tribe-events-map-wrap {
-	float: none;
-	margin: 5px 0 12px;
-	width: 98%;
-}
+		float: none;
+		margin: 5px 0 12px;
+		width: 98%;
+	}
 
 .tribe-events-event-meta address.tribe-events-address {
 	padding: 0;
@@ -81,5 +81,5 @@
 }
 
 .tribe-events-single ul.tribe-related-events li .tribe-related-event-info {
-	padding: 0px 10px 10px 0;
-}
+		padding: 0px 10px 10px 0;
+	}

@@ -8,6 +8,8 @@
  * @see: http://moderntribe.github.io/products-engineering/css/
  */
 
+@custom-media --tablet (max-width: 782px);
+
 /******* Recurrence Rule visibility *******/
 
 .recurrence-row td {
@@ -21,32 +23,32 @@
 
 .eventForm .recurrence-rules-header,
 	.eventForm .recurrence-exclusions-header {
-	vertical-align: top;
-}
+		vertical-align: top;
+	}
 
 .eventForm .recurrence-rules-header {
-	min-width: 124px;
-}
+		min-width: 124px;
+	}
 
 .eventForm .recurrence-end-container {
-	vertical-align: middle;
-}
+		vertical-align: middle;
+	}
 
 .tribe-has-recurrence-rule #tribe-add-recurrence .has-no-recurrence {
-	display: none;
-}
+			display: none;
+		}
 
 .tribe-has-recurrence-rule #tribe-add-recurrence .has-recurrence {
-	display: inline;
-}
+			display: inline;
+		}
 
 #tribe-add-recurrence .has-no-recurrence {
-	display: inline;
-}
+		display: inline;
+	}
 
 #tribe-add-recurrence .has-recurrence {
-	display: none;
-}
+		display: none;
+	}
 
 .tribe-has-recurrence-rule .tribe-add-recurrence.button {
 	background: #2786ba;
@@ -78,88 +80,88 @@ input[type="checkbox"].tribe-recurrence-active {
 }
 
 .tribe-event-recurrence:nth-child( 2n+2 ), .tribe-event-exclusion:nth-child( 2n+2 ) {
-	background: #fdfdfd;
-}
+		background: #fdfdfd;
+	}
 
 .tribe-event-recurrence:first-child, .tribe-event-exclusion:first-child {
-	border-top: 0;
-	padding-top: 0;
-}
+		border-top: 0;
+		padding-top: 0;
+	}
 
 .tribe-event-recurrence input,
 	.tribe-event-recurrence select,
 	.tribe-event-exclusion input,
 	.tribe-event-exclusion select {
-	font-size: 13px;
-}
+		font-size: 13px;
+	}
 
 .tribe-event-recurrence .tribe-handle, .tribe-event-exclusion .tribe-handle {
-	color: #a0a5aa;
-	cursor: pointer;
-	margin-left: -6px;
-	vertical-align: middle;
-}
+		color: #a0a5aa;
+		cursor: pointer;
+		margin-left: -6px;
+		vertical-align: middle;
+	}
 
 .tribe-event-recurrence .tribe-handle span, .tribe-event-exclusion .tribe-handle span {
-	vertical-align: middle;
-}
+			vertical-align: middle;
+		}
 
 .tribe-event-recurrence .tribe-timepicker, .tribe-event-exclusion .tribe-timepicker {
-	font-size: 13px;
-	width: 80px;
-}
+		font-size: 13px;
+		width: 80px;
+	}
 
 .tribe-event-recurrence .tribe-handle:before, .tribe-event-exclusion .tribe-handle:before {
-	content: '\f140';
-	display: inline-block;
-	font: 400 20px/1 dashicons;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	position: relative;
-	speak: none;
-	top: 7px;
-}
+		content: '\f140';
+		display: inline-block;
+		font: 400 20px/1 dashicons;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		position: relative;
+		speak: none;
+		top: 7px;
+	}
 
 .tribe-event-recurrence.tribe-open .tribe-handle:before, .tribe-event-exclusion.tribe-open .tribe-handle:before {
-	content: '\f142';
-	top: 6px;
-}
+				content: '\f142';
+				top: 6px;
+			}
 
 .tribe-event-recurrence.tribe-open .tribe-handle .show, .tribe-event-exclusion.tribe-open .tribe-handle .show {
-	display: none;
-}
+				display: none;
+			}
 
 .tribe-event-recurrence.tribe-open .tribe-handle .hide, .tribe-event-exclusion.tribe-open .tribe-handle .hide {
-	display: inline;
-}
+				display: inline;
+			}
 
 .tribe-event-recurrence.tribe-open .tribe-recurrence-details, .tribe-event-exclusion.tribe-open .tribe-recurrence-details {
-	display: block;
-}
+			display: block;
+		}
 
 .tribe-event-recurrence .tribe-handle .show, .tribe-event-exclusion .tribe-handle .show {
-	display: inline;
-}
+			display: inline;
+		}
 
 .tribe-event-recurrence .tribe-handle .hide, .tribe-event-exclusion .tribe-handle .hide {
-	display: none;
-}
+			display: none;
+		}
 
 .tribe-event-recurrence .tribe-recurrence-details, .tribe-event-exclusion .tribe-recurrence-details {
-	display: none;
-}
+		display: none;
+	}
 
 .tribe-event-recurrence .recurrence-rows, .tribe-event-exclusion .recurrence-rows {
-	display: none;
-}
+		display: none;
+	}
 
 .tribe-event-recurrence.tribe-open .recurrence-rows, .tribe-event-exclusion.tribe-open .recurrence-rows {
-	display: block;
-}
+		display: block;
+	}
 
 .tribe-event-recurrence .recurrence-row, .tribe-event-exclusion .recurrence-row {
-	padding-top: 10px;
-}
+		padding-top: 10px;
+	}
 
 input[data-field="custom-interval"] {
 	width: 3em;
@@ -171,7 +173,6 @@ input[data-field="custom-interval"] {
 
 .tribe-has-recurrence-rule .tribe-recurrence-exclusion-row {
 	display: table-row;
-	-webkit-transition: opacity 0.35s ease-in;
 	transition: opacity 0.35s ease-in;
 }
 
@@ -209,9 +210,8 @@ input[data-field="custom-interval"] {
 }
 
 .custom-recurrence-weeks label {
-	margin-right: 16px;
-	margin-right: 1rem;
-}
+		margin-right: 1rem;
+	}
 
 .tribe-field-inline-text {
 	padding-left: 2px;
@@ -219,14 +219,14 @@ input[data-field="custom-interval"] {
 }
 
 .tribe-field-inline-text.tribe-field-inline-first {
-	margin-left: 0;
-	padding-left: 0;
-}
+		margin-left: 0;
+		padding-left: 0;
+	}
 
 .tribe-field-inline-text.tribe-field-inline-last {
-	margin-right: 0;
-	padding-right: 0;
-}
+		margin-right: 0;
+		padding-right: 0;
+	}
 
 .recurrence-row {
 	line-height: 28px;
@@ -234,47 +234,45 @@ input[data-field="custom-interval"] {
 
 .recurrence-row div,
 	.recurrence-row span {
-	line-height: 28px;
-	vertical-align: top;
-}
+		line-height: 28px;
+		vertical-align: top;
+	}
 
 .recurrence-row button > span {
-	vertical-align: top;
-}
+		vertical-align: top;
+	}
 
 .recurrence-row table {
-	border-collapse: collapse;
-}
+		border-collapse: collapse;
+	}
 
 .recurrence-row .select2-container {
-	margin-top: 1px;
-}
+		margin-top: 1px;
+	}
 
 .first-label-in-line {
 	margin-left: 0;
-	margin-right: 4px;
 	margin-right: .25rem;
-	min-width: 16px;
 	min-width: 1rem;
 }
 
 span.first-label-in-line{
-	display: inline-block;
-}
+		display: inline-block;
+	}
 
 .custom-recurrence-years {
 	width: 200px;
 }
 
 .custom-recurrence-years td {
-	border-top: 0;
-	padding-top: 0;
-}
+		border-top: 0;
+		padding-top: 0;
+	}
 
 .custom-recurrence-years .month-label {
-	font-weight: normal;
-	vertical-align: top;
-}
+		font-weight: normal;
+		vertical-align: top;
+	}
 
 .tribe-same-day-select {
 	min-width: 118px;
@@ -292,49 +290,49 @@ span.first-label-in-line{
 }
 
 #tribe-row-delete-dialog .question {
-	display: block;
-	margin: 0 auto;
-	padding-top: .5em;
-	position: relative;
-}
+		display: block;
+		margin: 0 auto;
+		padding-top: .5em;
+		position: relative;
+	}
 
 #tribe-row-delete-dialog .exclusion-question {
-	display: none;
-}
+		display: none;
+	}
 
 #tribe-row-delete-dialog.rule-dialog .rule-question {
-	display: block;
-}
+			display: block;
+		}
 
 #tribe-row-delete-dialog.rule-dialog .exclusion-question {
-	display: none;
-}
+			display: none;
+		}
 
 #tribe-row-delete-dialog.exclusion-dialog .exclusion-question {
-	display: block;
-}
+			display: block;
+		}
 
 #tribe-row-delete-dialog.exclusion-dialog .rule-question {
-	display: none;
-}
+			display: none;
+		}
 
 .tribe-row-delete-dialog .ui-dialog-titlebar {
-	display: none;
-}
+		display: none;
+	}
 
 .tribe-row-delete-dialog .ui-dialog-titlebar-close {
-	display: none;
-}
+		display: none;
+	}
 
 .tribe-row-delete-dialog .ui-dialog-buttonpane {
-	text-align : center;
-	margin-top: 0;
-	padding-top: 0;
-}
+		text-align : center;
+		margin-top: 0;
+		padding-top: 0;
+	}
 
 .tribe-row-delete-dialog .ui-dialog-buttonpane .button {
-	margin: .5em .4em .5em;
-}
+			margin: .5em .4em .5em;
+		}
 
 /* make recurrence > monthly > on a different day > select2 height tall enough to show date options */
 
@@ -343,8 +341,8 @@ span.first-label-in-line{
 }
 
 .select2-results .select2-highlighted {
-	background-color: #585858;
-}
+		background-color: #585858;
+	}
 
 .tribe-month-select,
 .tribe-dame-day-select,
@@ -353,12 +351,12 @@ span.first-label-in-line{
 	padding-top: 10px;
 }
 
-@media (max-width: 782px) {
+@media (--tablet) {
 
-	.tribe-event-recurrence.tribe-open .tribe-recurrence-details .tribe-field-start_time,
+.tribe-event-recurrence.tribe-open .tribe-recurrence-details .tribe-field-start_time,
 			.tribe-event-recurrence.tribe-open .tribe-recurrence-details .tribe-field-end_time,
 			.tribe-event-exclusion.tribe-open .tribe-recurrence-details .tribe-field-start_time,
 			.tribe-event-exclusion.tribe-open .tribe-recurrence-details .tribe-field-end_time {
-		width: 80px;
-	}
-}
+					width: 80px
+			}
+				}

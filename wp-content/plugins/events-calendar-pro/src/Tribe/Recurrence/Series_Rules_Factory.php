@@ -185,11 +185,15 @@ class Tribe__Events__Pro__Recurrence__Series_Rules_Factory {
 				$rule = new Tribe__Events__Pro__Date_Series_Rules__Month( 1 );
 				break;
 			case Tribe__Events__Pro__Recurrence__Custom_Types::MONTHLY_CUSTOM_TYPE:
+
+				$custom_monthly_interval = (int) empty( $recurrence['custom']['interval'] ) ? 1 : $recurrence['custom']['interval'];
+
+				// These values are often empty if the monthly-type event is recurring on the same day.
 				if (
 					empty( $recurrence['custom']['month']['number'] )
 					&& empty( $recurrence['custom']['month']['day'] )
 				) {
-					$rule = new Tribe__Events__Pro__Date_Series_Rules__Month( 1 );
+					$rule = new Tribe__Events__Pro__Date_Series_Rules__Month( $custom_monthly_interval );
 				} else {
 					$day_of_month = null;
 
@@ -202,7 +206,7 @@ class Tribe__Events__Pro__Recurrence__Series_Rules_Factory {
 
 					$month_number = self::ordinalToInt( $recurrence['custom']['month']['number'] );
 					$rule         = new Tribe__Events__Pro__Date_Series_Rules__Month(
-						$recurrence['custom']['interval'],
+						$custom_monthly_interval,
 						$day_of_month,
 						$month_number,
 						Tribe__Utils__Array::get( $recurrence, array( 'custom', 'month', 'day' ) )

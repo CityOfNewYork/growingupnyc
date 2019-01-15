@@ -707,7 +707,7 @@ final class WP_Installer {
 
 		}
 
-		return $site_url;
+		return apply_filters( 'otgs_installer_site_url', $site_url );
 	}
 
 	/**
@@ -806,13 +806,24 @@ final class WP_Installer {
 						}
 
 						$this->repositories[ $id ] = $data;
-
+						$this->set_predefined_config( $id, 'api-url', 'API_URL' );
+						$this->set_predefined_config( $id, 'products', 'PRODUCTS' );
 					}
 				}
 
 			}
 		}
 
+	}
+
+	/**
+	 * @param string $id
+	 */
+	private function set_predefined_config( $id, $setting_field, $constant_suffix ) {
+		$repo_upper = strtoupper( $id );
+		if ( defined( "OTGS_INSTALLER_{$repo_upper}_{$constant_suffix}" ) ) {
+			$this->repositories[ $id ][ $setting_field ] = constant( "OTGS_INSTALLER_{$repo_upper}_{$constant_suffix}" );
+		}
 	}
 
 	public function filter_repositories_list() {
@@ -1256,6 +1267,7 @@ final class WP_Installer {
 						'site_url'      => get_site_url(),
 					);
 					$this->save_settings();
+					$this->clean_plugins_update_cache();
 				} else {
 					$error = __( 'Invalid site key for the current site.', 'installer' )
 					         . '<br /><div class="installer-footnote">' . __( 'Please note that the site key is case sensitive.', 'installer' ) . '</div>';
@@ -1304,6 +1316,7 @@ final class WP_Installer {
 		if ( isset( $this->settings['repositories'][ $repository_id ] ) ) {
 			unset( $this->settings['repositories'][ $repository_id ]['subscription'] );
 			$this->save_settings();
+			$this->clean_plugins_update_cache();
 			if( $refresh_repositories_data ){
 				$this->refresh_repositories_data();
 			}
@@ -1367,7 +1380,6 @@ final class WP_Installer {
 						$this->refresh_repositories_data();
 
 						$this->save_settings();
-
 					} else {
 						unset( $this->settings['repositories'][ $repository_id ]['subscription'] );
 						$error = __( 'Invalid site key for the current site. If the error persists, try to unregister first and then register again with the same site key.', 'installer' );
@@ -1387,6 +1399,8 @@ final class WP_Installer {
 			}
 
 		}
+
+		$this->clean_plugins_update_cache();
 
 		echo json_encode( array( 'error' => $error ) );
 
@@ -2431,6 +2445,10 @@ final class WP_Installer {
 									if ( 'Toolset Types' === $name && version_compare( $plugin['Version'], '3.0', '<' ) ) {
 										$display_subscription_notice = false;
 									}
+
+									if ( 'Toolset Types' === $name && $this->plugin_is_registered( 'wpml', $slug ) ) {
+										$display_subscription_notice = false;
+									}
 								}
 							}
 
@@ -2732,6 +2750,10 @@ final class WP_Installer {
 		return $this->plugin_finder;
 	}
 
+	private function clean_plugins_update_cache() {
+		do_action( 'otgs_installer_clean_plugins_update_cache' );
+    }
+
 	public function plugin_upgrade_custom_errors() {
 
 		if ( isset( $_REQUEST['action'] ) ) {
@@ -2784,6 +2806,11 @@ final class WP_Installer {
 							if ( empty( $sub_cache[ $plugin_repository ] ) ) {
 								$subscription_data = false;
 								$site_key          = $this->get_repository_site_key( $plugin_repository );
+
+								if ( ! $site_key ) {
+									list( $plugin_repository, $site_key ) = $this->match_product_in_external_repository( $plugin_repository, $wp_plugin_slug );
+								}
+
 								if ( $site_key ) {
 									try {
 										$subscription_data = $this->fetch_subscription_data( $plugin_repository, $site_key, self::SITE_KEY_VALIDATION_SOURCE_REVALIDATION );
@@ -2798,7 +2825,7 @@ final class WP_Installer {
 								$subscription_data = $sub_cache[ $plugin_repository ]['subscription_data'];
 							}
 
-							if ( ! $site_key && ! empty( $free_on_wporg ) ) { // allow the download from wp.org
+							if ( ! $site_key && ( ! empty( $free_on_wporg ) || $this->should_fallback_under_wp_org_repo( $download, $site_key ) ) ) { // allow the download from wp.org
 								continue;
 							}
 
@@ -2863,6 +2890,11 @@ final class WP_Installer {
 
 					//validate subscription
 					$site_key = $this->get_repository_site_key( $plugin_repository );
+
+					if ( ! $site_key ) {
+						list( $plugin_repository, $site_key ) = $this->match_product_in_external_repository( $plugin_repository, $wp_plugin_slug );
+                    }
+
 					if ( $site_key ) {
 						try {
 							$subscription_data = $this->fetch_subscription_data( $plugin_repository, $site_key, self::SITE_KEY_VALIDATION_SOURCE_REVALIDATION );
@@ -2917,5 +2949,30 @@ final class WP_Installer {
 		}
 
 	}
+
+	/**
+	 * @param string $current_repository
+	 * @param string $plugin_slug
+	 *
+	 * @return array
+	 */
+	private function match_product_in_external_repository( $current_repository, $plugin_slug ) {
+		foreach( $this->get_repositories() as $repo => $repo_data ) {
+			if ( $repo !== $current_repository ) {
+				$plugin_finder = $this->get_plugin_finder();
+				$plugin_obj = $plugin_finder->get_plugin( $plugin_slug, $repo );
+
+				if ( $plugin_obj ) {
+					$site_key = $this->get_repository_site_key( $repo );
+
+					if ( $site_key ) {
+						return array( $repo, $site_key );
+					}
+				}
+			}
+		}
+
+		return array( '', '' );
+    }
 
 }

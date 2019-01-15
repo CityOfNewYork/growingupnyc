@@ -7,7 +7,7 @@
  *
  * @package TribeEventsCalendar
  *
- * @version 4.4.26
+ * @version 4.4.32
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
@@ -29,7 +29,7 @@ $mini_cal_widget_id = Tribe__Events__Utils__Id_Generator::generate_id( 'tribe-mi
 					<?php tribe_events_the_mini_calendar_prev_link() ?>
 					<span id="<?php echo esc_attr( $mini_cal_widget_id ) ?>"><?php tribe_events_the_mini_calendar_title() ?></span>
 					<?php tribe_events_the_mini_calendar_next_link() ?>
-					<img id="ajax-loading-mini" src="<?php echo tribe_resource_url( 'images/tribe-loading.gif' ) ?>" alt="loading..." />
+					<img id="ajax-loading-mini" src="<?php echo esc_url( tribe_events_resource_url( 'images/tribe-loading.gif' ) ); ?>" alt="loading..." />
 				</div>
 			</td>
 		</tr>

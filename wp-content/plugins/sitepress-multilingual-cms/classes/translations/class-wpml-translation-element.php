@@ -86,14 +86,14 @@ abstract class WPML_Translation_Element extends WPML_SP_User {
 	}
 
 	/**
-	 * @return array
+	 * @return WPML_Translation_Element[]
 	 */
 	public function get_translations() {
 		return $this->maybe_init_translations();
 	}
 
 	/**
-	 * @return array
+	 * @return WPML_Translation_Element[]
 	 */
 	public function maybe_init_translations() {
 		if ( ! $this->element_translations ) {

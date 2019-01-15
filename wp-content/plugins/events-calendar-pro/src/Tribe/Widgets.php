@@ -66,34 +66,10 @@ class Tribe__Events__Pro__Widgets {
 	 * the same basic appearance.
 	 */
 	public static function enqueue_calendar_widget_styles() {
-		// CSS file
-		$event_file        = 'widget-calendar.css';
-		$event_file_option = 'widget-calendar-theme.css';
-		$stylesheet_option = tribe_get_option( 'stylesheetOption', 'tribe' );
 
-		// Choose the appropriate stylesheet in light of the current styling options
-		switch ( $stylesheet_option ) {
-			case 'skeleton':
-			case 'full':
-				$event_file_option = "widget-calendar-$stylesheet_option.css";
-				break;
-		}
+		tribe_asset_enqueue( 'widget-calendar-pro-style' );
 
-		$style_url = tribe_events_pro_resource_url( $event_file_option );
-		$style_url = apply_filters( 'tribe_events_pro_widget_calendar_stylesheet_url', $style_url );
+		tribe_asset_enqueue( Tribe__Events__Main::POSTTYPE . '-widget-calendar-pro-override-style' );
 
-		$style_override_url = Tribe__Events__Templates::locate_stylesheet( 'tribe-events/pro/' . $event_file, $style_url );
-
-		// Load up stylesheet from theme or plugin
-		if ( $style_url && 'tribe' === $stylesheet_option ) {
-			wp_enqueue_style( 'widget-calendar-pro-style', tribe_events_pro_resource_url( 'widget-calendar-full.css' ), array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
-			wp_enqueue_style( Tribe__Events__Main::POSTTYPE . '-widget-calendar-pro-style', $style_url, array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
-		} else {
-			wp_enqueue_style( Tribe__Events__Main::POSTTYPE . '-widget-calendar-pro-style', $style_url, array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
-		}
-
-		if ( $style_override_url && $style_url !== $style_override_url ) {
-			wp_enqueue_style( Tribe__Events__Main::POSTTYPE . '--widget-calendar-pro-override-style', $style_override_url, array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
-		}
 	}
 }

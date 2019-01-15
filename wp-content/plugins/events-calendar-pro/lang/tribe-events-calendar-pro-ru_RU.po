@@ -11,7 +11,142 @@ msgstr ""
 "Language: ru\n"
 "Project-Id-Version: Events Calendar Pro\n"
 
-#: src/views/pro/week/loop-grid.php:18
+#: src/admin-views/custom-fields/gutenberg.php:22
+msgid "Include this field on all new events in the Gutenberg block editor"
+msgstr ""
+
+#: src/admin-views/custom-fields/gutenberg.php:3
+msgid "Use in Block Editor"
+msgstr ""
+
+#: src/admin-views/widget-admin-countdown.php:29
+msgid "On &#8220;Future Event&#8221; type of countdown, it will go to the next event after the current event starts."
+msgstr ""
+
+#: src/admin-views/widget-admin-countdown.php:23
+msgid "Future Event"
+msgstr ""
+
+#: src/admin-views/recurrence/years.php:30
+msgctxt "The plural case for \"years\" in the recurrence rules of an event, e.g. \"Every 3 years\""
+msgid "years"
+msgstr ""
+
+#: src/admin-views/recurrence/years.php:27
+msgctxt "The singular case for \"year\" in the recurrence rules of an event, e.g. \"Every 1 year\""
+msgid "year"
+msgstr ""
+
+#: src/admin-views/geolocation-fix-text.php:19
+msgid "We will use the Google Maps API to get that information. Doing this may take a while (approximately 1 minute for every 200 venues)."
+msgstr ""
+
+#: src/admin-views/geolocation-fix-text.php:17
+msgid "You have %d venues for which we don't have geolocation data."
+msgstr ""
+
+#: src/admin-views/event-meta-options.php:173
+msgid "Are you sure you wish to remove this field and its data from all events?"
+msgstr ""
+
+#: src/admin-views/event-meta-options.php:90
+msgid "One per line"
+msgstr ""
+
+#: src/admin-views/event-meta-options.php:81
+msgid "Enter field label"
+msgstr ""
+
+#: src/admin-views/event-meta-options.php:29
+msgid "Add field"
+msgstr ""
+
+#: src/admin-views/event-meta-options.php:5
+msgid "Read more"
+msgstr ""
+
+#: src/admin-views/event-meta-options.php:5
+msgid "Add additional fields to your event admin pages by configuring the fields and options here. Your custom additional fields then display on the event admin so that anyone creating events can add unique event information such as food options, recommended age groups, or parking details. %s"
+msgstr ""
+
+#: src/Tribe/This_Week_Widget.php:30
+msgid "This Week"
+msgstr ""
+
+#: src/Tribe/This_Week_Widget.php:20
+msgid "by day for the week."
+msgstr ""
+
+#: src/Tribe/This_Week_Widget.php:18
+msgid "Display"
+msgstr ""
+
+#: src/Tribe/Recurrence/Scripts.php:38
+msgid ""
+"You are about to break this event out of its series.\n"
+"\n"
+"You will be able to edit it independently of the original series.\n"
+"\n"
+"This action cannot be undone.\n"
+"\n"
+"When you break events from a series their URLs will change, so any users trying to use the original URLs will receive a 404 Not Found error. If this is a concern, consider using a suitable plugin to setup and manage redirects."
+msgstr ""
+
+#: src/Tribe/Recurrence/Scripts.php:37
+msgid ""
+"You are about to split this series in two.\n"
+"\n"
+"The event you selected and all subsequent events in the series will be separated into a new series of events that you can edit independently of the original series.\n"
+"\n"
+"This action cannot be undone.\n"
+"\n"
+"When you break events from a series their URLs will change, so any users trying to use the original URLs will receive a 404 Not Found error. If this is a concern, consider using a suitable plugin to setup and manage redirects."
+msgstr ""
+
+#: src/Tribe/Recurrence/Meta.php:1331
+msgctxt "Used when displaying the word \"years\" in e.g. \"every 2 years\""
+msgid "years"
+msgstr ""
+
+#: src/Tribe/Recurrence/Meta.php:1330
+msgctxt "Used when displaying the word \"year\" in e.g. \"every year\""
+msgid "year"
+msgstr ""
+
+#: src/Tribe/Recurrence/Meta.php:1329
+msgctxt "Used when displaying the word \"months\" in e.g. \"every 3 months\""
+msgid "months"
+msgstr ""
+
+#: src/Tribe/Recurrence/Meta.php:1328
+msgctxt "Used when displaying the word \"month\" in e.g. \"every month\""
+msgid "month"
+msgstr ""
+
+#: src/Tribe/Recurrence/Meta.php:1327
+msgctxt "Used when displaying the word \"weeks\" in e.g. \"every 3 weeks\""
+msgid "weeks"
+msgstr ""
+
+#: src/Tribe/Recurrence/Meta.php:1326
+msgctxt "Used when displaying the word \"week\" in \"the last week\" or \"the first week\""
+msgid "week"
+msgstr ""
+
+#: src/Tribe/Recurrence/Meta.php:1325
+msgctxt "Used when displaying the word \"days\" in e.g. \"every 3 days\""
+msgid "days"
+msgstr ""
+
+#: src/Tribe/Geo_Loc.php:409
+msgid "for latitude and longitude to be auto-generated; otherwise, you'll only be able to enter the values manually."
+msgstr ""
+
+#: src/Tribe/Geo_Loc.php:408
+msgid "Enter a custom Google Maps API key"
+msgstr ""
+
+#: src/views/pro/week/loop-grid.php:19
 msgid "Calendar of %s"
 msgstr ""
 
@@ -28,31 +163,31 @@ msgstr ""
 msgid "Default state/province"
 msgstr ""
 
-#: src/Tribe/Shortcodes/Tribe_Events.php:580
+#: src/Tribe/Shortcodes/Tribe_Events.php:575
 msgid "Loading %s"
 msgstr ""
 
-#: src/Tribe/Main.php:799
+#: src/Tribe/Main.php:784
 msgid "Check this to show the After HTML from the text area below on events displayed via shortcode."
 msgstr ""
 
-#: src/Tribe/Main.php:798
+#: src/Tribe/Main.php:783
 msgid "Enable the After HTML (below) on shortcodes."
 msgstr ""
 
-#: src/Tribe/Main.php:786
+#: src/Tribe/Main.php:771
 msgid "Check this to show the Before HTML from the text area below on events displayed via shortcode."
 msgstr ""
 
-#: src/Tribe/Main.php:785
+#: src/Tribe/Main.php:770
 msgid "Enable the Before HTML (below) on shortcodes."
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1712
+#: src/Tribe/Recurrence/Meta.php:1731
 msgid "Allow users to decide whether to show all instances of a recurring event on list-style views."
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:643
+#: src/Tribe/Geo_Loc.php:729
 msgid "Enter your API Key"
 msgstr ""
 
@@ -60,11 +195,11 @@ msgstr ""
 msgid "Expected an array but received a variable of type '%s'"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:306
+#: src/Tribe/Geo_Loc.php:321
 msgid "Venue Overwrite Coordinates"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:283
+#: src/admin-views/event-recurrence.php:287
 msgid "Recurring Events Active"
 msgstr ""
 
@@ -77,7 +212,7 @@ msgstr ""
 msgid "Hide this widget if there are no upcoming events"
 msgstr ""
 
-#: src/Tribe/Main.php:1422
+#: src/Tribe/Assets.php:373
 msgctxt "Event title map marker prefix"
 msgid "%s: "
 msgstr ""
@@ -87,10 +222,6 @@ msgctxt "events list widget setting"
 msgid "Limit to featured events only"
 msgstr ""
 
-#: src/admin-views/recurrence/years.php:63
-msgid "the same day"
-msgstr ""
-
 #: src/admin-views/recurrence/years.php:37
 msgid "Which month will the event recur in?"
 msgstr ""
@@ -98,14 +229,6 @@ msgstr ""
 #: src/admin-views/recurrence/years.php:36
 msgctxt "Begins the line indicating on which month the event will occur"
 msgid "in"
-msgstr ""
-
-#: src/admin-views/recurrence/years.php:30
-msgid "years"
-msgstr ""
-
-#: src/admin-views/recurrence/years.php:27
-msgid "year"
 msgstr ""
 
 #: src/admin-views/recurrence/weeks.php:7
@@ -190,78 +313,79 @@ msgid "a different day:"
 msgstr ""
 
 #: src/admin-views/recurrence/months.php:11
+#: src/admin-views/recurrence/years.php:63
 msgid "the same day:"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:507
+#: src/admin-views/event-recurrence.php:511
 msgid "Recurrence Description"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:304
+#: src/admin-views/event-recurrence.php:308
 msgid "Event will not occur:"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:264
+#: src/admin-views/event-recurrence.php:268
 msgid "Add more events"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:261
+#: src/admin-views/event-recurrence.php:265
 msgid "Schedule multiple events"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:252
-#: src/admin-views/event-recurrence.php:494
+#: src/admin-views/event-recurrence.php:256
+#: src/admin-views/event-recurrence.php:498
 msgid "Hide Details"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:251
-#: src/admin-views/event-recurrence.php:493
+#: src/admin-views/event-recurrence.php:255
+#: src/admin-views/event-recurrence.php:497
 msgid "Show Details"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:223
+#: src/admin-views/event-recurrence.php:227
 msgid "Series ends on this date"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:204
-#: src/admin-views/event-recurrence.php:435
+#: src/admin-views/event-recurrence.php:208
+#: src/admin-views/event-recurrence.php:439
 msgid "on"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:195
-#: src/admin-views/event-recurrence.php:425
+#: src/admin-views/event-recurrence.php:199
+#: src/admin-views/event-recurrence.php:429
 msgid "Series ends"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:167
+#: src/admin-views/event-recurrence.php:171
 msgid "a different time:"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:166
+#: src/admin-views/event-recurrence.php:170
 msgid "the same time:"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:156
+#: src/admin-views/event-recurrence.php:160
 msgctxt "Begins the line indicating when a recurrence time starts"
 msgid "At"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:115
-#: src/admin-views/event-recurrence.php:379
+#: src/admin-views/event-recurrence.php:119
+#: src/admin-views/event-recurrence.php:383
 msgid "months"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:112
-#: src/admin-views/event-recurrence.php:376
+#: src/admin-views/event-recurrence.php:116
+#: src/admin-views/event-recurrence.php:380
 msgid "month"
 msgstr "месяц"
 
-#: src/admin-views/event-recurrence.php:107
-#: src/admin-views/event-recurrence.php:371
+#: src/admin-views/event-recurrence.php:111
+#: src/admin-views/event-recurrence.php:375
 msgid "weeks"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:42
+#: src/admin-views/event-recurrence.php:46
 msgid "Delete This"
 msgstr ""
 
@@ -269,11 +393,11 @@ msgstr ""
 msgid "Event Series:"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:27
+#: src/admin-views/event-recurrence.php:29
 msgid "Are you sure you want to delete this exclusion?"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:26
+#: src/admin-views/event-recurrence.php:28
 msgid "Are you sure you want to delete these events?"
 msgstr ""
 
@@ -801,7 +925,7 @@ msgstr ""
 msgid "All day"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1298
+#: src/Tribe/Recurrence/Meta.php:1307
 msgctxt "placeholder used where the true day of the day is determined dynamically"
 msgid "day"
 msgstr ""
@@ -815,28 +939,28 @@ msgid "Previous %s"
 msgstr ""
 
 #: src/admin-views/widget-admin-advanced-list.php:128
-#: src/admin-views/widget-admin-this-week.php:147
+#: src/admin-views/widget-admin-this-week.php:158
 #: src/admin-views/widget-calendar.php:83
 msgid "Select a Taxonomy Term"
 msgstr ""
 
-#: src/admin-views/widget-admin-advanced-list.php:150
-#: src/admin-views/widget-admin-countdown.php:57
-#: src/admin-views/widget-admin-this-week.php:161
-#: src/admin-views/widget-admin-venue.php:43
-#: src/admin-views/widget-calendar.php:101
+#: src/admin-views/widget-admin-advanced-list.php:149
+#: src/admin-views/widget-admin-countdown.php:61
+#: src/admin-views/widget-admin-this-week.php:171
+#: src/admin-views/widget-admin-venue.php:42
+#: src/admin-views/widget-calendar.php:100
 msgid "Generate JSON-LD data"
 msgstr ""
 
-#: src/admin-views/tribe-options-mobile.php:33
+#: src/admin-views/tribe-options-mobile.php:38
 msgid "Change the default view for Mobile users."
 msgstr ""
 
-#: src/admin-views/tribe-options-mobile.php:32
+#: src/admin-views/tribe-options-mobile.php:37
 msgid "Default mobile view"
 msgstr ""
 
-#: src/admin-views/tribe-options-mobile.php:19
+#: src/admin-views/tribe-options-mobile.php:21
 msgid "Use Default View"
 msgstr ""
 
@@ -844,40 +968,40 @@ msgstr ""
 msgid "All %s"
 msgstr "Все %s"
 
-#: src/Tribe/Shortcodes/Tribe_Events.php:512
+#: src/Tribe/Shortcodes/Tribe_Events.php:507
 msgid "$template_object is expected to be an actual object"
 msgstr ""
 
-#: src/Tribe/Main.php:2078
+#: src/Tribe/Main.php:2075
 msgid "all"
 msgstr ""
 
-#: src/Tribe/Main.php:583
+#: src/Tribe/Main.php:624
 msgctxt "debug recurrence"
 msgid "Invalid instance of a recurring event was requested ($1%s) redirecting to $2%s"
 msgstr ""
 
-#: src/Tribe/Main.php:561
+#: src/Tribe/Main.php:589 src/Tribe/Main.php:602
 msgctxt "debug recurrence"
 msgid "incorrect slug"
 msgstr ""
 
-#: src/Tribe/Main.php:548
+#: src/Tribe/Main.php:558
 msgctxt "debug recurrence"
 msgid "invalid date"
 msgstr ""
 
-#: src/Tribe/Main.php:534
+#: src/Tribe/Main.php:540
 msgctxt "debug recurrence"
 msgid "Unknown"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:586
+#: src/Tribe/Geo_Loc.php:657
 msgctxt "debug geodata"
 msgid "empty response"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:585
+#: src/Tribe/Geo_Loc.php:656
 msgctxt "debug geodata"
 msgid "Geocode request failed ($1%s - $2%s)"
 msgstr ""
@@ -902,15 +1026,15 @@ msgstr ""
 msgid "Times:"
 msgstr ""
 
-#: src/Tribe/Main.php:1974
+#: src/Tribe/Main.php:1971
 msgid "Events Calendar PRO"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:639
+#: src/Tribe/Geo_Loc.php:725
 msgid "The latitude and longitude for your venue could not be fetched. The Google Maps API daily query limit has been reached!. %1$s "
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:190
+#: src/Tribe/Geo_Loc.php:191
 msgid "Distance unit"
 msgstr ""
 
@@ -930,7 +1054,7 @@ msgstr ""
 msgid "Download for free"
 msgstr ""
 
-#: src/views/pro/widgets/this-week/nav.php:15
+#: src/views/pro/widgets/this-week/nav.php:16
 msgid "This Week Navigation"
 msgstr ""
 
@@ -958,7 +1082,7 @@ msgstr ""
 msgid "<span>&laquo;</span> <span class=\"tribe-nav-label\">Previous</span>"
 msgstr ""
 
-#: src/admin-views/widget-admin-this-week.php:68
+#: src/admin-views/widget-admin-this-week.php:79
 msgid "Number of events to show per day:"
 msgstr ""
 
@@ -978,7 +1102,7 @@ msgstr ""
 msgid "Layout:"
 msgstr ""
 
-#: src/admin-views/widget-admin-countdown.php:46
+#: src/admin-views/widget-admin-countdown.php:51
 msgid "On &#8220;Next Event&#8221; type of countdown, this text will only show when there are no events to show."
 msgstr ""
 
@@ -994,19 +1118,11 @@ msgstr ""
 msgid "If fields are left empty when they're submitted, automatically fill them in with these values."
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:510
+#: src/admin-views/event-recurrence.php:514
 msgid "Use this field if you want to override the auto-generated descriptions of event recurrence"
 msgstr ""
 
-#: src/Tribe/This_Week_Widget.php:22
-msgid "This Week Events"
-msgstr ""
-
-#: src/Tribe/This_Week_Widget.php:19
-msgid "Displays events by day for the week."
-msgstr ""
-
-#: src/Tribe/Recurrence/Meta.php:1556
+#: src/Tribe/Recurrence/Meta.php:1575
 msgctxt "An unspecified end date"
 msgid "an unspecified date"
 msgstr ""
@@ -1023,7 +1139,7 @@ msgstr "Цвет фона фотографии"
 msgid "Photo View"
 msgstr "Просмотреть фото"
 
-#: src/Tribe/Main.php:207
+#: src/Tribe/Main.php:214
 msgid "Month/Week View"
 msgstr ""
 
@@ -1031,7 +1147,7 @@ msgstr ""
 msgid "Options selected here will override what was selected in the \"General Theme\" and \"Global Elements\" sections"
 msgstr ""
 
-#: src/Tribe/Countdown_Widget.php:53 src/Tribe/Countdown_Widget.php:102
+#: src/Tribe/Countdown_Widget.php:54 src/Tribe/Countdown_Widget.php:104
 msgid "Hooray!"
 msgstr ""
 
@@ -1083,75 +1199,75 @@ msgstr ""
 msgid "View all %1$s at this %2$s"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:500
+#: src/admin-views/event-recurrence.php:504
 msgid "Add Exclusion"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:63
-#: src/admin-views/event-recurrence.php:329
+#: src/admin-views/event-recurrence.php:67
+#: src/admin-views/event-recurrence.php:333
 msgid "Once"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1324
+#: src/Tribe/Recurrence/Meta.php:1324 src/Tribe/Recurrence/Meta.php:1343
 msgctxt "Used when displaying the word \"day\" in \"the last day\" or \"the first day\""
 msgid "day"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1323
+#: src/Tribe/Recurrence/Meta.php:1342
 msgctxt "Used when displaying: \"the last Monday\" or \"the last day\""
 msgid "the last %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1322
+#: src/Tribe/Recurrence/Meta.php:1341
 msgctxt "Used when displaying: \"the fifth Monday\" or \"the fifth day\""
 msgid "the fifth %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1321
+#: src/Tribe/Recurrence/Meta.php:1340
 msgctxt "Used when displaying: \"the fourth Monday\" or \"the fourth day\""
 msgid "the fourth %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1320
+#: src/Tribe/Recurrence/Meta.php:1339
 msgctxt "Used when displaying: \"the third Monday\" or \"the third day\""
 msgid "the third %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1319
+#: src/Tribe/Recurrence/Meta.php:1338
 msgctxt "Used when displaying: \"the second Monday\" or \"the second day\""
 msgid "the second %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1318
+#: src/Tribe/Recurrence/Meta.php:1337
 msgctxt "Used when displaying: \"the first Monday\" or \"the first day\""
 msgid "the first %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1317
+#: src/Tribe/Recurrence/Meta.php:1336
 msgctxt "Describes a day of the month (e.g. \"day 5\" or \"day 27\")"
 msgid "day %1$s"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1316
+#: src/Tribe/Recurrence/Meta.php:1335
 msgctxt "Placeholder text for a month (or months) before the user has selected any"
 msgid "[month]"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1315
+#: src/Tribe/Recurrence/Meta.php:1334
 msgctxt "Placeholder text for a day of the week (or days of the week) before the user has selected any"
 msgid "[day]"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:1314
+#: src/Tribe/Recurrence/Meta.php:1333
 msgctxt "Joins the last item in a list of items (i.e. the \"and\" in Monday, Tuesday, and Wednesday)"
 msgid "and"
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:876 src/Tribe/Recurrence/Validator.php:110
+#: src/Tribe/Recurrence/Meta.php:885 src/Tribe/Recurrence/Validator.php:110
 msgid "Custom recurrences must have all data present."
 msgstr ""
 
-#: src/Tribe/Recurrence/Meta.php:867 src/Tribe/Recurrence/Validator.php:101
+#: src/Tribe/Recurrence/Meta.php:876 src/Tribe/Recurrence/Validator.php:101
 msgid "Custom recurrences must have a type selected."
 msgstr ""
 
@@ -1159,19 +1275,15 @@ msgstr ""
 msgid "Could not process queue for event %1$d: %2$s"
 msgstr ""
 
-#: src/Tribe/Main.php:469
+#: src/Tribe/Main.php:476
 msgid "%1$s for week of %2$s"
 msgstr ""
 
-#: src/Tribe/Main.php:463
+#: src/Tribe/Main.php:470
 msgid "All %1$s for %2$s"
 msgstr ""
 
-#: src/admin-views/event-meta-options.php:71
-msgid "tutorial that will walk you through the process"
-msgstr ""
-
-#: src/Tribe/Main.php:817
+#: src/Tribe/Main.php:802
 msgid "Thanks for buying Events Calendar PRO! From all of us at Modern Tribe, we sincerely appreciate it. If you're looking for help with Events Calendar PRO, you've come to the right place. We are committed to helping make your calendar be spectacular... and hope the resources provided below will help get you there."
 msgstr ""
 
@@ -1199,17 +1311,17 @@ msgstr "минут"
 msgid "hours"
 msgstr "часов"
 
-#: src/admin-views/event-recurrence.php:99
-#: src/admin-views/event-recurrence.php:363
+#: src/admin-views/event-recurrence.php:103
+#: src/admin-views/event-recurrence.php:367
 #: src/views/pro/widgets/countdown-widget.php:20
 msgid "days"
 msgstr "дней"
 
-#: src/views/pro/week/nav.php:16
+#: src/views/pro/week/nav.php:17
 msgid "Week Navigation"
 msgstr "Навигация недели"
 
-#: src/views/pro/week/loop-grid.php:22
+#: src/views/pro/week/loop-grid.php:23
 msgid "Hours"
 msgstr "Часы"
 
@@ -1221,7 +1333,7 @@ msgstr "Весь день"
 msgid "&larr; Back to %s"
 msgstr "&larr; Вернуться к %s"
 
-#: src/views/pro/related-events.php:26
+#: src/views/pro/related-events.php:27
 msgid "Related %s"
 msgstr "Похожие %s"
 
@@ -1230,16 +1342,16 @@ msgstr "Похожие %s"
 msgid "Find out more"
 msgstr "Узнать больше"
 
-#: src/views/pro/map/nav.php:32 src/views/pro/photo/nav.php:31
+#: src/views/pro/map/nav.php:33 src/views/pro/photo/nav.php:32
 msgid "Next %s <span>&raquo;</span>"
 msgstr "Следующее %s <span>&raquo;</span>"
 
-#: src/views/pro/map/nav.php:25 src/views/pro/photo/nav.php:25
+#: src/views/pro/map/nav.php:26 src/views/pro/photo/nav.php:26
 msgid "<span>&laquo;</span> Previous %s"
 msgstr "<span>&laquo;</span> Предыдущее %s"
 
-#: src/views/pro/list/venue-nav.php:26 src/views/pro/map/nav.php:20
-#: src/views/pro/photo/nav.php:20
+#: src/views/pro/list/venue-nav.php:26 src/views/pro/map/nav.php:21
+#: src/views/pro/photo/nav.php:21
 msgid "%s List Navigation"
 msgstr ""
 
@@ -1251,65 +1363,65 @@ msgstr "Следующая неделя <span>&raquo;</span>"
 msgid "<span>&laquo;</span> Previous Week"
 msgstr "<span>&laquo;</span> Прошлая неделя"
 
-#: src/functions/template-tags/general.php:783
+#: src/functions/template-tags/general.php:664
 msgid "(See all)"
 msgstr "(Посмотреть все)"
 
-#: src/functions/template-tags/general.php:780
+#: src/functions/template-tags/general.php:661
 msgid "Recurring %s"
 msgstr ""
 
-#: src/functions/template-tags/general.php:635
-#: src/functions/template-tags/general.php:658
+#: src/functions/template-tags/general.php:516
+#: src/functions/template-tags/general.php:539
 msgid "Date out of range."
 msgstr "Дата находится вне диапазона."
 
-#: src/functions/template-tags/general.php:445
+#: src/functions/template-tags/general.php:321
 msgid "The current default phone is: %s"
 msgstr "Текущий телефон по умолчанию: %s"
 
-#: src/functions/template-tags/general.php:430
+#: src/functions/template-tags/general.php:306
 msgid "The current default country is: %s"
 msgstr "Текущая страна по умолчанию: %s"
 
-#: src/functions/template-tags/general.php:415
+#: src/functions/template-tags/general.php:291
 msgid "The current default postal code/zip code is: %s"
 msgstr "Текущий почтовый индекс по умолчанию: %s"
 
-#: src/functions/template-tags/general.php:385
-#: src/functions/template-tags/general.php:400
+#: src/functions/template-tags/general.php:261
+#: src/functions/template-tags/general.php:276
 msgid "The current default state/province is: %s"
 msgstr ""
 
-#: src/functions/template-tags/general.php:370
+#: src/functions/template-tags/general.php:246
 msgid "The current default city is: %s"
 msgstr "Текущий город по умолчанию: %s"
 
-#: src/functions/template-tags/general.php:355
+#: src/functions/template-tags/general.php:231
 msgid "The current default address is: %s"
 msgstr "Текущий адрес по умолчанию: %s"
 
-#: src/functions/template-tags/general.php:340
+#: src/functions/template-tags/general.php:216
 msgid "The current default venue is: %s"
 msgstr "Текущее место проведения по умолчанию: %s"
 
-#: src/functions/template-tags/general.php:325
+#: src/functions/template-tags/general.php:201
 msgid "The current default organizer is: %s"
 msgstr "Текущий организатор по умолчанию: %s"
 
-#: src/functions/template-tags/general.php:323
-#: src/functions/template-tags/general.php:338
-#: src/functions/template-tags/general.php:353
-#: src/functions/template-tags/general.php:368
-#: src/functions/template-tags/general.php:383
-#: src/functions/template-tags/general.php:398
-#: src/functions/template-tags/general.php:413
-#: src/functions/template-tags/general.php:428
-#: src/functions/template-tags/general.php:443
+#: src/functions/template-tags/general.php:199
+#: src/functions/template-tags/general.php:214
+#: src/functions/template-tags/general.php:229
+#: src/functions/template-tags/general.php:244
+#: src/functions/template-tags/general.php:259
+#: src/functions/template-tags/general.php:274
+#: src/functions/template-tags/general.php:289
+#: src/functions/template-tags/general.php:304
+#: src/functions/template-tags/general.php:319
 msgid "No default set"
 msgstr "Нет значения по умолчанию"
 
-#: src/functions/template-tags/general.php:143
+#: src/functions/template-tags/general.php:142
 msgid "Show only the first upcoming instance of recurring %s"
 msgstr ""
 
@@ -1317,44 +1429,44 @@ msgstr ""
 msgid "Venue:"
 msgstr "Место проведения:"
 
-#: src/admin-views/widget-admin-countdown.php:44
+#: src/admin-views/widget-admin-countdown.php:49
 msgid "Countdown Completed Text:"
 msgstr "Текст для окончания обратного отсчета:"
 
-#: src/admin-views/widget-admin-countdown.php:51
+#: src/admin-views/widget-admin-countdown.php:56
 msgid "Show seconds?"
 msgstr ""
 
-#: src/admin-views/widget-admin-countdown.php:28
+#: src/admin-views/widget-admin-countdown.php:33
 msgid "Event:"
 msgstr "Мероприятие:"
 
 #: src/admin-views/widget-admin-advanced-list.php:125
-#: src/admin-views/widget-admin-this-week.php:144
+#: src/admin-views/widget-admin-this-week.php:155
 #: src/admin-views/widget-calendar.php:80
 msgid "Add a filter"
 msgstr "Добавить фильтр"
 
 #: src/admin-views/widget-admin-advanced-list.php:121
-#: src/admin-views/widget-admin-this-week.php:140
+#: src/admin-views/widget-admin-this-week.php:151
 #: src/admin-views/widget-calendar.php:75
 msgid "Match any"
 msgstr "Частичное совпадение"
 
 #: src/admin-views/widget-admin-advanced-list.php:118
-#: src/admin-views/widget-admin-this-week.php:135
+#: src/admin-views/widget-admin-this-week.php:146
 #: src/admin-views/widget-calendar.php:63
 msgid "Match all"
 msgstr "Точное совпадение"
 
 #: src/admin-views/widget-admin-advanced-list.php:105
-#: src/admin-views/widget-admin-this-week.php:120
+#: src/admin-views/widget-admin-this-week.php:131
 #: src/admin-views/widget-calendar.php:47
 msgid "remove"
 msgstr "удалить"
 
 #: src/admin-views/widget-admin-advanced-list.php:79
-#: src/admin-views/widget-admin-this-week.php:93
+#: src/admin-views/widget-admin-this-week.php:104
 #: src/admin-views/widget-calendar.php:24
 msgid "Filters"
 msgstr "Фильтры"
@@ -1476,7 +1588,7 @@ msgstr "Выберите штат"
 msgid "No Default"
 msgstr "Нет значения по умолчанию"
 
-#: src/admin-views/event-recurrence.php:505
+#: src/admin-views/event-recurrence.php:509
 msgid "Recurrence Description:"
 msgstr "Описание повторения:"
 
@@ -1505,59 +1617,59 @@ msgstr ""
 msgid "first"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:480
+#: src/admin-views/event-recurrence.php:484
 msgid "Frequency of recurring event must be a number"
 msgstr "Частота повторения мероприятия должна быть цифрой"
 
-#: src/admin-views/event-recurrence.php:81
-#: src/admin-views/event-recurrence.php:346
+#: src/admin-views/event-recurrence.php:85
+#: src/admin-views/event-recurrence.php:350
 #: src/admin-views/recurrence/years.php:12
 msgid "Every"
 msgstr "Каждый"
 
-#: src/admin-views/event-recurrence.php:62
-#: src/admin-views/event-recurrence.php:328
+#: src/admin-views/event-recurrence.php:66
+#: src/admin-views/event-recurrence.php:332
 msgid "Yearly"
 msgstr "Ежегодно"
 
-#: src/admin-views/event-recurrence.php:61
-#: src/admin-views/event-recurrence.php:327
+#: src/admin-views/event-recurrence.php:65
+#: src/admin-views/event-recurrence.php:331
 msgid "Monthly"
 msgstr "Ежемесячно"
 
-#: src/admin-views/event-recurrence.php:60
-#: src/admin-views/event-recurrence.php:326
+#: src/admin-views/event-recurrence.php:64
+#: src/admin-views/event-recurrence.php:330
 msgid "Weekly"
 msgstr "Еженедельно"
 
-#: src/admin-views/event-recurrence.php:59
-#: src/admin-views/event-recurrence.php:325
+#: src/admin-views/event-recurrence.php:63
+#: src/admin-views/event-recurrence.php:329
 msgid "Daily"
 msgstr "Ежедневно"
 
-#: src/admin-views/event-recurrence.php:242
-#: src/admin-views/event-recurrence.php:472
+#: src/admin-views/event-recurrence.php:246
+#: src/admin-views/event-recurrence.php:476
 msgid "You must select a recurrence end date"
 msgstr "Вы должны выбрать дату окончания повторения"
 
-#: src/admin-views/event-recurrence.php:239
-#: src/admin-views/event-recurrence.php:469
+#: src/admin-views/event-recurrence.php:243
+#: src/admin-views/event-recurrence.php:473
 msgctxt "occurence count text"
 msgid "events"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:206
-#: src/admin-views/event-recurrence.php:437
+#: src/admin-views/event-recurrence.php:210
+#: src/admin-views/event-recurrence.php:441
 msgid "never"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:205
-#: src/admin-views/event-recurrence.php:436
+#: src/admin-views/event-recurrence.php:209
+#: src/admin-views/event-recurrence.php:440
 msgid "after"
 msgstr ""
 
-#: src/admin-views/event-recurrence.php:68
-#: src/admin-views/event-recurrence.php:334
+#: src/admin-views/event-recurrence.php:72
+#: src/admin-views/event-recurrence.php:338
 #: src/admin-views/recurrence/months.php:2
 #: src/admin-views/recurrence/years.php:53
 msgid "On"
@@ -1567,13 +1679,13 @@ msgstr ""
 msgid "None"
 msgstr "Нет"
 
-#: src/admin-views/event-recurrence.php:56
-#: src/admin-views/event-recurrence.php:322
+#: src/admin-views/event-recurrence.php:60
+#: src/admin-views/event-recurrence.php:326
 msgid "events"
 msgstr "мероприятия"
 
-#: src/admin-views/event-recurrence.php:55
-#: src/admin-views/event-recurrence.php:321
+#: src/admin-views/event-recurrence.php:59
+#: src/admin-views/event-recurrence.php:325
 msgid "event"
 msgstr "мероприятие"
 
@@ -1581,101 +1693,42 @@ msgstr "мероприятие"
 msgid "Additional %1$s Fields"
 msgstr ""
 
-#: src/admin-views/event-meta-options.php:116
-msgid "Are you sure you wish to remove this field and its data from all events? Once you click OK this cannot be undone."
-msgstr "Вы уверены, что хотите убрать это поле и данные из него со всех событий? Как только вы нажмете ОК, это действие нельзя будет отменить."
-
-#: src/admin-views/event-meta-options.php:81
-msgid "Enabling this option this will not remove custom field data or functionality, just the default meta box editor."
-msgstr ""
-
-#: src/admin-views/event-meta-options.php:78
-msgid "Hide"
-msgstr "Скрыть"
-
-#: src/admin-views/event-meta-options.php:76
-msgid "Show"
-msgstr "Показать"
-
-#: src/admin-views/event-meta-options.php:74
-msgid "Editor \"Custom Fields\" meta box"
-msgstr "Редактор поля мета-данных \"Настраиваемые поля\""
-
-#: src/admin-views/event-meta-options.php:70
-msgid "Enter the field label as you want it to appear (this will be the label in the same way \"Start Date,\" \"Organizer,\" etc appear in the event details box on the frontend). Select whether the field will be a text field; URL field; radio buttons; checkboxes; or a dropdown. All of these with the exception of text and URL allow for multiple options to be included, which you can add — one per-line — in the right-hand column. If you feel flummoxed, we've got you covered with a %s."
-msgstr "Введите подпись поля таким образом, как вы хотите, чтобы она показывалась (также подпись будет выводиться и в подробностях мероприятия - \"Дата начала\", \"Организатор\" и т.д.). Выберите, будет ли это поле текстовым, со ссылкой, переключателем, полем для флажка или выпадающим меню. Все эти варианты, за исключением текствого поля и поля со ссылкой, позволяют выбирать несколько вариантов для выбора - один на строку - в правой колонке. Если вы сбиты с толку, вот что мы предлагаем: %s."
-
-#: src/admin-views/event-meta-options.php:57
+#: src/admin-views/event-meta-options.php:67
+#: src/admin-views/event-meta-options.php:138
 msgid "Checkbox"
 msgstr "Поле для установки флажка"
 
-#: src/admin-views/event-meta-options.php:56
+#: src/admin-views/event-meta-options.php:66
+#: src/admin-views/event-meta-options.php:137
 msgid "Radio"
 msgstr "Переключатель"
 
-#: src/admin-views/event-meta-options.php:55
+#: src/admin-views/event-meta-options.php:65
+#: src/admin-views/event-meta-options.php:135
 msgid "URL"
 msgstr "Ссылка"
 
-#: src/admin-views/event-meta-options.php:54
+#: src/admin-views/event-meta-options.php:64
+#: src/admin-views/event-meta-options.php:134
 msgid "Text Area"
 msgstr ""
 
-#: src/admin-views/event-meta-options.php:53
+#: src/admin-views/event-meta-options.php:63
+#: src/admin-views/event-meta-options.php:133
 msgid "Text"
 msgstr "Текст"
 
-#: src/admin-views/event-meta-options.php:25
+#: src/admin-views/event-meta-options.php:86
 msgid "Options (one per line)"
 msgstr "Варианты (на строку)"
 
-#: src/admin-views/event-meta-options.php:24
+#: src/admin-views/event-meta-options.php:56
 msgid "Field Type"
 msgstr "Вид поля"
 
-#: src/admin-views/event-meta-options.php:23
+#: src/admin-views/event-meta-options.php:73
 msgid "Field Label"
 msgstr "Подпись поля"
-
-#: src/admin-views/event-meta-options.php:16
-msgid "Dropdown Menu - for a dropdown menu"
-msgstr "Выпадающее меню - для выпадающего меню"
-
-#: src/admin-views/event-meta-options.php:15
-msgid "Radio Button - to select only one"
-msgstr "Переключатель - чтобы выбрать только одно"
-
-#: src/admin-views/event-meta-options.php:14
-msgid "Checkbox - for multiple choice"
-msgstr "Поле для установки флажка - для множественного выбора"
-
-#: src/admin-views/event-meta-options.php:13
-msgid "URL - for the user to input a URL"
-msgstr "Ссылка - для ввода ссылок пользователя"
-
-#: src/admin-views/event-meta-options.php:12
-msgid "Text Area - identical to a text field but providing a larger area for the user to input text"
-msgstr ""
-
-#: src/admin-views/event-meta-options.php:11
-msgid "Text - for the user to input text"
-msgstr "Текстовое - для ввода текста пользователя"
-
-#: src/admin-views/event-meta-options.php:9
-msgid "Field type. These are:"
-msgstr "Вид поля. Это:"
-
-#: src/admin-views/event-meta-options.php:8
-msgid "At least one option (e.g. Vegetarian, Kosher, Paleo)"
-msgstr "Хотя бы один вариант (например, Вегетерианский, Кошерный, Палео)"
-
-#: src/admin-views/event-meta-options.php:7
-msgid "Label (e.g. Meal Plans)"
-msgstr "Подпись (например, Планы питания)"
-
-#: src/admin-views/event-meta-options.php:5
-msgid "Use additional fields to add unique content fields to the event admin, which can be used by anyone who creates events. Upon publication they'll appear in the event metabox that accompanies your event listing, alongside the date/time/venue/organizer/etc. </p><p>Each new piece of data needs:"
-msgstr "Используйте дополнительные поля и уникальное поля содержимого для администратора мероприятий, которые могут быть использованы всеми, кто создает мероприятия. Под публикацией они возникнут в поле мета-данных, которое будет находится рядом с вашим списком мероприятий возле даты/времени/места проведения/организатора и т.д. </p><p>Всем данным нужны:"
 
 #: src/admin-views/tribe-options-defaults.php:184
 msgid "Use a custom list of countries"
@@ -1701,53 +1754,25 @@ msgstr "Для в или возле <strong>\"%s\"</strong> мероприяти
 msgid "There were no results found for <strong>\"%s\"</strong> this week. Try searching another week."
 msgstr "Для <strong>\"%s\"</strong> на этой неделе результаты не найдены. Попробуйте поискать на другой неделе."
 
-#: src/Tribe/Templates/Map.php:109
+#: src/Tribe/Templates/Map.php:112
 msgid "There were no results found."
 msgstr "Результаты не найдены."
 
-#: src/Tribe/Templates/Map.php:107 src/Tribe/Templates/Week.php:207
+#: src/Tribe/Templates/Map.php:110 src/Tribe/Templates/Week.php:207
 msgid "No matching events listed under %s. Please try viewing the full calendar for a complete list of events."
 msgstr "Нет совпадений с мероприятиями в списке %s. Посмотрите календарь полностью для полного списка мероприятий."
 
-#: src/Tribe/Templates/Map.php:105
+#: src/Tribe/Templates/Map.php:108
 msgid "No results were found for events in or near <strong>\"%s\"</strong>."
 msgstr "Результаты для мероприятий в или рядом с <strong>\"%s\"</strong> не найдены."
 
-#: src/views/pro/modules/meta/additional-fields.php:18
+#: src/views/pro/modules/meta/additional-fields.php:19
 msgid "Other"
 msgstr "Другое"
 
 #: src/Tribe/Recurrence/Scripts.php:39
 msgid "Are you sure you want to trash all occurrences of these events?"
 msgstr ""
-
-#: src/Tribe/Recurrence/Scripts.php:38
-msgid ""
-"You are about to break this event out of its series.\n"
-"\n"
-"You will be able to edit it independently of the original series.\n"
-"\n"
-"This action cannot be undone."
-msgstr ""
-"Вы собираетесь отделить это мероприятие от серии.\n"
-"\n"
-"Вы будете иметь возможность редактировать его отдельно от оригинальной серии.\n"
-"\n"
-"Это действие нельзя отменить."
-
-#: src/Tribe/Recurrence/Scripts.php:37
-msgid ""
-"You are about to split this series in two.\n"
-"\n"
-"The event you selected and all subsequent events in the series will be separated into a new series of events that you can edit independently of the original series.\n"
-"\n"
-"This action cannot be undone."
-msgstr ""
-"Вы собираетесь разделить эту серию на две.\n"
-"\n"
-"Мероприятие, которое вы выбрали, и все последующие в серии, будут выделены в новую серию мероприятий, которую вы можете редактировать отдельно от оригинальной серии.\n"
-"\n"
-"Это действие нельзя отменить."
 
 #: src/Tribe/Recurrence/Meta.php:126
 msgid "%d instances of this event have been created through %s. <a href=\"%s\" target=\"_blank\">Learn more.</a>"
@@ -1757,153 +1782,153 @@ msgstr "%d экземпляров этого мероприятия были с�
 msgid "You are currently editing all events in a recurring series."
 msgstr "Вы сейчас редактируете все мероприятия в повторяющейся серии."
 
-#: src/Tribe/Recurrence/Meta.php:1749
+#: src/Tribe/Recurrence/Meta.php:1768
 msgid " months"
 msgstr " месяцев"
 
-#: src/Tribe/Recurrence/Meta.php:1728
+#: src/Tribe/Recurrence/Meta.php:1747
 msgid "Recurring events will be created this far in advance"
 msgstr "Повторяющиеся мероприятия будут созданы настолько раньше"
 
-#: src/Tribe/Recurrence/Meta.php:1727
+#: src/Tribe/Recurrence/Meta.php:1746
 msgid "Create recurring events in advance for"
 msgstr "Создать повторяющиеся мероприятия заранее для"
 
-#: src/Tribe/Recurrence/Meta.php:1720
+#: src/Tribe/Recurrence/Meta.php:1739
 msgid "Automatically remove recurring event instances older than this"
 msgstr "Автоматически удалять экземпляры повторяющихся мероприятий, старше этого"
 
-#: src/Tribe/Recurrence/Meta.php:1719
+#: src/Tribe/Recurrence/Meta.php:1738
 msgid "Clean up recurring events after"
 msgstr "Очистить повторяющиеся мероприятия после"
 
-#: src/Tribe/Recurrence/Meta.php:1711
+#: src/Tribe/Recurrence/Meta.php:1730
 msgid "Front-end recurring event instances toggle"
 msgstr "Внешний переключатель повторяющихся мероприятий "
 
-#: src/Tribe/Recurrence/Meta.php:1705
+#: src/Tribe/Recurrence/Meta.php:1724
 msgid "Show only the first instance of each recurring event (only affects list-style views)."
 msgstr "Показывать только первый экземпляр каждого повторяющегося мероприятия (влияет только в случае предствления в виде списка)"
 
-#: src/Tribe/Recurrence/Meta.php:1704
+#: src/Tribe/Recurrence/Meta.php:1723
 msgid "Recurring event instances"
 msgstr "Экземпляры повторяющихся мероприятий"
 
-#: src/Tribe/Recurrence/Meta.php:1678
+#: src/Tribe/Recurrence/Meta.php:1697
 msgid ", "
 msgstr ","
 
-#: src/Tribe/Recurrence/Meta.php:1676
+#: src/Tribe/Recurrence/Meta.php:1695
 msgid " and "
 msgstr "и"
 
-#: src/Tribe/Recurrence/Meta.php:1674
+#: src/Tribe/Recurrence/Meta.php:1693
 msgid ", and "
 msgstr ", и"
 
-#: src/Tribe/Recurrence/Meta.php:1312 src/Tribe/Recurrence/Meta.php:1667
+#: src/Tribe/Recurrence/Meta.php:1321 src/Tribe/Recurrence/Meta.php:1686
 msgid "December"
 msgstr "Декабрь"
 
-#: src/Tribe/Recurrence/Meta.php:1311 src/Tribe/Recurrence/Meta.php:1666
+#: src/Tribe/Recurrence/Meta.php:1320 src/Tribe/Recurrence/Meta.php:1685
 msgid "November"
 msgstr "Ноябрь"
 
-#: src/Tribe/Recurrence/Meta.php:1310 src/Tribe/Recurrence/Meta.php:1665
+#: src/Tribe/Recurrence/Meta.php:1319 src/Tribe/Recurrence/Meta.php:1684
 msgid "October"
 msgstr "Октябрь"
 
-#: src/Tribe/Recurrence/Meta.php:1309 src/Tribe/Recurrence/Meta.php:1664
+#: src/Tribe/Recurrence/Meta.php:1318 src/Tribe/Recurrence/Meta.php:1683
 msgid "September"
 msgstr "Сентябрь"
 
-#: src/Tribe/Recurrence/Meta.php:1308 src/Tribe/Recurrence/Meta.php:1663
+#: src/Tribe/Recurrence/Meta.php:1317 src/Tribe/Recurrence/Meta.php:1682
 msgid "August"
 msgstr "Август"
 
-#: src/Tribe/Recurrence/Meta.php:1307 src/Tribe/Recurrence/Meta.php:1662
+#: src/Tribe/Recurrence/Meta.php:1316 src/Tribe/Recurrence/Meta.php:1681
 msgid "July"
 msgstr "Июль"
 
-#: src/Tribe/Recurrence/Meta.php:1306 src/Tribe/Recurrence/Meta.php:1661
+#: src/Tribe/Recurrence/Meta.php:1315 src/Tribe/Recurrence/Meta.php:1680
 msgid "June"
 msgstr "Июнь"
 
-#: src/Tribe/Recurrence/Meta.php:1305 src/Tribe/Recurrence/Meta.php:1660
+#: src/Tribe/Recurrence/Meta.php:1314 src/Tribe/Recurrence/Meta.php:1679
 msgid "May"
 msgstr "Май"
 
-#: src/Tribe/Recurrence/Meta.php:1304 src/Tribe/Recurrence/Meta.php:1659
+#: src/Tribe/Recurrence/Meta.php:1313 src/Tribe/Recurrence/Meta.php:1678
 msgid "April"
 msgstr "Апрель"
 
-#: src/Tribe/Recurrence/Meta.php:1303 src/Tribe/Recurrence/Meta.php:1658
+#: src/Tribe/Recurrence/Meta.php:1312 src/Tribe/Recurrence/Meta.php:1677
 msgid "March"
 msgstr "Март"
 
-#: src/Tribe/Recurrence/Meta.php:1302 src/Tribe/Recurrence/Meta.php:1657
+#: src/Tribe/Recurrence/Meta.php:1311 src/Tribe/Recurrence/Meta.php:1676
 msgid "February"
 msgstr "Февраль"
 
-#: src/Tribe/Recurrence/Meta.php:1301 src/Tribe/Recurrence/Meta.php:1656
+#: src/Tribe/Recurrence/Meta.php:1310 src/Tribe/Recurrence/Meta.php:1675
 msgid "January"
 msgstr "Январь"
 
-#: src/Tribe/Recurrence/Meta.php:1638
+#: src/Tribe/Recurrence/Meta.php:1657
 msgid ","
 msgstr ","
 
-#: src/Tribe/Recurrence/Meta.php:1636
+#: src/Tribe/Recurrence/Meta.php:1655
 msgid "and"
 msgstr "и"
 
-#: src/Tribe/Recurrence/Meta.php:1634
+#: src/Tribe/Recurrence/Meta.php:1653
 msgid ", and"
 msgstr ", и"
 
-#: src/Tribe/Recurrence/Meta.php:1297 src/Tribe/Recurrence/Meta.php:1627
+#: src/Tribe/Recurrence/Meta.php:1306 src/Tribe/Recurrence/Meta.php:1646
 #: src/admin-views/recurrence/months.php:88
 #: src/admin-views/recurrence/weeks.php:8
 #: src/admin-views/recurrence/years.php:134
 msgid "Sunday"
 msgstr "Воскресенье"
 
-#: src/Tribe/Recurrence/Meta.php:1296 src/Tribe/Recurrence/Meta.php:1626
+#: src/Tribe/Recurrence/Meta.php:1305 src/Tribe/Recurrence/Meta.php:1645
 #: src/admin-views/recurrence/months.php:87
 #: src/admin-views/recurrence/weeks.php:74
 #: src/admin-views/recurrence/years.php:133
 msgid "Saturday"
 msgstr "Суббота"
 
-#: src/Tribe/Recurrence/Meta.php:1295 src/Tribe/Recurrence/Meta.php:1625
+#: src/Tribe/Recurrence/Meta.php:1304 src/Tribe/Recurrence/Meta.php:1644
 #: src/admin-views/recurrence/months.php:86
 #: src/admin-views/recurrence/weeks.php:63
 #: src/admin-views/recurrence/years.php:132
 msgid "Friday"
 msgstr "Пятница"
 
-#: src/Tribe/Recurrence/Meta.php:1294 src/Tribe/Recurrence/Meta.php:1624
+#: src/Tribe/Recurrence/Meta.php:1303 src/Tribe/Recurrence/Meta.php:1643
 #: src/admin-views/recurrence/months.php:85
 #: src/admin-views/recurrence/weeks.php:52
 #: src/admin-views/recurrence/years.php:131
 msgid "Thursday"
 msgstr "Четверг"
 
-#: src/Tribe/Recurrence/Meta.php:1293 src/Tribe/Recurrence/Meta.php:1623
+#: src/Tribe/Recurrence/Meta.php:1302 src/Tribe/Recurrence/Meta.php:1642
 #: src/admin-views/recurrence/months.php:84
 #: src/admin-views/recurrence/weeks.php:41
 #: src/admin-views/recurrence/years.php:130
 msgid "Wednesday"
 msgstr "Среда"
 
-#: src/Tribe/Recurrence/Meta.php:1292 src/Tribe/Recurrence/Meta.php:1622
+#: src/Tribe/Recurrence/Meta.php:1301 src/Tribe/Recurrence/Meta.php:1641
 #: src/admin-views/recurrence/months.php:83
 #: src/admin-views/recurrence/weeks.php:30
 #: src/admin-views/recurrence/years.php:129
 msgid "Tuesday"
 msgstr "Вторник"
 
-#: src/Tribe/Recurrence/Meta.php:1291 src/Tribe/Recurrence/Meta.php:1621
+#: src/Tribe/Recurrence/Meta.php:1300 src/Tribe/Recurrence/Meta.php:1640
 #: src/admin-views/recurrence/months.php:82
 #: src/admin-views/recurrence/weeks.php:19
 #: src/admin-views/recurrence/years.php:128
@@ -1915,20 +1940,20 @@ msgstr "Понедельник"
 msgid "last"
 msgstr "последний"
 
-#: src/admin-views/event-recurrence.php:59
-#: src/admin-views/event-recurrence.php:96
-#: src/admin-views/event-recurrence.php:325
-#: src/admin-views/event-recurrence.php:360
+#: src/admin-views/event-recurrence.php:63
+#: src/admin-views/event-recurrence.php:100
+#: src/admin-views/event-recurrence.php:329
+#: src/admin-views/event-recurrence.php:364
 #: src/admin-views/recurrence/months.php:90
 #: src/admin-views/recurrence/years.php:136
 msgid "day"
 msgstr "день"
 
-#: src/Tribe/Recurrence/Meta.php:896 src/Tribe/Recurrence/Validator.php:158
+#: src/Tribe/Recurrence/Meta.php:905 src/Tribe/Recurrence/Validator.php:158
 msgid "Yearly custom recurrences cannot have a dash set as the day to occur on."
 msgstr "Настраиваемые повторения по году не могут иметь тире вместо дня проведения."
 
-#: src/Tribe/Recurrence/Meta.php:887 src/Tribe/Recurrence/Validator.php:133
+#: src/Tribe/Recurrence/Meta.php:896 src/Tribe/Recurrence/Validator.php:133
 msgid "Monthly custom recurrences cannot have a dash set as the day to occur on."
 msgstr "Настраиваемые повторения по месяцу не могут иметь тире вместо дня проведения."
 
@@ -2015,7 +2040,7 @@ msgid "Completed!"
 msgstr "Завершено!"
 
 #: src/Tribe/Mini_Calendar_Widget.php:11 src/Tribe/Mini_Calendar_Widget.php:28
-#: src/Tribe/Mini_Calendar_Widget.php:77
+#: src/Tribe/Mini_Calendar_Widget.php:90
 msgid "Events Calendar"
 msgstr "Календарь мероприятий"
 
@@ -2023,145 +2048,146 @@ msgstr "Календарь мероприятий"
 msgid "The events calendar mini calendar widget"
 msgstr "Виджет мини-календаря The events calendar"
 
-#: src/Tribe/Main.php:1909
+#: src/Tribe/Main.php:1906
 msgid "Week Of"
 msgstr "Неделя"
 
-#: src/Tribe/Main.php:1892
+#: src/Tribe/Main.php:1889
 msgid "Photo"
 msgstr "Фото"
 
-#: src/Tribe/Main.php:1874
+#: src/Tribe/Main.php:1871
 msgid "Week"
 msgstr "Неделя"
 
-#: src/Tribe/Main.php:1645
+#: src/Tribe/Main.php:1642
 msgid "View All Add-Ons"
 msgstr "Просмотреть все расширения"
 
-#: src/Tribe/Main.php:1643
+#: src/Tribe/Main.php:1640
 msgid "Support"
 msgstr "Поддержка"
 
-#: src/Tribe/Main.php:1583
+#: src/Tribe/Main.php:1580
 msgid "Organizer draft updated. <a target=\"_blank\" href=\"%s\">Preview organizer</a>"
 msgstr "Черновик организатора обновлен. <a target=\"_blank\" href=\"%s\">Предпросмотр организатора</a>"
 
-#: src/Tribe/Main.php:1579
+#: src/Tribe/Main.php:1576
 msgid "Organizer scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview organizer</a>"
 msgstr "Организатор станет доступен: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Предпросмотр организатора</a>"
 
-#: src/Tribe/Main.php:1577
+#: src/Tribe/Main.php:1574
 msgid "Organizer submitted. <a target=\"_blank\" href=\"%s\">Preview organizer</a>"
 msgstr "Организатор подтвержден. <a target=\"_blank\" href=\"%s\">Предпросмотр организатора</a>"
 
-#: src/Tribe/Main.php:1576
+#: src/Tribe/Main.php:1573
 msgid "Organizer published. <a href=\"%s\">View organizer</a>"
 msgstr "Организатор опубликован. <a href=\"%s\">Посмотреть организатора</a>"
 
-#: src/Tribe/Main.php:1575
+#: src/Tribe/Main.php:1572
 msgid "Organizer updated. <a href=\"%s\">View organizer</a>"
 msgstr "Организатор обновлен. <a href=\"%s\">Посмотреть организатора</a>"
 
-#: src/Tribe/Main.php:1573
+#: src/Tribe/Main.php:1570
 msgid "Venue draft updated. <a target=\"_blank\" href=\"%s\">Preview venue</a>"
 msgstr "Черновик места проведения обновлен. <a target=\"_blank\" href=\"%s\">Предпросмотр места проведения</a>"
 
 #. translators: Publish box date format, see http://php.net/date
-#: src/Tribe/Main.php:1571 src/Tribe/Main.php:1581
+#: src/Tribe/Main.php:1568 src/Tribe/Main.php:1578
 msgid "M j, Y @ G:i"
 msgstr "M j, Y @ G:i"
 
-#: src/Tribe/Main.php:1569
+#: src/Tribe/Main.php:1566
 msgid "Venue scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview venue</a>"
 msgstr "Место проведения станет доступно: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Предпросмотр места проведения</a>"
 
-#: src/Tribe/Main.php:1567
+#: src/Tribe/Main.php:1564
 msgid "Venue submitted. <a target=\"_blank\" href=\"%s\">Preview venue</a>"
 msgstr "Место проведения подтверждено. <a target=\"_blank\" href=\"%s\">Предпросмотр места проведения</a>"
 
 #. translators: %s: date and time of the revision
-#: src/Tribe/Main.php:1566
+#: src/Tribe/Main.php:1563
 msgid "Venue published. <a href=\"%s\">View venue</a>"
 msgstr "Место проведения опубликовано. <a href=\"%s\">Просмотреть место проведения</a>"
 
-#: src/Tribe/Main.php:1564
+#: src/Tribe/Main.php:1561
 msgid "Venue updated. <a href=\"%s\">View venue</a>"
 msgstr "Место проведения обновлено. <a href=\"%s\">Просмотреть место проведения</a>"
 
-#: src/Tribe/Main.php:1536
+#: src/Tribe/Main.php:1533
 msgid "Settings"
 msgstr "Настройки"
 
-#: src/Tribe/Main.php:1423
+#: src/Tribe/Assets.php:374
 msgid "Address: "
 msgstr ""
 
-#: src/Tribe/Main.php:854
+#: src/Tribe/Main.php:839
 msgid "Before posting a new thread, please do a search to make sure your issue hasn't already been addressed. When posting please make sure to provide as much detail about the problem as you can (with screenshots or screencasts if feasible), and make sure that you've identified whether a plugin / theme conflict could be at play in your initial message."
 msgstr ""
 
-#: src/Tribe/Main.php:853
+#: src/Tribe/Main.php:838
 msgid "Our number one goal is helping you succeed, and to whatever extent possible, we'll help troubleshoot and guide your customizations or tweaks. While we won't build your site for you, and we can't guarantee we'll be able to get you 100% integrated with every theme or plugin out there, we'll do all we can to point you in the right direction and to make you -- and your client, as is often more importantly the case -- satisfied."
 msgstr "Наша первостепенная цель - это помочь вам добиться успеха, и в какой бы то ни было мере, мы поможем устранить неполадки и разобраться с настройками. И хотя мы не построим ваш сайт за вас, и не будем гарантировать, что сможем помочь интегрировать его на 100% с любой темой или плагином, мы приложим все усилия, чтобы дать вам правильное направление и сделать вас - и вашего клиента, что часто важнее - счастливыми."
 
-#: src/Tribe/Main.php:852
+#: src/Tribe/Main.php:837
 msgid "Users who have purchased an Events Calendar PRO license are granted total access to our %spremium support forums%s. Unlike at the %sWordPress.org support forum%s, where our involvement is limited to identifying and patching bugs, we have a dedicated support team for PRO users. We're on the PRO forums daily throughout the business week, and no thread should go more than 24-hours without a response."
 msgstr "Пользователи, которые приобрели лицензию на Events Calendar PRO, получают полный доступ к нашим %sпремиальным форумам поддержки%s. В отличии от %sфорумов поддержки WordPress.org%s, где наше сотрудничество ограничено определением и исправлением ошибок, у нас есть преданная команда поддержки для пользователей PRO. Мы находимся на форумах PRO ежедневно всю рабочую неделю, и ни одно обращение не останется без ответа больше, чем на 24 часа."
 
-#: src/Tribe/Main.php:851
+#: src/Tribe/Main.php:836
 msgid "Written documentation can only take things so far...sometimes, you need help from a real person. This is where our %ssupport forums%s come into play."
 msgstr "Письменная документация может дойти только до этого места... иногда нужна помощь реального человека. Здесь в игру и вступают наши %sфорумы поддержки%s."
 
-#: src/Tribe/Main.php:838
+#: src/Tribe/Main.php:823
 msgid "Otherwise, if you're feeling adventurous, you can get started by heading to the Events menu and adding your first event."
 msgstr "В противном случае, если вам хочется положиться на удачу, вы можете начать с Меню мероприятий и добавить свое первое мероприятие."
 
-#: src/Tribe/Main.php:836
+#: src/Tribe/Main.php:821
 msgid "Take care of your license key. Though not required to create your first event, you'll want to get it in place as soon as possible to guarantee your access to support and upgrades. %sHere's how to find your license key%s, if you don't have it handy."
 msgstr "Позаботьтесь о своем лицензионном ключе. Хотя он и не нужен для создания вашего первого мероприятия, вам нужно будет ввести его как можно скорее, чтобы гарантировать доступ к поддержке и обновлениям. %sВот как найти ваш лицензионный ключ%s, если у вас нет его под рукой."
 
-#: src/Tribe/Main.php:834
+#: src/Tribe/Main.php:819
 msgid "%sInstallation/Setup FAQs%s from our support page can help give an overview of what the plugin can and cannot do. This section of the FAQs may be helpful as it aims to address any basic install questions not addressed by the new user primer."
 msgstr "%sFAQ по установке и настройке%s с нашей страницы поддержки даст вам представление о том, что может и чего не может делать плагин. Этот раздел FAQ может помочь, так как он обращается ко всем основным вопросам по установке, не затронутым Учебником."
 
-#: src/Tribe/Main.php:832
+#: src/Tribe/Main.php:817
 msgid "%sOur New User Primer%s was designed for folks in your exact position. Featuring both step-by-step videos and written walkthroughs that feature accompanying screenshots, the primer aims to take you from zero to hero in no time."
 msgstr "%sНаш учебник для начинающих%s был создан для людей, которые находятся в той же ситуации, что и вы. Одновременно предоставляя пошаговые видео и письменные инструкции со скриншотами, учебник сделает из вас мастера за считанные минуты!"
 
-#: src/Tribe/Main.php:829
+#: src/Tribe/Main.php:814
 msgid "If this is your first time using The Events Calendar Pro, you're in for a treat and are already well on your way to creating a first event. Here are some basics we've found helpful for users jumping into it for the first time:"
 msgstr "Если вы пользуетесь The Events Calendar Pro впервые, вы уже на прямом пути к созданию вашего первого мероприятия. Мы собрали некоторые базовые элементы, которые могут помочь пользователю-новичку:"
 
-#: src/Tribe/Main.php:773
+#: src/Tribe/Main.php:758
 msgid "Check this to only show weekdays on Week View"
 msgstr ""
 
-#: src/Tribe/Main.php:772
+#: src/Tribe/Main.php:757
 msgid "Hide weekends on Week View"
 msgstr ""
 
-#: src/Tribe/Main.php:759
+#: src/Tribe/Main.php:744
 msgid "Enter the format to use for week days. Used when showing days of the week in Week view."
 msgstr "Введите формат, который будет использоваться для дней недели. Используется для показа дней недели в недельном виде."
 
-#: src/Tribe/Main.php:758
+#: src/Tribe/Main.php:743
 msgid "Week Day Format"
 msgstr "Формат дня недели"
 
-#: src/Tribe/Main.php:746
+#: src/Tribe/Main.php:731
 msgid "Remove related events from the single event view"
 msgstr "Убрать похожие мероприятия из вида одного мероприятия"
 
-#: src/Tribe/Main.php:745
+#: src/Tribe/Main.php:730
 msgid "Hide related events"
 msgstr "Скрыть похожие мероприятия"
 
-#: src/Tribe/Main.php:728 src/admin-views/event-meta-options.php:3
+#: src/Tribe/Editor.php:194 src/Tribe/Main.php:713
+#: src/admin-views/event-meta-options.php:3
 msgid "Additional Fields"
 msgstr "Дополнительные поля"
 
-#: src/Tribe/Main.php:726 src/admin-views/tribe-options-defaults.php:35
+#: src/Tribe/Main.php:711 src/admin-views/tribe-options-defaults.php:35
 msgid "Default Content"
 msgstr "Содержимое по умолчанию"
 
@@ -2169,12 +2195,12 @@ msgstr "Содержимое по умолчанию"
 msgid "%s for week of %s"
 msgstr "%s на неделе с %s"
 
-#: src/Tribe/Main.php:2080
+#: src/Tribe/Main.php:2077
 msgid "photo"
 msgstr "фото"
 
-#: src/Tribe/Main.php:2079 src/admin-views/event-recurrence.php:104
-#: src/admin-views/event-recurrence.php:368
+#: src/Tribe/Main.php:2076 src/admin-views/event-recurrence.php:108
+#: src/admin-views/event-recurrence.php:372
 msgid "week"
 msgstr "неделя"
 
@@ -2182,7 +2208,8 @@ msgstr "неделя"
 msgid "Radio Buttons"
 msgstr "Переключатели"
 
-#: src/Tribe/Geo_Loc_Filter.php:53 src/admin-views/event-meta-options.php:58
+#: src/Tribe/Geo_Loc_Filter.php:53 src/admin-views/event-meta-options.php:68
+#: src/admin-views/event-meta-options.php:136
 msgid "Dropdown"
 msgstr "Выпадающее меню"
 
@@ -2194,71 +2221,67 @@ msgstr "Вид: %s %s"
 msgid "%d %s"
 msgstr "%d %s"
 
-#: src/Tribe/Geo_Loc.php:1202
+#: src/Tribe/Geo_Loc.php:1293
 msgid "Fixed geolocation data for %d venues"
 msgstr "Исправлены геолокационные данные для %d мест"
 
-#: src/Tribe/Geo_Loc.php:1176
+#: src/Tribe/Geo_Loc.php:1267
 msgid "You have venues for which we don't have Geolocation information. <a href='%s'>Click here to generate it</a>."
 msgstr "У вас есть места проведения, для которых у нас отсутсвует геолокационная информация. <a href='%s'>Нажмите здесь, чтобы сгенерировать ееt</a>."
 
-#: src/Tribe/Geo_Loc.php:1132
+#: src/Tribe/Geo_Loc.php:1218
 msgid "Fix venues data"
 msgstr "Исправить данные места проведения"
 
-#: src/Tribe/Geo_Loc.php:369
+#: src/Tribe/Geo_Loc.php:390
 msgid "Longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:368
+#: src/Tribe/Geo_Loc.php:389
 msgid "Latitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:364
+#: src/Tribe/Geo_Loc.php:378
 msgid "Use latitude + longitude"
 msgstr ""
 
-#: src/Tribe/Geo_Loc.php:339
+#: src/Tribe/Geo_Loc.php:353
 msgid "Location"
 msgstr "Местность"
 
-#: src/Tribe/Geo_Loc.php:338
+#: src/Tribe/Geo_Loc.php:352
 msgid "Near"
 msgstr "Рядом"
 
-#: src/Tribe/Geo_Loc.php:268
+#: src/Tribe/Geo_Loc.php:283
 msgid "Map"
 msgstr "Карта"
 
-#: src/Tribe/Geo_Loc.php:213
+#: src/Tribe/Geo_Loc.php:214
 msgid "Removes location search field from the events bar on all views except for map view."
 msgstr "Удаляет поле поиска по местности из строки мероприятий во всех режимах, кроме режима просмотра карты."
 
-#: src/Tribe/Geo_Loc.php:212
+#: src/Tribe/Geo_Loc.php:213
 msgid "Hide location search"
 msgstr "Спрятать поиск по местности"
 
-#: src/Tribe/Geo_Loc.php:203
-msgid "You have %d venues for which we don't have geolocation data. We need to use the Google Maps API to get that information. Doing this may take a while (approximately 1 minute for every 200 venues)."
-msgstr ""
-
-#: src/Tribe/Geo_Loc.php:203
+#: src/admin-views/geolocation-fix-text.php:13
 msgid "Fix geolocation data"
 msgstr "Исправить геолокационные данные"
 
-#: src/Tribe/Geo_Loc.php:197 src/Tribe/Geo_Loc_Filter.php:26
+#: src/Tribe/Geo_Loc.php:198 src/Tribe/Geo_Loc_Filter.php:26
 msgid "Kilometers"
 msgstr "Километры"
 
-#: src/Tribe/Geo_Loc.php:196 src/Tribe/Geo_Loc_Filter.php:23
+#: src/Tribe/Geo_Loc.php:197 src/Tribe/Geo_Loc_Filter.php:23
 msgid "Miles"
 msgstr "Мили"
 
-#: src/Tribe/Geo_Loc.php:183
+#: src/Tribe/Geo_Loc.php:184
 msgid "Set the distance that the location search covers (find events within X distance units of location search input)."
 msgstr "Установить расстояние, которое покрывается поиском местности (найти мероприятия на расстоянии X единиц ввода поиска местности)"
 
-#: src/Tribe/Geo_Loc.php:181
+#: src/Tribe/Geo_Loc.php:182
 msgid "Map view search distance limit"
 msgstr "Режим просмотра карты: искать на карте ограничение расстояния"
 
@@ -2290,7 +2313,7 @@ msgstr ""
 msgid "Recurrence End Date"
 msgstr ""
 
-#: src/Tribe/Advanced_List_Widget.php:155
+#: src/Tribe/Advanced_List_Widget.php:156
 msgid "Upcoming Events"
 msgstr "Будущие мероприятия"
 
@@ -2360,7 +2383,7 @@ msgstr "Дата окончания"
 msgid "Start Date"
 msgstr "Дата начала"
 
-#: events-calendar-pro.php:87
+#: events-calendar-pro.php:88
 msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 msgstr "Чтобы начать использовать Events Calendar PRO, пожалуйста, установите последнюю версию <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
 

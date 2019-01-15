@@ -39,12 +39,10 @@ class WPML_TM_Wizard_Translation_Editor_Step extends WPML_Twig_Template_Loader {
 			'options'        => array(
 				'classic' => array(
 					'heading'    => __( 'Classic Translation Editor', 'wpml-translation-management' ),
-					'subheading' => __( 'Great for smaller sites', 'wpml-translation-management' ),
 
 				),
 				'ate'     => array(
 					'heading'        => __( 'Advanced Translation Editor', 'wpml-translation-management' ),
-					'subheading'     => __( 'Ideal for commercial sites', 'wpml-translation-management' ),
 					'extra_template' => array(
 						'template' => 'mcs-ate-controls.twig',
 						'model'    => $this->mscs_ate->get_model(),
@@ -83,27 +81,6 @@ class WPML_TM_Wizard_Translation_Editor_Step extends WPML_Twig_Template_Loader {
 					'classic' => false,
 					'ate'     => true,
 				)
-			),
-
-			'after_table' => array(
-				array(
-					array(
-						'type'  => 'text',
-						'value' => __( '* The Advanced Translation Editor is free now. When it goes out of beta, it will cost a small fee per user.', 'wpml-translation-management' ),
-					),
-					array(
-						'type'     => 'link',
-						'value'    => __( 'Pricing information', 'wpml-translation-management' ),
-						'url'      => 'https://wpml.org/documentation/translating-your-contents/advanced-translation-editor/?utm_source=wpmlplugin&utm_campaign=tm-setup-wizard&utm_medium=pricing-information-link&utm_term=advanced-translation-editor#how-much-does-it-cost',
-						'external' => true,
-					),
-				),
-				array(
-					array(
-						'type'  => 'text',
-						'value' => __( '* WPML’s Advanced Translation Editor has no lock-in. Content that you translate with it, you can continue editing with the Translation Editor.', 'wpml-translation-management' ),
-					),
-				),
 			),
 
 			'ate' => $this->mscs_ate->get_model(),

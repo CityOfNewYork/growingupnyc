@@ -11,16 +11,23 @@ class WPML_TM_REST_AMS_Clients extends WPML_REST_Base {
 	/** @var WPML_TM_AMS_Translator_Activation_Records $translator_activation_records */
 	private $translator_activation_records;
 
+	/**
+	 * @var WPML_TM_ATE_AMS_Endpoints
+	 */
+	private $strings;
+
 	public function __construct(
 		WPML_TM_AMS_API $api,
 		WPML_TM_AMS_Users $ams_user_records,
-		WPML_TM_AMS_Translator_Activation_Records $translator_activation_records
+		WPML_TM_AMS_Translator_Activation_Records $translator_activation_records,
+		WPML_TM_MCS_ATE_Strings $strings
 	) {
 		parent::__construct( 'wpml/tm/v1' );
 
-		$this->api          = $api;
-		$this->ams_user_records = $ams_user_records;
+		$this->api                           = $api;
+		$this->ams_user_records              = $ams_user_records;
 		$this->translator_activation_records = $translator_activation_records;
+		$this->strings                       = $strings;
 	}
 
 	function add_hooks() {
@@ -46,10 +53,16 @@ class WPML_TM_REST_AMS_Clients extends WPML_REST_Base {
 		                        ) );
 
 		parent::register_route( '/ams/status',
-		                        array(
-			                        'methods'  => 'GET',
-			                        'callback' => array( $this, 'get_status' ),
-		                        ) );
+			array(
+				'methods'  => 'GET',
+				'callback' => array( $this, 'get_status' ),
+			) );
+
+		parent::register_route( '/ams/console',
+			array(
+				'methods'  => 'GET',
+				'callback' => array( $this, 'get_console' ),
+			) );
 	}
 
 	/**
@@ -113,6 +126,10 @@ class WPML_TM_REST_AMS_Clients extends WPML_REST_Base {
 	 */
 	public function get_status() {
 		return $this->api->get_status();
+	}
+
+	public function get_console() {
+		return $this->strings->get_auto_login();
 	}
 
 	function get_allowed_capabilities( WP_REST_Request $request ) {

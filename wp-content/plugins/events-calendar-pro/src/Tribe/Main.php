@@ -58,18 +58,28 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $shortcodes;
 
-		const REQUIRED_TEC_VERSION = '4.6.22';
-		const VERSION = '4.4.31';
+		/**
+		 * Where in the themes we will look for templates
+		 *
+		 * @since 4.5
+		 *
+		 * @var string
+		 */
+		public $template_namespace = 'events-pro';
+
+		const REQUIRED_TEC_VERSION = '4.7.3-dev';
+		const VERSION = '4.5.2.1';
 
 		private function __construct() {
 			$this->pluginDir = trailingslashit( basename( EVENTS_CALENDAR_PRO_DIR ) );
 			$this->pluginPath = trailingslashit( EVENTS_CALENDAR_PRO_DIR );
-			$this->pluginUrl = plugins_url( $this->pluginDir );
+			$this->pluginUrl = plugins_url( $this->pluginDir, EVENTS_CALENDAR_PRO_DIR );
 			$this->pluginSlug = 'events-calendar-pro';
 
 			$this->loadTextDomain();
 
 			require_once( $this->pluginPath . 'src/functions/template-tags/general.php' );
+			require_once( $this->pluginPath . 'src/functions/template-tags/map.php' );
 			require_once( $this->pluginPath . 'src/functions/template-tags/week.php' );
 			require_once( $this->pluginPath . 'src/functions/template-tags/venue.php' );
 			require_once( $this->pluginPath . 'src/functions/template-tags/widgets.php' );
@@ -191,6 +201,9 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			Tribe__Events__Pro__Integrations__Manager::instance()->load_integrations();
 
 			add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ) );
+
+			add_action( 'tribe_events_before_event_template_data_date_display', array( $this, 'disable_recurring_info_tooltip' ) );
+			add_action( 'tribe_events_after_event_template_data_date_display', array( $this, 'enable_recurring_info_tooltip' ) );
 		}
 
 		public function filter_month_week_customizer_label( $args, $section_id, $customizer ) {
@@ -487,7 +500,6 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			Tribe__Events__Pro__Recurrence__Meta::init();
 			Tribe__Events__Pro__Geo_Loc::instance();
 			Tribe__Events__Pro__Community_Modifications::init();
-			$this->displayMetaboxCustomFields();
 			$this->custom_meta_tools = new Tribe__Events__Pro__Admin__Custom_Meta_Tools;
 			$this->single_event_meta = new Tribe__Events__Pro__Single_Event_Meta;
 			$this->single_event_overrides = new Tribe__Events__Pro__Recurrence__Single_Event_Overrides;
@@ -687,62 +699,6 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 				TribeRelatedPosts::instance();
 				require_once( $this->pluginPath . 'vendor/tribe-related-posts/template-tags.php' );
 			}
-		}
-
-		/**
-		 * Determines whether or not to show the custom fields metabox for events.
-		 *
-		 * @return bool Whether to show or not.
-		 */
-		public function displayMetaboxCustomFields() {
-			$show_box = tribe_get_option( 'disable_metabox_custom_fields' );
-			if ( $show_box == 'show' ) {
-				return true;
-			}
-			if ( $show_box == 'hide' ) {
-				remove_post_type_support( Tribe__Events__Main::POSTTYPE, 'custom-fields' );
-				return false;
-			}
-			if ( empty( $show_box ) ) {
-				global $wpdb;
-				$meta_keys = $wpdb->get_results(
-					"SELECT DISTINCT pm.meta_key FROM $wpdb->postmeta pm
-									LEFT JOIN $wpdb->posts p ON p.ID = pm.post_id
-									WHERE p.post_type = '" . Tribe__Events__Main::POSTTYPE . "'
-									AND pm.meta_key NOT LIKE '_wp_%'
-									AND pm.meta_key NOT IN (
-										'_edit_last',
-										'_edit_lock',
-										'_thumbnail_id',
-										'_EventConference',
-										'_EventAllDay',
-										'_EventHideFromUpcoming',
-										'_EventOrigin',
-										'_EventShowMap',
-										'_EventVenueID',
-										'_EventShowMapLink',
-										'_EventCost',
-										'_EventOrganizerID',
-										'_EventRecurrence',
-										'_EventStartDate',
-										'_EventEndDate',
-										'_EventDuration',
-										'_FacebookID')"
-				);
-				if ( empty( $meta_keys ) ) {
-					remove_post_type_support( Tribe__Events__Main::POSTTYPE, 'custom-fields' );
-					$show_box = 'hide';
-					$r = false;
-				} else {
-					$show_box = 'show';
-					$r = true;
-				}
-
-				tribe_update_option( 'disable_metabox_custom_fields', $show_box );
-
-				return $r;
-			}
-
 		}
 
 		/**
@@ -1001,7 +957,11 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 					// remove the default gridview class from core
 					$classes = array_diff( $classes, array( 'events-gridview' ) );
 				}
-				if ( tribe_is_map() || ! tribe_get_option( 'hideLocationSearch', false ) ) {
+
+				if (
+					! tribe_is_using_basic_gmaps_api()
+					&& ( tribe_is_map() || ! tribe_get_option( 'hideLocationSearch', false ) )
+				) {
 					$classes[] = 'tribe-events-uses-geolocation';
 				}
 
@@ -1247,7 +1207,11 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 
 			// map view
 			if ( tribe_is_map() ) {
-				$template = Tribe__Events__Templates::getTemplateHierarchy( 'pro/map' );
+				if ( tribe_is_using_basic_gmaps_api() ) {
+					$template = Tribe__Events__Templates::getTemplateHierarchy( 'pro/map-basic' );
+				} else {
+					$template = Tribe__Events__Templates::getTemplateHierarchy( 'pro/map' );
+				}
 			}
 
 			// recurring "all" view
@@ -1374,9 +1338,9 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			$data = apply_filters( 'tribe_events_pro_localize_script', array(), 'TribeEventsProAdmin', Tribe__Events__Main::POSTTYPE.'-premium-admin' );
 			wp_localize_script( Tribe__Events__Main::POSTTYPE . '-premium-admin', 'TribeEventsProAdmin', $data );
 			wp_localize_script( Tribe__Events__Main::POSTTYPE . '-premium-admin', 'tribe_events_pro_recurrence_strings', array(
-				'date' => Tribe__Events__Pro__Recurrence__Meta::date_strings(),
+				'date'       => Tribe__Events__Pro__Recurrence__Meta::date_strings(),
 				'recurrence' => Tribe__Events__Pro__Recurrence__Strings::recurrence_strings(),
-				'exclusion' => array(),
+				'exclusion'  => array(),
 			) );
 		}
 
@@ -1414,13 +1378,10 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 * @return void
 		 */
 		public function enqueue_styles() {
+			global $post;
+
 			if ( tribe_is_event_query()
-				 || is_active_widget( false, false, 'tribe-events-adv-list-widget' )
-				 || is_active_widget( false, false, 'tribe-mini-calendar' )
-				 || is_active_widget( false, false, 'tribe-events-countdown-widget' )
-				 || is_active_widget( false, false, 'next_event' )
-				 || is_active_widget( false, false, 'tribe-events-venue-widget' )
-				 || is_active_widget( false, false, 'tribe-this-week-events-widget' )
+				|| ( $post instanceof WP_Post && has_shortcode( $post->post_content, 'tribe_events' ) )
 			) {
 				tribe_asset_enqueue_group( 'events-pro-styles' );
 			}
@@ -1440,17 +1401,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			if (
 				$force
 				|| tribe_is_event_query()
-				|| is_active_widget( false, false, 'tribe-events-adv-list-widget' )
-				|| is_active_widget( false, false, 'tribe-mini-calendar' )
-				|| is_active_widget( false, false, 'tribe-events-countdown-widget' )
-				|| is_active_widget( false, false, 'next_event' )
-				|| is_active_widget( false, false, 'tribe-events-venue-widget' )
-				|| is_active_widget( false, false, 'tribe-this-week-events-widget' )
 				|| ( $post instanceof WP_Post && has_shortcode( $post->post_content, 'tribe_events' ) )
-				|| ( $post instanceof WP_Post && has_shortcode( $post->post_content, 'tribe_mini_calendar' ) )
-				|| ( $post instanceof WP_Post && has_shortcode( $post->post_content, 'tribe_this_week' ) )
-				|| ( $post instanceof WP_Post && has_shortcode( $post->post_content, 'tribe_event_countdown' ) )
-				|| ( $post instanceof WP_Post && has_shortcode( $post->post_content, 'tribe_featured_venue' ) )
 			) {
 
 				// Be sure we enqueue TEC scripts
@@ -1463,11 +1414,12 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 				$data_pro = tribe( 'events-pro.assets' )->get_data_tribe_events_pro();
 				wp_localize_script( 'tribe-events-pro', 'TribeEventsPro', $data_pro );
 
-				// Be sure we enqueue PRO geoloc when needed with the proper localization
-				tribe_asset_enqueue( 'tribe-events-pro-geoloc' );
-				$data_geo = tribe( 'events-pro.assets' )->get_data_tribe_geoloc();
-				wp_localize_script( 'tribe-events-pro-geoloc', 'GeoLoc', $data_geo );
-
+				if ( ! tribe_is_using_basic_gmaps_api() ) {
+					// Be sure we enqueue PRO geoloc when needed with the proper localization
+					tribe_asset_enqueue( 'tribe-events-pro-geoloc' );
+					$data_geo = tribe( 'events-pro.assets' )->get_data_tribe_geoloc();
+					wp_localize_script( 'tribe-events-pro-geoloc', 'GeoLoc', $data_geo );
+				}
 			}
 		}
 
@@ -2131,10 +2083,72 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			tribe_singleton( 'events-pro.customizer.photo-view', 'Tribe__Events__Pro__Customizer__Photo_View' );
 			tribe_singleton( 'events-pro.recurrence.nav', 'Tribe__Events__Pro__Recurrence__Navigation', array( 'hook' ) );
 
+			tribe_register_provider( 'Tribe__Events__Pro__Editor__Provider' );
+
 			tribe( 'events-pro.admin.settings' );
 			tribe( 'events-pro.customizer.photo-view' );
 			tribe( 'events-pro.assets' );
 			tribe( 'events-pro.recurrence.nav' );
+		}
+
+		/**
+		 * Determines whether or not to show the custom fields metabox for events.
+		 *
+		 * @deprecated
+		 *
+		 * @return bool Whether to show or not.
+		 */
+		public function displayMetaboxCustomFields() {
+			_deprecated_function( __METHOD__, '4.4.32', 'Use tribe( "tec.admin.event-meta-box" )->display_wp_custom_fields_metabox() instead' );
+
+			$show_box = tribe_get_option( 'disable_metabox_custom_fields' );
+			if ( $show_box == 'show' ) {
+				return true;
+			}
+			if ( $show_box == 'hide' ) {
+				remove_post_type_support( Tribe__Events__Main::POSTTYPE, 'custom-fields' );
+				return false;
+			}
+			if ( empty( $show_box ) ) {
+				global $wpdb;
+				$meta_keys = $wpdb->get_results(
+					"SELECT DISTINCT pm.meta_key FROM $wpdb->postmeta pm
+									LEFT JOIN $wpdb->posts p ON p.ID = pm.post_id
+									WHERE p.post_type = '" . Tribe__Events__Main::POSTTYPE . "'
+									AND pm.meta_key NOT LIKE '_wp_%'
+									AND pm.meta_key NOT IN (
+										'_edit_last',
+										'_edit_lock',
+										'_thumbnail_id',
+										'_EventConference',
+										'_EventAllDay',
+										'_EventHideFromUpcoming',
+										'_EventOrigin',
+										'_EventShowMap',
+										'_EventVenueID',
+										'_EventShowMapLink',
+										'_EventCost',
+										'_EventOrganizerID',
+										'_EventRecurrence',
+										'_EventStartDate',
+										'_EventEndDate',
+										'_EventDuration',
+										'_FacebookID')"
+				);
+				if ( empty( $meta_keys ) ) {
+					remove_post_type_support( Tribe__Events__Main::POSTTYPE, 'custom-fields' );
+					$show_box = 'hide';
+					$r = false;
+				} else {
+					$show_box = 'show';
+					$r = true;
+				}
+
+				tribe_update_option( 'disable_metabox_custom_fields', $show_box );
+
+				return $r;
+			}
+
 		}
 	} // end Class
 }

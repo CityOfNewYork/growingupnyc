@@ -93,9 +93,9 @@ class OTGS_Installer_WP_Share_Local_Components_Setting_Hooks {
 			'strings'                    => array(
 				'heading'                 => __( 'Reporting to', 'installer' ),
 				'report_to'               => __( 'Report to', 'installer' ),
-				'radio_report_yes'        => __( 'Send theme and plugins info, in order to get faster support and compatibility alerts',
+				'radio_report_yes'        => __( 'Send theme and plugins information, in order to get faster support and compatibility alerts',
 				                                 'installer' ),
-				'radio_report_no'         => __( "Don't send this information and skip compatibility notes",
+				'radio_report_no'         => __( "Don't send this information and skip compatibility alerts",
 				                                 'installer' ),
 				'which_theme_and_plugins' => __( 'which theme and plugins you are using.', 'installer' ),
 			),

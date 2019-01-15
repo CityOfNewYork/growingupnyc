@@ -29,58 +29,6 @@ class Tribe__Events__Pro__This_Week {
 	}
 
 	/**
-	 * This Week Widget - Style and Scripts
-	 *
-	 */
-	public static function styles_and_scripts() {
-
-		wp_enqueue_script( 'tribe-this-week', tribe_events_pro_resource_url( 'widget-this-week.min.js' ), array( 'jquery' ), apply_filters( 'tribe_events_pro_js_version', Tribe__Events__Pro__Main::VERSION ) );
-
-		// Tribe Events CSS filename
-		$event_file        = 'widget-this-week.css';
-		$stylesheet_option = tribe_get_option( 'stylesheetOption', 'tribe' );
-
-		// What Option was selected
-		switch ( $stylesheet_option ) {
-			case 'skeleton':
-				$event_file_option = 'widget-this-week-' . $stylesheet_option . '.css';
-				break;
-			case 'full':
-				$event_file_option = 'widget-this-week-' . $stylesheet_option . '.css';
-				break;
-			default:
-				$event_file_option = 'widget-this-week-theme.css';
-				break;
-		}
-
-		$style_url = tribe_events_pro_resource_url( $event_file_option );
-
-		// get the minified file
-		$style_url = Tribe__Events__Template_Factory::getMinFile( $style_url, true );
-
-		//filter stylesheet
-		$style_url = apply_filters( 'tribe_events_pro_widget_calendar_stylesheet_url', $style_url );
-
-		//Check for Override
-		$style_override_url = Tribe__Events__Templates::locate_stylesheet( 'tribe-events/pro/' . $event_file, $style_url );
-
-		// Load up stylesheet from theme or plugin
-		if ( $style_url && $stylesheet_option == 'tribe' ) {
-			wp_enqueue_style( 'widget-this-week-pro-style', tribe_events_pro_resource_url( 'widget-this-week-full.css' ), array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
-			wp_enqueue_style( Tribe__Events__Main::POSTTYPE . '-widget-this-week-pro-style', $style_url, array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
-		} else {
-			wp_enqueue_style( Tribe__Events__Main::POSTTYPE . '-widget-this-week-pro-style', $style_url, array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
-		}
-
-		if ( $style_override_url && $style_override_url !== $style_url ) {
-			wp_enqueue_style( Tribe__Events__Main::POSTTYPE . '--widget-this-week-pro-override-style', $style_override_url, array(), apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION ) );
-		}
-
-		$widget_data = array( 'ajaxurl' => admin_url( 'admin-ajax.php', ( is_ssl() ? 'https' : 'http' ) ) );
-		wp_localize_script( 'tribe-this-week', 'tribe_this_week', $widget_data );
-	}
-
-	/**
 	 * This Week Widget - Ajax Change Week
 	 *
 	 *
@@ -224,7 +172,7 @@ class Tribe__Events__Pro__This_Week {
 		}
 
 		// enqueue the widget js
-		self::styles_and_scripts();
+		tribe_asset_enqueue( 'tribe-this-week' );
 
 		//Get Events with Hide From Event Listings Checked
 		$hide_upcoming_ids = Tribe__Events__Query::getHideFromUpcomingEvents();

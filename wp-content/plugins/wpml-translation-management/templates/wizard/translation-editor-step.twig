@@ -19,9 +19,6 @@
             {% for option,data in strings.options %}
                 <th>
                     {{ data.heading }}
-                    {% if data.subheading is defined %}
-                        <span class="translation-editor-table-subheading">{{ data.subheading }}</span>
-                    {% endif %}
                 </th>
             {% endfor %}
         </tr>
@@ -64,37 +61,6 @@
         </tr>
         </tbody>
     </table>
-
-    {% for after_table_item in strings.after_table %}
-        <p class="translation-editor-table-info">
-            {% for after_table_sentence in after_table_item %}
-
-                {% if after_table_sentence.type == 'text' %}
-
-                    {{ after_table_sentence.value }}
-
-                {% elseif after_table_sentence.type == 'link' %}
-
-                    {% if after_table_sentence.external is same as(true) %}
-                        <a
-                                target="_blank"
-                                rel="nofollow"
-                                class="wpml-external-link"
-                                href="{{ after_table_sentence.url }}"
-                        >
-                            {{- after_table_sentence.value -}}
-                        </a>
-                    {% else %}
-                        <a href="{{ after_table_sentence.url }}">
-                            {{- after_table_sentence.value -}}
-                        </a>
-                    {% endif %}
-
-                {% endif %}
-
-            {% endfor %}
-        </p>
-    {% endfor %}
 
     <div class="wpml-wizard-buttons-container">
         <button class="button button-secondary alignleft js-go-back">&laquo; {{ strings.go_back }}</button>

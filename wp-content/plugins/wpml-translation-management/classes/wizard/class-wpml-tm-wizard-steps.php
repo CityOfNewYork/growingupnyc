@@ -70,7 +70,7 @@ class WPML_TM_Wizard_Steps implements IWPML_Action {
 			case 'tm_local_translators':
 				return new WPML_TM_Wizard_Translators_Step(
 					$this->translator_records,
-					new WPML_Language_Collection( $this->sitepress ),
+					new WPML_Language_Collection( $this->sitepress, array_keys( $this->sitepress->get_active_languages() ) ),
 					$this->get_active_translation_service()
 				);
 

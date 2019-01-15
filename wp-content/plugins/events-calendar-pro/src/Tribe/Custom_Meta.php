@@ -149,9 +149,6 @@ class Tribe__Events__Pro__Custom_Meta {
 		$add_another  = esc_html( __( 'Add another', 'tribe-events-calendar-pro' ) );
 		$remove_field = esc_html( __( 'Remove', 'tribe-events-calendar-pro' ) );
 
-		// Settings for regular WordPress custom fields
-		$disable_metabox_custom_fields = $pro->displayMetaboxCustomFields() ? 'show' : 'hide';
-
 		include $pro->pluginPath . 'src/admin-views/event-meta-options.php';
 	}
 
@@ -325,7 +322,7 @@ class Tribe__Events__Pro__Custom_Meta {
 	 * @return array
 	 */
 	public static function save_meta_options( $ecp_options ) {
-		// The custom-fields key may not exist if not fields have been defined
+		// The custom-fields key may not exist if no fields have been defined
 		$ecp_options['custom-fields'] = isset( $ecp_options['custom-fields'] ) ? $ecp_options['custom-fields'] : array();
 
 		// Maintain a record of the highest assigned custom field index
@@ -337,7 +334,7 @@ class Tribe__Events__Pro__Custom_Meta {
 		$ecp_options['custom-fields'] = array();
 
 		// save the view state for custom fields
-		$ecp_options['disable_metabox_custom_fields'] = $_POST['disable_metabox_custom_fields'];
+		$ecp_options['disable_metabox_custom_fields'] = isset( $_POST['disable_metabox_custom_fields'] ) ? $_POST['disable_metabox_custom_fields'] : '';
 
 		foreach ( $_POST['custom-field'] as $index => $field ) {
 			$name   = wp_kses( stripslashes( $_POST['custom-field'][ $index ] ), array() );

@@ -36,6 +36,10 @@
 		 */
 
 		map_add_marker: function( lat, lng, title, address, link ) {
+			if ( 'undefined' == typeof google ) {
+				return;
+			}
+
 			var myLatlng = new google.maps.LatLng( lat, lng );
 
 			var marker = {
@@ -80,8 +84,10 @@
 		}
 	} );
 
-	tg.geocoder = new google.maps.Geocoder();
-	tg.bounds = new google.maps.LatLngBounds();
+	try {
+		tg.geocoder = new google.maps.Geocoder();
+		tg.bounds = new google.maps.LatLngBounds();
+	} catch( e ) {};
 
 	$( document ).ready( function() {
 
@@ -122,19 +128,21 @@
 
 		tribe_test_location();
 
-		var $tribe_container = $( '#tribe-events' ),
-			$geo_bar_input = $( '#tribe-bar-geoloc' ),
-			$geo_options = $( "#tribe-geo-options" ),
-			invalid_date = false;
-
-		var options = {
-			zoom     : 5,
-			center   : new google.maps.LatLng( TribeEventsPro.geocenter.max_lat, TribeEventsPro.geocenter.max_lng ),
-			mapTypeId: google.maps.MapTypeId.ROADMAP
-		};
+		var $tribe_container = $( '#tribe-events' );
+		var $geo_bar_input   = $( '#tribe-bar-geoloc' );
+		var $geo_options     = $( '#tribe-geo-options' );
+		var invalid_date     = false;
 
 		var mapEl = document.getElementById( 'tribe-geo-map' );
-		if ( mapEl ) {
+
+		if ( mapEl && 'undefined' !== typeof google ) {
+
+			var options = {
+				zoom     : 5,
+				center   : new google.maps.LatLng( TribeEventsPro.geocenter.max_lat, TribeEventsPro.geocenter.max_lng ),
+				mapTypeId: google.maps.MapTypeId.ROADMAP
+			};
+
 			tg.map = new google.maps.Map( mapEl, options );
 			tg.bounds = new google.maps.LatLngBounds();
 
@@ -567,7 +575,7 @@
 		 */
 
 		function deleteMarkers() {
-			if ( tg.markers ) {
+			if ( tg.markers && 'undefined' !== typeof google ) {
 				for ( i in tg.markers ) {
 					tg.markers[i].setMap( null );
 				}
@@ -582,7 +590,13 @@
 		 */
 
 		function centerMap() {
+
+			if ( 'undefined' == typeof google ) {
+				return;
+			}
+
 			tg.map.fitBounds( tg.bounds );
+
 			if ( tg.map.getZoom() > 13 ) {
 				tg.map.setZoom( 13 );
 			}

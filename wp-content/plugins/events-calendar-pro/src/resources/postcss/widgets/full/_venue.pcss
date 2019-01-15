@@ -1,0 +1,112 @@
+/* = Events Venue Widget
+   @ Template: pro/widgets/venue-widget.php
+=============================================*/
+
+.tribe-venue-widget-wrapper {
+	margin-bottom: 20px;
+
+	.tribe-venue-widget-venue {
+		margin-bottom: 20px;
+	}
+
+	.tribe-venue-widget-venue-name a {
+		font-weight: bold;
+	}
+
+	.tribe-venue-widget-list {
+		font-size: 13px;
+		line-height: 1.6;
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+
+		.tribe-events-event-schedule-details {
+			display: inline;
+			font-weight: bold;
+		}
+
+		.entry-title {
+			margin: 0 0 5px;
+		}
+
+		.type-tribe_events {
+			margin-bottom: 10px;
+			padding-bottom: 15px;
+		}
+	}
+
+	.type-tribe_events {
+		border: 0;
+		border-bottom: 1px dotted #2f2f2f;
+		list-style-type: none;
+		margin-bottom: 0 0 10px;
+		padding: 0 0 15px;
+	}
+
+	.tribe-event-title {
+		font-size: 14px;
+		font-weight: bold;
+		line-height: 18px;
+		margin-bottom: 10px;
+		margin-top: 0;
+		padding-top: .75em;
+	}
+
+	.tribe-venue-widget-thumbnail {
+		margin: 10px 0 20px 0;
+
+		img {
+			display: block;
+			height: auto;
+			max-width: 100%;
+		}
+	}
+}
+
+/* Twenty Sixteen Compat
+========================================================================== */
+
+.tribe-theme-twentysixteen {
+	.tribe-venue-widget-list {
+		list-style: none;
+		margin-left: 0;
+	}
+}
+
+/* Twenty Fifteen Compat
+=============================================*/
+.tribe-theme-twentyfifteen {
+	.tribe-events-venue-widget {
+		.hentry {
+			box-shadow: none;
+			display: inline-block;
+			margin-left: 0;
+			margin-right: 0;
+
+			.entry-title {
+				font-size: 1.2em;
+			}
+		}
+	}
+
+	.tribe-venue-widget-wrapper {
+		ul.tribe-venue-widget-list {
+			list-style-type: none;
+		}
+
+		h4 {
+			font-size: 14px;
+		}
+
+		.date-start,
+		.date-end,
+		.end-time,
+		.tribe-events-event-cost {
+			font-size: 13px;
+		}
+
+		.date-end {
+			display: block;
+		}
+	}
+}

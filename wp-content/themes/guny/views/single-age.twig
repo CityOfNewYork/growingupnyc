@@ -101,10 +101,10 @@
       {% if post.tip %}
       <aside class="c-tip u-sm-gutter {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary o-content-container" id="tip-{{(post.title|split(' '))|join('-')}}">
         <div class="c-tip__sticker sticker {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">
-          <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#icon-lightbulb"></use></svg>
+          <svg class="icon--large" role="img" aria-hidden="true"><title>Tip</title><use xlink:href="#icon-lightbulb"></use></svg>
         </div>
         {% if post.tip_action_heading %}
-          <p class="c-tip__content text-center">{{post.tip_action_heading}}</p>
+          <h3 class="c-tip__content text-center">{{post.tip_action_heading}}</h3>
         {% endif %}
         <p class="c-tip__content">{{post.tip}}</p>
         {# <footer class="c-tip__footer"> #}

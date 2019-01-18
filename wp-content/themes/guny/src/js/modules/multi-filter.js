@@ -339,41 +339,33 @@ ProgramsList.hideLoader = function(el, status){
  **/
 ProgramsList.selectAllTypes = function() {
   if(this.checkedAllTypes){
-    this.checkedAllTypes = false;
-    this.checkedProgramType = [];
-  }else {
-    this.checkedAllTypes = true;
     this.checkedProgramType = this.programTypes.map(a => a.slug);
+  }else {
+    this.checkedProgramType = [];
   }
 }
 
 ProgramsList.selectAllAges = function() {
   if(this.checkedAllAges){
-    this.checkedAllAges = false;
-    this.checkedAgeGroup = [];
-  }else {
-    this.checkedAllAges = true;
     this.checkedAgeGroup = this.ageGroups.map(a => a.slug);
+  }else {
+    this.checkedAgeGroup = [];
   }
 }
 
 ProgramsList.selectAllAfterschoolTypes = function() {
   if(this.checkedAllAfterschoolTypes){
-    this.checkedAllAfterschoolTypes = false;
-    this.checkedAfterschoolType = [];
-  }else {
-    this.checkedAllAfterschoolTypes = true;
     this.checkedAfterschoolType = this.afterschoolTypes.map(a => a.slug);
+  }else {
+    this.checkedAfterschoolType = [];
   }
 }
 
 ProgramsList.selectAllBoroughs = function() {  
   if(this.checkedAllBoroughs){
-    this.checkedAllBoroughs = false;
-    this.checkedBorough = [];
-  }else {
-    this.checkedAllBoroughs = true;
     this.checkedBorough = this.boroughNames.map(a => a.slug);
+  }else {
+    this.checkedBorough = [];
   }
 }
 

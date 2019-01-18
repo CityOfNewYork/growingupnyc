@@ -28,7 +28,7 @@
       <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
         <li class="c-list-box__subitem">
           <label class="checkbox" >
-            <input type="checkbox" v-model="checkedAllTypes" class="checkbox__field" @click="selectAllTypes">
+            <input type="checkbox" v-model="checkedAllTypes" @change="selectAllTypes" class="checkbox__field">
             <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
             {{ __('Select All', 'guny') }}
           </label>
@@ -51,7 +51,7 @@
 
         <li class="c-list-box__subitem">
           <label class="checkbox" >
-            <input type="checkbox" v-model="checkedAllAges" class="checkbox__field" @click="selectAllAges">
+            <input type="checkbox" v-model="checkedAllAges" class="checkbox__field" @change="selectAllAges">
             <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
             {{ __('Select All', 'guny') }}
           </label>

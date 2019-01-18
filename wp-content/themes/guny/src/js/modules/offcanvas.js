@@ -52,4 +52,10 @@ export default function() {
       $(triggerLink).focus();
     }
   });
+
+  $('nav#generationnyc-menu [data-toggle="offcanvas-generationnyc"]').on('click', function (e) {
+    if (triggerLink !== null) {
+      $(triggerLink).focus();
+    }
+  });
 }

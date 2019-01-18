@@ -20,7 +20,6 @@ import Search from './modules/search.js';
 import ProgramsList from './modules/multi-filter.js';
 /* eslint-disable no-unused-vars */
 import toggleOpen from './modules/toggleOpen.js';
-import toggleMenu from './modules/toggleMenu.js';
 /* eslint-enable no-unused-vars */
 
 function ready(fn) {

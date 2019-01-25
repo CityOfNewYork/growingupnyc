@@ -101,7 +101,9 @@ function wpml_load_request_handler( $is_admin, $active_language_codes, $default_
 	$wpml_cookie = new WPML_Cookie();
 	$wp_api      = new WPML_WP_API();
 
-	if ( $is_admin === true ) {
+	$is_rest = array_key_exists( 'rest_route', $_REQUEST ) || ( false !== strpos( $_SERVER['REQUEST_URI'], 'wp-json' ) );
+
+	if ( $is_admin === true || $is_rest ) {
 		$wpml_request_handler = new WPML_Backend_Request(
 			$wpml_url_converter,
 			$active_language_codes,
@@ -406,6 +408,30 @@ function wpml_show_user_options() {
 	$user = new WP_User( $user_id );
 	$user_options_menu = new WPML_User_Options_Menu( $sitepress, $user );
 	echo $user_options_menu->render();
+}
+
+/**
+ * @return \WPML_Upgrade_Command_Factory
+ */
+function wpml_get_upgrade_command_factory() {
+	static $factory;
+	if ( ! $factory ) {
+		$factory = new WPML_Upgrade_Command_Factory();
+	}
+
+	return $factory;
+}
+
+/**
+ * @param string      $class_name   A class implementing \IWPML_Upgrade_Command.
+ * @param array       $dependencies An array of dependencies passed to the `$class_name`'s constructor.
+ * @param array       $scopes       An array of scope values. Accepted values are: `\WPML_Upgrade::SCOPE_ADMIN`, `\WPML_Upgrade::SCOPE_AJAX`, and `\WPML_Upgrade::SCOPE_FRONT_END`.
+ * @param string|null $method       The method to call to run the upgrade (otherwise, it calls the "run" method),
+ *
+ * @return \WPML_Upgrade_Command_Definition
+ */
+function wpml_create_upgrade_command_definition( $class_name, array $dependencies, array $scopes, $method = null ) {
+	return wpml_get_upgrade_command_factory()->create_command_definition( $class_name, $dependencies, $scopes, $method );
 }
 
 if ( is_admin() ) {

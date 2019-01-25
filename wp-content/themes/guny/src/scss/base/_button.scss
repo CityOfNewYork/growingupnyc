@@ -272,3 +272,20 @@
     }
   }
 }
+
+// mircosite
+.button--text-microsite {
+  color: $gray-1;
+  min-height: 0;
+
+  &:focus {
+    color: $dark-gray-1;
+    outline: none;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $dark-gray-1;
+    }
+  }
+}

@@ -135,4 +135,10 @@
 .hover\:stop-color-blue-2:hover {
   stop-color: $blue-2 !important;
 }
+
+//
+.text-gray-1,
+.hover\:text-gray-1:hover {
+  color: $gray-1 !important;
+}
 // End Tailwind Utility

@@ -52,13 +52,15 @@ class WPML_PB_Register_Shortcodes {
 		}
 
 		foreach ( $shortcodes as $shortcode ) {
-			$shortcode_content  = $shortcode['content'];
-			$encoding           = $this->shortcode_strategy->get_shortcode_tag_encoding( $shortcode['tag'] );
-			$encoding_condition = $this->shortcode_strategy->get_shortcode_tag_encoding_condition( $shortcode['tag'] );
-			$type               = $this->shortcode_strategy->get_shortcode_tag_type( $shortcode['tag'] );
-			$shortcode_content  = $this->encoding->decode( $shortcode_content, $encoding, $encoding_condition );
 
-			$this->register_string( $post_id, $shortcode_content, $shortcode, 'content', $type );
+			if ( $this->should_handle_content( $shortcode['tag'] ) ) {
+				$shortcode_content  = $shortcode['content'];
+				$encoding           = $this->shortcode_strategy->get_shortcode_tag_encoding( $shortcode['tag'] );
+				$encoding_condition = $this->shortcode_strategy->get_shortcode_tag_encoding_condition( $shortcode['tag'] );
+				$type               = $this->shortcode_strategy->get_shortcode_tag_type( $shortcode['tag'] );
+				$shortcode_content  = $this->encoding->decode( $shortcode_content, $encoding, $encoding_condition );
+				$this->register_string( $post_id, $shortcode_content, $shortcode, 'content', $type );
+			}
 
 			$attributes              = (array) shortcode_parse_atts( $shortcode['attributes'] );
 			$translatable_attributes = $this->shortcode_strategy->get_shortcode_attributes( $shortcode['tag'] );
@@ -82,6 +84,25 @@ class WPML_PB_Register_Shortcodes {
 		$this->clean_up_package_leftovers();
 
 		$this->mark_post_as_migrate_location_done( $post_id );
+	}
+
+	/**
+	 * @param string $tag
+	 *
+	 * @return bool
+	 */
+	private function should_handle_content( $tag ) {
+		return ! (
+			$this->shortcode_strategy->get_shortcode_ignore_content( $tag )
+			|| in_array(
+				$this->shortcode_strategy->get_shortcode_tag_type( $tag ),
+				array(
+					'media-url',
+					'media-ids',
+				),
+				true
+			)
+		);
 	}
 
 	function get_updated_shortcode_string_title( $string_id, $shortcode, $attribute ) {

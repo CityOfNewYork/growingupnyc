@@ -11,7 +11,7 @@ class Tribe__Events__Pro__Mini_Calendar_Widget extends WP_Widget {
 		parent::__construct( 'tribe-mini-calendar', __( 'Events Calendar', 'tribe-events-calendar-pro' ), $widget_ops );
 
 		if ( is_active_widget( false, false, $this->id_base ) || is_customize_preview() ) {
-			Tribe__Events__Pro__Mini_Calendar::instance()->register_assets();
+			add_action( 'tribe_events_pro_widget_render', array( 'Tribe__Events__Pro__Widgets', 'enqueue_calendar_widget_styles' ), 100 );
 		}
 	}
 
@@ -31,6 +31,11 @@ class Tribe__Events__Pro__Mini_Calendar_Widget extends WP_Widget {
 			'operand' => 'OR',
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
+		tribe_asset_enqueue( 'tribe-mini-calendar' );
+
+		// Add localization variables
+		$data_tec = tribe( 'tec.assets' )->get_js_calendar_script_data();
+		wp_localize_script( 'tribe-events-calendar-script', 'tribe_js_config', $data_tec );
 
 		/**
 		 * Do things pre-render like: optionally enqueue assets if we're not in a sidebar
@@ -70,28 +75,24 @@ class Tribe__Events__Pro__Mini_Calendar_Widget extends WP_Widget {
 	}
 
 	public function update( $new_instance, $old_instance ) {
-		$instance            = $old_instance;
-		$instance['title']   = strip_tags( $new_instance['title'] );
-		$instance['count']   = intval( strip_tags( $new_instance['count'] ) );
-		$instance['operand'] = strip_tags( $new_instance['operand'] );
-		$instance['filters'] = maybe_unserialize( $new_instance['filters'] );
-
-		if ( isset( $new_instance['jsonld_enable'] ) && $new_instance['jsonld_enable'] == true ) {
-			$instance['jsonld_enable'] = 1;
-		} else {
-			$instance['jsonld_enable'] = 0;
-		}
+		$instance                  = $old_instance;
+		$instance['title']         = strip_tags( $new_instance['title'] );
+		$instance['count']         = intval( strip_tags( $new_instance['count'] ) );
+		$instance['operand']       = strip_tags( $new_instance['operand'] );
+		$instance['filters']       = maybe_unserialize( $new_instance['filters'] );
+		$instance['jsonld_enable'] = ( ! empty( $new_instance['jsonld_enable'] ) ? 1 : 0 );
 
 		return $instance;
 	}
 
 	public function form( $instance ) {
 		$defaults = array(
-			'title'   => __( 'Events Calendar', 'tribe-events-calendar-pro' ),
-			'layout'  => 'tall',
-			'count'   => 5,
-			'operand' => 'OR',
-			'filters' => null,
+			'title'         => __( 'Events Calendar', 'tribe-events-calendar-pro' ),
+			'layout'        => 'tall',
+			'count'         => 5,
+			'operand'       => 'OR',
+			'filters'       => null,
+			'jsonld_enable' => true,
 		);
 		$instance = wp_parse_args( (array) $instance, $defaults );
 

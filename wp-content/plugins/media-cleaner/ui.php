@@ -19,6 +19,7 @@ class Meow_WPMC_UI {
 		add_action( 'wp_ajax_wpmc_delete_do', array( $this, 'wp_ajax_wpmc_delete_do' ) );
 		add_action( 'wp_ajax_wpmc_ignore_do', array( $this, 'wp_ajax_wpmc_ignore_do' ) );
 		add_action( 'wp_ajax_wpmc_recover_do', array( $this, 'wp_ajax_wpmc_recover_do' ) );
+		add_action( 'wp_ajax_wpmc_validate_option', array( $this, 'wp_ajax_wpmc_validate_option' ) );
 		add_filter( 'media_row_actions', array( $this, 'media_row_actions' ), 10, 2 );
 	}
 
@@ -57,7 +58,16 @@ class Meow_WPMC_UI {
 		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 		wp_enqueue_script( 'jquery-ui-dialog' );
 		wp_enqueue_style( 'media-cleaner-css', plugins_url( '/media-cleaner.css', __FILE__ ) );
-		wp_enqueue_script( 'media-cleaner', plugins_url( '/media-cleaner.js', __FILE__ ), array( 'jquery', 'jquery-ui-dialog' ), "3.7.0", true );
+
+		$screen = get_current_screen();
+		switch ( $screen->id ) {
+		case 'media_page_media-cleaner': // Media > Cleaner
+			wp_enqueue_script( 'media-cleaner', plugins_url( '/media-cleaner.js', __FILE__ ), array( 'jquery', 'jquery-ui-dialog' ), "3.7.0", true );
+			break;
+		case 'meow-apps_page_wpmc_settings-menu': // Meow Apps > Media Cleaner (Settings)
+			wp_enqueue_script( 'media-cleaner-settings', plugins_url( '/settings.js', __FILE__ ), array( 'jquery' ), "3.7.0", true );
+			break;
+		}
 	}
 
 	/**
@@ -466,5 +476,20 @@ class Meow_WPMC_UI {
 			)
 		);
 		die();
+	}
+
+	function wp_ajax_wpmc_validate_option() {
+		$name = $_POST['name']; // Option Name
+		$value = $_POST['value']; // Option Value
+		$value = wp_unslash( $value ); // Unescape backslashes
+		$validated = $this->admin->validate_option( $name, $value );
+		if ( $validated instanceof WP_Error ) { // Invalid value
+			$error = array (
+				'code' => $validated->get_error_code() ?: 'invalid_option',
+				'message' => $validated->get_error_message() ?: __( "Invalid Option Value", 'media-cleaner' )
+			);
+			wp_send_json_error( $error );
+		}
+		wp_send_json_success();
 	}
 }

@@ -83,3 +83,10 @@
 #wpmc-dialog .prompt .button + .button {
 	margin-left: 16px;
 }
+
+/**
+ * Settings
+ */
+.meow-box form input:invalid {
+	color: red;
+}

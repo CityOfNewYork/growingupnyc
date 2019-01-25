@@ -67,7 +67,7 @@ class WPML_TM_Xliff_Frontend extends WPML_TM_Xliff_Shared {
 				'ajax_set_xliff_options'
 			), 10, 2 );
 			if ( ! $this->sitepress->get_setting( 'xliff_newlines' ) ) {
-				$this->sitepress->set_setting( 'xliff_newlines', WPML_XLIFF_TM_NEWLINES_REPLACE, true );
+				$this->sitepress->set_setting( 'xliff_newlines', WPML_XLIFF_TM_NEWLINES_ORIGINAL, true );
 			}
 			if ( ! $this->sitepress->get_setting( 'tm_xliff_version' ) ) {
 				$this->sitepress->set_setting( 'tm_xliff_version', '12', true );
@@ -81,7 +81,7 @@ class WPML_TM_Xliff_Frontend extends WPML_TM_Xliff_Shared {
 				add_action( 'wpml_xliff_select_actions', array(
 					$this,
 					'translation_queue_xliff_select_actions'
-				), 10, 2 );
+				), 10, 3 );
 				add_action( 'wpml_translation_queue_do_actions_export_xliff', array(
 					$this,
 					'translation_queue_do_actions_export_xliff'
@@ -426,9 +426,10 @@ class WPML_TM_Xliff_Frontend extends WPML_TM_Xliff_Shared {
 	/**
 	 * @param $actions
 	 * @param $action_name
+	 * @param $translation_jobs
 	 */
-	function translation_queue_xliff_select_actions( $actions, $action_name ) {
-		if ( sizeof( $actions ) > 0 ):
+	function translation_queue_xliff_select_actions( $actions, $action_name, $translation_jobs ) {
+		if ( $this->has_translation_jobs( $translation_jobs ) && sizeof( $actions ) > 0 ):
 			$user_version = $this->get_user_xliff_version();
 			?>
 			<div class="alignleft actions">
@@ -446,6 +447,10 @@ class WPML_TM_Xliff_Frontend extends WPML_TM_Xliff_Shared {
 			</div>
 			<?php
 		endif;
+	}
+
+	private function has_translation_jobs( $translation_jobs ) {
+		return $translation_jobs && array_key_exists( 'jobs', $translation_jobs ) && $translation_jobs['jobs'];
 	}
 
 	/**
@@ -540,7 +545,11 @@ class WPML_TM_Xliff_Frontend extends WPML_TM_Xliff_Shared {
 		<?php
 	}
 
-	function translation_queue_after_display() {
+	function translation_queue_after_display( $translation_jobs = array() ) {
+		if ( ! $this->has_translation_jobs( $translation_jobs ) ) {
+			return;
+		}
+
 		$export_label = esc_html__( 'Export all jobs:', 'wpml-translation-management' );
 
 		if ( isset( $_SESSION['translation_ujobs_filter'] ) ) {

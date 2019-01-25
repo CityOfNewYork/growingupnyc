@@ -2,7 +2,7 @@
 /*
 Plugin Name: The Events Calendar PRO
 Description: The Events Calendar PRO, a premium add-on to the open source The Events Calendar plugin (required), enables recurring events, custom attributes, venue pages, new widgets and a host of other premium features.
-Version: 4.4.31
+Version: 4.5.2.1
 Author: Modern Tribe, Inc.
 Author URI: http://m.tri.be/20
 Text Domain: tribe-events-calendar-pro
@@ -35,7 +35,7 @@ function Tribe_ECP_Load() {
 	tribe_init_events_pro_autoloading();
 
 	$classes_exist = class_exists( 'Tribe__Events__Main' ) && class_exists( 'Tribe__Events__Pro__Main' );
-	$version_ok = $classes_exist && defined( 'Tribe__Events__Main::VERSION' ) && version_compare( Tribe__Events__Main::VERSION, Tribe__Events__Pro__Main::REQUIRED_TEC_VERSION, '>=' );
+	$version_ok    = $classes_exist && defined( 'Tribe__Events__Main::VERSION' ) && version_compare( Tribe__Events__Main::VERSION, Tribe__Events__Pro__Main::REQUIRED_TEC_VERSION, '>=' );
 
 	if ( class_exists( 'Tribe__Main' ) && ! is_admin() && ! class_exists( 'Tribe__Events__Pro__PUE__Helper' ) ) {
 		tribe_main_pue_helper();
@@ -82,8 +82,9 @@ function tribe_show_fail_message() {
 		Tribe__Main::instance()->load_text_domain( $domain, $mopath );
 	}
 
-	$url = 'plugin-install.php?tab=plugin-information&plugin=the-events-calendar&TB_iframe=true';
+	$url   = 'plugin-install.php?tab=plugin-information&plugin=the-events-calendar&TB_iframe=true';
 	$title = __( 'The Events Calendar', 'tribe-events-calendar-pro' );
+
 	echo '<div class="error"><p>' . sprintf( __( 'To begin using Events Calendar PRO, please install the latest version of <a href="%s" class="thickbox" title="%s">The Events Calendar</a>.', 'tribe-events-calendar-pro' ), esc_url( $url ), $title ) . '</p></div>';
 }
 
@@ -94,10 +95,10 @@ function tribe_show_fail_message() {
  */
 function tribe_init_ecp_addon( $plugins ) {
 	$plugins['Tribe__Events__Pro__Main'] = array(
-		'plugin_name' => 'Events Calendar PRO',
+		'plugin_name'      => 'Events Calendar PRO',
 		'required_version' => Tribe__Events__Pro__Main::REQUIRED_TEC_VERSION,
-		'current_version' => Tribe__Events__Pro__Main::VERSION,
-		'plugin_dir_file' => basename( dirname( __FILE__ ) ) . '/events-calendar-pro.php',
+		'current_version'  => Tribe__Events__Pro__Main::VERSION,
+		'plugin_dir_file'  => basename( dirname( __FILE__ ) ) . '/events-calendar-pro.php',
 	);
 
 	return $plugins;
@@ -107,14 +108,6 @@ register_deactivation_hook( __FILE__, 'tribe_events_pro_deactivation' );
 function tribe_events_pro_deactivation( $network_deactivating ) {
 	require_once dirname( __FILE__ ) . '/src/Tribe/Main.php';
 	Tribe__Events__Pro__Main::deactivate( $network_deactivating );
-}
-
-/**
- * The uninstall hook is no longer registered, but leaving the function
- * here to prevent a fatal error if uninstalled on a site that had
- * it registered previously.
- */
-function tribe_ecp_uninstall() {
 }
 
 /**

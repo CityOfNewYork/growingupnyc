@@ -48,7 +48,7 @@ class OTGS_Installer_Plugin_Finder {
 	public function get_plugin_by_name( $name ) {
 		foreach ( $this->plugins as $repo ) {
 			foreach ( $repo as $plugin ) {
-				if ( $name === $plugin->get_name() ) {
+				if ( $name === strip_tags( $plugin->get_name() ) ) {
 					return $plugin;
 				}
 			}

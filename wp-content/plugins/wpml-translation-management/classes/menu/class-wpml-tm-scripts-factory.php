@@ -53,44 +53,12 @@ class WPML_TM_Scripts_Factory {
 		}
 	}
 
-	/**
-	 * @param array $strings
-	 * @param bool $all_users_have_subscription
-	 *
-	 * @return array
-	 */
-	public function filter_translators_view_strings( array $strings, $all_users_have_subscription ) {
-		if ( WPML_TM_ATE_Status::is_enabled() ) {
-			$strings['ate'] = $this->create_ate_strings()
-			                       ->get_status_HTML(
-				                       $this->get_ate_activation_status(),
-				                       $all_users_have_subscription
-			                       );
+	public function register_otgs_notices() {
+		if ( ! wp_style_is( 'otgs-notices', 'registered' ) ) {
+			wp_register_style( 'otgs-notices',
+				ICL_PLUGIN_URL . '/res/css/otgs-notices.css',
+				array( 'sitepress-style' ) );
 		}
-
-		return $strings;
-	}
-
-	private function get_authentication() {
-		if ( ! $this->auth ) {
-			$this->auth = new WPML_TM_ATE_Authentication();
-		}
-
-		return $this->auth;
-	}
-
-	/**
-	 * @return WPML_TM_MCS_ATE
-	 * @throws \InvalidArgumentException
-	 */
-	public function create_ate() {
-		if ( ! $this->ate ) {
-			$this->ate = new WPML_TM_MCS_ATE( $this->get_authentication(),
-			                                  $this->get_endpoints(),
-			                                  $this->create_ate_strings() );
-		}
-
-		return $this->ate;
 	}
 
 	/**
@@ -116,6 +84,28 @@ class WPML_TM_Scripts_Factory {
 		wp_localize_script( $handle, 'WPML_TM_SETTINGS', $data );
 	}
 
+	/**
+	 * @return WPML_TM_MCS_ATE
+	 * @throws \InvalidArgumentException
+	 */
+	public function create_ate() {
+		if ( ! $this->ate ) {
+			$this->ate = new WPML_TM_MCS_ATE( $this->get_authentication(),
+			                                  $this->get_endpoints(),
+			                                  $this->create_ate_strings() );
+		}
+
+		return $this->ate;
+	}
+
+	private function get_authentication() {
+		if ( ! $this->auth ) {
+			$this->auth = new WPML_TM_ATE_Authentication();
+		}
+
+		return $this->auth;
+	}
+
 	private function get_endpoints() {
 		if ( ! $this->endpoints ) {
 			$this->endpoints = new WPML_TM_ATE_AMS_Endpoints();
@@ -124,7 +114,7 @@ class WPML_TM_Scripts_Factory {
 		return $this->endpoints;
 	}
 
-	public function create_ate_strings() {
+	private function create_ate_strings() {
 		if ( ! $this->strings ) {
 			$this->strings = new WPML_TM_MCS_ATE_Strings( $this->get_authentication(), $this->get_endpoints() );
 		}
@@ -132,36 +122,22 @@ class WPML_TM_Scripts_Factory {
 		return $this->strings;
 	}
 
-	public function register_otgs_notices() {
-		if ( ! wp_style_is( 'otgs-notices', 'registered' ) ) {
-			wp_register_style( 'otgs-notices',
-			                   ICL_PLUGIN_URL . '/res/css/otgs-notices.css',
-			                   array( 'sitepress-style' ) );
-		}
-	}
-
 	/**
-	 * @return WPML_TM_AMS_API
+	 * @param array $strings
+	 * @param bool $all_users_have_subscription
+	 *
+	 * @return array
 	 */
-	private function create_ams_api() {
-		if ( ! $this->ams_api ) {
-			$this->ams_api = new WPML_TM_AMS_API( $this->get_http(),
-			                                      $this->get_authentication(),
-			                                      $this->get_endpoints() );
+	public function filter_translators_view_strings( array $strings, $all_users_have_subscription ) {
+		if ( WPML_TM_ATE_Status::is_enabled() ) {
+			$strings['ate'] = $this->create_ate_strings()
+			                       ->get_status_HTML(
+				                       $this->get_ate_activation_status(),
+				                       $all_users_have_subscription
+			                       );
 		}
 
-		return $this->ams_api;
-	}
-
-	/**
-	 * @return WP_Http
-	 */
-	private function get_http() {
-		if ( ! $this->http ) {
-			$this->http = new WP_Http();
-		}
-
-		return $this->http;
+		return $strings;
 	}
 
 	/**
@@ -187,5 +163,29 @@ class WPML_TM_Scripts_Factory {
 		               ->get_status();
 
 		return $status;
+	}
+
+	/**
+	 * @return WPML_TM_AMS_API
+	 */
+	private function create_ams_api() {
+		if ( ! $this->ams_api ) {
+			$this->ams_api = new WPML_TM_AMS_API( $this->get_http(),
+			                                      $this->get_authentication(),
+			                                      $this->get_endpoints() );
+		}
+
+		return $this->ams_api;
+	}
+
+	/**
+	 * @return WP_Http
+	 */
+	private function get_http() {
+		if ( ! $this->http ) {
+			$this->http = new WP_Http();
+		}
+
+		return $this->http;
 	}
 }

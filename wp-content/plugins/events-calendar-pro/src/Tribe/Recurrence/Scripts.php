@@ -34,8 +34,8 @@ class Tribe__Events__Pro__Recurrence__Scripts {
 			$data['recurrence'] = array();
 		}
 		$data['recurrence'] = array_merge( $data['recurrence'], array(
-			'splitAllMessage'               => __( "You are about to split this series in two.\n\nThe event you selected and all subsequent events in the series will be separated into a new series of events that you can edit independently of the original series.\n\nThis action cannot be undone.", 'tribe-events-calendar-pro' ),
-			'splitSingleMessage'            => __( "You are about to break this event out of its series.\n\nYou will be able to edit it independently of the original series.\n\nThis action cannot be undone.", 'tribe-events-calendar-pro' ),
+			'splitAllMessage'               => __( "You are about to split this series in two.\n\nThe event you selected and all subsequent events in the series will be separated into a new series of events that you can edit independently of the original series.\n\nThis action cannot be undone.\n\nWhen you break events from a series their URLs will change, so any users trying to use the original URLs will receive a 404 Not Found error. If this is a concern, consider using a suitable plugin to setup and manage redirects.", 'tribe-events-calendar-pro' ),
+			'splitSingleMessage'            => __( "You are about to break this event out of its series.\n\nYou will be able to edit it independently of the original series.\n\nThis action cannot be undone.\n\nWhen you break events from a series their URLs will change, so any users trying to use the original URLs will receive a 404 Not Found error. If this is a concern, consider using a suitable plugin to setup and manage redirects.", 'tribe-events-calendar-pro' ),
 			'bulkDeleteConfirmationMessage' => __( 'Are you sure you want to trash all occurrences of these events?', 'tribe-events-calendar-pro' ),
 		) );
 

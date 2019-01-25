@@ -51,13 +51,13 @@
 
 .tribe-events-week #tribe-mobile-container .type-tribe_events,
 		.tribe-events-week #tribe-mobile-container .type-tribe_events ~ .type-tribe_events {
-	padding-left: 8px;
-	padding-right: 8px;
-}
+			padding-left: 8px;
+			padding-right: 8px;
+		}
 
 .tribe-events-week #tribe-mobile-container .type-tribe_events .tribe-events-read-more {
-	margin-top: 0;
-}
+			margin-top: 0;
+		}
 
 /* = Photo View Template Styles
    @ Template: Photo.php
@@ -73,15 +73,15 @@
 }
 
 .tribe-events-photo .tribe-events-loop .type-tribe_events .tribe-events-event-meta {
-	background-color: transparent;
-	border: 0;
-	margin: 6px 0;
-	padding: 0;
-}
+			background-color: transparent;
+			border: 0;
+			margin: 6px 0;
+			padding: 0;
+		}
 
 .tribe-events-photo .tribe-events-loop .type-tribe_events .time-details {
-	padding: 0;
-}
+			padding: 0;
+		}
 
 .tribe-events-list .tribe-events-loop .tribe-events-photo-event .tribe-events-event-meta .recurringinfo {
 	margin-top: 2px;
@@ -115,8 +115,8 @@
 }
 
 .tribe-events-venue .tribe-events-event-meta, .tribe-events-organizer .tribe-events-event-meta {
-	border: 1px solid #eee;
-}
+		border: 1px solid #eee;
+	}
 
 .tribe-events-venue .tribe-events-venue-meta .tribe-events-event-image {
 	margin-top: 15px;
@@ -139,37 +139,37 @@
 
 .tribe-events-event-meta address.tribe-events-address,
 	.tribe-events-event-meta address.venue-address {
-	margin: 0;
-}
+		margin: 0;
+	}
 
 /* = Single Organizer Template Styles (Pro Version)
    @ Template: Single_Organizer.php
 =============================================*/
 
 .tribe-events-organizer .tribe-events-organizer-meta h2.entry-title {
-	margin-bottom: 15px;
-	padding: 0;
-}
+			margin-bottom: 15px;
+			padding: 0;
+		}
 
 .tribe-events-organizer .tribe-events-organizer-meta .tribe-events-event-image {
-	margin-bottom: 12px;
-}
+			margin-bottom: 12px;
+		}
 
 .tribe-events-organizer address.organizer-address {
-	margin: 10px 0 15px;
-}
+			margin: 10px 0 15px;
+		}
 
 .tribe-events-organizer address.organizer-address span {
-	display: block;
-}
+				display: block;
+			}
 
 .tribe-events-organizer address.organizer-address span ~ span {
-	margin-top: 4px;
-}
+					margin-top: 4px;
+				}
 
 .tribe-events-organizer address.organizer-address .tribe-events-divider {
-	display: none;
-}
+				display: none;
+			}
 
 /* = Map View Template Styles
    @ Template: Map.php
@@ -192,42 +192,42 @@
 }
 
 .tribe-events-single ul.tribe-related-events {
-	margin: 0;
-}
+		margin: 0;
+	}
 
 .tribe-events-single ul.tribe-related-events .tribe-related-events-thumbnail {
-	float: right;
-	width: 30%;
-}
+			float: right;
+			width: 30%;
+		}
 
 .tribe-events-single ul.tribe-related-events .tribe-related-events-title {
-	margin-bottom: 4px;
-}
+			margin-bottom: 4px;
+		}
 
 .tribe-events-single ul.tribe-related-events .recurringinfo {
-	margin: 2px 0 0;
-}
+			margin: 2px 0 0;
+		}
 
 .tribe-events-single ul.tribe-related-events li {
-	float: none;
-	margin-bottom: 12px;
-	margin-right: 0;
-	padding:10px;
-	width: 100%;
-	zoom: 1;
-}
+			float: none;
+			margin-bottom: 12px;
+			margin-right: 0;
+			padding:10px;
+			width: 100%;
+			zoom: 1;
+		}
 
 .tribe-events-single ul.tribe-related-events li::after {
-	clear: both;
-	content: "";
-	display: table;
-}
+				clear: both;
+				content: "";
+				display: table;
+			}
 
 .tribe-events-single ul.tribe-related-events li .tribe-related-event-info {
-	float: left;
-	padding: 0 10px 10px 0;
-	width: 60%;
-}
+				float: left;
+				padding: 0 10px 10px 0;
+				width: 60%;
+			}
 
 .tribe-events-photo-event .tribe-events-event-image,
 .tribe-events-photo-event .tribe-events-event-image a,
@@ -240,21 +240,21 @@
 /* = Mobile Styles: Photo View (max-width: 600px)
 =============================================*/
 
-@media (max-width: 600px) {/* = Photo View Template Styles
+@media (max-width: 600px) {
+
+	/* = Photo View Template Styles
 	   @ Template: Photo.php
 	=============================================*/
-
 	div#tribe-events-photo-events {
 		height: auto !important;
 		width: 100%;
 	}
-
-	#tribe-events-photo-events .type-tribe_events.tribe-events-photo-event,
+		#tribe-events-photo-events .type-tribe_events.tribe-events-photo-event,
 		#tribe-events-photo-events.photo-two-col .type-tribe_events.tribe-events-photo-event {
-		float: none;
-		margin: 0 auto 12px;
-		max-width: 400px;
-		position: static !important;
-		width: auto;
-	}
+			float: none;
+			margin: 0 auto 12px;
+			max-width: 400px;
+			position: static !important;
+			width: auto;
+		}
 }

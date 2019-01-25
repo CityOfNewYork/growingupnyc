@@ -38,7 +38,20 @@
 					</div>
 
 					<div class="tribe-field-content">
-
+						<?php
+						/**
+						 * Allow for additional rendering of elements inside at the end of the custom
+						 * fields markup, before any other custom field markup
+						 *
+						 * @param array $field Field rendered on this action
+						 * @param int $index Index of the field usually used to identify the field name
+						 * @param int $count Total count of the current field useful to identify copies amount of same field
+						 * @param array $custom_fields An array with all the custom fields
+						 *
+						 * @since 4.4.34
+						 */
+						do_action( 'tribe_events_pro_before_custom_field_content', $field, $index, $count, $custom_fields );
+						?>
 						<div class="tribe-field-row tribe-field-type">
 							<label><?php esc_html_e( 'Field Type', 'tribe-events-calendar-pro' ); ?></label>
 							<select
@@ -78,6 +91,20 @@
 								data-count="<?php echo esc_attr( $count ); ?>" rows="3"><?php echo stripslashes( esc_textarea( isset( $field['values'] ) ? $field['values'] : '' ) ) ?></textarea>
 						</div>
 						<span class="add-remove-actions"></span>
+						<?php
+						/**
+						 * Allow for additional rendering of elements inside at the end of the custom
+						 * fields markup.
+						 *
+						 * @param array $field Field rendered on this action
+						 * @param int $index Index of the field usually used to identify the field name
+						 * @param int $count Total count of the current field useful to identify copies amount of same field
+						 * @param array $custom_fields An array with all the custom fields
+						 *
+						 * @since 4.4.34
+						 */
+						do_action( 'tribe_events_pro_after_custom_field_content', $field, $index, $count, $custom_fields );
+						?>
 					</div>
 				</td>
 			</tr>
@@ -94,17 +121,6 @@
 		</tbody>
 	</table>
 </div>
-
-<fieldset>
-	<legend class="tribe-field-label"><?php esc_html_e( 'Editor "Custom Fields" meta box', 'tribe-events-calendar-pro' ); ?></legend>
-	<div class="tribe-field-wrap">
-		<label><input type="radio" name="disable_metabox_custom_fields" id="disable_metabox_custom_fields" value="show" <?php checked( 'show', $disable_metabox_custom_fields ); ?> /> <?php esc_html_e( 'Show', 'tribe-events-calendar-pro' ); ?>
-		</label><br />
-		<label><input type="radio" name="disable_metabox_custom_fields" id="disable_metabox_custom_fields" value="hide" <?php checked( 'hide', $disable_metabox_custom_fields ); ?> /> <?php esc_html_e( 'Hide', 'tribe-events-calendar-pro' ); ?>
-		</label>
- 		<p class="description"><?php esc_html_e( 'Enabling this option this will not remove custom field data or functionality, just the default meta box editor.', 'tribe-events-calendar-pro' ); ?></p>
-	</div>
-</fieldset>
 
 <script type="text/javascript">
 

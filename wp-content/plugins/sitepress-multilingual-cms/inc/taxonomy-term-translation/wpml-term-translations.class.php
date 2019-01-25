@@ -249,9 +249,9 @@ class WPML_Terms_Translations {
 			
 			if ( ! empty( $taxonomies ) ) {
 				$res = $wpdb->get_results( "	SELECT language_code, taxonomy, term_id FROM {$wpdb->term_taxonomy} tt
- 										JOIN {$wpdb->prefix}icl_translations t
- 											ON t.element_id = tt.term_taxonomy_id
- 												AND t.element_type = CONCAT('tax_', tt.taxonomy)
+ 										JOIN {$wpdb->prefix}icl_translations wpml_translations
+ 											ON wpml_translations.element_id = tt.term_taxonomy_id
+ 												AND wpml_translations.element_type = CONCAT('tax_', tt.taxonomy)
                                         WHERE tt.taxonomy IN (" . wpml_prepare_in( $taxonomies ) . " )" );
 			} else {
 				$res = array();

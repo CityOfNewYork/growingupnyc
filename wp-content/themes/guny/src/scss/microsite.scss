@@ -62,10 +62,22 @@ button {
   }
 }
 
+.desktop-only {
+  @include media($bp-mobile-x-small) {
+    display: none;
+  }
+}
+
 // Show mobile only
 .mobile-only {
   @include media($bp-large) {
     display: none;
+  }
+}
+
+.mobile-only__nav {
+  @include media($bp-small) {
+    display: none !important;
   }
 }
 

@@ -265,3 +265,51 @@
   border-radius: 3px;
   padding: rem-calc(5 0);
 }
+
+// Microsite
+.c-list-box--microsite .c-list-box__heading {
+  padding: rem-calc(13 28);
+}
+
+.c-list-box--microsite .c-list-box__heading {
+  background: $color-background-shade;
+  border-radius: rem-calc(3);
+  color: $gray-1;
+
+  .icon {
+    color: $gray-1;
+  }
+
+  &:focus {
+    color: $dark-gray-1;
+    outline: none;
+
+    .icon {
+      color: $gray-1;
+    }
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $dark-gray-1;
+
+      .icon {
+        color: $gray-1;
+      }
+    }
+  }
+}
+
+.c-list-box--microsite .c-list-box__subitem {
+  color: $gray-1;
+
+  &:focus {
+    color: $dark-gray-1;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $dark-gray-1;
+    }
+  }
+}

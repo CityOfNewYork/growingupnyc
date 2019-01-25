@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit289110f34001cbf7711c1827f3211548
+class ComposerStaticInitc611336e6bbcb045448cccfcd8dbc160
 {
     public static $prefixesPsr0 = array (
         'x' => 
@@ -95,7 +95,6 @@ class ComposerStaticInit289110f34001cbf7711c1827f3211548
         'WPML_ST_MO_File_Registration' => __DIR__ . '/../..' . '/classes/mo-scan/wpml-st-mo-file-registration.php',
         'WPML_ST_MO_Queue' => __DIR__ . '/../..' . '/classes/mo-scan/wpml-st-mo-queue.php',
         'WPML_ST_MO_Scan' => __DIR__ . '/../..' . '/classes/mo-scan/wpml-st-mo-scan.php',
-        'WPML_ST_MO_Scan_Cached_Charset_Validation' => __DIR__ . '/../..' . '/classes/mo-scan/charset-validation/wpml-st-mo-scan-cached-charset-validation.php',
         'WPML_ST_MO_Scan_Charset_Validation' => __DIR__ . '/../..' . '/classes/mo-scan/charset-validation/wpml-st-mo-scan-charset-validation.php',
         'WPML_ST_MO_Scan_Db_Charset_Validation' => __DIR__ . '/../..' . '/classes/mo-scan/charset-validation/wpml-st-mo-scan-db-charset-validation.php',
         'WPML_ST_MO_Scan_Db_Table_List' => __DIR__ . '/../..' . '/classes/mo-scan/charset-validation/wpml-st-mo-scan-db-table-list.php',
@@ -147,9 +146,12 @@ class ComposerStaticInit289110f34001cbf7711c1827f3211548
         'WPML_ST_String_Dependencies_Records' => __DIR__ . '/../..' . '/classes/utilities/string-dependencies/wpml-st-string-dependencies-records.php',
         'WPML_ST_String_Factory' => __DIR__ . '/../..' . '/classes/class-wpml-st-string-factory.php',
         'WPML_ST_String_Positions' => __DIR__ . '/../..' . '/classes/string-tracking/class-wpml-st-string-positions.php',
+        'WPML_ST_String_Positions_In_Page' => __DIR__ . '/../..' . '/classes/string-tracking/class-wpml-st-string-positions-in-page.php',
         'WPML_ST_String_Positions_In_Source' => __DIR__ . '/../..' . '/classes/string-tracking/class-wpml-st-string-positions-in-source.php',
         'WPML_ST_String_Status_Update' => __DIR__ . '/../..' . '/classes/mo-scan/wpml-st-mo-string-status-update.php',
         'WPML_ST_String_Statuses' => __DIR__ . '/../..' . '/classes/class-wpml-st-string-statuses.php',
+        'WPML_ST_String_Tracking_AJAX' => __DIR__ . '/../..' . '/classes/string-tracking/class-wpml-st-string-tracking-ajax.php',
+        'WPML_ST_String_Tracking_AJAX_Factory' => __DIR__ . '/../..' . '/classes/string-tracking/class-wpml-st-string-tracking-ajax-factory.php',
         'WPML_ST_String_Translation_AJAX_Hooks_Factory' => __DIR__ . '/../..' . '/classes/string-translation/class-wpml-st-string-translation-ajax-hooks-factory.php',
         'WPML_ST_String_Translation_Priority_AJAX' => __DIR__ . '/../..' . '/classes/string-translation/class-wpml-st-string-translation-priority-ajax.php',
         'WPML_ST_String_Update' => __DIR__ . '/../..' . '/inc/wpml-st-string-update.class.php',
@@ -237,8 +239,8 @@ class ComposerStaticInit289110f34001cbf7711c1827f3211548
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixesPsr0 = ComposerStaticInit289110f34001cbf7711c1827f3211548::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit289110f34001cbf7711c1827f3211548::$classMap;
+            $loader->prefixesPsr0 = ComposerStaticInitc611336e6bbcb045448cccfcd8dbc160::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitc611336e6bbcb045448cccfcd8dbc160::$classMap;
 
         }, null, ClassLoader::class);
     }

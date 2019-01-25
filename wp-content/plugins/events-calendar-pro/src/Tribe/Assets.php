@@ -30,29 +30,14 @@ class Tribe__Events__Pro__Assets {
 		);
 
 		$api_url = 'https://maps.google.com/maps/api/js';
-		$api_key = tribe_get_option( 'google_maps_js_api_key' );
-
-		if ( ! empty( $api_key ) && is_string( $api_key ) ) {
-			$api_url = sprintf( 'https://maps.googleapis.com/maps/api/js?key=%s', trim( $api_key ) );
-		}
-
 		/**
 		 * Allows users to use a diferent Google Maps JS URL
+		 *
+		 * @deprecated  4.4.33
 		 *
 		 * @param string $url
 		 */
 		$google_maps_js_url = apply_filters( 'tribe_events_pro_google_maps_api', $api_url );
-
-		tribe_asset(
-			$pro,
-			'tribe-gmaps',
-			$google_maps_js_url,
-			array( 'tribe-events-pro' ),
-			null,
-			array(
-				'type' => 'js',
-			)
-		);
 
 		tribe_asset(
 			$pro,
@@ -115,12 +100,18 @@ class Tribe__Events__Pro__Assets {
 			)
 		);
 
+		$pro_ajax_maps_deps = array( 'jquery-placeholder' );
+
+		if ( ! tribe_is_using_basic_gmaps_api() ) {
+			// This dependency is only available when a custom gMaps API Key is being used.
+			$pro_ajax_maps_deps[] = 'tribe-events-google-maps';
+		}
 
 		tribe_asset(
 			$pro,
 			'tribe-events-pro-geoloc',
 			'tribe-events-ajax-maps.js',
-			array( 'tribe-gmaps', 'jquery-placeholder' ),
+			$pro_ajax_maps_deps,
 			null,
 			array(
 				'localize' => array(
@@ -198,6 +189,62 @@ class Tribe__Events__Pro__Assets {
 				'groups'       => array( 'events-pro-styles' ),
 			)
 		);
+
+
+		tribe_asset(
+			$pro,
+			'tribe-mini-calendar',
+			'widget-calendar.js',
+			array( 'jquery' ),
+			null,
+			array(
+				'localize'     => array(
+					'name' => 'TribeMiniCalendar',
+					'data' => array( 'ajaxurl' => admin_url( 'admin-ajax.php', ( is_ssl() ? 'https' : 'http' ) ) ),
+				),
+			)
+		);
+
+		tribe_asset(
+			$pro,
+			'tribe-this-week',
+			'widget-this-week.js',
+			array( 'jquery' ),
+			null,
+			array(
+				'localize'     => array(
+					'name' => 'tribe_this_week',
+					'data' => array( 'ajaxurl' => admin_url( 'admin-ajax.php', ( is_ssl() ? 'https' : 'http' ) ) ),
+				),
+			)
+		);
+
+		tribe_asset(
+			$pro,
+			'tribe-events-countdown-widget',
+			'widget-countdown.js',
+			array( 'jquery' ),
+			null,
+			array()
+		);
+
+		tribe_asset(
+			$pro,
+			'widget-calendar-pro-style',
+			$this->get_widget_style_file(),
+			array(),
+			null,
+			array()
+		);
+
+		tribe_asset(
+			$pro,
+			Tribe__Events__Main::POSTTYPE . '-widget-calendar-pro-override-style',
+			Tribe__Events__Templates::locate_stylesheet( 'tribe-events/pro/widget-calendar.css' ),
+			array(),
+			null,
+			array()
+		);
 	}
 
 	/**
@@ -260,6 +307,43 @@ class Tribe__Events__Pro__Assets {
 		return apply_filters( 'tribe_events_pro_stylesheet_url', $file, $name );
 	}
 
+
+	/**
+	 * Due to how we define which style we use based on an Option on the Administration
+	 * we need to determine this file.
+	 *
+	 * @since  4.4.33
+	 *
+	 * @return string
+	 */
+	public function get_widget_style_file() {
+		$name = tribe_get_option( 'stylesheetOption', 'tribe' );
+
+		$stylesheets = array(
+			'tribe'    => 'widget-theme.css',
+			'full'     => 'widget-full.css',
+			'skeleton' => 'widget-skeleton.css',
+		) ;
+
+		// By default we go with `tribe`
+		$file = $stylesheets['tribe'];
+
+		// if we have one we use it
+		if ( isset( $stylesheets[ $name ] ) ) {
+			$file = $stylesheets[ $name ];
+		}
+
+		/**
+		 * Allows filtering of the Stylesheet file for Events Calendar Pro Widgets
+		 *
+		 * @deprecated  4.4.33
+		 *
+		 * @param string $file Which file we are loading
+		 * @param string $name Option from the DB of style we are using
+		 */
+		return apply_filters( 'tribe_events_pro_widget_calendar_stylesheet_url', $file, $name );
+	}
+
 	/**
 	 * When to enqueue the Pro Styles on the front-end
 	 *
@@ -272,17 +356,7 @@ class Tribe__Events__Pro__Assets {
 
 		return (
 			tribe_is_event_query()
-			|| is_active_widget( false, false, 'tribe-events-adv-list-widget' )
-			|| is_active_widget( false, false, 'tribe-mini-calendar' )
-			|| is_active_widget( false, false, 'tribe-events-countdown-widget' )
-			|| is_active_widget( false, false, 'next_event' )
-			|| is_active_widget( false, false, 'tribe-events-venue-widget' )
-			|| is_active_widget( false, false, 'tribe-this-week-events-widget' )
 			|| ( $post instanceof WP_Post && has_shortcode( $post->post_content, 'tribe_events' ) )
-			|| ( $post instanceof WP_Post && has_shortcode( $post->post_content, 'tribe_mini_calendar' ) )
-			|| ( $post instanceof WP_Post && has_shortcode( $post->post_content, 'tribe_this_week' ) )
-			|| ( $post instanceof WP_Post && has_shortcode( $post->post_content, 'tribe_event_countdown' ) )
-			|| ( $post instanceof WP_Post && has_shortcode( $post->post_content, 'tribe_featured_venue' ) )
 		);
 	}
 

@@ -17,6 +17,11 @@ if ( ! class_exists( 'Tribe__Events__Pro__Venue_Widget' ) ) {
 			);
 			// Create the widget.
 			parent::__construct( 'tribe-events-venue-widget', __( 'Events Featured Venue', 'tribe-events-calendar-pro' ), $widget_ops );
+
+			// Do not enqueue if the widget is inactive
+			if ( is_active_widget( false, false, $this->id_base, true ) || is_customize_preview() ) {
+				add_action( 'tribe_events_pro_widget_render', array( 'Tribe__Events__Pro__Widgets', 'enqueue_calendar_widget_styles' ), 100 );
+			}
 		}
 
 		public function widget( $args, $instance ) {
@@ -122,6 +127,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Venue_Widget' ) ) {
 				'venue_ID'      => null,
 				'count'         => 3,
 				'hide_if_empty' => true,
+				'jsonld_enable' => true,
 			);
 			$venues   = get_posts( array(
 					'post_type' => Tribe__Events__Main::VENUE_POST_TYPE,
@@ -139,13 +145,8 @@ if ( ! class_exists( 'Tribe__Events__Pro__Venue_Widget' ) ) {
 			$instance['title']         = $new_instance['title'];
 			$instance['venue_ID']      = $new_instance['venue_ID'];
 			$instance['count']         = $new_instance['count'];
-			$instance['hide_if_empty'] = $new_instance['hide_if_empty'];
-
-			if ( isset( $new_instance['jsonld_enable'] ) && $new_instance['jsonld_enable'] == true ) {
-				$instance['jsonld_enable'] = 1;
-			} else {
-				$instance['jsonld_enable'] = 0;
-			}
+			$instance['hide_if_empty'] = ( isset( $new_instance['hide_if_empty'] ) ? 1 : 0 );
+			$instance['jsonld_enable']        = ( ! empty( $new_instance['jsonld_enable'] ) ? 1 : 0 );
 
 			return $instance;
 		}

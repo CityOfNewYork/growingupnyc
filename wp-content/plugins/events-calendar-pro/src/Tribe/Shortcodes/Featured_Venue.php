@@ -48,6 +48,8 @@ class Tribe__Events__Pro__Shortcodes__Featured_Venue {
 			return;
 		}
 
+		Tribe__Events__Pro__Widgets::enqueue_calendar_widget_styles();
+
 		ob_start();
 		// We use $this->arguments for both the args and the instance vars here
 		the_widget( 'Tribe__Events__Pro__Venue_Widget', $this->arguments, $this->arguments );

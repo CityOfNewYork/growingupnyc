@@ -3,7 +3,7 @@ Contributors: Benbodhi
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Z9R7JERS82EQQ
 Tags: svg, vector, css, style, mime, mime type, embed, img, inline, animation, animate, js
 Requires at least: 4.8
-Tested up to: 5.0-alpha-42993
+Tested up to: 5.1-alpha-44207
 Requires PHP: 5.2
 Stable tag: 2.3.15
 License: GPLv2 or later
@@ -13,6 +13,15 @@ Upload SVG files to the Media Library and render SVG files inline for direct sty
 
 
 == Description ==
+
+**Important Note:**
+*WordPress now requires us to have the* `<xml>` *tag in our SVG files before uploading. If you have security errors when trying to upload, please open your SVG file in a code editor such as sublime text and add the following to the very first line of your SVG file and save:*
+
+`<?xml version="1.0" encoding="utf-8"?>`
+
+*Your SVG should upload as normal again. I'm looking at implementing something to avoid this as soon as possible.*
+
+**Thanks for your support and patience!**
 
 When using SVG images on your WordPress site, it can be hard to style elements within the SVG using CSS. **Now you can, easily!**
 

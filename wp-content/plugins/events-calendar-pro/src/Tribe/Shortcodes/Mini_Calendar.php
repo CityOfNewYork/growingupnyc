@@ -56,8 +56,7 @@ class Tribe__Events__Pro__Shortcodes__Mini_Calendar extends Tribe__Events__Pro__
 	public function __construct( $attributes ) {
 		$this->arguments = shortcode_atts( $this->default_args, $attributes );
 		$this->taxonomy_filters();
-
-		Tribe__Events__Pro__Mini_Calendar::instance()->register_assets();
+		Tribe__Events__Pro__Widgets::enqueue_calendar_widget_styles();
 
 		// Support both 'count' and 'limit' attributes (the latter overrides the former)
 		$count = strlen( $this->arguments['count'] ) ? $this->arguments['count'] : null;

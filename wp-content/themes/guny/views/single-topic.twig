@@ -82,9 +82,9 @@
         {% if top.tip_title %}
           <aside class="c-tip c-tip-ms__topics u-lg-gutter o-content-container">
             <div class="c-tip__sticker sticker">
-              <svg class="icon--large" role="img"><title>Tip</title><use xlink:href="#icon-lightbulb"></use></svg>
+              <svg class="icon--large" role="img" aria-hidden="true"><title>Tip</title><use xlink:href="#icon-lightbulb"></use></svg>
             </div>
-            <p class="c-tip__content">{{top.tip_title}}</p>
+            <h3 class="c-tip__content">{{top.tip_title}}</h3>
             <p class="c-tip__content">{{top.tips}}</p>
           </aside>
         {% endif %}
@@ -110,7 +110,7 @@
         {% if options.enable_sms == "Yes" %}
           <aside class="c-tip c-tip--sms c-tip-ms__topics u-lg-gutter o-content-container">
             <div class="c-tip__sticker sticker">
-              <svg class="icon--large" role="img"><title>Tip</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-outlined"></use></svg>
+              <svg class="icon--large" role="img" aria-hidden="true"><title>Tip</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-outlined"></use></svg>
             </div>
             <p class="c-tip__content">Read it later! Text yourself the link to this page.</p>
 

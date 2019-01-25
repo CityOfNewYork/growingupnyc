@@ -15,12 +15,17 @@
  */
 $views = apply_filters( 'tribe-events-bar-views', array(), false );
 
+$enabled_views = tribe_get_option( 'tribeEnableViews', array() );
+
 $views_options = array(
 	'default' => esc_html__( 'Use Default View', 'tribe-events-calendar-pro' ),
 );
 
 foreach ( $views as $view ) {
-	$views_options[ $view['displaying'] ] = $view['anchor'];
+	// Only include the enabled views on the default views array
+	if ( in_array( $view['displaying'], $enabled_views ) ) {
+		$views_options[ $view['displaying'] ] = $view['anchor'];
+	}
 }
 
 $settings = Tribe__Main::array_insert_after_key(
@@ -31,7 +36,7 @@ $settings = Tribe__Main::array_insert_after_key(
 			'type'            => 'dropdown',
 			'label'           => esc_html__( 'Default mobile view', 'tribe-events-calendar-pro' ),
 			'tooltip'         => esc_html__( 'Change the default view for Mobile users.', 'tribe-events-calendar-pro' ),
-			'validation_type' => 'options',
+			'validation_type' => 'not_empty',
 			'size'            => 'large',
 			'default'         => 'default',
 			'options'         => $views_options,

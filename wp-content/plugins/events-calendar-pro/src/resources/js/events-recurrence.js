@@ -20,27 +20,27 @@ tribe_events_pro_admin.recurrence = {
 	 */
 	my.init_recurrence = function() {
 		this.$recurrence_staging = $( '#tribe-recurrence-staging' );
-		this.recurrence_tmpl = document.getElementById( 'tmpl-tribe-recurrence' );
+		this.recurrence_tmpl     = document.getElementById( 'tmpl-tribe-recurrence' );
 
 		if ( ! this.recurrence_tmpl ) {
 			return;
 		}
 
 		this.recurrence_template = Handlebars.compile( this.recurrence_tmpl.innerHTML );
-		this.$add_recurrence = $( '#tribe-add-recurrence' );
-		this.$recurrence_rules = $( '.tribe-event-recurrence-rule' );
-		this.$recurrence_row = $( '.recurrence-row.tribe-datetime-block' ).addClass( 'tribe-recurrence-exclusion-row--idle' );
+		this.$add_recurrence     = $( '#tribe-add-recurrence' );
+		this.$recurrence_rules   = $( '.tribe-event-recurrence-rule' );
+		this.$recurrence_row     = $( '.recurrence-row.tribe-datetime-block' ).addClass( 'tribe-recurrence-exclusion-row--idle' );
 
-		this.$exclusion_staging = $( '#tribe-exclusion-staging' );
-		this.exclusion_tmpl = document.getElementById( 'tmpl-tribe-exclusion' );
+		this.$exclusion_staging  = $( '#tribe-exclusion-staging' );
+		this.exclusion_tmpl      = document.getElementById( 'tmpl-tribe-exclusion' );
 
-		this.exclusion_template = Handlebars.compile( this.exclusion_tmpl.innerHTML );
-		this.$add_exclusion = $( '#tribe-add-exclusion' );
-		this.$exclusion_rules = $( '.tribe-event-recurrence-exclusion' );
+		this.exclusion_template  = Handlebars.compile( this.exclusion_tmpl.innerHTML );
+		this.$add_exclusion      = $( '#tribe-add-exclusion' );
+		this.$exclusion_rules    = $( '.tribe-event-recurrence-exclusion' );
 
 		this.recurrence_errors = {
 			days: [],
-			end: []
+			end : []
 		};
 
 		this.date_format = tribe_datepicker_opts.dateFormat.toUpperCase();
@@ -503,11 +503,11 @@ tribe_events_pro_admin.recurrence = {
 	 */
 	my.populate_completed = function() {
 		if ( my.operations_completed === my.total_operations ) {
-			setTimeout(function() {
+			setTimeout( function() {
 				my.attach_behaviors();
-				$document.trigger( 'tribe.dependencies-run' );
+				$document.trigger( 'setup.dependency' );
 				my.$recurrence_row.removeClass( 'tribe-recurrence-exclusion-row--idle' );
-			});
+			} );
 		}
 	}
 
@@ -755,18 +755,18 @@ tribe_events_pro_admin.recurrence = {
 	};
 
 	my.update_rule_recurrence_text = function( $rule ) {
-		var type = $rule.find( '[data-field="type"]' ).val();
-		var end_type = $rule.find( '[data-field="end-type"] option:selected' ).val();
+		var type      = $rule.find( '[data-field="type"]' ).val();
+		var end_type  = $rule.find( '[data-field="end-type"] option:selected' ).val();
 		var end_count = $rule.find( '[data-field="end-count"]' ).val();
 		var same_time = 'yes' === $rule.find( '[data-field="same-time"]' ).val();
-		var interval = $rule.find( '[data-field="custom-interval"]' ).val();
-		var allday = $( document.getElementById( 'allDayCheckbox' ) ).prop( 'checked' );
+		var interval  = $rule.find( '[data-field="custom-interval"]' ).val();
+		var allday    = $( document.getElementById( 'allDayCheckbox' ) ).prop( 'checked' );
 
 		if ( ! end_count ) {
 			end_count = 0;
 		}
 
-		type = type.toLowerCase().replace( ' ', '-' );
+		type     = type.toLowerCase().replace( ' ', '-' );
 		end_type = end_type.toLowerCase().replace( ' ', '-' );
 
 		if ( 'none' === type || '' === type ) {
@@ -779,22 +779,22 @@ tribe_events_pro_admin.recurrence = {
 		var date_format = this.date_format + ' hh:mm a';
 
 		var $start_date = $( document.getElementById( 'EventStartDate' ) );
-		var start_date = $start_date.val();
+		var start_date  = $start_date.val();
 
 		var $start_time = $( document.getElementById( 'EventStartTime' ) );
-		var start_time = $start_time.val().toUpperCase();
-		start_date += ' ' + start_time;
+		var start_time  = $start_time.val().toUpperCase();
+		start_date     += ' ' + start_time;
 
-		var $end_date = $( document.getElementById( 'EventEndDate' ) );
-		var end_date = $end_date.val();
+		var $end_date   = $( document.getElementById( 'EventEndDate' ) );
+		var end_date    = $end_date.val();
 		var $selected_end_meridian = $event_form.find( '[name="EventEndMeridian"] option:selected' );
 
-		var $end_time = $( document.getElementById( 'EventEndTime' ) );
-		var end_time = $end_time.val().toUpperCase();
-		end_date += ' ' + end_time;
+		var $end_time   = $( document.getElementById( 'EventEndTime' ) );
+		var end_time    = $end_time.val().toUpperCase();
+		end_date       += ' ' + end_time;
 
-		var start_moment = moment( start_date, date_format );
-		var end_moment = moment( end_date, date_format );
+		var start_moment  = moment( start_date, date_format );
+		var end_moment    = moment( end_date, date_format );
 		var single_moment = start_moment;
 
 		// The specific start time for this rule depends on whether or not it takes
@@ -802,9 +802,9 @@ tribe_events_pro_admin.recurrence = {
 		var instance_start_time = same_time ? start_time : $rule.find( '.tribe-field-start_time' ).val();
 
 		var days_of_week = null;
-		var month_names = null;
+		var month_names  = null;
 		var month_day_description = tribe_events_pro_recurrence_strings.date.day_placeholder;
-		var day_number = start_moment.format( 'D' );
+		var day_number   = start_moment.format( 'D' );
 
 		var key = type;
 
@@ -830,9 +830,9 @@ tribe_events_pro_admin.recurrence = {
 				days_of_week = days_of_week.replace( /(.*),/, '$1, ' + tribe_events_pro_recurrence_strings.date.collection_joiner );
 			}
 		} else if ( 'monthly' === type ) {
-			var same_day = $rule.find( '[data-field="month-same-day"] option:selected' ).val();
+			var same_day     = $rule.find( '[data-field="month-same-day"] option:selected' ).val();
 			var month_number = $rule.find( '[data-field="custom-month-number"] option:selected' ).val();
-			var month_day = $rule.find( '[data-field="custom-month-day"] option:selected' ).val();
+			var month_day    = $rule.find( '[data-field="custom-month-day"] option:selected' ).val();
 
 			if ( 'yes' === same_day || ! isNaN( month_number ) ) {
 				month_number = day_number;
@@ -844,11 +844,11 @@ tribe_events_pro_admin.recurrence = {
 				month_day_description = month_day_description.replace( '%1$s', tribe_events_pro_recurrence_strings.date.weekdays[ parseInt( month_day, 10 ) - 1 ] );
 			}
 		} else if ( 'yearly' === type ) {
-			var same_day = $rule.find( '[data-field="year-same-day"] option:selected' ).val();
+			var same_day     = $rule.find( '[data-field="year-same-day"] option:selected' ).val();
 			var month_number = $rule.find( '[data-field="custom-year-month-number"]' ).val();
-			var month_day = $rule.find( '[data-field="custom-year-month-day"]' ).val();
+			var month_day    = $rule.find( '[data-field="custom-year-month-day"]' ).val();
 
-			var months = [];
+			var months       = [];
 			var month_values = $rule.find( '[data-field="custom-year-month"]' ).val().split(',');
 
 			$.each( month_values, function( i, month ) {
@@ -940,14 +940,14 @@ tribe_events_pro_admin.recurrence = {
 		text = text.replace( '[single_date]', single_moment.format( display_format ) );
 
 		// English-only simplification
-		text = text.replace( '1 day(s)', 'day' );
-		text = text.replace( '1 week(s)', 'week' );
-		text = text.replace( '1 month(s)', 'month' );
-		text = text.replace( '1 year(s)', 'year' );
-		text = text.replace( 'day(s)', 'days' );
-		text = text.replace( 'week(s)', 'weeks' );
-		text = text.replace( 'month(s)', 'months' );
-		text = text.replace( 'year(s)', 'years' );
+		text = text.replace( '1 day(s)', tribe_events_pro_recurrence_strings.date.time_spans.day );
+		text = text.replace( '1 week(s)', tribe_events_pro_recurrence_strings.date.time_spans.week );
+		text = text.replace( '1 month(s)', tribe_events_pro_recurrence_strings.date.time_spans.month );
+		text = text.replace( '1 year(s)', tribe_events_pro_recurrence_strings.date.time_spans.year );
+		text = text.replace( 'day(s)', tribe_events_pro_recurrence_strings.date.time_spans.days );
+		text = text.replace( 'week(s)', tribe_events_pro_recurrence_strings.date.time_spans.weeks );
+		text = text.replace( 'month(s)', tribe_events_pro_recurrence_strings.date.time_spans.months );
+		text = text.replace( 'year(s)', tribe_events_pro_recurrence_strings.date.time_spans.years );
 
 		$rule.find( '.tribe-event-recurrence-description' ).html( text );
 	};
@@ -966,14 +966,14 @@ tribe_events_pro_admin.recurrence = {
 	 * Handles when a recurrence type changes
 	 */
 	my.event.recurrence_type_changed = function() {
-		var $el = $( this );
+		var $el   = $( this );
 		var $rule = $el.closest( '.tribe-event-recurrence, .tribe-event-exclusion' );
 
 		var val = $el.find( 'option:selected' ).val();
 
 		var $count_text = $rule.find( '.occurence-count-text' );
-		var end_count = parseInt( $rule.find( '.recurrence_end_count' ).val(), 10 );
-		var type_text = $el.data( 'plural' );
+		var end_count   = parseInt( $rule.find( '.recurrence_end_count' ).val(), 10 );
+		var type_text   = $el.data( 'plural' );
 
 		// clean the input from other characters and set the int value
 		$rule.find( '.recurrence_end_count' ).val( end_count );
@@ -1011,7 +1011,7 @@ tribe_events_pro_admin.recurrence = {
 	 * Handles when a recurrence end type changes
 	 */
 	my.event.recurrence_end_type_changed = function() {
-		var $el = $( this );
+		var $el   = $( this );
 		var $rule = $el.closest( '.tribe-event-recurrence' );
 
 		my.set_recurrence_data_attributes( $rule );
@@ -1021,7 +1021,7 @@ tribe_events_pro_admin.recurrence = {
 	 * When a recurrence row changes, make sure the recurrence changed row is displayed
 	 */
 	my.event.recurrence_changed = function() {
-		var $el = $( this );
+		var $el   = $( this );
 		var $rule = $el.closest( '.tribe-event-recurrence, .tribe-event-exclusion' );
 		$rule.attr( 'data-recurrence-changed', 'yes' );
 		my.toggle_rule( $rule, 'open' );
@@ -1031,7 +1031,7 @@ tribe_events_pro_admin.recurrence = {
 	 * Handles when the recurrence end count changes
 	 */
 	my.event.recurrence_end_count_changed = function() {
-		var $el = $( this );
+		var $el   = $( this );
 		var $rule = $el.closest( '.tribe-event-recurrence, .tribe-event-exclusion' );
 
 		$rule.find( '[data-field="type"]' ).change();
@@ -1041,7 +1041,7 @@ tribe_events_pro_admin.recurrence = {
 	 * Handles the changing of custom month numbers
 	 */
 	my.event.recurrence_custom_month_changed = function() {
-		var $el = $( this );
+		var $el   = $( this );
 		var $rule = $el.closest( '.tribe-event-recurrence' );
 
 		my.set_recurrence_data_attributes( $rule );
@@ -1082,7 +1082,7 @@ tribe_events_pro_admin.recurrence = {
 	 * handles when the "Same Time" select box is toggled
 	 */
 	my.event.same_time_changed = function() {
-		var $el = $( this );
+		var $el   = $( this );
 		var $rule = $el.closest( '.tribe-event-recurrence, .tribe-event-exclusion' );
 
 		my.set_recurrence_data_attributes( $rule );
@@ -1092,7 +1092,7 @@ tribe_events_pro_admin.recurrence = {
 	 * Handles when Week Days changed
 	 */
 	my.event.weekdays_changed = function() {
-		var $el = $( this );
+		var $el   = $( this );
 		var $rule = $el.closest( '.tribe-event-recurrence, .tribe-event-exclusion' );
 
 		my.set_recurrence_data_attributes( $rule );
@@ -1111,8 +1111,8 @@ tribe_events_pro_admin.recurrence = {
 	my.event.delete_rule = function ( event ) {
 		event.preventDefault();
 
-		var $this = $( this ),
-			$rule = $this.closest( '.tribe-event-recurrence, .tribe-event-exclusion' ),
+		var $this       = $( this ),
+			$rule       = $this.closest( '.tribe-event-recurrence, .tribe-event-exclusion' ),
 			delete_text = tribe_events_pro_recurrence_strings.recurrence['delete-confirm'],
 			cancel_text = tribe_events_pro_recurrence_strings.recurrence['delete-cancel'],
 			buttons = {
@@ -1147,15 +1147,15 @@ tribe_events_pro_admin.recurrence = {
 		}
 
 		$dialog.dialog( {
-			dialogClass: 'tribe-row-delete-dialog',
-			closeOnEscape: true,
-			resizable: false,
-			height: $rule[0].offsetHeight,
-			width: $rule[0].offsetWidth,
-			buttons: buttons,
-			position: { my: 'center', at: 'center', of: $rule },
+			dialogClass   : 'tribe-row-delete-dialog',
+			closeOnEscape : true,
+			resizable     : false,
+			height        : $rule[0].offsetHeight,
+			width         : $rule[0].offsetWidth,
+			buttons       : buttons,
+			position      : { my: 'center', at: 'center', of: $rule },
 			open: function () {
-				var $dialog = $( '.tribe-row-delete-dialog' );
+				var $dialog  = $( '.tribe-row-delete-dialog' );
 				var $buttons = $dialog.find( '.ui-dialog-buttonset button' );
 				var $content = $dialog.find( '.ui-dialog-content' );
 
@@ -1163,7 +1163,7 @@ tribe_events_pro_admin.recurrence = {
 
 				// make sure the content area is sized appropriately so we don't take up too much space
 				$content.css( {
-					'height': 'auto',
+					'height'    : 'auto',
 					'min-height': '1.5rem'
 				} );
 

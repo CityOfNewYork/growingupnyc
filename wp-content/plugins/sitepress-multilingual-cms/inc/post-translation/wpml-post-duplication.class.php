@@ -123,7 +123,7 @@ class WPML_Post_Duplication extends WPML_WPDB_And_SP_User {
 		// make sure post name is copied
 		$this->wpdb->update( $this->wpdb->posts, array( 'post_name' => $master_post->post_name ), array( 'ID' => $id ) );
 
-		if ( $this->sitepress->get_option( 'sync_post_taxonomies' ) ) {
+		if ( $this->sitepress->get_setting( 'sync_post_taxonomies', false ) ) {
 			$this->duplicate_taxonomies( $master_post_id, $lang );
 		}
 		$this->duplicate_custom_fields( $master_post_id, $lang );

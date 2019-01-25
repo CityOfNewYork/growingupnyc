@@ -4,6 +4,9 @@
  * @author OnTheGo Systems
  */
 class WPML_TM_AMS_API {
+
+	const HTTP_ERROR_CODE_400 = 400;
+
 	private $auth;
 	private $endpoints;
 	private $wp_http;
@@ -220,30 +223,43 @@ class WPML_TM_AMS_API {
 
 		if ( is_wp_error( $response ) ) {
 			$response_errors = $response;
-		} elseif ( array_key_exists( 'body', $response ) && $response['response']['code'] >= 400 ) {
-			$errors = array();
-
+		} elseif ( array_key_exists( 'body', $response ) && $response['response']['code'] >= self::HTTP_ERROR_CODE_400 ) {
+			$main_error    = array();
+			$errors        = array();
 			$error_message = $response['response']['message'];
 
 			$response_body = json_decode( $response['body'], true );
 			if ( ! $response_body ) {
 				$error_message = $response['body'];
-				$errors        = array( $error_message );
+				$main_error    = array( $response['body'] );
 			} elseif ( array_key_exists( 'errors', $response_body ) ) {
-				$errors = $response_body['errors'];
+				$errors     = $response_body['errors'];
+				$main_error = array_shift( $errors );
+				$error_message = $this->get_error_message( $main_error, $response['body'] );
 			}
 
-			$response_errors = new WP_Error( 'ams_error:' . $response['response']['code'], $error_message, array(
-				                                                                             'status' => $response['response']['code'],
-				                                                                             'errors' => $errors,
-			                                                                             ) );
-			// Candidate for handling better errors: to be implemented
+			$response_errors = new WP_Error( $main_error['status'], $error_message, $main_error );
+
 			foreach ( $errors as $error ) {
-				$response_errors->add( $response['response']['code'], $error );
+				$error_message = $this->get_error_message( $error, $response['body'] );
+				$error_status = isset( $error['status'] ) ? 'ams_error: ' . $error['status'] : '';
+				$response_errors->add( $error_status, $error_message, $error );
 			}
 		}
 
 		return $response_errors;
+	}
+
+	/**
+	 * @param array  $ams_error
+	 * @param string $default
+	 *
+	 * @return string
+	 */
+	private function get_error_message( $ams_error, $default ) {
+		$title   = isset( $ams_error['title'] ) ? $ams_error['title'] . ': ' : '';
+		$details = isset( $ams_error['detail'] ) ? $ams_error['detail'] : $default;
+		return $title . $details;
 	}
 
 	private function response_has_keys( $response ) {

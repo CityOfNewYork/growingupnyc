@@ -24,10 +24,10 @@ for ( $i = 1; $i <= 12; $i++ ) {
 		/>
 		<span class="tribe-field-inline-text tribe-field-inline-last tribe-dependent" data-depends="#<?php echo esc_attr( $rule_prefix ); ?>_rule_--_type" data-condition="Yearly">
 			<span class="tribe-dependent" data-depends="#<?php echo esc_attr( $rule_prefix ); ?>_rule_--_interval_year" data-condition="1">
-				<?php esc_html_e( 'year', 'tribe-events-calendar-pro' ); ?>
+				<?php echo esc_html_x( 'year', 'The singular case for "year" in the recurrence rules of an event, e.g. "Every 1 year"', 'tribe-events-calendar-pro' ); ?>
 			</span>
 			<span class="tribe-dependent" data-depends="#<?php echo esc_attr( $rule_prefix ); ?>_rule_--_interval_year" data-condition-not="1">
-				<?php esc_html_e( 'years', 'tribe-events-calendar-pro' ); ?>
+				<?php echo esc_html_x( 'years', 'The plural case for "years" in the recurrence rules of an event, e.g. "Every 3 years"', 'tribe-events-calendar-pro' ); ?>
 			</span>
 		</span>
 	</span>

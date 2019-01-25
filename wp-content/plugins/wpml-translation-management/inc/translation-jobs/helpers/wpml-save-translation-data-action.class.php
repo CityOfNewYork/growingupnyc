@@ -24,7 +24,7 @@ class WPML_Save_Translation_Data_Action extends WPML_Translation_Job_Helper_With
 	}
 
 	function save_translation() {
-		global $wpdb, $sitepress, $ICL_Pro_Translation, $iclTranslationManagement, $wpml_post_translations;
+		global $wpdb, $sitepress, $iclTranslationManagement, $wpml_post_translations;
 
 		$new_post_id         = false;
 		$is_incomplete       = false;
@@ -185,11 +185,6 @@ class WPML_Save_Translation_Data_Action extends WPML_Translation_Job_Helper_With
 
 					do_action( 'icl_pro_translation_saved', $new_post_id, $data['fields'], $job );
 					do_action( 'wpml_translation_job_saved', $new_post_id, $data['fields'], $job );
-
-					if ( $ICL_Pro_Translation ) {
-						/** @var WPML_Pro_Translation $ICL_Pro_Translation */
-						$ICL_Pro_Translation->fix_links_to_translated_content( $new_post_id, $job->language_code );
-					}
 
 					// update body translation with the links fixed
 					$new_post_content = $wpdb->get_var( $wpdb->prepare( "SELECT post_content FROM {$wpdb->posts} WHERE ID=%d", $new_post_id ) );

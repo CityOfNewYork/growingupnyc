@@ -2,8 +2,8 @@
 Contributors: TigrouMeow, amekusa
 Tags: clean, delete, file, files, images, image, media, library, upload, clean, acf
 Requires at least: 4.8
-Tested up to: 4.9.8
-Stable tag: 5.0.2
+Tested up to: 5.0
+Stable tag: 5.1.0
 
 Clean your WordPress (broken media, unused media, files). It has its own trash and recovery features. Please read the description.
 
@@ -41,6 +41,12 @@ The official FAQ is [here](https://meowapps.com/media-cleaner/faq/).
 1. Media -> Media Cleaner
 
 == Changelog ==
+
+= 5.1.0 =
+* Add: Filters for Filesystem scan. Please have a look at the tutorial (https://meowapps.com/media-cleaner-tutorial/), there is now a section about those filters.
+* Fix: Query for metakey.
+* Fix: Thumbnails matching.
+* Update: Compatibility for WordPress 5 and Gutenberg.
 
 = 5.0.2 =
 * Update: Remove UpdraftPlus.

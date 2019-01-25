@@ -60,9 +60,8 @@ class WPML_ST_MO_Scan_Factory {
 		if ( ! $this->queue ) {
 			global $wpdb;
 
-			$charset_validator = new WPML_ST_MO_Scan_Cached_Charset_Validation(
-				new WPML_ST_MO_Scan_Db_Charset_Validation( $wpdb, new WPML_ST_MO_Scan_Db_Table_List( $wpdb ) )
-			);
+			$charset_validator = new WPML_ST_MO_Scan_Db_Charset_Validation( $wpdb, new WPML_ST_MO_Scan_Db_Table_List( $wpdb ) );
+
 			$charset_filter = $charset_validator->is_valid() ? null : new WPML_ST_MO_Unicode_Characters_Filter();
 
 			$this->queue = new WPML_ST_MO_Queue(

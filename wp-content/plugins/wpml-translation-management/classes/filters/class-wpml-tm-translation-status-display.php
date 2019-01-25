@@ -80,6 +80,10 @@ class WPML_TM_Translation_Status_Display {
 	}
 
 	private function load_stats( $trids ) {
+		if ( ! $trids ) {
+			return;
+		}
+
 		$trids = implode( ',', $trids );
 		$trids_query = $trids ? "i.trid IN ( {$trids} )" : '1=1';
 		$stats = $this->wpdb->get_results(

@@ -18,7 +18,7 @@ class WPML_Dashboard_Ajax {
 		wp_register_script (
 			'wpml-tm-dashboard-scripts',
 			WPML_TM_URL . '/res/js/tm-dashboard/wpml-tm-dashboard.js',
-			array( 'jquery', 'backbone' ),
+			array( 'jquery', 'backbone', 'wpml-popover-tooltip' ),
 			WPML_TM_VERSION
 		);
 		$wpml_tm_strings = $this->get_wpml_tm_script_js_strings ();

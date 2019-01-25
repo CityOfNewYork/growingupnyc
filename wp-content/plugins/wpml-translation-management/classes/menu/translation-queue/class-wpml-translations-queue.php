@@ -295,12 +295,12 @@ class WPML_Translations_Queue {
 				<?php endif; ?>
 
 				<?php
-				do_action( 'wpml_xliff_select_actions', $actions, 'action' );
+				do_action( 'wpml_xliff_select_actions', $actions, 'action', $translation_jobs );
 
 				/**
 				 * @deprecated Use 'wpml_xliff_select_actions' instead
 				 */
-				do_action( 'WPML_xliff_select_actions', $actions, 'action' );
+				do_action( 'WPML_xliff_select_actions', $actions, 'action', $translation_jobs );
 				?>
 
 				<?php
@@ -330,12 +330,12 @@ class WPML_Translations_Queue {
 					<?php $translation_queue_pagination->show() ?>
 
 					<?php
-					do_action( 'wpml_xliff_select_actions', $actions, 'action2' );
+					do_action( 'wpml_xliff_select_actions', $actions, 'action2', $translation_jobs );
 
 					/**
 					 * @deprecated Use 'wpml_xliff_select_actions' instead
 					 */
-					do_action( 'WPML_xliff_select_actions', $actions, 'action2' );
+					do_action( 'WPML_xliff_select_actions', $actions, 'action2', $translation_jobs );
 					?>
                 </div>
 				<?php // pagination - end ?>
@@ -344,7 +344,7 @@ class WPML_Translations_Queue {
                     </form>
 				<?php endif; ?>
 
-				<?php do_action( 'wpml_translation_queue_after_display' ); ?>
+				<?php do_action( 'wpml_translation_queue_after_display', $translation_jobs ); ?>
 
 			<?php endif; ?>
         </div>

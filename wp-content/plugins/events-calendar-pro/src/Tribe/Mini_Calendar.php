@@ -203,63 +203,6 @@ class Tribe__Events__Pro__Mini_Calendar {
 
 	}
 
-	/**
-	 * Register and enqueue the widget's scripts and stylesheets.
-	 *
-	 * @since 4.4.16
-	 */
-	public function register_assets() {
-		wp_enqueue_script( 'tribe-mini-calendar', tribe_events_pro_resource_url( 'widget-calendar.js' ), array( 'jquery' ), apply_filters( 'tribe_events_pro_js_version', Tribe__Events__Pro__Main::VERSION ) );
-		Tribe__Events__Pro__Widgets::enqueue_calendar_widget_styles();
-
-		// Tribe Events CSS filename
-		$event_file        = 'widget-calendar.css';
-		$stylesheet_option = tribe_get_option( 'stylesheetOption', 'tribe' );
-
-		// What Option was selected
-		switch ( $stylesheet_option ) {
-			case 'skeleton':
-				$event_file_option = 'widget-calendar-' . $stylesheet_option . '.css';
-				break;
-			case 'full':
-				$event_file_option = 'widget-calendar-' . $stylesheet_option . '.css';
-				break;
-			default:
-				$event_file_option = 'widget-calendar-theme.css';
-				break;
-		}
-
-		/**
-		 * The URL to the Minical Widget's stylesheet.
-		 *
-		 * @param string $style_url Full URL
-		 */
-		$style_url          = apply_filters( 'tribe_events_pro_widget_calendar_stylesheet_url', tribe_events_pro_resource_url( $event_file_option ) );
-		$style_override_url = Tribe__Events__Templates::locate_stylesheet( 'tribe-events/pro/' . $event_file, $style_url );
-
-		/**
-		 * The version of Pro that is appended to stylesheet URLs as a query parameter.
-		 *
-		 * @param string $version Pro version number
-		 */
-		$pro_version = apply_filters( 'tribe_events_pro_css_version', Tribe__Events__Pro__Main::VERSION );
-
-		// Load up stylesheet from theme or plugin
-		if ( $style_url && 'tribe' === $stylesheet_option ) {
-			wp_enqueue_style( 'widget-calendar-pro-style', tribe_events_pro_resource_url( 'widget-calendar-full.css' ), array(), $pro_version );
-			wp_enqueue_style( 'tribe_events-widget-calendar-pro-style', $style_url, array(), $pro_version );
-		} else {
-			wp_enqueue_style( 'tribe_events-widget-calendar-pro-style', $style_url, array(), $pro_version );
-		}
-
-		if ( $style_override_url && $style_url !== $style_override_url ) {
-			wp_enqueue_style( 'tribe_events-widget-calendar-pro-override-style', $style_override_url, array(), $pro_version );
-		}
-
-		$widget_data = array( 'ajaxurl' => admin_url( 'admin-ajax.php', ( is_ssl() ? 'https' : 'http' ) ) );
-		wp_localize_script( 'tribe-mini-calendar', 'TribeMiniCalendar', $widget_data );
-	}
-
 	public function setup_list( $template_file ) {
 
 		$path = basename( dirname( $template_file ) ) . '/' . basename( $template_file );

@@ -58,7 +58,13 @@ class WPML_Meta_Boxes_Post_Edit_HTML {
 		$this->translation_of();
 		$this->languages_actions();
 		$this->copy_from_original( $post );
-		$this->media_options( $post );
+
+		if ( $this->sitepress->is_translated_post_type( 'attachment' ) ) {
+			$this->media_options( $post );
+		}
+
+		$this->minor_edit();
+
 		do_action( 'icl_post_languages_options_after' );
 		$contents = ob_get_clean();
 
@@ -267,6 +273,13 @@ class WPML_Meta_Boxes_Post_Edit_HTML {
 
 		<br clear="all"/>
 	<?php
+	}
+
+	private function minor_edit() {
+		$stacktrace = new WPML_Debug_BackTrace( phpversion() );
+		if ( $stacktrace->is_function_in_call_stack( 'the_block_editor_meta_boxes' ) ) {
+			do_action( 'wpml_minor_edit_for_gutenberg' );
+		}
 	}
 
 	private function languages_actions() {
@@ -614,16 +627,11 @@ class WPML_Meta_Boxes_Post_Edit_HTML {
                 $source_lang_name
             ) . '"
 				onclick="icl_copy_from_original(\'' . esc_js( $source_lang ) . '\', \'' . esc_js( $trid ) . '\')"'
-		     . $disabled . ' />';
-		icl_pop_info(
-				esc_html__(
-						"This operation copies the content from the original language onto this translation. It's meant for when you want to start with the original content, but keep translating in this language. This button is only enabled when there's no content in the editor.",
-						'sitepress'
-				),
-				'question'
-		);
-		echo '<br clear="all" />';
-	}
+		     . $disabled . ' />'; ?>
+		<i class="otgs-ico-help js-wpml-popover-tooltip"
+		   data-tippy-zindex="999999"
+		   title="<?php echo  esc_html__("This operation copies the content from the original language onto this translation. It's meant for when you want to start with the original content, but keep translating in this language. This button is only enabled when there's no content in the editor.",'sitepress');?>"></i>
+	<?php }
 
 	/**
 	 * Renders the "Overwrite" button on the post edit screen that allows setting the post as a duplicate of its
@@ -650,14 +658,9 @@ class WPML_Meta_Boxes_Post_Edit_HTML {
 							esc_html( $source_lang_name )
 					)
 			); ?></span>
-		<?php icl_pop_info(
-				esc_html__(
-						"This operation will synchronize this translation with the original language. When you edit the original, this translation will update immediately. It's meant when you want the content in this language to always be the same as the content in the original language.",
-						'sitepress'
-				),
-				'question'
-		); ?>
-		<br clear="all"/>
+		<i class="otgs-ico-help js-wpml-popover-tooltip"
+		   data-tippy-zindex="999999"
+		   title="	  <?php echo esc_html__("This operation will synchronize this translation with the original language. When you edit the original, this translation will update immediately. It's meant when you want the content in this language to always be the same as the content in the original language.",'sitepress') ?>"></i>
 		<?php
 	}
 

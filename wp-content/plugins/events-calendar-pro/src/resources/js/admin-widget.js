@@ -46,6 +46,7 @@
 	};
 
 	tribeWidget.select2 = function () {
+
 		var $select = $( this ),
 			args = {};
 
@@ -200,6 +201,38 @@
 		} ).select2( args );
 	};
 
+	tribeWidget.conditional = function ( conditional, $widget ) {
+
+		var $this = $( conditional ),
+			field = $this.data( 'tribeConditionalField' ),
+			$conditionals = $widget.find( '.js-tribe-conditional' ).filter( '[data-tribe-conditional-field="' + field + '"]' ),
+			value = $this.val();
+
+		// First hide all conditionals
+		$conditionals.hide()
+
+		// Now Apply any stuff that must be "conditional" on hide
+		.each( function () {
+			var $conditional = $( this );
+
+			if ( $conditional.hasClass( 'tribe-select2' ) ) {
+				$conditional.prev( '.select2-container' ).hide();
+			}
+		} )
+
+			// Find the matching values
+		.filter( '[data-tribe-conditional-value="' + value + '"]' ).show()
+
+		// Apply showing with "conditions"
+		.each( function () {
+			var $conditional = $( this );
+
+			if ( $conditional.hasClass( 'tribe-select2' ) ) {
+				$conditional.hide().prev( '.select2-container' ).show();
+			}
+		} );
+	}
+
 	tribeWidget.setup = function ( e, $widget ) {
 		// If it's not set we try to figure it out from the Event
 		if ( 'undefined' === typeof $widget ) {
@@ -235,43 +268,20 @@
 			return;
 		}
 
-		$widget.find( '.tribe-widget-select2' ).each( tribeWidget.select2 ).trigger( 'change' );
+		$widget.find( '.tribe-widget-select2' ).each( tribeWidget.select2 ).trigger( 'change.select2' );
 
+		// On change of widget fields process conditional display
 		$widget.on( 'change', '.js-tribe-condition', function () {
-			var $this = $( this ),
-				field = $this.data( 'tribeConditionalField' ),
-				$conditionals = $widget.find( '.js-tribe-conditional' ).filter( '[data-tribe-conditional-field="' + field + '"]' ),
-				value = $this.val();
-
-			// First hide all conditionals
-			$conditionals.hide()
-
-			// Now Apply any stuff that must be "conditional" on hide
-				.each( function () {
-					var $conditional = $( this );
-
-					if ( $conditional.hasClass( 'tribe-select2' ) ) {
-						$conditional.prev( '.select2-container' ).hide();
-					}
-				} )
-
-				// Find the matching values
-				.filter( '[data-tribe-conditional-value="' + value + '"]' ).show()
-
-			// Apply showing with "conditions"
-				.each( function () {
-					var $conditional = $( this );
-
-					if ( $conditional.hasClass( 'tribe-select2' ) ) {
-						$conditional.hide().prev( '.select2-container' ).show();
-					}
-				} );
+			tribeWidget.conditional(  this, $widget );
 		} );
 
 		// Only happens on Widgets Admin page
 		if ( !$( 'body' ).hasClass( 'wp-customizer' ) ) {
 			if ( $.isNumeric( e ) || 'widget-updated' === e.type ) {
-				$widget.find( '.js-tribe-condition' ).trigger( 'change' );
+				$widget.find( '.js-tribe-condition' ).each( function() {
+					// check for conditional display of fields and process after saving
+					tribeWidget.conditional( this, $widget );
+				} );
 			}
 		}
 	};
@@ -292,6 +302,7 @@
 			'widget-added widget-updated': tribeWidget.setup,
 		} )
 		.on( 'change', '.calendar-widget-add-filter', function ( e ) {
+
 			var $select = $( this ),
 				$widget = $select.parents( '.widget[id*="tribe-"]' ),
 				$filters = $widget.find( '.calendar-widget-filters-container' ),

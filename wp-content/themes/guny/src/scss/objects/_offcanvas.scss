@@ -11,6 +11,12 @@
   z-index: 1;
 }
 
+.o-offcanvas__heading {
+  @include media($bp-small) {
+    display: none !important;
+  }
+}
+
 // Off-Canvas Side
 //
 // The content that is initially offcanvas and then revealed

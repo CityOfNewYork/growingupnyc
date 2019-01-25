@@ -3,9 +3,10 @@
 Contributors: ModernTribe, barry.hughes, bordoni, borkweb, brianjessee, brook-tribe, faction23, geoffgraham, ggwicz, jazbek, jbrinley, joshlimecuda, leahkoerper, lucatume, mastromktg, mat-lipe, mdbitz, neillmcshea, nicosantos, peterchester, reid.peifer, roblagatta, ryancurban, shane.pearlman, thatdudebutch,  zbtirrell
 Tags: events, calendar, event, venue, organizer, dates, date, google maps, conference, workshop, concert, meeting, seminar, summit, class, modern tribe, tribe, widget, pro
 Donate link: http://m.tri.be/29
-Requires at least: 4.5
-Tested up to: 4.9.8
-Stable tag: 4.4.31
+Requires at least: 4.7
+Tested up to: 5.0.2
+Stable tag: 4.5.2.1
+Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -203,6 +204,74 @@ Our Premium Plugins:
 * <a href="http://m.tri.be/fa" target="_blank">The Events Calendar: Filter Bar</a>
 
 == Changelog ==
+
+= [4.5.2.1] 2019-01-14 =
+
+* Fix - Display recurrence section in classic editor for all users that don't have blocks [119912]
+
+= [4.5.2] 2018-12-19 =
+
+* Tweak - Ensure that recurrence rule types use their plural form when appropriate in the Events block [117441]
+
+= [4.5.1] 2018-12-13 =
+
+* Feature - Added new recurring event marker element for Event Date Time block [112827]
+* Tweak - Improved default yearly recurrence rule options to be more intuitive [118123]
+* Fix - Adjusted recurrence options in the Event Date Time block to prevent confusion with overlapping elements [118605]
+* Fix - Updated the code responsible for generating recurring event tooltips so it does not interfere with the result of calls to tribe_events_template_data() [119263]
+* Fix - Set fallback to default timezone if event timezone is not valid for Countdown Widget
+* Fix - Corrected an issue where a single instance of a recurring events redirected to the series /all page [118815]
+
+= [4.5] 2018-11-29 =
+
+* Feature - added recurring events support to the Events Date Time block
+* Feature - added default content support to the Organizer and Venue blocks
+* Feature - any configured Additional Field now has a corresponding block in the block editor
+* Feature - added option to Additional Fields settings to include configured fields blocks on new events by default
+* Tweak - exclusion rules are now called exceptions when configuring recurring events in the block editor
+* Fix - Style regression for series end element with gutenberg style override
+* Tweak - Changed views: `blocks/additional-fields/checkbox`, `blocks/additional-fields/dropdown`, `blocks/additional-fields/radio`, `blocks/additional-fields/text`, `blocks/additional-fields/textarea`, `blocks/additional-fields/url`
+* Language - 2 new strings added, 50 updated, 0 fuzzied, and 0 obsoleted
+
+= [4.4.35] 2018-11-13 =
+
+* Add - Add filter `tribe_events_pro_show_recurrence_meta_box` to control the render of the recurrence meta box
+* Fix - Fixed some HTML in the recurrence-building section of the event editor so it's valid and doesn't create issues with other HTML on the page [113784]
+* Fix - Fixed the setting-up of strings in the Tribe Bar datepicker to ensure they're translatable into languages other than English [115286]
+* Tweak - Prevent certain geolocation-related prompts from showing if The Events Calendar's built-in Google Maps API key is being used [115426]
+
+= [4.4.34] 2018-10-22 =
+
+* Feature - Add two new filters to extend custom fields markup: `tribe_events_pro_before_custom_field_content` and `tribe_events_pro_after_custom_field_content`
+* Fix - Fixed a JavaScript error that would occasionally arise when using the "Near:" search input in the Tribe Bar on non-Map views [116172]
+* Fix - List only enabled views on the "Default mobile view" option. Thanks to wescole, John Meuse and others for reporting! [114807]
+* Tweak - Ensure calls to the Google Maps Geocoding API are not made unless an API key supporting that is present [115937]
+* Tweak - Make sure Geolocation search features are only accessible and visible when a Google API key that supports those features is present [115862]
+* Tweak - Added `tribe_events_pro_geocode_addresses` filter to allow for disabling of Google Maps API geocoding using Google Maps API key [114171]
+* Language - 26 new strings added, 175 updated, 0 fuzzied, and 25 obsoleted
+
+= [4.4.33] 2018-10-03 =
+
+* Fix - Prevent broken and low-resolution Google Maps if user has not provided a Google Maps API key of their own by providing our own fallback API key [114442]
+* Fix - Prevent duplicate events from being created on the first date of a series, thanks to Mathew for the detailed instructions to reproduce [113352]
+* Fix - Only load widget assets when widget is active on the page [113141]
+* Fix - Saving of widgets so that it completes the process and changes JSON-LD on first load save, thanks to Mathew and Craig for the report [107120,105176]
+* Fix - Ensure that custom month recurrence rules (e.g. "every three months") are respected, and the events are generated on the correct dates (thanks to @applegateconnect and others for reporting this!) [92946]
+* Tweak - Combine widget css into a single css file, still using widget-calendar-pro-style has the handle [113141]
+* Tweak - Move Google Maps API loading to tribe_assets and only load once on single views and Map View when PRO is active, thanks to info2grow first reporting [112221]
+* Tweak - Added localization variables to scripts over the mini calendar widget, in order to avoid warnings when used on non events pages [113524]
+* Deprecated - `tribe_events_pro_google_maps_api` in favor of using `tribe_events_google_maps_api`
+* Deprecated - Removed empty function `tribe_ecp_uninstall` [26664]
+
+= [4.4.32] 2018-09-12 =
+
+* Fix - When using "Once" recurring rule, events were not being updated correctly. Thanks to @lasandia, Cynthia Giles and others for flagging this! [110006]
+* Fix - Fixed duplicate parameters in week view when using the shortcode [110284]
+* Fix - Modify resource url function to work in mu-plugin directory, thanks to Doug for reporting it  [86104]
+* Fix - Correct behavior when using "day-of-month" recurrence rules, thanks to SiteCrafting for reporting this! [75258]
+* Tweak - Improve the translatability of recurrence description text by making generic words like "day", "weeks", "year", etc. translatable in more contexts [106561]
+* Tweak - Update the warning message for users who are breaking an event from the series, adding a note about possible 404s. Thanks Robert for reporting [72070]
+* Tweak - Move the WordPress Custom Fields Metabox show|hide settings to The Events Calendar [109815]
 
 = [4.4.31] 2018-08-22 =
 

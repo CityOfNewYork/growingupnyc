@@ -48,6 +48,8 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 			'ajax_calls'
 		), 10, 2 );
 
+		add_action( 'wpml_minor_edit_for_gutenberg', array( $this, 'gutenberg_minor_edit' ), 10, 0 );
+
 		$this->update_pm = new WPML_Update_PickUp_Method( $this->sitepress );
 	}
 
@@ -530,7 +532,8 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 								$replace = get_permalink($translated_id);
 							}elseif(preg_match('#^tax_#', $kind)){
 								if ( is_numeric( $translated_id ) ) {
-									$translated_id = (int) $translated_id;
+									// Take the term_id instead of the term_taxonomy_id
+									$translated_id = (int) $translations[$target_lang_code]->term_id;
 								}
 								$replace = get_term_link($translated_id, $taxonomy);
 							}
@@ -636,29 +639,54 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 	}
 	
 	function post_submitbox_start(){
+		$show_box_style = $this->get_show_minor_edit_style();
+		if ( false !== $show_box_style ) {
+			?>
+			<p id="icl_minor_change_box" style="float:left;padding:0;margin:3px;<?php echo $show_box_style; ?>">
+				<label><input type="checkbox" name="icl_minor_edit" value="1" style="min-width:15px;"/>&nbsp;
+					<?php esc_html_e( 'Minor edit - don\'t update translation', 'wpml-translation-management' ); ?>
+				</label>
+				<br clear="all"/>
+			</p>
+			<?php
+		}
+	}
+
+	public function gutenberg_minor_edit() {
+		$show_box_style = $this->get_show_minor_edit_style();
+		if ( false !== $show_box_style ) {
+			?>
+			<div id="icl_minor_change_box" style="<?php echo $show_box_style; ?>" class="icl_box_paragraph">
+				<p>
+					<strong><?php esc_html_e( 'Minor edit', 'wpml-translation-management' ); ?></strong>
+				</p>
+				<label><input type="checkbox" name="icl_minor_edit" value="1" style="min-width:15px;"/>&nbsp;
+					<?php esc_html_e( "Don't update translation", 'wpml-translation-management' ); ?>
+				</label>
+			</div>
+			<?php
+		}
+	}
+
+	private function get_show_minor_edit_style() {
 		global $post, $iclTranslationManagement;
-		if(empty($post)|| !$post->ID){
-			return;
+		if ( empty( $post ) || ! $post->ID ) {
+			return false;
 		}
 
-		$translations = $iclTranslationManagement->get_element_translations($post->ID, 'post_' . $post->post_type);
-		$show_box = 'display:none';
-		foreach($translations as $t){
-			if($t->element_id == $post->ID){
-				return;
+		$translations   = $iclTranslationManagement->get_element_translations( $post->ID, 'post_' . $post->post_type );
+		$show_box_style = 'display:none';
+		foreach ( $translations as $t ) {
+			if ( $t->element_id == $post->ID ) {
+				return false;
 			}
-			if($t->status == ICL_TM_COMPLETE && !$t->needs_update){
-				$show_box = '';
+			if ( $t->status == ICL_TM_COMPLETE && ! $t->needs_update ) {
+				$show_box_style = '';
 				break;
 			}
 		}
 
-		echo '<p id="icl_minor_change_box" style="float:left;padding:0;margin:3px;'.$show_box.'">';
-		echo '<label><input type="checkbox" name="icl_minor_edit" value="1" style="min-width:15px;" />&nbsp;';
-		echo __('Minor edit - don\'t update translation','wpml-translation-management');
-		echo '</label>';
-		echo '<br clear="all" />';
-		echo '</p>';
+		return $show_box_style;
 	}
 
 	private function process_translated_string( $translation_proxy_job_id, $language ) {

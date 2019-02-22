@@ -136,7 +136,11 @@ function create_rss_event($event){
   $end_hour = $end_dt->format('g');
   $end_minute = $end_dt->format('i');
   $end_meridiem = $end_dt->format('a');
-  
+
+  // check the venue
+  $venue_id = check_venue_exists($event);
+
+  // create the event
   $args = array(
    'post_title'         => $event['title'],
    'post_name'          => sanitize_title($event['title']).'-'.$event['startdate'],
@@ -150,23 +154,17 @@ function create_rss_event($event){
    'EventEndHour'       => $end_hour,
    'EventEndMinute'     => $end_minute,
    'EventEndMeridian'   => $end_meridiem,
-   // 'Venue' => array(
-   //  'Venue' => 'test',
-   //  'Country' => 'US',
-   //  'Address' => '1 W. Washington Ave.',
-   //  'City' => 'Madison',
-   //  'State' => 'WI'    
-   // ),
-   // 'Organizer' => array(
-   //  'Organizer' => '',
-   //  'Email' => '' 
-   // )
+   'EventURL'           => $event['link'],
+   'EventVenueID'       => $venue_id,
   );
 
   $post_id = tribe_create_event( $args );
 
-  update_field('summary', $event['description'], $post_id); 
+  update_field('summary', $event['description'], $post_id);
   wp_set_object_terms( $post_id, get_rss_borough($event['parkids']), 'borough');
+
+  echo '<p>Imported <a href="',get_edit_post_link($post_id),'">'.$event['title'].'</a></p>';
+
 
 }
 function generate_import_table($events) {
@@ -254,7 +252,46 @@ function get_rss_borough($id){
   }
 }
 
-/* Function to check to see if the */
-function check_venue_exists(){
+/* Function to check to see if the venue exists.
+ * If it doesn't create it in draft mode
+ */
+function check_venue_exists($event) {
+  $location = $event['location'];
+  $coordinates = explode(',', $event['coordinates']);
+  $lat = $coordinates[0];
+  $lng = $coordinates[1];
 
+  $args=array(
+    'post_type' => 'tribe_venue',
+    'name' => sanitize_title($location),
+  );
+
+  $query = new WP_Query($args);
+
+  $existing_venues = $query->posts;
+
+  if (sizeof($existing_venues) > 0) {
+
+    return $existing_venues[0]->ID;
+
+  } else {
+    $v_args = array(
+      'Venue' => $location,
+      'OverwriteCoords' => 1,
+      'Lat' => $lat,
+      'Lng' => $lng,
+    );
+
+    $new_venue = tribe_create_venue($v_args);
+
+    /* Due to bug with events calendar, change it to draft */
+    $u_args = array(
+      'ID' => $new_venue,
+      'post_status' => 'draft',
+    );
+
+    wp_update_post( $u_args );
+
+    return $new_venue;
+  }
 }

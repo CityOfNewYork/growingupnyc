@@ -5,6 +5,9 @@
 /* Get the events from the rss feed*/
 function get_rss_events() {
   echo '<div class="wrap">';
+  echo '<h1>Import Events</h1>';
+  echo '<p>Filter events from RSS feeds by categories and select events to import.</p>';
+
 
   $options = array(
     CURLOPT_URL => get_option('rss_url'),
@@ -22,29 +25,24 @@ function get_rss_events() {
   }
   curl_close($ch);
 
+  date_default_timezone_set('America/New_York');
+  $cur_datetime = new DateTime(date('Y-m-d g:i a'));
+
   // clean out the events that already happened
   foreach ($output as $i => &$event) {
-    $event_startdate = date('Y-m-d',strtotime($event['startdate']));
+    $event_endtime = new DateTime(date('Y-m-d g:i a',strtotime($event['enddate'].$event['endtime'])));
 
-    if ($event_startdate< date('Y-m-d')){
+    if ($event_endtime < $cur_datetime){
       unset($output[$i]);
     }
   }
 
-  /**************/
-  // temp to not use all the data
-  $data=array_slice($output, 0, 100);
-  get_rss_categories($data);
-  
-  /**************/
+  get_rss_categories($output);
 
   echo '</div>';
 }
 
-/**********************************************/
-
 /* Show and extract categories and add checkbox filter 
- * 
  */
 function get_rss_categories($events) {
   $categories = [];
@@ -53,24 +51,28 @@ function get_rss_categories($events) {
     $categories = array_merge($categories,explode(' | ',$event['categories']));
     $categories = array_unique($categories);
   }
+  $categories = array_filter($categories);
+  sort($categories);
 
   echo '  <h1>Categories</h1>';
-  echo '<form action="admin.php?page=nyco-events" method="post">';
+  echo '<form action="admin.php?page=import-events" method="post">';
+  echo '<fieldset class="metabox-prefs">';
 
-  // this is a WordPress security feature - see: https://codex.wordpress.org/WordPress_Nonces
+  // WordPress security feature - see: https://codex.wordpress.org/WordPress_Nonces
   wp_nonce_field('categories_selected');
   foreach ($categories as $i => &$category) {
+    echo '<label>';
     echo '<input type="checkbox" name="categories[]" class="checkbox__field" value="'.$category.'">';
-    echo '<label>'.$category.'</label>';
-    echo '<br>';  
+    echo $category.'</label>';
   }
+  echo '</fieldset>';
   submit_button('Filter');
   echo '</form>';
   echo '  <h1>Events</h1>';
 
   // filter the events if categories are selected
   if (isset($_POST['categories']) && check_admin_referer('categories_selected')) {
-    echo '<p><strong>Filtered by ',implode(', ', $_POST['categories']),'</strong></p>';
+    echo '<h2><strong>Filtered by ',implode(', ', $_POST['categories']),'</strong></h2>';
     get_rss_events_filtered($events, $_POST['categories']);
   } else {
     import_events($events, []);
@@ -104,12 +106,11 @@ function get_rss_events_filtered($events, $categories){
  *
  * @return table         Result of update_post_meta.
  */
-// function import_events($events, $categories){
 function import_events($events){
   $titles=array_column($events, 'title');
   
 
-  echo '<form action="admin.php?page=nyco-events" method="post">';
+  echo '<form action="admin.php?page=import-events" method="post">';
   wp_nonce_field('events_selected');
 
   generate_import_table($events);
@@ -137,7 +138,6 @@ function create_rss_event($event){
   $end_minute = $end_dt->format('i');
   $end_meridiem = $end_dt->format('a');
 
-  // check the venue
   $venue_id = check_venue_exists($event);
 
   // create the event
@@ -163,12 +163,14 @@ function create_rss_event($event){
   update_field('summary', $event['description'], $post_id);
   wp_set_object_terms( $post_id, get_rss_borough($event['parkids']), 'borough');
 
+  echo '<div class="notice notice-success is-dismissible">';
   echo '<p>Imported <a href="',get_edit_post_link($post_id),'">'.$event['title'].'</a></p>';
-
-
+  echo '</div>';
 }
+
 function generate_import_table($events) {
-  echo '<table class="events-list">';
+  echo '<table class="events-list widefat striped">';
+  echo '  <thead>';
   echo '  <tr>';
   echo '  <th class="text-left">Import</th>';
   echo '  <th class="text-left">Event Name</th>';
@@ -177,6 +179,7 @@ function generate_import_table($events) {
   echo '  <th class="text-left">Borough</th>';
   echo '  <th class="text-left">Exists</th>';
   echo '  </tr>';
+  echo '  </thead>';
 
   foreach ($events as $i => &$event) {
     echo '  <tr>';
@@ -204,15 +207,14 @@ function generate_import_table($events) {
   echo '</table>';
 }
 
-// loop through the events from the feed and check to see if they exist in the database
-// returns the queried event
+/*loop through the events from the feed and check to see if they exist in the database
+returns the queried event*/
 function check_rss_event_exists($event){
 
   $borough = get_rss_borough($event['parkids']);
 
   $args=array(
     'post_type' => 'tribe_events',
-    // 'title' => $event['title'],
     'name' => sanitize_title($event['title']).'-'.$event['startdate'],
     'tax_query' => array(
       array(

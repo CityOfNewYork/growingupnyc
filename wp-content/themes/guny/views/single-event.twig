@@ -73,6 +73,7 @@
           {% endfor %}
         </dd>
 
+        {% if post.venue_address.address or post.venue_address.city or post.venue_address.region or post.venue_address.zip%}
         <dt class="c-details-list__term">{{ __('Address', 'guny-events') }}</dt>
 
         <dd class="c-details-list__descr">
@@ -95,6 +96,7 @@
           {% endif %}
 
         </dd>
+        {% endif %}
 
         <dt class="c-details-list__term">{{ __('Cost', 'guny-events') }}</dt>
 

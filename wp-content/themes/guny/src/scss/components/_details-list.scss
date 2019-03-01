@@ -37,6 +37,10 @@
 .c-details-list__descr {
   padding: rem-calc(0 20 15);
 
+  a {
+    word-break: break-all;
+  }
+
   @include media($bp-medium) {
     padding: rem-calc(0 30 17);
   }

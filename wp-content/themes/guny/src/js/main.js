@@ -67,7 +67,8 @@ window.accordion = accordion;
   'use strict';
 
   if ((window.location.pathname.indexOf('programs') >= 0) ||
-      (window.location.pathname.indexOf('afterschool') >= 0)
+      (window.location.pathname.indexOf('afterschool') >= 0) ||
+      (window.location.pathname.indexOf('summer') >= 0)
     ) {
     new ProgramsList().init();
   }

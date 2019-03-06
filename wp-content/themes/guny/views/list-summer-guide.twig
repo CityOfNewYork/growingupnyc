@@ -1,4 +1,4 @@
-{% extends 'filter.twig' %}
+{% extends 'list.twig' %}
 
 
 {% block head_extras %}
@@ -58,82 +58,153 @@
 
 
 {% block list_sidebar %}
+{% set colors_head = 'bg-vivid-orange' %}  
+{% set colors_content = 'bg-pure-orange' %} 
 
-  <div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
-    {% for item in filters %}
-    <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading bg-vivid-orange" id="type-filter-heading">{{ item.prompt }}</h3>
-      <ul class="js-accordion__content c-list-box__content bg-pure-orange" id="type-filter-panel">
-        {% for filter in item.filters %}
-        <li>
-          <a href="{{ filter.link }}" class="c-list-box__subitem bg-pure-orange hover:bg-vivid-orange">
-            {{ filter.name }}
-            {% if filter.count %}
-              <span class="bg-vivid-orange rounded float-right"
-                    title="{{ filter.count }} {% if filter.count == 1 %}{{ __('program available for', domain) }}{% else %}{{ __('programs available for', domain) }}{% endif %} {{ filter.name }}">
-                &nbsp;&nbsp;{{ filter.count }}&nbsp;&nbsp;
-              </span>
-            {% endif %}
-          </a>
+<div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false" v-cloak>
+
+  <div class="c-list-box__item">
+    <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="type-filter-heading">{{ __('Program Types', 'guny') }}</h3>
+    <ul class="js-accordion__content c-list-box__content {{colors_content}}" id="type-filter-panel">
+      <li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}">
+        <label class="checkbox" >
+          <input type="checkbox" v-model="checkedAllSummerTypes" class="checkbox__field" @change="selectAllSummerTypes">
+          <svg class="checkbox__indicator-orange"><use xlink:href="#icon-check"></use></svg>
+          {{ __('Select All', 'guny') }}
+        </label>
+      </li>
+      <li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}" v-for="category in summerTypes">
+        <label class="checkbox" :for="category.slug">
+          <input type="checkbox"  :id="category.slug" :value="category.slug" v-model="checkedSummerType" class="checkbox__field">
+          <svg class="checkbox__indicator-orange"><use xlink:href="#icon-check"></use></svg>
+          v{ category.name }
+        </label>
+      </li>
+    </ul>
+  </div>
+  <div class="c-list-box__item">
+    <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="age-filter-heading">{{ __('Ages', 'guny') }}</h3>
+    <ul class="js-accordion__content c-list-box__content {{colors_content}}" id="age-filter-panel">
+
+      <li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}">
+        <label class="checkbox" >
+          <input type="checkbox" v-model="checkedAllAges" class="checkbox__field" @change="selectAllAges">
+          <svg class="checkbox__indicator-orange"><use xlink:href="#icon-check"></use></svg>
+          {{ __('Select All', 'guny') }}
+        </label>
+      </li>
+
+      <li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}" v-for="age in ageGroups">
+        <label class="checkbox" :for="age.slug">
+          <input type="checkbox" :id="age.slug" :value="age.slug" v-model="checkedAgeGroup" class="checkbox__field">
+          <svg class="checkbox__indicator-orange"><use xlink:href="#icon-check"></use></svg>
+          v{ age.name }
+        </label>
+      </li>
+    </ul>
+  </div>
+  <div class="c-list-box__item" v-if="posttype=='afterschool-guide' || posttype=='summer-guide'">
+      <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="age-filter-heading">{{ __('Boroughs', 'guny') }}</h3>
+      <ul class="js-accordion__content c-list-box__content {{colors_content}}" id="age-filter-panel">
+
+        <li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}">
+          <label class="checkbox" >
+            <input type="checkbox" v-model="checkedAllBoroughs" class="checkbox__field" @change="selectAllBoroughs">
+            <svg class="checkbox__indicator-orange"><use xlink:href="#icon-check"></use></svg>
+            {{ __('Select All', 'guny') }}
+          </label>
         </li>
-        {% endfor %}
+
+        <li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}" v-for="borough in boroughNames">
+          <label class="checkbox" :for="borough.slug">
+            <input type="checkbox" :id="borough.slug" :value="borough.slug" v-model="checkedBorough" class="checkbox__field">
+            <svg class="checkbox__indicator-orange"><use xlink:href="#icon-check"></use></svg>
+            v{ borough.name }
+          </label>
+        </li>
       </ul>
     </div>
-    {% endfor %}
-  </div>
+
+</div>
 
 {% endblock %}
 
 
 {% block post_list %}
 
-  {% if posts %}
-
-  <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
-  {% for post in posts %}
-    <div class="c-block-list__item">
-      {% include ['partials/teaser-' ~ post.post_type ~ '.twig', 'partials/teaser.twig'] %}
+  <section class="c-block-list" v-cloak>
+    <div class="c-block-list--blue o-content-container u-sm-gutter loader"></div>
+    <div class="c-block-list--blue o-content-container u-sm-gutter loader-mobile text-center" v-if="!errorMsg">
+      <button>
+      <a href="#programs-loaded" class="button--outline button--outline--white aligncenter">See v{ totalResults } programs</a>
+      </button>
     </div>
-  {% endfor %}
+
+    <div id="programs-loaded" class="c-block-list--shade o-content-container u-sm-gutter" v-if="!isLoading">
+      <div class="c-block-list__item" v-for="post in programs">
+
+        <div class="c-card c-card--subtitle-first">
+
+          <a :href="post.link">
+            <div class="c-card__sticker sticker bg-vivid-orange" aria-hidden="true">
+              <svg aria-hidden="true" class="icon--large"><title>v{post.summer_programs_cat[0].name}</title>
+                <use xlink:href="#icon-summer-guides"></use></svg>
+            </div>
+          </a>
+
+          <h3 class="c-card__title">
+            <a :href="post.link" :title="post.title" rel="bookmark">
+              v{ post.title }
+            </a>
+          </h3>
+
+          <div class="c-card__subtitle">
+            v{ post.acf.plain_text_date}
+          </div>
+
+
+          <div class="c-card__tags" v-if="post.summer_programs_cat">
+            <span v-for="term in post.summer_programs_cat"> 
+              <a :href="'?summer_category=' + term.slug" class="button--pill bg-vivid-orange">v{ term.name }</a>
+            </span>
+            <span v-for="term in post.age_group"> 
+              <a :href="'?ages=' + term.slug" class="button--pill bg-bright-red button--pill--alt">v{ term.name }</a>
+            </span>
+          </div>
+
+          <hr class="c-card__cta-divider" v-if="post.acf.cta_title!=''">
+          <a class="c-card__cta" :href="post.acf.cta_href" target="_blank" rel="nofollow" v-if="post.acf.cta_new_window">v{ post.acf.cta_title }</a>
+          <a class="c-card__cta" :href="post.acf.cta_href" v-if="!post.acf.cta_new_window">v{ post.acf.cta_title }</a>
+
+          <div class="c-card__body">
+            v{ post.excerpt }
+          </div>
+
+          <p class="c-card__link">
+            <svg role="img" class="icon--xxsmall" aria-hidden="true">
+              <use xlink:href="#icon-map-marker"></use>
+            </svg>
+            <span v-if="post.location.google_map_link">
+              <a :href="post.location.google_map_link" target="_blank" rel="nofollow">v{ post.location.location_name }</a>
+            </span>
+            <span v-else>
+              Locations in all boroughs
+            </span>
+          </p>
+        </div>
+      </div>
+      <p class="type--no-results" v-if="errorMsg">{{ __('Sorry, we don’t have any programs that match those filters. For more results, try different filters or <a href="/afterschool">reset your filters</a>.', 'guny') }}</p>
+    </div>
   </section>
 
-  {% else %}
+  {# pagination #}
+  <div class="o-content-container--compact pagination" v-if="!isLoading" v-cloak>
+    <div id="paginate" class="previous" v-if="programPage <= maxPages" >
+      <router-link class="button--outline button--outline--gray alignleft" v-if="programPage > 1" :to="{ query: { page: programPage-1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Previous', 'guny') }}</router-link>    
+    </div>
 
-  <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-sm-gutter">
-    {% spaceless %}
-    <p class="type--no-results">
-      {{ __('No summer events found for;', domain) }}
-      {% for value in filters %}
-        {% if loop.last %}{{ __('and', domain) }} {% endif %}
-        {% if value.prompt == value.default %}{{ value.name }}{% else %}{{ value.prompt }}{% endif %}{% if loop.last %}.{% else %},{% endif %}
-      {% endfor %}
-      {{ __('Try choosing different filters or ', domain) }}
-      <a href="{{ reset_link }}">{{ __('reset them by clicking this link', domain) }}</a>.
-    </p>
-    {% endspaceless %}
-  </section>
-
-  {% endif %}
-
-
-{% endblock %}
-
-{% block after_list %}
-  {{function('do_action', 'tribe_events_after_template')}}
-
-  <div class="o-content-container--compact">
-
-    {% if pagination.prev %}
-    <a href="{{ pagination.prev.link }}" class="button--outline button--outline--gray float-left">
-      {{ __('Previous', 'guny') }}
-    </a>
-    {% endif %}
-
-    {% if pagination.next %}
-    <a href="{{ pagination.next.link }}" class="button--outline button--outline--gray float-right">
-      {{ __('Next', 'guny') }}
-    </a>
-    {% endif %}
-
+    <div class="paginate" v-if="programPage < maxPages">
+      <router-link class="button--outline button--outline--gray alignright paginate" :to="{ query: { page: (programPage*1)+1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Next', 'guny') }}</router-link>
+    </div>
   </div>
 {% endblock %}

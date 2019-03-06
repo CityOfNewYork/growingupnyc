@@ -546,9 +546,10 @@ $includes = [
   '/includes/summer_guides.php', // Summer guide functions
   '/includes/afterschool_guides.php', // Afterschool guide functions
   [ // REST
-    '/includes/REST/guny_rest_programs.php', // expose fields to rest API
-    '/includes/REST/guny_rest_events.php', // expose fields to rest API
     '/includes/REST/guny_rest_afterschool.php', // expose fields to rest API
+    '/includes/REST/guny_rest_events.php',
+    '/includes/REST/guny_rest_programs.php',
+    '/includes/REST/guny_rest_summer.php',
   ],
   [ // Templating
     '/includes/get_focal_point.php', // Focal point functions

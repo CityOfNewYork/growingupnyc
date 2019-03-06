@@ -261,3 +261,12 @@ input[type="search"].form-field {
 .checkbox__field.is-error + .checkbox__indicator-purple {
   border-color: $color-error;
 }
+
+// orange
+.checkbox__indicator-orange {
+  @extend .checkbox__indicator;
+}
+
+.checkbox__field:checked + .checkbox__indicator-orange {
+  color: $vivid-orange;
+}

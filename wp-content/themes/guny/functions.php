@@ -482,6 +482,9 @@ function guny_titles( $title ){
     // set the title to the program name instead of plain language
     $title=$_post->program_name . ' - ' . get_bloginfo('name', 'display');
   }
+  else if(get_post_type() == "summer-guide"){
+    $title = get_post_type_object('summer-guide')->labels->singular_name.' - ' . get_bloginfo('name', 'display');
+  }
   return $title;
 }
 add_filter( 'pre_get_document_title', 'guny_titles', 999, 1 );

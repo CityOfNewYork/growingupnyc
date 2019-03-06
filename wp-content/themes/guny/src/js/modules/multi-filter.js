@@ -419,6 +419,7 @@ ProgramsList.mobileScroll = function() {
   if(this.checkedProgramType.length > 0 || 
      this.checkedAgeGroup.length > 0 ||
      this.checkedAfterschoolType.length > 0 ||
+     this.checkedSummerType.length > 0 ||
      this.checkedBorough.length > 0
   ){
     let ww = $(window).scrollTop()

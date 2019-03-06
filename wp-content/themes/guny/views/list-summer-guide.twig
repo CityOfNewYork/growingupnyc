@@ -103,7 +103,7 @@
       </li>
     </ul>
   </div>
-  <div class="c-list-box__item" v-if="posttype=='afterschool-guide' || posttype=='summer-guide'">
+  <div class="c-list-box__item">
       <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="age-filter-heading">{{ __('Boroughs', 'guny') }}</h3>
       <ul class="js-accordion__content c-list-box__content {{colors_content}}" id="age-filter-panel">
 
@@ -193,7 +193,7 @@
           </p>
         </div>
       </div>
-      <p class="type--no-results" v-if="errorMsg">{{ __('Sorry, we don’t have any programs that match those filters. For more results, try different filters or <a href="/afterschool">reset your filters</a>.', 'guny') }}</p>
+      <p class="type--no-results" v-if="errorMsg">{{ __('Sorry, we don’t have any programs that match those filters. For more results, try different filters or <a href="/summer">reset your filters</a>.', 'guny') }}</p>
     </div>
   </section>
 

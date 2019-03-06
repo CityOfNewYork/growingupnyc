@@ -33,6 +33,16 @@ function register_rest_afterschool() {
    'get_callback'    => 'get_rest_afterschool_google_map_link',
    'schema'          => null,
   ));
+
+  register_rest_route( 'wp/v2', 'afterschool_programs_cat', array(
+    'methods'  => WP_REST_Server::READABLE,
+    'callback' => 'get_rest_afterschool_program_types',
+    'args' => array(
+      'term_id' => array(
+        'type' => 'integer'
+      )
+    )
+  ));
 }
 
 /** #################
@@ -84,4 +94,21 @@ function get_rest_afterschool_google_map_link( $object ) {
   $loc_obj->location_name = $post_loc_name[1];
 
 	return $loc_obj;
+}
+
+function get_rest_afterschool_program_types() {
+
+  $terms = get_terms( array(
+    'taxonomy' => 'afterschool_programs_cat',
+    'hide_empty' => true,
+  ) );
+
+  $terms_cleaned = array();
+
+  foreach ($terms as &$term) {
+    $term->name = htmlspecialchars_decode($term->name);
+    array_push($terms_cleaned, $term);
+  }
+
+  return $terms_cleaned;
 }

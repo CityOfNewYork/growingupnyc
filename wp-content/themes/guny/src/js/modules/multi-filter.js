@@ -38,7 +38,7 @@ class ProgramsList {
         checkedAfterschoolType: [],
         checkedAllAfterschoolTypes: false,
         allAfterschoolTypes: false,
-        summerTypeURL: this._baseURL + 'summer_programs_cat' + this._lang + '&per_page=100',
+        summerTypeURL: this._baseURL + 'summer_programs_cat' + this._lang,
         summerTypes: null,
         checkedSummerType: [],
         checkedAllSummerTypes: false,
@@ -182,13 +182,13 @@ ProgramsList.generateFilterURL = function(data) {
 
   if ( data.checkedAfterschoolType.length > 0  ) {
     data.checkedAfterschoolType.length != data.afterschoolTypes.length ? data.checkedAllAfterschoolTypes = false : data.checkedAllAfterschoolTypes = true;
-    arrIds = ProgramsList.getIds(data.afterschoolTypes, data.checkedAfterschoolType).map(value => value.id)
+    arrIds = ProgramsList.getIds(data.afterschoolTypes, data.checkedAfterschoolType).map(value => value.term_id)
     filters.push('afterschool_programs_cat[]=' + arrIds.join('&afterschool_programs_cat[]='));
   }
 
   if ( data.checkedSummerType.length > 0  ) {
     data.checkedSummerType.length != data.summerTypes.length ? data.checkedAllSummerTypes = false : data.checkedAllSummerTypes = true;
-    arrIds = ProgramsList.getIds(data.summerTypes, data.checkedSummerType).map(value => value.id)
+    arrIds = ProgramsList.getIds(data.summerTypes, data.checkedSummerType).map(value => value.term_id)
     filters.push('summer_programs_cat[]=' + arrIds.join('&summer_programs_cat[]='));
   }
 

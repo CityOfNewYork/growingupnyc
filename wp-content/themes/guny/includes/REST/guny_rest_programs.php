@@ -26,13 +26,13 @@ function register_rest_programs() {
 	));
 
 	register_rest_route( 'wp/v2', 'programs_cat', array(
-	    'methods'  => WP_REST_Server::READABLE,
-	    'callback' => 'get_rest_program_types',
-	    'args' => array(
-	    	'term_id' => array(
-	    		'type' => 'integer'
-	    	)
-	    )
+    'methods'  => WP_REST_Server::READABLE,
+    'callback' => 'get_rest_program_types',
+    'args' => array(
+    	'term_id' => array(
+    		'type' => 'integer'
+    	)
+    )
 	));
 }
 
@@ -77,25 +77,18 @@ function get_rest_program_cat( $object ) {
 
 
 function get_rest_program_types() {
+
 	$terms = get_terms( array(
     'taxonomy' => 'programs_cat',
     'hide_empty' => true,
 	) );
 
-	$terms_cleaned = clean_terms($terms);
-	usort($terms_cleaned, function($a, $b) { 
-    return strcmp($a->name, $b->name); 
-  });
+  $terms_cleaned = array();
+
+  foreach ($terms as &$term) {
+    $term->name = htmlspecialchars_decode($term->name);
+    array_push($terms_cleaned, $term);
+  }
 
 	return $terms_cleaned;
 }
-
-// decode special characters
-function clean_terms($terms_array) {
-	foreach ($terms_array as &$term) { 
-	  $term->name = htmlspecialchars_decode($term->name);
-  }
-  return $terms_array;
-}
-
-

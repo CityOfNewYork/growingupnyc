@@ -43,6 +43,16 @@ function register_rest_afterschool() {
       )
     )
   ));
+
+  register_rest_route( 'wp/v2', 'afterschool-guide_age_group', array(
+    'methods'  => WP_REST_Server::READABLE,
+    'callback' => 'get_rest_afterschool_age_groups_categories',
+    'args' => array(
+      'term_id' => array(
+        'type' => 'integer'
+      )
+    )
+  ));
 }
 
 /** #################
@@ -110,5 +120,41 @@ function get_rest_afterschool_program_types() {
     array_push($terms_cleaned, $term);
   }
 
+  return $terms_cleaned;
+}
+
+function get_rest_afterschool_age_groups_categories() {
+
+  $terms = get_terms( array(
+    'taxonomy' => 'age_group',
+    'hide_empty' => true,
+  ) );
+
+  $terms_cleaned = array();
+
+  foreach ($terms as &$term) {
+    $term->name = htmlspecialchars_decode($term->name);
+
+    $args = array(
+        'post_type'     => 'afterschool-guide',
+        'post_status'   => 'publish',
+        'posts_per_page' => -1,
+        'tax_query' => array(
+          'relation' => 'AND',
+          array(
+            'taxonomy' => 'age_group',
+            'field' => 'term_id',
+            'terms' => $term->term_id
+          )
+        )
+      );
+
+    $query = new WP_Query( $args);
+    if(count($query->posts) > 0) {
+      $term->count = count($query->posts);
+      array_push($terms_cleaned, $term);
+    }
+  }
+  
   return $terms_cleaned;
 }

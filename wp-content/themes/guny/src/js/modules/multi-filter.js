@@ -25,7 +25,7 @@ class ProgramsList {
         programTypes: null,
         checkedProgramType: [],
         checkedAllTypes: false,
-        ageGroupURL: this._baseURL + 'age_group' + this._lang,
+        ageGroupURL: this._baseURL + this._posttype + '_age_group' + this._lang,
         ageGroups: null,
         checkedAgeGroup: [],
         checkedAllAges: false,
@@ -176,7 +176,7 @@ ProgramsList.generateFilterURL = function(data) {
 
   if ( data.checkedAgeGroup.length > 0  ) {
     data.checkedAgeGroup.length != data.ageGroups.length ? data.checkedAllAges = false : data.checkedAllAges = true;
-    arrIds = ProgramsList.getIds(data.ageGroups, data.checkedAgeGroup).map(value => value.id)
+    arrIds = ProgramsList.getIds(data.ageGroups, data.checkedAgeGroup).map(value => value.term_id)
     filters.push('age_group[]=' + arrIds.join('&age_group[]='));
   }
 

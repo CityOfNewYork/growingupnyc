@@ -1,42 +1,35 @@
-<?php
+<?php 
 
-/**
- * Afterschool WP Rest API
- */
-
-/** #################################
- * Registering rest routes and fields
- */
-add_action( 'rest_api_init', 'register_rest_afterschool' );
-function register_rest_afterschool() {
-  register_rest_field( 'afterschool-guide', 'title', array(
-   'get_callback'    => 'get_rest_afterschool_title',
+add_action( 'rest_api_init', 'register_rest_summer' );
+function register_rest_summer() {
+  register_rest_field( 'summer-guide', 'title', array(
+   'get_callback'    => 'get_rest_summer_title',
    'schema'          => null,
   ));
 
-  register_rest_field( 'afterschool-guide', 'excerpt', array(
-   'get_callback'    => 'get_rest_afterschool_excerpt',
+  register_rest_field( 'summer-guide', 'excerpt', array(
+   'get_callback'    => 'get_rest_summer_excerpt',
    'schema'          => null,
   ));
 
-  register_rest_field( 'afterschool-guide', 'afterschool_programs_cat', array(
-   'get_callback'    => 'get_rest_afterschool_cat',
+  register_rest_field( 'summer-guide', 'summer_programs_cat', array(
+   'get_callback'    => 'get_rest_summer_cat',
    'schema'          => null,
   ));
 
-  register_rest_field( 'afterschool-guide', 'age_group', array(
-   'get_callback'    => 'get_rest_afterschool_age_groups',
+  register_rest_field( 'summer-guide', 'age_group', array(
+   'get_callback'    => 'get_rest_summer_age_groups',
    'schema'          => null,
   ));
 
-  register_rest_field( 'afterschool-guide', 'location', array(
-   'get_callback'    => 'get_rest_afterschool_google_map_link',
+  register_rest_field( 'summer-guide', 'location', array(
+   'get_callback'    => 'get_rest_summer_google_map_link',
    'schema'          => null,
   ));
 
-  register_rest_route( 'wp/v2', 'afterschool_programs_cat', array(
+  register_rest_route( 'wp/v2', 'summer_programs_cat', array(
     'methods'  => WP_REST_Server::READABLE,
-    'callback' => 'get_rest_afterschool_program_types',
+    'callback' => 'get_rest_summer_program_types',
     'args' => array(
       'term_id' => array(
         'type' => 'integer'
@@ -44,9 +37,9 @@ function register_rest_afterschool() {
     )
   ));
 
-  register_rest_route( 'wp/v2', 'afterschool-guide_age_group', array(
+  register_rest_route( 'wp/v2', 'summer-guide_age_group', array(
     'methods'  => WP_REST_Server::READABLE,
-    'callback' => 'get_rest_afterschool_age_groups_categories',
+    'callback' => 'get_rest_summer_age_groups_categories',
     'args' => array(
       'term_id' => array(
         'type' => 'integer'
@@ -58,22 +51,22 @@ function register_rest_afterschool() {
 /** #################
  * Callback functions
  */
-function get_rest_afterschool_title( $object ) { 
+function get_rest_summer_title( $object ) { 
   $post_title = html_entity_decode($object['title']['rendered']);
    
   return $post_title;
 }
 
-function get_rest_afterschool_excerpt( $object ) { 
+function get_rest_summer_excerpt( $object ) { 
   $post_excerpt = strip_tags(html_entity_decode($object['excerpt']['rendered']));
    
   return $post_excerpt;
 }
 
-function get_rest_afterschool_cat( $object ) {
+function get_rest_summer_cat( $object ) {
   $post_id = $object['id'];
 
-  $terms = wp_get_post_terms( $post_id, 'afterschool_programs_cat' );
+  $terms = wp_get_post_terms( $post_id, 'summer_programs_cat' );
 
   foreach ($terms as &$term) { 
     $term->name = htmlspecialchars_decode($term->name);
@@ -82,7 +75,7 @@ function get_rest_afterschool_cat( $object ) {
   return $terms;
 }
 
-function get_rest_afterschool_age_groups( $object ) {
+function get_rest_summer_age_groups( $object ) {
   $post_id = $object['id'];
 
   $terms = wp_get_post_terms( $post_id, 'age_group' );
@@ -94,8 +87,8 @@ function get_rest_afterschool_age_groups( $object ) {
   return $terms;
 }
 
-function get_rest_afterschool_google_map_link( $object ) {
-	$loc_obj = new stdClass();
+function get_rest_summer_google_map_link( $object ) {
+  $loc_obj = new stdClass();
 
   preg_match('#\((.*?)\)#', $object['acf']['location_description'], $post_loc);
   preg_match('#\[(.*?)\]#', $object['acf']['location_description'], $post_loc_name);
@@ -103,13 +96,13 @@ function get_rest_afterschool_google_map_link( $object ) {
   $loc_obj->google_map_link = $post_loc[1];
   $loc_obj->location_name = $post_loc_name[1];
 
-	return $loc_obj;
+  return $loc_obj;
 }
 
-function get_rest_afterschool_program_types() {
+function get_rest_summer_program_types() {
 
   $terms = get_terms( array(
-    'taxonomy' => 'afterschool_programs_cat',
+    'taxonomy' => 'summer_programs_cat',
     'hide_empty' => true,
   ) );
 
@@ -123,7 +116,7 @@ function get_rest_afterschool_program_types() {
   return $terms_cleaned;
 }
 
-function get_rest_afterschool_age_groups_categories() {
+function get_rest_summer_age_groups_categories() {
 
   $terms = get_terms( array(
     'taxonomy' => 'age_group',
@@ -136,7 +129,7 @@ function get_rest_afterschool_age_groups_categories() {
     $term->name = htmlspecialchars_decode($term->name);
 
     $args = array(
-        'post_type'     => 'afterschool-guide',
+        'post_type'     => 'summer-guide',
         'post_status'   => 'publish',
         'posts_per_page' => -1,
         'tax_query' => array(

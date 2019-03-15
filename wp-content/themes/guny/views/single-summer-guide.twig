@@ -22,15 +22,22 @@
           {% set colors = ['bright-red', 'vivid-orange', 'bright-red', 'vivid-orange', 'bright-red', 'vivid-orange'] %}
           {% for key, value in taxonomies %}
 
-            {% if key != 'borough' %}
+            {% if key != 'borough' and key != 'time' %}
 
               {% set i = loop.index %}
 
               {% for term in post.terms(key) %}
-              <a class="button--pill bg-{{ colors[i] }} hover:bg-{{ colors[ i + 1 ] }}" href="{{ archive_link }}?{{ key }}={{ term.slug }}">
-                {{ term.name }}
-              </a>
+                {% if key == 'age_group' %}
+                  <a class="button--pill bg-{{ colors[i] }} hover:bg-{{ colors[ i + 1 ] }}" href="{{ archive_link }}?ages={{ term.slug }}">
+                    {{ term.name }}
+                  </a>
+                {% elseif key == 'summer_programs_cat' %}
+                  <a class="button--pill bg-{{ colors[i] }} hover:bg-{{ colors[ i + 1 ] }}" href="{{ archive_link }}?summer_category={{ term.slug }}">
+                    {{ term.name }}
+                  </a>
+                {% endif %}
               {% endfor %}
+
 
             {% endif %}
 

@@ -132,6 +132,7 @@ class GUPostTypes {
         'public' => true,
         'menu_position' => 24,
         'menu_icon' => 'dashicons-palmtree',
+        'show_in_rest' => true,
         'supports' => array('title', 'excerpt', 'editor'),
         'has_archive' => true,
         'rewrite' => array(
@@ -212,7 +213,8 @@ class GUPostTypes {
       array(
         'label' => __( 'Program Categories' ),
         'hierarchical' => true,
-        'rewrite' => false
+        'rewrite' => false,
+        'show_in_rest' => true,
       )
     );
 

@@ -182,6 +182,7 @@ function get_translation_domain() {
  * @return [array] The collection of TAXONOMIES with slug, name, and links
  */
 function get_filter($slug) {
+
   $filter = array();
 
   // Timber::get_terms() works in context of the post type/archive type
@@ -250,13 +251,15 @@ function get_filter($slug) {
 
   // Add the reset filter, the 'All ...' filter needs to be set to something
   // blank in order to show all results.
-  array_unshift($filter, array(
-    'slug' => 'all_' . $slug,
-    'name' => __(TAXONOMIES[$slug]['name'], TRANSLATION_DOMAIN),
-    'link' => esc_url(add_query_arg($slug, '', remove_query_arg($slug)))
-  ));
+  // array_unshift($filter, array(
+  //   'slug' => 'all_' . $slug,
+  //   'name' => __(TAXONOMIES[$slug]['name'], TRANSLATION_DOMAIN),
+  //   'link' => esc_url(add_query_arg($slug, '', remove_query_arg($slug)))
+  // ));
 
-  return $filter;
+  if ($slug != 'time'){
+    return $filter;
+  }
 }
 
 /**

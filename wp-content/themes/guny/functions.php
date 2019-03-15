@@ -482,6 +482,9 @@ function guny_titles( $title ){
     // set the title to the program name instead of plain language
     $title=$_post->program_name . ' - ' . get_bloginfo('name', 'display');
   }
+  else if(get_post_type() == "summer-guide"){
+    $title = get_post_type_object('summer-guide')->labels->singular_name.' - ' . get_bloginfo('name', 'display');
+  }
   return $title;
 }
 add_filter( 'pre_get_document_title', 'guny_titles', 999, 1 );
@@ -546,9 +549,10 @@ $includes = [
   '/includes/summer_guides.php', // Summer guide functions
   '/includes/afterschool_guides.php', // Afterschool guide functions
   [ // REST
-    '/includes/REST/guny_rest_programs.php', // expose fields to rest API
-    '/includes/REST/guny_rest_events.php', // expose fields to rest API
     '/includes/REST/guny_rest_afterschool.php', // expose fields to rest API
+    '/includes/REST/guny_rest_events.php',
+    '/includes/REST/guny_rest_programs.php',
+    '/includes/REST/guny_rest_summer.php',
   ],
   [ // Templating
     '/includes/get_focal_point.php', // Focal point functions

@@ -66,10 +66,10 @@ window.accordion = accordion;
 (function(window, $) {
   'use strict';
 
-  if ((window.location.pathname.indexOf('programs') >= 0) ||
-      (window.location.pathname.indexOf('afterschool') >= 0) ||
-      (window.location.pathname.indexOf('summer') >= 0)
-    ) {
+  var post_path = window.location.pathname.split('/');
+  var arr_types = ['programs', 'afterschool', 'summer'];
+
+  if(($.inArray(post_path[1], arr_types) > -1) && post_path[2] == ""){
     new ProgramsList().init();
   }
 

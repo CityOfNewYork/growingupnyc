@@ -6,7 +6,6 @@ import stickNav from './modules/stickNav.js';
 import sectionHighlighter from './modules/sectionHighlighter.js';
 import staticColumn from './modules/staticColumn.js';
 import alert from './modules/alert.js';
-// import bsdtoolsSignup from './modules/bsdtools-signup.js';
 import gunySignup from './modules/newsletter-signup.js';
 import formEffects from './modules/formEffects.js';
 import facets from './modules/facets.js';
@@ -45,7 +44,6 @@ function init() {
   // Homepage
   staticColumn();
   stickNav();
-  // bsdtoolsSignup();
   gunySignup();
   formEffects();
   owlSettings();
@@ -66,10 +64,12 @@ window.accordion = accordion;
 (function(window, $) {
   'use strict';
 
-  if ((window.location.pathname.indexOf('programs') >= 0) ||
-      (window.location.pathname.indexOf('afterschool') >= 0) ||
-      (window.location.pathname.indexOf('summer') >= 0)
-    ) {
+  var post_path = window.location.pathname.split('/');
+  var arr_types = ['programs', 'afterschool', 'summer'];
+
+  if((($.inArray(post_path[1], arr_types) > -1) && post_path[2] == "") ||
+     (post_path[1] == "es" && ($.inArray(post_path[2], arr_types) > -1) && post_path[3] == "")
+    ){
     new ProgramsList().init();
   }
 

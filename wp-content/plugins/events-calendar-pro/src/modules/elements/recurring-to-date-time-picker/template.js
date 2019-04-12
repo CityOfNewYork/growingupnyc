@@ -30,7 +30,7 @@ const RecurringToDateTimePicker = ( {
 			'tribe-editor__recurring-to-date-time-picker',
 			className
 		) }
-		label={ __( 'To', 'events-gutenberg' ) }
+		label={ __( 'To', 'tribe-events-calendar-pro' ) }
 	>
 		<TimePicker
 			current={ endTimeInput }
@@ -42,7 +42,7 @@ const RecurringToDateTimePicker = ( {
 			showAllDay={ true }
 			allDay={ isAllDay }
 		/>
-		<span>{ __( 'on the', 'events-gutenberg' ) }</span>
+		<span>{ __( 'on the', 'tribe-events-calendar-pro' ) }</span>
 		<Select
 			className="tribe-editor__recurring-to-date-time-picker__select"
 			backspaceRemovesValue={ false }

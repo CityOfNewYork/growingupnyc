@@ -70,7 +70,7 @@ export const fieldToBlock = ( field ) => {
 		title: label,
 		description: __(
 			'Additional Field',
-			'events-gutenberg',
+			'tribe-events-calendar-pro',
 		),
 		icon: schema.icon,
 		category: 'tribe-events-pro-additional-fields',

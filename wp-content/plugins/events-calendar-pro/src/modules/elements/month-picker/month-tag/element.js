@@ -19,7 +19,7 @@ const MonthTag = ( { children, className, onClick } ) => (
 	>
 		<CloseIcon />
 		<span className='tribe-editor__month-tag__remove'>
-			{ __( 'Remove', 'events-gutenberg' ) }
+			{ __( 'Remove', 'tribe-events-calendar-pro' ) }
 		</span>
 		{ children }
 	</button>

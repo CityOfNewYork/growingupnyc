@@ -25,7 +25,7 @@ const MonthlyField = ( { isMultiDay, index } ) => {
 				blockType={ constants.RECURRING }
 				index={ index }
 				options={ options.RECURRENCE_TYPE_RULES_OPTIONS }
-				rowLabel={ __( 'Every', 'events-gutenberg' ) }
+				rowLabel={ __( 'Every', 'tribe-events-calendar-pro' ) }
 			/>
 			<OnDayOfMonthPicker
 				blockType={ constants.RECURRING }

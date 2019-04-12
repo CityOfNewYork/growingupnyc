@@ -61,7 +61,7 @@ class MonthPicker extends PureComponent {
 					onClick={ this.onAddClick }
 				>
 					<span className="tribe-editor__month-picker__add-icon">+</span>
-					{ __( 'Add', 'events-gutenberg' ) }
+					{ __( 'Add', 'tribe-events-calendar-pro' ) }
 				</button>
 			)
 	);

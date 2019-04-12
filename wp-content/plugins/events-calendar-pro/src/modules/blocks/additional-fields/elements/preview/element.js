@@ -24,7 +24,7 @@ const Preview = ( { name, children, className } ) => {
 	const body = isArray( children ) ? children : <Paragraph>{ children }</Paragraph>;
 	return (
 		<div className={ classNames( 'tribe-editor__additional-fields__preview', className ) }>
-			<Heading level={ 2 } className="tribe-editor__additional-fields__preview-title">
+			<Heading level={ 3 } className="tribe-editor__additional-fields__preview-title">
 				{ name }
 			</Heading>
 			{ body }

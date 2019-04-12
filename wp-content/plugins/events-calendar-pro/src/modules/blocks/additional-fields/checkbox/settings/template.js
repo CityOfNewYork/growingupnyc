@@ -30,15 +30,15 @@ const CheckboxSettings = ( props ) => {
 	} = props;
 
 	const After = () => (
-		<PanelBody title={ __( 'Custom Dividers', 'events-gutenberg' ) }>
+		<PanelBody title={ __( 'Custom Dividers', 'tribe-events-calendar-pro' ) }>
 			<TextControl
-				label={ __( 'List divider', 'events-gutenberg' ) }
+				label={ __( 'List divider', 'tribe-events-calendar-pro' ) }
 				value={ listDividerValue }
 				onChange={ listDividerOnChange }
 				className="tribe-editor__additional-fields__divider-settings"
 			/>
 			<TextControl
-				label={ __( 'List ender', 'events-gutenberg' ) }
+				label={ __( 'List ender', 'tribe-events-calendar-pro' ) }
 				value={ listEnderValue }
 				onChange={ listEnderOnChange }
 				className="tribe-editor__additional-fields__divider-settings"

@@ -12,6 +12,7 @@ class Tribe__Events__Pro__Editor__Provider extends tad_DI52_ServiceProvider {
 		// Return if we shouldn't load blocks or Events Pro Plugin is active
 		if (
 			! tribe( 'editor' )->should_load_blocks()
+			|| ! tribe( 'events.editor.compatibility' )->is_blocks_editor_toggled_on()
 			|| ! class_exists( 'Tribe__Events__Pro__Main' )
 		) {
 			return;
@@ -21,7 +22,6 @@ class Tribe__Events__Pro__Editor__Provider extends tad_DI52_ServiceProvider {
 		$this->container->singleton( 'events-pro.editor.fields', 'Tribe__Events__Pro__Editor__Additional_Fields' );
 		$this->container->singleton( 'events-pro.editor.frontend.template', 'Tribe__Events__Pro__Editor__Template__Frontend' );
 		$this->container->singleton( 'events-pro.editor.admin.template', 'Tribe__Events__Pro__Editor__Template__Admin' );
-		$this->container->singleton( 'events-pro.editor.blocks.fields', 'Tribe__Events__Pro__Editor__Blocks__Additional_Fields' );
 		$this->container->singleton( 'events-pro.editor.configuration', 'Tribe__Events__Pro__Editor__Configuration', array( 'hook' ) );
 		$this->container->singleton( 'events-pro.editor.assets', 'Tribe__Events__Pro__Editor__Assets', array( 'register' ) );
 
@@ -29,6 +29,10 @@ class Tribe__Events__Pro__Editor__Provider extends tad_DI52_ServiceProvider {
 		$this->container->singleton( 'events-pro.editor.recurrence.provider', 'Tribe__Events__Pro__Editor__Recurrence__Provider' );
 		$this->container->singleton( 'events-pro.editor.recurrence.queue-status', 'Tribe__Events__Pro__Editor__Recurrence__Queue_Status' );
 		$this->container->singleton( 'events-pro.editor.recurrence.blocks-meta', 'Tribe__Events__Pro__Editor__Recurrence__Blocks_Meta' );
+
+		// Singletons for pro blocks
+		$this->container->singleton( 'events-pro.editor.blocks.fields', 'Tribe__Events__Pro__Editor__Blocks__Additional_Fields' );
+		$this->container->singleton( 'events-pro.editor.blocks.related-events', 'Tribe__Events__Pro__Editor__Blocks__Related_Events' );
 
 		$this->hook();
 
@@ -52,11 +56,10 @@ class Tribe__Events__Pro__Editor__Provider extends tad_DI52_ServiceProvider {
 		add_action( 'init', tribe_callback( 'events-pro.editor.meta', 'register' ), 15 );
 
 		tribe( 'events-pro.editor' )->hook();
-		// Setup the Meta registration
-		add_action(
-			'tribe_editor_register_blocks',
-			tribe_callback( 'events-pro.editor.blocks.fields', 'register' )
-		);
+
+		// Setup the registration of blocks
+		add_action( 'tribe_editor_register_blocks', tribe_callback( 'events-pro.editor.blocks.fields', 'register' ) );
+		add_action( 'tribe_editor_register_blocks', tribe_callback( 'events-pro.editor.blocks.related-events', 'register' ) );
 	}
 
 	/**

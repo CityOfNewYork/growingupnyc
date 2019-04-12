@@ -20,10 +20,10 @@ import './style.pcss';
 
 export default {
 	id: 'event-pro-recurrence-description',
-	title: __( 'Recurring Description', 'events-gutenberg' ),
+	title: __( 'Recurring Description', 'tribe-events-calendar-pro' ),
 	description: __(
 		'Recurrence description',
-		'events-gutenberg'
+		'tribe-events-calendar-pro'
 	),
 	icon: <DateTime />,
 	category: 'tribe-events',

@@ -28,7 +28,7 @@ const OnDatePicker = ( {
 				'tribe-editor__on-date-picker',
 				className
 			) }
-			label={ __( 'On', 'events-gutenberg' ) }
+			label={ __( 'On', 'tribe-events-calendar-pro' ) }
 		>
 			<DayPickerInput
 				value={ date }

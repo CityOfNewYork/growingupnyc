@@ -21,7 +21,7 @@ const InMonth = ( {
 } ) => (
 	<LabeledRow
 		className={ classNames( 'tribe-editor__in-month', className ) }
-		label={ __( 'In', 'events-gutenberg' ) }
+		label={ __( 'In', 'tribe-events-calendar-pro' ) }
 	>
 		<MonthPicker
 			className="tribe-editor__in-month__month-picker"

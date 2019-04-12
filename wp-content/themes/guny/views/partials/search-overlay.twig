@@ -1,0 +1,70 @@
+<section class="o-overlay js-overlay animated" id="overlay-search" aria-hidden="true">
+  <div class="o-container-med">
+
+    <div class="u-bottom-spacing">
+      {% include 'partials/search-form.twig' %}
+    </div>
+
+    {# SUMMER #}
+    {% if top_summer %}
+    <section class="o-col__divider c-block-list">
+      <h2 class="c-block-list__heading">
+        {{ __('Summer Guide', 'guny') }}
+        <a class="c-block-list__link" href="{{ site.url | trim('/') }}/summer">{{ __('See all activities', 'guny') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="true"><use xlink:href="#icon-caret-right"></use></svg></a>
+      </h2> <!-- /.c-content-tout__heading -->
+      <div class="c-block-list__inner o-row">
+        {{ top_summer }}
+      </div> <!-- /.o-col__divider -->
+    </section> <!-- /.c-content-tout -->
+    {% endif %}
+
+    {# AFTER SCHOOL #}
+    {% if top_afterschool %}
+    <section class="o-col__divider c-block-list">
+      <h2 class="c-block-list__heading">
+        {{ __('After School Guide', 'guny') }}
+        <a class="c-block-list__link" href="{{ site.url | trim('/') }}/afterschool">{{ __('See all activities', 'guny') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="true"><use xlink:href="#icon-caret-right"></use></svg></a>
+      </h2> <!-- /.c-content-tout__heading -->
+      <div class="c-block-list__inner o-row">
+        {{ top_afterschool }}
+      </div> <!-- /.o-col__divider -->
+    </section> <!-- /.c-content-tout -->
+    {% endif %}
+
+    {# PROGRAMS #}
+    <section class="o-col__divider c-block-list">
+      <h2 class="c-block-list__heading">
+        {{ __('Programs', 'guny') }}
+        <a class="c-block-list__link" href="{{ site.url | trim('/') }}/programs">{{ __('See all programs', 'guny') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="true"><use xlink:href="#icon-caret-right"></use></svg></a>
+      </h2> <!-- /.c-content-tout__heading -->
+      <div class="c-block-list__inner o-row">
+        {{ top_programs }}
+      </div> <!-- /.o-col__divider -->
+    </section> <!-- /.c-content-tout -->
+
+    {# EVENTS #}
+    {# <section class="o-col__divider c-block-list">
+      <h2 class="c-block-list__heading">
+        {{ __('Events', 'guny') }}
+        <a class="c-block-list__link" href="{{ site.url | trim('/') }}/events">{{ __('See all events', 'guny') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="small"><use xlink:href="#icon-caret-right"></use></svg></a>
+      </h2> <!-- /.c-content-tout__heading -->
+      <div class="c-block-list__inner o-row">
+      {% for post in top_events %}
+        <div class="o-col-3 c-content-tout">
+          <h3 class="c-content-tout__title">
+            <a href="{{ post.path }}" title="{{ post.post_title }}" rel="bookmark">{{ post.post_title }}</a>
+          </h3>
+          <div class="c-content-tout__subtitle">
+            {% include 'partials/event-date.twig' %}
+          </div> <!-- /.c-content-tout__subtitle -->
+          {% if post.venue %}
+            <div class="c-content-tout__link">
+              {% include 'partials/event-link.twig' %}
+            </div>
+          {% endif %}
+        </div> <!-- /.o-col-3.c-content-tout -->
+      {% endfor %}
+      </div> <!-- /.o-col__row -->
+    </section> #} <!-- /.o-col__divider -->
+  </div> <!-- /.o-container-med -->
+</section> <!-- /.o-overlay -->

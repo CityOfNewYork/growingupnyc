@@ -67,8 +67,16 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		public $template_namespace = 'events-pro';
 
-		const REQUIRED_TEC_VERSION = '4.7.3-dev';
-		const VERSION = '4.5.2.1';
+		const VERSION = '4.6.2.1';
+
+		/**
+		 * The Events Calendar Required Version
+		 * Use Tribe__Events__Pro__Plugin_Register instead
+		 *
+		 * @deprecated 4.6
+		 *
+		 */
+		const REQUIRED_TEC_VERSION = '4.8.1-dev';
 
 		private function __construct() {
 			$this->pluginDir = trailingslashit( basename( EVENTS_CALENDAR_PRO_DIR ) );
@@ -213,18 +221,6 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 
 			$args['title'] = esc_html__( 'Month/Week View', 'events-calendar-pro' );
 			return $args;
-		}
-
-		/**
-		 * Registers this plugin as being active for other tribe plugins and extensions
-		 *
-		 * @return bool Indicates if Tribe Common wants the plugin to run
-		 */
-		public function register_active_plugin() {
-			if ( ! function_exists( 'tribe_register_plugin' ) ) {
-				return true;
-			}
-			return tribe_register_plugin( EVENTS_CALENDAR_PRO_FILE, __CLASS__, self::VERSION );
 		}
 
 		/**
@@ -728,7 +724,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 							'hideRelatedEvents' => array(
 								'type'            => 'checkbox_bool',
 								'label'           => __( 'Hide related events', 'tribe-events-calendar-pro' ),
-								'tooltip'         => __( 'Remove related events from the single event view', 'tribe-events-calendar-pro' ),
+								'tooltip'         => __( 'Remove related events from the single event view (with classic editor)', 'tribe-events-calendar-pro' ),
 								'default'         => false,
 								'validation_type' => 'boolean',
 							),
@@ -2089,6 +2085,22 @@ if ( ! class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			tribe( 'events-pro.customizer.photo-view' );
 			tribe( 'events-pro.assets' );
 			tribe( 'events-pro.recurrence.nav' );
+		}
+
+		/**
+		 * Registers this plugin as being active for other tribe plugins and extensions
+		 *
+		 * @deprecated 4.6
+		 *
+		 * @return bool Indicates if Tribe Common wants the plugin to run
+		 */
+		public function register_active_plugin() {
+			_deprecated_function( __METHOD__, '4.6', '' );
+
+			if ( ! function_exists( 'tribe_register_plugin' ) ) {
+				return true;
+			}
+			return tribe_register_plugin( EVENTS_CALENDAR_PRO_FILE, __CLASS__, self::VERSION );
 		}
 
 		/**

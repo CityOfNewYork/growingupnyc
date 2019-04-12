@@ -62,8 +62,8 @@ const SeriesEnds = ( {
 					<span className="tribe-editor__series-ends__number-input-label">
 						{
 							seriesEndsAfterTimes > 1
-								? __( 'events', 'events-gutenberg' )
-								: __( 'event', 'events-gutenberg' )
+								? __( 'events', 'tribe-events-calendar-pro' )
+								: __( 'event', 'tribe-events-calendar-pro' )
 						}
 					</span>
 				</Fragment>
@@ -105,7 +105,7 @@ SeriesEnds.propTypes = {
 
 SeriesEnds.defaultProps = {
 	seriesEndsOnDateFormat: 'LL',
-	rowLabel: __( 'Series ends', 'events-gutenberg' ),
+	rowLabel: __( 'Series ends', 'tribe-events-calendar-pro' ),
 };
 
 export default SeriesEnds;

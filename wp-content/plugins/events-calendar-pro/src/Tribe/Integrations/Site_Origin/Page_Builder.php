@@ -98,7 +98,11 @@ class Tribe__Events__Pro__Integrations__Site_Origin__Page_Builder {
 
 		foreach ( $panels_data[ 'widgets' ] as $widget ) {
 			// If $widget[ 'panels_info' ][ 'class' ] is the calling class, enqueue styles.
-			if ( empty( $styles_enqueued ) && ! empty( $widget[ 'panels_info' ][ 'class' ] ) && $class === $widget[ 'panels_info' ][ 'class' ] ) {
+			if (
+				empty( $styles_enqueued )
+				&& ! empty( $widget['panels_info']['class'] )
+				&& $class === $widget['panels_info']['class']
+			) {
 				Tribe__Events__Pro__Widgets::enqueue_calendar_widget_styles();
 				// Only need to enqueue them once
 				$styles_enqueued = true;
@@ -110,7 +114,7 @@ class Tribe__Events__Pro__Integrations__Site_Origin__Page_Builder {
 			// Specific to only one widget
 			switch ( $widget[ 'panels_info' ][ 'class' ] ) {
 				case 'Tribe__Events__Pro__Mini_Calendar_Widget':
-					Tribe__Events__Pro__Mini_Calendar::instance()->register_assets();
+					tribe_asset_enqueue( 'tribe-mini-calendar' );
 					break;
 				case 'Tribe__Events__Pro__Countdown_Widget':
 					wp_enqueue_script( 'tribe-events-countdown-widget', tribe_events_pro_resource_url( 'widget-countdown.js' ), array( 'jquery' ), apply_filters( 'tribe_events_pro_js_version', Tribe__Events__Pro__Main::VERSION ), true );

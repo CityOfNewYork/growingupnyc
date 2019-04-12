@@ -34,7 +34,7 @@ const SingleToDateTimePicker = ( {
 				'tribe-editor__single-to-date-time-picker',
 				className,
 			) }
-			label={ __( 'To', 'events-gutenberg' ) }
+			label={ __( 'To', 'tribe-events-calendar-pro' ) }
 		>
 			<TimePicker
 				current={ endTimeInput }
@@ -45,7 +45,7 @@ const SingleToDateTimePicker = ( {
 				onClick={ onEndTimeClick }
 				allDay={ isAllDay }
 			/>
-			<span>{ __( 'on', 'events-gutenberg' ) }</span>
+			<span>{ __( 'on', 'tribe-events-calendar-pro' ) }</span>
 			<DayPickerInput
 				value={ endDate }
 				format={ endDateFormat }

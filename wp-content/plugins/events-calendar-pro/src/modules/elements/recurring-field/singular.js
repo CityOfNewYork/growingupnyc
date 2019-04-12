@@ -24,7 +24,7 @@ const SingularField = ( { isMultiDay, index } ) => {
 				blockType={ constants.RECURRING }
 				index={ index }
 				options={ options.RECURRENCE_TYPE_RULES_OPTIONS }
-				rowLabel={ __( 'A', 'events-gutenberg' ) }
+				rowLabel={ __( 'A', 'tribe-events-calendar-pro' ) }
 			/>
 			<OnDatePicker
 				blockType={ constants.RECURRING }

@@ -116,6 +116,8 @@ class GunySite extends TimberSite {
       'meta_value' => 1
     ) );
     $context['top_programs'] = Timber::get_widgets('top_programs_widgets');
+    $context['top_afterschool'] = Timber::get_widgets('top_afterschool_widgets');
+    $context['top_summer'] = Timber::get_widgets('top_summer_widgets');
     if (is_front_page()) {
       $context['top_widget'] = Timber::get_widgets('top_widget');
     }
@@ -158,6 +160,20 @@ class GunySite extends TimberSite {
       'id' => 'top_programs_widgets',
       'name' => __('Top Programs'),
       'description' => __('Manually selected top programs'),
+      'before_widget' => '',
+      'after_widget' => ''
+    ));
+    register_sidebar(array(
+      'id' => 'top_summer_widgets',
+      'name' => __('Top Summer'),
+      'description' => __('Manually selected top summer activities'),
+      'before_widget' => '',
+      'after_widget' => ''
+    ));
+    register_sidebar(array(
+      'id' => 'top_afterschool_widgets',
+      'name' => __('Top After School'),
+      'description' => __('Manually selected top after school activities'),
       'before_widget' => '',
       'after_widget' => ''
     ));
@@ -485,6 +501,10 @@ function guny_titles( $title ){
   else if(get_post_type() == "summer-guide"){
     $title = get_post_type_object('summer-guide')->labels->singular_name.' - ' . get_bloginfo('name', 'display');
   }
+
+  if ( preg_match('search') || !empty($_GET['s'])) {
+    $title = __('Search - Growing Up NYC', 'guny-search');
+  }
   return $title;
 }
 add_filter( 'pre_get_document_title', 'guny_titles', 999, 1 );
@@ -540,6 +560,8 @@ $includes = [
   '/includes/guny_shortcodes.php', // Custom Shortcodes
   '/includes/guny_meta_boxes.php', // Customize Wordpress meta boxes
   '/includes/guny_top_programs.php', // Add Top Programs Widget
+  '/includes/guny_top_summer.php', // Add Top Summer Widget
+  '/includes/guny_top_afterschool.php', // Add Top Afterschool Widget
   '/includes/guny_term_meta.php', // Add custom meta fields to taxonomies
   '/includes/guny_facetwp.php', // Customize Facet WP output
   '/includes/guny_filter_events.php', // Event filters
@@ -602,20 +624,23 @@ function pre_dump($var) {
  * Render 404 template for pages containing "404" in
  * their title. This uses same logic in 404.php
  */
-add_action('template_redirect', 'page_not_found_redirect');
+// add_action('template_redirect', 'page_not_found_redirect');
 
-function page_not_found_redirect() {
-  if ( preg_match('/404/', $_SERVER['REQUEST_URI']) > 0 && !is_404() ) {
-    $context = Timber::get_context();
-    $context['top_widget'] = Timber::get_widgets('top_widget');
+// function page_not_found_redirect() {
+//   // if ( preg_match('/404/', $_SERVER['REQUEST_URI']) > 0 && !is_404() ) {
+//   //   $context = Timber::get_context();
+//   //   $context['top_widget'] = Timber::get_widgets('top_widget');
 
-    $post_id = icl_object_id(get_page_by_title( '404' )->ID, 'page', FALSE, ICL_LANGUAGE_CODE);
-    $post = get_page($post_id);
+//   //   $post_id = icl_object_id(get_page_by_title( '404' )->ID, 'page', FALSE, ICL_LANGUAGE_CODE);
+//   //   $post = get_page($post_id);
 
-    $context['post'] = $post;
-    $context['side_menu_categories'] = get_field('side_menu_categories', $post->id);
+//   //   $context['post'] = $post;
+//   //   $context['side_menu_categories'] = get_field('side_menu_categories', $post->id);
 
-    Timber::render(array('404.twig'), $context);
-    exit;
-  }
-}
+//   //   Timber::render(array('404.twig'), $context);
+//   //   exit;
+//   // }
+//   if (!empty($_GET['s'])){
+//     Routes::load('search.php', $params, null, 200);
+//   }
+// }

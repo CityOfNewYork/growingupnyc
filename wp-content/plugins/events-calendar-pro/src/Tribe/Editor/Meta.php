@@ -193,11 +193,13 @@ class Tribe__Events__Pro__Editor__Meta extends Tribe__Editor__Meta {
 	}
 
 	/**
-	 * Remove the recurrence meta box if classic-editor is set
+	 * Remove the recurrence meta box based on recurrence structure for blocks
 	 *
 	 * @since 4.5
+	 * @since 4.5.3 Added $post_id param
 	 *
-	 * @param $show_meta
+	 * @param  mixed  $show_meta  Default value to display recurrence or not
+	 * @param  int    $post_id    Which post we are dealing with
 	 *
 	 * @return bool
 	 */
@@ -205,7 +207,17 @@ class Tribe__Events__Pro__Editor__Meta extends Tribe__Editor__Meta {
 		/** @var Tribe__Editor $editor */
 		$editor = tribe( 'editor' );
 
-		return has_blocks( (int) $post_id ) && $editor->is_classic_editor() ? false : $show_meta;
+		// Return default on non classic editor
+		if ( ! $editor->is_classic_editor() ) {
+			return $show_meta;
+		}
+
+		// when it doesnt have blocks we return default
+		if ( ! has_blocks( absint( $post_id ) ) ) {
+			return $show_meta;
+		}
+
+		return false;
 	}
 
 	/**

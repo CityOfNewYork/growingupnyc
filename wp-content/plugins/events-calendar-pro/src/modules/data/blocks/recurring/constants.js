@@ -14,17 +14,17 @@ export const MONTHLY = 'monthly';
 export const YEARLY = 'yearly';
 export const SINGLE = 'single';
 
-export const DAILY_LABEL = __( 'Day', 'events-gutenberg' );
-export const WEEKLY_LABEL = __( 'Week', 'events-gutenberg' );
-export const MONTHLY_LABEL = __( 'Month', 'events-gutenberg' );
-export const YEARLY_LABEL = __( 'Year', 'events-gutenberg' );
+export const DAILY_LABEL = __( 'Day', 'tribe-events-calendar-pro' );
+export const WEEKLY_LABEL = __( 'Week', 'tribe-events-calendar-pro' );
+export const MONTHLY_LABEL = __( 'Month', 'tribe-events-calendar-pro' );
+export const YEARLY_LABEL = __( 'Year', 'tribe-events-calendar-pro' );
 
-export const DAILY_LABEL_PLURAL = __( 'Days', 'events-gutenberg' );
-export const WEEKLY_LABEL_PLURAL = __( 'Weeks', 'events-gutenberg' );
-export const MONTHLY_LABEL_PLURAL = __( 'Months', 'events-gutenberg' );
-export const YEARLY_LABEL_PLURAL = __( 'Years', 'events-gutenberg' );
+export const DAILY_LABEL_PLURAL = __( 'Days', 'tribe-events-calendar-pro' );
+export const WEEKLY_LABEL_PLURAL = __( 'Weeks', 'tribe-events-calendar-pro' );
+export const MONTHLY_LABEL_PLURAL = __( 'Months', 'tribe-events-calendar-pro' );
+export const YEARLY_LABEL_PLURAL = __( 'Years', 'tribe-events-calendar-pro' );
 
-export const SINGLE_LABEL = __( 'Single Recurrence', 'events-gutenberg' );
+export const SINGLE_LABEL = __( 'Single Recurrence', 'tribe-events-calendar-pro' );
 
 export const RECURRENCE_TYPES = [ DAILY, WEEKLY, MONTHLY, YEARLY, SINGLE ];
 
@@ -36,9 +36,9 @@ export const ON = 'on';
 export const AFTER = 'after';
 export const NEVER = 'never';
 
-export const ON_LABEL = __( 'On', 'events-gutenberg' );
-export const AFTER_LABEL = __( 'After', 'events-gutenberg' );
-export const NEVER_LABEL = __( 'Never', 'events-gutenberg' );
+export const ON_LABEL = __( 'On', 'tribe-events-calendar-pro' );
+export const AFTER_LABEL = __( 'After', 'tribe-events-calendar-pro' );
+export const NEVER_LABEL = __( 'Never', 'tribe-events-calendar-pro' );
 
 export const DATE = 'date';
 export const COUNT = 'count';
@@ -55,21 +55,21 @@ export const THURSDAY = 'thursday';
 export const FRIDAY = 'friday';
 export const SATURDAY = 'saturday';
 
-export const SUNDAY_LABEL = __( 'Sunday', 'events-gutenberg' );
-export const MONDAY_LABEL = __( 'Monday', 'events-gutenberg' );
-export const TUESDAY_LABEL = __( 'Tuesday', 'events-gutenberg' );
-export const WEDNESDAY_LABEL = __( 'Wednesday', 'events-gutenberg' );
-export const THURSDAY_LABEL = __( 'Thursday', 'events-gutenberg' );
-export const FRIDAY_LABEL = __( 'Friday', 'events-gutenberg' );
-export const SATURDAY_LABEL = __( 'Saturday', 'events-gutenberg' );
+export const SUNDAY_LABEL = __( 'Sunday', 'tribe-events-calendar-pro' );
+export const MONDAY_LABEL = __( 'Monday', 'tribe-events-calendar-pro' );
+export const TUESDAY_LABEL = __( 'Tuesday', 'tribe-events-calendar-pro' );
+export const WEDNESDAY_LABEL = __( 'Wednesday', 'tribe-events-calendar-pro' );
+export const THURSDAY_LABEL = __( 'Thursday', 'tribe-events-calendar-pro' );
+export const FRIDAY_LABEL = __( 'Friday', 'tribe-events-calendar-pro' );
+export const SATURDAY_LABEL = __( 'Saturday', 'tribe-events-calendar-pro' );
 
-export const SUNDAY_ABBR = __( 'S', 'events-gutenberg' );
-export const MONDAY_ABBR = __( 'M', 'events-gutenberg' );
-export const TUESDAY_ABBR = __( 'T', 'events-gutenberg' );
-export const WEDNESDAY_ABBR = __( 'W', 'events-gutenberg' );
-export const THURSDAY_ABBR = __( 'T', 'events-gutenberg' );
-export const FRIDAY_ABBR = __( 'F', 'events-gutenberg' );
-export const SATURDAY_ABBR = __( 'S', 'events-gutenberg' );
+export const SUNDAY_ABBR = __( 'S', 'tribe-events-calendar-pro' );
+export const MONDAY_ABBR = __( 'M', 'tribe-events-calendar-pro' );
+export const TUESDAY_ABBR = __( 'T', 'tribe-events-calendar-pro' );
+export const WEDNESDAY_ABBR = __( 'W', 'tribe-events-calendar-pro' );
+export const THURSDAY_ABBR = __( 'T', 'tribe-events-calendar-pro' );
+export const FRIDAY_ABBR = __( 'F', 'tribe-events-calendar-pro' );
+export const SATURDAY_ABBR = __( 'S', 'tribe-events-calendar-pro' );
 
 export const SUNDAY_CHECKED = 'sundayChecked';
 export const MONDAY_CHECKED = 'mondayChecked';
@@ -119,7 +119,7 @@ export const DAYS_OF_THE_WEEK_PROP_KEY_MAPPING_FROM_STATE = {
 export const DAYS_OF_THE_MONTH = Array( 31 ).fill().map( ( _, index ) => index + 1 );
 
 export const DAY = 'day';
-export const DAY_LABEL = __( 'Day', 'events-gutenberg' );
+export const DAY_LABEL = __( 'Day', 'tribe-events-calendar-pro' );
 
 //
 // ─── WEEKS OF THE MONTH ─────────────────────────────────────────────────────────
@@ -132,12 +132,12 @@ export const FOURTH = 'fourth';
 export const FIFTH = 'fifth';
 export const LAST = 'last';
 
-export const FIRST_LABEL = __( 'First', 'events-gutenberg' );
-export const SECOND_LABEL = __( 'Second', 'events-gutenberg' );
-export const THIRD_LABEL = __( 'Third', 'events-gutenberg' );
-export const FOURTH_LABEL = __( 'Fourth', 'events-gutenberg' );
-export const FIFTH_LABEL = __( 'Fifth', 'events-gutenberg' );
-export const LAST_LABEL = __( 'Last', 'events-gutenberg' );
+export const FIRST_LABEL = __( 'First', 'tribe-events-calendar-pro' );
+export const SECOND_LABEL = __( 'Second', 'tribe-events-calendar-pro' );
+export const THIRD_LABEL = __( 'Third', 'tribe-events-calendar-pro' );
+export const FOURTH_LABEL = __( 'Fourth', 'tribe-events-calendar-pro' );
+export const FIFTH_LABEL = __( 'Fifth', 'tribe-events-calendar-pro' );
+export const LAST_LABEL = __( 'Last', 'tribe-events-calendar-pro' );
 
 export const WEEKS_OF_THE_MONTH = [ FIRST, SECOND, THIRD, FOURTH, FIFTH, LAST ];
 export const WEEK_NUM_MAPPING_TO_WEEKS_OF_THE_MONTH = {
@@ -165,31 +165,31 @@ export const OCTOBER = 'october';
 export const NOVEMBER = 'november';
 export const DECEMBER = 'december';
 
-export const JANUARY_LABEL = __( 'January', 'events-gutenberg' );
-export const FEBRUARY_LABEL = __( 'February', 'events-gutenberg' );
-export const MARCH_LABEL = __( 'March', 'events-gutenberg' );
-export const APRIL_LABEL = __( 'April', 'events-gutenberg' );
-export const MAY_LABEL = __( 'May', 'events-gutenberg' );
-export const JUNE_LABEL = __( 'June', 'events-gutenberg' );
-export const JULY_LABEL = __( 'July', 'events-gutenberg' );
-export const AUGUST_LABEL = __( 'August', 'events-gutenberg' );
-export const SEPTEMBER_LABEL = __( 'September', 'events-gutenberg' );
-export const OCTOBER_LABEL = __( 'October', 'events-gutenberg' );
-export const NOVEMBER_LABEL = __( 'November', 'events-gutenberg' );
-export const DECEMBER_LABEL = __( 'December', 'events-gutenberg' );
+export const JANUARY_LABEL = __( 'January', 'tribe-events-calendar-pro' );
+export const FEBRUARY_LABEL = __( 'February', 'tribe-events-calendar-pro' );
+export const MARCH_LABEL = __( 'March', 'tribe-events-calendar-pro' );
+export const APRIL_LABEL = __( 'April', 'tribe-events-calendar-pro' );
+export const MAY_LABEL = __( 'May', 'tribe-events-calendar-pro' );
+export const JUNE_LABEL = __( 'June', 'tribe-events-calendar-pro' );
+export const JULY_LABEL = __( 'July', 'tribe-events-calendar-pro' );
+export const AUGUST_LABEL = __( 'August', 'tribe-events-calendar-pro' );
+export const SEPTEMBER_LABEL = __( 'September', 'tribe-events-calendar-pro' );
+export const OCTOBER_LABEL = __( 'October', 'tribe-events-calendar-pro' );
+export const NOVEMBER_LABEL = __( 'November', 'tribe-events-calendar-pro' );
+export const DECEMBER_LABEL = __( 'December', 'tribe-events-calendar-pro' );
 
-export const JANUARY_ABBR = __( 'Jan', 'events-gutenberg' );
-export const FEBRUARY_ABBR = __( 'Feb', 'events-gutenberg' );
-export const MARCH_ABBR = __( 'Mar', 'events-gutenberg' );
-export const APRIL_ABBR = __( 'Apr', 'events-gutenberg' );
-export const MAY_ABBR = __( 'May', 'events-gutenberg' );
-export const JUNE_ABBR = __( 'Jun', 'events-gutenberg' );
-export const JULY_ABBR = __( 'Jul', 'events-gutenberg' );
-export const AUGUST_ABBR = __( 'Aug', 'events-gutenberg' );
-export const SEPTEMBER_ABBR = __( 'Sep', 'events-gutenberg' );
-export const OCTOBER_ABBR = __( 'Oct', 'events-gutenberg' );
-export const NOVEMBER_ABBR = __( 'Nov', 'events-gutenberg' );
-export const DECEMBER_ABBR = __( 'Dec', 'events-gutenberg' );
+export const JANUARY_ABBR = __( 'Jan', 'tribe-events-calendar-pro' );
+export const FEBRUARY_ABBR = __( 'Feb', 'tribe-events-calendar-pro' );
+export const MARCH_ABBR = __( 'Mar', 'tribe-events-calendar-pro' );
+export const APRIL_ABBR = __( 'Apr', 'tribe-events-calendar-pro' );
+export const MAY_ABBR = __( 'May', 'tribe-events-calendar-pro' );
+export const JUNE_ABBR = __( 'Jun', 'tribe-events-calendar-pro' );
+export const JULY_ABBR = __( 'Jul', 'tribe-events-calendar-pro' );
+export const AUGUST_ABBR = __( 'Aug', 'tribe-events-calendar-pro' );
+export const SEPTEMBER_ABBR = __( 'Sep', 'tribe-events-calendar-pro' );
+export const OCTOBER_ABBR = __( 'Oct', 'tribe-events-calendar-pro' );
+export const NOVEMBER_ABBR = __( 'Nov', 'tribe-events-calendar-pro' );
+export const DECEMBER_ABBR = __( 'Dec', 'tribe-events-calendar-pro' );
 
 export const MONTHS_OF_THE_YEAR_MAPPING_TO_STATE = {
 	[ JANUARY ]: 1,
@@ -220,10 +220,10 @@ export const FIFTH_DAY = 'fifth_day';
 export const SIXTH_DAY = 'sixth_day';
 export const SEVENTH_DAY = 'seventh_day';
 
-export const NEXT_DAY_LABEL = __( 'Next day', 'events-gutenberg' );
-export const SECOND_DAY_LABEL = __( '2nd day', 'events-gutenberg' );
-export const THIRD_DAY_LABEL = __( '3rd day', 'events-gutenberg' );
-export const FOURTH_DAY_LABEL = __( '4th day', 'events-gutenberg' );
-export const FIFTH_DAY_LABEL = __( '5th day', 'events-gutenberg' );
-export const SIXTH_DAY_LABEL = __( '6th day', 'events-gutenberg' );
-export const SEVENTH_DAY_LABEL = __( '7th day', 'events-gutenberg' );
+export const NEXT_DAY_LABEL = __( 'Next day', 'tribe-events-calendar-pro' );
+export const SECOND_DAY_LABEL = __( '2nd day', 'tribe-events-calendar-pro' );
+export const THIRD_DAY_LABEL = __( '3rd day', 'tribe-events-calendar-pro' );
+export const FOURTH_DAY_LABEL = __( '4th day', 'tribe-events-calendar-pro' );
+export const FIFTH_DAY_LABEL = __( '5th day', 'tribe-events-calendar-pro' );
+export const SIXTH_DAY_LABEL = __( '6th day', 'tribe-events-calendar-pro' );
+export const SEVENTH_DAY_LABEL = __( '7th day', 'tribe-events-calendar-pro' );

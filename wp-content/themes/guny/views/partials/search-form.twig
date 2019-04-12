@@ -20,8 +20,8 @@
       </svg>
     </button>
 
-    <a href="{{ function('Search\\get_path') }}/?s={% if post_type %}&post_type={{ post_type }}{% endif %}"
-       class="form-field__icon form-field__icon--large form-field__icon--weak"
+    <a href="#clear"
+       class="form-field__icon form-field__icon--large form-field__icon--weak search-clear"
        {% if s == '' %}
        style="display:none;"
        aria-hidden="true"

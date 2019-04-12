@@ -9,338 +9,6 @@
  */
 
 /**
- * Filters posts based on WPML language.
- *
- * Attaches to 'relevanssi_hits_filter' to restrict WPML searches to the current
- * language. Whether this filter is used or not depends on the option
- * 'relevanssi_wpml_only_current'. Thanks to rvencu for the initial code.
- *
- * @global object $sitepress The WPML global object.
- *
- * @param array $data Index 0 has the array of results, index 1 has the search query.
- *
- * @return array $data The whole parameter array, with the filtered posts in the index 0.
- */
-function relevanssi_wpml_filter( $data ) {
-	$filter_enabled = get_option( 'relevanssi_wpml_only_current' );
-	if ( 'on' === $filter_enabled ) {
-		$current_blog_language = get_bloginfo( 'language' );
-		$filtered_hits         = array();
-		foreach ( $data[0] as $hit ) {
-			if ( is_integer( $hit ) ) {
-				// In case "fields" is set to "ids", fetch the post object we need.
-				$hit = get_post( $hit );
-			}
-
-			if ( isset( $hit->blog_id ) ) {
-				// This is a multisite search.
-				switch_to_blog( $hit->blog_id );
-				if ( function_exists( 'icl_object_id' ) ) {
-					// Reset the WPML cache when blog is switched, otherwise WPML
-					// will be confused.
-					global $wpml_post_translations;
-					$wpml_post_translations->reload();
-				}
-			}
-
-			global $sitepress;
-
-			// Check if WPML is used.
-			if ( function_exists( 'icl_object_id' ) && ! function_exists( 'pll_is_translated_post_type' ) ) {
-				if ( $sitepress->is_translated_post_type( $hit->post_type ) ) {
-					$id = apply_filters( 'wpml_object_id', $hit->ID, $hit->post_type, false );
-					// This is a post in a translated post type.
-					if ( intval( $hit->ID ) === $id ) {
-						// The post exists in the current language, and can be included.
-						$filtered_hits[] = $hit;
-					}
-				} else {
-					// This is not a translated post type, so include all posts.
-					$filtered_hits[] = $hit;
-				}
-			} elseif ( get_bloginfo( 'language' ) === $current_blog_language ) {
-				// If there is no WPML but the target blog has identical language with current blog,
-				// we use the hits. Note en-US is not identical to en-GB!
-				$filtered_hits[] = $hit;
-			}
-
-			if ( isset( $hit->blog_id ) ) {
-				restore_current_blog();
-			}
-		}
-
-		return array( $filtered_hits, $data[1] );
-	}
-
-	return $data;
-}
-
-/**
- * Removes the Polylang language filters.
- *
- * If the Polylang allow all option is enabled ('relevanssi_polylang_all_languages'),
- * removes the Polylang language filter. By default Polylang filters the languages
- * using a taxonomy query.
- *
- * @param object $query WP_Query object we need to clean up.
- */
-function relevanssi_polylang_filter( $query ) {
-	$polylang_allow_all = get_option( 'relevanssi_polylang_all_languages' );
-	if ( 'on' === $polylang_allow_all ) {
-		$ok_queries = array();
-
-		if ( ! isset( $query->tax_query ) ) {
-			// No tax query set, backing off.
-			return;
-		}
-
-		if ( ! isset( $query->tax_query->queries ) || ! is_array( $query->tax_query->queries ) ) {
-			// No tax query set, backing off.
-			return;
-		}
-
-		foreach ( $query->tax_query->queries as $tax_query ) {
-			if ( 'language' !== $tax_query['taxonomy'] ) {
-				// Not a language tax query.
-				$ok_queries[] = $tax_query;
-			}
-		}
-		$query->tax_query->queries = $ok_queries;
-
-		if ( isset( $query->query_vars['tax_query'] ) ) {
-			// Tax queries can be here as well, so let's sweep this one too.
-			$ok_queries = array();
-			foreach ( $query->query_vars['tax_query'] as $tax_query ) {
-				if ( 'language' !== $tax_query['taxonomy'] ) {
-					$ok_queries[] = $tax_query;
-				}
-			}
-			$query->query_vars['tax_query'] = $ok_queries;
-		}
-
-		if ( isset( $query->query_vars['taxonomy'] ) && 'language' === $query->query_vars['taxonomy'] ) {
-			// Another way to set the taxonomy.
-			unset( $query->query_vars['taxonomy'] );
-			unset( $query->query_vars['term'] );
-		}
-	}
-
-	return $query;
-}
-
-/**
- * Gets the next key-direction pair from the orderby array.
- *
- * Fetches a key-direction pair from the orderby array. Converts key names to match
- * the post object parameters when necessary and seeds the random generator, if
- * required.
- *
- * @param array $orderby An array of key-direction pairs.
- *
- * @return array A set of 'key', 'dir' for direction and 'compare' for proper
- * comparison method.
- */
-function relevanssi_get_next_key( &$orderby ) {
-	if ( ! is_array( $orderby ) || count( $orderby ) < 1 ) {
-		// Nothing to see here.
-		return array(
-			'key'     => null,
-			'dir'     => null,
-			'compare' => null,
-		);
-	}
-
-	list( $key ) = array_keys( $orderby );
-	$dir         = $orderby[ $key ];
-	unset( $orderby[ $key ] );
-
-	if ( 'rand' === strtolower( $dir ) ) {
-		$key = 'rand';
-	}
-
-	// Correcting the key for couple of shorthand cases.
-	switch ( $key ) {
-		case 'title':
-			$key = 'post_title';
-			break;
-		case 'date':
-			$key = 'post_date';
-			break;
-		case 'modified':
-			$key = 'post_modified';
-			break;
-		case 'parent':
-			$key = 'post_parent';
-			break;
-		case 'type':
-			$key = 'post_type';
-			break;
-		case 'name':
-			$key = 'post_name';
-			break;
-		case 'author':
-			$key = 'post_author';
-			break;
-		case 'relevance':
-			$key = 'relevance_score';
-			break;
-	}
-
-	$numeric_keys = array( 'menu_order', 'ID', 'post_parent', 'post_author', 'comment_count', 'relevance_score' );
-	$date_keys    = array( 'post_date', 'post_date_gmt', 'post_modified', 'post_modified_gmt' );
-
-	$compare = 'string';
-	if ( in_array( $key, $numeric_keys, true ) ) {
-		$compare = 'number';
-	} elseif ( in_array( $key, $date_keys, true ) ) {
-		$compare = 'date';
-	}
-
-	if ( 'rand' === $key ) {
-		if ( is_numeric( $dir ) ) {
-			// A specific random seed is requested.
-			mt_srand( $dir );
-		}
-	} else {
-		$dir = strtolower( $dir );
-		if ( 'asc' !== $dir ) {
-			$dir = 'desc';
-		}
-	}
-
-	$values = array(
-		'key'     => $key,
-		'dir'     => $dir,
-		'compare' => $compare,
-	);
-	return $values;
-}
-
-/**
- * Gets the values for comparing items for given key.
- *
- * Fetches the key values for the item pair. If random order is required, this
- * function will randomize the order.
- *
- * @global object $wp_query The global WP_Query object.
- *
- * @param string $key    The key used.
- * @param object $item_1 The first post object to compare.
- * @param object $item_2 The second post object to compare.
- *
- * @return array Array with the key values: 'key1' and 'key2', respectively.
- */
-function relevanssi_get_compare_values( $key, $item_1, $item_2 ) {
-	if ( 'rand' === $key ) {
-		do {
-			$key1 = rand();
-			$key2 = rand();
-		} while ( $key1 === $key2 );
-		$keys = array(
-			'key1' => $key1,
-			'key2' => $key2,
-		);
-		return $keys;
-	}
-
-	$key1 = '';
-	$key2 = '';
-
-	if ( 'meta_value' === $key || 'meta_value_num' === $key ) {
-		global $wp_query;
-		// Get the name of the field from the global WP_Query.
-		$key = $wp_query->query_vars['meta_key'];
-		if ( ! isset( $key ) ) {
-			// The key is not set.
-			return array( '', '' );
-		}
-
-		$key1 = get_post_meta( $item_1->ID, $key, true );
-		if ( empty( $key1 ) ) {
-			/**
-			 * Adds in a missing sorting value.
-			 *
-			 * In some cases the sorting method may not have values for all posts
-			 * (for example when sorting by 'menu_order'). If you still want to use
-			 * a sorting method like this, you can use this function to fill in a
-			 * value (in the case of 'menu_order', for example, one could use
-			 * PHP_INT_MAX.)
-			 *
-			 * @param string $key1 The value to filter.
-			 * @param string $key  The name of the key.
-			 */
-			$key1 = apply_filters( 'relevanssi_missing_sort_key', $key1, $key );
-		}
-
-		$key2 = get_post_meta( $item_2->ID, $key, true );
-		if ( empty( $key2 ) ) {
-			/**
-			 * Documented in lib/common.php.
-			 */
-			$key2 = apply_filters( 'relevanssi_missing_sort_key', $key2, $key );
-		}
-	} else {
-		if ( isset( $item_1->$key ) ) {
-			$key1 = relevanssi_strtolower( $item_1->$key );
-		} else {
-			/**
-			 * Documented in lib/common.php.
-			 */
-			$key1 = apply_filters( 'relevanssi_missing_sort_key', $key1, $key );
-		}
-		if ( isset( $item_2->$key ) ) {
-			$key2 = relevanssi_strtolower( $item_2->$key );
-		} else {
-			/**
-			 * Documented in lib/common.php.
-			 */
-			$key2 = apply_filters( 'relevanssi_missing_sort_key', $key2, $key );
-		}
-	}
-
-	$keys = array(
-		'key1' => $key1,
-		'key2' => $key2,
-	);
-	return $keys;
-}
-
-/**
- * Compares to values.
- *
- * Compares two sorting keys using date based comparison, string comparison or
- * numeric comparison.
- *
- * @param string $key1 The first key.
- * @param string $key2 The second key.
- * @param string $compare The comparison method; possible values are 'date' for
- * date comparisons and 'string' for string comparison, everything else is
- * considered a numeric comparison.
- *
- * @return int $val Returns < 0 if key1 is less than key2; > 0 if key1 is greater
- * than key2, and 0 if they are equal.
- */
-function relevanssi_compare_values( $key1, $key2, $compare ) {
-	$val = 0;
-	if ( 'date' === $compare ) {
-		if ( strtotime( $key1 ) > strtotime( $key2 ) ) {
-			$val = 1;
-		} elseif ( strtotime( $key1 ) < strtotime( $key2 ) ) {
-			$val = -1;
-		}
-	} elseif ( 'string' === $compare ) {
-		$val = relevanssi_mb_strcasecmp( $key1, $key2 );
-	} else {
-		if ( $key1 > $key2 ) {
-			$val = 1;
-		} elseif ( $key1 < $key2 ) {
-			$val = -1;
-		}
-	}
-	return $val;
-}
-
-/**
  * Multibyte friendly case-insensitive string comparison.
  *
  * If multibyte string functions are available, do strcmp() after using
@@ -380,86 +48,6 @@ function relevanssi_strtolower( $string ) {
 	} else {
 		return mb_strtolower( $string );
 	}
-}
-
-/**
- * Compares values using multiple levels of sorting keys.
- *
- * Comparison function for usort() using multiple levels of sorting methods. If one
- * level produces a tie, the sort will get a next level of sorting methods.
- *
- * @global array $relevanssi_keys     An array of sorting keys by level.
- * @global array $relevanssi_dirs     An array of sorting directions by level.
- * @global array $relevanssi_compares An array of comparison methods by level.
- *
- * @param object $a A post object.
- * @param object $b A post object.
- *
- * @return int $val Returns < 0 if a is less than b; > 0 if a is greater
- * than b, and 0 if they are equal.
- */
-function relevanssi_cmp_function( $a, $b ) {
-	global $relevanssi_keys, $relevanssi_dirs, $relevanssi_compares;
-
-	$level = -1;
-	$val   = 0;
-
-	while ( 0 === $val ) {
-		$level++;
-		if ( ! isset( $relevanssi_keys[ $level ] ) ) {
-			// No more levels; we've hit the bedrock.
-			$level--;
-			break;
-		}
-		$compare        = $relevanssi_compares[ $level ];
-		$compare_values = relevanssi_get_compare_values( $relevanssi_keys[ $level ], $a, $b );
-		$val            = relevanssi_compare_values( $compare_values['key1'], $compare_values['key2'], $compare );
-	}
-
-	if ( 'desc' === $relevanssi_dirs[ $level ] ) {
-		$val = $val * -1;
-	}
-
-	return $val;
-}
-
-/**
- * Sorts post objects.
- *
- * Sorts post objects using multiple levels of sorting methods. This function was
- * originally written by Matthew Hood and published in the PHP manual comments.
- * The actual sorting is handled by relevanssi_cmp_function().
- *
- * @global array $relevanssi_keys     An array of sorting keys by level.
- * @global array $relevanssi_dirs     An array of sorting directions by level.
- * @global array $relevanssi_compares An array of comparison methods by level.
- *
- * @param array $data    The posts to sort are in $data[0], used as a reference.
- * @param array $orderby The array of orderby rules with directions.
- */
-function relevanssi_object_sort( &$data, $orderby ) {
-	global $relevanssi_keys, $relevanssi_dirs, $relevanssi_compares;
-
-	$relevanssi_keys     = array();
-	$relevanssi_dirs     = array();
-	$relevanssi_compares = array();
-
-	do {
-		$values = relevanssi_get_next_key( $orderby );
-		if ( ! empty( $values['key'] ) ) {
-			$relevanssi_keys[]     = $values['key'];
-			$relevanssi_dirs[]     = $values['dir'];
-			$relevanssi_compares[] = $values['compare'];
-		}
-	} while ( ! empty( $values['key'] ) );
-
-	$primary_key = $relevanssi_keys[0];
-	if ( ! isset( $data[0]->$primary_key ) ) {
-		// Trying to sort by a non-existent key.
-		return;
-	}
-
-	usort( $data, 'relevanssi_cmp_function' );
 }
 
 /**
@@ -515,7 +103,6 @@ function relevanssi_show_matches( $data, $hit ) {
 	} else {
 		$term_hits_array = array();
 	}
-
 	$term_hits  = '';
 	$total_hits = 0;
 	foreach ( $term_hits_array as $term => $hits ) {
@@ -537,115 +124,6 @@ function relevanssi_show_matches( $data, $hit ) {
 	 * @param string $result The breakdown.
 	 */
 	return apply_filters( 'relevanssi_show_matches', $result );
-}
-
-/**
- * Adds the search query to the log.
- *
- * Logs the search query, trying to avoid bots.
- *
- * @global object $wpdb                 The WordPress database interface.
- * @global array  $relevanssi_variables The global Relevanssi variables, used for database table names.
- *
- * @param string $query The search query.
- * @param int    $hits  The number of hits found.
- */
-function relevanssi_update_log( $query, $hits ) {
-	// Bot filter, by Justin_K.
-	// See: http://wordpress.org/support/topic/bot-logging-problem-w-tested-solution.
-	$user_agent = '';
-	if ( isset( $_SERVER['HTTP_USER_AGENT'] ) ) {
-		$user_agent = $_SERVER['HTTP_USER_AGENT'];
-		$bots       = array( 'Google' => 'Mediapartners-Google' );
-
-		/**
-		 * Filters the bots Relevanssi should block from logs.
-		 *
-		 * Lets you filter the bots that are blocked from Relevanssi logs.
-		 *
-		 * @param array $bots An array of bot user agents.
-		 */
-		$bots = apply_filters( 'relevanssi_bots_to_not_log', $bots );
-		foreach ( $bots as $name => $lookfor ) {
-			if ( false !== stristr( $user_agent, $lookfor ) ) {
-				return;
-			}
-		}
-	}
-
-	/**
-	 * Filters the current user for logs.
-	 *
-	 * The current user is checked before logging a query to omit particular users.
-	 * You can use this filter to filter out the user.
-	 *
-	 * @param object The current user object.
-	 */
-	$user = apply_filters( 'relevanssi_log_get_user', wp_get_current_user() );
-	if ( 0 !== $user->ID && get_option( 'relevanssi_omit_from_logs' ) ) {
-		$omit = explode( ',', get_option( 'relevanssi_omit_from_logs' ) );
-		if ( in_array( strval( $user->ID ), $omit, true ) ) {
-			return;
-		}
-		if ( in_array( $user->user_login, $omit, true ) ) {
-			return;
-		}
-	}
-
-	$ip = '';
-	if ( 'on' === get_option( 'relevanssi_log_queries_with_ip' ) ) {
-		/**
-		 * Filters the IP address of the searcher.
-		 *
-		 * Relevanssi may store the IP address of the searches in the logs. If the
-		 * setting is enabled, this filter can be used to filter out the IP address
-		 * before the log entry is made.
-		 *
-		 * Do note that storing the IP address may be illegal or get you in GDPR
-		 * trouble.
-		 *
-		 * @param string $ip The IP address, from $_SERVER['REMOTE_ADDR'].
-		 */
-		$ip = apply_filters( 'relevanssi_remote_addr', $_SERVER['REMOTE_ADDR'] );
-	}
-
-	/**
-	 * Filters whether a query should be logged or not.
-	 *
-	 * This filter can used to determine whether a query should be logged or not.
-	 *
-	 * @param boolean $ok_to_log  Can the query be logged.
-	 * @param string  $query      The actual query string.
-	 * @param int     $hits       The number of hits found.
-	 * @param string  $user_agent The user agent that made the search.
-	 * @param string  $ip         The IP address the search came from (or empty).
-	 */
-	$ok_to_log = apply_filters( 'relevanssi_ok_to_log', true, $query, $hits, $user_agent, $ip );
-	if ( $ok_to_log ) {
-		global $wpdb, $relevanssi_variables;
-
-		$wpdb->query(
-			$wpdb->prepare( 'INSERT INTO ' . $relevanssi_variables['log_table'] . ' (query, hits, user_id, ip, time) VALUES (%s, %d, %d, %s, NOW())',
-			$query, intval( $hits ), $user->ID, $ip )
-		); // WPCS: unprepared SQL ok, Relevanssi database table name.
-	}
-}
-
-/**
- * Trims Relevanssi log table.
- *
- * Trims Relevanssi log table, using the day interval setting from 'relevanssi_trim_logs'.
- *
- * @global object $wpdb                 The WordPress database interface.
- * @global array  $relevanssi_variables The global Relevanssi variables, used for database table names.
- */
-function relevanssi_trim_logs() {
-	global $wpdb, $relevanssi_variables;
-	$interval = intval( get_option( 'relevanssi_trim_logs' ) );
-	$wpdb->query(
-		$wpdb->prepare( 'DELETE FROM ' . $relevanssi_variables['log_table'] . ' WHERE time < TIMESTAMP(DATE_SUB(NOW(), INTERVAL %d DAY))',
-		$interval )
-	); // WPCS: unprepared SQL ok, Relevanssi database table name.
 }
 
 /**
@@ -689,33 +167,40 @@ function relevanssi_default_post_ok( $post_ok, $post_id ) {
 			// Current user has the required capabilities and can see the page.
 			$post_ok = true;
 		}
-	}
 
-	if ( function_exists( 'members_can_current_user_view_post' ) ) {
-		// Members.
-		$post_ok = members_can_current_user_view_post( $post_id );
+		if ( function_exists( 'members_content_permissions_enabled' ) && function_exists( 'members_can_current_user_view_post' ) ) {
+			// Members. Only use, if 'content permissions' feature is enabled.
+			if ( members_content_permissions_enabled() ) {
+				$post_ok = members_can_current_user_view_post( $post_id );
+			}
+		}
 	}
-	if ( defined( 'GROUPS_CORE_VERSION' ) ) {
-		// Groups.
+	if ( defined( 'GROUPS_CORE_VERSION' ) && 'publish' === $status ) {
+		// Groups. Only apply to published posts, don't apply to drafts.
 		$current_user = wp_get_current_user();
 		$post_ok      = Groups_Post_Access::user_can_read_post( $post_id, $current_user->ID );
 	}
-	if ( class_exists( 'MeprUpdateCtrl' ) && MeprUpdateCtrl::is_activated() ) {
+	if ( class_exists( 'MeprUpdateCtrl', false ) && MeprUpdateCtrl::is_activated() ) { // False, because class_exists() can be really slow sometimes otherwise.
 		// Memberpress.
-		$post    = get_post( $post_id );
-		$post_ok = ! MeprRule::is_locked( $post );
+		$post = get_post( $post_id );
+		if ( MeprRule::is_locked( $post ) ) {
+			$post_ok = false;
+		}
 	}
 	if ( defined( 'SIMPLE_WP_MEMBERSHIP_VER' ) ) {
 		// Simple Membership.
-		$logged_in = SwpmMemberUtils::is_member_logged_in();
-		if ( ! $logged_in ) {
-			$post_ok = false;
-		} else {
-			$access_ctrl = SwpmAccessControl::get_instance();
-			$post_ok     = $access_ctrl->can_i_read_post( $post_id );
-		}
+		$access_ctrl = SwpmAccessControl::get_instance();
+		$post        = get_post( $post_id );
+		$post_ok     = $access_ctrl->can_i_read_post( $post );
 	}
-
+	if ( function_exists( 'wp_jv_prg_user_can_see_a_post' ) ) {
+		// WP JV Post Reading Groups.
+		$post_ok = wp_jv_prg_user_can_see_a_post( get_current_user_id(), $post_id );
+	}
+	if ( function_exists( 'rcp_user_can_access' ) ) {
+		// Restrict Content Pro.
+		$post_ok = rcp_user_can_access( get_current_user_id(), $post_id );
+	}
 	/**
 	 * Filters statuses allowed in admin searches.
 	 *
@@ -759,6 +244,7 @@ function relevanssi_populate_array( $matches ) {
 		array_push( $ids, $match->doc );
 	}
 
+	$ids   = array_keys( array_flip( $ids ) ); // Remove duplicate IDs.
 	$ids   = implode( ',', $ids );
 	$posts = $wpdb->get_results( "SELECT * FROM $wpdb->posts WHERE id IN ($ids)" ); // WPCS: unprepared SQL ok, no user-generated inputs.
 
@@ -855,6 +341,7 @@ function relevanssi_recognize_phrases( $search_query ) {
 	if ( count( $phrases ) > 0 ) {
 		foreach ( $phrases as $phrase ) {
 			$queries = array();
+			$phrase  = $wpdb->esc_like( $phrase );
 			$phrase  = str_replace( '‘', '_', $phrase );
 			$phrase  = str_replace( '’', '_', $phrase );
 			$phrase  = str_replace( "'", '_', $phrase );
@@ -863,7 +350,6 @@ function relevanssi_recognize_phrases( $search_query ) {
 			$phrase  = str_replace( '“', '_', $phrase );
 			$phrase  = str_replace( '„', '_', $phrase );
 			$phrase  = str_replace( '´', '_', $phrase );
-			$phrase  = $wpdb->esc_like( $phrase );
 			$phrase  = esc_sql( $phrase );
 			$excerpt = '';
 			if ( 'on' === get_option( 'relevanssi_index_excerpt' ) ) {
@@ -931,22 +417,6 @@ function relevanssi_strip_invisibles( $text ) {
 }
 
 /**
- * Sorts strings by length.
- *
- * A sorting function that sorts strings by length. Uses relevanssi_strlen() to
- * count the string length.
- *
- * @param string $a String A.
- * @param string $b String B.
- *
- * @return int Negative value, if string A is longer; zero, if strings are equally
- * long; positive, if string B is longer.
- */
-function relevanssi_strlen_sort( $a, $b ) {
-	return relevanssi_strlen( $b ) - relevanssi_strlen( $a );
-}
-
-/**
  * Returns the custom fields to index.
  *
  * Returns a list of custom fields to index, based on the custom field indexing
@@ -977,7 +447,7 @@ function relevanssi_get_custom_fields() {
 /**
  * Trims multibyte strings.
  *
- * Removes the 194+160 non-breakable spaces and removes whitespace.
+ * Removes the 194+160 non-breakable spaces, removes null bytes and removes whitespace.
  *
  * @param string $string The source string.
  *
@@ -985,8 +455,23 @@ function relevanssi_get_custom_fields() {
  */
 function relevanssi_mb_trim( $string ) {
 	$string = str_replace( chr( 194 ) . chr( 160 ), '', $string );
+	$string = str_replace( "\0", '', $string );
 	$string = preg_replace( '/(^\s+)|(\s+$)/us', '', $string );
 	return $string;
+}
+
+/**
+ * Wraps the relevanssi_mb_trim() function so that it can be used as a callback for
+ * array_walk().
+ *
+ * @since 2.1.4
+ *
+ * @see relevanssi_mb_trim.
+ *
+ * @param string $string String to trim.
+ */
+function relevanssi_array_walk_trim( &$string ) {
+	$string = relevanssi_mb_trim( $string );
 }
 
 /**
@@ -1007,6 +492,9 @@ function relevanssi_remove_punct( $a ) {
 		return '';
 	}
 
+	$a = preg_replace( '/&lt;(\d|\s)/', '\1', $a );
+
+	$a = html_entity_decode( $a, ENT_QUOTES );
 	$a = preg_replace( '/<[^>]*>/', ' ', $a );
 
 	$punct_options = get_option( 'relevanssi_punctuation' );
@@ -1026,7 +514,7 @@ function relevanssi_remove_punct( $a ) {
 	}
 
 	$quote_replacement = ' ';
-	if ( isset( $punct_options['quote'] ) && 'remove' === $punct_options['quote'] ) {
+	if ( isset( $punct_options['quotes'] ) && 'remove' === $punct_options['quotes'] ) {
 		$quote_replacement = '';
 	}
 
@@ -1053,11 +541,12 @@ function relevanssi_remove_punct( $a ) {
 		'€'                     => '',
 		'®'                     => '',
 		'©'                     => '',
+		'™'                     => '',
 		'&shy;'                 => '',
 		'&nbsp;'                => ' ',
-		'&#8217;'               => ' ',
 		chr( 194 ) . chr( 160 ) => ' ',
 		'×'                     => ' ',
+		'&#8217;'               => $quote_replacement,
 		"'"                     => $quote_replacement,
 		'’'                     => $quote_replacement,
 		'‘'                     => $quote_replacement,
@@ -1209,24 +698,6 @@ function relevanssi_prevent_default_request( $request, $query ) {
 }
 
 /**
- * Disables Relevanssi in the ACF Relationship field post search.
- *
- * We don't want to use Relevanssi on the ACF Relationship field post searches, so
- * this function disables it (on the 'relevanssi_search_ok' hook).
- *
- * @param boolean $search_ok Block the search or not.
- *
- * @return boolean False, if this is an ACF Relationship field search, pass the
- * parameter unchanged otherwise.
- */
-function relevanssi_acf_relationship_fields( $search_ok ) {
-	if ( isset( $_REQUEST['action'] ) && 'acf' === substr( $_REQUEST['action'], 0, 3 ) ) { // WPCS: CSRF ok.
-		$search_ok = false;
-	}
-	return $search_ok;
-}
-
-/**
  * Tokenizes strings.
  *
  * Tokenizes strings, removes punctuation, converts to lowercase and removes
@@ -1339,7 +810,7 @@ function relevanssi_tokenize( $string, $remove_stops = true, $min_word_length = 
 function relevanssi_get_post_status( $post_id ) {
 	global $relevanssi_post_array;
 	$type = substr( $post_id, 0, 2 );
-	if ( '**' === $type || 'u_' === $type ) {
+	if ( '**' === $type || 'u_' === $type || 'p_' === $type ) {
 		// Taxonomy term or user (a Premium feature).
 		return 'publish';
 	}
@@ -1427,7 +898,7 @@ function relevanssi_the_tags( $before = null, $separator = ', ', $after = '', $e
  * @param string $after     What is printed after the tags, default ''.
  */
 function relevanssi_get_the_tags( $before = null, $separator = ', ', $after = '' ) {
-	return relevanssi_the_tags( $before, $sep, $after, false );
+	return relevanssi_the_tags( $before, $separator, $after, false );
 }
 
 /**
@@ -1474,6 +945,9 @@ function relevanssi_add_synonyms( $query ) {
 			$key   = strval( trim( $parts[0] ) );
 			$value = trim( $parts[1] );
 
+			if ( is_numeric( $key ) ) {
+				$key = " $key";
+			}
 			$synonyms[ $key ][ $value ] = true;
 		}
 
@@ -1487,19 +961,24 @@ function relevanssi_add_synonyms( $query ) {
 
 			foreach ( $terms as $term ) {
 				$term = trim( $term );
-				if ( in_array( strval( $term ), array_keys( $synonyms ), true ) ) { // Strval(), otherwise numbers cause problems.
+				if ( is_numeric( $term ) ) {
+					$term = " $term";
+				}
+				if ( in_array( $term, array_keys( $synonyms ), true ) ) { // Strval(), otherwise numbers cause problems.
 					if ( isset( $synonyms[ strval( $term ) ] ) ) { // Necessary, otherwise terms like "02" can cause problems.
 						$new_terms = array_merge( $new_terms, array_keys( $synonyms[ strval( $term ) ] ) );
 					}
 				}
 			}
 			if ( count( $new_terms ) > 0 ) {
+				$new_terms = array_unique( $new_terms );
 				foreach ( $new_terms as $new_term ) {
 					$query .= " $new_term";
 				}
 			}
 		}
 	}
+
 	return $query;
 }
 
@@ -1618,11 +1097,13 @@ function relevanssi_get_the_title( $post_id ) {
  *
  * @global object $wpdb                 The WordPress database interface.
  * @global array  $relevanssi_variables The Relevanssi global variable, used for table names.
+ * @return int    The doc count.
  */
 function relevanssi_update_doc_count() {
 	global $wpdb, $relevanssi_variables;
-	$doc_count = $wpdb->get_var( 'SELECT COUNT(DISTINCT(relevanssi.doc)) FROM ' . $relevanssi_variables['relevanssi_table'] . ' AS relevanssi' ); // WPCS: unprepared SQL ok, Relevanssi table name.
+	$doc_count = $wpdb->get_var( 'SELECT COUNT(DISTINCT(doc)) FROM ' . $relevanssi_variables['relevanssi_table'] ); // WPCS: unprepared SQL ok, Relevanssi table name.
 	update_option( 'relevanssi_doc_count', $doc_count );
+	return $doc_count;
 }
 
 /**
@@ -1707,19 +1188,31 @@ function relevanssi_switch_blog( $new_blog, $prev_blog ) {
  * @global object $post The global post object.
  *
  * @param string $permalink The link to patch.
+ * @param object $link_post The post object for the current link, global $post if
+ * the parameter is set to null. Default null.
  *
  * @return string The link with the parameter added.
  */
-function relevanssi_add_highlight( $permalink ) {
+function relevanssi_add_highlight( $permalink, $link_post = null ) {
 	$highlight_docs = get_option( 'relevanssi_highlight_docs' );
 	$query          = get_search_query();
 	if ( isset( $highlight_docs ) && 'off' !== $highlight_docs && ! empty( $query ) ) {
-		global $post;
-		$frontpage_id = get_option( 'page_on_front' );
-		if ( is_object( $post ) && $post->ID !== $frontpage_id ) {
-			// We won't add the highlight parameter for the front page, as that will break the link.
-			$permalink = esc_attr( add_query_arg( array( 'highlight' => rawurlencode( get_search_query() ) ), $permalink )
-			);
+		$frontpage_id = intval( get_option( 'page_on_front' ) );
+		// We won't add the highlight parameter for the front page, as that will break the link.
+		$front_page = false;
+		if ( is_object( $link_post ) ) {
+			if ( $link_post->ID === $frontpage_id ) {
+				$front_page = true;
+			}
+		} else {
+			global $post;
+			if ( is_object( $post ) && $post->ID === $frontpage_id ) {
+				$front_page = true;
+			}
+		}
+		if ( ! $front_page ) {
+			$query     = str_replace( '&quot;', '"', $query );
+			$permalink = esc_attr( add_query_arg( array( 'highlight' => rawurlencode( $query ) ), $permalink ) );
 		}
 	}
 	return $permalink;
@@ -1750,7 +1243,7 @@ function relevanssi_get_permalink() {
  * if necessary using relevanssi_add_highlight(), then echoes it out.
  */
 function relevanssi_the_permalink() {
-	echo esc_attr( relevanssi_get_permalink() );
+	echo esc_url( relevanssi_get_permalink() );
 }
 
 /**
@@ -1764,21 +1257,27 @@ function relevanssi_the_permalink() {
  *
  * @global object $post The global post object.
  *
- * @param string $link      The link to adjust.
- * @param object $link_post The post to modify. If null, use global $post.
- * Defaults null.
+ * @param string     $link      The link to adjust.
+ * @param object|int $link_post The post to modify, either WP post object or the post
+ * ID. If null, use global $post. Defaults null.
  *
  * @return string The modified link.
  */
 function relevanssi_permalink( $link, $link_post = null ) {
 	if ( null === $link_post ) {
 		global $post;
+		$link_post = $post;
+	} elseif ( is_int( $link_post ) ) {
+		$link_post = get_post( $link_post );
 	}
 	// Using property_exists() to avoid troubles from magic variables.
-	if ( is_object( $post ) && property_exists( $post, 'relevanssi_link' ) ) {
-		$link = $post->relevanssi_link;
+	if ( is_object( $link_post ) && property_exists( $link_post, 'relevanssi_link' ) ) {
+		$link = $link_post->relevanssi_link;
 	}
-	$link = relevanssi_add_highlight( $link );
+
+	if ( is_search() ) {
+		$link = relevanssi_add_highlight( $link, $link_post );
+	}
 	return $link;
 }
 
@@ -1886,16 +1385,30 @@ function relevanssi_simple_didyoumean( $query, $pre, $post, $n = 5 ) {
 function relevanssi_simple_generate_suggestion( $query ) {
 	global $wpdb, $relevanssi_variables;
 
-	$q = 'SELECT query, count(query) as c, AVG(hits) as a FROM ' . $relevanssi_variables['log_table'] . ' WHERE hits > 1 GROUP BY query ORDER BY count(query) DESC';
+	/**
+	 * The minimum limit of occurrances to include a word.
+	 *
+	 * To save resources, only words with more than this many occurrances are fed for
+	 * the spelling corrector. If there are problems with the spelling corrector,
+	 * increasing this value may fix those problems.
+	 *
+	 * @param int $number The number of occurrances must be more than this value,
+	 * default 2.
+	 */
+	$count = apply_filters( 'relevanssi_get_words_having', 2 );
+	if ( ! is_numeric( $count ) ) {
+		$count = 2;
+	}
+	$q = 'SELECT query, count(query) as c, AVG(hits) as a FROM ' . $relevanssi_variables['log_table'] . ' WHERE hits > ' . $count . ' GROUP BY query ORDER BY count(query) DESC';
 	$q = apply_filters( 'relevanssi_didyoumean_query', $q );
 
-	$data = wp_cache_get( 'relevanssi_didyoumean_query' );
+	$data = get_transient( 'relevanssi_didyoumean_query' );
 	if ( empty( $data ) ) {
 		$data = $wpdb->get_results( $q ); // WPCS: unprepared SQL ok. No user-generated input involved.
-		wp_cache_set( 'relevanssi_didyoumean_query', $data );
+		set_transient( 'relevanssi_didyoumean_query', $data, 60 * 60 * 24 * 7 );
 	}
 
-	$query            = htmlspecialchars_decode( $query );
+	$query            = htmlspecialchars_decode( $query, ENT_QUOTES );
 	$tokens           = relevanssi_tokenize( $query );
 	$suggestions_made = false;
 	$suggestion       = '';
@@ -1913,8 +1426,7 @@ function relevanssi_simple_generate_suggestion( $query ) {
 				break;
 			} else {
 				$lev = levenshtein( $token, $row->query );
-
-				if ( $lev < $distance || $distance < 0 ) {
+				if ( $lev < 3 && ( $lev < $distance || $distance < 0 ) ) {
 					if ( $row->a > 0 ) {
 						$distance = $lev;
 						$closest  = $row->query;
@@ -2016,10 +1528,107 @@ function relevanssi_sanitize_hex_color( $color ) {
 		return '';
 	}
 
+	if ( '#' !== substr( $color, 0, 1 ) ) {
+		$color = '#' . $color;
+	}
+
 	// 3 or 6 hex digits, or the empty string.
 	if ( preg_match( '|^#([A-Fa-f0-9]{3}){1,2}$|', $color ) ) {
 		return $color;
 	}
 
 	return '';
+}
+
+/**
+ * Displays the list of most common words in the index.
+ *
+ * @global object $wpdb                 The WP database interface.
+ * @global array  $relevanssi_variables The global Relevanssi variables.
+ *
+ * @param int     $limit  How many words to display, default 25.
+ * @param boolean $wp_cli If true, return just a list of words. If false, print out
+ * HTML code.
+ *
+ * @return array A list of words, if $wp_cli is true.
+ */
+function relevanssi_common_words( $limit = 25, $wp_cli = false ) {
+	global $wpdb, $relevanssi_variables;
+
+	$plugin = 'relevanssi';
+	if ( RELEVANSSI_PREMIUM ) {
+		$plugin = 'relevanssi-premium';
+	}
+
+	if ( ! is_numeric( $limit ) ) {
+		$limit = 25;
+	}
+
+	$words = $wpdb->get_results( 'SELECT COUNT(*) as cnt, term FROM ' . $relevanssi_variables['relevanssi_table'] . " GROUP BY term ORDER BY cnt DESC LIMIT $limit" ); // WPCS: unprepared sql ok, Relevanssi table name and $limit is numeric.
+
+	if ( ! $wp_cli ) {
+		printf( '<h2>%s</h2>', esc_html__( '25 most common words in the index', 'relevanssi' ) );
+		printf( '<p>%s</p>', esc_html__( "These words are excellent stopword material. A word that appears in most of the posts in the database is quite pointless when searching. This is also an easy way to create a completely new stopword list, if one isn't available in your language. Click the word to add the word to the stopword list. The word will also be removed from the index, so rebuilding the index is not necessary.", 'relevanssi' ) );
+
+?>
+<input type="hidden" name="dowhat" value="add_stopword" />
+<table class="form-table">
+<tr>
+	<th scope="row"><?php esc_html_e( 'Stopword Candidates', 'relevanssi' ); ?></th>
+	<td>
+<ul>
+	<?php
+	$src = plugins_url( 'delete.png', $relevanssi_variables['file'] );
+
+	foreach ( $words as $word ) {
+		$stop = __( 'Add to stopwords', 'relevanssi' );
+		printf( '<li><input style="padding: 0; margin: 0" type="submit" src="%1$s" name="term" value="%2$s"/> (%3$d)</li>', esc_attr( $src ), esc_attr( $word->term ), esc_html( $word->cnt ) );
+	}
+	?>
+	</ul>
+	</td>
+</tr>
+</table>
+	<?php
+
+	}
+
+	return $words;
+}
+
+/**
+ * Returns a list of post types Relevanssi does not want to use.
+ *
+ * @return array An array of post type names.
+ */
+function relevanssi_get_forbidden_post_types() {
+	return array(
+		'nav_menu_item',        // Navigation menu items.
+		'revision',             // Never index revisions.
+		'acf-field',            // Advanced Custom Fields.
+		'acf-field-group',      // Advanced Custom Fields.
+		'oembed_cache',         // Mysterious caches.
+		'customize_changeset',  // Customizer change sets.
+		'user_request',         // User data request.
+		'custom_css',           // Custom CSS data.
+		'cpt_staff_lst_item',   // Staff List.
+		'cpt_staff_lst',        // Staff List.
+		'wp_block',             // Gutenberg block.
+		'amp_validated_url',    // AMP.
+		'jp_pay_order',         // Jetpack.
+		'jp_pay_product',       // Jetpack.
+	);
+}
+
+/**
+ * Returns a list of taxonomies Relevanssi does not want to use.
+ *
+ * @return array An array of taxonomy names.
+ */
+function relevanssi_get_forbidden_taxonomies() {
+	return array(
+		'nav_menu',               // Navigation menus.
+		'link_category',          // Link categories.
+		'amp_validation_error',   // AMP.
+	);
 }

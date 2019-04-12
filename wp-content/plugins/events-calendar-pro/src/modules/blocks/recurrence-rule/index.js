@@ -19,10 +19,10 @@ import EventRecurring from './container';
 
 export default {
 	id: 'event-pro-recurrence-rule',
-	title: __( 'Rules', 'events-gutenberg' ),
+	title: __( 'Rules', 'tribe-events-calendar-pro' ),
 	description: __(
 		'Add recurrence to your event.',
-		'events-gutenberg'
+		'tribe-events-calendar-pro'
 	),
 	icon: <DateTime />,
 	category: 'tribe-events',

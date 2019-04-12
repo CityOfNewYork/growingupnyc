@@ -23,7 +23,7 @@ const WeeklyField = ( { index } ) => {
 				blockType={ constants.EXCEPTION }
 				options={ options.EXCEPTION_OCCURRENCE_OPTIONS }
 				index={ index }
-				rowLabel={ __( 'Every', 'events-gutenberg' ) }
+				rowLabel={ __( 'Every', 'tribe-events-calendar-pro' ) }
 			/>
 			<OnDayOfWeek
 				blockType={ constants.EXCEPTION }
@@ -32,7 +32,7 @@ const WeeklyField = ( { index } ) => {
 			<SeriesEnds
 				blockType={ constants.EXCEPTION }
 				index={ index }
-				rowLabel={ __( 'Exception ends', 'events-gutenberg' ) }
+				rowLabel={ __( 'Exception ends', 'tribe-events-calendar-pro' ) }
 			/>
 		</Fragment>
 	);

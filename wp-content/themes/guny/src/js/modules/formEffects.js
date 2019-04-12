@@ -33,12 +33,33 @@ export default function() {
     }
   }
 
+  /**
+  * Remove the text from search field when clear is triggered
+  * @param {object} event - The event object
+  */
+  function handleClear(event) {
+    event.preventDefault()
+    const searchFields = document.querySelectorAll('input[type=search]');
+    if (searchFields.length) {
+      forEach(searchFields, function(search) {
+        search.value = '';
+      });
+    }
+  }
+
   const inputs = document.querySelectorAll('.signup-form__field');
   if (inputs.length) {
     forEach(inputs, function(inputElem) {
       inputElem.addEventListener('focus', handleFocus);
       inputElem.addEventListener('blur', handleBlur);
       dispatchEvent(inputElem, 'blur');
+    });
+  }
+
+  const searchInput = document.querySelectorAll('.search-clear');
+  if (searchInput.length) {
+    forEach(searchInput, function(inputElem) {
+      inputElem.addEventListener('click', handleClear);
     });
   }
 }

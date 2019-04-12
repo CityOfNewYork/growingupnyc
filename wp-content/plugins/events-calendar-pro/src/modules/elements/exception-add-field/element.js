@@ -13,7 +13,7 @@ import AddField from '@moderntribe/events-pro/elements/add-field/element';
 const ExceptionAddField = ( props ) => {
 	return (
 		<AddField { ...props }>
-			{ __( 'Add Exception', 'events-gutenberg' ) }
+			{ __( 'Add Exception', 'tribe-events-calendar-pro' ) }
 		</AddField>
 	);
 };

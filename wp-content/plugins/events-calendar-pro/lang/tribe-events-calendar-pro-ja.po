@@ -11,6 +11,49 @@ msgstr ""
 "Language: ja_JP\n"
 "Project-Id-Version: Events Calendar Pro\n"
 
+#: src/Tribe/Editor/Blocks/Related_Events.php:26
+msgid "Related Events"
+msgstr ""
+
+#: src/functions/php-min-version.php:76
+msgid "Contact your Host or your system administrator and ask to upgrade to the latest version of PHP."
+msgstr ""
+
+#: src/functions/php-min-version.php:74
+msgid "To allow better control over dates, advanced security improvements and performance gain."
+msgstr ""
+
+#: src/functions/php-min-version.php:64
+msgid "<b>%1$s</b> requires <b>PHP %2$s</b> or higher."
+msgid_plural "<b>%1$s</b> require <b>PHP %2$s</b> or higher."
+msgstr[0] ""
+
+#: src/functions/php-min-version.php:52
+msgctxt "Plugin A\",\" Plugin B"
+msgid ", "
+msgstr ""
+
+#: src/functions/php-min-version.php:51
+msgctxt "Plugin A \"and\" Plugin B"
+msgid " and "
+msgstr ""
+
+#: events-calendar-pro.php:167
+msgid "To begin using Events Calendar PRO, please install the latest version of"
+msgstr ""
+
+#: events-calendar-pro.php:52
+msgid "Events Calendar Pro"
+msgstr ""
+
+#: src/admin-views/event-recurrence-blocks-message.php:11
+msgid "This event’s recurrence rules were created in the block editor. Please use the block editor to make any further changes."
+msgstr ""
+
+#: src/Tribe/Main.php:727
+msgid "Remove related events from the single event view (with classic editor)"
+msgstr ""
+
 #: src/admin-views/custom-fields/gutenberg.php:22
 msgid "Include this field on all new events in the Gutenberg block editor"
 msgstr ""
@@ -117,37 +160,37 @@ msgstr ""
 "\n"
 "イベントをシリーズから分割すると URLが変更されるため、ユーザーが元の URL を使用すると、404 Not Found (お探しのページは見つかりませんでした) エラーが発生します。これが問題であれば、適切なプラグインを使用して、リダイレクトをセットアップおよび管理することをお薦めします。"
 
-#: src/Tribe/Recurrence/Meta.php:1331
+#: src/Tribe/Recurrence/Meta.php:1339
 msgctxt "Used when displaying the word \"years\" in e.g. \"every 2 years\""
 msgid "years"
 msgstr "年"
 
-#: src/Tribe/Recurrence/Meta.php:1330
+#: src/Tribe/Recurrence/Meta.php:1338
 msgctxt "Used when displaying the word \"year\" in e.g. \"every year\""
 msgid "year"
 msgstr "年"
 
-#: src/Tribe/Recurrence/Meta.php:1329
+#: src/Tribe/Recurrence/Meta.php:1337
 msgctxt "Used when displaying the word \"months\" in e.g. \"every 3 months\""
 msgid "months"
 msgstr "月"
 
-#: src/Tribe/Recurrence/Meta.php:1328
+#: src/Tribe/Recurrence/Meta.php:1336
 msgctxt "Used when displaying the word \"month\" in e.g. \"every month\""
 msgid "month"
 msgstr "月"
 
-#: src/Tribe/Recurrence/Meta.php:1327
+#: src/Tribe/Recurrence/Meta.php:1335
 msgctxt "Used when displaying the word \"weeks\" in e.g. \"every 3 weeks\""
 msgid "weeks"
 msgstr "週"
 
-#: src/Tribe/Recurrence/Meta.php:1326
+#: src/Tribe/Recurrence/Meta.php:1334
 msgctxt "Used when displaying the word \"week\" in \"the last week\" or \"the first week\""
 msgid "week"
 msgstr "週"
 
-#: src/Tribe/Recurrence/Meta.php:1325
+#: src/Tribe/Recurrence/Meta.php:1333
 msgctxt "Used when displaying the word \"days\" in e.g. \"every 3 days\""
 msgid "days"
 msgstr "日"
@@ -181,23 +224,23 @@ msgstr "既定の州/都道府県"
 msgid "Loading %s"
 msgstr "%s をロードしています"
 
-#: src/Tribe/Main.php:784
+#: src/Tribe/Main.php:780
 msgid "Check this to show the After HTML from the text area below on events displayed via shortcode."
 msgstr "これを選択し、ショートコード経由で表示されたイベントの下のテキスト領域から After HTML を表示します。"
 
-#: src/Tribe/Main.php:783
+#: src/Tribe/Main.php:779
 msgid "Enable the After HTML (below) on shortcodes."
 msgstr "ショートコードで After HTML (下) を有効化します。"
 
-#: src/Tribe/Main.php:771
+#: src/Tribe/Main.php:767
 msgid "Check this to show the Before HTML from the text area below on events displayed via shortcode."
 msgstr "これを選択し、ショートコード経由で表示されたイベントの下のテキスト領域から Before HTML を表示します。"
 
-#: src/Tribe/Main.php:770
+#: src/Tribe/Main.php:766
 msgid "Enable the Before HTML (below) on shortcodes."
 msgstr "ショートコードで Before HTML (下) を有効化します。"
 
-#: src/Tribe/Recurrence/Meta.php:1731
+#: src/Tribe/Recurrence/Meta.php:1739
 msgid "Allow users to decide whether to show all instances of a recurring event on list-style views."
 msgstr "リストスタイル ビューの繰り返しイベントのすべてのインスタンスを表示するかどうかをユーザーが決定できるようになります。"
 
@@ -939,7 +982,7 @@ msgstr "%1$s"
 msgid "All day"
 msgstr "全日"
 
-#: src/Tribe/Recurrence/Meta.php:1307
+#: src/Tribe/Recurrence/Meta.php:1315
 msgctxt "placeholder used where the true day of the day is determined dynamically"
 msgid "day"
 msgstr "日"
@@ -986,26 +1029,26 @@ msgstr "すべての %s"
 msgid "$template_object is expected to be an actual object"
 msgstr "$template_object は、実際のオブジェクトであることが予測されています"
 
-#: src/Tribe/Main.php:2075
+#: src/Tribe/Main.php:2071
 msgid "all"
 msgstr "すべて"
 
-#: src/Tribe/Main.php:624
+#: src/Tribe/Main.php:620
 msgctxt "debug recurrence"
 msgid "Invalid instance of a recurring event was requested ($1%s) redirecting to $2%s"
 msgstr "繰り返しイベントの無効なインスタンスがリクエストされました ($1%s) $2%s にリダイレクト中"
 
-#: src/Tribe/Main.php:589 src/Tribe/Main.php:602
+#: src/Tribe/Main.php:585 src/Tribe/Main.php:598
 msgctxt "debug recurrence"
 msgid "incorrect slug"
 msgstr "不正なスラグ"
 
-#: src/Tribe/Main.php:558
+#: src/Tribe/Main.php:554
 msgctxt "debug recurrence"
 msgid "invalid date"
 msgstr "無効な日付"
 
-#: src/Tribe/Main.php:540
+#: src/Tribe/Main.php:536
 msgctxt "debug recurrence"
 msgid "Unknown"
 msgstr "不明"
@@ -1040,7 +1083,7 @@ msgstr "イベント ポストではありません。"
 msgid "Times:"
 msgstr "回数:"
 
-#: src/Tribe/Main.php:1971
+#: src/Tribe/Main.php:1967
 msgid "Events Calendar PRO"
 msgstr "Events Calendar PRO"
 
@@ -1134,7 +1177,7 @@ msgstr "送信時にこのフィールドが空であると、これらの値が
 msgid "Use this field if you want to override the auto-generated descriptions of event recurrence"
 msgstr "自動生成されたイベントの繰り返しの説明を上書きする場合は、このフィールドを使用します"
 
-#: src/Tribe/Recurrence/Meta.php:1575
+#: src/Tribe/Recurrence/Meta.php:1583
 msgctxt "An unspecified end date"
 msgid "an unspecified date"
 msgstr "未指定の終了日"
@@ -1151,7 +1194,7 @@ msgstr "写真の背景色"
 msgid "Photo View"
 msgstr "写真ビュー"
 
-#: src/Tribe/Main.php:214
+#: src/Tribe/Main.php:222
 msgid "Month/Week View"
 msgstr "月/週ビュー"
 
@@ -1220,66 +1263,66 @@ msgstr "除外設定を追加"
 msgid "Once"
 msgstr "1 回"
 
-#: src/Tribe/Recurrence/Meta.php:1324 src/Tribe/Recurrence/Meta.php:1343
+#: src/Tribe/Recurrence/Meta.php:1332 src/Tribe/Recurrence/Meta.php:1351
 msgctxt "Used when displaying the word \"day\" in \"the last day\" or \"the first day\""
 msgid "day"
 msgstr "日"
 
-#: src/Tribe/Recurrence/Meta.php:1342
+#: src/Tribe/Recurrence/Meta.php:1350
 msgctxt "Used when displaying: \"the last Monday\" or \"the last day\""
 msgid "the last %1$s"
 msgstr "最後の %1$s"
 
-#: src/Tribe/Recurrence/Meta.php:1341
+#: src/Tribe/Recurrence/Meta.php:1349
 msgctxt "Used when displaying: \"the fifth Monday\" or \"the fifth day\""
 msgid "the fifth %1$s"
 msgstr "第 5 %1$s"
 
-#: src/Tribe/Recurrence/Meta.php:1340
+#: src/Tribe/Recurrence/Meta.php:1348
 msgctxt "Used when displaying: \"the fourth Monday\" or \"the fourth day\""
 msgid "the fourth %1$s"
 msgstr "第 4 %1$s"
 
-#: src/Tribe/Recurrence/Meta.php:1339
+#: src/Tribe/Recurrence/Meta.php:1347
 msgctxt "Used when displaying: \"the third Monday\" or \"the third day\""
 msgid "the third %1$s"
 msgstr "第 3 %1$s"
 
-#: src/Tribe/Recurrence/Meta.php:1338
+#: src/Tribe/Recurrence/Meta.php:1346
 msgctxt "Used when displaying: \"the second Monday\" or \"the second day\""
 msgid "the second %1$s"
 msgstr "第 2 %1$s"
 
-#: src/Tribe/Recurrence/Meta.php:1337
+#: src/Tribe/Recurrence/Meta.php:1345
 msgctxt "Used when displaying: \"the first Monday\" or \"the first day\""
 msgid "the first %1$s"
 msgstr "第 1 %1$s"
 
-#: src/Tribe/Recurrence/Meta.php:1336
+#: src/Tribe/Recurrence/Meta.php:1344
 msgctxt "Describes a day of the month (e.g. \"day 5\" or \"day 27\")"
 msgid "day %1$s"
 msgstr "%1$s 日"
 
-#: src/Tribe/Recurrence/Meta.php:1335
+#: src/Tribe/Recurrence/Meta.php:1343
 msgctxt "Placeholder text for a month (or months) before the user has selected any"
 msgid "[month]"
 msgstr "[month]"
 
-#: src/Tribe/Recurrence/Meta.php:1334
+#: src/Tribe/Recurrence/Meta.php:1342
 msgctxt "Placeholder text for a day of the week (or days of the week) before the user has selected any"
 msgid "[day]"
 msgstr "[day]"
 
-#: src/Tribe/Recurrence/Meta.php:1333
+#: src/Tribe/Recurrence/Meta.php:1341
 msgctxt "Joins the last item in a list of items (i.e. the \"and\" in Monday, Tuesday, and Wednesday)"
 msgid "and"
 msgstr "および"
 
-#: src/Tribe/Recurrence/Meta.php:885 src/Tribe/Recurrence/Validator.php:110
+#: src/Tribe/Recurrence/Meta.php:893 src/Tribe/Recurrence/Validator.php:110
 msgid "Custom recurrences must have all data present."
 msgstr "カスタム設定での繰り返しでは、すべてのデータが存在する必要があります。"
 
-#: src/Tribe/Recurrence/Meta.php:876 src/Tribe/Recurrence/Validator.php:101
+#: src/Tribe/Recurrence/Meta.php:884 src/Tribe/Recurrence/Validator.php:101
 msgid "Custom recurrences must have a type selected."
 msgstr "カスタム設定での繰り返しでは、種類を選択している必要があります。"
 
@@ -1287,15 +1330,15 @@ msgstr "カスタム設定での繰り返しでは、種類を選択している
 msgid "Could not process queue for event %1$d: %2$s"
 msgstr "イベント %1$d のキューを処理できません: %2$s"
 
-#: src/Tribe/Main.php:476
+#: src/Tribe/Main.php:472
 msgid "%1$s for week of %2$s"
 msgstr "%2$sの週の%1$s"
 
-#: src/Tribe/Main.php:470
+#: src/Tribe/Main.php:466
 msgid "All %1$s for %2$s"
 msgstr "%2$s のすべての %1$s"
 
-#: src/Tribe/Main.php:802
+#: src/Tribe/Main.php:798
 msgid "Thanks for buying Events Calendar PRO! From all of us at Modern Tribe, we sincerely appreciate it. If you're looking for help with Events Calendar PRO, you've come to the right place. We are committed to helping make your calendar be spectacular... and hope the resources provided below will help get you there."
 msgstr "Events Calendar PRO をご購入いただきありがとうございます! Modern Tribe の全社員から感謝申し上げます。Events Calendar PRO についてご不明な点がございましたら、何なりとお申し付けください。私たちは、お客様に喜んでいただけるカレンダーの機能を充実していけるよう一層の努力を重ねてまいりたいと存じます。是非、下記にご紹介するリソースをお役立てください。"
 
@@ -1794,153 +1837,153 @@ msgstr "このイベントの %d インスタンスは、%s を介して作成�
 msgid "You are currently editing all events in a recurring series."
 msgstr "現在、繰り返しシリーズのすべてのイベントを編集しています。"
 
-#: src/Tribe/Recurrence/Meta.php:1768
+#: src/Tribe/Recurrence/Meta.php:1776
 msgid " months"
 msgstr " 月"
 
-#: src/Tribe/Recurrence/Meta.php:1747
+#: src/Tribe/Recurrence/Meta.php:1755
 msgid "Recurring events will be created this far in advance"
 msgstr "繰り返しイベントは、この時点まで事前に作成されます"
 
-#: src/Tribe/Recurrence/Meta.php:1746
+#: src/Tribe/Recurrence/Meta.php:1754
 msgid "Create recurring events in advance for"
 msgstr "次の繰り返しイベントを事前に作成"
 
-#: src/Tribe/Recurrence/Meta.php:1739
+#: src/Tribe/Recurrence/Meta.php:1747
 msgid "Automatically remove recurring event instances older than this"
 msgstr "次よりも古い繰り返しイベント インスタンスを自動的に除去"
 
-#: src/Tribe/Recurrence/Meta.php:1738
+#: src/Tribe/Recurrence/Meta.php:1746
 msgid "Clean up recurring events after"
 msgstr "次よりも後に繰り返しイベントをクリーンナップ"
 
-#: src/Tribe/Recurrence/Meta.php:1730
+#: src/Tribe/Recurrence/Meta.php:1738
 msgid "Front-end recurring event instances toggle"
 msgstr "フロントエンド繰り返しイベント インスタンス切替え"
 
-#: src/Tribe/Recurrence/Meta.php:1724
+#: src/Tribe/Recurrence/Meta.php:1732
 msgid "Show only the first instance of each recurring event (only affects list-style views)."
 msgstr "各繰り返しイベントの最初のインスタンスのみを表示します (リスタイル ビューのみに影響します)。"
 
-#: src/Tribe/Recurrence/Meta.php:1723
+#: src/Tribe/Recurrence/Meta.php:1731
 msgid "Recurring event instances"
 msgstr "繰り返しイベント インスタンス"
 
-#: src/Tribe/Recurrence/Meta.php:1697
+#: src/Tribe/Recurrence/Meta.php:1705
 msgid ", "
 msgstr "、 "
 
-#: src/Tribe/Recurrence/Meta.php:1695
+#: src/Tribe/Recurrence/Meta.php:1703
 msgid " and "
 msgstr " および "
 
-#: src/Tribe/Recurrence/Meta.php:1693
+#: src/Tribe/Recurrence/Meta.php:1701
 msgid ", and "
 msgstr "、および "
 
-#: src/Tribe/Recurrence/Meta.php:1321 src/Tribe/Recurrence/Meta.php:1686
+#: src/Tribe/Recurrence/Meta.php:1329 src/Tribe/Recurrence/Meta.php:1694
 msgid "December"
 msgstr "12 月"
 
-#: src/Tribe/Recurrence/Meta.php:1320 src/Tribe/Recurrence/Meta.php:1685
+#: src/Tribe/Recurrence/Meta.php:1328 src/Tribe/Recurrence/Meta.php:1693
 msgid "November"
 msgstr "11 月"
 
-#: src/Tribe/Recurrence/Meta.php:1319 src/Tribe/Recurrence/Meta.php:1684
+#: src/Tribe/Recurrence/Meta.php:1327 src/Tribe/Recurrence/Meta.php:1692
 msgid "October"
 msgstr "10 月"
 
-#: src/Tribe/Recurrence/Meta.php:1318 src/Tribe/Recurrence/Meta.php:1683
+#: src/Tribe/Recurrence/Meta.php:1326 src/Tribe/Recurrence/Meta.php:1691
 msgid "September"
 msgstr "9 月"
 
-#: src/Tribe/Recurrence/Meta.php:1317 src/Tribe/Recurrence/Meta.php:1682
+#: src/Tribe/Recurrence/Meta.php:1325 src/Tribe/Recurrence/Meta.php:1690
 msgid "August"
 msgstr "8 月"
 
-#: src/Tribe/Recurrence/Meta.php:1316 src/Tribe/Recurrence/Meta.php:1681
+#: src/Tribe/Recurrence/Meta.php:1324 src/Tribe/Recurrence/Meta.php:1689
 msgid "July"
 msgstr "7 月"
 
-#: src/Tribe/Recurrence/Meta.php:1315 src/Tribe/Recurrence/Meta.php:1680
+#: src/Tribe/Recurrence/Meta.php:1323 src/Tribe/Recurrence/Meta.php:1688
 msgid "June"
 msgstr "6 月"
 
-#: src/Tribe/Recurrence/Meta.php:1314 src/Tribe/Recurrence/Meta.php:1679
+#: src/Tribe/Recurrence/Meta.php:1322 src/Tribe/Recurrence/Meta.php:1687
 msgid "May"
 msgstr "5 月"
 
-#: src/Tribe/Recurrence/Meta.php:1313 src/Tribe/Recurrence/Meta.php:1678
+#: src/Tribe/Recurrence/Meta.php:1321 src/Tribe/Recurrence/Meta.php:1686
 msgid "April"
 msgstr "4 月"
 
-#: src/Tribe/Recurrence/Meta.php:1312 src/Tribe/Recurrence/Meta.php:1677
+#: src/Tribe/Recurrence/Meta.php:1320 src/Tribe/Recurrence/Meta.php:1685
 msgid "March"
 msgstr "3 月"
 
-#: src/Tribe/Recurrence/Meta.php:1311 src/Tribe/Recurrence/Meta.php:1676
+#: src/Tribe/Recurrence/Meta.php:1319 src/Tribe/Recurrence/Meta.php:1684
 msgid "February"
 msgstr "2 月"
 
-#: src/Tribe/Recurrence/Meta.php:1310 src/Tribe/Recurrence/Meta.php:1675
+#: src/Tribe/Recurrence/Meta.php:1318 src/Tribe/Recurrence/Meta.php:1683
 msgid "January"
 msgstr "1 月"
 
-#: src/Tribe/Recurrence/Meta.php:1657
+#: src/Tribe/Recurrence/Meta.php:1665
 msgid ","
 msgstr "、"
 
-#: src/Tribe/Recurrence/Meta.php:1655
+#: src/Tribe/Recurrence/Meta.php:1663
 msgid "and"
 msgstr " "
 
-#: src/Tribe/Recurrence/Meta.php:1653
+#: src/Tribe/Recurrence/Meta.php:1661
 msgid ", and"
 msgstr "、および"
 
-#: src/Tribe/Recurrence/Meta.php:1306 src/Tribe/Recurrence/Meta.php:1646
+#: src/Tribe/Recurrence/Meta.php:1314 src/Tribe/Recurrence/Meta.php:1654
 #: src/admin-views/recurrence/months.php:88
 #: src/admin-views/recurrence/weeks.php:8
 #: src/admin-views/recurrence/years.php:134
 msgid "Sunday"
 msgstr "日曜日"
 
-#: src/Tribe/Recurrence/Meta.php:1305 src/Tribe/Recurrence/Meta.php:1645
+#: src/Tribe/Recurrence/Meta.php:1313 src/Tribe/Recurrence/Meta.php:1653
 #: src/admin-views/recurrence/months.php:87
 #: src/admin-views/recurrence/weeks.php:74
 #: src/admin-views/recurrence/years.php:133
 msgid "Saturday"
 msgstr "土曜日"
 
-#: src/Tribe/Recurrence/Meta.php:1304 src/Tribe/Recurrence/Meta.php:1644
+#: src/Tribe/Recurrence/Meta.php:1312 src/Tribe/Recurrence/Meta.php:1652
 #: src/admin-views/recurrence/months.php:86
 #: src/admin-views/recurrence/weeks.php:63
 #: src/admin-views/recurrence/years.php:132
 msgid "Friday"
 msgstr "金曜日"
 
-#: src/Tribe/Recurrence/Meta.php:1303 src/Tribe/Recurrence/Meta.php:1643
+#: src/Tribe/Recurrence/Meta.php:1311 src/Tribe/Recurrence/Meta.php:1651
 #: src/admin-views/recurrence/months.php:85
 #: src/admin-views/recurrence/weeks.php:52
 #: src/admin-views/recurrence/years.php:131
 msgid "Thursday"
 msgstr "木曜日"
 
-#: src/Tribe/Recurrence/Meta.php:1302 src/Tribe/Recurrence/Meta.php:1642
+#: src/Tribe/Recurrence/Meta.php:1310 src/Tribe/Recurrence/Meta.php:1650
 #: src/admin-views/recurrence/months.php:84
 #: src/admin-views/recurrence/weeks.php:41
 #: src/admin-views/recurrence/years.php:130
 msgid "Wednesday"
 msgstr "水曜日"
 
-#: src/Tribe/Recurrence/Meta.php:1301 src/Tribe/Recurrence/Meta.php:1641
+#: src/Tribe/Recurrence/Meta.php:1309 src/Tribe/Recurrence/Meta.php:1649
 #: src/admin-views/recurrence/months.php:83
 #: src/admin-views/recurrence/weeks.php:30
 #: src/admin-views/recurrence/years.php:129
 msgid "Tuesday"
 msgstr "火曜日"
 
-#: src/Tribe/Recurrence/Meta.php:1300 src/Tribe/Recurrence/Meta.php:1640
+#: src/Tribe/Recurrence/Meta.php:1308 src/Tribe/Recurrence/Meta.php:1648
 #: src/admin-views/recurrence/months.php:82
 #: src/admin-views/recurrence/weeks.php:19
 #: src/admin-views/recurrence/years.php:128
@@ -1961,11 +2004,11 @@ msgstr "最後の"
 msgid "day"
 msgstr "日"
 
-#: src/Tribe/Recurrence/Meta.php:905 src/Tribe/Recurrence/Validator.php:158
+#: src/Tribe/Recurrence/Meta.php:913 src/Tribe/Recurrence/Validator.php:158
 msgid "Yearly custom recurrences cannot have a dash set as the day to occur on."
 msgstr "年次でのカスタムの繰り返しイベントは、その日に発生する日付としてダッシュを設定することはできません。"
 
-#: src/Tribe/Recurrence/Meta.php:896 src/Tribe/Recurrence/Validator.php:133
+#: src/Tribe/Recurrence/Meta.php:904 src/Tribe/Recurrence/Validator.php:133
 msgid "Monthly custom recurrences cannot have a dash set as the day to occur on."
 msgstr "月次でのカスタムの繰り返しイベントは、その日に発生する日付としてダッシュを設定することはできません。"
 
@@ -2060,73 +2103,73 @@ msgstr "イベント カレンダー"
 msgid "The events calendar mini calendar widget"
 msgstr "イベント カレンダー ミニ カレンダー ウィジェット"
 
-#: src/Tribe/Main.php:1906
+#: src/Tribe/Main.php:1902
 msgid "Week Of"
 msgstr "の週"
 
-#: src/Tribe/Main.php:1889
+#: src/Tribe/Main.php:1885
 msgid "Photo"
 msgstr "写真"
 
-#: src/Tribe/Main.php:1871
+#: src/Tribe/Main.php:1867
 msgid "Week"
 msgstr "週"
 
-#: src/Tribe/Main.php:1642
+#: src/Tribe/Main.php:1638
 msgid "View All Add-Ons"
 msgstr "すべてのアドオンを表示"
 
-#: src/Tribe/Main.php:1640
+#: src/Tribe/Main.php:1636
 msgid "Support"
 msgstr "サポート"
 
-#: src/Tribe/Main.php:1580
+#: src/Tribe/Main.php:1576
 msgid "Organizer draft updated. <a target=\"_blank\" href=\"%s\">Preview organizer</a>"
 msgstr "主催者ドラフトが更新されました。<a target=\"_blank\" href=\"%s\">主催者をプレビュー</a>"
 
-#: src/Tribe/Main.php:1576
+#: src/Tribe/Main.php:1572
 msgid "Organizer scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview organizer</a>"
 msgstr "次のスケジュールの主催者は: <strong>%1$s</strong>。<a target=\"_blank\" href=\"%2$s\">主催者をプレビュー</a>"
 
-#: src/Tribe/Main.php:1574
+#: src/Tribe/Main.php:1570
 msgid "Organizer submitted. <a target=\"_blank\" href=\"%s\">Preview organizer</a>"
 msgstr "主催者が送信されました。<a target=\"_blank\" href=\"%s\">主催者をプレビュー</a>"
 
-#: src/Tribe/Main.php:1573
+#: src/Tribe/Main.php:1569
 msgid "Organizer published. <a href=\"%s\">View organizer</a>"
 msgstr "主催者が公開されました。<a href=\"%s\">主催者を表示</a>"
 
-#: src/Tribe/Main.php:1572
+#: src/Tribe/Main.php:1568
 msgid "Organizer updated. <a href=\"%s\">View organizer</a>"
 msgstr "主催者が更新されました。<a href=\"%s\">主催者を表示</a>"
 
-#: src/Tribe/Main.php:1570
+#: src/Tribe/Main.php:1566
 msgid "Venue draft updated. <a target=\"_blank\" href=\"%s\">Preview venue</a>"
 msgstr "開催地のドラフトがアップデートされました。<a target=\"_blank\" href=\"%s\">開催地をプレビュー</a>"
 
 #. translators: Publish box date format, see http://php.net/date
-#: src/Tribe/Main.php:1568 src/Tribe/Main.php:1578
+#: src/Tribe/Main.php:1564 src/Tribe/Main.php:1574
 msgid "M j, Y @ G:i"
 msgstr "M j, Y @ G:i"
 
-#: src/Tribe/Main.php:1566
+#: src/Tribe/Main.php:1562
 msgid "Venue scheduled for: <strong>%1$s</strong>. <a target=\"_blank\" href=\"%2$s\">Preview venue</a>"
 msgstr "次のイベントにスケジュールされている開催地: <strong>%1$s</strong>。<a target=\"_blank\" href=\"%2$s\">開催地をプレビュー</a>"
 
-#: src/Tribe/Main.php:1564
+#: src/Tribe/Main.php:1560
 msgid "Venue submitted. <a target=\"_blank\" href=\"%s\">Preview venue</a>"
 msgstr "開催地が送信されました。<a target=\"_blank\" href=\"%s\">開催地をプレビュー</a>"
 
 #. translators: %s: date and time of the revision
-#: src/Tribe/Main.php:1563
+#: src/Tribe/Main.php:1559
 msgid "Venue published. <a href=\"%s\">View venue</a>"
 msgstr "開催地が公開されました。<a href=\"%s\">開催地を表示</a>"
 
-#: src/Tribe/Main.php:1561
+#: src/Tribe/Main.php:1557
 msgid "Venue updated. <a href=\"%s\">View venue</a>"
 msgstr "開催地が更新されました。<a href=\"%s\">開催地を表示</a>"
 
-#: src/Tribe/Main.php:1533
+#: src/Tribe/Main.php:1529
 msgid "Settings"
 msgstr "設定"
 
@@ -2134,72 +2177,68 @@ msgstr "設定"
 msgid "Address: "
 msgstr "住所: "
 
-#: src/Tribe/Main.php:839
+#: src/Tribe/Main.php:835
 msgid "Before posting a new thread, please do a search to make sure your issue hasn't already been addressed. When posting please make sure to provide as much detail about the problem as you can (with screenshots or screencasts if feasible), and make sure that you've identified whether a plugin / theme conflict could be at play in your initial message."
 msgstr "新しいスレッドを投稿する前に、すでに問題への対応がなされていないかどうかを検索してください。投稿時は、問題に関し、できる限り多くの詳細情報をご提供いただき (可能であれば、スクリーンショットやスクリーンキャストを使用)、プラグイン/テーマの不一致の関与が特定されているかどうかを最初のメッセージでご確認ください。"
 
-#: src/Tribe/Main.php:838
+#: src/Tribe/Main.php:834
 msgid "Our number one goal is helping you succeed, and to whatever extent possible, we'll help troubleshoot and guide your customizations or tweaks. While we won't build your site for you, and we can't guarantee we'll be able to get you 100% integrated with every theme or plugin out there, we'll do all we can to point you in the right direction and to make you -- and your client, as is often more importantly the case -- satisfied."
 msgstr "当社の第 1 の目標は、お客様の成功を支援することであり、できる限りの範囲でカスタマイゼーションや弱点に関するトラブルシューティングのお手伝いとご相談を承ります。当社は、貴社サイトを構築することはありませんし、テーマやプラグインに 100％ 統合できるか同かをお約束できませんが、正しい方向性を定め、そして何よりも重要なこと、お客様とそのクライアント様にご満足いただけるよう、最善の取り組みを行ってまいります。"
 
-#: src/Tribe/Main.php:837
+#: src/Tribe/Main.php:833
 msgid "Users who have purchased an Events Calendar PRO license are granted total access to our %spremium support forums%s. Unlike at the %sWordPress.org support forum%s, where our involvement is limited to identifying and patching bugs, we have a dedicated support team for PRO users. We're on the PRO forums daily throughout the business week, and no thread should go more than 24-hours without a response."
 msgstr "Events Calendar PRO ライセンスをご購入いただいたユーザーには、当社の%sプレミアム サポート フォーラム%sへの完全なアクセス権限が付与されます。当社の関与はバグの特定およびパッチ実行に限定されている %sWordPress.org サポート フォーラム%sとは異なり、PRO ユーザー専任のサポート チームが対応させていただきます。通常営業週においては、毎日 PRO フォーラムに常駐しており、あらゆるスレッドに必ず 24 時間以内に対応いたします。"
 
-#: src/Tribe/Main.php:836
+#: src/Tribe/Main.php:832
 msgid "Written documentation can only take things so far...sometimes, you need help from a real person. This is where our %ssupport forums%s come into play."
 msgstr "単なる書面は、ある程度の結果しかもたらさないことがあります...場合によっては、実際の人物からの支援が必要になることがあるのです。ここで、当社の%sサポート フォーラム%sの出番となります。"
 
-#: src/Tribe/Main.php:823
+#: src/Tribe/Main.php:819
 msgid "Otherwise, if you're feeling adventurous, you can get started by heading to the Events menu and adding your first event."
 msgstr "あるいは、もし冒険したいような気持であれば、[イベント] メニューにアクセスし、最初のイベントを追加することから開始できます。"
 
-#: src/Tribe/Main.php:821
+#: src/Tribe/Main.php:817
 msgid "Take care of your license key. Though not required to create your first event, you'll want to get it in place as soon as possible to guarantee your access to support and upgrades. %sHere's how to find your license key%s, if you don't have it handy."
 msgstr "ライセンス キーの取り扱いにご注意ください。最初のイベントの作成には必要ではありませんが、サポートおよびアップデートに確実にアクセスるには、できる限り早急に正しい場所に取得してください。お手元にない場合は、%sここからライセンス キーの検索方法%sをご覧ください。"
 
-#: src/Tribe/Main.php:819
+#: src/Tribe/Main.php:815
 msgid "%sInstallation/Setup FAQs%s from our support page can help give an overview of what the plugin can and cannot do. This section of the FAQs may be helpful as it aims to address any basic install questions not addressed by the new user primer."
 msgstr "サポート ページの%sインストール/セットアップに関するFAQ%s は、プラグインが実行できる内容、できない内容に関する概要を把握していただくうえで役立ちます。FAQ のこのセクションは、『新しいユーザーのための入門書』には記載されていないインストールの基本的な質問事項に対応することを目的としているため有用です。"
 
-#: src/Tribe/Main.php:817
+#: src/Tribe/Main.php:813
 msgid "%sOur New User Primer%s was designed for folks in your exact position. Featuring both step-by-step videos and written walkthroughs that feature accompanying screenshots, the primer aims to take you from zero to hero in no time."
 msgstr "『%s新しいユーザーのための入門書%s』は、必要な情報をその情報を必要としているユーザーに提供することを目的として作成されています。ステップバイステップのビデオとスクリーンショットを用いた書面での完全ガイドが用意されており、あっという間にゼロからヒーローへと変身できます。"
 
-#: src/Tribe/Main.php:814
+#: src/Tribe/Main.php:810
 msgid "If this is your first time using The Events Calendar Pro, you're in for a treat and are already well on your way to creating a first event. Here are some basics we've found helpful for users jumping into it for the first time:"
 msgstr "Events Calendar Pro を始めてご利用いただくのであれば、ぜひご期待ください。すでに最初のイベントを作成する一歩を踏み出しています。初めてご利用いただくユーザーに役立つと思われる基本情報をいくつかご用意しました:"
 
-#: src/Tribe/Main.php:758
+#: src/Tribe/Main.php:754
 msgid "Check this to only show weekdays on Week View"
 msgstr "これを選択し、週ビューで平日のみを表示します"
 
-#: src/Tribe/Main.php:757
+#: src/Tribe/Main.php:753
 msgid "Hide weekends on Week View"
 msgstr "週ビューで平日を非表示にする"
 
-#: src/Tribe/Main.php:744
+#: src/Tribe/Main.php:740
 msgid "Enter the format to use for week days. Used when showing days of the week in Week view."
 msgstr "平日に使用する形式を入力します。週ビューで曜日を表示する時に使用されます。"
 
-#: src/Tribe/Main.php:743
+#: src/Tribe/Main.php:739
 msgid "Week Day Format"
 msgstr "平日の形式"
 
-#: src/Tribe/Main.php:731
-msgid "Remove related events from the single event view"
-msgstr "シングル イベント ビューから関連イベントを除去する"
-
-#: src/Tribe/Main.php:730
+#: src/Tribe/Main.php:726
 msgid "Hide related events"
 msgstr "関連イベントを非表示にする"
 
-#: src/Tribe/Editor.php:194 src/Tribe/Main.php:713
+#: src/Tribe/Editor.php:196 src/Tribe/Main.php:709
 #: src/admin-views/event-meta-options.php:3
 msgid "Additional Fields"
 msgstr "追加フィールド"
 
-#: src/Tribe/Main.php:711 src/admin-views/tribe-options-defaults.php:35
+#: src/Tribe/Main.php:707 src/admin-views/tribe-options-defaults.php:35
 msgid "Default Content"
 msgstr "既定のコンテンツ"
 
@@ -2207,11 +2246,11 @@ msgstr "既定のコンテンツ"
 msgid "%s for week of %s"
 msgstr "%sの週の%s"
 
-#: src/Tribe/Main.php:2077
+#: src/Tribe/Main.php:2073
 msgid "photo"
 msgstr "写真"
 
-#: src/Tribe/Main.php:2076 src/admin-views/event-recurrence.php:108
+#: src/Tribe/Main.php:2072 src/admin-views/event-recurrence.php:108
 #: src/admin-views/event-recurrence.php:372
 msgid "week"
 msgstr "週"
@@ -2395,10 +2434,6 @@ msgstr "終了日"
 msgid "Start Date"
 msgstr "開始日"
 
-#: events-calendar-pro.php:88
-msgid "To begin using Events Calendar PRO, please install the latest version of <a href=\"%s\" class=\"thickbox\" title=\"%s\">The Events Calendar</a>."
-msgstr "Events Calendar PRO の使用を開始するには、最新バージョンの <a href=\"%s\" class=\"thickbox\" title=\"%s\">Events Calendar</a> をインストールしてください。"
-
-#: events-calendar-pro.php:86
+#: events-calendar-pro.php:169 events-calendar-pro.php:170
 msgid "The Events Calendar"
 msgstr "Events Calendar"

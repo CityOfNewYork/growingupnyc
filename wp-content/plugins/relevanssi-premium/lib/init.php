@@ -11,18 +11,14 @@
 // Setup.
 add_action( 'init', 'relevanssi_init' );
 add_filter( 'query_vars', 'relevanssi_query_vars' );
-add_action( 'admin_menu', 'relevanssi_menu' );
 add_filter( 'rest_api_init', 'relevanssi_rest_api_disable' );
 add_action( 'switch_blog', 'relevanssi_switch_blog', 1, 2 );
-add_action( 'admin_enqueue_scripts', 'relevanssi_add_admin_scripts' );
+add_action( 'admin_init', 'relevanssi_admin_init' );
+add_action( 'admin_menu', 'relevanssi_menu' );
 
 // Taking over the search.
 add_filter( 'the_posts', 'relevanssi_query', 99, 2 );
 add_filter( 'posts_request', 'relevanssi_prevent_default_request', 10, 2 );
-
-// Multilingual plugin support.
-add_filter( 'relevanssi_hits_filter', 'relevanssi_wpml_filter' );
-add_filter( 'relevanssi_modify_wp_query', 'relevanssi_polylang_filter' );
 
 // Post indexing.
 add_action( 'wp_insert_post', 'relevanssi_insert_edit', 99, 1 );
@@ -49,12 +45,15 @@ add_action( 'relevanssi_trim_logs', 'relevanssi_trim_logs' );
 
 // Plugin and theme compatibility.
 add_filter( 'relevanssi_pre_excerpt_content', 'relevanssi_remove_page_builder_shortcodes', 9 );
-add_filter( 'relevanssi_search_ok', 'relevanssi_acf_relationship_fields' );
 
 // Permalink handling.
-add_filter( 'the_permalink', 'relevanssi_permalink' );
-add_filter( 'post_link', 'relevanssi_permalink' );
+add_filter( 'the_permalink', 'relevanssi_permalink', 10, 2 );
+add_filter( 'post_link', 'relevanssi_permalink', 10, 2 );
+add_filter( 'page_link', 'relevanssi_permalink', 10, 2 );
 add_filter( 'relevanssi_permalink', 'relevanssi_permalink' );
+
+// Log exports.
+add_action( 'plugins_loaded', 'relevanssi_export_log_check' );
 
 global $relevanssi_variables;
 register_activation_hook( $relevanssi_variables['file'], 'relevanssi_install' );
@@ -120,6 +119,44 @@ function relevanssi_init() {
 			wp_clear_scheduled_hook( 'relevanssi_trim_logs' );
 		}
 	}
+
+	if ( function_exists( 'icl_object_id' ) && ! function_exists( 'pll_is_translated_post_type' ) ) {
+		require_once 'compatibility/wpml.php';
+	}
+
+	if ( class_exists( 'Polylang', false ) ) {
+		require_once 'compatibility/polylang.php';
+	}
+
+	if ( class_exists( 'WooCommerce', false ) ) {
+		require_once 'compatibility/woocommerce.php';
+	}
+
+	if ( class_exists( 'acf', false ) ) {
+		require_once 'compatibility/acf.php';
+	}
+
+	if ( class_exists( 'Obenland_Wp_Search_Suggest', false ) ) {
+		require_once 'compatibility/wp-search-suggest.php';
+	}
+
+	if ( defined( 'GUTENBERG_VERSION' ) ) {
+		require_once 'compatibility/gutenberg.php';
+	}
+}
+
+/**
+ * Iniatiates Relevanssi for admin.
+ *
+ * @global array $relevanssi_variables Global Relevanssi variables array.
+ */
+function relevanssi_admin_init() {
+	global $relevanssi_variables;
+
+	require_once $relevanssi_variables['plugin_dir'] . 'lib/admin-ajax.php';
+
+	add_action( 'admin_enqueue_scripts', 'relevanssi_add_admin_scripts' );
+	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'relevanssi_action_links' );
 }
 
 /**
@@ -157,6 +194,19 @@ function relevanssi_menu() {
 		$relevanssi_variables['file'],
 		'relevanssi_search_stats'
 	);
+	add_dashboard_page(
+		__( 'Admin search', 'relevanssi' ),
+		__( 'Admin search', 'relevanssi' ),
+		/**
+		 * Filters the capability required to access Relevanssi admin search page.
+		 *
+		 * @param string The capability required. Default 'edit_posts'.
+		 */
+		apply_filters( 'relevanssi_admin_search_capability', 'edit_posts' ),
+		'relevanssi_admin_search',
+		'relevanssi_admin_search_page'
+	);
+	require_once 'contextual-help.php';
 	add_action( 'load-' . $plugin_page, 'relevanssi_admin_help' );
 	if ( function_exists( 'relevanssi_premium_plugin_page_actions' ) ) {
 		// Loads contextual help and JS for Premium version.
@@ -180,6 +230,7 @@ function relevanssi_query_vars( $qv ) {
 	$qv[] = 'post_types';
 	$qv[] = 'by_date';
 	$qv[] = 'highlight';
+	$qv[] = 'posts_per_page';
 
 	return $qv;
 }
@@ -353,4 +404,18 @@ function relevanssi_action_links( $links ) {
 function relevanssi_rest_api_disable() {
 	remove_filter( 'posts_request', 'relevanssi_prevent_default_request' );
 	remove_filter( 'the_posts', 'relevanssi_query', 99 );
+}
+
+/**
+ * Checks if a log export is requested.
+ *
+ * If the 'relevanssi_export' query variable is set, a log export has been requested
+ * and one will be provided by relevanssi_export_log().
+ *
+ * @see relevanssi_export_log
+ */
+function relevanssi_export_log_check() {
+	if ( isset( $_REQUEST['relevanssi_export'] ) ) { // WPCS: CSRF ok, just checking the parameter exists.
+		relevanssi_export_log();
+	}
 }

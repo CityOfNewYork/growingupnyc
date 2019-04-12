@@ -28,7 +28,7 @@ const OnDayOfWeek = ( {
 			'tribe-editor__on-day-of-week',
 			className
 		) }
-		label={ __( 'On', 'events-gutenberg' ) }
+		label={ __( 'On', 'tribe-events-calendar-pro' ) }
 	>
 		<DayOfWeekPicker
 			sundayChecked={ sundayChecked }

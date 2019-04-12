@@ -66,6 +66,10 @@
 
 :root {
 	--featured-event-bg: #0ea0d7;
+	--twentynineteen-font--body: "NonBreakingSpaceOverride", "Hoefler Text", "Baskerville Old Face", Garamond, "Times New Roman", serif;
+	--twentynineteen-font--heading: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+	--twentynineteen-font--code: Menlo, monaco, Consolas, Lucida Console, monospace;
+	--twentynineteen-font--pre: "Courier 10 Pitch", Courier, monospace;
 }
 
 .tribe-events-user-recurrence-toggle {
@@ -1119,6 +1123,25 @@ ul.related-events li {
 .tribe-events-list-photo-description {
 	width: 100%;
 }
+
+/* Twenty Nineteen Compat
+========================================================================== */
+
+.tribe-theme-twentynineteen .tribe-grid-header .column span,
+	.tribe-theme-twentynineteen .tribe-grid-allday .column.first,
+	.tribe-theme-twentynineteen .tribe-events-grid .column.first div,
+	.tribe-theme-twentynineteen .tribe-week-grid-hours div {
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+		font-family: var(--twentynineteen-font--heading);
+	}
+
+.tribe-theme-twentynineteen .tribe-events-list #tribe-events-photo-events .tribe-events-event-details .tribe-events-list-event-title {
+		font-size: 1.1rem;
+	}
+
+.tribe-theme-twentynineteen #tribe-geo-options .tribe-events-map-event-title, .tribe-theme-twentynineteen #tribe-geo-results .tribe-events-map-event-title {
+			font-size: 1.4rem;
+		}
 
 /* = Events Calendar Tribe Bar Styles
 =============================================*/

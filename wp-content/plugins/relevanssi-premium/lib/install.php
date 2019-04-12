@@ -11,13 +11,18 @@
 /**
  * Installs Relevanssi on a new plugin if Relevanssi is network active.
  *
- * Hooks on to 'wpmu_new_blog' action hook and runs '_relevanssi_install' on the
- * new blog.
+ * Hooks on to 'wpmu_new_blog' and 'wp_insert_site' action hooks and runs
+ * '_relevanssi_install' on the new blog.
  *
- * @param int $blog_id The blog ID.
+ * @param int|object $blog Either the blog ID (if 'wpmu_new_blog') or new site
+ * object (if 'wp_insert_site').
  */
-function relevanssi_new_blog( $blog_id ) {
-	global $wpdb;
+function relevanssi_new_blog( $blog ) {
+	if ( is_int( $blog ) ) {
+		$blog_id = $blog;
+	} else {
+		$blog_id = $blog->id;
+	}
 
 	if ( is_plugin_active_for_network( 'relevanssi-premium/relevanssi.php' ) || is_plugin_active_for_network( 'relevanssi/relevanssi.php' ) ) {
 		switch_to_blog( $blog_id );
@@ -89,7 +94,6 @@ function _relevanssi_install() {
 	add_option( 'relevanssi_highlight', 'strong' );
 	add_option( 'relevanssi_highlight_comments', 'off' );
 	add_option( 'relevanssi_highlight_docs', 'off' );
-	add_option( 'relevanssi_highlight_docs_external', 'off' );
 	add_option( 'relevanssi_hilite_title', '' );
 	add_option( 'relevanssi_implicit_operator', 'OR' );
 	add_option( 'relevanssi_index_author', '' );

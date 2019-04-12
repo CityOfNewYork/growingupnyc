@@ -15,12 +15,12 @@ import { InspectorControls } from '@wordpress/editor';
 const Settings = ( { name, before, after, settingsLink } ) => (
 	<InspectorControls key="inspector">
 		{ before }
-		<PanelBody title={ sprintf( __( '%1$s Settings', 'events-gutenberg' ), name ) }>
+		<PanelBody title={ sprintf( __( '%1$s Settings', 'tribe-events-calendar-pro' ), name ) }>
 			{ ! ! settingsLink && (
 				<span>
-					{ __( 'Adjust this block’s options under Events → Settings → ', 'events-gutenberg' ) }
+					{ __( 'Adjust this block’s options under Events → Settings → ', 'tribe-events-calendar-pro' ) }
 					<a href={ settingsLink } target="_blank" rel="noreferrer noopener">
-						{ __( 'Additional Fields', 'events-gutenberg' ) }
+						{ __( 'Additional Fields', 'tribe-events-calendar-pro' ) }
 					</a>
 				</span>
 			) }

@@ -50,7 +50,7 @@ export default class RecurringEntry extends PureComponent {
 	renderRepeatEventButton() {
 		return (
 			<AddField onClick={ this.props.initialRepeatBlockClick }>
-				{ __( 'Repeat This Event', 'events-gutenberg' ) }
+				{ __( 'Repeat This Event', 'tribe-events-calendar-pro' ) }
 			</AddField>
 		);
 	}

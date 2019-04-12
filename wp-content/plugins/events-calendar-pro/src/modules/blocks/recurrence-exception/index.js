@@ -19,10 +19,10 @@ import EventException from './container';
 
 export default {
 	id: 'event-pro-recurrence-exception',
-	title: __( 'Exception', 'events-gutenberg' ),
+	title: __( 'Exception', 'tribe-events-calendar-pro' ),
 	description: __(
 		'Add exceptions to your event.',
-		'events-gutenberg',
+		'tribe-events-calendar-pro',
 	),
 	icon: <DateTime />,
 	category: 'tribe-events',

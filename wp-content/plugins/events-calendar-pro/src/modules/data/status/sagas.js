@@ -26,9 +26,9 @@ export const NOTICE_EDITING_SERIES = 'NOTICE_EDITING_SERIES';
 export const NOTICE_PROGRESS_ON_SERIES_CREATION_COUNT = 'NOTICE_PROGRESS_ON_SERIES_CREATION_COUNT';
 export const NOTICE_PROGRESS_ON_SERIES_CREATION = 'NOTICE_PROGRESS_ON_SERIES_CREATION';
 export const NOTICES = {
-	[ NOTICE_EDITING_SERIES ]: __( 'You are currently editing all events in a recurring series.', 'events-gutenberg' ),
-	[ NOTICE_PROGRESS_ON_SERIES_CREATION_COUNT ]: _n( '%d instance', '%d instances', 1, 'events-gutenberg' ),
-	[ NOTICE_PROGRESS_ON_SERIES_CREATION ]: __( 'of this event have been created through %s.', 'events-gutenberg' ),
+	[ NOTICE_EDITING_SERIES ]: __( 'You are currently editing all events in a recurring series.', 'tribe-events-calendar-pro' ),
+	[ NOTICE_PROGRESS_ON_SERIES_CREATION_COUNT ]: _n( '%d instance', '%d instances', 1, 'tribe-events-calendar-pro' ),
+	[ NOTICE_PROGRESS_ON_SERIES_CREATION ]: __( 'of this event have been created through %s.', 'tribe-events-calendar-pro' ),
 };
 
 /**
@@ -79,19 +79,31 @@ export function* pollUntilSeriesCompleted() {
 		const isCompleted = response === false || response.done; // If false, no edits being done
 
 		if ( isCompleted ) {
+
 			const payload = response === false ? { done: isCompleted } : response;
+
 			yield put( actions.setSeriesQueueStatus( payload ) );
+
+			const { items_created, last_created_at, done, percentage } = response;
+
+			// Show progress notice
+			if ( done && 100 === percentage ) {
+
+				const date = momentUtils.toDate( momentUtils.toMoment( last_created_at ) );
+
+				yield call(
+					[ wpDispatch( 'core/notices' ), 'createSuccessNotice' ],
+					`${ sprintf( _n( '%d instance', '%d instances', items_created, 'events-gutenberg' ), items_created ) } ${ sprintf( NOTICES[ NOTICE_PROGRESS_ON_SERIES_CREATION ], date ) }`,
+					{ id: NOTICE_PROGRESS_ON_SERIES_CREATION, isDismissible: true }
+				);
+			}
 		} else {
 			yield put( actions.setSeriesQueueStatus( response ) );
 
-			const { items_created, last_created_at } = response;
-
-			const date = momentUtils.toDate( momentUtils.toMoment( last_created_at ) );
-
-			// Show progress notice
+			// Show "still creating" notice. Same NOTICE_PROGRESS_ON_SERIES_CREATION id is used here so that the above "completion" notice replaces this "still working" notice.
 			yield call(
 				[ wpDispatch( 'core/notices' ), 'createSuccessNotice' ],
-				`${ sprintf( NOTICES[ NOTICE_PROGRESS_ON_SERIES_CREATION_COUNT ], items_created ) } ${ sprintf( NOTICES[ NOTICE_PROGRESS_ON_SERIES_CREATION ], date ) }`,
+				__( 'Recurring event instances are still being created...', 'events-gutenberg' ),
 				{ id: NOTICE_PROGRESS_ON_SERIES_CREATION, isDismissible: true }
 			);
 		}

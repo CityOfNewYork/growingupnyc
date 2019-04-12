@@ -38,7 +38,7 @@ export default class EventRecurring extends PureComponent {
 							count={ this.props.rulesCount }
 							onHeaderClick={ this.props.toggleRulePanelExpand }
 							isExpanded={ this.props.isRulePanelExpanded }
-							panelTitle={ __( 'Recurrence Rules', 'events-gutenberg' ) }
+							panelTitle={ __( 'Recurrence Rules', 'tribe-events-calendar-pro' ) }
 						>
 							<RecurringForm
 								rules={ this.props.rules }

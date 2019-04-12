@@ -20,7 +20,21 @@ function format_posts($posts) {
       switch ($post->post_type) {
         case 'tribe_events':
           // Format events posts
+          // $cur_post = new GunyEvent($post);
+
+          // // compares the event date against current date
+          // date_default_timezone_set('America/New_York');
+          // $cur_datetime = date('Y-m-d g:i:u');
+          // $start_time = date('Y-m-d g:i:u',strtotime($cur_post->custom['_EventStartDate']));
+
+          // if ($start_time < $cur_datetime){
+          //   unset($posts[$i]);
+          // } else {
+          //   $posts[$i] = $cur_post;
+          // }
+          
           $posts[$i] = new GunyEvent($post);
+          
           break;
         case 'age':
           // Add age groups to age posts

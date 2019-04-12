@@ -21,12 +21,6 @@
  * @param WP_Query $query The WP_Query object, default false.
  */
 function relevanssi_query( $posts, $query = false ) {
-	$admin_search_option = get_option( 'relevanssi_admin_search' );
-	$admin_search        = false;
-	if ( 'on' === $admin_search_option ) {
-		$admin_search = true;
-	}
-
 	global $relevanssi_active;
 
 	if ( ! $query ) {
@@ -45,8 +39,9 @@ function relevanssi_query( $posts, $query = false ) {
 	// use 'admin_ajax' hook (which sets is_admin() to true whether it's an admin search
 	// or not.
 	if ( $query->is_search() && $query->is_admin ) {
-		$search_ok = false; // But if this is an admin search, reconsider.
-		if ( $admin_search ) {
+		$search_ok           = false; // But if this is an admin search, reconsider.
+		$admin_search_option = get_option( 'relevanssi_admin_search' );
+		if ( 'on' === $admin_search_option ) {
 			$search_ok = true; // Yes, we can search!
 		}
 	}
@@ -121,31 +116,34 @@ function relevanssi_search( $args ) {
 	 *
 	 * @param array The search parameters.
 	 */
-	$filtered_args      = apply_filters( 'relevanssi_search_filters', $args );
-	$q                  = $filtered_args['q'];
-	$tax_query          = $filtered_args['tax_query'];
-	$tax_query_relation = $filtered_args['tax_query_relation'];
-	$post_query         = $filtered_args['post_query'];
-	$parent_query       = $filtered_args['parent_query'];
-	$meta_query         = $filtered_args['meta_query'];
-	$date_query         = $filtered_args['date_query'];
-	$expost             = $filtered_args['expost'];
-	$post_type          = $filtered_args['post_type'];
-	$post_status        = $filtered_args['post_status'];
-	$operator           = $filtered_args['operator'];
-	$search_blogs       = $filtered_args['search_blogs'];
-	$author             = $filtered_args['author'];
-	$orderby            = $filtered_args['orderby'];
-	$order              = $filtered_args['order'];
-	$fields             = $filtered_args['fields'];
-	$sentence           = $filtered_args['sentence'];
-	$by_date            = $filtered_args['by_date'];
+	$filtered_args       = apply_filters( 'relevanssi_search_filters', $args );
+	$q                   = $filtered_args['q'];
+	$tax_query           = $filtered_args['tax_query'];
+	$tax_query_relation  = $filtered_args['tax_query_relation'];
+	$post_query          = $filtered_args['post_query'];
+	$parent_query        = $filtered_args['parent_query'];
+	$meta_query          = $filtered_args['meta_query'];
+	$date_query          = $filtered_args['date_query'];
+	$expost              = $filtered_args['expost'];
+	$post_type           = $filtered_args['post_type'];
+	$post_status         = $filtered_args['post_status'];
+	$operator            = $filtered_args['operator'];
+	$search_blogs        = $filtered_args['search_blogs'];
+	$author              = $filtered_args['author'];
+	$orderby             = $filtered_args['orderby'];
+	$order               = $filtered_args['order'];
+	$fields              = $filtered_args['fields'];
+	$sentence            = $filtered_args['sentence'];
+	$by_date             = $filtered_args['by_date'];
+	$admin_search        = $filtered_args['admin_search'];
+	$include_attachments = $filtered_args['include_attachments'];
+	$meta_query          = $filtered_args['meta_query'];
 
 	$hits               = array();
 	$query_restrictions = '';
 
 	if ( ! isset( $tax_query_relation ) ) {
-		$tax_query_relation = 'or';
+		$tax_query_relation = 'and';
 	}
 	$tax_query_relation = relevanssi_strtolower( $tax_query_relation );
 	$term_tax_id        = array();
@@ -156,7 +154,7 @@ function relevanssi_search( $args ) {
 	if ( is_array( $tax_query ) ) {
 		$is_sub_row = false;
 		foreach ( $tax_query as $row ) {
-			if ( isset( $row['terms'] ) ) {
+			if ( isset( $row['terms'] ) || ( isset( $row['operator'] ) && ( 'not exists' === strtolower( $row['operator'] ) || 'exists' === strtolower( $row['operator'] ) ) ) ) {
 				list( $query_restrictions, $term_tax_ids, $not_term_tax_ids, $and_term_tax_ids ) =
 				relevanssi_process_tax_query_row( $row, $is_sub_row, $tax_query_relation, $query_restrictions, $tax_query_relation, $term_tax_ids, $not_term_tax_ids, $and_term_tax_ids );
 			} else {
@@ -232,28 +230,28 @@ function relevanssi_search( $args ) {
 	}
 
 	if ( is_array( $parent_query ) ) {
-		if ( ! empty( $parent_query['parent in'] ) ) {
+		if ( isset( $parent_query['parent in'] ) ) {
 			$valid_values = array();
 			foreach ( $parent_query['parent in'] as $post_in_id ) {
-				if ( is_numeric( $post_in_id ) ) {
+				if ( is_int( $post_in_id ) ) {
 					$valid_values[] = $post_in_id;
 				}
 			}
 			$posts = implode( ',', $valid_values );
-			if ( ! empty( $posts ) ) {
+			if ( strlen( $posts ) > 0 ) {
 				$query_restrictions .= " AND relevanssi.doc IN (SELECT ID FROM $wpdb->posts WHERE post_parent IN ($posts))";
 				// Clean: $posts is checked to be integers.
 			}
 		}
-		if ( ! empty( $parent_query['parent not in'] ) ) {
+		if ( isset( $parent_query['parent not in'] ) ) {
 			$valid_values = array();
 			foreach ( $parent_query['parent not in'] as $post_not_in_id ) {
-				if ( is_numeric( $post_not_in_id ) ) {
+				if ( is_int( $post_not_in_id ) ) {
 					$valid_values[] = $post_not_in_id;
 				}
 			}
 			$posts = implode( ',', $valid_values );
-			if ( ! empty( $posts ) ) {
+			if ( isset( $posts ) ) {
 				$query_restrictions .= " AND relevanssi.doc NOT IN (SELECT ID FROM $wpdb->posts WHERE post_parent IN ($posts))";
 				// Clean: $posts is checked to be integers.
 			}
@@ -289,8 +287,8 @@ function relevanssi_search( $args ) {
 	// If $post_type is not set, see if there are post types to exclude from the search.
 	// If $post_type is set, there's no need to exclude, as we only include.
 	$negative_post_type = null;
-	if ( ! $post_type ) {
-		$negative_post_type = relevanssi_get_negative_post_type();
+	if ( ! $post_type && ! $admin_search ) {
+		$negative_post_type = relevanssi_get_negative_post_type( $include_attachments );
 	}
 
 	$non_post_post_type        = null;
@@ -345,7 +343,7 @@ function relevanssi_search( $args ) {
 	if ( ! empty( $expost ) ) {
 		$excluded_post_ids = explode( ',', $expost );
 		foreach ( $excluded_post_ids as $excluded_post_id ) {
-			$exid              = intval( trim( $excluded_post_id, ' -' ) );
+			$excluded_post_id  = intval( trim( $excluded_post_id, ' -' ) );
 			$posts_to_exclude .= " AND relevanssi.doc != $excluded_post_id";
 			// Clean: escaped.
 		}
@@ -399,8 +397,7 @@ function relevanssi_search( $args ) {
 	// Go get the count from the options, but run the full query if it's not available.
 	$doc_count = get_option( 'relevanssi_doc_count' );
 	if ( ! $doc_count || $doc_count < 1 ) {
-		$doc_count = $wpdb->get_var( "SELECT COUNT(DISTINCT(relevanssi.doc)) FROM $relevanssi_table AS relevanssi" ); // WPCS: unprepared SQL ok, Relevanssi table name.
-		update_option( 'relevanssi_doc_count', $doc_count );
+		$doc_count = relevanssi_update_doc_count();
 	}
 
 	$total_hits = 0;
@@ -611,36 +608,72 @@ function relevanssi_search( $args ) {
 	$link_boost    = floatval( get_option( 'relevanssi_link_boost' ) );
 	$comment_boost = floatval( get_option( 'relevanssi_comment_boost' ) );
 
+	$tag = $relevanssi_variables['post_type_weight_defaults']['post_tag'];
+	$cat = $relevanssi_variables['post_type_weight_defaults']['category'];
+
+	if ( ! empty( $post_type_weights['post_tagged_with_post_tag'] ) ) {
+		$tag = $post_type_weights['post_tagged_with_post_tag'];
+	}
+	if ( ! empty( $post_type_weights['post_tagged_with_category'] ) ) {
+		$cat = $post_type_weights['post_tagged_with_category'];
+	}
+
+	/* Legacy code, improvement introduced in 2.1.8, remove at some point. */
+	if ( ! empty( $post_type_weights['post_tag'] ) ) {
+		$tag = $post_type_weights['post_tag'];
+	}
+	if ( ! empty( $post_type_weights['category'] ) ) {
+		$cat = $post_type_weights['category'];
+	}
+	/* End legacy code. */
+
 	$include_these_posts = array();
+	$include_these_items = array();
+	$df_counts           = array();
+	$doc_weight          = array();
 
 	do {
 		foreach ( $terms as $term ) {
-			$term = trim( $term ); // Numeric search terms will start with a space.
-			/**
-			 * Allows the use of one letter search terms.
-			 *
-			 * Return false to allow one letter searches.
-			 *
-			 * @param boolean True, if search term is one letter long and will be blocked.
-			 */
-			if ( apply_filters( 'relevanssi_block_one_letter_searches', relevanssi_strlen( $term ) < 2 ) ) {
+			$term_cond = relevanssi_generate_term_cond( $term, $o_term_cond );
+			if ( null === $term_cond ) {
 				continue;
 			}
-			$term = esc_sql( $term );
+			$query = "SELECT COUNT(DISTINCT(relevanssi.doc)) FROM $relevanssi_table AS relevanssi
+				$query_join WHERE $term_cond $query_restrictions";
+			// Clean: $query_restrictions is escaped, $term_cond is escaped.
+			/**
+			 * Filters the DF query.
+			 *
+			 * This query is used to calculate the df for the tf * idf calculations.
+			 *
+			 * @param string MySQL query to filter.
+			 */
+			$query = apply_filters( 'relevanssi_df_query_filter', $query );
 
-			if ( false !== strpos( $o_term_cond, 'LIKE' ) ) {
-				$term = $wpdb->esc_like( $term );
+			$df = $wpdb->get_var( $query ); // WPCS: unprepared SQL ok.
+
+			if ( $df < 1 && 'sometimes' === $fuzzy ) {
+				$query = "SELECT COUNT(DISTINCT(relevanssi.doc)) FROM $relevanssi_table AS relevanssi
+					$query_join WHERE (relevanssi.term LIKE '$term%'
+					OR relevanssi.term_reverse LIKE CONCAT(REVERSE('$term'), '%')) $query_restrictions";
+				// Clean: $query_restrictions is escaped, $term is escaped.
+				/** Documented in lib/search.php. */
+				$query = apply_filters( 'relevanssi_df_query_filter', $query );
+				$df    = $wpdb->get_var( $query ); // WPCS: unprepared SQL ok.
 			}
 
-			$term_cond = str_replace( '#term#', $term, $o_term_cond );
+			$df_counts[ $term ] = $df;
+		}
 
-			$tag = $relevanssi_variables['post_type_weight_defaults']['post_tag'];
-			$cat = $relevanssi_variables['post_type_weight_defaults']['category'];
-			if ( ! empty( $post_type_weights['post_tag'] ) ) {
-				$tag = $post_type_weights['post_tag'];
-			}
-			if ( ! empty( $post_type_weights['category'] ) ) {
-				$cat = $post_type_weights['category'];
+		// Sort the terms in ascending DF order, so that rarest terms are searched
+		// for first. This is to make sure the throttle doesn't cut off posts with
+		// rare search terms.
+		asort( $df_counts );
+
+		foreach ( $df_counts as $term => $df ) {
+			$term_cond = relevanssi_generate_term_cond( $term, $o_term_cond );
+			if ( null === $term_cond ) {
+				continue;
 			}
 
 			$query = "SELECT DISTINCT(relevanssi.doc), relevanssi.*, relevanssi.title * $title_boost +
@@ -660,7 +693,6 @@ function relevanssi_search( $args ) {
 			 */
 			$query   = apply_filters( 'relevanssi_query_filter', $query );
 			$matches = $wpdb->get_results( $query ); // WPCS: unprepared SQL ok, the query is thoroughly escaped.
-
 			if ( count( $matches ) < 1 ) {
 				continue;
 			} else {
@@ -671,14 +703,41 @@ function relevanssi_search( $args ) {
 					foreach ( $matches as $match ) {
 						$existing_ids[] = $match->doc;
 					}
+					$existing_ids = array_keys( array_flip( $existing_ids ) );
 					$existing_ids = implode( ',', $existing_ids );
 					$query        = "SELECT relevanssi.*, relevanssi.title * $title_boost +
-					relevanssi.content + relevanssi.comment * $comment_boost +
+					relevanssi.content * $content_boost + relevanssi.comment * $comment_boost +
 					relevanssi.tag * $tag + relevanssi.link * $link_boost +
 					relevanssi.author + relevanssi.category * $cat + relevanssi.excerpt +
 					relevanssi.taxonomy + relevanssi.customfield + relevanssi.mysqlcolumn AS tf
 					FROM $relevanssi_table AS relevanssi WHERE relevanssi.doc IN ($post_ids_to_add)
 					AND relevanssi.doc NOT IN ($existing_ids) AND $term_cond";
+
+					// Clean: no unescaped user inputs.
+					$matches_to_add = $wpdb->get_results( $query ); // WPCS: unprepared SQL ok.
+					$matches        = array_merge( $matches, $matches_to_add );
+				}
+				if ( count( $include_these_items ) > 0 ) {
+					$items_to_add   = implode( ',', array_keys( $include_these_items ) );
+					$existing_items = array();
+					foreach ( $matches as $match ) {
+						if ( 0 !== intval( $match->item ) ) {
+							$existing_items[] = $match->item;
+						}
+					}
+					$existing_items = array_keys( array_flip( $existing_items ) );
+					$existing_items = implode( ',', $existing_items );
+					if ( ! empty( $existing_items ) ) {
+						$existing_items = "AND relevanssi.item NOT IN ($existing_items) ";
+					}
+					$query = "SELECT relevanssi.*, relevanssi.title * $title_boost +
+					relevanssi.content * $content_boost + relevanssi.comment * $comment_boost +
+					relevanssi.tag * $tag + relevanssi.link * $link_boost +
+					relevanssi.author + relevanssi.category * $cat + relevanssi.excerpt +
+					relevanssi.taxonomy + relevanssi.customfield + relevanssi.mysqlcolumn AS tf
+					FROM $relevanssi_table AS relevanssi WHERE relevanssi.item IN ($items_to_add)
+					$existing_items AND $term_cond";
+
 					// Clean: no unescaped user inputs.
 					$matches_to_add = $wpdb->get_results( $query ); // WPCS: unprepared SQL ok.
 					$matches        = array_merge( $matches, $matches_to_add );
@@ -690,30 +749,6 @@ function relevanssi_search( $args ) {
 
 			$total_hits += count( $matches );
 
-			$query = "SELECT COUNT(DISTINCT(relevanssi.doc)) FROM $relevanssi_table AS relevanssi
-				$query_join WHERE $term_cond $query_restrictions";
-			// Clean: $query_restrictions is escaped, $term_cond is escaped.
-			/**
-			 * Filters the DF query.
-			 *
-			 * This query is used to calculate the df for the tf * idf calculations.
-			 *
-			 * @param string MySQL query to filter.
-			 */
-			$query = apply_filters( 'relevanssi_df_query_filter', $query );
-
-			$df = $wpdb->get_var( $query ); // WPCS: unprepared SQL ok.
-
-			if ( $df < 1 && 'sometimes' === $fuzzy ) {
-				$query = "SELECT COUNT(DISTINCT(relevanssi.doc)) FROM $relevanssi_table AS relevanssi
-					$query_join WHERE (relevanssi.term LIKE '$term%'
-					OR relevanssi.term_reverse LIKE CONCAT(REVERSE('$term), %')) $query_restrictions";
-				// Clean: $query_restrictions is escaped, $term is escaped.
-				/** Documented in lib/search.php. */
-				$query = apply_filters( 'relevanssi_df_query_filter', $query );
-				$df    = $wpdb->get_var( $query ); // WPCS: unprepared SQL ok.
-			}
-
 			$idf = log( $doc_count + 1 / ( 1 + $df ) );
 			$idf = $idf * $idf; // Adjustment to increase the value of IDF.
 			if ( $idf < 1 ) {
@@ -722,25 +757,42 @@ function relevanssi_search( $args ) {
 			foreach ( $matches as $match ) {
 				if ( 'user' === $match->type ) {
 					$match->doc = 'u_' . $match->item;
+				} elseif ( 'post_type' === $match->type ) {
+					$match->doc = 'p_' . $match->item;
 				} elseif ( ! in_array( $match->type, array( 'post', 'attachment' ), true ) ) {
 					$match->doc = '**' . $match->type . '**' . $match->item;
 				}
 
-				if ( isset( $match->taxonomy_detail ) ) {
-					$match->taxonomy_score  = 0;
-					$match->taxonomy_detail = json_decode( $match->taxonomy_detail );
-					if ( is_object( $match->taxonomy_detail ) ) {
-						foreach ( $match->taxonomy_detail as $tax => $count ) {
-							if ( 'post_tag' === $tax ) {
-								$match->tag = $count;
-							}
-							if ( empty( $post_type_weights[ $tax ] ) ) {
-								$match->taxonomy_score += $count * 1;
-							} else {
-								$match->taxonomy_score += $count * $post_type_weights[ $tax ];
-							}
-						}
+				if ( ! empty( $match->taxonomy_detail ) ) {
+					relevanssi_taxonomy_score( $match, $post_type_weights );
+				} else {
+					$tag_weight = 1;
+					if ( isset( $post_type_weights['post_tagged_with_post_tag'] ) && is_numeric( $post_type_weights['post_tagged_with_post_tag'] ) ) {
+						$tag_weight = $post_type_weights['post_tagged_with_post_tag'];
 					}
+
+					$category_weight = 1;
+					if ( isset( $post_type_weights['post_tagged_with_category'] ) && is_numeric( $post_type_weights['post_tagged_with_category'] ) ) {
+						$category_weight = $post_type_weights['post_tagged_with_category'];
+					}
+
+					/* Legacy code from 2.1.8. Remove at some point. */
+					if ( isset( $post_type_weights['post_tag'] ) && is_numeric( $post_type_weights['post_tag'] ) ) {
+						$tag_weight = $post_type_weights['post_tag'];
+					}
+
+					$category_weight = 1;
+					if ( isset( $post_type_weights['category'] ) && is_numeric( $post_type_weights['category'] ) ) {
+						$category_weight = $post_type_weights['category'];
+					}
+					/* End legacy code. */
+
+					$taxonomy_weight = 1;
+
+					$match->taxonomy_score =
+						$match->tag * $tag_weight +
+						$match->category * $category_weight +
+						$match->taxonomy * $taxonomy_weight;
 				}
 
 				$match->tf =
@@ -772,7 +824,7 @@ function relevanssi_search( $args ) {
 				if ( $recency_bonus ) {
 					$post = relevanssi_get_post( $match->doc );
 					if ( strtotime( $post->post_date ) > $recency_cutoff_date ) {
-						$match->weight = $match->weight * $recency_bonus['bonus'];
+						$match->weight = $match->weight * $recency_bonus;
 					}
 				}
 
@@ -816,12 +868,18 @@ function relevanssi_search( $args ) {
 				$taxonomy_matches[ $match->doc ] += $match->taxonomy;
 				$comment_matches[ $match->doc ]  += $match->comment;
 
+				/* Post type weights. */
 				$type = null;
 				if ( isset( $relevanssi_post_types[ $match->doc ] ) ) {
 					$type = $relevanssi_post_types[ $match->doc ];
 				}
 				if ( ! empty( $post_type_weights[ $type ] ) ) {
 					$match->weight = $match->weight * $post_type_weights[ $type ];
+				}
+
+				/* Weight boost for taxonomy terms based on taxonomy. */
+				if ( ! empty( $post_type_weights[ 'taxonomy_term_' . $match->type ] ) ) {
+					$match->weight = $match->weight * $post_type_weights[ 'taxonomy_term_' . $match->type ];
 				}
 
 				/**
@@ -854,7 +912,6 @@ function relevanssi_search( $args ) {
 				 * @param int     The post ID.
 				 */
 				$post_ok = apply_filters( 'relevanssi_post_ok', $post_ok, $match->doc );
-
 				if ( $post_ok ) {
 					$doc_terms[ $match->doc ][ $term ] = true; // Count how many terms are matched to a doc.
 					if ( ! isset( $doc_weight[ $match->doc ] ) ) {
@@ -865,9 +922,13 @@ function relevanssi_search( $args ) {
 						$scores[ $match->doc ] = 0;
 					}
 					$scores[ $match->doc ] += $match->weight;
-					if ( is_numeric( $match->doc ) ) {
+					// For AND searches, add the posts to the $include_these lists, so that
+					// nothing is missed.
+					if ( is_numeric( $match->doc ) && 'AND' === $operator ) {
 						// This is to weed out taxonomies and users (t_XXX, u_XXX).
 						$include_these_posts[ $match->doc ] = true;
+					} elseif ( 0 !== intval( $match->item ) && 'AND' === $operator ) {
+						$include_these_items[ $match->item ] = true;
 					}
 				}
 			}
@@ -1019,7 +1080,6 @@ function relevanssi_search( $args ) {
 	if ( empty( $orderby ) ) {
 		$orderby = $default_order;
 	}
-
 	if ( is_array( $orderby ) ) {
 		/**
 		 * Filters the 'orderby' value just before sorting.
@@ -1032,7 +1092,7 @@ function relevanssi_search( $args ) {
 		 * @param string The 'orderby' parameter.
 		 */
 		$orderby = apply_filters( 'relevanssi_orderby', $orderby );
-		relevanssi_object_sort( $hits, $orderby );
+		relevanssi_object_sort( $hits, $orderby, $meta_query );
 	} else {
 		if ( empty( $order ) ) {
 			$order = 'desc';
@@ -1055,7 +1115,7 @@ function relevanssi_search( $args ) {
 
 		if ( 'relevance' !== $orderby ) {
 			$orderby_array = array( $orderby => $order );
-			relevanssi_object_sort( $hits, $orderby_array );
+			relevanssi_object_sort( $hits, $orderby_array, $meta_query );
 		}
 	}
 	$return = array(
@@ -1214,6 +1274,11 @@ function relevanssi_do_query( &$query ) {
 			}
 
 			$multi_args['meta_query'] = $meta_query;
+
+			if ( isset( $query->query_vars['include_attachments'] ) ) {
+				$multi_args['include_attachments'] = $query->query_vars['include_attachments'];
+			}
+
 			if ( function_exists( 'relevanssi_search_multi' ) ) {
 				$return = relevanssi_search_multi( $multi_args );
 			}
@@ -1367,14 +1432,6 @@ function relevanssi_do_query( &$query ) {
 					'operator' => 'AND',
 				);
 			}
-			if ( ! empty( $query->query_vars['tag__not_in'] ) ) {
-				$tax_query[] = array(
-					'taxonomy' => 'post_tag',
-					'field'    => 'id',
-					'terms'    => $query->query_vars['tag__not_in'],
-					'operator' => 'NOT IN',
-				);
-			}
 			if ( ! empty( $query->query_vars['tag_slug__in'] ) ) {
 				$tax_query[] = array(
 					'taxonomy' => 'post_tag',
@@ -1423,6 +1480,7 @@ function relevanssi_do_query( &$query ) {
 					);
 				}
 			}
+			$query->tax_query = $tax_query;
 		}
 
 		$author = false;
@@ -1435,27 +1493,27 @@ function relevanssi_do_query( &$query ) {
 		}
 
 		$post_query = array();
-		if ( ! empty( $query->query_vars['p'] ) ) {
+		if ( isset( $query->query_vars['p'] ) ) {
 			$post_query = array( 'in' => array( $query->query_vars['p'] ) );
 		}
-		if ( ! empty( $query->query_vars['page_id'] ) ) {
+		if ( isset( $query->query_vars['page_id'] ) ) {
 			$post_query = array( 'in' => array( $query->query_vars['page_id'] ) );
 		}
-		if ( ! empty( $query->query_vars['post__in'] ) ) {
+		if ( isset( $query->query_vars['post__in'] ) && is_array( $query->query_vars['post__in'] ) && ! empty( $query->query_vars['post__in'] ) ) {
 			$post_query = array( 'in' => $query->query_vars['post__in'] );
 		}
-		if ( ! empty( $query->query_vars['post__not_in'] ) ) {
+		if ( isset( $query->query_vars['post__not_in'] ) && is_array( $query->query_vars['post__not_in'] ) && ! empty( $query->query_vars['post__not_in'] ) ) {
 			$post_query = array( 'not in' => $query->query_vars['post__not_in'] );
 		}
 
 		$parent_query = array();
-		if ( ! empty( $query->query_vars['post_parent'] ) ) {
+		if ( isset( $query->query_vars['post_parent'] ) ) {
 			$parent_query = array( 'parent in' => array( $query->query_vars['post_parent'] ) );
 		}
-		if ( ! empty( $query->query_vars['post_parent__in'] ) ) {
+		if ( isset( $query->query_vars['post_parent__in'] ) && is_array( $query->query_vars['post_parent__in'] ) && ! empty( $query->query_vars['post_parent__in'] ) ) {
 			$parent_query = array( 'parent in' => $query->query_vars['post_parent__in'] );
 		}
-		if ( ! empty( $query->query_vars['post_parent__not_in'] ) ) {
+		if ( isset( $query->query_vars['post_parent__not_in'] ) && is_array( $query->query_vars['post_parent__not_in'] ) && ! empty( $query->query_vars['post_parent__not_in'] ) ) {
 			$parent_query = array( 'parent not in' => $query->query_vars['post_parent__not_in'] );
 		}
 
@@ -1596,6 +1654,17 @@ function relevanssi_do_query( &$query ) {
 				$by_date = $query->query_vars['by_date'];
 			}
 		}
+
+		$admin_search = false;
+		if ( isset( $query->query_vars['relevanssi_admin_search'] ) ) {
+			$admin_search = true;
+		}
+
+		$include_attachments = '';
+		if ( isset( $query->query_vars['include_attachments'] ) ) {
+			$include_attachments = $query->query_vars['include_attachments'];
+		}
+
 		// Add synonyms.
 		// This is done here so the new terms will get highlighting.
 		if ( 'OR' === $operator ) {
@@ -1604,24 +1673,27 @@ function relevanssi_do_query( &$query ) {
 		}
 
 		$search_params = array(
-			'q'                  => $q,
-			'tax_query'          => $tax_query,
-			'tax_query_relation' => $tax_query_relation,
-			'post_query'         => $post_query,
-			'parent_query'       => $parent_query,
-			'meta_query'         => $meta_query,
-			'date_query'         => $date_query,
-			'expost'             => $expost,
-			'post_type'          => $post_type,
-			'post_status'        => $post_status,
-			'operator'           => $operator,
-			'search_blogs'       => $search_blogs,
-			'author'             => $author,
-			'orderby'            => $orderby,
-			'order'              => $order,
-			'fields'             => $fields,
-			'sentence'           => $sentence,
-			'by_date'            => $by_date,
+			'q'                   => $q,
+			'tax_query'           => $tax_query,
+			'tax_query_relation'  => $tax_query_relation,
+			'post_query'          => $post_query,
+			'parent_query'        => $parent_query,
+			'meta_query'          => $meta_query,
+			'date_query'          => $date_query,
+			'expost'              => $expost,
+			'post_type'           => $post_type,
+			'post_status'         => $post_status,
+			'operator'            => $operator,
+			'search_blogs'        => $search_blogs,
+			'author'              => $author,
+			'orderby'             => $orderby,
+			'order'               => $order,
+			'fields'              => $fields,
+			'sentence'            => $sentence,
+			'by_date'             => $by_date,
+			'admin_search'        => $admin_search,
+			'include_attachments' => $include_attachments,
+			'meta_query'          => $meta_query,
 		);
 
 		$return = relevanssi_search( $search_params );
@@ -1654,24 +1726,25 @@ function relevanssi_do_query( &$query ) {
 	// Manipulating the array with array_unique() for example may mess with that.
 	$hits = array_values( $hits_filters_applied[0] );
 
-	$query->found_posts = count( $hits );
+	$hits_count         = count( $hits );
+	$query->found_posts = $hits_count;
 	if ( ! isset( $query->query_vars['posts_per_page'] ) || 0 === $query->query_vars['posts_per_page'] ) {
 		// Assume something sensible to prevent "division by zero error".
 		$query->query_vars['posts_per_page'] = -1;
 	}
 	if ( -1 === $query->query_vars['posts_per_page'] ) {
-		$query->max_num_pages = count( $hits );
+		$query->max_num_pages = $hits_count;
 	} else {
-		$query->max_num_pages = ceil( count( $hits ) / $query->query_vars['posts_per_page'] );
+		$query->max_num_pages = ceil( $hits_count / $query->query_vars['posts_per_page'] );
 	}
 
 	$update_log = get_option( 'relevanssi_log_queries' );
 	if ( 'on' === $update_log ) {
-		relevanssi_update_log( $q, count( $hits ) );
+		relevanssi_update_log( $q, $hits_count );
 	}
 
 	$make_excerpts = get_option( 'relevanssi_excerpts' );
-	if ( $query->is_admin ) {
+	if ( $query->is_admin && ! defined( 'DOING_AJAX' ) ) {
 		$make_excerpts = false;
 	}
 
@@ -1682,7 +1755,7 @@ function relevanssi_do_query( &$query ) {
 	}
 
 	if ( ! isset( $query->query_vars['posts_per_page'] ) || -1 === $query->query_vars['posts_per_page'] ) {
-		$search_high_boundary = count( $hits );
+		$search_high_boundary = $hits_count;
 	} else {
 		$search_high_boundary = $search_low_boundary + $query->query_vars['posts_per_page'] - 1;
 	}
@@ -1692,8 +1765,8 @@ function relevanssi_do_query( &$query ) {
 		$search_low_boundary  += $query->query_vars['offset'];
 	}
 
-	if ( $search_high_boundary > count( $hits ) ) {
-		$search_high_boundary = count( $hits );
+	if ( $search_high_boundary > $hits_count ) {
+		$search_high_boundary = $hits_count;
 	}
 
 	for ( $i = $search_low_boundary; $i <= $search_high_boundary; $i++ ) {
@@ -1723,22 +1796,38 @@ function relevanssi_do_query( &$query ) {
 		}
 
 		if ( 'on' === $make_excerpts && empty( $fields ) ) {
+			if ( isset( $post->blog_id ) ) {
+				switch_to_blog( $post->blog_id );
+			}
 			$post->original_excerpt = $post->post_excerpt;
 			$post->post_excerpt     = relevanssi_do_excerpt( $post, $q );
+			if ( isset( $post->blog_id ) ) {
+				restore_current_blog();
+			}
 		}
-
 		if ( 'on' === get_option( 'relevanssi_show_matches' ) && empty( $fields ) ) {
 			$post_id = $post->ID;
 			if ( 'user' === $post->post_type ) {
 				$post_id = 'u_' . $post->user_id;
+			} elseif ( 'post_type' === $post->post_type ) {
+				$post_id = 'p_' . $post->ID;
 			} elseif ( isset( $post->term_id ) ) {
 				$post_id = '**' . $post->post_type . '**' . $post->term_id;
+			}
+			if ( isset( $post->blog_id ) ) {
+				$post_id = $post->blog_id . '|' . $post->ID;
 			}
 			$post->post_excerpt .= relevanssi_show_matches( $return, $post_id );
 		}
 
-		if ( empty( $fields ) && isset( $return['scores'][ $post->ID ] ) ) {
-			$post->relevance_score = round( $return['scores'][ $post->ID ], 2 );
+		if ( empty( $fields ) ) {
+			$post_id = $post->ID;
+			if ( isset( $post->blog_id ) ) {
+				$post_id = $post->blog_id . '|' . $post->ID;
+			}
+			if ( isset( $return['scores'][ $post_id ] ) ) {
+				$post->relevance_score = round( $return['scores'][ $post_id ], 2 );
+			}
 		}
 
 		$posts[] = $post;
@@ -1777,21 +1866,23 @@ function relevanssi_limit_filter( $query ) {
  *
  * Figures out the post types that are not included in the search.
  *
- * @global WP_Query $wp_query The global WP_Query object.
+ * @param string $include_attachments Whether to include attachments or not.
  *
  * @return string SQL escaped list of excluded post types.
  */
-function relevanssi_get_negative_post_type() {
-	global $wp_query;
-
+function relevanssi_get_negative_post_type( $include_attachments ) {
 	$negative_post_type      = null;
 	$negative_post_type_list = array();
 
-	if ( isset( $wp_query->query_vars['include_attachments'] ) && in_array( $wp_query->query_vars['include_attachments'], array( '0', 'off', 'false' ), true ) ) {
+	if ( isset( $include_attachments ) && in_array( $include_attachments, array( '0', 'off', 'false' ), true ) ) {
 		$negative_post_type_list[] = 'attachment';
 	}
 
-	if ( 'on' === get_option( 'relevanssi_respect_exclude' ) ) {
+	$front_end = true;
+	if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
+		$front_end = false;
+	}
+	if ( 'on' === get_option( 'relevanssi_respect_exclude' ) && $front_end ) {
 		// If Relevanssi is set to respect exclude_from_search, find out which
 		// post types should be excluded from search.
 		$pt_1 = get_post_types( array( 'exclude_from_search' => '1' ) );
@@ -1835,11 +1926,21 @@ function relevanssi_process_tax_query_row( $row, $is_sub_row, $global_relation, 
 	$local_term_tax_ids     = array();
 	$local_not_term_tax_ids = array();
 	$local_and_term_tax_ids = array();
+	$term_tax_id            = array();
+
+	$exists_query = false;
+	if ( isset( $row['operator'] ) && ( 'exists' === strtolower( $row['operator'] ) || 'not exists' === strtolower( $row['operator'] ) ) ) {
+		$exists_query = true;
+	}
 
 	$using_term_tax_id = false;
+	if ( $exists_query ) {
+		$row['field'] = 'exists';
+	}
 	if ( ! isset( $row['field'] ) ) {
 		$row['field'] = 'term_id'; // In case 'field' is not set, go with the WP default of 'term_id'.
 	}
+	$row['field'] = strtolower( $row['field'] ); // In some cases, you can get 'ID' instead of 'id'.
 	if ( 'slug' === $row['field'] ) {
 		$slug          = $row['terms'];
 		$numeric_slugs = array();
@@ -1897,7 +1998,7 @@ function relevanssi_process_tax_query_row( $row, $is_sub_row, $global_relation, 
 			$term_id = array();
 			foreach ( $name as $t_name ) {
 				$term = get_term_by( 'name', $t_name, $row['taxonomy'] );
-				if ( ! $term && is_numeric( $t_names ) ) {
+				if ( ! $term && is_numeric( $t_name ) ) {
 					$numeric_names[] = "'$t_name'";
 				} else {
 					if ( isset( $term->term_id ) ) {
@@ -1979,7 +2080,7 @@ function relevanssi_process_tax_query_row( $row, $is_sub_row, $global_relation, 
 		}
 	}
 
-	if ( ! isset( $row['include_children'] ) || true === $row['include_children'] ) {
+	if ( ! $exists_query && ( ! isset( $row['include_children'] ) || true === $row['include_children'] ) ) {
 		if ( ! $using_term_tax_id && isset( $term_id ) ) {
 			if ( ! is_array( $term_id ) ) {
 				$term_id = array( $term_id );
@@ -2004,9 +2105,11 @@ function relevanssi_process_tax_query_row( $row, $is_sub_row, $global_relation, 
 				}
 				$kids = get_term_children( $t_id, $row['taxonomy'] );
 				foreach ( $kids as $kid ) {
-					$term            = get_term_by( 'id', $kid, $row['taxonomy'] );
 					$kid_term_tax_id = relevanssi_get_term_tax_id( $kid, $row['taxonomy'] );
-					$term_tax_id[]   = $kid_term_tax_id;
+					if ( $kid_term_tax_id ) {
+						// In some weird cases, this may be null. See: https://wordpress.org/support/topic/childrens-of-chosen-product_cat-not-showing-up/.
+						$term_tax_id[] = $kid_term_tax_id;
+					}
 				}
 			}
 		}
@@ -2101,5 +2204,80 @@ function relevanssi_process_tax_query_row( $row, $is_sub_row, $global_relation, 
 		$and_term_tax_ids = array_merge( $and_term_tax_ids, $local_and_term_tax_ids );
 	}
 
+	if ( $exists_query ) {
+		$taxonomy = $row['taxonomy'];
+		$operator = 'IN';
+		if ( 'not exists' === strtolower( $row['operator'] ) ) {
+			$operator = 'NOT IN';
+		}
+		$query_restrictions .= " AND relevanssi.doc $operator (SELECT DISTINCT(tr.object_id) FROM $wpdb->term_relationships AS tr,
+			$wpdb->term_taxonomy AS tt WHERE tr.term_taxonomy_id = tt.term_taxonomy_id AND tt.taxonomy = '$taxonomy')";
+	}
+
 	return array( $query_restrictions, $term_tax_ids, $not_term_tax_ids, $and_term_tax_ids );
+}
+
+/**
+ * Generates the WHERE condition for terms.
+ *
+ * Trims the term, escapes it and places it in the template.
+ *
+ * @param string $term        The search term.
+ * @param string $o_term_cond The search condition template.
+ *
+ * @return string The template with the term in place.
+ */
+function relevanssi_generate_term_cond( $term, $o_term_cond ) {
+	global $wpdb;
+
+	$term = trim( $term ); // Numeric search terms will start with a space.
+	/**
+	 * Allows the use of one letter search terms.
+	 *
+	 * Return false to allow one letter searches.
+	 *
+	 * @param boolean True, if search term is one letter long and will be blocked.
+	 */
+	if ( apply_filters( 'relevanssi_block_one_letter_searches', relevanssi_strlen( $term ) < 2 ) ) {
+		return null;
+	}
+	$term = esc_sql( $term );
+
+	if ( false !== strpos( $o_term_cond, 'LIKE' ) ) {
+		$term = $wpdb->esc_like( $term );
+	}
+
+	$term_cond = str_replace( '#term#', $term, $o_term_cond );
+
+	return $term_cond;
+}
+
+/**
+ * Counts the taxonomy score for a match.
+ *
+ * Uses the taxonomy_detail object to count the taxonomy score for a match.
+ * If there's a taxonomy weight in $post_type_weights, that is used, otherwise
+ * assume weight 1.
+ *
+ * @since 2.1.5
+ *
+ * @param object $match             The match object, used as a reference.
+ * @param array  $post_type_weights The post type and taxonomy weights array.
+ */
+function relevanssi_taxonomy_score( &$match, $post_type_weights ) {
+	$match->taxonomy_score  = 0;
+	$match->taxonomy_detail = json_decode( $match->taxonomy_detail );
+	if ( is_object( $match->taxonomy_detail ) ) {
+		foreach ( $match->taxonomy_detail as $tax => $count ) {
+			if ( empty( $post_type_weights[ 'post_tagged_with_' . $tax ] ) ) {
+				if ( ! empty( $post_type_weights[ $tax ] ) ) { // Legacy code, needed for 2.1.8, remove later.
+					$match->taxonomy_score += $count * $post_type_weights[ $tax ];
+				} else {
+					$match->taxonomy_score += $count * 1;
+				}
+			} else {
+				$match->taxonomy_score += $count * $post_type_weights[ 'post_tagged_with_' . $tax ];
+			}
+		}
+	}
 }

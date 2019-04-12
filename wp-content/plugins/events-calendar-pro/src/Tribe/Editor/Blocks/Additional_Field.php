@@ -95,7 +95,7 @@ class Tribe__Events__Pro__Editor__Blocks__Additional_Field extends Tribe__Editor
 		tribe_asset(
 			Tribe__Events__Pro__Main::instance(),
 			'tribe-events-pro-additional-fields-fe',
-			'additional-fields/frontend.css',
+			'app/additional-fields/frontend.css',
 			array(),
 			'wp_enqueue_scripts',
 			array(

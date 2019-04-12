@@ -45,10 +45,10 @@ input[type="search"].form-field {
 .form-field--large {
   @include font-size-x-large;
   line-height: normal;
-  padding: rem-calc(10 40 10 20);
+  padding: rem-calc(10 75 10 20);
 
   @include media($bp-medium) {
-    padding: rem-calc(20 60 20 25);
+    padding: rem-calc(20 95 20 25);
   }
 }
 

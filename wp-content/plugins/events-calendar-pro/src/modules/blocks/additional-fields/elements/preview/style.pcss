@@ -3,6 +3,14 @@
 }
 
 .tribe-editor__additional-fields__preview-title {
-	line-height: 1;
-	margin: 10px 0;
+	/* Add specific styles to override the editor & themes styles here */
+	.editor-styles-wrapper &,
+	.edit-post-visual-editor .editor-block-list__block & {
+		line-height: 1;
+		margin: 0 0 5px 0;
+		font-size: 19px;
+		font-weight: bold;
+		padding: 0;
+		font-family: 'Helvetica', 'Arial', 'sans-serif';
+	}
 }

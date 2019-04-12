@@ -24,7 +24,7 @@ const DailyField = ( { index, isMultiDay } ) => {
 				blockType={ constants.RECURRING }
 				index={ index }
 				options={ options.RECURRENCE_TYPE_RULES_OPTIONS }
-				rowLabel={ __( 'Every', 'events-gutenberg' ) }
+				rowLabel={ __( 'Every', 'tribe-events-calendar-pro' ) }
 			/>
 			<FromTimeRangePicker
 				blockType={ constants.RECURRING }

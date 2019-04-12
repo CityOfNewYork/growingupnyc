@@ -13,7 +13,7 @@ import { Recurrence } from '@moderntribe/events-pro/icons';
 
 const { EventDateTimeControls } = controls;
 
-const DEFAULT_DESCRIPTION = __( 'Recurring Event', 'events-gutenberg' );
+const DEFAULT_DESCRIPTION = __( 'Recurring Event', 'tribe-events-calendar-pro' );
 
 export default class RecurrenceDescription extends PureComponent {
 	static propTypes = {
@@ -79,7 +79,7 @@ export default class RecurrenceDescription extends PureComponent {
 							)
 					}
 
-					<a href={ this.props.url } target="__blank">{ __( 'see all', 'events-gutenberg' ) }</a>
+					<a href={ this.props.url } target="__blank">{ __( 'see all', 'tribe-events-calendar-pro' ) }</a>
 				</span>
 			),
 		];

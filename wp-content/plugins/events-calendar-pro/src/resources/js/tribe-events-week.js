@@ -661,7 +661,10 @@
 
 						ts.page_title  = $( '#tribe-events-header' ).data( 'title' );
 						ts.view_title  = $( '#tribe-events-header' ).data( 'viewtitle' );
-						document.title = ts.page_title;
+						if ( ts.page_title ) {
+							document.title = ts.page_title;
+						}
+
 						$( '.tribe-events-page-title' ).html( ts.view_title );
 
 						// we only want to add query args for Shortcodes and ugly URL sites

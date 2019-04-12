@@ -4,6 +4,6 @@
   </div>
 {% else %}
   <p class="type--no-results">
-    {{ __('Sorry, we couldn’t find anything matching your search.', 'guny') }} <a href="/search">{{ __('Clear filters', 'guny') }}</a>
+    {{ __('Sorry, we didn\'t find any results for that search.<br><br>Please try a different phrase, check for typos, or', 'guny') }} <a href="{% if language == 'es' %}/es{% endif %}/search/?s={{search_term}}">{{ __('reset your filters', 'guny') }}</a>.
   </p>
 {% endfor %}

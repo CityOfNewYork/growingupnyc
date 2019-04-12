@@ -22,7 +22,11 @@
     {% if post.post_type == 'tribe_events' %}
       {{ __('Event', 'guny') }}
     {% elseif post.post_type == 'age' %}
-      {{ __('Age Guide', 'guny') }}
+      {{ __('Age Guides', 'guny') }}
+    {% elseif post.post_type == 'summer-guide' %}
+      {{ __('Summer Guide', 'guny') }}
+    {% elseif post.post_type == 'afterschool-guide' %}
+      {{ __('After School Guide', 'guny') }}
     {% else %}
       {{ __(post.post_type|replace({'_': ' '})|title, 'guny') }}
     {% endif %}
@@ -55,4 +59,6 @@
   </div>
 
   {% block link %}{% endblock %}
+
+  {% block cta %}{% endblock %}
 </div>

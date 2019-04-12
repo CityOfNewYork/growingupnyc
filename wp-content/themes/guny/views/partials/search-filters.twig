@@ -7,6 +7,10 @@
       </a>
     </li>
     {% for key, value in types %}
+      {% if 'guide' in key %}
+        {% set value = value | replace({ "Guides": "Guide" }) %}
+      {% endif %}
+      
     <li>
       <a href="?s={{ s }}&post_type={{ key }}" class="c-list-box__subitem" aria-selected="{% if type == key %}true{% else %}false{% endif %}" data-value="filter-{{ key }}">
         {{ __(value, 'guny') }}
@@ -15,3 +19,4 @@
     {% endfor %}
   </ul>
 </div>
+

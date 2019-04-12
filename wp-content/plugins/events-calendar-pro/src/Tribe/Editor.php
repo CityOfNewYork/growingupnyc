@@ -19,6 +19,8 @@ class Tribe__Events__Pro__Editor extends Tribe__Editor {
 		add_filter( 'tribe_events_editor_default_template', array( $this, 'add_additional_fields_in_editor' ) );
 		add_filter( 'tribe_events_editor_default_classic_template', array( $this, 'add_additional_fields_in_editor' ) );
 		add_filter( 'tribe_blocks_editor_update_classic_content_params', array( $this, 'migrate_additional_fields_params_to_blocks' ), 10, 3 );
+		add_filter( 'tribe_events_editor_default_classic_template', array( $this, 'add_related_events_in_editor' ), 50 );
+		add_filter( 'tribe_events_editor_default_template', array( $this, 'add_related_events_in_editor' ), 50 );
 
 		$this->assets();
 	}
@@ -300,5 +302,27 @@ class Tribe__Events__Pro__Editor extends Tribe__Editor {
 			return $output;
 		}
 		return implode( $end_separator, array( $output, $last ) );
+	}
+
+	/**
+	 * Filters and adds the related events block into the default classic blocks
+	 *
+	 * @since 4.6.2
+	 *
+	 * @param  array $template
+	 *
+	 * @return array
+	 */
+	public function add_related_events_in_editor( $template = array() ) {
+
+		$hide_related_events = tribe_get_option( 'hideRelatedEvents', false );
+
+		if ( $hide_related_events ) {
+			return $template;
+		}
+
+		$template[] = array( 'tribe/related-events' );
+		return $template;
+
 	}
 }

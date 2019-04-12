@@ -65,12 +65,12 @@ const FromTimeRangePicker = ( {
 				{ 'tribe-editor__from-time-range-picker--multi-day': isMultiDay },
 				className
 			) }
-			label={ __( 'From', 'events-gutenberg' ) }
+			label={ __( 'From', 'tribe-events-calendar-pro' ) }
 		>
 			<TimePicker { ...getStartTimePickerProps() } />
 			{ ! isAllDay && (
 				<Fragment>
-					<span>{ __( 'to', 'events-gutenberg' ) }</span>
+					<span>{ __( 'to', 'tribe-events-calendar-pro' ) }</span>
 					<TimePicker { ...getEndTimePickerProps() } />
 				</Fragment>
 			) }

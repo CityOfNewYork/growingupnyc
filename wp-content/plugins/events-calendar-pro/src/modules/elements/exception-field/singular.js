@@ -23,7 +23,7 @@ const SingularField = ( { index } ) => {
 				blockType={ constants.EXCEPTION }
 				index={ index }
 				options={ options.EXCEPTION_OCCURRENCE_OPTIONS }
-				rowLabel={ __( 'A', 'events-gutenberg' ) }
+				rowLabel={ __( 'A', 'tribe-events-calendar-pro' ) }
 			/>
 			<OnDatePicker
 				blockType={ constants.EXCEPTION }

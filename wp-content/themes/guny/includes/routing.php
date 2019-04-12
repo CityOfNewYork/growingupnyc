@@ -55,7 +55,7 @@ Routes::map('/trips/:post', function($params) {
  */
 
 Routes::map('/search', function($params) {
-  if (Search\visible()) {
+  if (Search\visible() || !empty($_GET['s'])) {
     Routes::load('search.php', $params, null, 200);
   } else {
     wp_redirect('/'); exit;
@@ -63,13 +63,12 @@ Routes::map('/search', function($params) {
 });
 
 // Redirect default Wordpress search to our route
+add_action('template_redirect', 'search');
 function search() {
-  if (is_search() && !empty($_GET['s'])) {
-    $query = Search\get_query();
-    $path = Search\get_path();
-    wp_redirect($path . '/?' . http_build_query($query)); exit;
+  if (!empty($_GET['s'])){
+    Routes::load('search.php', $params, null, 200);
   }
-} add_action('template_redirect', 'search');
+} 
 
 /**
  * Programs

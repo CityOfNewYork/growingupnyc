@@ -31,7 +31,9 @@
 {% endblock %}
 
 {% block after_list %}
+{% if posts %}
 <div class="o-content-container--compact">
-  {{ pagination }}
+    {{ pagination }}
 </div>
+{% endif %}
 {% endblock %}

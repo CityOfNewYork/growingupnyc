@@ -82,12 +82,12 @@ var tribe = typeof tribe === "object" ? tribe : {}; tribe["events-pro"] = tribe[
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 565);
+/******/ 	return __webpack_require__(__webpack_require__.s = 571);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 565:
+/***/ 571:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

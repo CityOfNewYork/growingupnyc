@@ -36,7 +36,7 @@ const FieldTemplate = ( { isPristine, isSelected, label, output, input, settings
 
 	if ( isPristine ) {
 		const placeholderMessage = sprintf(
-			__( 'Add %1$s', 'events-gutenberg' ),
+			__( 'Add %1$s', 'tribe-events-calendar-pro' ),
 			capitalize( label )
 		);
 		return <Placeholder>{ placeholderMessage }</Placeholder>;

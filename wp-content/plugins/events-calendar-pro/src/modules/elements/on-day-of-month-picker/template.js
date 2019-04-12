@@ -25,7 +25,7 @@ const OnDayOfMonthPicker = ( {
 			'tribe-editor__on-day-of-month-picker',
 			className
 		) }
-		label={ __( 'On the', 'events-gutenberg' ) }
+		label={ __( 'On the', 'tribe-events-calendar-pro' ) }
 	>
 		<DayOfMonthPicker
 			dayOfMonth={ dayOfMonth }

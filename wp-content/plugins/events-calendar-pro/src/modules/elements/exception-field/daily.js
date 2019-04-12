@@ -22,12 +22,12 @@ const DailyField = ( { index } ) => {
 				blockType={ constants.EXCEPTION }
 				index={ index }
 				options={ options.EXCEPTION_OCCURRENCE_OPTIONS }
-				rowLabel={ __( 'Every', 'events-gutenberg' ) }
+				rowLabel={ __( 'Every', 'tribe-events-calendar-pro' ) }
 			/>
 			<SeriesEnds
 				blockType={ constants.EXCEPTION }
 				index={ index }
-				rowLabel={ __( 'Exception ends', 'events-gutenberg' ) }
+				rowLabel={ __( 'Exception ends', 'tribe-events-calendar-pro' ) }
 			/>
 		</Fragment>
 	);

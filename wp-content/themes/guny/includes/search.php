@@ -29,23 +29,25 @@ const TRANSLATION_DOMAIN = 'guny-search';
 
 // The search filters
 CONST FILTER_TYPES = array(
-  'age' => 'Ages',
-  'tribe_events' => 'Events',
-  'program' => 'Programs'
+  'age' => 'Age Guides',
+  // 'tribe_events' => 'Events',
+  'program' => 'Programs',
+  'afterschool-guide' => 'After School Guide',
+  'summer-guide' => 'Summer Guide',
 );
 
 // Default values for query string parameters
 const DEFAULT_PARAMS = array(
   's' => '',
   'post_type' => 'any',
-  'paged' => 1
+  'paged' => 1,
 );
 
 // Parameter validation patterns
 const PARAM_PATTERNS = array(
   's' => '/^[\W\w]*$/',
   'post_type' => '/^[A-Za-z_-]*$/',
-  'paged' => '/^[0-9]*$/'
+  'paged' => '/^[0-9]*$/',
 );
 
 // The field ID for auto corrected terms
@@ -63,9 +65,7 @@ const ENABLE_SUGGESTIONS = 'field_5a7886d200097';
 // group_5a6a00e9e6ee2.json
 const SUGGESTED_TERMS_FIELD = 'field_5a74dbd08af7f';
 
-
 const USER_PRIVATE_VIEWING_ROLE = 'administrator';
-
 
 /**
  * Functions
@@ -104,7 +104,11 @@ function visible() {
  * @return string The full url for search, including language prefix
  */
 function get_path() {
-  return get_home_url() . PATH;
+  if (ICL_LANGUAGE_CODE == 'es'){
+    return rtrim(get_home_url(),'/'). PATH;
+  }else {
+    return get_home_url() . PATH;
+  }
 }
 
 /**
@@ -121,18 +125,20 @@ function get_translation_domain() {
  * @return array Key, value pair of query parameters
  */
 function get_query() {
+  $pt = (ICL_LANGUAGE_CODE ==='es')? array('age', 'program', 'tribe_events'):DEFAULT_PARAMS['post_type'];
+  
   $query = array(
     's' => get_query_var('s', DEFAULT_PARAMS['s']),
-    'post_type' => get_query_var('post_type', DEFAULT_PARAMS['post_type']),
-    'paged' => get_query_var('page', DEFAULT_PARAMS['paged'])
+    'post_type' => get_query_var('post_type', $pt),
+    'paged' => get_query_var('page', DEFAULT_PARAMS['paged']),
   );
 
   // Blank post types can get through
   $query['post_type'] = ($query['post_type'] === '') ?
-    DEFAULT_PARAMS['post_type'] : $query['post_type'];
+    $pt : $query['post_type'];
 
   // Validate our paramters
-  $query = Templating\validate_params($query, PARAM_PATTERNS);
+  // $query = Templating\validate_params($query, PARAM_PATTERNS);
 
   // Page 0 and 1 are the same, but 0 cause pagination issues
   $query['paged'] = ($query['paged'] === 0) ? 1 : $query['paged'];

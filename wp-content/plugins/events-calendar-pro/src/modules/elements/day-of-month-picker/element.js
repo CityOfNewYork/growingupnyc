@@ -51,7 +51,7 @@ const DayOfMonthPicker = ( {
 				onChange={ onDayOfMonthChange }
 			/>
 			{ getWeekDaySelect() }
-			<span>{ __( 'of the month', 'events-gutenberg' ) }</span>
+			<span>{ __( 'of the month', 'tribe-events-calendar-pro' ) }</span>
 		</div>
 	);
 };

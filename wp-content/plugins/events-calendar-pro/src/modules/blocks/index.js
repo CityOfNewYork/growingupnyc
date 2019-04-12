@@ -10,6 +10,7 @@ import recurrence from '@moderntribe/events-pro/blocks/recurrence';
 import recurrenceRule from '@moderntribe/events-pro/blocks/recurrence-rule';
 import recurrenceException from '@moderntribe/events-pro/blocks/recurrence-exception';
 import recurrenceDescription from '@moderntribe/events-pro/blocks/recurrence-description';
+import RelatedEvents from '@moderntribe/events-pro/blocks/related-events';
 import { addAdditionalFields } from '@moderntribe/events-pro/blocks/additional-fields/utils';
 import { initStore } from '@moderntribe/events-pro/data';
 
@@ -18,6 +19,7 @@ const blocks = addAdditionalFields( [
 	recurrenceRule,
 	recurrenceException,
 	recurrenceDescription,
+	RelatedEvents,
 ] );
 
 blocks.forEach( block => {

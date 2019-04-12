@@ -34,7 +34,7 @@ class MultiDayCheckbox extends PureComponent {
 				className={ classNames( 'tribe-editor__multi-day-checkbox', className ) }
 				disabled={ disabled }
 				id={ this.id }
-				label={ __( 'Multi-day', 'events-gutenberg' ) }
+				label={ __( 'Multi-day', 'tribe-events-calendar-pro' ) }
 				onChange={ onChange }
 			/>
 		)

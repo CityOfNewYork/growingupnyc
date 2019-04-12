@@ -595,13 +595,11 @@ class Tribe__Events__Pro__Recurrence__Meta {
 		 */
 		$show_recurrence_meta = apply_filters( 'tribe_events_pro_show_recurrence_meta_box', true, $post_id );
 
-		/**
-		 * On version hotfix 4.5.2.1 we implemented a simpler fix for C#119912 with `has_blocks`
-		 *
-		 * @todo  Remove has_blocks on version release/B19.01
-		 */
-		if ( ! $show_recurrence_meta || has_blocks( $post ) ) {
-			return;
+		if ( ! empty( $post->post_parent ) || ! $show_recurrence_meta ) {
+
+			include Tribe__Events__Pro__Main::instance()->pluginPath . 'src/admin-views/event-recurrence-blocks-message.php';
+
+			return; // don't show recurrence fields for instances of a recurring event
 		}
 
 		$recurrence = array();
@@ -613,7 +611,7 @@ class Tribe__Events__Pro__Recurrence__Meta {
 
 		$premium = Tribe__Events__Pro__Main::instance();
 		include Tribe__Events__Pro__Main::instance()->pluginPath . 'src/admin-views/event-recurrence.php';
-	}//end loadRecurrenceData
+	}
 
 	/**
 	 * Localizes recurrence JS data

@@ -1,9 +1,10 @@
 === Media Cleaner ===
-Contributors: TigrouMeow, amekusa
-Tags: clean, delete, file, files, images, image, media, library, upload, clean, acf
+Contributors: TigrouMeow
+Tags: clean, delete, file, files, images, image, media, library, upload, acf
 Requires at least: 4.8
-Tested up to: 5.0
-Stable tag: 5.1.0
+Tested up to: 5.1
+Requires PHP: 7.0
+Stable tag: 5.2.1
 
 Clean your WordPress (broken media, unused media, files). It has its own trash and recovery features. Please read the description.
 
@@ -13,28 +14,37 @@ Clean your Media Library from the media which aren't used in any of your posts, 
 
 A tutorial is available on the official website, here: [Media Cleaner](https://meowapps.com/media-cleaner).
 
-**This tool is a knife. Do not use it if you don't have any backup, or if you don't know what it does. For backup, I recommend use the excellent service called [BlogVault](https://meow.click/blogvault).**
+=== IMPORTANT ===
 
-**SPECIAL PLUGIN**. Such a plugin is difficult to create and to maintain. If you understand WordPress, you probably know why. This plugin does its best to help you. Learn how to use it and you will get awesome results.
+This tool is a knife. Do not use it if you don't have any backup, or if you don't know what it does. For backup, I recommend use the excellent service called [BlogVault](https://meow.click/blogvault). Such a plugin is difficult to create and to maintain. If you understand WordPress, you probably know why. This plugin does its best to help you. Learn how to use it and you will get awesome results.
 
-**DASHBOARD**. The files detected as not used will be listed in a specific dashboard. At this point, it will be up to you to delete them. They will be then moved to a trash internal to the plugin. After more testing, you can trash them permanently.
+=== DASHBOARD ===
+The files detected as not used will be listed in a specific dashboard. At this point, it will be up to you to delete them. They will be then moved to a trash internal to the plugin. After more testing, you can trash them permanently.
 
-**PRO**. [Media Cleaner Pro](https://meowapps.com/media-cleaner) can scan your physical /uploads directory, and match it against the Media Library. It also has extra support for Page Builders.
+=== COMPATIBILITY ===
+It works with any kind of media, and including their retina and/or WebP versions. I am adding support for specific plugins little by little. As it requires meticulous work and updates, **specific checks for Page Builders are being added to the Pro version**.
 
-**COMPATIBILITY**. I am adding support for specific plugins little by little. Currently, I have been working with ACF, Gutenberg, Divi, Fusion Builder (Avada), WooCommerce, Visual Composer (WPBakery), Elementor, and Beaver Builder. **Specific checks for Page Builders are being added to the Pro version** (as it requires meticulous work and updates).
+=== PRO ===
+[Media Cleaner Pro](https://meowapps.com/media-cleaner) can scan your physical /uploads directory, and match it against the Media Library. It also has extra support for plugins which are complicated to handle. Here is the list:
 
-**AGAIN, BE CAREFUL**. Again, this plugin deletes files so be careful! Backup is not only important, it is **necessary**. Don't use this plugin if you don't understand how WordPress works.
+- Gutenberg
+- ACF
+- Divi
+- Fusion Builder (Avada)
+- WooCommerce
+- Visual Composer (WPBakery)
+- Elementor
+- Beaver Builder
+
+=== AGAIN, BE CAREFUL ===
+Again, this plugin deletes files so be careful! Backup is not only important, it is **necessary**. Don't use this plugin if you don't understand how WordPress works.
 
 == Installation ==
 
-1. Upload `media-file-cleaner` to the `/wp-content/plugins/` directory
+1. Upload `media-file-cleaner-pro` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go in the Settings -> Media Cleaner and check the appropriate options
 3. Go in Media -> Media Cleaner
-
-== Frequently Asked Questions ==
-
-The official FAQ is [here](https://meowapps.com/media-cleaner/faq/).
 
 == Screenshots ==
 
@@ -42,14 +52,34 @@ The official FAQ is [here](https://meowapps.com/media-cleaner/faq/).
 
 == Changelog ==
 
+= 5.2.1 =
+* Add: Support for My Calendar (thanks to Mike Meinz).
+* Add: Support for iFrames (thanks to Mike Meinz).
+* Update: Code cleaning, reorganization and optimization.
+
+= 5.2.0 =
+* Update: Many optimizations, modules and big sections of the code are now only loaded when really needed.
+* Fix: Filenames with spaces weren't detected correctly and other.
+* Fix: Make sure that the shortcodes are resolved.
+* Add: Compatibility with more plugins (ACF Widgets, Attachments, Metaslider).
+* Info: Mike Meinz is an amazing developer who made a thorough debugging of the whole process, made a lot of corrections, and added support for more plugins. Thanks to him, Media Cleaner is much better!
+
+= 5.1.3 =
+* Add: Support for WebP.
+* Update: Avoid removing tables when plugin is only disabled.
+* Fix: For some, the tables couldn't be reset.
+
+= 5.1.2 =
+* Update: Admin style update and common framework updated.
+* Update: Compatibility with WordPress 5.1.
+
 = 5.1.0 =
 * Add: Filters for Filesystem scan. Please have a look at the tutorial (https://meowapps.com/media-cleaner-tutorial/), there is now a section about those filters.
 * Fix: Query for metakey.
 * Fix: Thumbnails matching.
 * Update: Compatibility for WordPress 5 and Gutenberg.
 
-= 5.0.2 =
-* Update: Remove UpdraftPlus.
+= 5.0.1 =
 * Update: Slight code cleaning.
 * Update: Checkboxes are updated dynamically.
 * Info: Media Cleaner is better than ever by going through so many improvements and optimizations this year. The plugin has also been perfectly stable for a few weeks, so I have decided to change its version number. Please help this plugin survive by giving me a nice review, here: https://wordpress.org/support/plugin/meow-lightbox/reviews/?rate=5#new-post. Thank you :)

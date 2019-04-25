@@ -4,8 +4,10 @@ if ( !class_exists( 'MeowApps_Admin' ) ) {
 
 	class MeowApps_Admin {
 
+		public static $logo = 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxIiB2aWV3Qm94PSIwIDAgMTY1IDE2NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8c3R5bGU+CiAgICAuc3Qye2ZpbGw6IzgwNDYyNX0uc3Qze2ZpbGw6I2ZkYTk2MH0KICA8L3N0eWxlPgogIDxwYXRoIGQ9Ik03MiA3YTc2IDc2IDAgMCAxIDg0IDkxQTc1IDc1IDAgMSAxIDcyIDd6IiBmaWxsPSIjNGE2YjhjIi8+CiAgPHBhdGggZD0iTTQ4IDQ4YzIgNSAyIDEwIDUgMTQgNSA4IDEzIDE3IDIyIDIwbDEtMTBjMS0yIDMtMyA1LTNoMTNjMiAwIDQgMSA1IDNsMyA5IDQtMTBjMi0zIDYtMiA5LTJoMTFjMyAyIDMgNSAzIDhsMiAzN2MwIDMtMSA3LTQgOGgtMTJjLTIgMC0zLTItNS00LTEgMS0yIDMtNCAzLTUgMS05IDEtMTMtMS0zIDItNSAyLTkgMnMtOSAxLTEwLTNjLTItNC0xLTggMC0xMi04LTMtMTUtNy0yMi0xMi03LTctMTUtMTQtMjAtMjMtMy00LTUtOC01LTEzIDEtNCAzLTEwIDYtMTMgNC0zIDEyLTIgMTUgMnoiIGZpbGw9IiMxMDEwMTAiLz4KICA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNNDMgNTFsNCAxMS02IDVoLTZjLTMtNS0zLTExIDAtMTYgMi0yIDYtMyA4IDB6Ii8+CiAgPHBhdGggY2xhc3M9InN0MyIgZD0iTTQ3IDYybDMgNmMwIDMgMCA0LTIgNnMtNCAyLTcgMmwtNi05aDZsNi01eiIvPgogIDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik01MCA2OGw4IDljLTMgMy01IDYtOSA4bC04LTljMyAwIDUgMCA3LTJzMy0zIDItNnoiLz4KICA8cGF0aCBkPSJNODIgNzRoMTJsNSAxOCAzIDExIDgtMjloMTNsMiA0MmgtOGwtMS0yLTEtMzEtMTAgMzItNyAxLTktMzMtMSAyOS0xIDRoLThsMy00MnoiIGZpbGw9IiNmZmYiLz4KICA8cGF0aCBjbGFzcz0ic3QzIiBkPSJNNTggNzdsNSA1Yy0xIDQtMiA4LTcgOGwtNy01YzQtMiA2LTUgOS04eiIvPgogIDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik02MyA4Mmw5IDUtNiA5LTEwLTZjNSAwIDYtNCA3LTh6Ii8+CiAgPHBhdGggY2xhc3M9InN0MyIgZD0iTTcyIDg3bDMgMS0xIDExLTgtMyA2LTEweiIvPgo8L3N2Zz4K';
+
 		public static $loaded = false;
-		public static $admin_version = "1.6";
+		public static $admin_version = "1.9";
 
 		public $prefix; 		// prefix used for actions, filters (mfrh)
 		public $mainfile; 	// plugin main file (media-file-renamer.php)
@@ -151,8 +153,8 @@ if ( !class_exists( 'MeowApps_Admin' ) ) {
 			}
 			?>
 			<h1 style="line-height: 16px;">
-				<img width="36" style="margin-right: 10px; float: left; position: relative; top: -5px;"
-					src="<?php echo $this->meowapps_logo_url(); ?>"><?php echo $title; ?><br />
+				<img width="42" style="margin-right: 10px; float: left; position: relative; top: -5px;"
+					src="<?php echo MeowApps_Admin::$logo ?>"><?php echo $title; ?><br />
 				<span style="font-size: 12px"><?php echo $author; ?></span>
 			</h1>
 			<div style="clear: both;"></div>
@@ -174,8 +176,8 @@ if ( !class_exists( 'MeowApps_Admin' ) ) {
 			// Creates standard menu if it does NOT exist
 			global $submenu;
 			if ( !isset( $submenu[ 'meowapps-main-menu' ] ) ) {
-				add_menu_page( 'Meow Apps', 'Meow Apps', 'manage_options', 'meowapps-main-menu',
-					array( $this, 'admin_meow_apps' ), 'dashicons-camera', 82 );
+				add_menu_page( 'Meow Apps', '<img style="width: 24px; margin-left: -30px; position: absolute; margin-top: -3px;" src="' . MeowApps_Admin::$logo . '" />Meow Apps', 'manage_options', 'meowapps-main-menu',
+					array( $this, 'admin_meow_apps' ), '', 82 );
 				add_submenu_page( 'meowapps-main-menu', __( 'Dashboard', 'meowapps' ),
 					__( 'Dashboard', 'meowapps' ), 'manage_options',
 					'meowapps-main-menu', array( $this, 'admin_meow_apps' ) );
@@ -284,7 +286,7 @@ if ( !class_exists( 'MeowApps_Admin' ) ) {
 		function plugins_loaded() {
 			if ( isset( $_GET[ 'tool' ] ) && $_GET[ 'tool' ] == 'error_log' ) {
  				$sec = "5";
- 				header("Refresh: $sec;");
+ 				header( "Refresh: $sec;" );
 			}
 		}
 
@@ -303,11 +305,20 @@ if ( !class_exists( 'MeowApps_Admin' ) ) {
 				echo "</div>";
 			}
 			else if ( isset( $_GET['tool'] ) && $_GET['tool'] == 'error_log' ) {
+				$log_msg = '=== MEOW APPS DEBUG (This is not an error) ===';
+				if ( isset( $_POST['write_logs'] ) ) {
+					error_log( $log_msg );
+				}
 				$errorpath = ini_get( 'error_log' );
 				echo "<a href=\"javascript:history.go(-1)\">< Go back</a><br /><br />";
+				echo '
+					<form method="post">
+						<input type="hidden" name="write_logs" value="true">
+						<input class="button button-primary" type="submit" value="Write in the Error Logs">
+					</form><br />';
 				echo '<div id="error_log">';
 				if ( file_exists( $errorpath ) ) {
-					echo "Now (auto-reload every 5 seconds):<br />[" . date( "d-M-Y H:i:s", time() ) . " UTC]<br /<br /><br />Errors (order by latest):";
+					echo "Now (auto-reload every 5 seconds): [" . date( "d-M-Y H:i:s", time() ) . " UTC]<br /><br /><h2 style='margin: 0px;'>Errors (order by latest)</h2>";
 					$errors = file_get_contents( $errorpath );
 					$errors = explode( "\n", $errors );
 					$errors = array_reverse( $errors );
@@ -332,24 +343,28 @@ if ( !class_exists( 'MeowApps_Admin' ) ) {
 					<div class="meow-box meow-col meow-span_1_of_2 ">
 						<h3 class=""><span class="dashicons dashicons-camera"></span> UI Plugins </h3>
 						<ul class="">
-							<li><b>WP/LR Sync</b> <?php echo $this->check_install( 'wplr-sync' ) ?><br />
+							<li><img src='<?= $this->common_url( 'img/wplr-sync.jpg' ) ?>' /><b>WP/LR Sync</b>
+								<?php echo $this->check_install( 'wplr-sync' ) ?><br />
 								Synchronize photos (folders, collections, keywords) from Lightroom to WordPress.</li>
-							<li><b>Meow Lightbox</b> <?php echo $this->check_install( 'meow-lightbox' ) ?><br />
+							<li><img src='<?= $this->common_url( 'img/meow-lightbox.jpg' ) ?>' /><b>Meow Lightbox</b>
+								<?php echo $this->check_install( 'meow-lightbox' ) ?><br />
 								Light but powerful lightbox that can also display photo information (EXIF).</li>
-							<li><b>Meow Gallery</b> <?php echo $this->check_install( 'meow-gallery' ) ?><br />
+							<li><img src='<?= $this->common_url( 'img/meow-gallery.jpg' ) ?>' /><b>Meow Gallery</b>
+								<?php echo $this->check_install( 'meow-gallery' ) ?><br />
 								Gallery (using the built-in WP gallery) that makes your website look better.</li>
-							<!-- <li><b>Audio Story for Images</b> <?php echo $this->check_install( 'audio-story-images' ) ?><br />
-								Add audio (music, explanation, ambiance) to your images.</li> -->
 						</ul>
 					</div>
 					<div class="meow-box meow-col meow-span_1_of_2">
 						<h3 class=""><span class="dashicons dashicons-admin-tools"></span> System Plugins</h3>
 						<ul class="">
-							<li><b>Media File Renamer</b> <?php echo $this->check_install( 'media-file-renamer' ) ?><br />
+							<li><img src='<?= $this->common_url( 'img/media-file-renamer.jpg' ) ?>' /><b>Media File Renamer</b>
+								 <?php echo $this->check_install( 'media-file-renamer' ) ?><br />
 								For nicer filenames and better SEO.</li>
-							<li><b>Media Cleaner</b> <?php echo $this->check_install( 'media-cleaner' ) ?><br />
+							<li><img src='<?= $this->common_url( 'img/media-cleaner.jpg' ) ?>' /><b>Media Cleaner</b>
+								<?php echo $this->check_install( 'media-cleaner' ) ?><br />
 								Detect the files which are not in use.</li>
-							<li><b>WP Retina 2x</b> <?php echo $this->check_install( 'wp-retina-2x' ) ?><br />
+							<li><img src='<?= $this->common_url( 'img/wp-retina-2x.jpg' ) ?>' /><b>WP Retina 2x</b>
+								<?php echo $this->check_install( 'wp-retina-2x' ) ?><br />
 								The famous plugin that adds Retina support.</li>
 						</ul>
 					</div>

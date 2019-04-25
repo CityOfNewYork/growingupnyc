@@ -8,7 +8,10 @@ class WPML_REST_Posts_Hooks implements IWPML_Action {
 	/** @var WPML_Term_Translation $term_translations */
 	private $term_translations;
 
-	public function __construct( SitePress $sitepress, WPML_Term_Translation $term_translations ) {
+	public function __construct(
+		SitePress $sitepress,
+		WPML_Term_Translation $term_translations
+	) {
 		$this->sitepress         = $sitepress;
 		$this->term_translations = $term_translations;
 	}
@@ -31,6 +34,8 @@ class WPML_REST_Posts_Hooks implements IWPML_Action {
 		if ( $this->sitepress->get_setting( 'sync_post_taxonomies' ) ) {
 			$response = $this->preset_terms_in_new_translation( $response, $post );
 		}
+
+		$response = $this->adjust_sample_links( $response, $post );
 
 		return $response;
 	}
@@ -114,5 +119,31 @@ class WPML_REST_Posts_Hooks implements IWPML_Action {
 		}
 
 		return array_values( array_filter( $term_ids ) );
+	}
+
+	/**
+	 * @param WP_REST_Response $response The response object.
+	 * @param WP_Post          $post     Post object.
+	 *
+	 * @return WP_REST_Response
+	 */
+	private function adjust_sample_links( $response, $post ) {
+		$data = $response->get_data();
+
+		if ( ! isset( $data['link'], $data['permalink_template'] ) ) {
+			return $response;
+		}
+
+		$lang_details = $this->sitepress->get_element_language_details( $post->ID, 'post_' . $post->post_type );
+
+		if ( empty( $lang_details->language_code ) ) {
+			$lang                       = $this->sitepress->get_current_language();
+			$data['link']               = $this->sitepress->convert_url( $data['link'], $lang );
+			$data['permalink_template'] = $this->sitepress->convert_url( $data['permalink_template'], $lang );
+
+			$response->set_data( $data );
+		}
+
+		return $response;
 	}
 }

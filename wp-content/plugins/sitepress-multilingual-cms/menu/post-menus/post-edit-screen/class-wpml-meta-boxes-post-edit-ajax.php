@@ -20,7 +20,7 @@ class WPML_Meta_Boxes_Post_Edit_Ajax implements IWPML_Action {
 	 * @param string $hook
 	 */
 	public function enqueue_scripts( $hook ) {
-		if ( 'post.php' === $hook || 'post-new.php' === $hook ) {
+		if ( in_array( $hook, array( 'post.php', 'post-new.php', 'edit.php' ) ) ) {
 			wp_enqueue_script( 'wpml-meta-box', ICL_PLUGIN_URL . '/dist/js/wpml-meta-box/wpml-meta-box.js' );
 		}
 	}

@@ -662,6 +662,8 @@ echo '</textarea>';
 		<small style="margin-left:10px;"><?php _e( 'Fixes the collation of the element_type column in icl_translations in case this setting changed for your posts.post_type column.', 'sitepress' ) ?></small>
 	</p>
 
+    <?php do_action( 'wpml_troubleshooting_after_fix_element_type_collation' ); ?>
+
 	<?php if(class_exists('TranslationManagement')){ ?>
 	<p>
 		<input id="assign_translation_status_to_duplicates" type="button" class="button-secondary" value="<?php _e( 'Assign translation status to duplicated content', 'sitepress' ) ?>"/><span id="assign_translation_status_to_duplicates_resp"></span><br/>
@@ -835,6 +837,9 @@ echo WPML_Troubleshooting_Terms_Menu::display_terms_with_suffix();
 			echo '</p>';
 			echo '<p class="error" style="padding:6px;">';
 			_e(	"Please note that all translations you have sent to remote translation services will be lost if you reset WPML's data. They cannot be recovered later.", 'sitepress' );
+			echo '</p>';
+			echo '<p class="error" style="padding:6px;">';
+			_e( "If you are using the Advanced Translation Editor, you will lose the translations that are in progress, as well as the existing translation memory and glossary. You will also lose access to purchases, invoices, and history related to your work with the Advanced Translation Editor.", 'sitepress' );
 			echo '</p>';
 			echo '<label><input type="checkbox" name="icl-reset-all" ';
 			if ( !function_exists( 'is_super_admin' ) || is_super_admin() ) {

@@ -360,6 +360,18 @@ class WPML_Meta_Boxes_Post_Edit_HTML {
 	private function languages_table( $status_display ) {
 		?>
 		<p style="clear:both;"><b><?php esc_html_e( 'Translate this Document', 'sitepress' ); ?></b></p>
+
+		<?php
+		/**
+		 * Fire actions before to render the translations tables
+		 *
+		 * @since 4.2.0
+		 *
+		 * @param WP_Post $this->post
+		 */
+		do_action( 'wpml_before_post_edit_translations_table', $this->post );
+		?>
+
 		<table width="100%" id="icl_untranslated_table" class="icl_translations_table">
 			<tr>
 				<th>&nbsp;</th>
@@ -396,7 +408,20 @@ class WPML_Meta_Boxes_Post_Edit_HTML {
             <p><b><?php esc_html_e( 'Translations', 'sitepress' ) ?></b>
           (<a class="icl_toggle_show_translations" href="#" <?php if ( $not_show_flags ) : ?>style="display:none;"<?php endif; ?>><?php esc_html_e( 'hide', 'sitepress' ); ?></a><a class="icl_toggle_show_translations" href="#" <?php if ( ! $not_show_flags ) : ?>style="display:none;"<?php endif; ?>><?php esc_html_e( 'show', 'sitepress' ) ?></a>)
             </p>
-		            <?php wp_nonce_field( 'toggle_show_translations_nonce', '_icl_nonce_tst' ) ?>
+
+			<?php
+			/**
+			 * Fire actions before to render the translations summary
+			 *
+			 * @since 4.2.0
+			 *
+			 * @param WP_Post $this->post
+			 */
+			 do_action( 'wpml_before_post_edit_translations_summary', $this->post );
+
+			 wp_nonce_field( 'toggle_show_translations_nonce', '_icl_nonce_tst' );
+			 ?>
+
             <table width="100%" class="icl_translations_table wpml-margin-bottom-base" id="icl_translations_table"
 			       <?php
 			       if ( $not_show_flags ) : ?>style="display:none;"<?php endif; ?>>
@@ -628,7 +653,7 @@ class WPML_Meta_Boxes_Post_Edit_HTML {
             ) . '"
 				onclick="icl_copy_from_original(\'' . esc_js( $source_lang ) . '\', \'' . esc_js( $trid ) . '\')"'
 		     . $disabled . ' />'; ?>
-		<i class="otgs-ico-help js-wpml-popover-tooltip"
+		<i class="otgs-ico-help js-otgs-popover-tooltip"
 		   data-tippy-zindex="999999"
 		   title="<?php echo  esc_html__("This operation copies the content from the original language onto this translation. It's meant for when you want to start with the original content, but keep translating in this language. This button is only enabled when there's no content in the editor.",'sitepress');?>"></i>
 	<?php }
@@ -658,7 +683,7 @@ class WPML_Meta_Boxes_Post_Edit_HTML {
 							esc_html( $source_lang_name )
 					)
 			); ?></span>
-		<i class="otgs-ico-help js-wpml-popover-tooltip"
+		<i class="otgs-ico-help js-otgs-popover-tooltip"
 		   data-tippy-zindex="999999"
 		   title="	  <?php echo esc_html__("This operation will synchronize this translation with the original language. When you edit the original, this translation will update immediately. It's meant when you want the content in this language to always be the same as the content in the original language.",'sitepress') ?>"></i>
 		<?php

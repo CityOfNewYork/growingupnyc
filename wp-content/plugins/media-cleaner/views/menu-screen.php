@@ -8,7 +8,7 @@
 		$reset = isset ( $_GET[ 'reset' ] ) ? $_GET[ 'reset' ] : 0;
 		if ( $reset ) {
 			wpmc_reset();
-			$core->wpmc_reset_issues();
+			$core->reset_issues();
 		}
 		$s = isset ( $_GET[ 's' ] ) ? sanitize_text_field( $_GET[ 's' ] ) : null;
 		$table_name = $wpdb->prefix . "mclean_scan";

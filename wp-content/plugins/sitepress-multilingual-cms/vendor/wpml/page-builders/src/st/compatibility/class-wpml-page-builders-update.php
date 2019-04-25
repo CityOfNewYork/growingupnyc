@@ -47,13 +47,20 @@ class WPML_Page_Builders_Update {
 	 */
 	private function copy_meta_fields( $translated_post_id, $original_post_id, $meta_fields ) {
 		foreach ( $meta_fields as $meta_key ) {
-			$value = get_post_meta( $original_post_id, $meta_key, true );
-
-			update_post_meta(
-				$translated_post_id,
-				$meta_key,
-				apply_filters( 'wpml_pb_copy_meta_field', $value, $translated_post_id, $original_post_id, $meta_key )
-			);
+			if ( 'post_content' === $meta_key ) {
+				$original_post = get_post( $original_post_id );
+				wp_update_post( array(
+					                'ID' => $translated_post_id,
+					                'post_content' => $original_post->post_content,
+				                ) );
+			} else {
+				$value = get_post_meta( $original_post_id, $meta_key, true );
+				update_post_meta(
+					$translated_post_id,
+					$meta_key,
+					apply_filters( 'wpml_pb_copy_meta_field', $value, $translated_post_id, $original_post_id, $meta_key )
+				);
+			}
 		}
 	}
 }

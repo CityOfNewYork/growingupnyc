@@ -53,11 +53,17 @@ class GunySite extends TimberSite {
           'eventDisplay' => 'list',
           'meta_query' => array(
             'relation' => 'AND',
-            array(
+            'featured' => array(
               'key'     => 'featured_event',
               'value'   => 'Yes',
               'compare' => 'LIKE'
-            )
+            ),
+            'start_date' => array(
+              'key'     => '_EventStartDate',
+              'value'   => date( 'Y-m-d H:i:s' ),
+              'compare' => '>=',
+              'type'    => 'DATETIME',
+            ),
           ),
         );
         if ( !empty( $tax_query ) ) {
@@ -72,6 +78,7 @@ class GunySite extends TimberSite {
         $top_remaining_params = array(
           'posts_per_page' => $number_remaining,
           'eventDisplay' => 'list',
+          'start_date'     => date( 'Y-m-d H:i:s' ),
         );
         if ($featured_first) {
           $top_remaining_params['meta_query'] = array(

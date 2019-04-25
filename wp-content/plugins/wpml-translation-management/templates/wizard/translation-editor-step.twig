@@ -2,16 +2,6 @@
 
     <h2 class="text-center translation-editor-title">{{ strings.title }}</h2>
 
-    <p class="text-center translation-editor-demo">
-        <a
-                target="_blank"
-                rel="nofollow"
-                href="{{ strings.quick_demo_url }}"
-        >
-            {{ strings.summary }} &raquo;
-        </a>
-    </p>
-
     <table class="translation-editor-table">
         <thead>
         <tr>
@@ -42,12 +32,14 @@
 
             {% for option,data in strings.options %}
                 <td>
-                        <span>
+                    <span class="spinner" />
+                    <span>
                         <input type="radio"
                                name="editor-type"
                                id="editor-type-{{ option }}"
                                value="{{ editor_types[option] }}"
                                class="js-{{ option }}-editor"
+                               {% if editor_types[option] is same as(current_mode) %} checked {% endif %}
                         />
                         <label for="editor-type-{{ option }}">{{ strings.select }}</label>
                     </span>

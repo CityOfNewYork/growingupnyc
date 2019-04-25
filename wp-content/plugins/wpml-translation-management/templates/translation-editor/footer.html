@@ -7,16 +7,10 @@
 	<label><input class="js-translation-complete" name="complete" type="checkbox"/><%=translation_complete%></label>
 
 
-	<label class="otgs-toggle-group">
-		<input type="checkbox" class="js-toggle-translated" id="wpml_tm_toggle_translated">
-		<label for="wpml_tm_toggle_translated" class="otgs-on-off-switch"><%=hide_translated%></label>
-		<span class="otgs-switch__onoff">
-						<span class="otgs-switch__onoff-label">
-							<span class="otgs-switch__onoff-inner"></span>
-							<span class="otgs-switch__onoff-switch"></span>
-						</span>
-					</span>
-	</label>
+	<div class="otgs-toggle-group">
+		<input type="checkbox" class="js-toggle-translated otgs-switcher-input" id="wpml_tm_toggle_translated">
+		<label for="wpml_tm_toggle_translated" class="otgs-switcher" data-on="ON" data-off="OFF"><%=hide_translated%></label>
+	</div>
 </div>
 <div class = "wpml-translation-action-buttons-apply">
 	<span class = "js-saving-message" style = "display:none"><img src="<%=loading_url%>" alt="<%=saving%>" height="16" width="16"/><%=saving%></span>

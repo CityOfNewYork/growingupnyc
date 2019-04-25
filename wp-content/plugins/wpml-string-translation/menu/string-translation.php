@@ -3,7 +3,6 @@
 global $sitepress, $WPML_String_Translation, $wpdb, $wpml_st_string_factory, $wp_query;
 
 $string_settings = $WPML_String_Translation->get_strings_settings();
-icl_st_reset_current_translator_notifications();
 
 if((!isset($sitepress_settings['existing_content_language_verified']) || !$sitepress_settings['existing_content_language_verified']) /*|| 2 > count($sitepress->get_active_languages())*/){
     return;
@@ -258,7 +257,7 @@ $po_importer = apply_filters( 'wpml_st_get_po_importer', null );
 			id="search_translation"
 			value="1"
 			<?php if ( $search_translation ): ?>checked="checked"<?php endif; ?>
-			class="js-wpml-popover-tooltip"
+			class="js-otgs-popover-tooltip"
 			title="<?php echo esc_attr__( 'Search in both the original language and in translations. Searching in translations may take a bit of time.' ) ?>"
 		/>
 			<?php echo esc_html__( 'Include translations', 'wpml-string-translation' ) ?>

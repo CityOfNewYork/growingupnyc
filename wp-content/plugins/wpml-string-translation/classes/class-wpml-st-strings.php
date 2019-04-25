@@ -140,8 +140,8 @@ class WPML_ST_Strings {
 							$_lwhere  = ' AND (';
 							foreach ( $active_languages as $l2 ) {
 								$l2code_alias = esc_sql( str_replace( '-', '', $l2['code'] ) );
-								$_lwheres[]   = $this->wpdb->prepare( " str_{$l2code_alias}.status = %d
-	                                                          OR str_{$l2code_alias}.translator_id = %d ", ICL_TM_WAITING_FOR_TRANSLATOR, $current_user->ID );
+								$_lwheres[]   = $this->wpdb->prepare( " ( str_{$l2code_alias}.status = %d
+	                                                          AND ( str_{$l2code_alias}.translator_id = %d OR str_{$l2code_alias}.translator_id IS NULL ) ) ", ICL_TM_WAITING_FOR_TRANSLATOR, $current_user->ID );
 							}
 							$_lwhere .= join( ' OR ', $_lwheres ) . ')';
 							$_where[] = $_lwhere;

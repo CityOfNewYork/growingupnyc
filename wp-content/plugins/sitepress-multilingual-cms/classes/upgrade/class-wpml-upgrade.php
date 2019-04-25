@@ -57,8 +57,8 @@ class WPML_Upgrade {
 		 * @param array $new_commands Array of classes created with \wpml_create_upgrade_command_definition.
 		 */
 		$new_commands = apply_filters( 'wpml_upgrade_commands', array() );
-		if ( $new_commands && is_array($new_commands) ) {
-			$this->add_commands($new_commands);
+		if ( $new_commands && is_array( $new_commands ) ) {
+			$this->add_commands( $new_commands );
 		}
 
 		if ( $this->sitepress->get_wp_api()->is_admin() ) {

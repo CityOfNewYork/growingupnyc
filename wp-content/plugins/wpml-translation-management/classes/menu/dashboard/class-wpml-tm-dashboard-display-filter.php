@@ -49,7 +49,7 @@ class WPML_TM_Dashboard_Display_Filter {
 			$tooltip = $this->get_from_language_filter_lock_message_if_required();
 			?>
 			<input type="hidden" id="<?php echo esc_attr( $select_attributes_id ); ?>" name="<?php echo esc_attr( $select_attributes_name ); ?>" value="<?php echo esc_attr( $this->get_language_from() ); ?>"/>
-			<span class="wpml-tm-filter-disabled js-wpml-popover-tooltip" title="<?php echo esc_attr( $tooltip ); ?>"><?php echo esc_html( $this->active_languages[ $this->get_language_from() ]['display_name'] ); ?></span>
+			<span class="wpml-tm-filter-disabled js-otgs-popover-tooltip" title="<?php echo esc_attr( $tooltip ); ?>"><?php echo esc_html( $this->active_languages[ $this->get_language_from() ]['display_name'] ); ?></span>
 			<?php
 		} else {
 			?>
@@ -273,7 +273,7 @@ class WPML_TM_Dashboard_Display_Filter {
 	}
 
 	private function display_button() {
-		$reset_url = $this->get_admin_page_url( array( 'page' => WPML_TM_FOLDER . '/menu/main.php', 'sm' => 'dashboard', 'action' => 'reset' ) );
+		$reset_url = $this->get_admin_page_url( array( 'page' => WPML_TM_FOLDER . '/menu/main.php', 'sm' => 'dashboard', 'icl_tm_action' => 'reset_dashboard_filters' ) );
 		?>
 		<input id="translation_dashboard_filter" name="translation_dashboard_filter"
 			   class="button-secondary" type="submit"

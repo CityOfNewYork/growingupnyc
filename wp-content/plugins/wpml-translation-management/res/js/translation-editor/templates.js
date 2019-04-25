@@ -10,9 +10,9 @@ __p += '<div class="wpml-translation-action-buttons-abort">\r\n\t<button class="
 ((__t = (resign)) == null ? '' : __t) +
 '</button>\r\n</div>\r\n<div class="wpml-translation-action-buttons-status">\r\n\t<div class="progress-bar js-progress-bar"><div class="progress-bar-text"></div></div>\r\n\t<label><input class="js-translation-complete" name="complete" type="checkbox"/>' +
 ((__t = (translation_complete)) == null ? '' : __t) +
-'</label>\r\n\r\n\r\n\t<label class="otgs-toggle-group">\r\n\t\t<input type="checkbox" class="js-toggle-translated" id="wpml_tm_toggle_translated">\r\n\t\t<label for="wpml_tm_toggle_translated" class="otgs-on-off-switch">' +
+'</label>\r\n\r\n\r\n\t<div class="otgs-toggle-group">\r\n\t\t<input type="checkbox" class="js-toggle-translated otgs-switcher-input" id="wpml_tm_toggle_translated">\r\n\t\t<label for="wpml_tm_toggle_translated" class="otgs-switcher" data-on="ON" data-off="OFF">' +
 ((__t = (hide_translated)) == null ? '' : __t) +
-'</label>\r\n\t\t<span class="otgs-switch__onoff">\r\n\t\t\t\t\t\t<span class="otgs-switch__onoff-label">\r\n\t\t\t\t\t\t\t<span class="otgs-switch__onoff-inner"></span>\r\n\t\t\t\t\t\t\t<span class="otgs-switch__onoff-switch"></span>\r\n\t\t\t\t\t\t</span>\r\n\t\t\t\t\t</span>\r\n\t</label>\r\n</div>\r\n<div class = "wpml-translation-action-buttons-apply">\r\n\t<span class = "js-saving-message" style = "display:none"><img src="' +
+'</label>\r\n\t</div>\r\n</div>\r\n<div class = "wpml-translation-action-buttons-apply">\r\n\t<span class = "js-saving-message" style = "display:none"><img src="' +
 ((__t = (loading_url)) == null ? '' : __t) +
 '" alt="' +
 ((__t = (saving)) == null ? '' : __t) +

@@ -31,6 +31,10 @@ class OTGS_Installer_Icons {
 				$product = $this->installer->settings['repositories'][ $repository_id ]['data']['products-map'][ $response->plugin ];
 				$repository = $repository_id;
 				break;
+			} elseif ( isset( $this->installer->settings['repositories'][ $repository_id ]['data']['products-map'][ $name ] ) ) {
+				$product = $this->installer->settings['repositories'][ $repository_id ]['data']['products-map'][ $name ];
+				$repository = $repository_id;
+				break;
 			}
 		}
 

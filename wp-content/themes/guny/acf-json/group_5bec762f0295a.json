@@ -160,9 +160,9 @@
     "location": [
         [
             {
-                "param": "page",
+                "param": "page_template",
                 "operator": "==",
-                "value": "14420"
+                "value": "404.php"
             }
         ]
     ],

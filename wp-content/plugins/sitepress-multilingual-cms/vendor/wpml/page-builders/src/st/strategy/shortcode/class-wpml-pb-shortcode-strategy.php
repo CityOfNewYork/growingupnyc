@@ -2,7 +2,15 @@
 
 class WPML_PB_Shortcode_Strategy implements IWPML_PB_Strategy {
 
-	private $shortcodes = array();
+	private $shortcodes = array(
+		WPML_PB_Shortcode_Content_Wrapper::WRAPPER_SHORTCODE_NAME => array(
+			'encoding'           => '',
+			'encoding-condition' => '',
+			'type'               => '',
+			'ignore-content'     => false,
+			'attributes'         => array(),
+		),
+	);
 	/** @var  WPML_PB_Factory $factory */
 	private $factory;
 

@@ -115,16 +115,16 @@ class GUPostTypes {
       'summer-guide',
       array(
         'labels' => array(
-          'name' => 'Summer Guides',
+          'name' => 'Summer Guide',
           'singular_name' => 'Summer Guide',
           'add_new_item' => 'Add New Summer Guide',
           'edit_item' => 'Edit Summer Guide',
           'new_item' => 'New Summer Guide',
           'view_item' => 'View Summer Guide',
-          'search_items' => 'Search Summer Guides',
-          'not_found' =>  'No Summer Guides Found',
-          'not_found_in_trash' => 'No Summer Guides found in trash',
-          'all_items' => 'All Summer Guides',
+          'search_items' => 'Search Summer Guide',
+          'not_found' =>  'No Summer Guide Found',
+          'not_found_in_trash' => 'No Summer Guide found in trash',
+          'all_items' => 'All Activities',
           'archives' => 'Summer Guide Archives',
           'insert_into_item' => 'Insert into Summer Guide',
           'uploaded_to_this_item' => 'Uploaded to this Summer Guide'
@@ -146,16 +146,16 @@ class GUPostTypes {
       'afterschool-guide',
       array(
         'labels' => array(
-          'name' => 'After School Guides',
+          'name' => 'After School Guide',
           'singular_name' => 'After School Guide',
           'add_new_item' => 'Add New After School Guide',
           'edit_item' => 'Edit After School Guide',
           'new_item' => 'New After School Guide',
           'view_item' => 'View After School Guide',
-          'search_items' => 'Search After School Guides',
-          'not_found' =>  'No After School Guides Found',
-          'not_found_in_trash' => 'No After School Guides found in trash',
-          'all_items' => 'All After School Guides',
+          'search_items' => 'Search After School Guide',
+          'not_found' =>  'No After School Guide Found',
+          'not_found_in_trash' => 'No After School Guide found in trash',
+          'all_items' => 'All Activities',
           'archives' => 'After School Guide Archives',
           'insert_into_item' => 'Insert into After School Guide',
           'uploaded_to_this_item' => 'Uploaded to this After School Guide'
@@ -211,7 +211,7 @@ class GUPostTypes {
       'summer_programs_cat',
       array('summer-guide'),
       array(
-        'label' => __( 'Program Categories' ),
+        'label' => __( 'Activity Categories' ),
         'hierarchical' => true,
         'rewrite' => false,
         'show_in_rest' => true,
@@ -222,7 +222,7 @@ class GUPostTypes {
       'afterschool_programs_cat',
       array('afterschool-guide'),
       array(
-        'label' => __( 'Program Categories' ),
+        'label' => __( 'Activity Categories' ),
         'hierarchical' => true,
         'rewrite' => false,
         'show_in_rest' => true

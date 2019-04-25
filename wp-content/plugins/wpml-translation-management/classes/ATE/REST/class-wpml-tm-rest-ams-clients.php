@@ -74,10 +74,7 @@ class WPML_TM_REST_AMS_Clients extends WPML_REST_Base {
 		$translators  = $this->ams_user_records->get_translators();
 		$managers     = $this->ams_user_records->get_managers();
 
-		$result = $this->api->register_manager( $current_user->ID,
-		                                        $current_user,
-		                                        $translators,
-		                                        $managers );
+		$result = $this->api->register_manager( $current_user, $translators, $managers );
 
 		if ( is_wp_error( $result ) ) {
 			return $result;

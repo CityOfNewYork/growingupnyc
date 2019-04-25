@@ -4,8 +4,6 @@ include "common/admin.php";
 
 class Meow_WPMC_Admin extends MeowApps_Admin {
 
-	public $core;
-
 	public function __construct( $prefix, $mainfile, $domain ) {
 		parent::__construct( $prefix, $mainfile, $domain );
 		add_action( 'admin_menu', array( $this, 'app_menu' ) );
@@ -346,6 +344,7 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
   // }
 
 	function admin_debuglogs_callback( $args ) {
+		global $wpmc;
 		$debuglogs = get_option( 'wpmc_debuglogs' );
 		$clearlogs = isset ( $_GET[ 'clearlogs' ] ) ? $_GET[ 'clearlogs' ] : 0;
 		if ( $clearlogs && file_exists( plugin_dir_path( __FILE__ ) . '/media-cleaner.log' ) ) {
@@ -356,7 +355,7 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 		$html .= '<label for="wpmc_debuglogs"> '  . $args[0] . '</label><br>';
 		$html .= '<small>' . __( 'Creates an internal log file, for debugging purposes.', 'media-cleaner' );
 		if ( $debuglogs && !file_exists( plugin_dir_path( __FILE__ ) . '/media-cleaner.log' ) ) {
-			if ( !$this->core->log( "Testing the logging feature. It works!" ) ) {
+			if ( !$wpmc->log( "Testing the logging feature. It works!" ) ) {
 				$html .= sprintf( __( '<br /><b>Cannot create the logging file. Logging will not work. The plugin as a whole might not be able to work neither.</b>', 'media-cleaner' ), plugin_dir_url( __FILE__ ) );
 			}
 		}

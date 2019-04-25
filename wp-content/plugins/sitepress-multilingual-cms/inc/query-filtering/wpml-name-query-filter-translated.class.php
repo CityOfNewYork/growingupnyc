@@ -67,7 +67,7 @@ class WPML_Name_Query_Filter_Translated extends WPML_Name_Query_Filter {
 			if ( $lang === $this->sitepress->get_default_language()
 			     && $this->sitepress->is_display_as_translated_post_type( get_post_type( $page_id ) )
 			) {
-				return $page_id;
+				return $this->post_translation->element_id_in( $page_id, $this->sitepress->get_current_language(), true );
 			}
 		}
 

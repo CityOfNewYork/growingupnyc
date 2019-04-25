@@ -1,6 +1,6 @@
 <?php
 /**
-* 404
+ * Template Name: 404
 */
 
 $context = Timber::get_context();

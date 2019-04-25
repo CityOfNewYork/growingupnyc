@@ -648,7 +648,13 @@ class Limit_Login_Attempts
 			$message .= sprintf( __( "IP was blocked for %s", 'limit-login-attempts-reloaded' ), $when );
 		}
 
-		$admin_email = $this->use_local_options ? get_option( 'admin_email' ) : get_site_option( 'admin_email' );
+		if( $custom_admin_email = $this->get_option( 'admin_notify_email' ) ) {
+
+			$admin_email = $custom_admin_email;
+		} else {
+
+			$admin_email = $this->use_local_options ? get_option( 'admin_email' ) : get_site_option( 'admin_email' );
+		}
 
 		@wp_mail( $admin_email, $subject, $message );
 	}
@@ -942,8 +948,13 @@ class Limit_Login_Attempts
 		$my_warn_count = $limit_login_my_error_shown ? 1 : 0;
 
 		if ( $limit_login_nonempty_credentials && $count > $my_warn_count ) {
+			
 			/* Replace error message, including ours if necessary */
-			$content = __( '<strong>ERROR</strong>: Incorrect username or password.', 'limit-login-attempts-reloaded' ) . "<br />\n";
+			if( !empty( $_REQUEST['log'] ) && is_email( $_REQUEST['log'] ) ) {
+				$content = __( '<strong>ERROR</strong>: Incorrect email address or password.', 'limit-login-attempts-reloaded' ) . "<br />\n";
+			} else{
+				$content = __( '<strong>ERROR</strong>: Incorrect username or password.', 'limit-login-attempts-reloaded' ) . "<br />\n";
+			}
 
 			if ( $limit_login_my_error_shown || $this->get_message() ) {
 				$content .= "<br />\n" . $this->get_message() . "<br />\n";
@@ -1156,6 +1167,8 @@ class Limit_Login_Attempts
 				$this->update_option('allowed_lockouts',   (int)$_POST['allowed_lockouts'] );
 				$this->update_option('long_duration',      (int)$_POST['long_duration'] * 3600 );
 				$this->update_option('notify_email_after', (int)$_POST['email_after'] );
+
+				$this->update_option('admin_notify_email', sanitize_email( $_POST['admin_notify_email'] ) );
 
 				$white_list_ips = ( !empty( $_POST['lla_whitelist_ips'] ) ) ? explode("\n", str_replace("\r", "", stripslashes($_POST['lla_whitelist_ips']) ) ) : array();
 

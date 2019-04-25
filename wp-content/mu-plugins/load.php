@@ -1,15 +1,13 @@
 <?php
 /**
- * Plugin Name: Autoloader
- * Description: The autoloader for 'must use' plugins.
+ * Plugin Name: NYCO WordPress Config
+ * Description: Composer Managed. This "Must Use" WordPress Plugin sets environment variables for a WordPress installation through a YAML configuration file and autoloads environment specific scripts.
  * Author: NYC Opportunity
  */
-namespace MustUsePlugins;
 
-const PLUGINS = [
-  '/wp-config/Config.php'
-];
-for ($i=0; $i < sizeof(PLUGINS); $i++) {
-  if (file_exists(WPMU_PLUGIN_DIR . PLUGINS[$i]))
-    require WPMU_PLUGIN_DIR . PLUGINS[$i];
+if (file_exists(WPMU_PLUGIN_DIR . '/wp-config/Config.php')) {
+  require_once ABSPATH . '/vendor/mustangostang/spyc/Spyc.php';
+  require_once WPMU_PLUGIN_DIR . '/wp-config/Config.php';
+
+  new Nyco\WpConfig\Config\Config();
 }

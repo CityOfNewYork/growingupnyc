@@ -19,7 +19,7 @@ class WPML_Page_Builders_Page_Built {
 
 		if ( is_array( $config_data ) ) {
 			foreach ( $config_data as $pattern ) {
-				$result = (bool) preg_match_all( $pattern, $post->post_content );
+				$result = (bool) preg_match_all( $pattern, $post->post_content, $matches );
 
 				if ( $result ) {
 					break;

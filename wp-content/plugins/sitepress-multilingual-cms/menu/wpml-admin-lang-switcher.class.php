@@ -16,8 +16,8 @@ class WPML_Admin_Language_Switcher {
 
     function render() {
 
-	    wp_enqueue_script( 'wpml-popover-tooltip');
-	    wp_enqueue_style('wpml-popover-tooltip');
+	    wp_enqueue_script( OTGS_Assets_Handles::POPOVER_TOOLTIP );
+	    wp_enqueue_style( OTGS_Assets_Handles::POPOVER_TOOLTIP );
 
         /** @var $wp_admin_bar WP_Admin_Bar */
         global $wpdb, $wp_admin_bar, $pagenow, $mode, $sitepress;
@@ -225,7 +225,7 @@ class WPML_Admin_Language_Switcher {
                                       'title'  => '<span title="' . __( 'Showing content in:', 'sitepress' ) . ' ' . $lang[ 'anchor' ] .'">'
                                                   . wp_kses( $lang[ 'flag' ], $this->flag_kses_tags ) . '&nbsp;' . esc_html( $lang[ 'anchor' ] )
                                                   . '</span>'
-                                                  . '&nbsp;<i  class="otgs-ico-help js-wpml-popover-tooltip" data-tippy-zIndex="999999" title="' . $help_tip_text . '" ></i>',
+                                                  . '&nbsp;<i  class="otgs-ico-help js-otgs-popover-tooltip" data-tippy-zIndex="999999" title="' . $help_tip_text . '" ></i>',
                                       'href'   => false
                                  ) );
     

@@ -19,7 +19,13 @@ class WPML_Page_Builders_Defined {
 			}
 		}
 
-		return defined( $this->settings[ $page_builder ]['constant'] );
+		if ( ! empty( $this->settings[ $page_builder ]['constant'] ) ) {
+			return defined( $this->settings[ $page_builder ]['constant'] );
+		}
+
+		if ( ! empty( $this->settings[ $page_builder ]['function'] ) ) {
+			return function_exists( $this->settings[ $page_builder ]['function'] );
+		}
 	}
 
 	/**
@@ -34,11 +40,13 @@ class WPML_Page_Builders_Defined {
 					'beaver-builder' => 'Beaver Builder',
 					'elementor'      => 'Elementor',
 					'gutenberg'      => 'Gutenberg',
+					'cornerstone'    => 'Cornerstone',
 				) as $key => $name
 			) {
 				$components['page-builders'][ $key ] = array(
 					'name'            => $name,
-					'constant'        => $this->settings[ $key ]['constant'],
+					'constant'        => isset( $this->settings[ $key ]['constant'] ) ? $this->settings[ $key ]['constant'] : null,
+					'function'        => isset( $this->settings[ $key ]['function'] ) ? $this->settings[ $key ]['function'] : null,
 					'notices-display' => array(
 						'wpml-translation-editor',
 					),
@@ -62,6 +70,10 @@ class WPML_Page_Builders_Defined {
 			'gutenberg' => array(
 				'constant' => 'GUTENBERG_VERSION',
 				'factory' => 'WPML_Gutenberg_Integration_Factory',
+			),
+			'cornerstone'    => array(
+				'function' => 'cornerstone_plugin_init',
+				'factory'  => 'WPML_Cornerstone_Integration_Factory',
 			),
 		);
 	}

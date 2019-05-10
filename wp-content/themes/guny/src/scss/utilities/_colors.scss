@@ -141,4 +141,24 @@
 .hover\:text-gray-1:hover {
   color: $gray-1 !important;
 }
+
+.bg-green,
+.hover\:bg-green:hover {
+  background-color: $green !important;
+}
+
+.bg-very-dark-green,
+.hover\:bg-very-dark-green:hover {
+  background-color: $very-dark-green !important;
+}
+
+.bg-purple,
+.hover\:bg-purple:hover {
+  background-color: $purple !important;
+}
+
+.bg-dark-blue,
+.hover\:bg-dark-blue:hover {
+  background-color: $dark-blue !important;
+}
 // End Tailwind Utility

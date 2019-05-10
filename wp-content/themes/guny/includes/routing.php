@@ -62,6 +62,14 @@ Routes::map('/search', function($params) {
   }
 });
 
+Routes::map('/generationnyc/search', function($params) {
+  if (Search\visible() || !empty($_GET['s'])) {
+    Routes::load('search.php', $params, null, 200);
+  } else {
+    wp_redirect('/'); exit;
+  }
+});
+
 // Redirect default Wordpress search to our route
 add_action('template_redirect', 'search');
 function search() {

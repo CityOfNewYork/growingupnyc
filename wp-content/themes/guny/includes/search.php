@@ -27,13 +27,35 @@ CONST PATH = '/search';
 // The WPML domain for templates
 const TRANSLATION_DOMAIN = 'guny-search';
 
-// The search filters
-CONST FILTER_TYPES = array(
-  'age' => 'Age Guides',
-  // 'tribe_events' => 'Events',
-  'program' => 'Programs',
-  'afterschool-guide' => 'After School Guide',
-  'summer-guide' => 'Summer Guide',
+// Default values for Growing Up Filters
+const GUNY_POST_TYPES = array(
+  'program', 
+  'age', 
+  'summer-guide', 
+  'afterschool-guide', 
+  'tribe_events'
+);
+  
+// Default values for Generation Filters
+const GEN_POST_TYPES = array(
+  'topic', 
+  'inspiration', 
+  'trip'
+);
+
+// Default taxonomies for Generation
+const GEN_TAXONOMIES = array(
+  'relation' => 'EXISTS',
+  array(
+    'taxonomy' =>'age_group', 
+    'field'    => 'slug',
+    'terms'    => 'teen',
+  ),
+  array(
+    'taxonomy' =>'age_group', 
+    'field'    => 'slug',
+    'terms'    => 'young-adult',
+  )
 );
 
 // Default values for query string parameters
@@ -77,7 +99,14 @@ const USER_PRIVATE_VIEWING_ROLE = 'administrator';
  * @return integer The ID of the post
  */
 function get_controller_id() {
-  return get_page_by_path(PATH)->ID;
+  $path = get_path();
+  $id = get_page_by_path($path)->ID;
+  if ($id != NULL){
+    return $id;
+  } else {
+    $id = get_page_by_path(PATH)->ID;
+    return icl_object_id($id, 'page', false, ICL_LANGUAGE_CODE);
+  }
 }
 
 /**
@@ -104,11 +133,16 @@ function visible() {
  * @return string The full url for search, including language prefix
  */
 function get_path() {
-  if (ICL_LANGUAGE_CODE == 'es'){
-    return rtrim(get_home_url(),'/'). PATH;
+  $arr_path = explode('/',strtok($_SERVER["REQUEST_URI"],'?'));
+  if (array_search('generationnyc', $arr_path)){
+    $path = '/generationnyc'.PATH;
+  } else if (ICL_LANGUAGE_CODE == 'es') {
+    $path = '/'.ICL_LANGUAGE_CODE.PATH;
   }else {
-    return get_home_url() . PATH;
+    $path = PATH;
   }
+
+  return $path;
 }
 
 /**
@@ -130,7 +164,7 @@ function get_query() {
   $query = array(
     's' => get_query_var('s', DEFAULT_PARAMS['s']),
     'post_type' => get_query_var('post_type', $pt),
-    'paged' => get_query_var('page', DEFAULT_PARAMS['paged']),
+    'paged' => get_query_var('page', DEFAULT_PARAMS['paged']), 
   );
 
   // Blank post types can get through
@@ -233,4 +267,46 @@ function get_suggested_terms() {
     }
   }
   return '['. $return .']';
+}
+
+/**
+ * Return an array of the filter names.
+ * @return array post types with their plural names.
+ */
+function search_filters(){
+  $post_types = get_search_post_types();
+  $filters = array_fill_keys($post_types, NULL);
+  
+  foreach ($filters as $key=>$post_type) {
+    $filters[$key] = get_post_type_object($key)->labels->name;
+  }
+
+  return $filters;
+}
+
+/**
+ * Return an array of the intersected post_Types and indexed post_types.
+ * @return array post types
+ */
+function get_search_post_types(){
+  $indexed=get_option( 'relevanssi_index_post_types' );
+  $path = explode('/', get_path());
+
+  if(in_array('generationnyc', $path)){
+    $post_types = array_intersect($indexed, GEN_POST_TYPES);
+  } else {
+    $post_types = array_intersect($indexed, GUNY_POST_TYPES);
+  }
+
+  return $post_types;
+}
+
+/**
+ * Return string of the message to display when there are no search results.
+ * @return string no results message
+ */
+function get_no_results_msg(){
+  $msg=get_field('no_results_message', get_controller_id());
+  $msg = preg_replace( '/^<[^>]+>|<\/[^>]+>$/', '', $msg );
+  return $msg;
 }

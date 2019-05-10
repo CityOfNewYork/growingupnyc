@@ -76,12 +76,12 @@
   text-transform: none;
 
   &:focus {
-    color: $color-text;
+    color: $strong-blue;
   }
 
   .no-touchevents & {
     &:hover {
-      color: $color-text;
+      color: $strong-blue;
     }
   }
 }

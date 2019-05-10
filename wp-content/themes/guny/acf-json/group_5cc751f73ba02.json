@@ -1,0 +1,50 @@
+{
+    "key": "group_5cc751f73ba02",
+    "title": "Top Inspirations",
+    "fields": [
+        {
+            "key": "field_5cc751f76ecc9",
+            "label": "Inspirations",
+            "name": "inspirations",
+            "type": "relationship",
+            "instructions": "Select 3 inspirations",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "inspiration"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search",
+                "post_type",
+                "taxonomy"
+            ],
+            "elements": "",
+            "min": 3,
+            "max": 3,
+            "return_format": "object"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "widget",
+                "operator": "==",
+                "value": "top_inspirations_widget"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": ""
+}

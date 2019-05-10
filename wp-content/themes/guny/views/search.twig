@@ -1,12 +1,25 @@
-{% extends "list.twig" %}
+{% if 'generationnyc' in current_url|split('/') %}
+  {% set is_generation = 'true' %}
+{% endif %}
+
+{% extends is_generation ? "microsite-list.twig": "list.twig" %}
 
 {% block head_extras %}
-<style>
-  .c-hero {
-    background-color: #469BFF;
-    background-image: url(/wp-content/themes/guny/assets/img/hero-full-splatter-2.svg);
-  }
-</style>
+  {% if is_generation %}
+  <style>
+    .c-hero {
+      background-color: #404657;
+      background-image: url(/wp-content/themes/guny/assets/img/generation-hero-full-splatter.svg);
+    }
+  </style>
+  {% else %}
+  <style>
+    .c-hero {
+        background-color: #469BFF;
+        background-image: url(/wp-content/themes/guny/assets/img/hero-full-splatter-2.svg);
+    }
+  </style>
+  {% endif %}
 {% endblock %}
 
 {% block hero %}

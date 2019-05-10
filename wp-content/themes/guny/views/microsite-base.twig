@@ -80,64 +80,23 @@
                 <li class="o-inline__item mobile-only__nav"><a href="#mobile-nav" data-toggle="offcanvas-generationnyc" class="c-banner__link">Menu</a></li>
               {# end of Menu toggle on mobile #}
 
-              {# {% if function('Search\\visible') %}
+              {% if function('Search\\visible') %}
                 <li class="o-inline__item desktop-only">
                    <a class="c-banner__link" href="#search" data-toggle="overlay-search" data-toggle-class="fadeInDown">
                      <svg class="c-banner__icon c-banner__icon__search" role="img"><title>Search</title><use xlink:href="#icon-search"></use></svg>
                      <svg class="c-banner__icon c-banner__icon__close" role="img"><title>Search</title><use xlink:href="#icon-close"></use></svg>
                    </a>
                 </li>
-              {% endif %} #}
+              {% endif %}
               </ul>
             </nav>
           </div>
         </header>
 
         {# search #}
-        {# {% if function('Search\\visible') %}
-          <section class="o-overlay js-overlay animated" id="overlay-search" aria-hidden="true">
-            <div class="o-container-med">
-
-              <div class="u-bottom-spacing">
-                {% include 'partials/search-form.twig' %}
-              </div>
-
-              <section class="o-col__divider c-block-list">
-                <h2 class="c-block-list__heading">
-                  {{ __('Programs', 'guny') }}
-                  <a class="c-block-list__link" href="{{ site.url }}/guny/programs">{{ __('See all programs', 'guny') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="true"><use xlink:href="#icon-caret-right"></use></svg></a>
-                </h2> <!-- /.c-content-tout__heading -->
-                <div class="c-block-list__inner o-row">
-                  {{ top_programs }}
-                </div> <!-- /.o-col__divider -->
-              </section> <!-- /.c-content-tout -->
-
-              <section class="o-col__divider c-block-list">
-                <h2 class="c-block-list__heading">
-                  {{ __('Events', 'guny') }}
-                  <a class="c-block-list__link" href="{{ site.url }}/guny/events">{{ __('See all events', 'guny') }}<svg role="img" class="icon--caret--xxsmall" aria-hidden="small"><use xlink:href="#icon-caret-right"></use></svg></a>
-                </h2> <!-- /.c-content-tout__heading -->
-                <div class="c-block-list__inner o-row">
-                {% for post in top_events %}
-                  <div class="o-col-3 c-content-tout">
-                    <h3 class="c-content-tout__title">
-                      <a href="{{ post.path }}" title="{{ post.post_title }}" rel="bookmark">{{ post.post_title }}</a>
-                    </h3>
-                    <div class="c-content-tout__subtitle">
-                      {% include 'partials/event-date.twig' %}
-                    </div> <!-- /.c-content-tout__subtitle -->
-                    {% if post.venue %}
-                      <div class="c-content-tout__link">
-                        {% include 'partials/event-link.twig' %}
-                      </div>
-                    {% endif %}
-                  </div> <!-- /.o-col-3.c-content-tout -->
-                {% endfor %}
-                </div> <!-- /.o-col__row -->
-              </section> <!-- /.o-col__divider -->
-            </div> <!-- /.o-container-med -->
-          </section> <!-- /.o-overlay -->
-        {% endif %} #}
+        {% if function('Search\\visible') %}
+          {% include 'partials/search-overlay.twig' %}
+        {% endif %}
         {# search end #}
         
       {% endblock %}
@@ -223,8 +182,8 @@
         </div>
         <div class="c-footer__reached"></div>
       </footer> <!-- /.c-footer -->
-      {% block banner_topic %}{% endblock %}
-      {% if options.show_banner_generation and not disable_generation_banner %}
+      {% block banner %}{% endblock %}
+      {% if options.show_banner_generation and not update_banner %}
         <div class="c-alert js-alert" data-cookie="{{options.current_banner_generation.slug}}" id="banner-{{options.current_banner_generation.slug}}" role="dialog" aria-labelledby="dialog-title-{{options.current_banner.slug}}" aria-describedby="dialog-desc-{{options.current_banner.slug}}">
           <div class="show-for-screen-reader" id="dialog-title-{{options.current_banner.slug}}">Notification Banner</div>
           <div class="c-alert__banner" id="dialog-desc-{{options.current_banner.slug}}">

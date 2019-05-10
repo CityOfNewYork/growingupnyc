@@ -230,6 +230,27 @@ button {
   }
 }
 
+.c-list-box--quaternary .c-list-box__heading {
+  background: $gray-1;
+}
+
+.c-list-box--quaternary  .c-list-box__content {
+  background: $dark-gray-1;
+}
+
+.c-list-box--quaternary .c-list-box__subitem {
+  &:focus {
+    background: $dark-gray-1;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $dark-gray-1;
+      color: inherit;
+    }
+  }
+}
+
 .c-list-box-ms__item {
   display: inline-block;
   width: 100%;
@@ -274,7 +295,7 @@ button {
     border: none;
 
     &:hover {
-      background: $black;
+      background: $dark-gray-1;
     }
   }
 
@@ -457,6 +478,86 @@ button {
       color: $light-gray-2;
     }
   }
+}
+
+.form-field__icon {
+  color: $dark-gray-1;
+
+  :focus {
+    color: $black;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $black;
+    }
+  }
+}
+
+.form-field__icon--weak {
+  color: $gray;
+
+  :focus {
+    color: $black;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      color: $black;
+    }
+  }
+}
+
+input[type="search"].form-field {
+  &:focus {
+    outline-color: $gray-1;
+  }
+}
+
+.o-overlay {
+  button {
+    color: $gray-1;
+    &:hover {
+      color: $dark-gray-1;
+    }
+  }
+}
+
+.c-block-list {
+  .c-block-list__link,
+  .c-content-tout__title a,
+  .c-content-tout__link a {
+    color: $gray-1;
+    &:focus {
+      color: $dark-gray-1;
+    }
+
+    .no-touchevents & {
+      &:hover {
+        color: $dark-gray-1;
+      }
+    }
+  }
+}
+
+.c-card__body {
+  p {
+    margin-bottom: rem-calc(30);
+  }
+
+  .c-card__link {
+    margin-top: rem-calc(10);
+    margin-bottom: 0;
+    &:hover {
+      svg {
+        fill: $very-dark-gray;
+      }
+    }
+  }
+}
+
+.c-card__sticker {
+  background-size: cover !important;
 }
 
 // Trips page styles

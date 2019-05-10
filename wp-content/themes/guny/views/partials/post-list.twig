@@ -4,6 +4,10 @@
   </div>
 {% else %}
   <p class="type--no-results">
-    {{ __('Sorry, we didn\'t find any results for that search.<br><br>Please try a different phrase, check for typos, or', 'guny') }} <a href="{% if language == 'es' %}/es{% endif %}/search/?s={{search_term}}">{{ __('reset your filters', 'guny') }}</a>.
+    {% if not no_results == '' %}
+      {{ no_results }}
+    {% else %}
+      {{ __('Sorry, we didn\'t find any results for that search.<br><br>Please try a different phrase, check for typos, or', 'guny') }} <a href="{% if language == 'es' %}/es/search/{% else %}{{current_url}}{% endif %}?s={{search_term}}">{{ __('reset your filters', 'guny') }}</a>.
+    {% endif %}
   </p>
 {% endfor %}

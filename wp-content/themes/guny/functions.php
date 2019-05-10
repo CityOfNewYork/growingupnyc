@@ -106,6 +106,7 @@ class GunySite extends TimberSite {
   }
 
   function add_to_context ( $context ) {
+    
     $context['menu'] = new TimberMenu('header-menu');
     $context['language_code'] = ICL_LANGUAGE_CODE;
     $context['footer_menu_primary_additional'] = new TimberMenu('footer-menu-additional');
@@ -122,9 +123,16 @@ class GunySite extends TimberSite {
       'meta_key' => 'include-in-age-picker',
       'meta_value' => 1
     ) );
-    $context['top_programs'] = Timber::get_widgets('top_programs_widgets');
-    $context['top_afterschool'] = Timber::get_widgets('top_afterschool_widgets');
-    $context['top_summer'] = Timber::get_widgets('top_summer_widgets');
+    $current_path=strtok($_SERVER["REQUEST_URI"],'?');
+    
+    // widgets
+    $search_sidebars=wp_get_sidebars_widgets();
+    if (strpos($current_path, 'generation')) {
+      $context['search_widgets']=get_search_widget('search_generation_widgets');
+    } else {
+      $context['search_widgets']=get_search_widget('search_guny_widgets');
+    }
+
     if (is_front_page()) {
       $context['top_widget'] = Timber::get_widgets('top_widget');
     }
@@ -138,6 +146,7 @@ class GunySite extends TimberSite {
     }
     $context['is_archive'] = is_archive();
     $context['current_url'] = strtok($_SERVER["REQUEST_URI"],'?');
+    $context['is_generation'] = in_array('generationnyc', explode('/', $context['current_url']));
 
     return $context;
   }
@@ -164,29 +173,23 @@ class GunySite extends TimberSite {
       'after_widget' => ''
     ));
     register_sidebar(array(
-      'id' => 'top_programs_widgets',
-      'name' => __('Top Programs'),
-      'description' => __('Manually selected top programs'),
+      'id' => 'search_guny_widgets',
+      'name' => __('Search Growing Up'),
+      'description' => __('Manually selected top posts for Growing Up'),
       'before_widget' => '',
       'after_widget' => ''
     ));
     register_sidebar(array(
-      'id' => 'top_summer_widgets',
-      'name' => __('Top Summer'),
-      'description' => __('Manually selected top summer activities'),
-      'before_widget' => '',
-      'after_widget' => ''
-    ));
-    register_sidebar(array(
-      'id' => 'top_afterschool_widgets',
-      'name' => __('Top After School'),
-      'description' => __('Manually selected top after school activities'),
+      'id' => 'search_generation_widgets',
+      'name' => __('Search Generation'),
+      'description' => __('Manually selected top posts for Generation'),
       'before_widget' => '',
       'after_widget' => ''
     ));
     register_sidebar( array(
       'name' => 'Top Widget Area',
       'id' => 'top_widget',
+      'description' => __('Widgets in site header'),
       'before_widget' => '<div class="c-language-switcher-wrapper"><div class="o-container c-language__switcher">',
       'after_widget' => '</div></div>',
       'before_title' => '<h2 class="rounded">',
@@ -558,6 +561,13 @@ function tribe_events_map_apis() {
   }
 add_action( 'wp_enqueue_scripts', 'tribe_events_map_apis' );
 
+function get_search_widget($widget_name){
+  ob_start();
+  dynamic_sidebar($widget_name);
+  $sidebar_contents = ob_get_contents();
+  ob_end_clean();
+  return $sidebar_contents;
+}
 /**
  * Includes
  */
@@ -566,9 +576,7 @@ $includes = [
   '/includes/guny_editor_styles.php', // Customize TinyMCE settings
   '/includes/guny_shortcodes.php', // Custom Shortcodes
   '/includes/guny_meta_boxes.php', // Customize Wordpress meta boxes
-  '/includes/guny_top_programs.php', // Add Top Programs Widget
-  '/includes/guny_top_summer.php', // Add Top Summer Widget
-  '/includes/guny_top_afterschool.php', // Add Top Afterschool Widget
+  '/includes/guny_top_widgets.php', // Add Top Afterschool Widget
   '/includes/guny_term_meta.php', // Add custom meta fields to taxonomies
   '/includes/guny_facetwp.php', // Customize Facet WP output
   '/includes/guny_filter_events.php', // Event filters

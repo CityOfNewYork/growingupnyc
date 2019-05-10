@@ -1,6 +1,6 @@
 {% extends "partials/teaser.twig" %}
 
-{% block classes %} c-card-invert {{is_first}}{% endblock %}
+{% block classes %}{{is_first}}{% endblock %}
 
 {% block title %}
     <a href="{{post.link}}" title="{{post.title}}" rel="bookmark">
@@ -10,7 +10,7 @@
 
 {% block sticker %}
  {% set category = post.terms('inspiration_group')|first %}
-   <div class="c-card__sticker sticker" aria-hidden="true" style="background: url({{post.get_field('prof_img').url}}) center center no-repeat;"></div>
+   <div class="c-card__sticker sticker bg-dark-blue" aria-hidden="true" style="background: url({{post.get_field('prof_img').url}}) center center no-repeat;"></div>
 {% endblock %}
 
 {% block subtitle_block %}

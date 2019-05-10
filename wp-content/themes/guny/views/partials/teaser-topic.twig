@@ -5,17 +5,16 @@
 {% block sticker %}
   {% set category = post.terms('topic_group')|first %}
   {% if category %}
-    <div class="c-card__sticker sticker" aria-hidden="true">
-      <svg class="icon--large"><title>{{category.name}}</title><use xlink:href="#icon-book"></use></svg>
+    <div class="c-card__sticker sticker bg-purple" aria-hidden="true">
+      <svg class="icon--large"><title>{{category.name}}</title><use xlink:href="#icon-topic"></use></svg>
     </div>
   {% endif %}
 {% endblock %}
 
-{% block subtitle %}
-  <p><strong>{{post.program_name}}{% if post.acronym %} ({{post.acronym}}){% endif %}</strong></p>
-  <p>{{post.government_agency}}</p>
-{% endblock %}
+{% block subtitle_block %}{% endblock %}
 
 {% block body %}
-{{post.post_excerpt ? post.post_excerpt : post.summary|excerpt(15)}}
+  <p>{{post.post_excerpt ? post.post_excerpt : post.summary|excerpt(15)}}</p>
+  <a href="{{post.link}}" class="button--primary button--primary__curved button--primary__purple" href="{{post.get_field('button')}}">Read More</a>
+
 {% endblock %}

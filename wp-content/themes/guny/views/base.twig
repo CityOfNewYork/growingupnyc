@@ -194,7 +194,8 @@
         </div>
         <div class="c-footer__reached"></div>
       </footer> <!-- /.c-footer -->
-      {% if options.show_banner %}
+      {% block banner %}{% endblock %}
+      {% if options.show_banner and not update_banner %}
         <div class="c-alert js-alert" data-cookie="{{options.current_banner.slug}}" id="banner-{{options.current_banner.slug}}" role="dialog" aria-labelledby="dialog-title-{{options.current_banner.slug}}" aria-describedby="dialog-desc-{{options.current_banner.slug}}">
           <div class="show-for-screen-reader" id="dialog-title-{{options.current_banner.slug}}">Notification Banner</div>
           <div class="c-alert__banner" id="dialog-desc-{{options.current_banner.slug}}">

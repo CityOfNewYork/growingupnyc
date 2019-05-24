@@ -1,4 +1,8 @@
 <form action="https://cityofnewyork.us18.list-manage.com/subscribe/post-json?u=d04b7b607bddbd338b416fa89&amp;id=a02dc5e68b&c=?" method="get" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="guny-signup" target="_blank" novalidate>
+  <div class="c-signup-form__response">
+    {% include 'partials/forms/forms-error-msgs.twig' %}
+  </div>
+
   <div class="signup-form">
     <h2{% if full_width %} class="text-center"{% endif %}>
       {% if title %}

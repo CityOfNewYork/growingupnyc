@@ -64,8 +64,34 @@
 
 <div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false" v-cloak>
 
+<div class="c-list-box__item">
+    <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="type-filter-heading">{{ __('Activity Types', 'guny') }}</h3>
+    <ul class="js-accordion__content c-list-box__content {{colors_content}}" id="type-filter-panel">
+        <li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}">
+            <label class="checkbox">
+                <input @change="selectAllActivityTypes" class="checkbox__field" type="checkbox" v-model="checkedAllActivityTypes">
+                <svg class="checkbox__indicator-orange">
+                    <use xlink:href="#icon-check"></use>
+                </svg>
+                {{ __('Select All', 'guny') }}
+            </label>
+        </li>
+        <li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}" v-for="category in activityTypes">
+            <label :for="category.slug" class="checkbox">
+                <input :id="category.slug" :value="category.slug" class="checkbox__field" type="checkbox" v-model="checkedActivityType">
+                <svg class="checkbox__indicator-orange">
+                    <use xlink:href="#icon-check"></use>
+                </svg>
+                v{ category.name }
+            </label>
+        </li>
+    </ul>
+</div>
+
+
+
   <div class="c-list-box__item">
-    <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="type-filter-heading">{{ __('Program Types', 'guny') }}</h3>
+    <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="type-filter-heading">{{ __('Interests', 'guny') }}</h3>
     <ul class="js-accordion__content c-list-box__content {{colors_content}}" id="type-filter-panel">
       <li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}">
         <label class="checkbox" >
@@ -165,8 +191,11 @@
 
 
           <div class="c-card__tags" v-if="post.summer_programs_cat">
+            <span v-for="term in post.activity_type">
+              <a :href="'?activity_types=' + term.slug" class="button--pill bg-vivid-orange">v{ term.name }</a>
+            </span>
             <span v-for="term in post.summer_programs_cat"> 
-              <a :href="'?summer_category=' + term.slug" class="button--pill bg-vivid-orange">v{ term.name }</a>
+              <a :href="'?interests=' + term.slug" class="button--pill bg-vivid-orange">v{ term.name }</a>
             </span>
             <span v-for="term in post.age_group"> 
               <a :href="'?ages=' + term.slug" class="button--pill bg-bright-red button--pill--alt">v{ term.name }</a>

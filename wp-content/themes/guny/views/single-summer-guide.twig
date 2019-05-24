@@ -28,13 +28,17 @@
 
               {% for term in post.terms(key) %}
                 {% if key == 'age_group' %}
-                  <a class="button--pill bg-{{ colors[i] }} hover:bg-{{ colors[ i + 1 ] }}" href="{{ archive_link }}?ages={{ term.slug }}">
+                  <a class="button--pill bg-bright-red hover:bg-vivid-orange" href="{{ archive_link }}?ages={{ term.slug }}">
                     {{ term.name }}
                   </a>
                 {% elseif key == 'summer_programs_cat' %}
-                  <a class="button--pill bg-{{ colors[i] }} hover:bg-{{ colors[ i + 1 ] }}" href="{{ archive_link }}?summer_category={{ term.slug }}">
+                  <a class="button--pill bg-vivid-orange hover:bg-bright-red" href="{{ archive_link }}?interests={{ term.slug }}">
                     {{ term.name }}
                   </a>
+                {% elseif key == 'activity_type' %}
+                  <a class="button--pill bg-vivid-orange hover:bg-bright-red" href="{{ archive_link }}?activity_types={{ term.slug }}">
+                  {{ term.name }}
+                </a>
                 {% endif %}
               {% endfor %}
 

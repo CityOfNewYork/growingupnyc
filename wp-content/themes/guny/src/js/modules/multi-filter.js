@@ -37,12 +37,14 @@ class ProgramsList {
         afterschoolTypes: null,
         checkedAfterschoolType: [],
         checkedAllAfterschoolTypes: false,
-        allAfterschoolTypes: false,
         summerTypeURL: this._baseURL + 'summer_programs_cat' + this._lang,
         summerTypes: null,
         checkedSummerType: [],
         checkedAllSummerTypes: false,
-        allAfterschoolTypes: false,
+        activityTypeURL: this._baseURL + 'activity_type' + this._lang,
+        activityTypes: null,
+        checkedActivityType: [],
+        checkedAllActivityTypes: false,
         programPage: 1,
         maxPages: 1,
         errorMsg: false,
@@ -56,6 +58,7 @@ class ProgramsList {
         programPage: 'getPrograms',
         checkedAfterschoolType: 'getPrograms',
         checkedSummerType: 'getPrograms',
+        checkedActivityType: 'getPrograms',
       },
       mounted: function() {
         axios.all([
@@ -63,14 +66,16 @@ class ProgramsList {
           axios.get(this.ageGroupURL),
           axios.get(this.boroughURL),
           axios.get(this.afterschoolTypeURL),
-          axios.get(this.summerTypeURL)
+          axios.get(this.summerTypeURL),
+          axios.get(this.activityTypeURL)
           ])
-          .then(axios.spread((catResponse, ageResponse, boroughResponse, afterschoolResponse, summerResponse) => {
+          .then(axios.spread((catResponse, ageResponse, boroughResponse, afterschoolResponse, summerResponse, activityResponse) => {
             this.programTypes = catResponse.data;
             this.ageGroups = ageResponse.data;
             this.boroughNames = boroughResponse.data;
             this.afterschoolTypes = afterschoolResponse.data;
             this.summerTypes = summerResponse.data;
+            this.activityTypes = activityResponse.data;
             this.parseQuery();
             this.getPrograms();
           }));
@@ -88,6 +93,7 @@ class ProgramsList {
         selectAllTypes: ProgramsList.selectAllTypes,
         selectAllAges: ProgramsList.selectAllAges,
         selectAllAfterschoolTypes: ProgramsList.selectAllAfterschoolTypes,
+        selectAllActivityTypes: ProgramsList.selectAllActivityTypes,
         selectAllSummerTypes: ProgramsList.selectAllSummerTypes,
         selectAllBoroughs: ProgramsList.selectAllBoroughs,
         mobileScroll: ProgramsList.mobileScroll
@@ -129,12 +135,13 @@ ProgramsList.getPrograms = function() {
         category: this.checkedProgramType.length < this.programTypes.length ? this.checkedProgramType : 'all', 
         ages: this.checkedAgeGroup.length < this.ageGroups.length ? this.checkedAgeGroup : 'all', 
         afterschool_category: this.checkedAfterschoolType.length < this.afterschoolTypes.length ? this.checkedAfterschoolType : 'all', 
-        summer_category: this.checkedSummerType.length < this.summerTypes.length ? this.checkedSummerType : 'all', 
+        interests: this.checkedSummerType.length < this.summerTypes.length ? this.checkedSummerType : 'all', 
+        activity_types: this.checkedActivityType.length < this.activityTypes.length ? this.checkedActivityType : 'all', 
         boroughs: this.checkedBorough.length < this.boroughNames.length ? this.checkedBorough : 'all'
       }
     });
   }else {
-    this.$router.push({query: {category: this.checkedProgramType, ages: this.checkedAgeGroup, afterschool_category: this.checkedAfterschoolType, summer_category: this.checkedSummerType, boroughs: this.checkedBorough, page: this.programPage }});
+    this.$router.push({query: {category: this.checkedProgramType, ages: this.checkedAgeGroup, afterschool_category: this.checkedAfterschoolType, interests: this.checkedSummerType, boroughs: this.checkedBorough, page: this.programPage }});
   }
 
   axios
@@ -190,6 +197,12 @@ ProgramsList.generateFilterURL = function(data) {
     data.checkedSummerType.length != data.summerTypes.length ? data.checkedAllSummerTypes = false : data.checkedAllSummerTypes = true;
     arrIds = ProgramsList.getIds(data.summerTypes, data.checkedSummerType).map(value => value.term_id)
     filters.push('summer_programs_cat[]=' + arrIds.join('&summer_programs_cat[]='));
+  }
+
+  if (data.checkedActivityType.length > 0) {
+    data.checkedActivityType.length != data.activityTypes.length ? data.checkedAllActivityTypes = false : data.checkedAllActivityTypes = true;
+    arrIds = ProgramsList.getIds(data.activityTypes, data.checkedActivityType).map(value => value.term_id)
+    filters.push('activity_type[]=' + arrIds.join('&activity_type[]='));
   }
 
   if ( data.checkedBorough.length > 0  ) {
@@ -271,22 +284,41 @@ ProgramsList.parseQuery = function() {
     }
   }
 
-  if(query.summer_category == 'all'){
+  if(query.interests == 'all'){
     this.checkedAllSummerTypes = true;
     this.checkedSummerType = this.summerTypes.map(a => a.slug);
   }
-  if(!_.isEmpty(query.summer_category) && query.summer_category != 'all'){
+  if(!_.isEmpty(query.interests) && query.interests != 'all'){
     this.checkedAllSummerTypes = false;
-    if (_.isArray(query.summer_category)){
-      if (query.summer_category.every( (val, i, arr) => val === arr[0] )) {
-        query.summer_category = query.summer_category[0];
+    if (_.isArray(query.interests)){
+      if (query.interests.every( (val, i, arr) => val === arr[0] )) {
+        query.interests = query.interests[0];
       } else {
-        queryArr=ProgramsList.getIds(this.summerTypes, query.summer_category.map(String));
+        queryArr=ProgramsList.getIds(this.summerTypes, query.interests.map(String));
         this.checkedSummerType = queryArr.map(value => value.slug)
       }
     }else{
-      let index = this.summerTypes.map(function(e) { return e.slug; }).indexOf(query.summer_category);
+      let index = this.summerTypes.map(function(e) { return e.slug; }).indexOf(query.interests);
       this.checkedSummerType.push(this.summerTypes[index].slug);
+    }
+  }
+
+  if (query.activity_types == 'all') {
+    this.checkedAllActivityTypes = true;
+    this.checkedActivityType = this.activityTypes.map(a => a.slug);
+  }
+  if (!_.isEmpty(query.activity_types) && query.activity_types != 'all') {
+    this.checkedAllActivityTypes = false;
+    if (_.isArray(query.activity_types)) {
+      if (query.activity_types.every((val, i, arr) => val === arr[0])) {
+        query.activity_types = query.activity_types[0];
+      } else {
+        queryArr = ProgramsList.getIds(this.activityTypes, query.activity_types.map(String));
+        this.checkedActivityType = queryArr.map(value => value.slug)
+      }
+    } else {
+      let index = this.activityTypes.map(function (e) { return e.slug; }).indexOf(query.activity_types);
+      this.checkedActivityType.push(this.activityTypes[index].slug);
     }
   }
 
@@ -396,6 +428,14 @@ ProgramsList.selectAllAfterschoolTypes = function() {
   }
 }
 
+ProgramsList.selectAllActivityTypes = function () {
+  if (this.checkedAllActivityTypes) {
+    this.checkedActivityType = this.activityTypes.map(a => a.slug);
+  } else {
+    this.checkedActivityType = [];
+  }
+}
+
 ProgramsList.selectAllSummerTypes = function() {
   if(this.checkedAllSummerTypes){
     this.checkedSummerType = this.summerTypes.map(a => a.slug);
@@ -420,6 +460,7 @@ ProgramsList.mobileScroll = function() {
      this.checkedAgeGroup.length > 0 ||
      this.checkedAfterschoolType.length > 0 ||
      this.checkedSummerType.length > 0 ||
+     this.checkedActivityType.length > 0 ||
      this.checkedBorough.length > 0
   ){
     let ww = $(window).scrollTop()

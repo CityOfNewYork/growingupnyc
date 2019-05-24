@@ -19,7 +19,7 @@
     {# Side Menu #}
     <section class="o-scroll-column o-scroll-column--right">
       <div class="c-list-box c-list-box--primary">
-        <div class="c-list-box__item bg-strong-blue">
+        <div class="c-list-box__item bg-strong-blue {% if post.get_field('side_menu_categories')|length <= 2 %} u-top-spacing-small u-bottom-spacing-small{% endif %}">
           <h2 class="c-list-box__heading bg-strong-blue">{{post.side_menu_header}}</h2>
           <ul class="c-list-box__content bg-strong-blue">
             {% for item in post.get_field('side_menu_categories') %}

@@ -225,11 +225,16 @@
 // <p class="c-signup-form__success">Success message for the form</p>
 //
 // Styleguide 4.2.2
-.c-signup-form__success {
+.c-signup-form__response {
   font-family: $font-family-display;
   @include font-size(21, 24);
   font-weight: $font-weight-extrablack;
   text-align: center;
+  .success,
+  .error,
+  .already-subscribed {
+    display: none;
+  }
 }
 
 .c-signup-form {

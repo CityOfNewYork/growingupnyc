@@ -211,7 +211,7 @@ class GUPostTypes {
       'summer_programs_cat',
       array('summer-guide'),
       array(
-        'label' => __( 'Activity Categories' ),
+        'label' => __( 'Interests' ),
         'hierarchical' => true,
         'rewrite' => false,
         'show_in_rest' => true,
@@ -230,12 +230,13 @@ class GUPostTypes {
     );
 
     register_taxonomy(
-      'time',
+      'activity_type',
       array('summer-guide'),
       array(
-        'label' => __( 'Times' ),
+        'label' => __( 'Activity Type' ),
         'hierarchical' => true,
-        'rewrite' => false
+        'rewrite' => false,
+        'show_in_rest' => true
       )
     );
   }

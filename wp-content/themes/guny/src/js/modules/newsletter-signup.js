@@ -91,6 +91,8 @@ export default function() {
   * @param {object} formData - form fields
   */
   function submitSignup(form, formData){
+    let response = $('.c-signup-form__response')
+    form.html(response);
     $.ajax({
       url: form.attr('action'),
       type: form.attr('method'),
@@ -108,9 +110,9 @@ export default function() {
             }
           }else {
             if(response.msg.includes('too many recent signup requests')){
-              form.find('.guny-error').html('<p class="text-center">There was a problem with your subscription.</p>');
+              $('.c-signup-form__response > .error').show();
             }else if(response.msg.includes('already subscribed')){
-              form.find('.guny-error').html('<p class="text-center">You are already signed up for updates! Check your email.</p>');
+              $('.c-signup-form__response > .already-subscribed').show();
             }
           }
         }else {
@@ -123,7 +125,7 @@ export default function() {
               form.html('<div class="text-center"><p class="u-bottom-spacing-small">Thank you for contacting us! Someone will respond to you shortly.</p><a class="button--simple button--simple--alt" href="https://growingupnyc.cityofnewyork.us/">Continue exploring Growing Up NYC</a></div>');
             }
           }else{
-            form.html('<p class="c-signup-form__success">One more step! <br /> Please check your inbox and confirm your email address to start receiving updates. <br />Thanks for signing up!</p>');
+            $('.c-signup-form__response > .success').show();
           }
         }
       },

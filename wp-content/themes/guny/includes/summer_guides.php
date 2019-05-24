@@ -42,6 +42,19 @@ const FIELD_BANNER_IMAGE = 'field_5a9dbafbc4617';
 // because the template checks to see if the prompt has changed for the "no
 // posts found messaging" in the filter-summer-guide.twig template.
 const TAXONOMIES = array(
+  'activity_type' => array(
+    'name' => 'All Activity Types',
+    'single' => 'activity_type',
+    'plural' => 'activity_types',
+    'default' => 'Select an Activity Type', // these need to match
+    'prompt' => 'Select an Activity Type', // these need to match
+    'config' => array(
+      'orderby' => 'NAME',
+      'hide_empty' => false,
+      'depth' => 1,
+      'hierarchical' => true,
+    )
+  ),
   'summer_programs_cat' => array(
     'name' => 'All Programs',
     'single' => 'program',
@@ -74,19 +87,6 @@ const TAXONOMIES = array(
     'plural' => 'boroughs',
     'default' => 'Select a Borough', // these need to match
     'prompt' => 'Select a Borough', // these need to match
-    'config' => array(
-      'hierarchical' => true,
-      'depth' => 1,
-      'orderby' => 'NAME',
-      'hide_empty' => false
-    )
-  ),
-  'time' => array(
-    'name' => 'All Times',
-    'single' => 'time',
-    'plural' => 'times',
-    'default' => 'Select a Time', // these need to match
-    'prompt' => 'Select a Time', // these need to match
     'config' => array(
       'hierarchical' => true,
       'depth' => 1,

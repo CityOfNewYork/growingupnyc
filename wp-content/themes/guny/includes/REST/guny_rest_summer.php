@@ -37,6 +37,21 @@ function register_rest_summer() {
     )
   ));
 
+  register_rest_field( 'summer-guide', 'activity_type', array(
+   'get_callback'    => 'get_rest_summer_activity_type',
+   'schema'          => null,
+  ));
+
+  register_rest_route( 'wp/v2', 'activity_type', array(
+    'methods'  => WP_REST_Server::READABLE,
+    'callback' => 'get_rest_summer_activity_types',
+    'args' => array(
+      'term_id' => array(
+        'type' => 'integer'
+      )
+    )
+  ));
+
   register_rest_route( 'wp/v2', 'summer-guide_age_group', array(
     'methods'  => WP_REST_Server::READABLE,
     'callback' => 'get_rest_summer_age_groups_categories',
@@ -75,6 +90,18 @@ function get_rest_summer_cat( $object ) {
   return $terms;
 }
 
+function get_rest_summer_activity_type( $object ) {
+  $post_id = $object['id'];
+
+  $terms = wp_get_post_terms( $post_id, 'activity_type' );
+
+  foreach ($terms as &$term) { 
+    $term->name = htmlspecialchars_decode($term->name);
+  }
+   
+  return $terms;
+}
+
 function get_rest_summer_age_groups( $object ) {
   $post_id = $object['id'];
 
@@ -103,6 +130,23 @@ function get_rest_summer_program_types() {
 
   $terms = get_terms( array(
     'taxonomy' => 'summer_programs_cat',
+    'hide_empty' => true,
+  ) );
+
+  $terms_cleaned = array();
+
+  foreach ($terms as &$term) {
+    $term->name = htmlspecialchars_decode($term->name);
+    array_push($terms_cleaned, $term);
+  }
+
+  return $terms_cleaned;
+}
+
+function get_rest_summer_activity_types() {
+
+  $terms = get_terms( array(
+    'taxonomy' => 'activity_type',
     'hide_empty' => true,
   ) );
 

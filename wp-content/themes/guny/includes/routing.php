@@ -15,6 +15,7 @@ use Search as Search;
  * Routes
  */
 
+
 function load($params, $endpoint) {
   $params['endpoint'] = $endpoint;
   Routes::load('redirect-generationnyc.php', $params, null, 200);
@@ -76,7 +77,7 @@ function search() {
   if (!empty($_GET['s'])){
     Routes::load('search.php', $params, null, 200);
   }
-} 
+}
 
 /**
  * Programs
@@ -84,4 +85,12 @@ function search() {
  */
 Routes::map('/programs', function($params) {
   Routes::load('archive-program.php', $params, null, 200);
+});
+
+ /**
+ * Generation 404
+ * Load the 404 template when /404 path is used in URL. Without this, a user is sent to the homepage
+ */
+Routes::map('/generationnyc/404', function($params) {
+  Routes::load('404.php', $params, null, 404);
 });

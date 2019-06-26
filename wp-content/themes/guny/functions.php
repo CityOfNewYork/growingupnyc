@@ -106,7 +106,7 @@ class GunySite extends TimberSite {
   }
 
   function add_to_context ( $context ) {
-    
+
     $context['menu'] = new TimberMenu('header-menu');
     $context['language_code'] = ICL_LANGUAGE_CODE;
     $context['footer_menu_primary_additional'] = new TimberMenu('footer-menu-additional');
@@ -124,7 +124,7 @@ class GunySite extends TimberSite {
       'meta_value' => 1
     ) );
     $current_path=strtok($_SERVER["REQUEST_URI"],'?');
-    
+
     // widgets
     $search_sidebars=wp_get_sidebars_widgets();
     if (strpos($current_path, 'generation')) {
@@ -583,6 +583,7 @@ $includes = [
   '/includes/hide_child_events.php', // Hide child events in WP Admin
   '/includes/routing.php', // Routing
   '/includes/search.php', // Search functions
+  '/includes/404.php', // 404 functions
   '/includes/summer_guides.php', // Summer guide functions
   '/includes/afterschool_guides.php', // Afterschool guide functions
   [ // REST

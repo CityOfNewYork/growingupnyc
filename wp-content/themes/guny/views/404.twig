@@ -11,7 +11,7 @@
   <section class="o-static-column o-static-column--left c-side-hero js-static">
     <div class="c-side-hero__content u-top-spacing">
       <h1 class="c-side-hero__title u-sm-gutter {% if is_generation %} u-top-spacing-small{% endif %}">
-        <span class="c-side-hero__title__large text-bright-blue">{{ function('NotFound\\get_hero_header') }}</span>
+        <span class="c-side-hero__title__large {% if not is_generation %} text-bright-blue{% endif %}">{{ function('NotFound\\get_hero_header') }}</span>
         <p class="c-side-hero__tagline">{{ function('NotFound\\get_hero_tagline') }}</p>
       </h1>
       {% if function('NotFound\\get_hero_button_url') %}

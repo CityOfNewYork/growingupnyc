@@ -515,6 +515,17 @@ function guny_titles( $title ){
   if ( preg_match('search') || !empty($_GET['s'])) {
     $title = __('Search - Growing Up NYC', 'guny-search');
   }
+
+  // Growing Up 404 page
+  if ( ($page_type[0] == '404-2')) {
+    $title = __('Page not found - Growing Up NYC');
+  }
+
+  // Generation 404 page
+  if ( (is_404() && $page_type[0] == "generationnyc") || ($page_type[0] == 'generationnyc' && $page_type[1] == '404-2')) {
+    $title = __('Page not found - Generation NYC');
+  }
+
   return $title;
 }
 add_filter( 'pre_get_document_title', 'guny_titles', 999, 1 );

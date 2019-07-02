@@ -1,7 +1,6 @@
 // Details List
 //
 // List, usually a description list, containing a series of metadata
-// Resembles Styleguide 3.1 but with more subdued styling and different markup
 //
 // markup:
 // <dl class="c-details-list">
@@ -13,7 +12,6 @@
 //   <dd class="c-details-list__descr">Description</dd>
 // </dl>
 //
-// Styleguide 3.3
 .c-details-list {
   background: $color-background-shade;
   border-radius: 3px;

@@ -2,15 +2,13 @@ html {
   font-size: 100%;
 }
 
-body,
-.styleguide {
+body {
   color: $color-text;
   font-family: $font-family-text;
   @include font-size-regular;
 }
 
-.wf-active body,
-.styleguide {
+.wf-active body {
   font-weight: $font-weight-semibold;
 }
 

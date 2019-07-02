@@ -28,7 +28,6 @@ var browserSync = require('browser-sync').create(),
     rename = require('gulp-rename'),
     sass = require('gulp-sass'),
     size = require('gulp-size'),
-    styleguide = require('sc5-styleguide'),
     stylelint = require('gulp-stylelint'),
     sourcemaps = require('gulp-sourcemaps'),
     sourcestream = require('vinyl-source-stream'),
@@ -274,54 +273,9 @@ gulp.task('icons', function() {
     .pipe(gulp.dest(views + 'partials'));
 });
 
-gulp.task('styleguideIcons', function() {
-  return gulp.src(source+'icons/*.svg')
-    .pipe(svgSprite({
-      mode: {
-        symbol: {
-          dest: '.',
-          sprite: 'svg-sprite.svg',
-          bust: false,
-          inline: false
-        }
-      }
-    }))
-    .pipe(gulp.dest(dist + 'styleguide/assets/img'))
-});
-
-// Generate Styleguide
-gulp.task('styleguide:generate', ['styles'], function() {
-  return gulp.src([source + 'scss/base/_*.scss', source + 'scss/components/_*.scss'])
-    .pipe(styleguide.generate({
-      title: 'Growing Up NYC',
-      rootPath: dist + 'styleguide',
-      appRoot: appRoot + 'styleguide',
-      overviewPath: 'styleguide-overview.md',
-      extraHead: '<script src="//use.typekit.net/wty8eeo.js"></script><script>try{Typekit.load({ async: true });}catch(e){}</script>',
-      commonClass: 'styleguide'
-    }))
-    .pipe(gulp.dest(dist + 'styleguide'))
-});
-
-// Apply styles to styleguide
-gulp.task('styleguide:applystyles', ['styleguide:generate'], function() {
-  return gulp.src(source + 'scss/default.scss')
-    .pipe(cssGlobbing({
-      extensions: ['.scss']
-    }))
-    .pipe(sass({includePaths: sassInclude}))
-      .on('error', handleError)
-      .on('error', notify.onError())
-  .pipe(styleguide.applyStyles())
-  .pipe(gulp.dest(dist + 'styleguide'))
-});
-
 
 // BUILD TASKS
 // ------------
-
-// Build styleguide
-gulp.task('styleguide', ['styleguide:applystyles']);
 
 // Watch
 gulp.task('default', function() {
@@ -351,7 +305,7 @@ gulp.task('default', function() {
     gulp.watch(source+'img/**/*', ['images']);
 
     // Watch SVG icons
-    gulp.watch(source+'icons/*.svg', ['icons', 'styleguideIcons']);
+    gulp.watch(source+'icons/*.svg', ['icons']);
 
     // Watch templates, JS, and CSS, reload on change
     gulp.watch([
@@ -362,5 +316,5 @@ gulp.task('default', function() {
 
 // Build
 gulp.task('build', ['clean (scripts)'], function() {
-    gulp.start('modernizr', 'scripts', 'styleguide');
+    gulp.start('modernizr', 'scripts');
 });

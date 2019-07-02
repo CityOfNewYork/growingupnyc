@@ -6,8 +6,6 @@
 
 **Local URL:** http://guny.wp.local
 
-[**Style Guide**](http://growingupnyc.staging.wpengine.com/wp-content/themes/guny/assets/styleguide)
-
 ---
 ## Technical Details
 
@@ -43,16 +41,6 @@ Use `rem` or `em` for any values that should scale in proportion to the user's b
 #### Grid
 
 The layout is designed on a 12-column grid using [Neat](http://neat.bourbon.io/).
-
-### Styleguide
-
-This project uses [SC5 Styleguide Generator](http://styleguide.sc5.io/) to generate a living styleguide. Style guide files are updated as part of the gulp watch and build tasks. You can view the styleguide at <kbd>/wp-content/themes/guny/assets/styleguide</kbd>.
-
-Any styles that should be included in the styleguide must be commented following
-the [KSS](http://warpspire.com/kss/) syntax. In general, this should include any
-Sass components (as described above) and potentially scopes.
-
-It is not necessary to separate list :hover and :focus states in the styleguide, but any variations based on CSS class should be documented and displayed using {$modifers}. (See https://github.com/kss-node/kss/blob/spec/SPEC.md for an example).
 
 ### JavaScript
 

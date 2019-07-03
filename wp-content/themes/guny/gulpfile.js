@@ -34,7 +34,6 @@ var browserSync = require('browser-sync').create(),
     svgSprite = require('gulp-svg-sprite'),
     uglify = require('gulp-uglify'),
     webpack = require('webpack-stream');
-    rtlcss = require('gulp-rtlcss'),
     jsonToSass = require('gulp-json-to-sass'),
     postcss = require('gulp-postcss'),
     autoprefixer = require('autoprefixer'),
@@ -91,7 +90,6 @@ gulp.task('styles (dev)', ['lint-css'], function() {
   ];
   return gulp.src([
     source + 'scss/default.scss',
-    // source + 'scss/style-rtl.scss',
     source + 'scss/microsite.scss'
   ]).pipe(jsonToSass({
     jsonPath: source + '/variables.json',
@@ -132,46 +130,8 @@ gulp.task('styles', ['lint-css'], function() {
     .pipe(size({
       'showFiles': true
     }))
-    .pipe(rtlcss())
-    .pipe(rename({ basename: 'rtl' }))
     .pipe(gulp.dest('./'));
 });
-
-// gulp.task('styles_rtl_dev', ['lint-css'], function() {
-//     return gulp.src([
-//       source+'scss/style-rtl.scss'
-//     ])
-//     .pipe(cssGlobbing({
-//       extensions: ['.scss']
-//     }))
-//     .pipe(sourcemaps.init())
-//     .pipe(sass({includePaths: sassInclude}))
-//         .on('error', handleError)
-//         .on('error', notify.onError())
-//     .pipe(autoprefixer(['last 2 versions', 'ie 9-11', 'iOS 8']))
-//     //.pipe(minifycss())
-//     .pipe(sourcemaps.write('./'))
-//     .pipe(gulp.dest('./'))
-//     .pipe(browserSync.stream({match: '**/*.css'}));
-// });
-
-// gulp.task('styles_microsite_dev', ['lint-css'], function() {
-//     return gulp.src([
-//       source+'scss/microsite.scss'
-//     ])
-//     .pipe(cssGlobbing({
-//       extensions: ['.scss']
-//     }))
-//     .pipe(sourcemaps.init())
-//     .pipe(sass({includePaths: sassInclude}))
-//         .on('error', handleError)
-//         .on('error', notify.onError())
-//     .pipe(autoprefixer(['last 2 versions', 'ie 9-11', 'iOS 8']))
-//     //.pipe(minifycss())
-//     .pipe(sourcemaps.write('./'))
-//     .pipe(gulp.dest('./'))
-//     .pipe(browserSync.stream({match: '**/*.css'}));
-// });
 
 // Script Linter
 gulp.task('lint', function() {
@@ -291,12 +251,6 @@ gulp.task('default', function() {
 
     // Watch .scss files
     gulp.watch(source+'scss/**/*.scss', ['clean (styles)', 'styles (dev)']);
-
-    // Watch .scss RTL files
-    // gulp.watch(source+'scss/**/*.scss', ['styles_rtl_dev']);
-
-    // Watch .scss Micro Site files
-    // gulp.watch(source+'scss/**/*.scss', ['styles_microsite_dev']);
 
     // Watch .js files
     gulp.watch(source+'js/**/*.js', ['scripts']);

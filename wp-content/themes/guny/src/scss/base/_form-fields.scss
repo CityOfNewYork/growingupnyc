@@ -1,10 +1,8 @@
 // Forms
 //
-// Styleguide 4
 
 // Basic Inputs
 //
-// Styleguide 4.1
 
 // Text Input Field
 //
@@ -16,13 +14,6 @@
 // markup:
 // <input type="text" class="form-field {$modifiers}"
 //
-// sg-wrapper:
-// <div style="background:#333; padding:20px">
-//   <sg-wrapper-content/>
-// </div>
-//
-// Styleguide 4.1.1
-
 .form-field,
 .facetwp-search {
   appearance: none;
@@ -199,7 +190,6 @@ input[type="search"].form-field {
 //   Label
 // </label>
 //
-// Styleguide 4.1.2
 .checkbox {
   cursor: pointer;
   position: relative;

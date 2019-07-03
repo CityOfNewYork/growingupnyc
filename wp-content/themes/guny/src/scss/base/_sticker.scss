@@ -4,8 +4,6 @@
 // <div class="sticker" aria-hidden="true">Text</div>
 // <div class="sticker" aria-hidden="true"><svg class="icon--large"><use xlink:href="assets/img/svg-sprite.svg#book"></use></svg></div>
 //
-// Styleguide 1.2
-
 .sticker {
   background: $color-primary;
   border-radius: rem-calc($sticker-size-mobile);

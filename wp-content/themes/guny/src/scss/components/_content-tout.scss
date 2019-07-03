@@ -1,6 +1,5 @@
 // Content Blocks
 //
-// Styleguide 5
 
 // Content Touts
 //
@@ -13,13 +12,6 @@
 //   <a class="c-content-tout__link">Link</a>
 // </div>
 //
-// sg-wrapper:
-// <div style="min-height:152px">
-//   <sg-wrapper-content/>
-// </div>
-//
-// Styleguide 5.1
-
 .c-content-tout {
   color: $color-text-weak;
   @include font-size-small;

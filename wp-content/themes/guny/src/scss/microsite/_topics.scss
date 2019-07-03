@@ -581,15 +581,13 @@
   margin-bottom: rem-calc(15);
 }
 
-.csstransforms3d .sms-form__label,
-.styleguide .sms-form__label {
+.csstransforms3d .sms-form__label {
   bottom: 100%;
   transform: translate3d(0, #{rem-calc(35)}, 0);
   transition: transform 250ms ease-in-out;
 }
 
-.csstransforms3d .is-filled .sms-form__label,
-.styleguide .is-filled .sms-form__label {
+.csstransforms3d .is-filled .sms-form__label {
   transform: translate3d(0, 0, 0);
 }
 

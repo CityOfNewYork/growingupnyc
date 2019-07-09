@@ -137,16 +137,23 @@ class GunySite extends TimberSite {
       $context['top_widget'] = Timber::get_widgets('top_widget');
     }
     $context['top_events'] = $this->get_featured_events(3);
-    $context['options'] = get_fields('options');
-    if (!empty($context['options']) && !empty($context['options']['current_banner'])) {
-      $context['options']['current_banner'] = new TimberPost($context['options']['current_banner']);
-    }
-    if (!empty($context['options']) && !empty($context['options']['current_banner_generation'])) {
-      $context['options']['current_banner_generation'] = new TimberPost($context['options']['current_banner_generation']);
-    }
     $context['is_archive'] = is_archive();
     $context['current_url'] = strtok($_SERVER["REQUEST_URI"],'?');
     $context['is_generation'] = in_array('generationnyc', explode('/', $context['current_url']));
+
+    // Global alert banner - Growing Up
+    $gu_id = get_page_by_title('Home')->ID;
+    $gu_banner = get_field('current_banner', $gu_id);
+
+    $context['banner']['gu'] = Timber::get_post($gu_banner);
+    $context['banner']['gu_show'] = get_field('show_banner', $gu_id);
+
+    // Global alert banner - Generation
+    $gen_id = get_page_by_title('Youth')->ID;
+    $gen_banner = get_field('current_banner', $gen_id);
+
+    $context['banner']['gen'] = Timber::get_post($gen_banner);
+    $context['banner']['gen_show'] = get_field('show_banner', $gen_id);
 
     return $context;
   }

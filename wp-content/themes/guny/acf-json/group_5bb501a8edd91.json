@@ -1,79 +1,80 @@
 {
-  "key": "group_5bb501a8edd91",
-  "title": "Banner - Update",
-  "fields": [
-    {
-      "key": "field_5bb501a92fc3e",
-      "label": "Update Banner",
-      "name": "update_banner",
-      "type": "true_false",
-      "instructions": "Replace the primary banner set for Growing Up or Generation with a banner specific to this program or topic.",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
-      "message": "Select to update banner",
-      "default_value": 0,
-      "ui": 0,
-      "ui_on_text": "",
-      "ui_off_text": ""
-    },
-    {
-      "key": "field_5bb501a92fd36",
-      "label": "Select Banner",
-      "name": "current_banner",
-      "type": "post_object",
-      "instructions": "Select the banner you would like to display at the bottom of the page.",
-      "required": 1,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_5bb501a92fc3e",
-            "operator": "==",
-            "value": "1"
-          }
-        ]
-      ],
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
-      "post_type": [
-        "banner"
-      ],
-      "taxonomy": "",
-      "allow_null": 1,
-      "multiple": 0,
-      "return_format": "id",
-      "ui": 1
-    }
-  ],
-  "location": [
-    [
-      {
-        "param": "post_type",
-        "operator": "==",
-        "value": "topic"
-      }
+    "key": "group_5bb501a8edd91",
+    "title": "Banner - Page Specific",
+    "fields": [
+        {
+            "key": "field_5bb501a92fc3e",
+            "label": "Override Global Banner",
+            "name": "update_banner",
+            "type": "true_false",
+            "instructions": "Replace the primary banner set for Growing Up or Generation with a banner specific to this program or topic page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Select to override global banner",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5bb501a92fd36",
+            "label": "Select Banner",
+            "name": "current_banner",
+            "type": "post_object",
+            "instructions": "Select the banner you would like to display at the bottom of the page.",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5bb501a92fc3e",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "banner"
+            ],
+            "taxonomy": "",
+            "allow_null": 0,
+            "multiple": 0,
+            "return_format": "id",
+            "ui": 1
+        }
     ],
-    [
-      {
-        "param": "post_type",
-        "operator": "==",
-        "value": "program"
-      }
-    ]
-  ],
-  "menu_order": 0,
-  "position": "normal",
-  "style": "default",
-  "label_placement": "top",
-  "instruction_placement": "label",
-  "hide_on_screen": "",
-  "active": true,
-  "description": ""
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "topic"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "program"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "This banner is applied to a program (GU) or topic (Gen) page. It overwrites the global banner set for GU (home) or Gen (youth) pages.",
+    "modified": 1562694849
 }

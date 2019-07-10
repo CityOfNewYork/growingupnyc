@@ -216,11 +216,12 @@ class GunySite extends TimberSite {
   function add_options_page() {
     if( function_exists('acf_add_options_page') ) {
       acf_add_options_page(array(
-        'page_title'  => 'Theme General Settings',
-        'menu_title'  => 'Theme Settings',
-        'menu_slug'   => 'theme-general-settings',
+        'page_title'  => 'GUNY General Settings',
+        'menu_title'  => 'GUNY Settings',
+        'menu_slug'   => 'guny-general-settings',
         'capability'  => 'edit_posts',
-        'redirect'    => false
+        'redirect'    => false,
+        'icon_url' => get_template_directory_uri().'/assets/img/admin-icon.png',
       ));
     }
   }
@@ -640,26 +641,10 @@ function pre_dump($var) {
 }
 
 /**
- * Render 404 template for pages containing "404" in
- * their title. This uses same logic in 404.php
- */
-// add_action('template_redirect', 'page_not_found_redirect');
-
-// function page_not_found_redirect() {
-//   // if ( preg_match('/404/', $_SERVER['REQUEST_URI']) > 0 && !is_404() ) {
-//   //   $context = Timber::get_context();
-//   //   $context['top_widget'] = Timber::get_widgets('top_widget');
-
-//   //   $post_id = icl_object_id(get_page_by_title( '404' )->ID, 'page', FALSE, ICL_LANGUAGE_CODE);
-//   //   $post = get_page($post_id);
-
-//   //   $context['post'] = $post;
-//   //   $context['side_menu_categories'] = get_field('side_menu_categories', $post->id);
-
-//   //   Timber::render(array('404.twig'), $context);
-//   //   exit;
-//   // }
-//   if (!empty($_GET['s'])){
-//     Routes::load('search.php', $params, null, 200);
-//   }
-// }
+ * Remove unneeded menu items from admin dashboard
+*/
+function remove_menus() {
+  remove_menu_page( 'edit.php' );           //Posts
+  remove_menu_page( 'edit-comments.php' );  //Comments
+}
+add_action( 'admin_menu', 'remove_menus' );

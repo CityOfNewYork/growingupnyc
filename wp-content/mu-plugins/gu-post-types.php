@@ -24,6 +24,33 @@ class GUPostTypes {
 
   function create_post_types() {
     register_post_type(
+      'banner',
+      array(
+        'labels' => array(
+          'name' => 'Banners',
+          'singular_name' => 'Banner',
+          'add_new_item' => 'Add New Banner',
+          'edit_item' => 'Edit Banner',
+          'new_item' => 'New Banner',
+          'view_item' => 'View Banner',
+          'search_items' => 'Search Banners',
+          'not_found' => 'No banners found',
+          'not_found_in_trash' => 'No banners found in trash',
+          'all_items' => 'All Banners',
+          'archives' => 'Banner Archives',
+          'insert_into_item' => 'Insert into banner',
+          'uploaded_to_this_item' => 'Uploaded to this banner'
+        ),
+        'public' => true,
+        'menu_position' => 21,
+        'menu_icon' => 'dashicons-megaphone',
+        'supports' => array( 'title' ),
+        'has_archive' => false,
+        'rewrite' => false
+      )
+    );
+
+    register_post_type(
       'program',
       array(
         'labels' => array(
@@ -42,8 +69,8 @@ class GUPostTypes {
           'uploaded_to_this_item' => 'Uploaded to this program'
         ),
         'public' => true,
-        'menu_position' => 21,
-        'menu_icon' => 'dashicons-carrot',
+        'menu_position' => 22,
+        'menu_icon' => get_template_directory_uri().'/assets/img/gunyc-admin-icon.png',
         'show_in_rest' => true,
         'supports' => array( 'title', 'excerpt' ),
         'has_archive' => true,
@@ -73,41 +100,14 @@ class GUPostTypes {
           'uploaded_to_this_item' => 'Uploaded to this age'
         ),
         'public' => true,
-        'menu_position' => 22,
-        'menu_icon' => 'dashicons-groups',
+        'menu_position' => 23,
+        'menu_icon' => get_template_directory_uri().'/assets/img/gunyc-admin-icon.png',
         'supports' => array( 'title', 'excerpt' ),
         'has_archive' => false,
         'rewrite' => array(
           'slug' => 'age',
           'with_front' => false
         )
-      )
-    );
-
-    register_post_type(
-      'banner',
-      array(
-        'labels' => array(
-          'name' => 'Banners',
-          'singular_name' => 'Banner',
-          'add_new_item' => 'Add New Banner',
-          'edit_item' => 'Edit Banner',
-          'new_item' => 'New Banner',
-          'view_item' => 'View Banner',
-          'search_items' => 'Search Banners',
-          'not_found' => 'No banners found',
-          'not_found_in_trash' => 'No banners found in trash',
-          'all_items' => 'All Banners',
-          'archives' => 'Banner Archives',
-          'insert_into_item' => 'Insert into banner',
-          'uploaded_to_this_item' => 'Uploaded to this banner'
-        ),
-        'public' => true,
-        'menu_position' => 23,
-        'menu_icon' => 'dashicons-megaphone',
-        'supports' => array( 'title' ),
-        'has_archive' => false,
-        'rewrite' => false
       )
     );
 
@@ -131,7 +131,7 @@ class GUPostTypes {
         ),
         'public' => true,
         'menu_position' => 24,
-        'menu_icon' => 'dashicons-palmtree',
+        'menu_icon' => get_template_directory_uri().'/assets/img/gunyc-admin-icon.png',
         'show_in_rest' => true,
         'supports' => array('title', 'excerpt', 'editor'),
         'has_archive' => true,
@@ -162,7 +162,7 @@ class GUPostTypes {
         ),
         'public' => true,
         'menu_position' => 25,
-        'menu_icon' => 'dashicons-awards',
+        'menu_icon' => get_template_directory_uri().'/assets/img/gunyc-admin-icon.png',
         'show_in_rest' => true,
         'supports' => array('title', 'excerpt', 'editor'),
         'has_archive' => true,

@@ -30,7 +30,7 @@ function ms_inspirations_create() {
     'has_archive' => 'generationnyc/inspirations',
     'public' => true,
     'menu_position' => 26,
-    'menu_icon' => 'dashicons-groups',
+    'menu_icon' => get_template_directory_uri().'/assets/img/gnyc-admin-icon.png',
     'supports' => array( 'title', 'excerpt', 'thumbnail'),
     'exclude_from_search' => false,
     'rewrite' => array(

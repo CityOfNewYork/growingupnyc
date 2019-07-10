@@ -13,7 +13,7 @@ $posts = array(
   array(
     'taxonomy' => 'other_category',
     'field' => 'slug',
-    'terms' => 'featured-post',
+    'terms' => 'show-on-generation',
   ),
 ),
 'orderby' => array(

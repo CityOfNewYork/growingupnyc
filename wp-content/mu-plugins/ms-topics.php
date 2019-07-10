@@ -61,7 +61,6 @@ function ms_topics_create() {
         'with_front' => false
       ),
       'hierarchical' => true,
-      'show_in_rest' => true,
     )
   );
 }

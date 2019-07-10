@@ -1,12 +1,9 @@
 {# initialize local variables current_banner, show_banner #}
 {% set current_banner, show_banner = null, false %}
 
-{# display global generation banner #}
-{% if is_generation and not banner.override %}
-  {% set current_banner, show_banner = banner.gen, banner.gen_show %}
-{# display global growing up banner #}
-{% elseif not is_generation and not banner.override %}
-  {% set current_banner, show_banner = banner.gu, banner.gu_show %}
+{# display global banner #}
+{% if not banner.override %}
+  {% set current_banner, show_banner = banner.post, banner.show %}
 {# display post-specific alternative banner (singular.php) #}
 {% else %}
   {% set current_banner = banner.alt %}

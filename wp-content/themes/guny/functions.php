@@ -141,19 +141,17 @@ class GunySite extends TimberSite {
     $context['current_url'] = strtok($_SERVER["REQUEST_URI"],'?');
     $context['is_generation'] = in_array('generationnyc', explode('/', $context['current_url']));
 
-    // Global alert banner - Growing Up
-    $gu_id = get_page_by_title('Home')->ID;
-    $gu_banner = get_field('current_banner', $gu_id);
+    // Global alert banner
+    if ($context['is_generation']) {
+      $page_id = get_page_by_title('Youth')->ID; // TODO: update so it's not dependent on page title
+      $banner = get_field('current_banner', $page_id);
+    } else {
+      $page_id = get_option('page_on_front');
+      $banner = get_field('current_banner', $page_id);
+    }
 
-    $context['banner']['gu'] = Timber::get_post($gu_banner);
-    $context['banner']['gu_show'] = get_field('show_banner', $gu_id);
-
-    // Global alert banner - Generation
-    $gen_id = get_page_by_title('Youth')->ID;
-    $gen_banner = get_field('current_banner', $gen_id);
-
-    $context['banner']['gen'] = Timber::get_post($gen_banner);
-    $context['banner']['gen_show'] = get_field('show_banner', $gen_id);
+    $context['banner']['post'] = Timber::get_post($banner);
+    $context['banner']['show'] = get_field('show_banner', $page_id);
 
     return $context;
   }

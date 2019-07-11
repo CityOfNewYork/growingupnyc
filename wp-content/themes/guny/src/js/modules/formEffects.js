@@ -53,7 +53,7 @@ export default function() {
   */
   function handleKeyDown(event) {
     if (event.keyCode == 13) {
-      $(event.target).is('[checked]') ? $(event.target).removeAttr('checked') : $(event.target).attr('checked', true);
+      $(event.target).prop('checked') ? $(event.target).prop('checked', false) : $(event.target).prop('checked', true);
     }
   }
 

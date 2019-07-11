@@ -85,9 +85,9 @@ $context['meta_desc'] = get_field('meta_description', $post->id);
 $context['meta_keywords'] = get_field('meta_keywords', $post->id);
 
 // Program and Topic post alert banner
-$current_banner = get_field('current_banner');
-$context['current_banner'] = new TimberPost($current_banner);
-$context['update_banner'] = $post->update_banner;
+$banner = get_field('current_banner');
+$context['banner']['alt'] = new TimberPost($banner);
+$context['banner']['override'] = $post->update_banner;
 
 $url = '/';
 if(ICL_LANGUAGE_CODE != 'en'){

@@ -1,6 +1,6 @@
 {
     "key": "group_57ae0e4d7b0f0",
-    "title": "Banner Content",
+    "title": "Banner",
     "fields": [
         {
             "key": "field_57ae0e60cbb74",
@@ -18,7 +18,8 @@
             "default_value": "",
             "tabs": "all",
             "toolbar": "basic",
-            "media_upload": 0
+            "media_upload": 0,
+            "delay": 0
         }
     ],
     "location": [
@@ -39,7 +40,6 @@
         "permalink",
         "the_content",
         "excerpt",
-        "custom_fields",
         "discussion",
         "comments",
         "revisions",
@@ -53,6 +53,6 @@
         "send-trackbacks"
     ],
     "active": 1,
-    "description": "",
-    "modified": 1471029139
+    "description": "Banner Content Referenced from Banner - Global, Banner - Page Specific field groups",
+    "modified": 1562694259
 }

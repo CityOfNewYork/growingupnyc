@@ -98,7 +98,7 @@
           {% include 'partials/search-overlay.twig' %}
         {% endif %}
         {# search end #}
-        
+
       {% endblock %}
 
       <main id="main" role="main">
@@ -182,18 +182,11 @@
         </div>
         <div class="c-footer__reached"></div>
       </footer> <!-- /.c-footer -->
-      {% block banner %}{% endblock %}
-      {% if options.show_banner_generation and not update_banner %}
-        <div class="c-alert js-alert" data-cookie="{{options.current_banner_generation.slug}}" id="banner-{{options.current_banner_generation.slug}}" role="dialog" aria-labelledby="dialog-title-{{options.current_banner.slug}}" aria-describedby="dialog-desc-{{options.current_banner.slug}}">
-          <div class="show-for-screen-reader" id="dialog-title-{{options.current_banner.slug}}">Notification Banner</div>
-          <div class="c-alert__banner" id="dialog-desc-{{options.current_banner.slug}}">
-            <div class="o-container">
-              {{options.current_banner_generation.get_field('banner_content')}}
-            </div>
-          </div>
-          <button type="button" class="c-alert__button" data-toggle="banner-{{options.current_banner_generation.slug}}" aria-label="close"><svg role="img" class="icon--small"><title>Close</title><use xlink:href="#icon-close"></use></svg></button>
-        </div>
-      {% endif %}
+
+      {# alert banner #}
+      {% include 'banner.twig' %}
+      {# alert banner end #}
+
       <a class="o-offcanvas__overlay" data-toggle="offcanvas-generationnyc" aria-hidden="true"></a>
     </div> <!-- /.o-offcanvas__main -->
   </div> <!-- /.o-offcanvas -->

@@ -17,12 +17,6 @@
 //   <button type="submit" class="signup-form__button button--simple button--simple--alt">Sign Up</button>
 // </form>
 //
-// sg-wrapper:
-// <div style="background:#2793e0; padding:20px">
-//   <sg-wrapper-content/>
-// </div>
-//
-// Styleguide 4.2
 .signup-form {
   @include font-size-small;
   h2 {
@@ -55,7 +49,6 @@
 //   <input name="email" id="email" type="email" class="form-field signup-form__field">
 // </div>
 //
-// Styleguide 4.2.1
 .signup-form__input {
   display: inline-block;
   margin: rem-calc(24) 0 0;
@@ -129,15 +122,13 @@
   bottom: 100%;
 }
 
-.csstransforms3d .signup-form__label,
-.styleguide .signup-form__label {
+.csstransforms3d .signup-form__label {
   bottom: 100%;
   transform: translate3d(0, #{rem-calc(37)}, 0);
   transition: transform 250ms ease-in-out;
 }
 
-.csstransforms3d .is-filled .signup-form__label,
-.styleguide .is-filled .signup-form__label {
+.csstransforms3d .is-filled .signup-form__label {
   transform: translate3d(0, 0, 0);
 }
 
@@ -179,8 +170,7 @@
   text-transform: uppercase;
 }
 
-.csstransforms3d .is-filled .signup-form__label-content,
-.styleguide .is-filled .signup-form__label-content {
+.csstransforms3d .is-filled .signup-form__label-content {
   color: transparent;
   overflow: visible;
   transform: translate3d(0, 100%, 0);
@@ -224,7 +214,6 @@
 // markup:
 // <p class="c-signup-form__success">Success message for the form</p>
 //
-// Styleguide 4.2.2
 .c-signup-form__response {
   font-family: $font-family-display;
   @include font-size(21, 24);

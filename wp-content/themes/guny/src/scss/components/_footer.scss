@@ -16,7 +16,6 @@
 //   <sg-insert>2.2.4</sg-insert>
 // </footer>
 //
-// Styleguide 2.2
 .c-footer {
   position: relative;
   background: $color-background-footer;
@@ -43,12 +42,6 @@
 //   </figure>
 // </div>
 //
-// sg-wrapper:
-// <div style="background:#333">
-//   <sg-wrapper-content/>
-// </div>
-//
-// Styleguide 2.2.1
 .c-footer__logos {
   @include row;
 }
@@ -97,12 +90,6 @@
 //   </ul>
 // </nav>
 //
-// sg-wrapper:
-// <div style="background:#333">
-//   <sg-wrapper-content/>
-// </div>
-//
-// Styleguide 2.2.2
 .c-footer__nav {
   @include row;
   line-height: 1.2;
@@ -127,12 +114,6 @@
 // markup:
 // <li class=".c-footer__nav-item {$modifiers}"><a class="c-footer__link" href="#">Item</a></li>
 //
-// sg-wrapper:
-// <ul style="background:#333">
-//   <sg-wrapper-content/>
-// </ul>
-//
-// Styleguide 2.2.3
 .c-footer__nav-item {
   list-style: none;
   margin-bottom: 8px;
@@ -180,7 +161,6 @@
 //   </div>
 // </div>
 //
-// Styleguide 2.2.4
 .c-footer__footer {
   font-family: $font-family-display;
   font-size: rem-calc(14);

@@ -27,19 +27,6 @@
 //   </div>
 // </header>
 //
-// sg-wrapper:
-// <div style="height:300px" class="styleguide-example">
-//   <sg-wrapper-content/>
-// </div>
-//
-// Styleguide 6.2
-
-.styleguide-example {
-  .c-side-hero {
-    height: 100%;
-  }
-}
-
 .c-side-hero__image {
   background: $color-primary center center no-repeat;
   background-size: cover;
@@ -47,10 +34,6 @@
 
   @include media($bp-large) {
     height: 100%;
-  }
-
-  .styleguide-example & {
-    background-image: url(/wp-content/uploads/2016/07/hero-home.jpg);
   }
 }
 

@@ -47,6 +47,16 @@ export default function() {
     }
   }
 
+  /**
+  * Toggle checked attribute on key enter for checkboxes
+  * @param {object} event - The event object
+  */
+  function handleKeyDown(event) {
+    if (event.keyCode == 13) {
+      $(event.target).prop('checked') ? $(event.target).prop('checked', false) : $(event.target).prop('checked', true);
+    }
+  }
+
   const inputs = document.querySelectorAll('.signup-form__field');
   if (inputs.length) {
     forEach(inputs, function(inputElem) {
@@ -60,6 +70,13 @@ export default function() {
   if (searchInput.length) {
     forEach(searchInput, function(inputElem) {
       inputElem.addEventListener('click', handleClear);
+    });
+  }
+
+  const inputCheckbox = document.querySelectorAll('input[type=checkbox]');
+  if (inputCheckbox.length) {
+    forEach(inputCheckbox, function (inputElem) {
+      inputElem.addEventListener('keydown', handleKeyDown);
     });
   }
 }

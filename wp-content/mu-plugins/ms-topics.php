@@ -30,7 +30,7 @@ function ms_topics_create() {
       'has_archive' => 'generationnyc/topics',
       'public' => true,
       'menu_position' => 27,
-      'menu_icon' => 'dashicons-groups',
+      'menu_icon' => get_template_directory_uri().'/assets/img/gnyc-admin-icon.png',
       'supports' => array( 'title', 'excerpt' , 'thumbnail' ),
       'rewrite' => array(
         'slug' => 'generationnyc/topics'
@@ -61,7 +61,6 @@ function ms_topics_create() {
         'with_front' => false
       ),
       'hierarchical' => true,
-      'show_in_rest' => true,
     )
   );
 }

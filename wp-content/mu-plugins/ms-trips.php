@@ -30,7 +30,7 @@ function ms_trips_create() {
       'labels' => $labels,
       'public' => true,
       'menu_position' => 24,
-      'menu_icon' => 'dashicons-groups',
+      'menu_icon' => get_template_directory_uri().'/assets/img/gnyc-admin-icon.png',
       'supports' => array( 'title', 'excerpt', 'thumbnail'),
       'has_archive' => 'generationnyc/trips',
       'rewrite' => array(

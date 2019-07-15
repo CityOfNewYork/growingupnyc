@@ -560,6 +560,20 @@ input[type="search"].form-field {
   background-size: cover !important;
 }
 
+// 404 Page
+.s-404 {
+  .c-list-box__item,
+  .c-list-box__heading,
+  .c-list-box__content {
+    background-color: #144f82 !important;
+  }
+
+  .c-side-hero__title__large,
+  .button--primary {
+    color: #144f82;
+  }
+}
+
 // Trips page styles
 @import "microsite/trips";
 

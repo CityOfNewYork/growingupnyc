@@ -106,7 +106,7 @@ class GunySite extends TimberSite {
   }
 
   function add_to_context ( $context ) {
-    
+
     $context['menu'] = new TimberMenu('header-menu');
     $context['language_code'] = ICL_LANGUAGE_CODE;
     $context['footer_menu_primary_additional'] = new TimberMenu('footer-menu-additional');
@@ -124,7 +124,7 @@ class GunySite extends TimberSite {
       'meta_value' => 1
     ) );
     $current_path=strtok($_SERVER["REQUEST_URI"],'?');
-    
+
     // widgets
     $search_sidebars=wp_get_sidebars_widgets();
     if (strpos($current_path, 'generation')) {
@@ -137,16 +137,23 @@ class GunySite extends TimberSite {
       $context['top_widget'] = Timber::get_widgets('top_widget');
     }
     $context['top_events'] = $this->get_featured_events(3);
-    $context['options'] = get_fields('options');
-    if (!empty($context['options']) && !empty($context['options']['current_banner'])) {
-      $context['options']['current_banner'] = new TimberPost($context['options']['current_banner']);
-    }
-    if (!empty($context['options']) && !empty($context['options']['current_banner_generation'])) {
-      $context['options']['current_banner_generation'] = new TimberPost($context['options']['current_banner_generation']);
-    }
     $context['is_archive'] = is_archive();
     $context['current_url'] = strtok($_SERVER["REQUEST_URI"],'?');
     $context['is_generation'] = in_array('generationnyc', explode('/', $context['current_url']));
+
+    $context['options'] = get_fields('options');
+    
+    // Global alert banner
+    if ($context['is_generation']) {
+      $page_id = get_page_by_title('Youth')->ID; // TODO: update so it's not dependent on page title
+      $banner = get_field('current_banner', $page_id);
+    } else {
+      $page_id = get_option('page_on_front');
+      $banner = get_field('current_banner', $page_id);
+    }
+
+    $context['banner']['post'] = Timber::get_post($banner);
+    $context['banner']['show'] = get_field('show_banner', $page_id);
 
     return $context;
   }
@@ -216,11 +223,12 @@ class GunySite extends TimberSite {
   function add_options_page() {
     if( function_exists('acf_add_options_page') ) {
       acf_add_options_page(array(
-        'page_title'  => 'Theme General Settings',
-        'menu_title'  => 'Theme Settings',
-        'menu_slug'   => 'theme-general-settings',
+        'page_title'  => 'GUNY General Settings',
+        'menu_title'  => 'GUNY Settings',
+        'menu_slug'   => 'guny-general-settings',
         'capability'  => 'edit_posts',
-        'redirect'    => false
+        'redirect'    => false,
+        'icon_url' => get_template_directory_uri().'/assets/img/admin-icon.png',
       ));
     }
   }
@@ -464,14 +472,6 @@ function guny_disable_emojis_tinymce( $plugins ) {
 }
 
 //Amalan New codes to test new content post type and microsite testing
-add_action( 'wp_print_styles', 'microsite_styles' );
-function microsite_styles() {
-  if ( is_post_type_archive( 'magazine_' ) || is_singular( 'magazine_' ) ) {
-    wp_dequeue_style( 'master' );
-    wp_enqueue_style( 'magazine', get_stylesheet_directory_uri() . '/magazine.css', null, '0.1' );
-  }
-}
-
 function my_acf_google_map_api( $api ){
   $api['key'] = 'AIzaSyDrvNnQZBiASAH3JI7LNFewrX9jeYZlMWo';
   return $api;
@@ -515,6 +515,17 @@ function guny_titles( $title ){
   if ( preg_match('search') || !empty($_GET['s'])) {
     $title = __('Search - Growing Up NYC', 'guny-search');
   }
+
+  // Growing Up 404 page
+  if ( ($page_type[0] == '404-2')) {
+    $title = __('Page not found - Growing Up NYC');
+  }
+
+  // Generation 404 page
+  if ( (is_404() && $page_type[0] == "generationnyc") || ($page_type[0] == 'generationnyc' && $page_type[1] == '404-2')) {
+    $title = __('Page not found - Generation NYC');
+  }
+
   return $title;
 }
 add_filter( 'pre_get_document_title', 'guny_titles', 999, 1 );
@@ -583,6 +594,7 @@ $includes = [
   '/includes/hide_child_events.php', // Hide child events in WP Admin
   '/includes/routing.php', // Routing
   '/includes/search.php', // Search functions
+  '/includes/404.php', // 404 functions
   '/includes/summer_guides.php', // Summer guide functions
   '/includes/afterschool_guides.php', // Afterschool guide functions
   [ // REST
@@ -636,26 +648,10 @@ function pre_dump($var) {
 }
 
 /**
- * Render 404 template for pages containing "404" in
- * their title. This uses same logic in 404.php
- */
-// add_action('template_redirect', 'page_not_found_redirect');
-
-// function page_not_found_redirect() {
-//   // if ( preg_match('/404/', $_SERVER['REQUEST_URI']) > 0 && !is_404() ) {
-//   //   $context = Timber::get_context();
-//   //   $context['top_widget'] = Timber::get_widgets('top_widget');
-
-//   //   $post_id = icl_object_id(get_page_by_title( '404' )->ID, 'page', FALSE, ICL_LANGUAGE_CODE);
-//   //   $post = get_page($post_id);
-
-//   //   $context['post'] = $post;
-//   //   $context['side_menu_categories'] = get_field('side_menu_categories', $post->id);
-
-//   //   Timber::render(array('404.twig'), $context);
-//   //   exit;
-//   // }
-//   if (!empty($_GET['s'])){
-//     Routes::load('search.php', $params, null, 200);
-//   }
-// }
+ * Remove unneeded menu items from admin dashboard
+*/
+function remove_menus() {
+  remove_menu_page( 'edit.php' );           //Posts
+  remove_menu_page( 'edit-comments.php' );  //Comments
+}
+add_action( 'admin_menu', 'remove_menus' );

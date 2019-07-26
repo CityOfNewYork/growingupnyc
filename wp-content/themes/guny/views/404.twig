@@ -9,7 +9,7 @@
 <div class="s-404">
   {# Side Hero #}
   <section class="o-static-column o-static-column--left c-side-hero js-static">
-    <div class="c-side-hero__content u-top-spacing">
+    <div class="c-side-hero__content {% if top_widget %} u-top-spacing{% else %} u-top-spacing-large{% endif %}">
       <h1 class="c-side-hero__title u-sm-gutter {% if is_generation %} u-top-spacing-small{% endif %}">
         <span class="c-side-hero__title__large {% if not is_generation %} text-bright-blue{% endif %}">{{ function('NotFound\\get_hero_header') }}</span>
         <p class="c-side-hero__tagline">{{ function('NotFound\\get_hero_tagline') }}</p>

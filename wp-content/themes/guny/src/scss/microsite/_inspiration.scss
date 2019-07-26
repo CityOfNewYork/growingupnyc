@@ -83,12 +83,6 @@
     margin-bottom: rem-calc(8);
   }
 
-  .c-card__body {
-    p {
-      margin-bottom: rem-calc(30);
-    }
-  }
-
   .c-card__subtitle {
     display: none;
   }
@@ -171,10 +165,6 @@
 
   .c-card__title {
     display: none;
-  }
-
-  .c-card__body {
-    margin-bottom: 0;
   }
 }
 

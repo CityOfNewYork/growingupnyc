@@ -6,11 +6,7 @@
 *
 */
 $context = Timber::get_context();
-$context['posts'] = facetwp_display('template', 'programs');
 $context['top_widget'] = Timber::get_widgets('top_widget');
-$context['pagination'] = facetwp_display('pager');
-$context['facet_program_type'] = facetwp_display( 'facet', 'program_type' );
-$context['facet_ages'] = facetwp_display( 'facet', 'ages' );
 $templates = array( 'list-program.twig', 'list.twig' );
 
 // meta tags

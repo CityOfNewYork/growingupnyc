@@ -79,4 +79,12 @@ export default function() {
       inputElem.addEventListener('keydown', handleKeyDown);
     });
   }
+
+  // Formstack overrides
+  const formstackEmbed = $('.fsBody.fsEmbed');
+  if(formstackEmbed.length){
+    formstackEmbed.closest('.o-article').css('width', '100%');
+    formstackEmbed.closest('.s-wysiwyg').css('width', '100%');
+    formstackEmbed.show()
+  }
 }

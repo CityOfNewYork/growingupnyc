@@ -541,10 +541,6 @@ input[type="search"].form-field {
 }
 
 .c-card__body {
-  p {
-    margin-bottom: rem-calc(30);
-  }
-
   .c-card__link {
     margin-top: rem-calc(10);
     margin-bottom: 0;
@@ -553,6 +549,9 @@ input[type="search"].form-field {
         fill: $very-dark-gray;
       }
     }
+  }
+  .button--primary {
+    margin-top: rem-calc(30);
   }
 }
 
@@ -572,6 +571,11 @@ input[type="search"].form-field {
   .button--primary {
     color: #144f82;
   }
+}
+
+// Formstack Overrides
+.fsBody.fsEmbed {
+  display: none;
 }
 
 // Trips page styles

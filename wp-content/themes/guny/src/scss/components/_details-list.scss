@@ -34,6 +34,7 @@
 // Details List Description
 .c-details-list__descr {
   padding: rem-calc(0 20 15);
+  word-wrap: break-word;
 
   a {
     word-break: break-all;

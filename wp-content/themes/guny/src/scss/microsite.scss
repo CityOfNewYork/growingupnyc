@@ -576,6 +576,27 @@ input[type="search"].form-field {
 // Formstack Overrides
 .fsBody.fsEmbed {
   display: none;
+
+  @include media(min-width $screen-medium) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  @include media(max-width $screen-xlarge) {
+    background-color: transparent;
+  }
+
+  .fsForm {
+    min-width: auto;
+    max-width: $max-width;
+    padding-bottom: 0;
+    margin: 40px auto 20px;
+
+    @include media(max-width $screen-medium) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
 }
 
 // Trips page styles

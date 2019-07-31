@@ -17,7 +17,9 @@
         <h1 class="c-hero__title c-hero-ms__topics__title">
           {{post.title}}
         </h1>
-        <p class="c-hero__tagline" aria-hidden="true">&nbsp;</p>
+        {% if sections %}
+          <p class="c-hero__tagline" aria-hidden="true">&nbsp;</p>
+        {% endif %}
       </div>
     </header>
   </div> <!-- /.js-parallax -->

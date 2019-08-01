@@ -93,6 +93,7 @@ export default function() {
       'padding-top': '0',
       'padding-bottom': '0',
     });
+    $('.spinner').hide();
     formstackEmbed.show();
   }
 }

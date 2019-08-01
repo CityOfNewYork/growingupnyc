@@ -7,6 +7,9 @@
     .c-hero-ms__topics-single {
       background-image: url(/wp-content/themes/guny/assets/img/hero-topics-splatter.svg);
     }
+    .spinner {
+      width: 10%;
+    }
   </style>
   {% endblock %}
 
@@ -26,6 +29,11 @@
   {% endblock %}
 
   <article class="o-container u-bottom-spacing-small js-sticky-container">
+    {% if loading %}
+    <div class="text-center">
+      {% include 'partials/spinner.twig' with {this: {color: '#7735b2'}} only %}
+    </div>
+    {% endif %}
 
     {% if sections %}
     <aside class="o-article-sidebar">
@@ -55,7 +63,7 @@
 
         {% if post.content %}
         <section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" data-id="section-summary">
-          {{ post.content }} {# translation comes from page content #}
+          {{ post.content }}
         </section>
         {% endif %}
 

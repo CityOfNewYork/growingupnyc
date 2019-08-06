@@ -29,7 +29,7 @@
   {% endblock %}
 
   <article class="o-container u-bottom-spacing-small js-sticky-container">
-    {% if enable_spinner %}
+    {% if has_embed %}
     <div class="spinner-container text-center u-top-spacing">
       {% include 'partials/spinner.twig' with {this: {color: '#7735b2'}} only %}
     </div>

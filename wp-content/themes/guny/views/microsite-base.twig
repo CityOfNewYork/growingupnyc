@@ -184,7 +184,9 @@
       </footer> <!-- /.c-footer -->
 
       {# alert banner #}
-      {% include 'banner.twig' %}
+      {% if not has_embed %}
+        {% include 'banner.twig' %}
+      {% endif %}
       {# alert banner end #}
 
       <a class="o-offcanvas__overlay" data-toggle="offcanvas-generationnyc" aria-hidden="true"></a>

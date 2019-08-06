@@ -9,7 +9,7 @@ $post = Timber::get_post();
 
 // determines if there is an embed
 if (strpos($post->post_content, 'script')) {
-  $context['enable_spinner'] = true;
+  $context['has_embed'] = true;
 }
 
 $templates = array( 'generic-microsite-page.twig' );

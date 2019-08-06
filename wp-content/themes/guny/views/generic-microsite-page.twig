@@ -29,6 +29,12 @@
   {% endblock %}
 
   <article class="o-container u-bottom-spacing-small js-sticky-container">
+    {% if enable_spinner %}
+    <div class="spinner-container text-center u-top-spacing">
+      {% include 'partials/spinner.twig' with {this: {color: '#7735b2'}} only %}
+    </div>
+    {% endif %}
+
     {% if sections %}
     <aside class="o-article-sidebar">
       <div class="o-content-container--compact u-shift-up">
@@ -57,12 +63,6 @@
 
         {% if post.content %}
         <section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" data-id="section-summary">
-          {% if loading %}
-          <div class="text-center">
-            {% include 'partials/spinner.twig' with {this: {color: '#7735b2'}} only %}
-          </div>
-          {% endif %}
-
           {{ post.content }}
         </section>
         {% endif %}

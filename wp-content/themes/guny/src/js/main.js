@@ -2,7 +2,7 @@ import accordion from './modules/accordion.js';
 import simpleAccordion from './modules/simpleAccordion.js';
 import offcanvas from './modules/offcanvas.js';
 import overlay from './modules/overlay.js';
-import stickNav from './modules/stickNav.js';
+import stickyNav from './modules/stickyNav.js';
 import sectionHighlighter from './modules/sectionHighlighter.js';
 import staticColumn from './modules/staticColumn.js';
 import alert from './modules/alert.js';
@@ -43,7 +43,7 @@ function init() {
 
   // Homepage
   staticColumn();
-  stickNav();
+  stickyNav();
   gunySignup();
   formEffects();
   owlSettings();
@@ -76,7 +76,7 @@ window.accordion = accordion;
   // if (window.location.pathname.indexOf('events') >= 0) {
   //   new EventsList().init();
   // }
-  
+
   // Initialize share by email/sms forms.
   $(`.${ShareForm.CssClass.FORM}`).each((i, el) => {
     const shareForm = new ShareForm(el);

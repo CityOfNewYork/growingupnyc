@@ -34,7 +34,7 @@
           </label>
         </li>
 
-        <li class="c-list-box__subitem" v-for="age in ageGroups">
+        <li class="c-list-box__subitem" v-for="age in ageGroups" v-if="age.name!='Everyone'">
           <label class="checkbox" :for="age.slug">
             <input type="checkbox" :id="age.slug" :value="age.slug" v-model="checkedAgeGroup" class="checkbox__field">
             <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>

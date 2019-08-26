@@ -364,7 +364,9 @@ ProgramsList.getIds = function(filter, slugs) {
   });
   
   let everyone_index = filter.map(function (e) { return e.slug; }).indexOf('everyone');
-  arrIds.push(filter[everyone_index])
+  if (everyone_index > 0) {
+    arrIds.push(filter[everyone_index])
+  }
   
   return arrIds;
 }

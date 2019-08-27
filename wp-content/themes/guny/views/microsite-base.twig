@@ -16,7 +16,13 @@
   <meta name="description" content="{{meta_desc}}">
   <meta name="keywords" content="{{meta_keywords}}">
   <link rel="manifest" href="{{theme.path}}/manifest-ms.json">
+
+  {% if custom_favicon %}
+  <link rel="icon" type="image" href="{{custom_favicon}}">
+  {% else %}
   <link rel="icon" type="image" href="{{theme.path}}/assets/img/microsite-favicon.png">
+  {% endif %}
+  
   <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{theme.path}}/assets/img/microsite-Icon-App-76x76@3x.png">
   <link rel="stylesheet" href="{{theme.path}}/src/css/owl.theme.default.min.css" type="text/css" media="screen">
   <link rel="stylesheet" href="{{theme.path}}/src/css/owl.carousel.min.css" type="text/css" media="screen">

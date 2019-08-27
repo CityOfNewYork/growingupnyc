@@ -97,4 +97,5 @@ if(ICL_LANGUAGE_CODE != 'en'){
 $context['eventslink'] = get_post_type_archive_link('tribe_events');
 $context['programslink'] = get_post_type_archive_link('program');
 
+$context['custom_favicon'] = get_field('updated_favicon', $post->id);
 Timber::render( $templates, $context );

@@ -594,3 +594,12 @@
 .signup-form__label-content {
   color: $purple;
 }
+
+.purple-svg {
+  .stop1 {
+    stop-color: $dark-purple;
+  }
+  .stop2 {
+    stop-color: $purple;
+  }
+}

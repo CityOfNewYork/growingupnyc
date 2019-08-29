@@ -183,7 +183,7 @@ ProgramsList.generateFilterURL = function(data) {
 
   if ( data.checkedAgeGroup.length > 0  ) {
     data.checkedAgeGroup.length != data.ageGroups.length ? data.checkedAllAges = false : data.checkedAllAges = true;
-    arrIds = ProgramsList.getIds(data.ageGroups, data.checkedAgeGroup).map(value => value.term_id)
+    arrIds = ProgramsList.getIds(data.ageGroups, data.checkedAgeGroup, data.posttype).map(value => value.term_id)
     filters.push('age_group[]=' + arrIds.join('&age_group[]='));
   }
 
@@ -351,7 +351,7 @@ ProgramsList.parseQuery = function() {
  * @param {array} - array of objects containing the category keys
  * @param {array} - array of slugs
  **/
-ProgramsList.getIds = function(filter, slugs) {
+ProgramsList.getIds = function(filter, slugs, posttype) {
   let arrIds = [];
 
   slugs.forEach(function(slug) {
@@ -362,7 +362,12 @@ ProgramsList.getIds = function(filter, slugs) {
       arrIds.push(filter[index])
     }
   });
-
+  
+  let everyone_index = filter.map(function (e) { return e.slug; }).indexOf('everyone');
+  if (everyone_index > 0 && posttype =='afterschool-guide') {
+    arrIds.push(filter[everyone_index])
+  }
+  
   return arrIds;
 }
 

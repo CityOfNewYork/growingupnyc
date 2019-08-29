@@ -82,9 +82,18 @@ export default function() {
 
   // Formstack overrides
   const formstackEmbed = $('.fsBody.fsEmbed');
-  if(formstackEmbed.length){
-    formstackEmbed.closest('.o-article').css('width', '100%');
-    formstackEmbed.closest('.s-wysiwyg').css('width', '100%');
-    formstackEmbed.show()
+  if (formstackEmbed.length) {
+    formstackEmbed.closest('.o-article').css({
+      'width': '100%',
+      'margin-left': 'auto',
+      'margin-right': 'auto',
+    });
+    formstackEmbed.closest('.s-wysiwyg').css({
+      'width': '100%',
+      'padding-top': '0',
+      'padding-bottom': '0',
+    });
+    formstackEmbed.show();
+    $('.spinner-container').hide();
   }
 }

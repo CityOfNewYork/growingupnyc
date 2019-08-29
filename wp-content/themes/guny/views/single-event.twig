@@ -73,28 +73,11 @@
           {% endfor %}
         </dd>
 
-        {% if post.venue_address.address or post.venue_address.city or post.venue_address.region or post.venue_address.zip%}
-        <dt class="c-details-list__term">{{ __('Address', 'guny-events') }}</dt>
+        {% if post.venue_address.phone %}
+        <dt class="c-details-list__term">{{ __('Phone Number', 'guny-events') }}</dt>
 
         <dd class="c-details-list__descr">
-
-          {% if post.venue_address %}
-
-          <span class="tribe-street-address">{{post.venue_address.address}}</span><br>
-          <span class="tribe-locality">{{post.venue_address.city}}</span><span class="tribe-delimiter">,</span>
-          <abbr class="tribe-region tribe-events-abbr" title="{{post.venue_address.full_region}}">{{post.venue_address.region}}</abbr>
-          <span class="tribe-postal-code">{{post.venue_address.zip}}</span>
-
-            {% if post.venue_address.phone %}
-            <br>{{post.venue_address.phone}}
-            {% endif %}
-
-            {% if post.venue_address.website %}
-            <br>{{post.venue_address.website}}
-            {% endif %}
-
-          {% endif %}
-
+          <a href="tel:{{post.venue_address.phone}}">{{post.venue_address.phone}}</a>
         </dd>
         {% endif %}
 
@@ -114,8 +97,8 @@
         {% endif %}
 
         {% if post.event_website %}
-        <dt class="c-details-list__term">{{ __('Event Website', 'guny-events') }}</dt>
-        <dd class="c-details-list__descr"><a href="{{post.event_website}}" target="_blank">{{post.event_website}}</a></dd>
+        <dt class="c-details-list__term">{{ __('More Information', 'guny-events') }}</dt>
+        <dd class="c-details-list__descr"><a href="{{post.event_website}}" target="_blank">{{ __('Visit the event website', 'guny-events') }}</a></dd>
         {% endif %}
 
       </dl>
@@ -135,6 +118,24 @@
         {% endif %}
 
         <h3>{{ __('Location Details', 'guny-events') }}</h3>
+
+        {% if post.venue_address.address or post.venue_address.city or post.venue_address.region or post.venue_address.zip %}
+        <div class="u-lg-gutter">
+
+          {% if post.venue_address %}
+          <span class="tribe-street-address">{{post.venue_address.address}}</span><br>
+          <span class="tribe-locality">{{post.venue_address.city}}</span><span class="tribe-delimiter">,</span>
+          <abbr class="tribe-region tribe-events-abbr" title="{{post.venue_address.full_region}}">{{post.venue_address.region}}</abbr>
+          <span class="tribe-postal-code">{{post.venue_address.zip}}</span>
+
+            {% if post.venue_address.website %}
+            <br>{{post.venue_address.website}}
+            {% endif %}
+
+          {% endif %}
+
+        </div>
+        {% endif %}
 
         {{post.location_details}} <a href="{{post.google_directions_link}}" target="_blank">{{ __('Get directions to the location.', 'guny-events') }}</a>
 

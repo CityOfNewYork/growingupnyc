@@ -7,6 +7,9 @@
     .c-hero-ms__topics-single {
       background-image: url(/wp-content/themes/guny/assets/img/hero-topics-splatter.svg);
     }
+    .spinner {
+      width: 10%;
+    }
   </style>
   {% endblock %}
 
@@ -17,13 +20,20 @@
         <h1 class="c-hero__title c-hero-ms__topics__title">
           {{post.title}}
         </h1>
-        <p class="c-hero__tagline" aria-hidden="true">&nbsp;</p>
+        {% if sections %}
+          <p class="c-hero__tagline" aria-hidden="true">&nbsp;</p>
+        {% endif %}
       </div>
     </header>
   </div> <!-- /.js-parallax -->
   {% endblock %}
 
   <article class="o-container u-bottom-spacing-small js-sticky-container">
+    {% if has_embed %}
+    <div class="spinner-container text-center u-top-spacing">
+      {% include 'partials/spinner.twig' with {this: {color: '#7735b2'}} only %}
+    </div>
+    {% endif %}
 
     {% if sections %}
     <aside class="o-article-sidebar">
@@ -53,7 +63,7 @@
 
         {% if post.content %}
         <section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" data-id="section-summary">
-          {{ post.content }} {# translation comes from page content #}
+          {{ post.content }}
         </section>
         {% endif %}
 

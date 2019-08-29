@@ -16,7 +16,13 @@
   <meta name="description" content="{{meta_desc}}">
   <meta name="keywords" content="{{meta_keywords}}">
   <link rel="manifest" href="{{theme.path}}/manifest-ms.json">
+
+  {% if custom_favicon %}
+  <link rel="icon" type="image" href="{{custom_favicon}}">
+  {% else %}
   <link rel="icon" type="image" href="{{theme.path}}/assets/img/microsite-favicon.png">
+  {% endif %}
+  
   <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{theme.path}}/assets/img/microsite-Icon-App-76x76@3x.png">
   <link rel="stylesheet" href="{{theme.path}}/src/css/owl.theme.default.min.css" type="text/css" media="screen">
   <link rel="stylesheet" href="{{theme.path}}/src/css/owl.carousel.min.css" type="text/css" media="screen">
@@ -70,7 +76,7 @@
       {% block header %}
         <header class="c-banner">
           <div class="o-container">
-            <a href="/generationnyc" class="c-banner__logo-wrapper"><span class="c-banner__logo c-banner-ms__logo">{{site.name}}</span></a>
+            <a href="/generationnyc" class="c-banner__logo-wrapper"><span class="c-banner__logo c-banner-ms__logo">Generation NYC</span></a>
             <nav class="c-banner__nav" role="navigation" aria-label="Primary">
               <ul class="o-inline o-inline-ms">
                 {% for menu_item in ms_menu.get_items %}
@@ -184,7 +190,9 @@
       </footer> <!-- /.c-footer -->
 
       {# alert banner #}
-      {% include 'banner.twig' %}
+      {% if not has_embed %}
+        {% include 'banner.twig' %}
+      {% endif %}
       {# alert banner end #}
 
       <a class="o-offcanvas__overlay" data-toggle="offcanvas-generationnyc" aria-hidden="true"></a>

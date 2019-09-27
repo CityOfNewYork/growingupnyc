@@ -2,8 +2,9 @@
 
 class Meow_WPMC_API {
 
-	function __construct( $core, $admin ) {
+	function __construct( $core, $admin, $engine ) {
 		$this->core = $core;
+		$this->engine = $engine;
 		$this->admin = $admin;
 		add_action( 'wp_ajax_wpmc_prepare_do', array( $this, 'wp_ajax_wpmc_prepare_do' ) );
 		add_action( 'wp_ajax_wpmc_scan', array( $this, 'wp_ajax_wpmc_scan' ) );
@@ -23,131 +24,13 @@ class Meow_WPMC_API {
 	function wp_ajax_wpmc_prepare_do() {
 		$limit = isset( $_POST['limit'] ) ? $_POST['limit'] : 0;
 		$limitsize = get_option( 'wpmc_posts_buffer', 5 );
-		if ( empty( $limit ) )
-			$this->core->reset_issues();
-
-		$method = get_option( 'wpmc_method', 'media' );
-		$check_library = get_option(' wpmc_media_library', true );
-		$check_postmeta = get_option( 'wpmc_postmeta', false );
-		$check_posts = get_option( 'wpmc_posts', false );
-		$check_widgets = get_option( 'wpmc_widgets', false );
-		if ( $method == 'media' && !$check_posts && !$check_postmeta && !$check_widgets ) {
-			echo json_encode( array(
-				'results' => array(),
-				'success' => true,
-				'finished' => true,
-				'message' => __( "Posts, Meta and Widgets analysis are all off. Done.", 'media-cleaner' )
-			) );
-			die();
-		}
-		if ( $method == 'files' && $check_library && !$check_posts && !$check_postmeta && !$check_widgets ) {
-			echo json_encode( array(
-				'results' => array(),
-				'success' => true,
-				'finished' => true,
-				'message' => __( "Posts, Meta and Widgets analysis are all off. Done.", 'media-cleaner' )
-			) );
-			die();
-		}
-
-		// Initialize the parsers
-		do_action( 'wpmc_initialize_parsers' );
-
-		global $wpdb;
-		// Maybe we could avoid to check more post_types.
-		// SELECT post_type, COUNT(*) FROM `wp_posts` GROUP BY post_type
-		$posts = $wpdb->get_col( $wpdb->prepare( "SELECT p.ID FROM $wpdb->posts p
-			WHERE p.post_status != 'inherit'
-			AND p.post_status != 'trash'
-			AND p.post_type != 'attachment'
-			AND p.post_type != 'shop_order'
-			AND p.post_type != 'shop_order_refund'
-			AND p.post_type != 'nav_menu_item'
-			AND p.post_type != 'revision'
-			AND p.post_type != 'auto-draft'
-			AND p.post_type != 'wphb_minify_group'
-			AND p.post_type != 'customize_changeset'
-			AND p.post_type != 'oembed_cache'
-			AND p.post_type NOT LIKE '%acf-%'
-			AND p.post_type NOT LIKE '%edd_%'
-			LIMIT %d, %d", $limit, $limitsize
-			)
-		);
-
-		$found = array();
-
-		// Only at the beginning
-		if ( empty( $limit ) ) {
-			$this->core->log( "Parsed references:" );
-			if ( get_option( 'wpmc_widgets', false ) ) {
-
-				global $wp_registered_widgets;
-				$syswidgets = $wp_registered_widgets;
-				$active_widgets = get_option( 'sidebars_widgets' );
-				foreach ( $active_widgets as $sidebar_name => $widgets ) {
-					if ( $sidebar_name != 'wp_inactive_widgets' && !empty( $widgets ) && is_array( $widgets ) ) {
-						foreach ( $widgets as $key => $widget ) {
-							do_action( 'wpmc_scan_widget', $syswidgets[$widget] );
-						}
-					}
-				}
-
-				do_action( 'wpmc_scan_widgets' );
-			}
-			do_action( 'wpmc_scan_once' );
-		}
-
-		$this->core->timeout_check_start( count( $posts ) );
-
-		foreach ( $posts as $post ) {
-			$this->core->timeout_check();
-			// Run the scanners
-			if ( $check_postmeta )
-				do_action( 'wpmc_scan_postmeta', $post );
-			if ( $check_posts ) {
-				// Get HTML for this post
-				$html = get_post_field( 'post_content', $post );
-
-				// Scan on the raw HTML content (useless?)
-				//do_action( 'wpmc_scan_post', $html, $post );
-
-				// This code was moved to the core.php (get_urls_from_html)
-				//$html = do_shortcode( $html );
-				//$html = wp_make_content_images_responsive( $html );
-				// Scan with shortcodes resolved and src-set
-
-				do_action( 'wpmc_scan_post', $html, $post );
-			}
-			$this->core->timeout_check_additem();
-		}
-
-		// Write the references cached by the scanners
-		$this->core->write_references();
-
-		$finished = count( $posts ) < $limitsize;
-		if ( $finished ) {
-			$this->core->log();
-			$found = array();
-			// Optimize DB (but that takes too long!)
-			//$table_name = $wpdb->prefix . "mclean_refs";
-			// $wpdb->query ("DELETE a FROM $table_name as a, $table_name as b
-			// WHERE (a.mediaId = b.mediaId OR a.mediaId IS NULL AND b.mediaId IS NULL)
-			// AND (a.mediaUrl = b.mediaUrl OR a.mediaUrl IS NULL AND b.mediaUrl IS NULL)
-			// AND (a.originType = b.originType OR a.originType IS NULL AND b.originType IS NULL)
-			// AND (a.origin = b.origin OR a.origin IS NULL AND b.origin IS NULL)
-			// AND a.ID < b.ID;" );
-			// $wpdb->query ("DELETE a FROM $table_name as a, $table_name as b WHERE a.mediaId = b.mediaId AND a.mediaId > 0 AND a.ID < b.ID;" );
-			// $wpdb->query ("DELETE a FROM $table_name as a, $table_name as b WHERE a.mediaUrl = b.mediaUrl AND LENGTH(a.mediaUrl) > 1 AND a.ID < b.ID;" );
-		}
-		if ( $finished && get_option( 'wpmc_debuglogs', false ) ) {
-			//$this->core->log( print_r( $found, true ) );
-		}
+		$finished = $this->engine->parse( $limit, $limitsize, $message ); // $message is set by run()
 		echo json_encode(
 			array(
 				'success' => true,
 				'finished' => $finished,
 				'limit' => $limit + $limitsize,
-				'message' => __( "Posts checked.", 'media-cleaner' ) )
+				'message' => $message )
 		);
 		die();
 	}
@@ -158,26 +41,34 @@ class Meow_WPMC_API {
 		$method = get_option( 'wpmc_method', 'media' );
 		if ( !$this->admin->is_registered() )
 			$method = 'media';
-		$path = isset( $_POST['path'] ) ? $_POST['path'] : null;
-		$limit = isset( $_POST['limit'] ) ? $_POST['limit'] : 0;
-		$limitsize = get_option( 'wpmc_medias_buffer', 100 );
 
 		if ( $method == 'files' ) {
-			$output = apply_filters( 'wpmc_list_uploaded_files', array(
-				'results' => array(), 'success' => false, 'message' => __( "Unavailable.", 'media-cleaner' )
-			), $path );
+			$output = null;
+			$path = isset( $_POST['path'] ) ? $_POST['path'] : null;
+			$files = $this->engine->get_files( $path );
+
+			if ( $files === null ) {
+				$output = array(
+					'results' => array(), 
+					'success' => true, 
+					'message' => __( "No files for this path ($path).", 'media-cleaner' )
+				);
+			}
+			else {
+				$output = array( 
+					'results' => $files, 
+					'success' => true, 
+					'message' => __( "Files retrieved.", 'media-cleaner' ) 
+				);
+			}
 			echo json_encode( $output );
 			die();
 		}
 
 		if ( $method == 'media' ) {
-			// Prevent double scanning by removing filesystem entries that we have DB entries for
-			$results = $wpdb->get_col( $wpdb->prepare( "SELECT p.ID FROM $wpdb->posts p
-				WHERE p.post_status = 'inherit'
-				AND p.post_type = 'attachment'
-				LIMIT %d, %d", $limit, $limitsize
-				)
-			);
+			$limit = isset( $_POST['limit'] ) ? $_POST['limit'] : 0;
+			$limitsize = get_option( 'wpmc_medias_buffer', 100 );
+			$results = $this->engine->get_media_entries( $limit, $limitsize );
 			$finished = count( $results ) < $limitsize;
 			echo json_encode(
 				array(
@@ -206,17 +97,22 @@ class Meow_WPMC_API {
 		$data = $_POST['data'];
 		$this->core->timeout_check_start( count( $data ) );
 		$success = 0;
+		if ( $type == 'file' ) {
+			do_action( 'wpmc_check_file_init' ); // Build_CroppedFile_Cache() in pro core.php
+		}
 		foreach ( $data as $piece ) {
 			$this->core->timeout_check();
 			if ( $type == 'file' ) {
 				$this->core->log( "Check File: {$piece}" );
-				$result = ( apply_filters( 'wpmc_check_file', true, $piece ) ? 1 : 0 );
+
+				$result = ( $this->engine->check_file( $piece ) ? 1 : 0 );
+
 				if ( $result )
 					$success += $result;
 			}
 			else if ( $type == 'media' ) {
 				$this->core->log( "Checking Media #{$piece}" );
-				$result = ( $this->core->check_media( $piece ) ? 1 : 0 );
+				$result = ( $this->engine->check_media( $piece ) ? 1 : 0 );
 				if ( $result )
 					$success += $result;
 			}

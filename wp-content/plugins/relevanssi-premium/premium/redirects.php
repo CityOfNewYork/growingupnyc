@@ -36,7 +36,7 @@ function relevanssi_redirects() {
 		}
 	}
 	if ( $url ) {
-		if ( wp_redirect( $url ) ) {
+		if ( wp_redirect( $url ) ) { // phpcs:ignore WordPress.Security.SafeRedirect
 			exit();
 		}
 	}

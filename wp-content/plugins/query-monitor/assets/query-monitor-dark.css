@@ -3,13 +3,6 @@
  *
  * @package query-monitor
  */
-/**
- * Dark Mode Colours
- */
-/**
- * The colours below are loosely based on the WordPress branding colours.
- * https://make.wordpress.org/design/handbook/design-guide/foundations/colors/
- */
 #wpadminbar .quicklinks .menupop ul li.qm-true > a {
   color: #8c8 !important;
 }
@@ -305,17 +298,22 @@ body.admin-color-light #wp-admin-bar-query-monitor:not(.qm-all-clear):not(:hover
 }
 #query-monitor-main #qm-title .qm-button-container-settings .dashicons {
   font-size: 17px !important;
-  margin: 3px 0 2px !important;
+  margin: 4px 0 2px !important;
 }
 #query-monitor-main #qm-title .qm-button-container-position .dashicons {
   font-size: 15px !important;
-  margin: 4px 0 1px !important;
+  margin: 2px -1px 3px 4px !important;
+  transform: scaleX(-1) rotate(90deg) !important;
+}
+#query-monitor-main.qm-show-right #qm-title .qm-button-container-position .dashicons {
+  margin: 4px 1px 0px 1px !important;
+  transform: none !important;
 }
 #query-monitor-main #qm-title .qm-button-container-close {
   margin-right: 10px !important;
 }
 #query-monitor-main #qm-title .qm-button-container-close .dashicons {
-  margin: 2px 0 3px !important;
+  margin: 3px 0 3px !important;
 }
 @media screen and (max-width: 960px) {
   #query-monitor-main #qm-title .qm-button-container-position {
@@ -390,16 +388,16 @@ body.admin-color-light #wp-admin-bar-query-monitor:not(.qm-all-clear):not(:hover
   background: #def !important;
   color: #222 !important;
 }
-#query-monitor-main #qm-panel-menu li button.qm-selected-menu {
+#query-monitor-main #qm-panel-menu li button[aria-selected="true"] {
   background: #0073aa !important;
   color: #fff !important;
   text-shadow: 0 -1px 1px #006291, 1px 0 1px #006291, 0 1px 1px #006291, -1px 0 1px #006291 !important;
 }
-#query-monitor-main #qm-panel-menu li button.qm-selected-menu:focus {
+#query-monitor-main #qm-panel-menu li button[aria-selected="true"]:focus {
   background: #0084c4 !important;
   color: #fff !important;
 }
-#query-monitor-main #qm-panel-menu li button.qm-selected-menu:after {
+#query-monitor-main #qm-panel-menu li button[aria-selected="true"]:after {
   border: solid 8px transparent;
   border-right-color: #23282d;
   content: " ";
@@ -1060,5 +1058,3 @@ body.admin-color-light #wp-admin-bar-query-monitor:not(.qm-all-clear):not(:hover
 #query-monitor-main.qm-broken #qm-broken h2 {
   padding: 20px !important;
 }
-
-/*# sourceMappingURL=query-monitor-dark.css.map */

@@ -15,8 +15,12 @@ function wpmc_scan_once_woocommerce() {
 		foreach ( $metas as $meta )
 			if ( is_numeric( $meta ) && $meta > 0 )
 				array_push( $postmeta_images_ids, $meta );
-		$wpmc->add_reference_id( $postmeta_images_ids, 'META (ID)' );
+		$wpmc->add_reference_id( $postmeta_images_ids, 'WOOCOOMMERCE (ID)' );
 	}
+
+	$placeholder_id = get_option( 'woocommerce_placeholder_image', null, true );
+	if ( !empty( $placeholder_id ) )
+		$wpmc->add_reference_id( (int)$placeholder_id, 'WOOCOOMMERCE (ID)' );
 }
 
 function wpmc_scan_postmeta_woocommerce( $id ) {

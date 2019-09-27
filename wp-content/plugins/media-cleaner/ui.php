@@ -10,6 +10,8 @@ class Meow_WPMC_UI {
 		"CONTENT (URL)" => "Found in content (as an URL).",
 		"THEME" => "Found in theme.",
 		"PAGE BUILDER" => "Found in Page Builder.",
+		"PAGE BUILDER (ID)" => "Found in Page Builder (as an ID).",
+		"PAGE BUILDER (URL)" => "Found in Page Builder (as an URL).",
 		"GALLERY" => "Found in gallery.",
 		"META" => "Found in meta.",
 		"META (ID)" => "Found in meta (as an ID).",
@@ -22,6 +24,7 @@ class Meow_WPMC_UI {
 		"ATTACHMENT (ID)" => "Found in Attachment (as an ID).",
 		"METASLIDER (ID)" => "Found in MetaSlider (as an ID).",
 		"MY CALENDAR (URL)" => "Found in My Calendar (as an URL).",
+		"UBERMENU (URL)" => "Found in UberMenu (as an URL).",
 		"MAX MEGA MENU (URL)" => "Found in Max Mega Menu (as an URL).",
 		"SITE ICON" => "Found in Site Icon."
 	);

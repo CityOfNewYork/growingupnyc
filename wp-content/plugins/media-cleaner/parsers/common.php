@@ -57,6 +57,11 @@ class MeowApps_WPMC_Parser {
 			$newIds = $widget_data[$instance_id]['ids'];
 			$ids = array_merge( $ids, $newIds );
 		}
+		// Recent Blog Posts
+		if ( !empty( $widget_data[$instance_id]['thumbnail'] ) ) {
+			$id = $widget_data[$instance_id]['thumbnail'];
+			array_push( $ids, $id );
+		}
 	}
 
 	public function scan_widget( $widget ) {

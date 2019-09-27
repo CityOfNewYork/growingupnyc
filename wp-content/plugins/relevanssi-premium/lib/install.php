@@ -100,7 +100,6 @@ function _relevanssi_install() {
 	add_option( 'relevanssi_index_comments', 'none' );
 	add_option( 'relevanssi_index_excerpt', 'off' );
 	add_option( 'relevanssi_index_fields', '' );
-	add_option( 'relevanssi_index_limit', '500' );
 	add_option( 'relevanssi_index_post_types', array( 'post', 'page' ) );
 	add_option( 'relevanssi_index_taxonomies_list', array() );
 	add_option( 'relevanssi_indexed', '' );
@@ -109,11 +108,14 @@ function _relevanssi_install() {
 	add_option( 'relevanssi_min_word_length', '3' );
 	add_option( 'relevanssi_omit_from_logs', '' );
 	add_option( 'relevanssi_polylang_all_languages', 'off' );
-	add_option( 'relevanssi_punctuation', array(
-		'quotes'     => 'replace',
-		'hyphens'    => 'replace',
-		'ampersands' => 'replace',
-	));
+	add_option(
+		'relevanssi_punctuation',
+		array(
+			'quotes'     => 'replace',
+			'hyphens'    => 'replace',
+			'ampersands' => 'replace',
+		)
+	);
 	add_option( 'relevanssi_respect_exclude', 'on' );
 	add_option( 'relevanssi_show_matches', '' );
 	add_option( 'relevanssi_show_matches_text', '(Search hits: %body% in body, %title% in title, %categories% in categories, %tags% in tags, %taxonomies% in other taxonomies, %comments% in comments. Score: %score%)' );

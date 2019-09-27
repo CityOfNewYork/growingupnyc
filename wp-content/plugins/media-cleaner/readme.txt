@@ -1,43 +1,62 @@
 === Media Cleaner ===
 Contributors: TigrouMeow
-Tags: clean, delete, file, files, images, image, media, library, upload, acf
+Tags: clean, delete, file, files, images, image, media, library, upload, acf, gutenberg
+Donate link: https://commerce.coinbase.com/checkout/d047546a-77a8-41c8-9ea9-4a950f61832f
 Requires at least: 4.8
-Tested up to: 5.1
+Tested up to: 5.2
 Requires PHP: 7.0
-Stable tag: 5.2.1
+Stable tag: 5.4.4
 
-Clean your WordPress (broken media, unused media, files). It has its own trash and recovery features. Please read the description.
+Clean your WordPress from unused or broken media and files. It has its own trash system and recovery features. Please read the description.
 
 == Description ==
 
-Clean your Media Library from the media which aren't used in any of your posts, gallery and so on. It features an internal trash, moving the files in there temporarily for you to make sure the files aren't actually in used; once checked, you can trash them permanently. **Before using this plugin, make sure you have a proper backup of your files and database. This is the most important step on the usage of this plugin as you can't trust any file deletion tools.** The Pro version of this plugin brings scanning to the /uploads folder and will detect which files aren't registered in the Media Library, not used in your content and so on. Retina images are also detected and supported, shortcodes, HTML in sidebars and of course your posts, pages and all post types.
+Media Cleaner cleans your Media Library from the media entries (and files) which aren't used in your website, as well as broken entries. An internal trash allows you to make sure everything works properly before deleting the media entries (and files) permanently. It uses a smart analysis powered by many implementations for specific plugins and themes.
 
-A tutorial is available on the official website, here: [Media Cleaner](https://meowapps.com/media-cleaner).
+**Before using this plugin, make sure you have a proper backup of your install. This step is not optional; it is required. You cannot trust any tools modifying or deleting your files.**
 
-=== IMPORTANT ===
+For compatibility, Pro version and important information, please read this until the end. Last but not least, it is necessary to read the [tutorial](https://meowapps.com/media-cleaner-tutorial/). It is available on the official website, here: [Media Cleaner](https://meowapps.com/media-cleaner). 
 
-This tool is a knife. Do not use it if you don't have any backup, or if you don't know what it does. For backup, I recommend use the excellent service called [BlogVault](https://meow.click/blogvault). Such a plugin is difficult to create and to maintain. If you understand WordPress, you probably know why. This plugin does its best to help you. Learn how to use it and you will get awesome results.
+=== VERY IMPORTANT ===
+
+This tool is a knife. Do not use it if you don't have any backup, or if you don't understand what it does. This plugin does its best to help you. Learn how to use it and you will get awesome results. 
 
 === DASHBOARD ===
-The files detected as not used will be listed in a specific dashboard. At this point, it will be up to you to delete them. They will be then moved to a trash internal to the plugin. After more testing, you can trash them permanently.
+
+The files detected as not used will be listed in a specific dashboard. It will be up to you to delete them. Then, they will be moved to a trash internal to the plugin. After more testing, you can retrieve those files from the trash, or you can delete them permanently.
 
 === COMPATIBILITY ===
-It works with any kind of media, and including their retina and/or WebP versions. I am adding support for specific plugins little by little. As it requires meticulous work and updates, **specific checks for Page Builders are being added to the Pro version**.
 
-=== PRO ===
-[Media Cleaner Pro](https://meowapps.com/media-cleaner) can scan your physical /uploads directory, and match it against the Media Library. It also has extra support for plugins which are complicated to handle. Here is the list:
+It works with any kind of media entries, including their retina and/or WebP versions. It is tested on modern WordPress installs (Gutenberg included) as well as older ones, with various themes and by a community of thousands of users. It does support **WooCommerce**. As it requires meticulous a lot of work and testing, **the Pro version might be required if you are using complex plugins to handle the content of your website**. I am constantly increasing the compatibility.
 
-- Gutenberg
-- ACF
-- Divi
+=== PRO VERSION ===
+
+The Pro version adds Filesystem Analysis, extra support for complex plugins, Live Site option and WP-CLI support. 
+
+With the Filesystem Analysis, [Media Cleaner Pro](https://meowapps.com/media-cleaner) scans your physical /uploads directory, and match it against the Media Library. It also has extra support for complex plugins, such as:
+
+- ACF (+ ACF Widgets)
+- Divi Builder
 - Fusion Builder (Avada)
-- WooCommerce
 - Visual Composer (WPBakery)
 - Elementor
 - Beaver Builder
+- Brizy Builder
+- Oxygen Builder
+- And more (Theme X, ZipList Recipe, UberMenu...)
+
+The Live Site option will analyze the online version of your website, which might enhance the accuracy of the Cleaner in edge-cases.
+
+Last but not least, [Media Cleaner Pro](https://meowapps.com/media-cleaner) has support for WP-CLI. If you have direct access (SSH) to your server, you will be able to run the plugin at a much higher speed or have it ran automatically, if you like.
 
 === AGAIN, BE CAREFUL ===
-Again, this plugin deletes files so be careful! Backup is not only important, it is **necessary**. Don't use this plugin if you don't understand how WordPress works.
+
+Better to be safe than sorry. This plugin deletes files! Therefore, backup is not only important, it is **necessary**. Don't use this plugin if you are not ready. I can't help you if you damaged your install.
+
+=== SPECIAL THANKS ===
+
+- Mike Meinz, an amazing developer from the US who made a thorough debugging of the whole process, load lot of corrections and optimizations, and added support for more plugins.
+- Satoshi Soma, an excellent Japanese developer who helped me when I needed it the most.
 
 == Installation ==
 
@@ -52,6 +71,36 @@ Again, this plugin deletes files so be careful! Backup is not only important, it
 
 == Changelog ==
 
+= 5.4.4 =
+* Add: Support for Brizy Builder.
+* Fix: Doesn't trigger the timeout check if WP-CLI is being used.
+* Add: WP-CLI can now delete and trash media entries and files.
+
+= 5.4.3 =
+* Add: Support for Yoast SEO and its Facebook Image.
+* Add: Support for Elementor and Oxygen Builder.
+* Add: Support for ACF File Field.
+* Update: Better support for WP CLI.
+* Fix: Make sure the HTML is UTF8 encoded before analyzing it.
+* Update: Removed affiliate links to BlogVault in the Readme as it seems to be against the WordPress guidelines.
+
+= 5.4.0 =
+* Add: Support for Uber, Easy Real Estate.
+* Update: Admin CSS and texts.
+* Fix: A rare but wrong call to the log() function was causing the plugin to fail.
+* Update: Clean the options. Now, the Content option replaces Posts/Meta/Widgets (they were useless in a way).
+* Add: Support for WP-CLI (have a look at the how-it-works.txt) in the Pro. Now, scanning can be 100x times faster.
+* Add: Option Live Site in the Pro.
+
+= 5.2.4 =
+* Add: Lot of refactoring and optimizations.
+* Add: Support for Theme X, ZipList, and better support for standard websites as well.
+* Add: Yes/No dialog for Reset button.
+
+= 5.2.3 =
+* Add: Support for Recent Blog Posts.
+* Add: Additional support for images used by the theme.
+
 = 5.2.1 =
 * Add: Support for My Calendar (thanks to Mike Meinz).
 * Add: Support for iFrames (thanks to Mike Meinz).
@@ -62,7 +111,6 @@ Again, this plugin deletes files so be careful! Backup is not only important, it
 * Fix: Filenames with spaces weren't detected correctly and other.
 * Fix: Make sure that the shortcodes are resolved.
 * Add: Compatibility with more plugins (ACF Widgets, Attachments, Metaslider).
-* Info: Mike Meinz is an amazing developer who made a thorough debugging of the whole process, made a lot of corrections, and added support for more plugins. Thanks to him, Media Cleaner is much better!
 
 = 5.1.3 =
 * Add: Support for WebP.

@@ -8,6 +8,8 @@
  * Registering rest routes and fields
  */
 add_action( 'rest_api_init', 'register_rest_afterschool' );
+add_filter( 'rest_afterschool-guide_collection_params', 'filter_add_rest_orderby_params', 10, 1 );
+
 function register_rest_afterschool() {
   register_rest_field( 'afterschool-guide', 'title', array(
    'get_callback'    => 'get_rest_afterschool_title',

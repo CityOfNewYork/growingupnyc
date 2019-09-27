@@ -75,7 +75,7 @@
     <div class="c-block-list--blue o-content-container u-sm-gutter loader"></div>
     <div class="c-block-list--blue o-content-container u-sm-gutter loader-mobile text-center" v-if="!errorMsg">
       <button>
-      <a href="#programs-loaded" class="button--outline button--outline--white aligncenter">See v{ totalResults } programs</a>
+      <a href="#programs-loaded" class="button--outline button--outline--white aligncenter">{{ __('See', 'guny') }} v{ totalResults } {{ __('programs', 'guny') }}</a>
       </button>
     </div>
     <div id="programs-loaded" class="c-block-list--shade o-content-container u-sm-gutter" v-if="!isLoading">

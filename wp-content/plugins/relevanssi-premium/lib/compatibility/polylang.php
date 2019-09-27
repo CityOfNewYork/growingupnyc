@@ -50,7 +50,12 @@ function relevanssi_polylang_filter( $query ) {
 			// Tax queries can be here as well, so let's sweep this one too.
 			$ok_queries = array();
 			foreach ( $query->query_vars['tax_query'] as $tax_query ) {
-				if ( 'language' !== $tax_query['taxonomy'] ) {
+				if ( isset( $tax_query['taxonomy'] ) ) {
+					if ( 'language' !== $tax_query['taxonomy'] ) {
+						$ok_queries[] = $tax_query;
+					}
+				} else {
+					// Relation parameter most likely.
 					$ok_queries[] = $tax_query;
 				}
 			}
@@ -82,9 +87,12 @@ function relevanssi_polylang_filter( $query ) {
  * @since 2.1.6
  */
 function relevanssi_polylang_where_include_terms( $where ) {
-	$current_language = pll_current_language();
-	$languages        = get_terms( array( 'taxonomy' => 'language' ) );
-	$language_id      = 0;
+	$current_language = substr( get_locale(), 0, 2 );
+	if ( function_exists( 'pll_current_language' ) ) {
+		$current_language = pll_current_language();
+	}
+	$languages   = get_terms( array( 'taxonomy' => 'language' ) );
+	$language_id = 0;
 	foreach ( $languages as $language ) {
 		if ( ! is_wp_error( $language ) && $language instanceof WP_Term && $language->slug === $current_language ) {
 			$language_id = intval( $language->term_id );
@@ -120,17 +128,32 @@ function relevanssi_polylang_where_include_terms( $where ) {
 function relevanssi_polylang_term_filter( $hits ) {
 	$polylang_allow_all = get_option( 'relevanssi_polylang_all_languages' );
 	if ( 'on' !== $polylang_allow_all ) {
-		$current_language = pll_current_language();
-		$accepted_hits    = array();
+		$current_language = substr( get_locale(), 0, 2 );
+		if ( function_exists( 'pll_current_language' ) ) {
+			$current_language = pll_current_language();
+		}
+		$accepted_hits = array();
 		foreach ( $hits[0] as $hit ) {
+			$original_hit = $hit;
+			if ( is_numeric( $hit ) ) {
+				// In case "fields" is set to "ids", fetch the post object we need.
+				$original_hit = $hit;
+				$hit          = get_post( $hit );
+			}
+			if ( ! isset( $hit->post_content ) ) {
+				// The "fields" is set to "id=>parent".
+				$original_hit = $hit;
+				$hit          = get_post( $hit->ID );
+			}
+
 			if ( -1 === $hit->ID && isset( $hit->term_id ) ) {
 				$term_id      = intval( $hit->term_id );
 				$translations = pll_get_term_translations( $term_id );
 				if ( isset( $translations[ $current_language ] ) && $translations[ $current_language ] === $term_id ) {
-					$accepted_hits[] = $hit;
+					$accepted_hits[] = $original_hit;
 				}
 			} else {
-				$accepted_hits[] = $hit;
+				$accepted_hits[] = $original_hit;
 			}
 		}
 		$hits[0] = $accepted_hits;

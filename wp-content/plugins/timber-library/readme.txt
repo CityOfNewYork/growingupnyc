@@ -1,9 +1,9 @@
 === Timber ===
-Contributors: jarednova, connorjburton, lggorman
+Contributors: jarednova
 Tags: template engine, templates, twig
 Requires at least: 4.7.12
-Tested up to: 5.1.1
-Stable tag: 1.9.4
+Tested up to: 5.2.3
+Stable tag: 1.11.0
 Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -30,21 +30,48 @@ _Twig is the template language powering Timber; if you need a little background 
 
 = Develop (next release) =
 
+= 1.11.0 =
+**General Note**
+- If you use WPML with Timber, please upgrade to WPML 4.2.8. The WPML team has removed their included Twig version which means no more conflicts!
+
 **Fixes and improvements**
-- Please add bullet points here with your PR. The heading for this section will get the correct version number once released.
+- Fix to menu items getting incorrect classes in WPML and others #1974
+- Fixed issue with Timber not respecting comment order #1731 #2015
 
 **Changes for Theme Developers**
-- Please add bullet points here with your PR. The heading for this section will get the correct version number once released.
+- Theme methods (theme.get and theme.display) for headers are now exposed by Timber\Theme #2051 (thanks @dtvn)
 
-= 1.9.4 = 
+= 1.10.1 =
+**Fixes and improvements**
+- Allows for a MenuItem's Menu to be unknown #2024 #2025
+
+= 1.10.0 =
+**Important Note**
+If you use WPML, please do not upgrade to 1.10.* yet. Because WPML also uses Twig, there is a conflict with loading Twig versions. They will release an update soon to keep things in sync. Until then, please use version 1.9.2
 
 **Fixes and improvements**
+- You can now skip the eager loading of meta vars through a filter #2014 (thanks @aj-adl @gchtr)
+- Use Twig 1.38 to prevent compatibility issues with WPML and other plug-ins
+- This restores the prior behavior before #1813 / 1.9.3 when using Timber::get_posts. This is now controllable by devs via a filter #1989 (thanks @palmiak)
+- Add support for non-cookied comment awaiting moderation message #1954 (thanks @codeclarified)
+- Avoids a potential WSOD when incorrectly specifying template filenames #1984 (thanks @aj-adl)
 - Fixes a bug introduced in #1813 that was watching for the query param of `supress_filters` (instead of the correct spelling: `suppress_filters`)
-
-= 1.9.3 = 
+- Fixes a bug where the last menu item received incorrect CSS classes #2009 #1974 (thanks @strategio)
 
 **Changes for Theme Developers**
+- You can use WordPress's behavior of `get_posts` (versus `WP_Query`) via a filter. By default, Timber uses the behaviors of WP_Query in Timber's queries #1989 (thanks @palmiak) 
+- If you run into problems with unknown `Twig_SimpleFilter` or unknown `Twig_Filter` classes, you can use `Timber\Twig_Filter` instead.
 - Fixed `Timber::get_posts` so that its default query parameters mirror WordPress's `get_posts` #1812 (thanks @bartvanraaij)
+- You can now more easily work with menu locations and filters #1959 #2018 (thanks @gchtr)
+
+= 1.9.5 =
+- This release was pulled due to compatibility issues with other plug-ins
+
+= 1.9.4 =
+- This release was pulled due to compatibility issues with other plug-ins
+
+= 1.9.3 =
+- This release was pulled due to compatibility issues with other plug-ins
 
 = 1.9.2 =
 
@@ -90,7 +117,7 @@ Timber now requires PHP 5.6 or greater. While Timber may work on PHP 5.5 and old
 
 **Fixes and improvements**
 - Using WordPress's `wp_check_filetype_and_ext` for the mime_type mess #1843 (thanks @gchtr)
-- Fixed how some previewed data (when looking at an unsaved post from the admin) is handled so that parenting relationships match what happens when published #1752 
+- Fixed how some previewed data (when looking at an unsaved post from the admin) is handled so that parenting relationships match what happens when published #1752
 - Timber\Menu now respects modifications sent through WP's `wp_nav_menu_objects` filter #1814 (thanks @pascalknecht)
 
 = 1.8.1 =

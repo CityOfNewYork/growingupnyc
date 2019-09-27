@@ -18,6 +18,7 @@ class InterfaceTest extends WP_UnitTestCase {
 	 */
 	public static function wpSetUpBeforeClass() {
 		relevanssi_install();
+		relevanssi_init();
 
 		// Truncate the index.
 		relevanssi_truncate_index();
@@ -76,6 +77,11 @@ class InterfaceTest extends WP_UnitTestCase {
 	 * Uninstalls Relevanssi.
 	 */
 	public static function wpTearDownAfterClass() {
+		require_once dirname( dirname( __FILE__ ) ) . '/lib/uninstall.php';
+		if ( RELEVANSSI_PREMIUM ) {
+			require_once dirname( dirname( __FILE__ ) ) . '/premium/uninstall.php';
+		}
+
 		if ( function_exists( 'relevanssi_uninstall' ) ) {
 			relevanssi_uninstall();
 		}

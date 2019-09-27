@@ -7,7 +7,7 @@ if ( !class_exists( 'MeowApps_Admin' ) ) {
 		public static $logo = 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxIiB2aWV3Qm94PSIwIDAgMTY1IDE2NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8c3R5bGU+CiAgICAuc3Qye2ZpbGw6IzgwNDYyNX0uc3Qze2ZpbGw6I2ZkYTk2MH0KICA8L3N0eWxlPgogIDxwYXRoIGQ9Ik03MiA3YTc2IDc2IDAgMCAxIDg0IDkxQTc1IDc1IDAgMSAxIDcyIDd6IiBmaWxsPSIjNGE2YjhjIi8+CiAgPHBhdGggZD0iTTQ4IDQ4YzIgNSAyIDEwIDUgMTQgNSA4IDEzIDE3IDIyIDIwbDEtMTBjMS0yIDMtMyA1LTNoMTNjMiAwIDQgMSA1IDNsMyA5IDQtMTBjMi0zIDYtMiA5LTJoMTFjMyAyIDMgNSAzIDhsMiAzN2MwIDMtMSA3LTQgOGgtMTJjLTIgMC0zLTItNS00LTEgMS0yIDMtNCAzLTUgMS05IDEtMTMtMS0zIDItNSAyLTkgMnMtOSAxLTEwLTNjLTItNC0xLTggMC0xMi04LTMtMTUtNy0yMi0xMi03LTctMTUtMTQtMjAtMjMtMy00LTUtOC01LTEzIDEtNCAzLTEwIDYtMTMgNC0zIDEyLTIgMTUgMnoiIGZpbGw9IiMxMDEwMTAiLz4KICA8cGF0aCBjbGFzcz0ic3QyIiBkPSJNNDMgNTFsNCAxMS02IDVoLTZjLTMtNS0zLTExIDAtMTYgMi0yIDYtMyA4IDB6Ii8+CiAgPHBhdGggY2xhc3M9InN0MyIgZD0iTTQ3IDYybDMgNmMwIDMgMCA0LTIgNnMtNCAyLTcgMmwtNi05aDZsNi01eiIvPgogIDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik01MCA2OGw4IDljLTMgMy01IDYtOSA4bC04LTljMyAwIDUgMCA3LTJzMy0zIDItNnoiLz4KICA8cGF0aCBkPSJNODIgNzRoMTJsNSAxOCAzIDExIDgtMjloMTNsMiA0MmgtOGwtMS0yLTEtMzEtMTAgMzItNyAxLTktMzMtMSAyOS0xIDRoLThsMy00MnoiIGZpbGw9IiNmZmYiLz4KICA8cGF0aCBjbGFzcz0ic3QzIiBkPSJNNTggNzdsNSA1Yy0xIDQtMiA4LTcgOGwtNy01YzQtMiA2LTUgOS04eiIvPgogIDxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik02MyA4Mmw5IDUtNiA5LTEwLTZjNSAwIDYtNCA3LTh6Ii8+CiAgPHBhdGggY2xhc3M9InN0MyIgZD0iTTcyIDg3bDMgMS0xIDExLTgtMyA2LTEweiIvPgo8L3N2Zz4K';
 
 		public static $loaded = false;
-		public static $admin_version = "1.9";
+		public static $admin_version = "2.0";
 
 		public $prefix; 		// prefix used for actions, filters (mfrh)
 		public $mainfile; 	// plugin main file (media-file-renamer.php)
@@ -29,21 +29,30 @@ if ( !class_exists( 'MeowApps_Admin' ) ) {
 			$this->prefix = $prefix;
 			$this->mainfile = $mainfile;
 			$this->domain = $domain;
+			$this->is_theme = ( strpos( $this->mainfile, '-theme' ) !== false  );
 
-			register_activation_hook( $mainfile, array( $this, 'show_meowapps_create_rating_date' ) );
-
-			if ( is_admin() ) {
-				$license = get_option( $this->prefix . '_license', "" );
-				if ( ( !empty( $license ) ) && !file_exists( plugin_dir_path( $this->mainfile ) . 'common/meowapps/admin.php' ) ) {
-					add_action( 'admin_notices', array( $this, 'admin_notices_licensed_free' ) );
-				}
-				if ( !$disableReview ) {
-					$rating_date = $this->create_rating_date();
-					if ( time() > $rating_date ) {
-						add_action( 'admin_notices', array( $this, 'admin_notices_rating' ) );
+			// If there is no mainfile, it's either a Pro only Plugin (with no Free version available) or a Theme.
+			if ( !$this->is_theme ) {
+				register_activation_hook( $mainfile, array( $this, 'show_meowapps_create_rating_date' ) );
+				if ( is_admin() ) {
+					$license = get_option( $this->prefix . '_license', "" );
+					if ( ( !empty( $license ) ) && !file_exists( plugin_dir_path( $this->mainfile ) . 'common/meowapps/admin.php' ) ) {
+						add_action( 'admin_notices', array( $this, 'admin_notices_licensed_free' ) );
+					}
+					if ( !$disableReview ) {
+						$rating_date = $this->create_rating_date();
+						if ( time() > $rating_date ) {
+							add_action( 'admin_notices', array( $this, 'admin_notices_rating' ) );
+						}
 					}
 				}
 			}
+			
+			add_filter( 'edd_sl_api_request_verify_ssl', array( $this, 'request_verify_ssl' ), 10, 0 );
+		}
+
+		function request_verify_ssl() {
+			return get_option( 'force_sslverify', false );
 		}
 
 		function show_meowapps_create_rating_date() {
@@ -147,7 +156,7 @@ if ( !class_exists( 'MeowApps_Admin' ) ) {
 
 		function display_title( $title = "Meow Apps",
 			$author = "By <a style='text-decoration: none;' href='https://meowapps.com' target='_blank'>Jordy Meow</a>" ) {
-			if ( !empty( $this->prefix ) )
+			if ( !empty( $this->prefix ) && $title !== "Meow Apps" )
 				$title = apply_filters( $this->prefix . '_plugin_title', $title );
 			if ( $this->display_ads() ) {
 			}
@@ -190,9 +199,9 @@ if ( !class_exists( 'MeowApps_Admin' ) ) {
 			add_settings_field( 'meowapps_force_sslverify', "SSL Verify",
 				array( $this, 'meowapps_force_sslverify_callback' ),
 				'meowapps_common_settings-menu', 'meowapps_common_settings' );
-			add_settings_field( 'meowapps_hide_ads', "Ads",
-				array( $this, 'meowapps_hide_ads_callback' ),
-				'meowapps_common_settings-menu', 'meowapps_common_settings' );
+			// add_settings_field( 'meowapps_hide_ads', "Ads",
+			// 	array( $this, 'meowapps_hide_ads_callback' ),
+			// 	'meowapps_common_settings-menu', 'meowapps_common_settings' );
 			register_setting( 'meowapps_common_settings', 'force_sslverify' );
 			register_setting( 'meowapps_common_settings', 'meowapps_hide_meowapps' );
 			register_setting( 'meowapps_common_settings', 'meowapps_hide_ads' );
@@ -334,42 +343,74 @@ if ( !class_exists( 'MeowApps_Admin' ) ) {
 			else {
 
 				?>
-				<?php $this->display_title(); ?>
+				<?php $this->display_title( 'Meow Apps' ); ?>
 				<p>
 				<?php _e( 'Meow Apps is run by Jordy Meow, a photographer and software developer living in Japan (and taking <a target="_blank" href="http://offbeatjapan.org">a lot of photos</a>). Meow Apps is a suite of plugins focusing on photography, imaging, optimization and it teams up with the best players in the community (other themes and plugins developers). For more information, please check <a href="http://meowapps.com" target="_blank">Meow Apps</a>.', 'meowapps' )
 				?>
 				</p>
-				<div class="meow-row">
-					<div class="meow-box meow-col meow-span_1_of_2 ">
-						<h3 class=""><span class="dashicons dashicons-camera"></span> UI Plugins </h3>
-						<ul class="">
-							<li><img src='<?= $this->common_url( 'img/wplr-sync.jpg' ) ?>' /><b>WP/LR Sync</b>
-								<?php echo $this->check_install( 'wplr-sync' ) ?><br />
-								Synchronize photos (folders, collections, keywords) from Lightroom to WordPress.</li>
-							<li><img src='<?= $this->common_url( 'img/meow-lightbox.jpg' ) ?>' /><b>Meow Lightbox</b>
-								<?php echo $this->check_install( 'meow-lightbox' ) ?><br />
-								Light but powerful lightbox that can also display photo information (EXIF).</li>
-							<li><img src='<?= $this->common_url( 'img/meow-gallery.jpg' ) ?>' /><b>Meow Gallery</b>
-								<?php echo $this->check_install( 'meow-gallery' ) ?><br />
-								Gallery (using the built-in WP gallery) that makes your website look better.</li>
-						</ul>
-					</div>
+				
+				<h2 style="margin-bottom: 0px; margin-top: 25px;">Featured Plugins</h2>
+				<div class="meow-row meow-featured-plugins">
 					<div class="meow-box meow-col meow-span_1_of_2">
-						<h3 class=""><span class="dashicons dashicons-admin-tools"></span> System Plugins</h3>
 						<ul class="">
-							<li><img src='<?= $this->common_url( 'img/media-file-renamer.jpg' ) ?>' /><b>Media File Renamer</b>
-								 <?php echo $this->check_install( 'media-file-renamer' ) ?><br />
-								For nicer filenames and better SEO.</li>
-							<li><img src='<?= $this->common_url( 'img/media-cleaner.jpg' ) ?>' /><b>Media Cleaner</b>
+							<li><img src='<?= $this->common_url( 'img/media-cleaner.jpg' ) ?>' />
+								<a href='https://meowapps.com/plugin/media-cleaner/'><b>Media Cleaner</b></a>
 								<?php echo $this->check_install( 'media-cleaner' ) ?><br />
 								Detect the files which are not in use.</li>
-							<li><img src='<?= $this->common_url( 'img/wp-retina-2x.jpg' ) ?>' /><b>WP Retina 2x</b>
+							<li><img src='<?= $this->common_url( 'img/media-file-renamer.jpg' ) ?>' />
+								<a href='https://meowapps.com/plugin/media-file-renamer/'><b>Media File Renamer</b></a>
+								 <?php echo $this->check_install( 'media-file-renamer' ) ?><br />
+								For nicer filenames and a better SEO.</li>
+							<li><img src='<?= $this->common_url( 'img/default.png' ) ?>' />
+								<a href='https://meowapps.com/plugin/contact-form-block/'><b>Contact Form Block</b></a>
+								<?php echo $this->check_install( 'contact-form-block' ) ?><br />
+								A simpler, nicer, prettier contact form.</li>
+							<!--li><img src='<?= $this->common_url( 'img/wp-retina-2x.jpg' ) ?>' />
+								<a href='https://meowapps.com/plugin/wp-retina-2x/'><b>WP Retina 2x</b></a>
 								<?php echo $this->check_install( 'wp-retina-2x' ) ?><br />
-								The famous plugin that adds Retina support.</li>
+								The famous plugin that adds Retina support.</li-->
+
+						</ul>
+					</div>
+					<div class="meow-box meow-col meow-span_1_of_2 ">
+						<ul class="">
+							<li><img src='<?= $this->common_url( 'img/meow-gallery.jpg' ) ?>' />
+								<a href='https://meowapps.com/plugin/meow-gallery/'><b>Meow Gallery</b></a>
+								<?php echo $this->check_install( 'meow-gallery' ) ?><br />
+								Beautiful but lightweight gallery with many layouts. The only one that allows you to uninstall it without losing anything.</li>
+							<li><img src='<?= $this->common_url( 'img/meow-lightbox.jpg' ) ?>' />
+								<a href='https://meowapps.com/plugin/meow-lightbox/'><b>Meow Lightbox</b></a>
+								<?php echo $this->check_install( 'meow-lightbox' ) ?><br />
+								Pretty and ultra-optimized Lightbox which can also display your EXIF data. You will love it.</li>
+							<li><img src='<?= $this->common_url( 'img/wplr-sync.jpg' ) ?>' />
+								<a href='https://meowapps.com/plugin/wplr-sync/'><b>WP/LR Sync</b></a>
+								<?php echo $this->check_install( 'wplr-sync' ) ?><br />
+								Synchronize your Lightroom to your WordPress. This plugin is loved by all the photographers using Lightroom and WordPress.</li>
 						</ul>
 					</div>
 				</div>
 
+				<h2>Recommendations</h2>
+				<div style="background: white; padding: 5px 15px 5px 15px; box-shadow: 2px 2px 1px rgba(0,0,0,.02);">
+					<p>
+						<?php _e( 'Too many WordPress installs are blown-up with useless and/or huge plugins, and bad practices. But that is because most users are overwhelmed by the diversity and immensity of the WordPress jungle. One rule of thumb is to keep your install the simplest as possible, with the least amount of plugins, in number and weight.', 'meowapps' )?>
+					</p>
+					<p>
+						<?php _e( 'Articles are kept being updated on the Meow Apps website, with all the latest recommendations. Please have a look and make your WordPress simpler, faster, better: ', 'meowapps' )?>
+						<a href='https://meowapps.com/debugging-wordpress/' target='_blank'>
+							How To Debug</a>, 
+						<a href='https://meowapps.com/seo-optimization/' target='_blank'>
+							SEO Checklist & Optimization</a>, 
+						<a href='https://meowapps.com/clean-optimize-wordpress/' target='_blank'>
+							Clean Up and Optimize</a>, 
+						<a href='https://meowapps.com/optimize-images-cdn/' target='_blank'>
+							Optimize Images</a>, 
+						<a href='https://meowapps.com/best-hosting-services-wordpress/' target='_blank'>
+							Best Hosting Services</a>.
+					</p>
+				</div>
+
+				<h2 style="margin-bottom: 0px; margin-top: 25px;">Common Options & Tools</h2>
 				<div class="meow-row">
 					<div class="meow-box meow-col meow-span_2_of_3">
 						<h3><span class="dashicons dashicons-admin-tools"></span> Common</h3>
@@ -409,11 +450,8 @@ if ( !class_exists( 'MeowApps_Admin' ) ) {
 					</div>
 				</div>
 
-
 				<?php
-
 			}
-
 			echo "<br /><small style='color: lightgray;'>Meow Admin " . MeowApps_Admin::$admin_version . "</small></div>";
 		}
 

@@ -3,8 +3,8 @@ Contributors:      gathercontent, mathew-chapman, namshee, jtsternberg, justinsa
 Donate link:       http://www.gathercontent.com
 Tags               structured content, gather content, gathercontent, import, migrate, export, mapping, production, writing, collaboration, platform, connect, link, gather, client, word, production
 Requires at least: 3.8
-Tested up to:      5.0.3
-Stable tag:        3.1.11
+Tested up to:      5.2
+Stable tag:        3.1.14
 License:           GPL-2.0+
 License URI:       https://opensource.org/licenses/GPL-2.0
 
@@ -63,6 +63,15 @@ Below the text box is a button that will allow you to simply save all of that in
 6. Or change the item's GatherContent status in quick-edit mode.
 
 == Changelog ==
+
+= 3.1.14 =
+* Fix yoast integration
+
+= 3.1.13 =
+* Fix auth_enabled() returning true for empty vars
+
+= 3.1.12 =
+* Remove importing hierarchy
 
 = 3.1.11 =
 * Fix for post date not updating

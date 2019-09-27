@@ -22,7 +22,7 @@
 			$items_count = $deleted_count;
 			$items = $wpdb->get_results( $wpdb->prepare( "SELECT id, type, postId, path, size, ignored, deleted, issue
 				FROM $table_name WHERE ignored = 0 AND deleted = 1 AND path LIKE %s
-				ORDER BY time
+				ORDER BY path, time
 				DESC LIMIT %d, %d", '%' . $s . '%', ( $paged - 1 ) * $posts_per_page, $posts_per_page ), OBJECT );
 		}
 		else if ( $view == 'ignored' ) {
@@ -30,7 +30,7 @@
 			$items = $wpdb->get_results( $wpdb->prepare( "SELECT id, type, postId, path, size, ignored, deleted, issue
 				FROM $table_name
 				WHERE ignored = 1 AND deleted = 0 AND path LIKE %s
-				ORDER BY time
+				ORDER BY path, time
 				DESC LIMIT %d, %d", '%' . $s . '%', ( $paged - 1 ) * $posts_per_page, $posts_per_page ), OBJECT );
 		}
 		else {
@@ -38,7 +38,7 @@
 			$items = $wpdb->get_results( $wpdb->prepare( "SELECT id, type, postId, path, size, ignored, deleted, issue
 				FROM $table_name
 				WHERE ignored = 0 AND deleted = 0  AND path LIKE %s
-				ORDER BY time
+				ORDER BY path, time
 				DESC LIMIT %d, %d", '%' . $s . '%', ( $paged - 1 ) * $posts_per_page, $posts_per_page ), OBJECT );
 		}
 	?>
@@ -154,6 +154,12 @@
 				_e( "<b>This version is not Pro.</b> This plugin is a lot of work so please consider <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a> in order to receive support and to contribute in the evolution of it. Also, <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a> version will also give you the option <b>to scan the physical files in your /uploads folder</b> and extra checks for the common Page Builders.", 'media-cleaner' );
 				echo "</p></div>";
 
+				if ( class_exists( 'ACF' ) ) {
+					echo "<div class='notice notice-warning'><p>";
+					_e( "<b>ACF has been detected</b>. The free version might detect the files used by ACF correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
+					echo "</p></div>";
+				}
+
 				if ( function_exists( '_et_core_find_latest' ) ) {
 					echo "<div class='notice notice-warning'><p>";
 					_e( "<b>Divi has been detected</b>. The free version might detect the files used by Divi correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
@@ -184,6 +190,36 @@
 					echo "</p></div>";
 				}
 
+				if ( class_exists( 'Oxygen_VSB_Dynamic_Shortcodes' ) ) {
+					echo "<div class='notice notice-warning'><p>";
+					_e( "<b>Oxygen Builder has been detected</b>. The free version might detect the files used by Oxygen Builder correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
+					echo "</p></div>";
+				}
+
+				if ( class_exists( 'Brizy_Editor_Post' ) ) {
+					echo "<div class='notice notice-warning'><p>";
+					_e( "<b>Brizy has been detected</b>. The free version might detect the files used by Brizy correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
+					echo "</p></div>";
+				}
+
+				if ( function_exists( 'amd_zlrecipe_convert_to_recipe' ) ) {
+					echo "<div class='notice notice-warning'><p>";
+					_e( "<b>ZipList Recipe has been detected</b>. The free version might detect the files used by ZipList Recipe correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
+					echo "</p></div>";
+				}
+
+				if ( class_exists( 'UberMenu' ) ) {
+					echo "<div class='notice notice-warning'><p>";
+					_e( "<b>UberMenu has been detected</b>. The free version might detect the files used by UberMenu correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
+					echo "</p></div>";
+				}
+
+				if ( class_exists( 'X_Bootstrap' ) ) {
+					echo "<div class='notice notice-warning'><p>";
+					_e( "<b>Theme X has been detected</b>. The free version might detect the files used by Theme X correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
+					echo "</p></div>";
+				}
+
 				if ( class_exists( 'SiteOrigin_Panels' ) ) {
 					echo "<div class='notice notice-warning'><p>";
 					_e( "<b>SiteOrigin Page Builder has been detected</b>. The free version might detect the files used by SiteOrigin Page Builder correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
@@ -192,7 +228,8 @@
 
 			}
 
-			$anychecks = get_option( 'wpmc_posts', false ) || get_option( 'wpmc_postmeta', false ) || get_option( 'wpmc_widgets', false );
+			$anychecks = get_option( 'wpmc_content', true ) || get_option( 'wpmc_posts', false ) 
+				|| get_option( 'wpmc_postmeta', false ) || get_option( 'wpmc_widgets', false );
 			$check_library = get_option(' wpmc_media_library', true );
 
 			if ( $method == 'media' ) {

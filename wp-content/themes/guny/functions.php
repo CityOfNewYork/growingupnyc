@@ -579,6 +579,20 @@ function get_search_widget($widget_name){
   ob_end_clean();
   return $sidebar_contents;
 }
+
+// Post expiration plugin for all custom post types
+function add_expire_date_metabox_custom_post_types() {
+  add_meta_box( 'hugu_ped_expire_date_metabox', __( 'Expiration Date', 'hugu'), 'hugu_ped_expire_date_metabox_callback', array( 'program', 'summer-guide', 'afterschool-guide' ), 'side', 'high' );
+}
+add_action( 'add_meta_boxes', 'add_expire_date_metabox_custom_post_types' );
+
+// REST API - add orderby filter for rest api
+add_filter( 'rest_post_collection_params', 'filter_add_rest_orderby_params', 10, 1 );
+function filter_add_rest_orderby_params( $params ) {
+	$params['orderby']['enum'][] = 'menu_order';
+	return $params;
+}
+
 /**
  * Includes
  */

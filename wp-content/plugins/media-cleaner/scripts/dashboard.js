@@ -682,6 +682,31 @@ function wpmc_open_dialog(content) {
 			if ($(this).hasClass('disabled')) return;
 			wpmc_delete_all(true);
 		});
+
+		// Reset Button
+		wrap.find('#wpmc_reset').on('click', function (ev) {
+			ev.preventDefault();
+			var $this = $(this);
+			var dialog = wpmc_open_dialog({
+				title: "Reset",
+				body:  "This will reset the Media Cleaner database. All the information related to your trash, your latest scan and ignored entries will be lost. Do you want to continue?",
+				append: $('<div class="prompt">')
+					.append(
+						// Cancel Button
+						$('<a class="button cancel" href="#">Cancel</a>').on('click', function (ev) {
+							ev.preventDefault();
+							dialog.dialog('close');
+						})
+					).append(
+						// Continue Button
+						$('<a class="button button-primary continue" href="#">Continue</a>').on('click', function (ev) {
+							ev.preventDefault();
+							dialog.dialog('close');
+							location.href = $this.attr('href');
+						})
+					)
+			});
+		});
 	})();
 
 	// Dialog

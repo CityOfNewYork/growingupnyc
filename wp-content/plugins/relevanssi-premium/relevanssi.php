@@ -13,7 +13,7 @@
  * Plugin Name: Relevanssi Premium
  * Plugin URI: https://www.relevanssi.com/
  * Description: This premium plugin replaces WordPress search with a relevance-sorting search.
- * Version: 2.2.5
+ * Version: 2.4.3
  * Author: Mikko Saari
  * Author URI: http://www.mikkosaari.fi/
  * Text Domain: relevanssi
@@ -76,7 +76,7 @@ $relevanssi_variables['title_boost_default']                   = 5;
 $relevanssi_variables['link_boost_default']                    = 0.75;
 $relevanssi_variables['comment_boost_default']                 = 0.75;
 $relevanssi_variables['database_version']                      = 18;
-$relevanssi_variables['plugin_version']                        = '2.2.5';
+$relevanssi_variables['plugin_version']                        = '2.4.3';
 $relevanssi_variables['plugin_dir']                            = plugin_dir_path( __FILE__ );
 $relevanssi_variables['plugin_basename']                       = plugin_basename( __FILE__ );
 $relevanssi_variables['file']                                  = __FILE__;
@@ -94,12 +94,14 @@ require_once 'lib/interface.php';
 require_once 'lib/log.php';
 require_once 'lib/privacy.php';
 require_once 'lib/search.php';
+require_once 'lib/search-tax-query.php';
+require_once 'lib/search-query-restrictions.php';
 require_once 'lib/shortcodes.php';
 require_once 'lib/stopwords.php';
 require_once 'lib/sorting.php';
-require_once 'lib/uninstall.php';
 
 require_once 'premium/admin-ajax.php';
+require_once 'premium/body-stopwords.php';
 require_once 'premium/class-relevanssi-wp-auto-update.php';
 require_once 'premium/class-relevanssi-spellcorrector.php';
 require_once 'premium/common.php';
@@ -113,8 +115,17 @@ require_once 'premium/redirects.php';
 require_once 'premium/related.php';
 require_once 'premium/search.php';
 require_once 'premium/search-multi.php';
-require_once 'premium/uninstall.php';
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	require_once 'premium/class-relevanssi-wp-cli-command.php';
+}
+
+if ( file_exists( __DIR__ . '/epitrove-helper-installer.php' ) ) {
+	require_once __DIR__ . '/epitrove-helper-installer.php';
+	add_filter(
+		'pre_option_relevanssi_api_key',
+		function() {
+			return get_option( 'epi_relevanssi-premium_license_key', 'wc_order_1111' );
+		}
+	);
 }

@@ -61,8 +61,8 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 			update_option( 'wpmc_delay', 100 );
 
 		if ( !$this->is_registered() && get_option( 'wpmc_method', 'media' ) == 'files' ) {
-	    _e( "<div class='error'><p>The Pro version is required to scan files. You can <a target='_blank' href='http://meowapps.com/media-cleaner'>get a serial for the Pro version here</a>.</p></div>", 'media-cleaner' );
-	  }
+			_e( "<div class='error'><p>The Pro version is required to scan files. You can <a target='_blank' href='http://meowapps.com/media-cleaner'>get a serial for the Pro version here</a>.</p></div>", 'media-cleaner' );
+		}
 	}
 
 	function common_url( $file ) {
@@ -80,18 +80,24 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 			add_settings_field( 'wpmc_method', "Method",
 				array( $this, 'admin_method_callback' ),
 				'wpmc_settings-menu', 'wpmc_settings' );
-				add_settings_field( 'wpmc_media_library', "Media Library",
-					array( $this, 'admin_media_library_callback' ),
-					'wpmc_settings-menu', 'wpmc_settings' );
-			add_settings_field( 'wpmc_posts', "Posts",
-				array( $this, 'admin_posts_callback' ),
+			add_settings_field( 'wpmc_content', "Content",
+				array( $this, 'admin_content_callback' ),
 				'wpmc_settings-menu', 'wpmc_settings' );
-			add_settings_field( 'wpmc_postmeta', "Post Meta",
-				array( $this, 'admin_postmeta_callback' ),
+			add_settings_field( 'wpmc_media_library', "Media Library",
+				array( $this, 'admin_media_library_callback' ),
 				'wpmc_settings-menu', 'wpmc_settings' );
-			add_settings_field( 'wpmc_widgets', "Widgets",
-				array( $this, 'admin_widgets_callback' ),
+			add_settings_field( 'wpmc_live_content', "Live Content<br />(Pro)",
+				array( $this, 'admin_live_content_callback' ),
 				'wpmc_settings-menu', 'wpmc_settings' );
+			// add_settings_field( 'wpmc_posts', "Posts",
+			// 	array( $this, 'admin_posts_callback' ),
+			// 	'wpmc_settings-menu', 'wpmc_settings' );
+			// add_settings_field( 'wpmc_postmeta', "Post Meta",
+			// 	array( $this, 'admin_postmeta_callback' ),
+			// 	'wpmc_settings-menu', 'wpmc_settings' );
+			// add_settings_field( 'wpmc_widgets', "Widgets",
+			// 	array( $this, 'admin_widgets_callback' ),
+			// 	'wpmc_settings-menu', 'wpmc_settings' );
 			// add_settings_field( 'wpmc_shortcode', "Shortcodes<br />(Pro)",
 			// 	array( $this, 'admin_shortcode_callback' ),
 			// 	'wpmc_settings-menu', 'wpmc_settings' );
@@ -153,12 +159,14 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 
 		// SETTINGS
 		register_setting( 'wpmc_settings', 'wpmc_method' );
-		register_setting( 'wpmc_settings', 'wpmc_posts' );
+		register_setting( 'wpmc_settings', 'wpmc_content' );
+		register_setting( 'wpmc_settings', 'wpmc_live_content' );
+		// register_setting( 'wpmc_settings', 'wpmc_posts' );
 		// register_setting( 'wpmc_settings', 'wpmc_shortcode' );
 		// register_setting( 'wpmc_settings', 'wpmc_background' );
-		register_setting( 'wpmc_settings', 'wpmc_widgets' );
+		// register_setting( 'wpmc_settings', 'wpmc_widgets' );
 		register_setting( 'wpmc_settings', 'wpmc_media_library' );
-		register_setting( 'wpmc_settings', 'wpmc_postmeta' );
+		// register_setting( 'wpmc_settings', 'wpmc_postmeta' );
 		register_setting( 'wpmc_settings', 'wpmc_debuglogs' );
 
 		register_setting( 'wpmc_filters_settings', 'wpmc_thumbnails_only' );
@@ -176,32 +184,32 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 	}
 
 	function admin_medias_buffer_callback( $args ) {
-    $value = get_option( 'wpmc_medias_buffer', 100 );
-    $html = '<input type="number" style="width: 100%;" id="wpmc_medias_buffer" name="wpmc_medias_buffer" value="' . $value . '" />';
-    $html .= '<br /><span class="description">The number of media entries to read at a time. This is fast, so the value should be between 50 and 1000.</label>';
-    echo $html;
-  }
+		$value = get_option( 'wpmc_medias_buffer', 100 );
+		$html = '<input type="number" style="width: 100%;" id="wpmc_medias_buffer" name="wpmc_medias_buffer" value="' . $value . '" />';
+		$html .= '<br /><span class="description">The number of media entries to read at a time. This is fast, so the value should be between 50 and 1000.</label>';
+		echo $html;
+	}
 
 	function admin_posts_buffer_callback( $args ) {
-    $value = get_option( 'wpmc_posts_buffer', 5 );
-    $html = '<input type="number" style="width: 100%;" id="wpmc_posts_buffer" name="wpmc_posts_buffer" value="' . $value . '" />';
-    $html .= '<br /><span class="description">The number of posts (and any other post types) to analyze at a time. This is the most intense part of the process. Recommended value is between 1 (slow server) and 20 (excellent server).</label>';
-    echo $html;
-  }
+		$value = get_option( 'wpmc_posts_buffer', 5 );
+		$html = '<input type="number" style="width: 100%;" id="wpmc_posts_buffer" name="wpmc_posts_buffer" value="' . $value . '" />';
+		$html .= '<br /><span class="description">The number of posts (and any other post types) to analyze at a time. This is the most intense part of the process. Recommended value is between 1 (slow server) and 20 (excellent server).</label>';
+		echo $html;
+	}
 
 	function admin_analysis_buffer_callback( $args ) {
-    $value = get_option( 'wpmc_analysis_buffer', 100 );
-    $html = '<input type="number" style="width: 100%;" id="wpmc_analysis_buffer" name="wpmc_analysis_buffer" value="' . $value . '" />';
-    $html .= '<br /><span class="description">The number of media entries or files to analyze at a time. This is the main part of the process, but is is much faster than analyzing each post. Recommended value is between 20 (slow server) and 1000 (excellent server).</label>';
-    echo $html;
-  }
+		$value = get_option( 'wpmc_analysis_buffer', 100 );
+		$html = '<input type="number" style="width: 100%;" id="wpmc_analysis_buffer" name="wpmc_analysis_buffer" value="' . $value . '" />';
+		$html .= '<br /><span class="description">The number of media entries or files to analyze at a time. This is the main part of the process, but is is much faster than analyzing each post. Recommended value is between 20 (slow server) and 1000 (excellent server).</label>';
+		echo $html;
+	}
 
 	function admin_delay_callback( $args ) {
-    $value = get_option( 'wpmc_delay', 100 );
-    $html = '<input type="number" style="width: 100%;" id="wpmc_delay" name="wpmc_delay" value="' . $value . '" />';
-    $html .= '<br /><span class="description">Time to wait between each request (in milliseconds). The overall process is intensive so this gives the chance to your server to chill out a bit. A very good server doesn\'t need it, but a slow/shared hosting might even reject requests if they are too fast and frequent. Recommended value is actually 0, 100 for safety, 2000 or 5000 if your hosting is kind of cheap.</label>';
-    echo $html;
-  }
+		$value = get_option( 'wpmc_delay', 100 );
+		$html = '<input type="number" style="width: 100%;" id="wpmc_delay" name="wpmc_delay" value="' . $value . '" />';
+		$html .= '<br /><span class="description">Time to wait between each request (in milliseconds). The overall process is intensive so this gives the chance to your server to chill out a bit. A very good server doesn\'t need it, but a slow/shared hosting might even reject requests if they are too fast and frequent. Recommended value is actually 0, 100 for safety, 2000 or 5000 if your hosting is kind of cheap.</label>';
+		echo $html;
+	}
 
 	function admin_settings() {
 		?>
@@ -213,7 +221,7 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 				<div class="meow-box meow-col meow-span_2_of_2">
 					<h3>How to use</h3>
 					<div class="inside">
-						<?php echo _e( "You can choose two kind of methods, analyzing your Media Library for images which are not in used, or in your Filesystem for images which aren't registered in the Media Library or not in used. <b>Those checks can be very expensive in term of resources and might fail so you might want to play with those options depending on your install and what you need.</b> Check the <a target=\"_blank\" href=\"//meowapps.com/media-cleaner/tutorial/\">tutorial</a> for more information.", 'media-cleaner' ); ?>
+						<?php echo _e( "You can choose two kind of methods. Usually, users like to analyze their Media Library for images which are not in used (Media Library Method + Content Check), and then, their Filesystem for images which aren't registered in the Media Library (Filesystem Method + Media Library Check). Check the <a target=\"_blank\" href=\"https://meowapps.com/media-cleaner-tutorial/\">tutorial</a> for more information.", 'media-cleaner' ); ?>
 						<p class="submit">
 							<a class="button button-primary" href="upload.php?page=media-cleaner"><?php echo _e( "Access Media Cleaner Dashboard", 'media-cleaner' ); ?></a>
 						</p>
@@ -230,8 +238,8 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 						<div class="inside">
 							<form method="post" action="options.php">
 							<?php settings_fields( 'wpmc_settings' ); ?>
-					    <?php do_settings_sections( 'wpmc_settings-menu' ); ?>
-					    <?php submit_button(); ?>
+							<?php do_settings_sections( 'wpmc_settings-menu' ); ?>
+							<?php submit_button(); ?>
 							</form>
 						</div>
 					</div>
@@ -241,8 +249,8 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 						<div class="inside">
 							<form method="post" action="options.php">
 							<?php settings_fields( 'wpmc_filters_settings' ); ?>
-					    <?php do_settings_sections( 'wpmc_filters_settings-menu' ); ?>
-					    <?php submit_button(); ?>
+							<?php do_settings_sections( 'wpmc_filters_settings-menu' ); ?>
+							<?php submit_button(); ?>
 							</form>
 						</div>
 
@@ -258,8 +266,8 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 						<div class="inside">
 							<form method="post" action="options.php">
 							<?php settings_fields( 'wpmc_ui_settings' ); ?>
-					    <?php do_settings_sections( 'wpmc_ui_settings-menu' ); ?>
-					    <?php submit_button(); ?>
+							<?php do_settings_sections( 'wpmc_ui_settings-menu' ); ?>
+							<?php submit_button(); ?>
 							</form>
 						</div>
 					</div>
@@ -269,8 +277,8 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 						<div class="inside">
 							<form method="post" action="options.php">
 							<?php settings_fields( 'wpmc_advanced_settings' ); ?>
-					    <?php do_settings_sections( 'wpmc_advanced_settings-menu' ); ?>
-					    <?php submit_button(); ?>
+							<?php do_settings_sections( 'wpmc_advanced_settings-menu' ); ?>
+							<?php submit_button(); ?>
 							</form>
 						</div>
 					</div>
@@ -283,20 +291,20 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 							<p>Here are the shortcodes registered in your WordPress by your theme and other plugins.</p>
 							<?php
 								global $shortcode_tags;
-						    try {
+								try {
 									if ( is_array( $shortcode_tags ) ) {
-							      $my_shortcodes = array();
-							      foreach ( $shortcode_tags as $sc )
-							        if ( $sc != '__return_false' ) {
-							          if ( is_string( $sc ) )
-							            array_push( $my_shortcodes, str_replace( '_shortcode', '', (string)$sc ) );
-							        }
-							      $my_shortcodes = implode( ', ', $my_shortcodes );
+										$my_shortcodes = array();
+										foreach ( $shortcode_tags as $sc )
+											if ( $sc != '__return_false' ) {
+												if ( is_string( $sc ) )
+													array_push( $my_shortcodes, str_replace( '_shortcode', '', (string)$sc ) );
+											}
+										$my_shortcodes = implode( ', ', $my_shortcodes );
 									}
-						    }
-						    catch (Exception $e) {
-						      $my_shortcodes = "";
-						    }
+								}
+								catch (Exception $e) {
+									$my_shortcodes = "";
+								}
 								echo $my_shortcodes;
 							?>
 						</small></div>
@@ -318,30 +326,34 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 	*/
 
 	function admin_method_callback( $args ) {
-    $value = get_option( 'wpmc_method', 'media' );
+		$value = get_option( 'wpmc_method', 'media' );
 		$html = '<select id="wpmc_method" name="wpmc_method">
-		  <option ' . selected( 'media', $value, false ) . 'value="media">Media Library</option>
-		  <option ' . disabled( $this->is_registered(), false, false ) . ' ' . selected( 'files', $value, false ) . 'value="files">Filesystem (Pro)</option>
-		</select><small><br />' . __( 'Check the <a target="_blank" href="//meowapps.com/media-cleaner/tutorial/">tutorial</a> for more information.', 'media-cleaner' ) . '</small>';
-    echo $html;
-  }
+			<option ' . selected( 'media', $value, false ) . 'value="media">Media Library</option>
+			<option ' . disabled( $this->is_registered(), false, false ) . ' ' . selected( 'files', $value, false ) . 'value="files">Filesystem (Pro)</option>
+		</select><small><br />' . __( 'Check the <a target="_blank" href="https://meowapps.com/media-cleaner-tutorial/">tutorial</a> for more information.', 'media-cleaner' ) . '</small>';
+
+		// TODO: This is temporary
+		// $html .= '<br /><br /><small><b style="color: red;">Notice: </b><b> Those settings will be simplified soon. Have a look <a href="https://trello.com/c/qrCuITg8/55-cleaner-simplification-of-the-settings" target="_blank">here</a> and let me know in the comments if you like the idea or not.</b></small>';
+
+		echo $html;
+	}
 
 
 	// function admin_shortcode_callback( $args ) {
-  //   $value = get_option( 'wpmc_shortcode', null );
+	//   $value = get_option( 'wpmc_shortcode', null );
 	// 	$html = '<input ' . disabled( $this->is_registered(), false, false ) . ' type="checkbox" id="wpmc_shortcode" name="wpmc_shortcode" value="1" ' .
 	// 		checked( 1, get_option( 'wpmc_shortcode' ), false ) . '/>';
-  //   $html .= '<label>Resolve</label><br /><small>The shortcodes you are using in your <b>posts</b> and/or <b>widgets</b> (depending on your options) will be resolved and analyzed. You don\'t need to have this option enabled for the WP Gallery (as it is covered by the Galleries option).</small>';
-  //   echo $html;
-  // }
+	//   $html .= '<label>Resolve</label><br /><small>The shortcodes you are using in your <b>posts</b> and/or <b>widgets</b> (depending on your options) will be resolved and analyzed. You don\'t need to have this option enabled for the WP Gallery (as it is covered by the Galleries option).</small>';
+	//   echo $html;
+	// }
 
 	// function admin_background_callback( $args ) {
-  //   $value = get_option( 'wpmc_background', null );
+	//   $value = get_option( 'wpmc_background', null );
 	// 	$html = '<input ' . disabled( $this->is_registered(), false, false ) . ' type="checkbox" id="wpmc_background" name="wpmc_background" value="1" ' .
 	// 		checked( 1, get_option( 'wpmc_background' ), false ) . '/>';
-  //   $html .= '<label>Analyze</label><br /><small>When parsing HTML, the CSS inline background will also be analyzed. A few page builders are using this.</small>';
-  //   echo $html;
-  // }
+	//   $html .= '<label>Analyze</label><br /><small>When parsing HTML, the CSS inline background will also be analyzed. A few page builders are using this.</small>';
+	//   echo $html;
+	// }
 
 	function admin_debuglogs_callback( $args ) {
 		global $wpmc;
@@ -367,52 +379,69 @@ class Meow_WPMC_Admin extends MeowApps_Admin {
 	}
 
 	function admin_media_library_callback( $args ) {
-    $value = get_option( 'wpmc_media_library', true );
+		$value = get_option( 'wpmc_media_library', true );
 		$html = '<input type="checkbox" id="wpmc_media_library" name="wpmc_media_library" value="1" ' .
 			disabled( get_option( 'wpmc_method', 'media' ) == 'files', false, false ) . ' ' .
-			checked( 1, get_option( 'wpmc_media_library' ), false ) . '/>';
-    $html .= '<label>Check</label><br /><small>Checks if the file is linked to a media. Only makes sense with the Filesystem scan.</small>';
-    echo $html;
-  }
+			checked( 1, $value, false ) . '/>';
+		$html .= '<label>Check</label><br /><small>Checks if the file is linked to a media. <i>Only matters to the Filesystem Method.</i></small>';
+		echo $html;
+	}
 
-	function admin_posts_callback( $args ) {
-    $value = get_option( 'wpmc_posts', true );
-		$html = '<input type="checkbox" id="wpmc_posts" name="wpmc_posts" value="1" ' .
-			checked( 1, get_option( 'wpmc_posts' ), false ) . '/>';
-    $html .= '<label>Analyze</label><br /><small>Check if the media/file is used by any post types.</small>';
-    echo $html;
-  }
+	function admin_content_callback( $args ) {
+		$value = get_option( 'wpmc_content', true );
+		$html = '<input type="checkbox" id="wpmc_content" name="wpmc_content" value="1" ' .
+			checked( 1, $value, false ) . '/>';
+		$html .= '<label>Check</label><br /><small>Check if the media/file is used in the content, such as Posts, Pages (and other Post Types), Metadata, Widgets, etc.</small>';
+		echo $html;
+	}
 
-	function admin_postmeta_callback( $args ) {
-    $value = get_option( 'wpmc_postmeta', true );
-		$html = '<input type="checkbox" id="wpmc_postmeta" name="wpmc_postmeta" value="1" ' .
-			checked( 1, get_option( 'wpmc_postmeta' ), false ) . '/>';
-    $html .= '<label>Analyze</label><br /><small>Checks if the media/file is used in the meta.</small>';
-    echo $html;
-  }
+	function admin_live_content_callback( $args ) {
+		$value = get_option( 'wpmc_live_content', false );
+		$html = '<input ' . disabled( $this->is_registered(), false, false ) . 
+			' type="checkbox" id="wpmc_content" name="wpmc_live_content" value="1" ' .
+			checked( 1, $value, false ) . '/>';
+		$html .= '<label>Check</label><br /><small>The live version of the website will be also analyzed (as if a visitor was loading it). <i>This will increase the accuracy of the results.</i></small>';
+		echo $html;
+	}
 
-	function admin_widgets_callback( $args ) {
-    $value = get_option( 'wpmc_widgets', false );
-		$html = '<input type="checkbox" id="wpmc_widgets" name="wpmc_widgets" value="1" ' .
-			checked( 1, get_option( 'wpmc_widgets' ), false ) . '/>';
-    $html .= '<label>Analyze</label><br /><small>Checks if the media/file is used by any widget.</small>';
-    echo $html;
-  }
+	// function admin_posts_callback( $args ) {
+	// 	$value = get_option( 'wpmc_posts', true );
+	// 	$html = '<input type="checkbox" id="wpmc_posts" name="wpmc_posts" value="1" ' .
+	// 		checked( 1, get_option( 'wpmc_posts' ), false ) . '/>';
+	// 	$html .= '<label>Analyze</label><br /><small>Check if the media/file is used by any post types.</small>';
+	// 	echo $html;
+	// }
+
+	// function admin_postmeta_callback( $args ) {
+	// 	$value = get_option( 'wpmc_postmeta', true );
+	// 	$html = '<input type="checkbox" id="wpmc_postmeta" name="wpmc_postmeta" value="1" ' .
+	// 		checked( 1, get_option( 'wpmc_postmeta' ), false ) . '/>';
+	// 	$html .= '<label>Analyze</label><br /><small>Checks if the media/file is used in the meta.</small>';
+	// 	echo $html;
+	// }
+
+	// function admin_widgets_callback( $args ) {
+	// 	$value = get_option( 'wpmc_widgets', false );
+	// 	$html = '<input type="checkbox" id="wpmc_widgets" name="wpmc_widgets" value="1" ' .
+	// 		checked( 1, get_option( 'wpmc_widgets' ), false ) . '/>';
+	// 	$html .= '<label>Analyze</label><br /><small>Checks if the media/file is used by any widget.</small>';
+	// 	echo $html;
+	// }
 
 	function admin_hide_thumbnails_callback( $args ) {
-    $value = get_option( 'wpmc_hide_thumbnails', null );
+		$value = get_option( 'wpmc_hide_thumbnails', null );
 		$html = '<input type="checkbox" id="wpmc_hide_thumbnails" name="wpmc_hide_thumbnails" value="1" ' .
 			checked( 1, get_option( 'wpmc_hide_thumbnails' ), false ) . '/>';
-    $html .= '<label>Hide</label><br /><small>If you prefer not to see the thumbnails.</small>';
-    echo $html;
-  }
+		$html .= '<label>Hide</label><br /><small>If you prefer not to see the thumbnails.</small>';
+		echo $html;
+	}
 
 	function admin_hide_warning_callback( $args ) {
-    $value = get_option( 'wpmc_hide_warning', null );
+		$value = get_option( 'wpmc_hide_warning', null );
 		$html = '<input type="checkbox" id="wpmc_hide_warning" name="wpmc_hide_warning" value="1" ' .
 			checked( 1, get_option( 'wpmc_hide_warning' ), false ) . '/>';
-    $html .= '<label>Hide</label><br /><small>Have you read it twice? If yes, hide it :)</small>';
-    echo $html;
+		$html .= '<label>Hide</label><br /><small>Have you read it twice? If yes, hide it :)</small>';
+		echo $html;
 	}
 
 	function admin_results_per_page( $args ) {
@@ -424,12 +453,12 @@ HTML;
 	}
 
 	function admin_thumbnails_only_callback( $args ) {
-    $value = get_option( 'wpmc_thumbnails_only', false );
+		$value = get_option( 'wpmc_thumbnails_only', false );
 		$html = '<input type="checkbox" id="wpmc_thumbnails_only" name="wpmc_thumbnails_only" value="1" ' .
 			disabled( get_option( 'wpmc_method', 'media' ) == 'files', false, false ) . ' ' .
 			checked( 1, get_option( 'wpmc_thumbnails_only' ), false ) . '/>';
-    $html .= '<label>Enable</label><br /><small>Restrict the filesystem scan to thumbnails (files containing the resolution). If none of the checks above are selected, you will get the list of all the thumbnails and be able to remove them.</small>';
-    echo $html;
+		$html .= '<label>Enable</label><br /><small>Restrict the filesystem scan to thumbnails (files containing the resolution). If none of the checks above are selected, you will get the list of all the thumbnails and be able to remove them.</small>';
+		echo $html;
 	}
 
 	function admin_dirs_filter_callback( $args ) {
@@ -457,14 +486,14 @@ HTML;
 	function old_getoption( $option, $section, $default = '' ) {
 		$options = get_option( $section );
 		if ( isset( $options[$option] ) ) {
-	        if ( $options[$option] == "off" ) {
-	            return false;
-	        }
-	        if ( $options[$option] == "on" ) {
-	            return true;
-	        }
+					if ( $options[$option] == "off" ) {
+							return false;
+					}
+					if ( $options[$option] == "on" ) {
+							return true;
+					}
 			return $options[$option];
-	    }
+			}
 		return $default;
 	}
 

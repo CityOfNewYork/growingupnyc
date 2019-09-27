@@ -3,25 +3,52 @@
 class Meow_WPMC_Core {
 
 	public $admin = null;
-	public $last_analysis = null;
-	public $last_analysis_ids = null;
-	private $regex_file = '/[A-Za-z0-9-_,\s]+[.]{1}(MIMETYPES)/';
+	public $last_analysis = null; //TODO: Is it actually used?
+	public $engine = null;
+	public $catch_timeout = true; // This will halt the plugin before reaching the PHP timeout.
+	private $regex_file = '/[A-Za-z0-9-_,.\(\)\s]+[.]{1}(MIMETYPES)/';
 	public $current_method = 'media';
 	private $refcache = array();
 	public $servername = null;
 	public $upload_folder = null;
 	public $contentDir = null; // becomes 'wp-content/uploads'
+	private $check_content = null;
+	private $check_postmeta = null;
+	private $check_posts = null;
+	private $check_widgets = null;
+	private $debug_logs = null;
+	public $site_url = null;
 
 	public function __construct( $admin ) {
 		$this->admin = $admin;
-		$site_url = get_site_url();
+		$this->site_url = get_site_url();
 		$this->current_method = get_option( 'wpmc_method', 'media' );
 		$types = "jpg|jpeg|jpe|gif|png|tiff|bmp|csv|pdf|xls|xlsx|doc|docx|tiff|mp3|mp4|wav|lua";
-		$this->regex_file  = str_replace( "MIMETYPES", $types, $this->regex_file );
-		$this->servername = str_replace( 'http://', '', str_replace( 'https://', '', $site_url ) );
+		$this->regex_file = str_replace( "MIMETYPES", $types, $this->regex_file );
+		$this->servername = str_replace( 'http://', '', str_replace( 'https://', '', $this->site_url ) );
 		$this->upload_folder = wp_upload_dir();
-		$this->contentDir = substr( $this->upload_folder['baseurl'], 1 + strlen( $site_url ) );
+		$this->contentDir = substr( $this->upload_folder['baseurl'], 1 + strlen( $this->site_url ) );
+
+		$this->check_content = get_option( 'wpmc_content', true );
+		$this->check_postmeta = get_option( 'wpmc_postmeta', false );
+		$this->check_posts = get_option( 'wpmc_posts', false );
+		$this->check_widgets = get_option( 'wpmc_widgets', false );
+
+		if ( $this->check_postmeta || $this->check_posts || $this->check_widgets ) {
+			delete_option( 'wpmc_postmeta' );
+			delete_option( 'wpmc_posts' );
+			delete_option( 'wpmc_widgets' );
+		}
+
+		$this->debug_logs = get_option( 'wpmc_debuglogs', false );
 		add_action( 'wpmc_initialize_parsers', array( $this, 'initialize_parsers' ), 10, 0 );
+
+		require __DIR__ . '/engine.php';
+		require __DIR__ . '/ui.php';
+		require __DIR__ . '/api.php';
+		$this->engine = new Meow_WPMC_Engine( $this, $admin );
+		new Meow_WPMC_UI( $this, $admin );
+		new Meow_WPMC_API( $this, $admin, $this->engine );
 	}
 
 	function initialize_parsers() {
@@ -67,16 +94,18 @@ class Meow_WPMC_Core {
 	function timeout_check() {
 		$this->time_elapsed = time() - $this->start_time;
 		$this->time_remaining = $this->max_execution_time - $this->wordpress_init_time - $this->time_elapsed;
-		if ( $this->time_remaining - $this->item_scan_avg_time < 0 ) {
-			error_log("Media Cleaner Timeout! Check the Media Cleaner logs for more info.");
-			$this->log( "Timeout! Some info for debug:" );
-			$this->log( "Elapsed time: $this->time_elapsed" );
-			$this->log( "WP init time: $this->wordpress_init_time" );
-			$this->log( "Remaining time: $this->time_remaining" );
-			$this->log( "Scan time per item: $this->item_scan_avg_time" );
-			$this->log( "PHP max_execution_time: $this->max_execution_time" );
-			header("HTTP/1.0 408 Request Timeout");
-			exit;
+		if ( $this->catch_timeout ) {
+			if ( $this->time_remaining - $this->item_scan_avg_time < 0 ) {
+				error_log("Media Cleaner Timeout! Check the Media Cleaner logs for more info.");
+				$this->log( "Timeout! Some info for debug:" );
+				$this->log( "Elapsed time: $this->time_elapsed" );
+				$this->log( "WP init time: $this->wordpress_init_time" );
+				$this->log( "Remaining time: $this->time_remaining" );
+				$this->log( "Scan time per item: $this->item_scan_avg_time" );
+				$this->log( "PHP max_execution_time: $this->max_execution_time" );
+				header("HTTP/1.0 408 Request Timeout");
+				exit;
+			}
 		}
 	}
 
@@ -109,38 +138,60 @@ class Meow_WPMC_Core {
 	}
 
 	function get_favicon() {
+		// Yoast SEO plugin
 		$vals = get_option( 'wpseo_titles' );
-		$url = $vals['company_logo'];
-		if ( $this->is_url($url) )
-			return $this->clean_url( $url );
-		return null;
+		if ( !empty( $vals ) ) {
+			$url = $vals['company_logo'];
+			if ( $this->is_url( $url ) )
+				return $this->clean_url( $url );
+		}
 	}
 
 	function get_urls_from_html( $html ) {
 		if ( empty( $html ) )
 			return array();
-		libxml_use_internal_errors( false );
+
+		// Proposal/fix by @copytrans
+		// Discussion: https://wordpress.org/support/topic/bug-in-core-php/#post-11647775
+		$html = mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' );
 
 		// Resolve src-set and shortcodes
 		$html = do_shortcode( $html );
 		$html = wp_make_content_images_responsive( $html );
 
+		// Create the DOM Document
 		$dom = new DOMDocument();
-		@$dom->loadHTML( $html );  // mm change
+		@$dom->loadHTML( $html );
 		$results = array();
+
+		// <meta> tags in <head> area
+		$metas = $dom->getElementsByTagName( 'meta' );
+		foreach ( $metas as $meta ) {
+			$property = $meta->getAttribute( 'property' );
+			if ( $property == 'og:image' || $property == 'og:image:secure_url' || $property == 'twitter:image' ) {
+				$url = $meta->getAttribute( 'content' );
+				if ( $this->is_url( $url ) ) {
+					$src = $this->clean_url( $url );
+					if ( !empty( $src ) ) {
+						array_push( $results, $src );
+					}
+				}
+			}
+		}
 
 		// IFrames (by Mike Meinz)
 		$iframes = $dom->getElementsByTagName( 'iframe' );
-		foreach($iframes as $iframe) {
+		foreach( $iframes as $iframe ) {
 			$iframe_src = $iframe->getAttribute( 'src' );
 			// Ignore if the iframe src is not on this server
 			if ( ( strpos( $iframe_src, $this->servername ) !== false) || ( substr( $iframe_src, 0, 1 ) == "/" ) ) {
 				// Create a new DOM Document to hold iframe
 				$iframe_doc = new DOMDocument();
 				// Load the url's contents into the DOM
-				libxml_use_internal_errors(true); // ignore html formatting problems
+				libxml_use_internal_errors( true ); // ignore html formatting problems
 				$rslt = $iframe_doc->loadHTMLFile( $iframe_src );
 				libxml_clear_errors();
+				libxml_use_internal_errors( false );
 				if ( $rslt ) {
 					// Get the resulting html
 					$iframe_html = $iframe_doc->saveHTML();
@@ -153,7 +204,9 @@ class Meow_WPMC_Core {
 					}
 				}
 				else {
-					trigger_error( "Failed to load iframe: " . $iframe_src );
+					$err = 'ERROR: Failed to load iframe: ' . $iframe_src;
+					error_log( $err );
+					$this->log( $err );
 				}
 			}
 		}
@@ -162,6 +215,7 @@ class Meow_WPMC_Core {
 		// Images, src, srcset
 		$imgs = $dom->getElementsByTagName( 'img' );
 		foreach ( $imgs as $img ) {
+			//error_log($img->getAttribute('src'));
 			$src = $this->clean_url( $img->getAttribute('src') );
     			array_push( $results, $src );
 			$srcset = $img->getAttribute('srcset');
@@ -184,6 +238,18 @@ class Meow_WPMC_Core {
 				$src = $this->clean_url( $url_href );  // mm change
 				if ( !empty( $src ) )
 					array_push( $results, $src );
+			}
+		}
+
+		// <link> tags in <head> area
+		$urls = $dom->getElementsByTagName( 'link' );
+		foreach ( $urls as $url ) {
+			$url_href = $url->getAttribute( 'href' );
+			if ( $this->is_url( $url_href ) ) {
+				$src = $this->clean_url( $url_href );
+				if ( !empty( $src ) ) {
+					array_push( $results, $src );
+				}
 			}
 		}
 
@@ -218,30 +284,40 @@ class Meow_WPMC_Core {
 					continue;
 				else if ( is_numeric( $value ) )
 					array_push( $ids, $value );
-				else
+				else {
 					if ( $this->is_url( $value ) )
 						array_push( $urls, $this->clean_url( $value ) );
+				}
 			}
 		}
 	}
 
 	function get_images_from_themes( &$ids, &$urls ) {
-		global $wpdb;
-
 		// USE CURRENT THEME AND WP API
 		$ch = get_custom_header();
 		if ( !empty( $ch ) && !empty( $ch->url ) ) {
 			array_push( $urls, $this->clean_url( $ch->url ) );
 		}
+		if ( $this->is_url( $ch->thumbnail_url ) ) {
+			array_push( $urls, $this->clean_url( $ch->thumbnail_url ) );
+		}
 		if ( !empty( $ch ) && !empty( $ch->attachment_id ) ) {
 			array_push( $ids, $ch->attachment_id );
 		}
 		$cl = get_custom_logo();
-		if ( !empty( $cl ) ) {
+		if ( $this->is_url( $cl ) ) {
 			$urls = array_merge( $this->get_urls_from_html( $cl ), $urls );
 		}
+		$si = get_site_icon_url();
+		if ( $this->is_url( $si ) ) {
+			array_push( $urls, $this->clean_url( $si ) );
+		}
+		$si_id = get_option( 'site_icon' );
+		if ( !empty( $si_id ) && is_numeric( $si_id ) ) {
+			array_push( $ids, (int)$si_id );
+		}
 		$cd = get_background_image();
-		if ( !empty( $cd ) ) {
+		if ( $this->is_url( $cd ) ) {
 			array_push( $urls, $this->clean_url( $cd ) );
 		}
 		$photography_hero_image = get_theme_mod( 'photography_hero_image' );
@@ -252,10 +328,20 @@ class Meow_WPMC_Core {
 		if ( !empty( $author_profile_picture ) ) {
 			array_push( $ids, $author_profile_picture );
 		}
+		if ( function_exists ( 'get_uploaded_header_images' ) ) {
+			$header_images = get_uploaded_header_images();
+			if ( !empty( $header_images ) ) {
+				foreach( $header_images as $hi ) {
+					if ( !empty ( $hi['attachment_id'] ) ) {
+						array_push( $ids, $hi['attachment_id'] );
+					}
+				}
+			}
+		}
 	}
 
 	function log( $data = null, $force = false ) {
-		if ( !get_option( 'wpmc_debuglogs', false ) && !$force )
+		if ( !$this->debug_logs && !$force )
 			return;
 		$fh = @fopen( trailingslashit( dirname(__FILE__) ) . '/media-cleaner.log', 'a' );
 		if ( !$fh )
@@ -434,7 +520,7 @@ class Meow_WPMC_Core {
 
 		// Make sure there isn't a media DB entry
 		if ( $issue->type == 0 ) {
-			$attachmentid = $this->find_media_id_from_file( $issue->path );
+			$attachmentid = $this->find_media_id_from_file( $issue->path, true );
 			if ( $attachmentid ) {
 				$this->log( "Issue listed as filesystem but Media {$attachmentid} exists." );
 			}
@@ -579,7 +665,7 @@ class Meow_WPMC_Core {
 		$query = "INSERT INTO $table (mediaId, mediaUrl, originType) VALUES ";
 		foreach( $this->refcache as $key => $value ) {
 			array_push( $values, $value['id'], $value['url'], $value['type'] );
-			if ( get_option( 'wpmc_debuglogs', false ) ) {
+			if ( $this->debug_logs ) {
 				if ( !empty( $value['id'] ) )
 					$this->log( "* {$value['type']}: Media #{$value['id']}" );
 				if ( !empty( $value['url'] ) )
@@ -608,7 +694,7 @@ class Meow_WPMC_Core {
 		return ($count > 0);
 	}
 
-	function find_media_id_from_file( $file ) {
+	function find_media_id_from_file( $file, $doLog ) {
 		global $wpdb;
 		$postmeta_table_name = $wpdb->prefix . 'postmeta';
 		$file = $this->clean_uploaded_filename( $file );
@@ -618,11 +704,14 @@ class Meow_WPMC_Core {
 			AND meta_value = %s", $file
 		);
 		$ret = $wpdb->get_var( $sql );
-		if ( empty( $ret ) )
-			$this->log( "File $file not found as _wp_attached_file (Library)." );
-		else {
-			$this->log( "File $file found as Media $ret." );
+		if ( $doLog ) {
+			if ( empty( $ret ) )
+				$this->log( "File $file not found as _wp_attached_file (Library)." );
+			else {
+				$this->log( "File $file found as Media $ret." );
+			}
 		}
+
 		return $ret;
 	}
 
@@ -674,11 +763,32 @@ class Meow_WPMC_Core {
 	}
 
 	// From a fullpath to the shortened and cleaned path (for example '2013/02/file.png')
+	// Original version by Jordy
+	// function clean_uploaded_filename( $fullpath ) {
+	// 	$basedir = $this->upload_folder['basedir'];
+	// 	$file = str_replace( $basedir, '', $fullpath );
+	// 	$file = str_replace( "./", "", $file );
+	// 	$file = trim( $file,  "/" );
+	// 	return $file;
+	// }
+
+	// From a fullpath to the shortened and cleaned path (for example '2013/02/file.png')
+	// Faster version, more difficult to read, by Mike Meinz
 	function clean_uploaded_filename( $fullpath ) {
-		$basedir = $this->upload_folder['basedir'];
-		$file = str_replace( $basedir, '', $fullpath );
-		$file = str_replace( "./", "", $file );
-		$file = trim( $file,  "/" );
+		$dirIndex = strpos( $fullpath, $this->contentDir );
+		if ( $dirIndex == false ) {
+			$file = $fullpath;
+		}
+		else {
+		// Remove first part of the path leaving yyyy/mm/filename.ext
+			$file = substr( $fullpath, 1 + strlen( $this->contentDir ) + $dirIndex );
+		}
+		if ( substr( $file, 0, 2 ) == './' ) {
+			$file = substr( $file, 2 );
+		}
+		if ( substr( $file, 0, 1 ) == '/' ) {
+			$file = substr( $file, 1 );
+		}
 		return $file;
 	}
 
@@ -730,10 +840,7 @@ class Meow_WPMC_Core {
 		if ( file_exists( $fullpath ) ) {
 
 			// Special scan: Broken only!
-			$check_postmeta = get_option( 'wpmc_postmeta', false );
-			$check_posts = get_option( 'wpmc_posts', false );
-			$check_widgets = get_option( 'wpmc_widgets', false );
-			if ( !$check_postmeta && !$check_posts && !$check_widgets )
+			if ( !$this->check_content && !$this->check_postmeta && !$this->check_posts && !$this->check_widgets )
 				return true;
 
 			$size = filesize( $fullpath );
@@ -833,7 +940,7 @@ class Meow_WPMC_Core {
 */
 
 function wpmc_init( $mainfile ) {
-	register_activation_hook( $mainfile, 'wpmc_reset' );
+	//register_activation_hook( $mainfile, 'wpmc_reset' );
 	//register_deactivation_hook( $mainfile, 'wpmc_uninstall' );
 	register_uninstall_hook( $mainfile, 'wpmc_uninstall' );
 }
@@ -864,9 +971,11 @@ function wpmc_install() {
 		deleted TINYINT(1) NOT NULL DEFAULT 0,
 		issue TINYTEXT NOT NULL,
 		PRIMARY KEY  (id)
-	) " . $charset_collate . ";";
+	) " . $charset_collate . ";" ;
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	dbDelta( $sql );
+	$sql="ALTER TABLE $table_name ADD INDEX IgnoredIndex (ignored) USING BTREE;";
+	$wpdb->query($sql);
 	$table_name = $wpdb->prefix . "mclean_refs";
 	$charset_collate = $wpdb->get_charset_collate();
 	// This key doesn't work on too many installs because of the 'Specified key was too long' issue

@@ -308,11 +308,14 @@
 	margin: 0px;
 }
 
+.meow-featured-plugins .meow-box li {
+	min-height: 80px;
+}
+
 .meow-dashboard .meow-box li {
 	border-bottom: 1px solid #eee;
 	margin: 0px;
 	padding: 10px;
-	min-height: 80px;
 	box-sizing: border-box;
 }
 

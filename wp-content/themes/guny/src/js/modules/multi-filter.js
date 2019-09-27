@@ -126,7 +126,7 @@ ProgramsList.getPrograms = function() {
   ProgramsList.showLoader(this, this.programs)
 
   let filters = ProgramsList.generateFilterURL(this);
-  url = url + '&' + filters;
+  url = url + '&orderby=menu_order&order=asc&' + filters;
 
   // update the query
   if ( this.programPage == 1){

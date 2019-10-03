@@ -6,6 +6,8 @@
   .facetwp-seo { display: none; }
   [v-cloak] { display: none; }
 </style>
+<link rel="canonical" href="{{site.url}}/programs" />
+{% include 'partials/scripts-google-optimize.twig' %}
 {% endblock %}
 
 {% block hero %}
@@ -48,7 +50,6 @@
       <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{ __('Ages', 'guny') }}</h3>
       <ul class="js-accordion__content c-list-box__content" id="age-filter-panel">
 
-
         <li class="c-list-box__subitem">
           <label class="checkbox" >
             <input type="checkbox" v-model="checkedAllAges" class="checkbox__field" @change="selectAllAges">
@@ -57,7 +58,7 @@
           </label>
         </li>
 
-        <li class="c-list-box__subitem" v-for="age in ageGroups">
+        <li class="c-list-box__subitem" v-for="age in ageGroups" {% if current_url == '/programs-2/'%}v-if="age.slug != 'everyone'"{% endif %}>
           <label class="checkbox" :for="age.slug">
             <input type="checkbox" :id="age.slug" :value="age.slug" v-model="checkedAgeGroup" class="checkbox__field">
             <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>

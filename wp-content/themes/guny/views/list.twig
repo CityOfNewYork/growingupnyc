@@ -4,7 +4,7 @@
 
   {% if 'events' in current_url %}
     {% set v_page = 'events' %}
-  {% elseif 'programs' in current_url %}
+  {% elseif ('programs' in current_url) or ('programs-2' in current_url) %}
     {% set v_page = 'program' %}
   {% elseif 'afterschool' in current_url %}
     {% set v_page = 'afterschool-guide' %}

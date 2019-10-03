@@ -486,6 +486,10 @@ function guny_titles( $title ){
   // Generation single pages
   $page_type = explode("/", trim(parse_url(get_permalink(), PHP_URL_PATH), "/"));
 
+  if('/programs-2/' == strtok($_SERVER["REQUEST_URI"],'?')){
+    $title='Programs - ' . get_bloginfo('name', 'display');
+  }
+
   if ( !is_front_page() && is_single() && in_array($page_type[0], $gen_pages) ) {
     $title = $_post->post_title . ' - ' . 'Generation NYC';
   }

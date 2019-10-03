@@ -31,8 +31,7 @@ define( 'NYCO_EVENTS_SLUG', 'nyco-events' );
 define( 'NYCO_EVENTS_PLUGIN', __FILE__ );
 define( 'NYCO_EVENTS_PATH', dirname( __FILE__ ) . '/' );
 define( 'NYCO_EVENTS_INC', NYCO_EVENTS_PATH . 'includes/' );
-wp_enqueue_style( 'nyco-events-styles', plugins_url( 'assets/css/style.css' , __FILE__ ) );
-
+// wp_enqueue_style( 'nyco-events-styles', plugins_url( 'assets/css/style.css' , __FILE__ ) );
 
 if( !function_exists( 'is_plugin_active' ) ) {
   require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -42,7 +41,6 @@ if( !function_exists( 'is_plugin_active' ) ) {
 if ( !is_plugin_active('events-calendar-pro/events-calendar-pro.php' ) ) {
   add_action( 'all_admin_notices', 'nyco_events_notice' );  
 }
-
 
 // require external files
 require_once NYCO_EVENTS_INC . 'settings.php';

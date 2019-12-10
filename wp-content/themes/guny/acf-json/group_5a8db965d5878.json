@@ -1,77 +1,94 @@
 {
-    "key": "group_5a8db965d5878",
-    "title": "SEO",
-    "fields": [
-        {
-            "key": "field_5a8db96d3b8dd",
-            "label": "Meta Description",
-            "name": "meta_description",
-            "type": "text",
-            "value": null,
-            "instructions": "Enter a description for this page.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5af5a150def12",
-            "label": "Meta Keywords",
-            "name": "meta_keywords",
-            "type": "text",
-            "value": null,
-            "instructions": "Enter a set of keywords, each separated by comma.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        }
+  "key": "group_5a8db965d5878",
+  "title": "SEO",
+  "fields": [
+    {
+      "key": "field_5a8db96d3b8dd",
+      "label": "Meta Description",
+      "name": "meta_description",
+      "type": "text",
+      "instructions": "Enter a description for this page.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    },
+    {
+      "key": "field_5af5a150def12",
+      "label": "Meta Keywords",
+      "name": "meta_keywords",
+      "type": "text",
+      "instructions": "Enter a set of keywords, each separated by comma.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    },
+    {
+      "key": "field_5ddc1f59fb232",
+      "label": "No Search Index",
+      "name": "meta_noindex",
+      "type": "true_false",
+      "instructions": "Check the box if this page should not be indexed by search engines (Google, Bing, etc.).",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "message": "",
+      "default_value": 0,
+      "ui": 0,
+      "ui_on_text": "",
+      "ui_off_text": ""
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "page"
+      }
     ],
-    "location": [
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "page"
-            }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "program"
-            }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "topic"
-            }
-        ]
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "program"
+      }
     ],
-    "menu_order": 5,
-    "position": "normal",
-    "style": "default",
-    "label_placement": "top",
-    "instruction_placement": "label",
-    "hide_on_screen": "",
-    "active": 1,
-    "description": ""
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "topic"
+      }
+    ]
+  ],
+  "menu_order": 5,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": ""
 }

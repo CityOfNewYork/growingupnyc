@@ -10,8 +10,13 @@
 
   <h3 class="c-card__title">
     {% block title %}
-    <a href="{{ post.link }}" title="{{ post.title }}" rel="bookmark">
-      {{ post.title }}
+    {% if post.get_field('plain_language_program_name') != '' %}
+      {% set post_title = post.get_field('plain_language_program_name') %}
+    {% else %}
+      {% set post_title = post.title %}
+    {% endif %}
+    <a href="{{ post.link }}" title="{{ post_title }}" rel="bookmark">
+      {{ post_title }}
     </a>
     {% endblock %}
   </h3>

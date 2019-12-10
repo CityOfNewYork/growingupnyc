@@ -23,7 +23,7 @@
           <svg aria-hidden="true" class="icon--medium"><use xlink:href="#icon-{{post.category.slug|replace({'-es':''})}}"></use></svg>
         </span>
         {% endif %}
-        {{post.title}}
+          {{post.plain_language_program_name}}
       </h1>
       <p class="c-hero__tagline">
         {{post.program_name}}{% if post.acronym %} ({{post.acronym}}){% endif %}
@@ -128,6 +128,13 @@
       </div>
     </div>
     {% endif %}
+  <div id='last-modified-date' class="o-content-container--compact">
+    <section class="u-top-spacing-small">
+      <div class="o-content-container--text s-wysiwyg text-gray">
+        <p>{{ __('Updated', 'GUNY-Single-Program') }} {{last_modified}}</p>
+      </div>
+    </section>
+  </div>
   </div> <!-- /.o-article -->
 </article> <!-- /.o-container -->
 {% endblock %}

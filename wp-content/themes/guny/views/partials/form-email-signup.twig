@@ -13,7 +13,9 @@
     </h2>
   </div>
 
-  <div class="signup-form__error guny-error"></div>
+  <div class="signup-form__error guny-error hidden">
+    {{ __('Please enter your email and zip code and select at least one age group.', 'GUNY-Email-Signup') }}
+  </div>
 
   {# EMAIL #}
   <div class="signup-form__input {% if full_width %}signup-form__input--full{% else %}signup-form__input--long{% endif %}">

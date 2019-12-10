@@ -161,4 +161,9 @@
 .hover\:bg-dark-blue:hover {
   background-color: $dark-blue !important;
 }
+
+.text-gray,
+.hover\:text-gray:hover {
+  color: $gray !important;
+}
 // End Tailwind Utility

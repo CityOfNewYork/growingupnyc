@@ -83,11 +83,15 @@ $context['top_widget'] = Timber::get_widgets('top_widget');
 // meta tags
 $context['meta_desc'] = get_field('meta_description', $post->id);
 $context['meta_keywords'] = get_field('meta_keywords', $post->id);
+$context['meta_noindex'] = get_field('meta_noindex', $post->id);
 
 // Program and Topic post alert banner
 $banner = get_field('current_banner');
 $context['banner']['alt'] = new TimberPost($banner);
 $context['banner']['override'] = $post->update_banner;
+
+// Last modified date
+$context['last_modified'] = get_the_modified_date( $d, $post );
 
 $url = '/';
 if(ICL_LANGUAGE_CODE != 'en'){

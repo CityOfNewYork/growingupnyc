@@ -364,9 +364,7 @@ ProgramsList.getIds = function(filter, slugs, posttype) {
   });
   
   let everyone_index = filter.map(function (e) { return e.slug; }).indexOf('everyone');
-  if ((everyone_index > 0 && posttype == 'afterschool-guide') || 
-      (everyone_index > 0 && window.location.pathname.indexOf('programs-2') >= 0)
-  ){
+  if ((everyone_index > 0 && posttype == 'afterschool-guide')){
     arrIds.push(filter[everyone_index])
   }
   

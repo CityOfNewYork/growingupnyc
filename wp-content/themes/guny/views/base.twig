@@ -22,6 +22,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="description" content="{{meta_desc}}">
   <meta name="keywords" content="{{meta_keywords}}">
+  {% if meta_noindex == true %}
+  <meta name="robots" content="noindex">
+  {% endif %}
   <link rel="manifest" href="{{theme.path}}/manifest.json">
   <link rel="icon" type="image" href="{{theme.path}}/assets/img/growningup-favicon.png">
   <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{theme.path}}/assets/img/growningup-Icon-App-76x76@3x.png">

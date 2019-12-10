@@ -40,6 +40,7 @@
     "wpackagist-plugin/timber-library": "1.11.0",
     "wpackagist-plugin/tinymce-advanced": "5.2.1",
     "wpackagist-plugin/wordpress-importer": "0.6.4",
+    "wpackagist-plugin/wp-all-export": "1.2.5",
     "wpackagist-plugin/wps-hide-login": "1.5.4.2",
     "filp/whoops": "^2.1",
     "whoops/soap": "^1.0",

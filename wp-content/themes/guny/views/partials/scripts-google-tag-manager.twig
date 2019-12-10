@@ -1,4 +1,7 @@
 {% if function('get_env', 'GOOGLE_TAG_MANAGER') != '' %}
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ function('get_env', 'GOOGLE_TAG_MANAGER') }}"
-  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id={{ function('get_env', 'GOOGLE_TAG_MANAGER') }}&gtm_auth={{ function('get_env', 'GOOGLE_TAG_MANAGER_AUTH') }}&gtm_preview={{ function('get_env', 'GOOGLE_TAG_MANAGER_PREVIEW') }}&gtm_cookies_win=x" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
 {% endif  %}

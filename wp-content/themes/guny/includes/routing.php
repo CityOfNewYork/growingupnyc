@@ -87,14 +87,6 @@ Routes::map('/programs', function($params) {
   Routes::load('archive-program.php', $params, null, 200);
 });
 
-/**
- * Programs - Google Optimize
- * Load the program archive to the /programs
- */
-Routes::map('/programs-2', function($params) {
-  Routes::load('archive-program.php', $params, null, 200);
-});
-
  /**
  * Generation 404
  * Load the 404 template when /404 path is used in URL. Without this, a user is sent to the homepage

@@ -65,7 +65,7 @@ window.accordion = accordion;
   'use strict';
 
   var post_path = window.location.pathname.split('/');
-  var arr_types = ['programs', 'programs-2', 'afterschool', 'summer'];
+  var arr_types = ['programs', 'afterschool', 'summer'];
 
   if((($.inArray(post_path[1], arr_types) > -1) && post_path[2] == "") ||
      (post_path[1] == "es" && ($.inArray(post_path[2], arr_types) > -1) && post_path[3] == "")

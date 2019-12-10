@@ -63,7 +63,7 @@ export default function() {
 
     // if there are no errors, submit
     if (hasErrors) {
-      form.find('.guny-error').html(`<p>${errorMsg}</p>`);
+      form.find('.guny-error').toggleClass();
     } else {
       submitSignup(form, fields);
     }

@@ -486,10 +486,6 @@ function guny_titles( $title ){
   // Generation single pages
   $page_type = explode("/", trim(parse_url(get_permalink(), PHP_URL_PATH), "/"));
 
-  if('/programs-2/' == strtok($_SERVER["REQUEST_URI"],'?')){
-    $title='Programs - ' . get_bloginfo('name', 'display');
-  }
-
   if ( !is_front_page() && is_single() && in_array($page_type[0], $gen_pages) ) {
     $title = $_post->post_title . ' - ' . 'Generation NYC';
   }
@@ -528,6 +524,11 @@ function guny_titles( $title ){
   // Generation 404 page
   if ( (is_404() && $page_type[0] == "generationnyc") || ($page_type[0] == 'generationnyc' && $page_type[1] == '404-2')) {
     $title = __('Page not found - Generation NYC');
+  }
+
+  // Update the title for the Unity Project
+  if(in_array('lgbtq', $page_type)){
+    $title = "NYC Unity Project - Generation NYC";
   }
 
   return $title;
@@ -636,9 +637,6 @@ $includes = [
   ],
   [ // Wpml
     '/includes/term_translations.php', // Term translation helpers
-  ],
-  [ // Admin
-    '/includes/program_posts_column.php' // Add program name to post in the admin
   ],
   [ // michelf
     '/vendor/michelf/php-markdown/Michelf/Markdown.inc.php' // Markdown parser

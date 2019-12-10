@@ -1,0 +1,137 @@
+{
+  "key": "group_5ddd43de90743",
+  "title": "Taxonomy Labels",
+  "fields": [
+    {
+      "key": "field_5ddd4440bccb9",
+      "label": "Afterschool Program Categories",
+      "name": "afterschool_program_categories",
+      "type": "text",
+      "instructions": "The label for the After School Program Categories that includes Arts, Academic Support, Sports, etc.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    },
+    {
+      "key": "field_5ddd45a1bccba",
+      "label": "Age Groups",
+      "name": "age_groups",
+      "type": "text",
+      "instructions": "The label for the Age Group taxonomy (Baby, Toddler, etc.)",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    },
+    {
+      "key": "field_5ddd46a7bccbe",
+      "label": "Borough",
+      "name": "borough",
+      "type": "text",
+      "instructions": "The label or the Borough taxonomy (Bronx, Manhattan, etc.)",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    },
+    {
+      "key": "field_5ddd45d8bccbb",
+      "label": "Program Categories",
+      "name": "program_categories",
+      "type": "text",
+      "instructions": "The label for Program Categories (Cash and Expenses, Child Care, etc.)",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    },
+    {
+      "key": "field_5ddd4606bccbc",
+      "label": "Summer Program Categories",
+      "name": "summer_program_categories",
+      "type": "text",
+      "instructions": "The label for Summer Program Categories (Arts, Community, etc.)",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    },
+    {
+      "key": "field_5ddd463dbccbd",
+      "label": "Summer Activity Types",
+      "name": "summer_activity_types",
+      "type": "text",
+      "instructions": "The label for Summer Activity Types (Program+Camp, Work+Internship, etc.)",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "options_page",
+        "operator": "==",
+        "value": "guny-general-settings"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "Re-assign the label for taxonomies. If left empty, the label will be remain at its default."
+}

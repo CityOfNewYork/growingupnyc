@@ -174,12 +174,14 @@ class GUPostTypes {
     );
   }
 
+  /* Creates the taxonomies - will use value entered in custom fields in GUNY Settings, otherwise will default */
   function create_taxonomies() {
     register_taxonomy(
       'borough',
       array('tribe_events', 'summer-guide', 'afterschool-guide'),
       array(
-        'label' => __( 'Event Location' ),
+        'label' => (check_taxonomy('field_5ddd46a7bccbe') !='' ? 
+            __(get_field('field_5ddd46a7bccbe', 'option')) : __( 'Event Location' )),
         'hierarchical' => true,
         'rewrite' => false,
         'show_in_rest' => true
@@ -190,7 +192,8 @@ class GUPostTypes {
       'age_group',
       array('age', 'tribe_events', 'program', 'summer-guide', 'afterschool-guide'),
       array(
-        'label' => __( 'Age Groups' ),
+        'label' => (check_taxonomy('field_5ddd45a1bccba') !='' ? 
+            __(get_field('field_5ddd45a1bccba', 'option')) : __( 'Age Groups' )),
         'hierarchical' => true,
         'rewrite' => false,
         'show_in_rest' => true
@@ -201,7 +204,8 @@ class GUPostTypes {
       'programs_cat',
       array('program'),
       array(
-        'label' => __( 'Program Categories' ),
+        'label' => (check_taxonomy('field_5ddd45d8bccbb') !='' ? 
+            __(get_field('field_5ddd45d8bccbb', 'option')) : __( 'Program Categories' )),
         'hierarchical' => true,
         'show_in_rest' => true
       )
@@ -211,7 +215,8 @@ class GUPostTypes {
       'summer_programs_cat',
       array('summer-guide'),
       array(
-        'label' => __( 'Interests' ),
+        'label' => (check_taxonomy('field_5ddd4606bccbc') !='' ? 
+                    __(get_field('field_5ddd4606bccbc', 'option')) : __( 'Interests' )),
         'hierarchical' => true,
         'rewrite' => false,
         'show_in_rest' => true,
@@ -222,7 +227,8 @@ class GUPostTypes {
       'afterschool_programs_cat',
       array('afterschool-guide'),
       array(
-        'label' => __( 'Activity Categories' ),
+        'label' => (check_taxonomy('field_5ddd4440bccb9') !='' ? 
+                    __(get_field('field_5ddd4440bccb9', 'option')) : __( 'Activity Categories' )),
         'hierarchical' => true,
         'rewrite' => false,
         'show_in_rest' => true
@@ -233,7 +239,8 @@ class GUPostTypes {
       'activity_type',
       array('summer-guide'),
       array(
-        'label' => __( 'Activity Type' ),
+        'label' => (check_taxonomy('field_5ddd463dbccbd') !='' ? 
+            __(get_field('field_5ddd463dbccbd', 'option')) : __( 'Activity Type' )),
         'hierarchical' => true,
         'rewrite' => false,
         'show_in_rest' => true
@@ -307,5 +314,15 @@ class GUPostTypes {
       }
     }
   }
+
+}
+
+// Gets the custom field value is set in GUNY Settings
+function check_taxonomy($field) {
+  $val = '';
+  if (function_exists('acf_get_field')) {
+    $val = get_field($field, 'option');
+  }
+  return $val;
 }
 new GUPostTypes();

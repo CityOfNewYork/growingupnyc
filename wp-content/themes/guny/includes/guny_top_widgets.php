@@ -272,8 +272,13 @@ function get_search_widget_container($posts, $post_type){
       echo get_field('page_top_heading', $post->ID);
       echo '</a></h3>';
     } else {
-      echo '<a rel="bookmark" title="' . $post->post_title . '" href="' . get_permalink($post->ID) . '">';
-      echo $post->post_title;
+      if(get_field('program_name', $post->ID) !='') {
+        $post_title = get_field('program_name', $post->ID);
+      } else {
+        $post_title = $post->post_title;
+      }
+      echo '<a rel="bookmark" title="' . $post_title . '" href="' . get_permalink($post->ID) . '">';
+      echo $post_title;
       echo '</a></h3>';
     }
     if($post_type == 'trip'){

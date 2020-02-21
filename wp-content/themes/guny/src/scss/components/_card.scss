@@ -30,6 +30,10 @@
     padding: rem-calc(30);
     padding-right: rem-calc(($sticker-size / 2) + 10);
   }
+
+  &--m-0 {
+    margin-right: 0;
+  }
 }
 
 .c-card--hero {
@@ -72,6 +76,10 @@
   }
 }
 
+// sticker inline
+// .c-card__sticker--inline {
+// }
+
 // Content Card Title
 //
 // markup: <h3 class="c-card__title"><a href="#">Post Title</a></h3>
@@ -110,8 +118,7 @@
 // </div>
 //
 .c-card__tags {
-  margin: rem-calc(0 0 10);
-  order: 5;
+  order: 8;
 }
 
 // Content Card Subtitle
@@ -132,7 +139,7 @@
   font-weight: $font-weight-extrablack;
   @include font-size(15);
   letter-spacing: .5px;
-  margin: rem-calc(0 0 10);
+  margin: rem-calc(0 0 12);
   order: 4;
 
   .icon--xsmall {
@@ -164,8 +171,8 @@
 //
 .c-card__body {
   @include font-size-small;
-  margin: rem-calc(0 0 8);
-  order: 6;
+  margin: rem-calc(0 0 12);
+  order: 5;
 }
 
 // Content Card Link
@@ -175,6 +182,7 @@
 //
 .c-card__link {
   color: $color-text-weak;
+  margin: rem-calc(0 0 16);
   @include font-size(14);
   order: 7;
 
@@ -196,7 +204,7 @@
 }
 
 .c-card__cta-divider {
-  order: 8;
+  order: 9;
   margin: rem-calc(24 0);
 }
 
@@ -209,7 +217,7 @@
   font-family: $font-family-display;
   font-weight: $font-weight-extrablack;
   @include font-size(18);
-  order: 9;
+  order: 10;
 
   color: inherit;
 
@@ -239,6 +247,5 @@
   font-weight: $font-weight-extrablack;
   padding: rem-calc(10);
   position: absolute;
-  @include text-uppercase;
   top: rem-calc(-16);
 }

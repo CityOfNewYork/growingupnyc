@@ -1,0 +1,50 @@
+.age-guide-card {
+  border-width: 2px;
+  border-radius: 3px;
+
+  @include media($bp-medium) {
+    display: flex;
+  }
+}
+
+.age-guide-card__title {
+  text-align: center;
+  color: $white;
+  border-radius: (3/2) + px;
+  padding: rem-calc(20);
+  margin-bottom: 0;
+
+  a {
+    color: $white;
+    text-decoration: none;
+
+    // &:hover {
+    //   color: $color-brain-building-tip;
+    // }
+  }
+
+  @include media($bp-medium) {
+    display: flex;
+    align-items: center;
+    min-width: 180px;
+    max-width: 180px;
+    justify-content: center;
+    padding: rem-calc(0 65);
+  }
+}
+
+.age-guide-card__body {
+  padding: rem-calc(20);
+}
+
+.age-guide-card__link {
+  color: $black;
+  font-weight: 900;
+  display: block;
+  margin: rem-calc(16 0 0);
+
+  &:hover {
+    color: $strong-blue;
+  }
+
+}

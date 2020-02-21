@@ -14,10 +14,8 @@
   height: rem-calc($sticker-size-mobile);
   text-align: center;
   text-decoration: none;
-  @include text-uppercase;
   white-space: nowrap;
   width: rem-calc($sticker-size-mobile);
-  //override text-uppercase
   line-height: rem-calc($sticker-size-mobile);
 
   @include media($bp-large) {
@@ -26,6 +24,16 @@
     line-height: rem-calc($sticker-size);
     width: rem-calc($sticker-size);
   }
+}
+
+.sticker--small {
+  background: $color-primary;
+  border-radius: rem-calc(50);
+  color: $white;
+  display: block;
+  font-family: $font-family-display;
+  height: rem-calc(64);
+  width: rem-calc(64);
 }
 
 a.sticker {

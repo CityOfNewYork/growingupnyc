@@ -87,6 +87,13 @@ Routes::map('/programs', function($params) {
   Routes::load('archive-program.php', $params, null, 200);
 });
 
+/**
+ * Brain Building Tip
+ */
+Routes::map('/brainbuilding', function($params) {
+  Routes::load('archive-brain-building-tip.php', $params, null, 200);
+});
+
  /**
  * Generation 404
  * Load the 404 template when /404 path is used in URL. Without this, a user is sent to the homepage

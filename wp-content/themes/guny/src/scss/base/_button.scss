@@ -40,7 +40,6 @@
   background: $color-text-invert;
   color: $color-text;
   letter-spacing: 1px;
-  text-transform: uppercase;
 
   &:focus {
     background: transparent;
@@ -56,6 +55,23 @@
 
   &--blue {
     color: $color-secondary;
+  }
+
+  &--dark-gray {
+    margin-top: rem-calc(30);
+    background: $dark-gray;
+    color: $white;
+    &:focus {
+      background: $black;
+      color: $white;
+    }
+
+    .no-touchevents & {
+      &:hover {
+        background: $black;
+        color: $white;
+      }
+    }
   }
 }
 
@@ -93,6 +109,24 @@
     }
   }
 
+  &--strong-blue {
+    border-color: $strong-blue;
+    color: $strong-blue;
+    opacity: .7;
+
+    &:focus {
+      color: $strong-blue;
+      opacity: 1;
+    }
+
+    .no-touchevents & {
+      &:hover {
+        color: $strong-blue;
+        opacity: 1;
+      }
+    }
+  }
+
   &--white {
     border-color: $color-text-invert;
     color: $color-text-invert;
@@ -109,7 +143,6 @@
       }
     }
   }
-
 }
 
 // Pill button
@@ -132,7 +165,6 @@
   margin: rem-calc(0 2 4 0);
   min-width: 0;
   padding: rem-calc(10 17);
-  @include text-uppercase;
 
   &:focus {
     background: $color-secondary;
@@ -175,6 +207,49 @@
   .no-touchevents & {
     &:hover {
       background: $dark-purple;
+    }
+  }
+}
+
+// pill age groups
+.button--pill--baby {
+  background: $color-baby;
+
+  &:focus {
+    background: $color-baby-secondary;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $color-baby-secondary;
+    }
+  }
+}
+
+.button--pill--toddler {
+  background: $color-toddler;
+
+  &:focus {
+    background: $color-toddler-secondary;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $color-toddler-secondary;
+    }
+  }
+}
+
+.button--pill--pre-schooler {
+  background: $color-pre-schooler;
+
+  &:focus {
+    background: $color-pre-schooler-secondary;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $color-pre-schooler-secondary;
     }
   }
 }
@@ -226,10 +301,13 @@
 }
 
 // Size Variations
-
 // Full-width
 .button--full-width {
   width: 100%;
+}
+
+.button--sm-width {
+  width: 20%;
 }
 
 // Text-only button
@@ -270,5 +348,34 @@
     &:hover {
       color: $dark-gray-1;
     }
+  }
+}
+
+//Curved purple button
+.button--primary__blue {
+  background: $strong-blue;
+  color: $white;
+  border-color: $strong-blue;
+  text-transform: none;
+  &:focus {
+    background: $white;
+    border-color: $white;
+    color: $strong-blue;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $white;
+      border-color: $white;
+      color: $strong-blue;
+    }
+  }
+
+  &[disabled],
+  &[disabled]:hover {
+    background: $strong-blue;
+    border-color: $strong-blue;
+    color: $white;
+    cursor: default;
   }
 }

@@ -132,7 +132,7 @@ button {
 
 .c-side-hero-ms__title .c-side-hero__title__large {
   @include font-size-xx-large;
-  text-transform: uppercase;
+  text-transform: capitalize;
   white-space: nowrap;
 
   @include media($bp-large) {

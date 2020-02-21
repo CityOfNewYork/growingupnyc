@@ -1,4 +1,7 @@
 <?php 
+/**
+ * Summer Guides WP Rest API
+ */
 
 add_action( 'rest_api_init', 'register_rest_summer' );
 add_filter( 'rest_summer-guide_collection_params', 'filter_add_rest_orderby_params', 10, 1 );

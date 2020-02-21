@@ -1,0 +1,52 @@
+  {
+      "key": "group_5e04fd1308140",
+      "title": "Age Guides",
+      "fields": [
+          {
+              "key": "field_5e04fd133766e",
+              "label": "Relevant Age Guides",
+              "name": "relevant_age_guides",
+              "type": "relationship",
+              "instructions": "Select the age guides that are relevant to this post.",
+              "required": 0,
+              "conditional_logic": 0,
+              "wrapper": {
+                  "width": "",
+                  "class": "",
+                  "id": ""
+              },
+              "post_type": [
+                  "age"
+              ],
+              "taxonomy": "",
+              "filters": [
+                  "search",
+                  "taxonomy"
+              ],
+              "elements": "",
+              "min": "",
+              "max": "",
+              "return_format": "id"
+          }
+      ],
+      "location": [
+          [
+              {
+                  "param": "post_type",
+                  "operator": "==",
+                  "value": "brain-building-tip"
+              }
+          ]
+      ],
+      "menu_order": 4,
+      "position": "normal",
+      "style": "default",
+      "label_placement": "top",
+      "instruction_placement": "label",
+      "hide_on_screen": [
+          "discussion",
+          "comments"
+      ],
+      "active": true,
+      "description": ""
+  }

@@ -1,0 +1,33 @@
+// Logo Banner
+
+.logo-banner {
+  height: 55px;
+  display: flex;
+  align-items: center;
+  padding: rem-calc(12);
+
+  @include media($bp-large) {
+    height: 115px;
+    padding: rem-calc(24);
+  }
+
+  &--small {
+    a {
+      display: block;
+    }
+  }
+}
+
+.logo-banner__img {
+  display: inline-block;
+  height: 100%;
+}
+
+.logo-banner--small > .logo-banner__img {
+  max-height: 55px;
+  margin-top: 15px;
+}
+
+.logo-banner__link {
+  margin-top: 15px;
+}

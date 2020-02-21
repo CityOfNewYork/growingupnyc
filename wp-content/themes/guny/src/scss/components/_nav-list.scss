@@ -37,7 +37,6 @@ $indicator-size: 10px;
   padding: rem-calc(20);
   position: relative;
   text-decoration: none;
-  @include text-uppercase;
 
   &:focus,
   &.is-active {
@@ -84,6 +83,25 @@ $indicator-size: 10px;
           top: 50%;
         }
       }
+    }
+  }
+}
+
+.c-nav-list__link-invert {
+  @extend .c-nav-list__link;
+  background-color: $color-primary;
+  border-color: $color-primary;
+
+  &:focus,
+  &.is-active {
+    background-color: $color-brain-building-tip;
+    border-color: $color-brain-building-tip;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background-color: $color-brain-building-tip;
+      border-color: $color-brain-building-tip;
     }
   }
 }

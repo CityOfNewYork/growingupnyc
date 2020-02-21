@@ -32,9 +32,9 @@
       .c-hero {background-image: url({{hero_img}}); }
     {% endif %}
     .c-hero__sticker {
-      background-image: url({{post.get_field('logo')}});
       background-size: cover;
       background-repeat: no-repeat;
+      background-image: url({{ post.get_field('logo')}});
     }
   </style>
 {% endblock %}
@@ -144,41 +144,7 @@
           <hr>
         {% endfor %}
 
-        {% if options.enable_sms == "Yes" %}
-          <aside class="c-tip c-tip--sms c-tip-ms__topics u-lg-gutter o-content-container">
-            <div class="c-tip__sticker sticker">
-              <svg class="icon--large" role="img" aria-hidden="true"><title>Tip</title><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#check-outlined"></use></svg>
-            </div>
-            <p class="c-tip__content">Read it later! Text yourself the link to this page.</p>
-
-            <div id="share-by-text" class="sms-form-wrapper share-form hidden">
-              <form method="post" action="{{ shareAction }}" class="js-share-form js-needs-disclaimer is-active" novalidate>
-
-                <input type="hidden" name="action" value="sms_send">
-                <input type="hidden" name="sharetext" value="{{post.get_field('sms_intro_text')}}">
-                <input type="hidden" name="postid" value="{{post.id}}">
-                <input type="hidden" name="hash" value="{{ shareHash }}">
-
-                <div class="signup-form__input signup-form__input--long sms-form__input--long">
-                  <label for="phone" class="signup-form__label sms-form__label">
-                    <span class="signup-form__label-content sms-form__label-content" data-content="Phone Number">Phone Number</span>
-                  </label>
-                  <input type="tel" id="phone" name="to" class="form-field signup-form__field sms-form__field js-show-disclaimer" data-scroll-offset="20" required>
-                  {% include 'partials/share-form-spinner.twig' %}
-                </div>
-
-                <button id="smsbutton" type="submit" class="button--primary button--primary__curved button--primary__purple sms-form__submit">{{__('Send', 'accessnyc-program-detail')}}</button>
-
-                <div class="c-validation" id="sms-form-msg"></div>
-                <div class="g-recaptcha" id="screener-recaptcha"></div>
-
-                {% include 'partials/share-form-disclaimer.twig' with {'text': options.disclaimer_text} %}
-
-              </form>
-            </div>
-            <footer class="c-tip__footer"></footer>
-          </aside>
-        {% endif %}
+        {% include 'components/form-wrapper.twig' %}
       </div> <!-- /.o-article -->
     </article>
 {% endblock %}

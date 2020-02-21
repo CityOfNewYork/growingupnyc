@@ -1,7 +1,21 @@
 # Composer #
 ############
 /vendor/*
-!/vendor/mustangostang/
+!/vendor/autoload.php
+
+!/vendor/aws
+!/vendor/composer
+!/vendor/doctrine
+!/vendor/guzzlehttp
+!/vendor/illuminate
+!/vendor/mtdowling
+!/vendor/mustangostang
+!/vendor/nesbot
+!/vendor/psr
+!/vendor/ralouphie
+!/vendor/soundasleep
+!/vendor/symfony
+!/vendor/twilio
 
 # Configuration #
 #################

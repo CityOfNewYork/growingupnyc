@@ -11,26 +11,33 @@ $animate-timing-function: cubic-bezier(.23, 1, .32, 1) !default;
 $black: #000;
 $white: #fff;
 $bright-blue: #2793e0;
-$bright-red: #fb0000;
-$dark-pink: #7f1c4e;
-$dark-gray: #6a6a6a;
+$dark-gray: hsl(0, 0%, 42%);
 $dark-green: #1d5d11;
 $gray: #999;
-$pure-orange: #ff9d00;
-$strong-blue: #0055b8;
-$strong-lime-green: #35c621;
+$strong-blue: #0055b8; //primary pre-teen
+$strong-lime-green: #21ad0e;
+$bright-green: #7fe62d;
+$bright-pink: #f8218d;
 $strong-pink: #d8006d;
-$very-dark-blue: #00326d;
+$dark-pink: #7f1c4e;
+$very-dark-blue: #052750; //secondary pre-teen
 $very-dark-gray: #333;
 $very-dark-gray-transparent: rgba(51, 51, 51, .5);
 $very-light-gray: #eee;
+$pure-orange: #ff9d00;
+$orange-tertiary: #ffb900;
 $vivid-orange: #ff6100;
+$bright-red: #bc3b09;
 $white: #fff;
 $purple: #7735b2;
 $dark-purple: #3c036f;
+$light-purple: #b35eff; //tertiary teen
 $blue: #184e9e;
 $light-blue: #eef3f7;
-$blue-2: #006ae8;
+$blue-2: #006ae8; //tertiary pre-teen
+$blue-green: #02a586;
+$dark-blue-green: #015948;
+$light-blue-green: #42d1b5;
 
 //Created gray colors as in the color palette
 // =============================================
@@ -40,6 +47,7 @@ $light-gray-1: rgba(45, 51, 61, .5);
 $light-gray-2: #b5b9c1;
 $dark-gray-1: #343e4c;
 $gray-2: #838a97;
+$light-gray: #768699; //tertiary young adult
 
 //Colors for Micro Site
 $dark-blue: #144f82;
@@ -81,16 +89,21 @@ $color-baby: $strong-pink;
 $color-baby-secondary: $dark-pink;
 $color-toddler: $vivid-orange;
 $color-toddler-secondary: $bright-red;
-$color-pre-schooler: $pure-orange;
-$color-pre-schooler-secondary: $vivid-orange;
-$color-grade-schooler: $strong-lime-green;
-$color-grade-schooler-secondary: $dark-green;
+$color-toddler-tertiary: $orange-tertiary;
+$color-pre-schooler: $strong-lime-green;
+$color-pre-schooler-secondary: $dark-green;
+$color-grade-schooler: $blue-green;
+$color-grade-schooler-secondary: $dark-blue-green;
 $color-pre-teen: $strong-blue;
 $color-pre-teen-secondary: $very-dark-blue;
 $color-teen: $purple;
 $color-teen-secondary: $dark-purple;
 $color-young-adult: $gray-1;
 $color-young-adult-secondary: $dark-gray-1;
+
+// Color by Post Type
+// =====================
+$color-brain-building-tip: #0055b8;
 
 // Font Families
 // =====================

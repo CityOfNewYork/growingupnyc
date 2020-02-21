@@ -77,6 +77,13 @@
   width: 100%;
 }
 
+.signup-form__input--mid {
+  width: 100%;
+  @include media($bp-medium) {
+    width: 60%;
+  }
+}
+
 // Signup Form Field
 //
 // .is-error - Error state
@@ -136,6 +143,7 @@
 //
 // Inner content within a label. The data-content
 .signup-form__label-content {
+  transition: transform 250ms ease-in-out;
   color: $color-secondary;
   display: block;
   overflow: hidden;
@@ -143,10 +151,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100%;
-}
-
-.csstransforms3d .signup-form__label-content {
-  transition: transform 250ms ease-in-out;
 
   &:after {
     bottom: 100%;
@@ -159,6 +163,14 @@
     position: absolute;
     text-transform: uppercase;
     width: 100%;
+  }
+
+  &--strong-blue {
+    color: $strong-blue;
+    &:after {
+      color: $strong-blue;
+    }
+
   }
 }
 
@@ -247,4 +259,12 @@
 
 .signup-form-intro {
   padding-bottom: rem-calc(15);
+}
+
+.send__success {
+  display: none;
+}
+
+.send_placeholder {
+  display: none;
 }

@@ -32,18 +32,6 @@ if ( $post->post_type == 'age' ) {
       'terms' => $age_group_id
     )
   ), true );
-  // $num_remaining = 3 - count($upcoming_events);
-  // if ($num_remaining > 0) {
-  //   $remaining_events = GunySite::get_featured_events($num_remaining, array(
-  //     array(
-  //       'taxonomy' => 'age_group',
-  //       'field' => 'term_id',
-  //       'terms' => $post->age_group->id,
-  //       'operator' => 'NOT IN'
-  //     )
-  //   ), false );
-  //   $upcoming_events = array_merge($upcoming_events, $remaining_events);
-  // }
   $context['upcoming_events'] = $upcoming_events;
 } elseif ( $post->post_type == 'program' ) {
   $programs_cat = $post->terms('programs_cat');
@@ -64,6 +52,7 @@ if ( $post->post_type == 'age' ) {
   }
 }
 
+
 // Generation NYC homepage declaration
 if($post->post_type == 'page' && strpos($post->post_name, 'generationnyc') !== false){
   $templates = array( 'micro-site-homepage.twig' );
@@ -73,9 +62,14 @@ else{
 }
 $context['post'] = $post;
 
-// New codes by amalan for sms intergration
+// SHARE - SMS
 $context['shareAction'] = admin_url( 'admin-ajax.php' );
 $context['shareHash'] = \SMNYC\hash($post->link);
+if($context['is_generation']) {
+  $context['shareTemplate'] = "generationnyc-".$post->post_type;
+} else {
+  $context['shareTemplate'] = "growingupnyc-".$post->post_type;
+}
 
 // top menu widget
 $context['top_widget'] = Timber::get_widgets('top_widget');

@@ -23,7 +23,6 @@
   padding-top: 10px;
   margin: 0 0 35px;
   text-align: center;
-  @include text-uppercase;
 
   @include media($bp-large) {
     padding-top: 0;

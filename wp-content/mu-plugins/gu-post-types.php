@@ -172,6 +172,37 @@ class GUPostTypes {
         )
       )
     );
+
+    register_post_type(
+      'brain-building-tip',
+      array(
+        'labels' => array(
+          'name' => 'Brain Building Tips',
+          'singular_name' => 'Brain Building Tip',
+          'add_new_item' => 'Add New Brain Building Tip',
+          'edit_item' => 'Edit Brain Building Tip',
+          'new_item' => 'New Brain Building Tip',
+          'view_item' => 'View Brain Building Tip',
+          'search_items' => 'Search Brain Building Tip',
+          'not_found' =>  'No Brain Building Tip Found',
+          'not_found_in_trash' => 'No Brain Building Tip found in trash',
+          'all_items' => 'All Brain Building Tips',
+          'archives' => 'Brain Building Tip Archives',
+          'insert_into_item' => 'Insert into Brain Building Tip',
+          'uploaded_to_this_item' => 'Uploaded to this Brain Building Tip'
+        ),
+        'public' => true,
+        'menu_position' => 26,
+        'menu_icon' => get_template_directory_uri().'/assets/img/gunyc-admin-icon.png',
+        'show_in_rest' => true,
+        'supports' => array('title', 'excerpt'),
+        'has_archive' => true,
+        'rewrite' => array(
+          'slug' => 'brainbuilding',
+          'with_front' => false
+        )
+      )
+    );
   }
 
   /* Creates the taxonomies - will use value entered in custom fields in GUNY Settings, otherwise will default */
@@ -190,7 +221,7 @@ class GUPostTypes {
 
     register_taxonomy(
       'age_group',
-      array('age', 'tribe_events', 'program', 'summer-guide', 'afterschool-guide'),
+      array('age', 'tribe_events', 'program', 'summer-guide', 'afterschool-guide', 'brain-building-tip'),
       array(
         'label' => (check_taxonomy('field_5ddd45a1bccba') !='' ? 
             __(get_field('field_5ddd45a1bccba', 'option')) : __( 'Age Groups' )),
@@ -241,6 +272,18 @@ class GUPostTypes {
       array(
         'label' => (check_taxonomy('field_5ddd463dbccbd') !='' ? 
             __(get_field('field_5ddd463dbccbd', 'option')) : __( 'Activity Type' )),
+        'hierarchical' => true,
+        'rewrite' => false,
+        'show_in_rest' => true
+      )
+    );
+    
+    register_taxonomy(
+      'tip_category',
+      array('brain-building-tip'),
+      array(
+        'label' => (check_taxonomy('field_5df8f05f88771') !='' ? 
+            __(get_field('field_5df8f05f88771', 'option')) : __( 'Tip Category' )),
         'hierarchical' => true,
         'rewrite' => false,
         'show_in_rest' => true

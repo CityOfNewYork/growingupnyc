@@ -251,8 +251,9 @@ class ShareForm {
    */
   _showSuccess(msg) {
     let $elParents = $(this._el).parents('.c-tip-ms__topics');
-    $('#phone').attr("placeholder", Utility.localize(msg));
-    $('#smsbutton').text("Send Another");
+    $('#phone').attr("placeholder", $('.send_placeholder').text());
+    $('span.send').hide();
+    $('span.send__success').show();
     $('#sms-form-msg').addClass(ShareForm.CssClass.SUCCESS).text('');
     $elParents.removeClass('success-js');
     $elParents.addClass('success-js');

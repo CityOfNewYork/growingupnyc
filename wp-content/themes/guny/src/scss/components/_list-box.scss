@@ -78,7 +78,6 @@
 }
 
 .c-list-box--primary .c-list-box__heading {
-  @include text-uppercase;
   padding: rem-calc(12 20);
 
   @include media($bp-large) {
@@ -143,6 +142,7 @@
   display: block;
   @include font-size-large;
   font-weight: $font-weight-medium;
+  line-height: rem-calc(28);
 }
 
 .c-list-box--primary .c-list-box__subheading {
@@ -205,8 +205,6 @@
 }
 
 .c-list-box--secondary .c-list-box__subitem {
-  @include text-uppercase;
-
   &:focus {
     background: $color-secondary;
   }

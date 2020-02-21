@@ -37,7 +37,9 @@
           </span>
           {{ page_title }}
         </h1>
-        <p class="c-hero__tagline">{{ page_tagline }}</p>
+        <div class="c-hero__tagline">
+          {{ page_tagline }}
+        </div>
       </div>
 
       <svg class="c-hero__frill" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 404 359" >
@@ -60,7 +62,75 @@
 {% block list_sidebar %}
   {% set colors_head = 'bg-very-dark-blue' %}  
   {% set colors_content = 'bg-strong-blue' %}  
-  {% include ['partials/tax-filters.twig'] %}
+  <div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false" v-cloak>
+
+    {# program types #}
+    <div class="c-list-box__item">
+      <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="type-filter-heading">{{ __(afterschool_category_heading, 'guny') }}</h3>
+      <ul class="js-accordion__content c-list-box__content {{colors_content}}" id="type-filter-panel">
+        <li class="c-list-box__subitem" v-if="afterschoolTypes!=null">
+          <label class="checkbox" >
+            <input type="checkbox" v-model="checkedAllAfterschoolTypes" class="checkbox__field" @change="selectAllAfterschoolTypes">
+            <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+            {{ __('Select All', 'guny') }}
+          </label>
+        </li>
+        <li class="c-list-box__subitem" v-for="category in afterschoolTypes">
+          <label class="checkbox" :for="category.slug">
+            <input type="checkbox"  :id="category.slug" :value="category.slug" v-model="checkedAfterschoolType" class="checkbox__field">
+            <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+            v{ category.name }
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    {# age groups #}
+    <div class="c-list-box__item">
+      <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="age-filter-heading">{{ __(age_group_heading, 'guny') }}</h3>
+      <ul class="js-accordion__content c-list-box__content {{colors_content}}" id="age-filter-panel">
+
+        <li class="c-list-box__subitem" v-if="ageGroups!=null">
+          <label class="checkbox" >
+            <input type="checkbox" v-model="checkedAllAges" class="checkbox__field" @change="selectAllAges">
+            <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+            {{ __('Select All', 'guny') }}
+          </label>
+        </li>
+
+        <li class="c-list-box__subitem" v-for="age in ageGroups" v-if="age.name!='Everyone'">
+          <label class="checkbox" :for="age.slug">
+            <input type="checkbox" :id="age.slug" :value="age.slug" v-model="checkedAgeGroup" class="checkbox__field">
+            <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+            v{ age.name }
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    {# borough #}
+    <div class="c-list-box__item" v-if="posttype=='afterschool-guide'">
+      <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="age-filter-heading">{{ __(borough_heading, 'guny') }}</h3>
+      <ul class="js-accordion__content c-list-box__content {{colors_content}}" id="age-filter-panel">
+
+        <li class="c-list-box__subitem" v-if="boroughNames!=null">
+          <label class="checkbox" >
+            <input type="checkbox" v-model="checkedAllBoroughs" class="checkbox__field" @change="selectAllBoroughs">
+            <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+            {{ __('Select All', 'guny') }}
+          </label>
+        </li>
+
+        <li class="c-list-box__subitem" v-for="borough in boroughNames">
+          <label class="checkbox" :for="borough.slug">
+            <input type="checkbox" :id="borough.slug" :value="borough.slug" v-model="checkedBorough" class="checkbox__field">
+            <svg class="checkbox__indicator"><use xlink:href="#icon-check"></use></svg>
+            v{ borough.name }
+          </label>
+        </li>
+      </ul>
+    </div>
+  </div>
 {% endblock %}
 {# end of Sidebar #}
 
@@ -96,20 +166,6 @@
             v{ post.acf.plain_text_date}
           </div>
 
-
-          <div class="c-card__tags" v-if="post.afterschool_programs_cat">
-            <span v-for="term in post.afterschool_programs_cat"> 
-              <a :href="'?afterschool_category=' + term.slug" class="button--pill bg-strong-blue">v{ term.name }</a>
-            </span>
-            <span v-for="term in post.age_group"> 
-              <a :href="'?ages=' + term.slug" class="button--pill bg-very-dark-blue button--pill--alt">v{ term.name }</a>
-            </span>
-          </div>
-
-          <hr class="c-card__cta-divider" v-if="post.acf.cta_title!=''">
-          <a class="c-card__cta" :href="post.acf.cta_href" target="_blank" rel="nofollow" v-if="post.acf.cta_new_window">v{ post.acf.cta_title }</a>
-          <a class="c-card__cta" :href="post.acf.cta_href" v-if="!post.acf.cta_new_window">v{ post.acf.cta_title }</a>
-
           <div class="c-card__body">
             v{ post.excerpt }
           </div>
@@ -125,6 +181,19 @@
               Locations in all boroughs
             </span>
           </p>
+
+          <div class="c-card__tags" v-if="post.afterschool_programs_cat">
+            <span v-for="term in post.afterschool_programs_cat"> 
+              <a :href="'?afterschool_category=' + term.slug" class="button--pill bg-strong-blue">v{ term.name }</a>
+            </span>
+            <span v-for="term in post.age_group"> 
+              <a :href="'?ages=' + term.slug" class="button--pill bg-very-dark-blue button--pill--alt">v{ term.name }</a>
+            </span>
+          </div>
+
+          <hr class="c-card__cta-divider" v-if="post.acf.cta_title!=''">
+          <a class="c-card__cta" :href="post.acf.cta_href" target="_blank" rel="nofollow" v-if="post.acf.cta_new_window">v{ post.acf.cta_title }</a>
+          <a class="c-card__cta" :href="post.acf.cta_href" v-if="!post.acf.cta_new_window">v{ post.acf.cta_title }</a>
         </div>
       </div>
       <p class="type--no-results" v-if="errorMsg">{{ __('Sorry, we don’t have any programs that match those filters. For more results, try different filters or <a href="/afterschool">reset your filters</a>.', 'guny') }}</p>

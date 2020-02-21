@@ -243,12 +243,14 @@
   &:focus {
     background: $very-dark-blue-1;
     border-color: $very-dark-blue-1;
+    color: $white;
   }
 
   .no-touchevents & {
     &:hover {
       background: $very-dark-blue-1;
       border-color: $very-dark-blue-1;
+      color: $white;
     }
   }
 }

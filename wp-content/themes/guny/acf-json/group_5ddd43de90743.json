@@ -115,6 +115,25 @@
       "prepend": "",
       "append": "",
       "maxlength": ""
+    },
+    {
+      "key": "field_5df8f05f88771",
+      "label": "Tip Category",
+      "name": "tip_category",
+      "type": "text",
+      "instructions": "The label for Brain Building Tip.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
     }
   ],
   "location": [

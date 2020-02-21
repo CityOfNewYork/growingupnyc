@@ -21,6 +21,10 @@
   border: 1px solid transparent;
   border-radius: rem-calc(3);
   color: $color-text;
+
+  &--shaded {
+    background: $light-gray-2;
+  }
   @include font-size-small;
   font-weight: $font-weight-semibold;
   padding: rem-calc(10 15);
@@ -240,6 +244,12 @@ input[type="search"].form-field {
   border: 2px solid $purple;
 }
 
+// black
+.checkbox__indicator-dark-gray {
+  @extend .checkbox__indicator;
+  border: 2px solid $dark-gray;
+}
+
 .checkbox__field:checked + .checkbox__indicator-purple {
   color: $dark-purple;
 }
@@ -259,4 +269,31 @@ input[type="search"].form-field {
 
 .checkbox__field:checked + .checkbox__indicator-orange {
   color: $vivid-orange;
+}
+
+.input__field {
+  border: 2px solid transparent;
+  width: 100%;
+
+  &:focus {
+    border-color: $dark-gray;
+    outline: none;
+  }
+
+  &.is-error {
+    border-color: $color-error;
+  }
+}
+
+.input__field-bg-very-light-gray {
+  @extend .input__field;
+  background: $very-light-gray;
+
+  &:focus {
+    border-color: $strong-blue;
+  }
+
+  &.is-error {
+    border-color: $color-error;
+  }
 }

@@ -109,6 +109,11 @@
   border-color: $strong-blue !important;
 }
 
+.text-strong-blue,
+.hover\:text-strong-blue:hover {
+  color: $strong-blue !important;
+}
+
 //
 .bg-very-dark-blue,
 .hover\:bg-very-dark-blue:hover {
@@ -134,6 +139,31 @@
 .stop-color-blue-2,
 .hover\:stop-color-blue-2:hover {
   stop-color: $blue-2 !important;
+}
+
+.bg-strong-pink,
+.hover\:bg-strong-pink:hover {
+  background-color: $strong-pink !important;
+}
+
+.stop-color-strong-pink,
+.hover\:stop-color-strong-pink:hover {
+  stop-color: $strong-pink !important;
+}
+
+.bg-very-light-gray,
+.hover\:bg-very-light-gray:hover {
+  background-color: $very-light-gray !important;
+}
+
+.bg-dark-gray,
+.hover\:bg-dark-gray:hover {
+  background-color: $dark-gray !important;
+}
+
+.stop-color-dark-gray,
+.hover\:stop-color-dark-gray:hover {
+  stop-color: $dark-gray !important;
 }
 
 //
@@ -162,8 +192,54 @@
   background-color: $dark-blue !important;
 }
 
+.bg-black,
+.hover\:bg-black:hover {
+  background-color: $black !important;
+}
+
 .text-gray,
 .hover\:text-gray:hover {
   color: $gray !important;
+}
+
+.bg-color-brain-building-tip,
+.hover\:bg-color-brain-building-tip:hover {
+  background-color: $color-brain-building-tip !important;
+}
+
+// Age Specific Colors
+.border-color-baby,
+.hover\:border-color-baby:hover {
+  border-color: $color-baby !important;
+}
+
+.bg-color-baby,
+.hover\:bg-color-baby:hover {
+  background-color: $color-baby !important;
+}
+
+.border-color-toddler,
+.hover\:border-color-toddler:hover {
+  border-color: $color-toddler !important;
+}
+
+.bg-color-toddler,
+.hover\:bg-color-toddler:hover {
+  background-color: $color-toddler !important;
+}
+
+.border-color-pre-schooler,
+.hover\:border-color-pre-schooler:hover {
+  border-color: $color-pre-schooler !important;
+}
+
+.bg-color-pre-schooler,
+.hover\:bg-color-pre-schooler:hover {
+  background-color: $color-pre-schooler !important;
+}
+
+.bg-color-primary,
+.hover\:bg-color-primary:hover {
+  background-color: $color-primary !important;
 }
 // End Tailwind Utility

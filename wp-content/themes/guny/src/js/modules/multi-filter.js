@@ -45,7 +45,10 @@ class ProgramsList {
         activityTypes: null,
         checkedActivityType: [],
         checkedAllActivityTypes: false,
+        checkedActivityType: [],
+        checkedAllActivityTypes: false,
         programPage: 1,
+        currentPage: 1,
         maxPages: 1,
         errorMsg: false,
         isLoading: true,
@@ -67,7 +70,7 @@ class ProgramsList {
           axios.get(this.boroughURL),
           axios.get(this.afterschoolTypeURL),
           axios.get(this.summerTypeURL),
-          axios.get(this.activityTypeURL)
+          axios.get(this.activityTypeURL),
           ])
           .then(axios.spread((catResponse, ageResponse, boroughResponse, afterschoolResponse, summerResponse, activityResponse) => {
             this.programTypes = catResponse.data;
@@ -96,7 +99,8 @@ class ProgramsList {
         selectAllActivityTypes: ProgramsList.selectAllActivityTypes,
         selectAllSummerTypes: ProgramsList.selectAllSummerTypes,
         selectAllBoroughs: ProgramsList.selectAllBoroughs,
-        mobileScroll: ProgramsList.mobileScroll
+        mobileScroll: ProgramsList.mobileScroll,
+        loadMore: ProgramsList.loadMore
       },
       created () {
         window.addEventListener('scroll', this.mobileScroll);
@@ -118,6 +122,7 @@ class ProgramsList {
     });
   }
 }
+
 /**
  * Request to get the programs and update router
  **/
@@ -126,7 +131,7 @@ ProgramsList.getPrograms = function() {
   ProgramsList.showLoader(this, this.programs)
 
   let filters = ProgramsList.generateFilterURL(this);
-  url = url + '&orderby=menu_order&order=asc&' + filters;
+  url = url + '&orderby=date&order=desc' + '&' +filters;
 
   // update the query
   if ( this.programPage == 1){
@@ -143,6 +148,8 @@ ProgramsList.getPrograms = function() {
   }else {
     this.$router.push({query: {category: this.checkedProgramType, ages: this.checkedAgeGroup, afterschool_category: this.checkedAfterschoolType, interests: this.checkedSummerType, boroughs: this.checkedBorough, page: this.programPage }});
   }
+
+  this.currentPage = 1;
 
   axios
     .get(url)
@@ -322,6 +329,25 @@ ProgramsList.parseQuery = function() {
     }
   }
 
+  if (query.tip_category == 'all') {
+    this.checkedAllTipTypes = true;
+    this.checkedTipType = this.tipTypes.map(a => a.slug);
+  }
+  if (!_.isEmpty(query.tip_category) && query.tip_category != 'all') {
+    this.checkedAllTipTypes = false;
+    if (_.isArray(query.tip_category)) {
+      if (query.tip_category.every((val, i, arr) => val === arr[0])) {
+        query.tip_category = query.tip_category[0];
+      } else {
+        queryArr = ProgramsList.getIds(this.tipTypes, query.tip_category.map(String));
+        this.checkedTipType = queryArr.map(value => value.slug)
+      }
+    } else {
+      let index = this.tipTypes.map(function (e) { return e.slug; }).indexOf(query.tip_category);
+      this.checkedTipType.push(this.tipTypes[index].slug);
+    }
+  }
+
   if(query.boroughs == 'all'){
     this.checkedAllBoroughs = true;
     this.checkedBorough = this.boroughNames.map(a => a.slug);
@@ -485,6 +511,7 @@ ProgramsList.mobileScroll = function() {
     $('.loader-mobile').fadeOut();
   }
 }
+
 
 export default ProgramsList;
 

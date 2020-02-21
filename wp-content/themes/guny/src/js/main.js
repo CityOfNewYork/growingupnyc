@@ -1,6 +1,7 @@
 import accordion from './modules/accordion.js';
 import simpleAccordion from './modules/simpleAccordion.js';
 import offcanvas from './modules/offcanvas.js';
+import ContentShow from './modules/contentShow.js';
 import overlay from './modules/overlay.js';
 import stickyNav from './modules/stickyNav.js';
 import sectionHighlighter from './modules/sectionHighlighter.js';
@@ -17,6 +18,7 @@ import rotatingTextAnimation from './modules/rotatingTextAnimation.js';
 import Search from './modules/search.js';
 // import EventsList from './modules/events.js';
 import ProgramsList from './modules/multi-filter.js';
+import BrainBuilding from './modules/brainbuilding.js';
 /* eslint-disable no-unused-vars */
 import toggleOpen from './modules/toggleOpen.js';
 /* eslint-enable no-unused-vars */
@@ -64,14 +66,18 @@ window.accordion = accordion;
 (function(window, $) {
   'use strict';
 
-  var post_path = window.location.pathname.split('/');
-  var arr_types = ['programs', 'afterschool', 'summer'];
+  new ContentShow();
 
-  if((($.inArray(post_path[1], arr_types) > -1) && post_path[2] == "") ||
-     (post_path[1] == "es" && ($.inArray(post_path[2], arr_types) > -1) && post_path[3] == "")
-    ){
-    new ProgramsList().init();
-  }
+  // initialize vue on specific pages
+  if ($('div').find('[id^=vue]').attr('id') != '' 
+      && $('div').find('[id^=vue]').attr('id') != undefined
+      && !(window.location.pathname.indexOf('events') >= 0)) {
+    if (window.location.pathname.indexOf('brainbuilding') >= 0){
+      new BrainBuilding().init();
+    } else {
+      new ProgramsList().init();
+    }
+  } 
 
   // if (window.location.pathname.indexOf('events') >= 0) {
   //   new EventsList().init();

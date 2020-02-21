@@ -37,6 +37,12 @@
     text-align: left;
     padding: rem-calc(92 40 80);
   }
+
+}
+
+.c-hero-cover {
+  background-image: linear-gradient(rgba(0, 85, 184, .2), rgba(0, 85, 184, .2));
+  background-size: cover;
 }
 
 .c-hero--light {
@@ -75,6 +81,17 @@
   }
 }
 
+.c-hero--medium {
+
+  @include media($bp-medium) {
+    padding: rem-calc(165 40 80);
+  }
+
+  @include media($bp-xlarge) {
+    padding: rem-calc(227 80 80);
+  }
+}
+
 .c-hero--long-text {
   text-align: left;
 }
@@ -96,7 +113,6 @@
   @include font-size-xxx-large;
   line-height: 1;
   padding-top: rem-calc(($sticker-size-mobile / 2) + 3);
-  text-transform: uppercase;
   // Set z-index for text to appear on top of bg image
   z-index: 1;
 }
@@ -147,9 +163,6 @@
 
 // Hero Tagline
 .c-hero__tagline {
-  font-family: $font-family-display;
-  font-size: rem-calc($font-size-xx-large * $font-size-ratio);
-  font-weight: $font-weight-extrablack;
   line-height: 1.2;
   margin-top: rem-calc(10);
   margin-bottom: rem-calc(15);
@@ -157,7 +170,7 @@
   z-index: 1; // Set z-index for text to appear on top of bg image
 
   @include media($bp-medium) {
-    font-size: rem-calc($font-size-xx-large);
+    font-size: rem-calc($font-size-x-large);
   }
 
   @include media($bp-large) {
@@ -182,6 +195,29 @@
   @include media($bp-large) {
     @include span-columns(9);
     @include omega;
+  }
+}
+
+.c-hero--medium .c-hero__tagline {
+  padding-top: rem-calc(165);
+
+  h2 {
+    line-height: 1;
+    margin: rem-calc(0 0 6);
+  }
+
+  @include media($bp-medium) {
+    padding-top: 0;
+    line-height: 1.2;
+    margin-top: rem-calc(10);
+    margin-bottom: rem-calc(15);
+    position: relative;
+    z-index: 1;
+
+    h2 {
+      margin: rem-calc(0 0 20);
+      line-height: 1.3;
+    }
   }
 }
 

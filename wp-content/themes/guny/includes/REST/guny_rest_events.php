@@ -1,8 +1,9 @@
 <?php
 
 /**
- * add tribe_events endpoint to the rest API
+ * Tribe Events
  */
+
 add_action( 'init', 'get_rest_tribe_events', 25 );
 
 function get_rest_tribe_events() {

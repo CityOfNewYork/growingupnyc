@@ -1,0 +1,101 @@
+//SMS form
+.form-container {
+  display: block;
+  justify-content: center;
+
+  @include media($bp-small) {
+    display: flex;
+    align-items: baseline;
+  }
+}
+
+.sms-form-wrapper {
+  display: inline-block;
+  width: 100%;
+  max-width: 568px;
+
+  button {
+    margin-top: rem-calc(20);
+    @include media($bp-medium) {
+      margin-top: 0;
+    }
+  }
+
+  &--full {
+    max-width: 100%;
+    button {
+      margin-top: rem-calc(20);
+      @include media($bp-medium) {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+.sms-form__input {
+  width: inherit;
+}
+
+.sms-form__input--long {
+  width: 100%;
+  text-align: left;
+  font-size: rem-calc(15);
+  margin-right: rem-calc(10) !important;
+
+  @include media($bp-medium) {
+    width: rem-calc(240);
+  }
+
+  @include media($bp-xlarge) {
+    width: rem-calc(352);
+  }
+}
+
+.sms-form__spinner {
+  width: rem-calc(34);
+  right: 8px;
+  top: 0;
+  position: absolute;
+}
+
+.sms-form__submit {
+  min-width: rem-calc(180);
+  @include media($bp-medium) {
+    min-width: rem-calc(194);
+  }
+}
+
+//Recaptcha
+.recaptcha-js {
+  background: $light-purple-1;
+
+  .c-tip__sticker {
+    background: $light-purple-1;
+  }
+}
+
+//Succes
+// .success-js .sms-form-wrapper {
+//   max-width: 610px;
+// }
+
+.g-recaptcha,
+.error-message,
+.c-validation {
+  margin-top: rem-calc(15);
+}
+
+.g-recaptcha {
+  transform-origin: left top;
+  margin-bottom: rem-calc(15);
+}
+
+.csstransforms3d .sms-form__label {
+  bottom: 100%;
+  transform: translate3d(0, #{rem-calc(35)}, 0);
+  transition: transform 250ms ease-in-out;
+}
+
+.csstransforms3d .is-filled .sms-form__label {
+  transform: translate3d(0, 0, 0);
+}

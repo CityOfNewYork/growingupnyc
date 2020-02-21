@@ -38,7 +38,7 @@
           </span>
           {{ page_title }}
         </h1>
-        <p class="c-hero__tagline">{{ page_tagline }}</p>
+        <div class="c-hero__tagline">{{ page_tagline }}</div>
       </div>
 
       <svg class="c-hero__frill" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 404 359" >
@@ -65,7 +65,7 @@
 <div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false" v-cloak>
 
 <div class="c-list-box__item">
-    <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="type-filter-heading">{{ __('Activity Types', 'guny') }}</h3>
+    <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="type-filter-heading">{{ __(activity_type_heading, 'guny') }}</h3>
     <ul class="js-accordion__content c-list-box__content {{colors_content}}" id="type-filter-panel">
         <li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}">
             <label class="checkbox">
@@ -91,7 +91,7 @@
 
 
   <div class="c-list-box__item">
-    <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="type-filter-heading">{{ __('Interests', 'guny') }}</h3>
+    <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="type-filter-heading">{{ __(summer_category_heading, 'guny') }}</h3>
     <ul class="js-accordion__content c-list-box__content {{colors_content}}" id="type-filter-panel">
       <li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}">
         <label class="checkbox" >
@@ -110,7 +110,7 @@
     </ul>
   </div>
   <div class="c-list-box__item">
-    <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="age-filter-heading">{{ __('Ages', 'guny') }}</h3>
+    <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="age-filter-heading">{{ __(age_group_heading, 'guny') }}</h3>
     <ul class="js-accordion__content c-list-box__content {{colors_content}}" id="age-filter-panel">
 
       <li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}">
@@ -131,7 +131,7 @@
     </ul>
   </div>
   <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="age-filter-heading">{{ __('Boroughs', 'guny') }}</h3>
+      <h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="age-filter-heading">{{ __(borough_heading, 'guny') }}</h3>
       <ul class="js-accordion__content c-list-box__content {{colors_content}}" id="age-filter-panel">
 
         <li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}">

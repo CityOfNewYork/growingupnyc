@@ -1,7 +1,8 @@
 <?php 
+/**
+ * Programs WP Rest API
+ */
 
-//###########################################
-// PROGRAMS
 // register routes and fields for programs rest endpoint
 add_action( 'rest_api_init', 'register_rest_programs' );
 add_filter( 'rest_program_collection_params', 'filter_add_rest_orderby_params', 10, 1 );

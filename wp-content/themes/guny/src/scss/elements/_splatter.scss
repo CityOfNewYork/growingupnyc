@@ -1,0 +1,35 @@
+// Paint Splatter
+.splatter-1 {
+  display: none;
+  position: absolute;
+  left: -50%;
+  top: 0;
+  opacity: .75;
+  @include media($bp-medium) {
+    display: block;
+  }
+}
+
+.splatter-2 {
+  position: absolute;
+  opacity: .75;
+  bottom: -50%;
+  left: -90%;
+  width: 200%;
+
+  @include media($bp-large) {
+    left: -50%;
+    width: auto;
+  }
+}
+
+.splatter-3 {
+  display: none;
+  position: absolute;
+  opacity: .75;
+  top: 0;
+  right: -50%;
+  @include media($bp-medium) {
+    display: block;
+  }
+}

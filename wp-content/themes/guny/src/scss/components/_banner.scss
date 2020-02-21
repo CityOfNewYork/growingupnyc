@@ -179,8 +179,6 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   position: relative;
   text-decoration: none;
 
-  @include text-uppercase;
-
   &:focus {
     color: $color-secondary;
   }
@@ -192,7 +190,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   }
 
   @include media($bp-medium) {
-    font-size: rem-calc($font-size-small);
+    font-size: rem-calc($font-size-regular);
     letter-spacing: 1.1px;
   }
 }

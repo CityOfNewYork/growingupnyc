@@ -89,7 +89,7 @@
 
 .c-side-hero__title__large {
   @include font-size-xxx-large;
-  text-transform: uppercase;
+  text-transform: capitalize;
   white-space: nowrap;
 
   .rotating-text__entry {

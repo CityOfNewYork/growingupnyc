@@ -25,7 +25,7 @@
 
     {# categories #}
     <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{ __('Program Types', 'guny') }}</h3>
+      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{ __(program_category_heading, 'guny') }}</h3>
       <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
         <li class="c-list-box__subitem" v-if="programTypes!=null">
           <label class="checkbox" >
@@ -46,7 +46,7 @@
 
     {# age groups #}
     <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{ __('Ages', 'guny') }}</h3>
+      <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{ __(age_group_heading, 'guny') }}</h3>
       <ul class="js-accordion__content c-list-box__content" id="age-filter-panel">
 
         <li class="c-list-box__subitem" v-if="ageGroups!=null">
@@ -96,6 +96,10 @@
             <p><strong>v{post.acf.program_name}</strong></p>
             <p>v{post.acf.government_agency}</p>
           </div>
+
+          <div class="c-card__body">
+            v{ post.excerpt }
+          </div>
           
           <div class="c-card__tags" v-if="post.programs_cat">
             <span v-for="term in post.programs_cat"> 
@@ -104,10 +108,6 @@
             <span v-for="term in post.age_group"> 
               <a :href="'?ages=' + term.slug" class="button--pill button--pill--alt">v{ term.name }</a>
             </span>
-          </div>
-          
-          <div class="c-card__body">
-            v{ post.excerpt }
           </div>
         </div>
       </div>

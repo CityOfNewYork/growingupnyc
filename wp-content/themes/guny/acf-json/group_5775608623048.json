@@ -3,6 +3,25 @@
     "title": "Developmental Milestones",
     "fields": [
         {
+            "key": "field_5e3464bfe7940",
+            "label": "Milestones Pretext",
+            "name": "milestones_pretext",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_577560e43a689",
             "label": "Milestones Heading",
             "name": "milestones_heading",
@@ -19,28 +38,7 @@
             "placeholder": "",
             "prepend": "",
             "append": "",
-            "maxlength": "",
-            "readonly": 0,
-            "disabled": 0
-        },
-        {
-            "key": "field_59947ced80d3a",
-            "label": "Milestones Pretext",
-            "name": "milestones_pretext",
-            "type": "textarea",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "How your child plays, learns, speaks, and acts offers important clues about your child's development.",
-            "placeholder": "",
-            "maxlength": "",
-            "rows": "",
-            "new_lines": "wpautop"
+            "maxlength": ""
         },
         {
             "key": "field_57991cc96c5f4",
@@ -56,8 +54,8 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "block",
             "button_label": "Add Row",
             "sub_fields": [
@@ -98,8 +96,8 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "block",
             "button_label": "Add Row",
             "sub_fields": [
@@ -140,8 +138,8 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "block",
             "button_label": "Add Row",
             "sub_fields": [
@@ -182,8 +180,8 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "block",
             "button_label": "Add Row",
             "sub_fields": [
@@ -224,8 +222,8 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "block",
             "button_label": "Add Row",
             "sub_fields": [
@@ -251,6 +249,25 @@
             ]
         },
         {
+            "key": "field_5e330e2c19f4d",
+            "label": "Warning Signs Heading",
+            "name": "warning_signs_heading",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_5775680e3a68f",
             "label": "Warning Signs",
             "name": "warning_signs",
@@ -264,8 +281,8 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "block",
             "button_label": "Add Row",
             "sub_fields": [
@@ -308,7 +325,6 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
-    "description": "",
-    "modified": 1472145424
+    "active": true,
+    "description": ""
 }

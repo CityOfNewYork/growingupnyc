@@ -1,0 +1,51 @@
+// Tip Cards
+.c-tip-card {
+  background: $color-background;
+  padding: rem-calc(25 25);
+  position: relative;
+
+  h3 {
+    margin: 0;
+  }
+}
+
+// Tip Card Header
+.c-tip-card__header {
+  margin: rem-calc(0 0 16);
+  font-family: $font-family-display;
+  display: flex;
+  align-items: center;
+}
+
+// Tip Card Title
+.c-tip-card__title {
+  color: $black;
+  font-family: $font-family-display;
+  font-size: rem-calc(22);
+  font-weight: 900;
+  margin-left: rem-calc(12);
+}
+
+.c-tip-card__content {
+  margin: rem-calc(0 0 12);
+}
+
+.c-tip-card__banner {
+  padding: rem-calc(12);
+  background: $color-background;
+}
+
+.c-tip-card__banner__img {
+  width: 115px;
+}
+
+.c-tip-card__link {
+  color: $black;
+  font-weight: 900;
+  display: block;
+  margin: rem-calc(16 0 24);
+
+  &:hover {
+    color: $strong-blue;
+  }
+}

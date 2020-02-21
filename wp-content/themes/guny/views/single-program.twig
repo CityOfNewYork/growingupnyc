@@ -128,13 +128,19 @@
       </div>
     </div>
     {% endif %}
-  <div id='last-modified-date' class="o-content-container--compact">
-    <section class="u-top-spacing-small">
-      <div class="o-content-container--text s-wysiwyg text-gray">
-        <p>{{ __('Updated', 'GUNY-Single-Program') }} {{last_modified}}</p>
-      </div>
-    </section>
-  </div>
+
+    {% if options.gunyc_enable_sms_programs == 'Yes' %}
+      {% include 'components/form-share.twig' %}
+    {% endif %}
+
+    <div id='last-modified-date' class="o-content-container--compact">
+      <section class="u-top-spacing-small">
+        <div class="o-content-container--text s-wysiwyg text-gray">
+          <p>{{ __('Updated', 'GUNY-Single-Program') }} {{last_modified}}</p>
+        </div>
+      </section>
+    </div>
+
   </div> <!-- /.o-article -->
 </article> <!-- /.o-container -->
 {% endblock %}

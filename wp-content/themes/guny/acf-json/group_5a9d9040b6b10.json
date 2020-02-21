@@ -6,8 +6,7 @@
             "key": "field_5a9d9040cb271",
             "label": "Tagline",
             "name": "tagline",
-            "type": "text",
-            "value": null,
+            "type": "wysiwyg",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -17,17 +16,40 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
         },
         {
             "key": "field_5a9dbafbc4617",
             "label": "Hero Banner",
             "name": "hero_banner",
             "type": "image",
-            "value": null,
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_5e3ae9fb8700e",
+            "label": "Hero Mobile Image",
+            "name": "lp_hero_mobile_image",
+            "type": "image",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -65,7 +87,6 @@
     "hide_on_screen": [
         "the_content"
     ],
-    "active": 1,
-    "description": "",
-    "modified": 1520376606
+    "active": true,
+    "description": ""
 }

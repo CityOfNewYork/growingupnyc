@@ -1,0 +1,337 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Auto Post Scheduler\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-25 11:36-0500\n"
+"PO-Revision-Date: 2014-12-30 11:06-0500\n"
+"Last-Translator: \n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.1\n"
+
+#: auto-post-scheduler.php:35 auto-post-scheduler.php:229
+msgid "Auto Post Scheduler Options"
+msgstr "Auto Post Scheduler Opciones"
+
+#: auto-post-scheduler.php:35 auto-post-scheduler.php:192
+msgid "Auto Post Scheduler"
+msgstr "Auto Post Scheduler"
+
+#: auto-post-scheduler.php:52 auto-post-scheduler.php:244 auto-post-scheduler.php:260
+#: auto-post-scheduler.php:339
+msgid "hours"
+msgstr "horas"
+
+#: auto-post-scheduler.php:54 auto-post-scheduler.php:243 auto-post-scheduler.php:259
+#: auto-post-scheduler.php:338
+msgid "seconds"
+msgstr "segundo"
+
+#: auto-post-scheduler.php:62 auto-post-scheduler.php:245 auto-post-scheduler.php:261
+#: auto-post-scheduler.php:340
+msgid "days"
+msgstr "día"
+
+#: auto-post-scheduler.php:87
+msgid "Auto Post Scheduler Enabled!"
+msgstr "Auto Post Scheduler Activado!"
+
+#: auto-post-scheduler.php:89
+msgid "Error with wp_schedule_event for aps_auto_post_hook!"
+msgstr "Error con wp_schedule_event para aps_auto_post_hook!"
+
+#: auto-post-scheduler.php:99
+msgid "You do not have permission to manage options."
+msgstr "Usted no tiene permiso para administrar opciones."
+
+#: auto-post-scheduler.php:119
+msgid "Auto Post Scheduler Disabled!"
+msgstr "Auto Post Scheduler Discapacitado!"
+
+#: auto-post-scheduler.php:164
+msgid "Options Saved! New Auto Post Schedule time will be used after next auto post check."
+msgstr ""
+"Opciones Salvados! Nuevo Auto Post Scheduler tiempo será utilizado después del check puesto el "
+"próximo auto."
+
+#: auto-post-scheduler.php:169
+msgid "Options Saved!"
+msgstr "Opciones Salvados!"
+
+#: auto-post-scheduler.php:177
+msgid "Unable to open Log File for writing! Check permissions."
+msgstr "No se puede abrir el archivo de registro para escribir! Compruebe los permisos."
+
+#: auto-post-scheduler.php:181
+msgid "Auto Post Scheduler Log file cleared"
+msgstr "Auto Post Scheduler Archivo de registro borrado"
+
+#: auto-post-scheduler.php:194
+msgid "Support Forum"
+msgstr "Foro Atención al Cliente"
+
+#: auto-post-scheduler.php:195
+msgid "Leave a review"
+msgstr "Deje un comentario"
+
+#: auto-post-scheduler.php:196
+msgid "Instant Karma $1"
+msgstr "Donación $1"
+
+#: auto-post-scheduler.php:200
+msgid "Current Status:"
+msgstr "Estado actual:"
+
+#: auto-post-scheduler.php:200
+msgid "Enabled"
+msgstr "Activado"
+
+#: auto-post-scheduler.php:200
+msgid "Disabled"
+msgstr "Discapacitado"
+
+#: auto-post-scheduler.php:204
+msgid "Current server time:"
+msgstr "Hora actual del servidor:"
+
+#: auto-post-scheduler.php:209
+msgid "Next auto post check:"
+msgstr "Siguiente post auto check:"
+
+#: auto-post-scheduler.php:213
+msgid ""
+"Error: aps_auto_post_hook not scheduled, likely another plugin misuse of cron_schedules. See "
+"FAQ. (Trying to reset...)"
+msgstr ""
+"Error: aps_auto_post_hook no programado, probablemente otro mal uso de plug-in de "
+"cron_schedules. Ver el FAQ. (Tratar de restablecer ...)"
+
+#: auto-post-scheduler.php:219
+msgid "Disable Auto Post Scheduler"
+msgstr "Desactivar Auto Post Scheduler"
+
+#: auto-post-scheduler.php:221
+msgid "Enable Auto Post Scheduler"
+msgstr "Permitir Auto Post Scheduler"
+
+#: auto-post-scheduler.php:225
+msgid ""
+"This plugin will schedule 'auto post checks' to publish new posts and/or recycle old posts "
+"automatically."
+msgstr ""
+"Este plugin programará 'cheques post auto' para publicar nuevos mensajes y / o reciclar los "
+"viejos postes automáticamente."
+
+#: auto-post-scheduler.php:234
+msgid "Auto Post Schedule"
+msgstr "Auto Post Schedule"
+
+#: auto-post-scheduler.php:246
+msgid "Time or time range between each auto post check."
+msgstr "Intervalo de tiempo o de tiempo entre cada cheque auto post."
+
+#: auto-post-scheduler.php:250
+msgid "Start Scheduling Delay"
+msgstr "Iniciar Programación Delay"
+
+#: auto-post-scheduler.php:262
+msgid "Time delay before the first auto post check."
+msgstr "Retraso de tiempo antes de que el primer cheque auto post."
+
+#: auto-post-scheduler.php:266
+msgid "Limit to Post Type(s)"
+msgstr "Limitar a Tipo Post(s)"
+
+#: auto-post-scheduler.php:269
+msgid "Separate post types with commas"
+msgstr "Tipos de correos con comas"
+
+#: auto-post-scheduler.php:270
+msgid "If left blank, the plugin will only check for the default 'post' type"
+msgstr "Si se deja en blanco, el plugin sólo comprueba si el tipo 'post' por defecto"
+
+#: auto-post-scheduler.php:274
+msgid "Limit to Category ID(s)"
+msgstr "Limitar a categoría ID(s)"
+
+#: auto-post-scheduler.php:277
+msgid "Separate category IDs with commas"
+msgstr "Categoría identificaciones con comas"
+
+#: auto-post-scheduler.php:278
+msgid "If left blank, the plugin will check for posts from all categories"
+msgstr "Si se deja en blanco, el plugin buscará mensajes de todas las categorías"
+
+#: auto-post-scheduler.php:282
+msgid "Limit certain Day(s)"
+msgstr "Límite cierta Día(s)"
+
+#: auto-post-scheduler.php:284
+msgid "Mondays"
+msgstr "lunes"
+
+#: auto-post-scheduler.php:284 auto-post-scheduler.php:287 auto-post-scheduler.php:290
+#: auto-post-scheduler.php:293 auto-post-scheduler.php:296 auto-post-scheduler.php:299
+#: auto-post-scheduler.php:302
+msgid "Time range(s)"
+msgstr "Rango (s) Tiempo"
+
+#: auto-post-scheduler.php:285 auto-post-scheduler.php:288 auto-post-scheduler.php:291
+#: auto-post-scheduler.php:294 auto-post-scheduler.php:297 auto-post-scheduler.php:300
+#: auto-post-scheduler.php:303
+msgid "in 24-hour format"
+msgstr "en formato de 24 horas"
+
+#: auto-post-scheduler.php:287
+msgid "Tuesdays"
+msgstr "martes"
+
+#: auto-post-scheduler.php:290
+msgid "Wednesdays"
+msgstr "miércoles"
+
+#: auto-post-scheduler.php:293
+msgid "Thursdays"
+msgstr "jueves"
+
+#: auto-post-scheduler.php:296
+msgid "Fridays"
+msgstr "viernes"
+
+#: auto-post-scheduler.php:299
+msgid "Saturdays"
+msgstr "sábados"
+
+#: auto-post-scheduler.php:302
+msgid "Sundays"
+msgstr "domingos"
+
+#: auto-post-scheduler.php:304
+msgid "Separate hours with dashes and commas. Example: 0400-1230, 1500-2100"
+msgstr "horas separadas con guiones y comas. Ejemplo: 0400-1230, 1500-2100"
+
+#: auto-post-scheduler.php:305
+msgid "If left blank, all times are considered"
+msgstr "Si se deja en blanco, todos los tiempos son considerados"
+
+#: auto-post-scheduler.php:309
+msgid "Eligible Post Statuses?"
+msgstr "Elegible Mensaje Los estados?"
+
+#: auto-post-scheduler.php:311
+msgid "Drafts. If checked, drafts will be checked for posting."
+msgstr "Borradores. Si se marca, borradores serán comprobados por publicar."
+
+#: auto-post-scheduler.php:312
+msgid "Pending. If checked, pending posts will be checked for posting."
+msgstr "En espera. Si se selecciona, los mensajes pendientes serán revisados para su publicación."
+
+#: auto-post-scheduler.php:313
+msgid "Publish. If checked, published posts will be checked for posting/recycling."
+msgstr ""
+"Publicar. Si se selecciona, los mensajes publicados serán revisados para su publicación / "
+"reciclado."
+
+#: auto-post-scheduler.php:317
+msgid "Pick Random Post(s)?"
+msgstr "Escoja Random Post(s)?"
+
+#: auto-post-scheduler.php:319
+msgid "If checked, random eligible posts will be chosen."
+msgstr "Si se selecciona, se elegirán los puestos elegibles aleatorios."
+
+#: auto-post-scheduler.php:319
+msgid "If not checked, the oldest eligible posts will be posted first."
+msgstr "Si no está activada, los mensajes más antiguos elegibles serán publicados por primera vez."
+
+#: auto-post-scheduler.php:323
+msgid "Recycle Published Posts?"
+msgstr "Recicle Mensajes publicados?"
+
+#: auto-post-scheduler.php:325
+msgid "If checked, the oldest published posts will be re-published as a new post."
+msgstr ""
+"Si se selecciona, los mensajes publicados más antiguas se volverán a publicar como un nuevo "
+"puesto."
+
+#: auto-post-scheduler.php:325
+msgid ""
+"Will ONLY be used if no eligible posts are checked OR there are no eligible draft/pending posts "
+"left to publish."
+msgstr ""
+"Sólo se utilizará si se comprueban hay mensajes elegibles o no hay proyecto elegible / pendiente "
+"mensajes dejaron de publicar."
+
+#: auto-post-scheduler.php:329
+msgid "Minimum Recycle Age"
+msgstr "Mínimo Edad de reciclaje "
+
+#: auto-post-scheduler.php:341
+msgid "Posts must be older than this to be recycled."
+msgstr "Las entradas deben ser mayores de este para ser reciclados."
+
+#: auto-post-scheduler.php:345
+msgid "Number of Posts"
+msgstr "Número de Mensajes"
+
+#: auto-post-scheduler.php:348
+msgid ""
+"The number of eligible posts to publish OR number of published posts to recycle as new at each "
+"auto post check"
+msgstr ""
+"El número de puestos con derecho a publicar o número de mensajes publicados para reciclar como "
+"nueva en cada cheque auto post"
+
+#: auto-post-scheduler.php:353
+msgid "Log File"
+msgstr "archivo de registro"
+
+#: auto-post-scheduler.php:356
+msgid "Make sure the log file is writable by WordPress."
+msgstr "Asegúrese de que el archivo de registro se puede escribir con WordPress."
+
+#: auto-post-scheduler.php:363
+msgid "Update options"
+msgstr "opciones de actualización"
+
+#: auto-post-scheduler.php:364
+msgid "Clear Log File"
+msgstr "Archivo de registro de Claro"
+
+#: auto-post-scheduler.php:371
+msgid "Auto Post Scheduler log"
+msgstr "Auto Post Scheduler log"
+
+#: auto-post-scheduler.php:439
+#, php-format
+msgid "Error: %s time range of %s not recognized."
+msgstr "Error: %s rango de tiempo de %s no reconocido."
+
+#: auto-post-scheduler.php:514
+#, php-format
+msgid "POST id %d RECYCLED: '%s'"
+msgstr "ID %d del mensaje Reciclado: '%s'"
+
+#: auto-post-scheduler.php:516
+#, php-format
+msgid "%s POST id %d PUBLISHED : '%s'"
+msgstr "%s ID del mensaje %d PUBLICADO: '%s'"
+
+#: auto-post-scheduler.php:530
+msgid "Unable to find eligible posts to publish."
+msgstr "Incapaz de encontrar puestos elegibles para publicar."
+
+#: auto-post-scheduler.php:551
+#, php-format
+msgid "Error reading log file (%s) Check that the file exists and is writable by WordPress"
+msgstr ""
+"Error archivo de registro de lectura (%s) Compruebe que el archivo existe y se puede escribir "
+"con WordPress"

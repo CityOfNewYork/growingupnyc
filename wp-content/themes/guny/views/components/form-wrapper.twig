@@ -1,0 +1,35 @@
+{% if is_generation and options.generation_enable_sms == 'Yes' %}
+  {% set disclaimer_text = options.generation_disclaimer_text%}
+{% elseif options.gunyc_enable_sms == 'Yes' %}
+  {% set disclaimer_text = options.gunyc_disclaimer_text%}
+{% else %}
+  {% set disclaimer_text = false %}
+{% endif %}
+
+{% if disclaimer_text != false %}
+  {% if form_only == true %}
+    <div class="o-content-container--no-pad u-sm-gutter" data-id="section-tip">
+        <div id="share-by-text" class="sms-form-wrapper sms-form-wrapper--full share-form">
+          {% include 'components/form-share.twig' with {form_only:true}%}
+        </div>
+    </div>
+
+  {% else %}
+    <aside class="c-tip c-tip--sms c-tip-ms__topics u-lg-gutter o-content-container">
+      <div class="c-tip__sticker sticker">
+        <svg class="icon--large" role="img" aria-hidden="true">
+          <title>Tip</title>
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-check-outlined"></use>
+        </svg>
+      </div>
+      <p class="c-tip__content">{{ __('Read it later! Text yourself the link to this page.', 'GUNY') }}</p>
+
+      <div id="share-by-text" class="sms-form-wrapper share-form">
+        {% include 'components/form-share.twig' with {form_only:false}%}
+      </div>
+      <footer class="c-tip__footer"></footer>
+    </aside>
+  {% endif %}
+  
+{% endif %}
+

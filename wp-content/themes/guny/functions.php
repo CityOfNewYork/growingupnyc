@@ -142,7 +142,7 @@ class GunySite extends TimberSite {
     $context['is_generation'] = in_array('generationnyc', explode('/', $context['current_url']));
 
     $context['options'] = get_fields('options');
-    
+
     // Global alert banner
     if ($context['is_generation']) {
       $page_id = get_page_by_title('Youth')->ID; // TODO: update so it's not dependent on page title
@@ -342,9 +342,9 @@ class GunyEvent extends TimberPost {
       $start_time = date_i18n(__('Y-m-d', 'guny-date-formats'), $this->start_datetime());
 
       if ($start_time == $today ) {
-        $time = __('today', 'guny-events');
+        $time = __('Today', 'guny-events');
       } else if ($start_time == $tomorrow) {
-        $time = __('tomorrow', 'guny-events');
+        $time = __('Tomorrow', 'guny-events');
       } else {
         $time = '<span class="event-day">' .
             date_i18n( __('l ', 'guny-date-formats') , $this->start_datetime()) .
@@ -508,6 +508,10 @@ function guny_titles( $title ){
     // set the title to the program name instead of plain language
     $title=$_post->program_name . ' - ' . get_bloginfo('name', 'display');
   }
+  else if(is_single() && get_post_type() == "brain-building-tip"){
+    // set the title to the program name instead of plain language
+    $title=$_post->brain_building_tip_name . ' - ' . get_bloginfo('name', 'display');
+  }
   else if(get_post_type() == "summer-guide"){
     $title = get_post_type_object('summer-guide')->labels->singular_name.' - ' . get_bloginfo('name', 'display');
   }
@@ -616,11 +620,14 @@ $includes = [
   '/includes/404.php', // 404 functions
   '/includes/summer_guides.php', // Summer guide functions
   '/includes/afterschool_guides.php', // Afterschool guide functions
+  '/includes/brain-building-tip.php', // Brain Building Tips
   [ // REST
+    '/includes/REST/guny_rest.php',
     '/includes/REST/guny_rest_afterschool.php', // expose fields to rest API
     '/includes/REST/guny_rest_events.php',
     '/includes/REST/guny_rest_programs.php',
     '/includes/REST/guny_rest_summer.php',
+    '/includes/REST/guny_rest_tips.php',
   ],
   [ // Templating
     '/includes/get_focal_point.php', // Focal point functions

@@ -50,104 +50,73 @@
       {# Anchor Links #}
       <div class="o-content-container--compact u-shift-up">
         <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
-          {% if upcoming_events %}
-            <li class="c-nav-list__item">
-              <a href="#section-events" data-section="section-events" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Events', 'GUNY-Single-Age') }}" class="js-section c-nav-list__link {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">{{ __('Events', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
-            </li>
+          {# brain building #}
+          {% if brain_building_tip %}
+          <li class="c-nav-list__item">
+            <a href="#section-brain-building" data-section="section-brain-building" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Brain Building', 'GUNY-Single-Age') }}"  class="js-section c-nav-list__link {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">{{ __('Brain Building', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+          </li>
+          {% else %}
+          <li class="c-nav-list__item">
+            <a href="#section-quick-tip" data-section="section-brain-building" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Quick Tip', 'GUNY-Single-Age') }}"  class="js-section c-nav-list__link {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">{{ __('Quick Tip', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+          </li>
           {% endif %}
+          {# milestones #}
+          <li class="c-nav-list__item">
+            <a href="#section-milestones" data-section="section-milestones" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Milestones', 'GUNY-Single-Age') }}"  class="js-section c-nav-list__link {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">{{ __('Milestones', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+          </li>
+          {# programs #}
           {% if post.featured_programs %}
             <li class="c-nav-list__item">
               <a href="#section-programs" data-section="section-programs" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Programs', 'GUNY-Single-Age') }}" class="js-section c-nav-list__link {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">{{ __('Programs', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
             </li>
           {% endif %}
-          <li class="c-nav-list__item">
-            <a href="#section-milestones" data-section="section-milestones" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Milestones', 'GUNY-Single-Age') }}"  class="js-section c-nav-list__link {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">{{ __('Milestones', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
-          </li>
+          {# events #}
+          {% if upcoming_events %}
+            <li class="c-nav-list__item">
+              <a href="#section-events" data-section="section-events" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Events', 'GUNY-Single-Age') }}" class="js-section c-nav-list__link {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">{{ __('Events', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+            </li>
+          {% endif %}
         </ol>
       </div> <!-- /.o-content-container-compact -->
     </div> <!-- /.o-article-sidebar -->
+
     <div class="o-article js-sticky-article">
       {# Introduction #}
       {% if post.intro_content %}
         <section class="o-content-container--compact u-top-spacing u-bottom-spacing">
           <div class="o-content-container--text u-sm-gutter">
-            <h2>{{ __('What to Expect', 'GUNY-Single-Age') }}</h2>
             {{post.get_field('intro_content')}}
           </div>
         </section>
       {% endif %}
 
-      {# Upcoming Events #}
-      {% if upcoming_events %}
-      <section class="c-block-list c-block-list--shade o-content-container{% if not post.tip %} u-sm-gutter{% endif %}" data-id="section-events">
-        <h2>{{ __('Events', 'GUNY-Single-Age') }}</h2>
-        {% if post.events_text %}
-          <p class="c-block-list__text">{{post.events_text}}</p>
-        {% endif %}
-        <div class="c-block-list__inner">
-          {% for event in upcoming_events %}
-            <div class="c-block-list__item">
-              {% include ['partials/teaser-'~event.post_type~'.twig', 'partials/teaser.twig'] with {post: event} %}
-            </div>
-          {% endfor %}
-        </div> <!-- /.c-block-list-inner -->
-        <div class="text-center">
-          <a href="{{eventslink}}" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Single-Age') }}</a>
-        </div>
-      </section> <!-- /.c-block-list -->
-      {% endif %}
-
       {# Tip #}
-      {% if post.tip %}
-      <aside class="c-tip u-sm-gutter {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary o-content-container" id="tip-{{(post.title|split(' '))|join('-')}}">
-        <div class="c-tip__sticker sticker {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">
-          <svg class="icon--large" role="img" aria-hidden="true"><title>Tip</title><use xlink:href="#icon-lightbulb"></use></svg>
-        </div>
-        {% if post.tip_action_heading %}
-          <h3 class="c-tip__content text-center">{{post.tip_action_heading}}</h3>
-        {% endif %}
-        <p class="c-tip__content">{{post.tip}}</p>
-        {# <footer class="c-tip__footer"> #}
-            {# {% if post.sms_text or post.website_link %}
-              <p>
-                {{post.sms_text}}{% if post.sms_text and post.website_link %}, or{% endif %}
-                {% if post.website_link %}<a href="{{post.website_link}}" class="c-tip__link" target="_blank">find out more here</a>{% endif %}.
-              </p>
-            {% endif %} #}
-        {# </footer> #}
-      </aside>
-      {% endif %}
+      {% if brain_building_tip %}
+        <section class="c-block-list c-block-list--shade o-content-container" data-id="section-brain-building">
+          <h2>{{ __('Brain Building', 'GUNY-Single-Age') }}</h2>
+          <p class="c-block-list__text">{{ post.brain_building_pretext }}</p>
+          <div class="c-block-list__inner">
+            {% include ['components/card-brain-building-tip.twig'] with {post: brain_building_tip, logo: true, full: true} %}
+          </div>
+          
+          <div class="text-center">
+            <a href="{{tipslink}}?ages={{post.age_group.slug}}" class="button--outline button--outline--gray">{{ __('See more tips', 'GUNY-Single-Age') }}</a>
+          </div>
+        </section>
 
-      {# Programs #}
-      {% if post.featured_programs %}
-      <section class="c-block-list c-block-list--shade o-content-container" data-id="section-programs">
-        <h2>{{ __('Programs', 'GUNY-Single-Age') }}</h2>
-        {% if post.programs_text %}
-          <p class="c-block-list__text">{{post.programs_text}}</p>
-        {% endif %}
-        <div class="c-block-list__inner">
-          {% for program in post.get_field('featured_programs') %}
-            {% set program = TimberPost(program) %}
-            <div class="c-block-list__item">
-              {% include ['partials/teaser-'~program.post_type~'.twig', 'partials/teaser.twig'] with {post: program, is_first: loop.first, age_group: post.age_group} %}
+      {% else %}
+        {% if post.tip %}
+          <section class="c-tip u-sm-gutter {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary o-content-container" id="tip-{{(post.title|split(' '))|join('-')}}" data-id="section-quick-tip">
+            <div class="c-tip__sticker sticker {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">
+              <svg class="icon--large" role="img" aria-hidden="true"><title>Tip</title><use xlink:href="#icon-lightbulb"></use></svg>
             </div>
-          {% endfor %}
-        </div> <!-- /.c-block-list__inner -->
-        <div class="text-center">
-          <a href="{{programslink}}" class="button--outline button--outline--gray">{{ __('See all programs', 'GUNY-Single-Age') }}</a>
-        </div>
-      </section>
+            {% if post.tip_action_heading %}
+              <h3 class="c-tip__content text-center">{{post.tip_action_heading}}</h3>
+            {% endif %}
+            <p class="c-tip__content">{{post.tip}}</p>
+          </section>
+        {% endif %}
       {% endif %}
-
-      {# Get Updates #}
-      {# <aside class="c-tip u-sm-gutter o-content-container">
-        <div class="c-tip__sticker sticker">
-          <svg class="icon--large" role="img" aria-hidden="true"><use xlink:href="#icon-envelope-o"></use></svg>
-        </div>
-        <div class="c-tip__inner">
-          {% include 'partials/form-email-signup.twig' with {form_id: post.slug, full_width: true} %}
-        </div> <!-- /.c-tip__content -->
-      </aside> #}
 
       {# Milestones #}
       <section class="o-content-container--compact u-top-spacing u-bottom-spacing" data-id="section-milestones">
@@ -212,23 +181,81 @@
               </ul>
             </li>
           {% endif %}
-          </ul>
+        </ul>
 
-          <h3>{{post.warning_header}}</h3>
-          {% if post.warning_signs %}
-            <ul class="c-list-box c-list-box--tertiary">
-              <li class="c-list-box__item">
-                <div class="c-list-box__border {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary"></div>
-                <ul class="c-list-box__content">
-                  {% for warning_sign in post.get_field('warning_signs') %}
-                    <li class="c-list-box__subitem"><svg aria-hidden="true" class="icon icon--xsmall"><use xlink:href="#icon-close"></use></svg>{{warning_sign.warning_sign}}</li>
-                  {% endfor %}
-                </ul>
-              </li>
+        {# Warning signs #}
+        <h3>{{post.warning_signs_heading}}</h3>
+        <ul class="js-accordion c-list-box c-list-box--tertiary u-sm-gutter">
+          <li class="c-list-box__item">
+            <h4 class="c-list-box__heading js-accordion__header {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary" id="milestones-header-health">{{ __('Act Early', 'GUNY-Single-Age') }}</h4>
+            <ul class="c-list-box__content js-accordion__content" id="milestones-panel-health">
+              {% for warning_sign in post.get_field('warning_signs') %}
+                <li class="c-list-box__subitem">
+                  <svg aria-hidden="true" class="icon icon--xsmall">
+                    <use xlink:href="#icon-close"></use>
+                  </svg>
+                  {{warning_sign.warning_sign}}</li>
+              {% endfor %}
             </ul>
-          {% endif %}
+          </li>
+        </ul>
 
+      </section>
+      
+      {# Programs #}
+      {% if post.featured_programs %}
+        <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" data-id="section-programs">
+          <h2>{{ __('Programs', 'GUNY-Single-Age') }}</h2>
+          {% if post.programs_text %}
+            <p class="c-block-list__text">{{post.programs_text}}</p>
+          {% endif %}
+          <div class="c-block-list__inner">
+            {% for program in post.get_field('featured_programs') %}
+              {% set program = TimberPost(program) %}
+              <div class="c-block-list__item">
+                {% include ['partials/teaser-'~program.post_type~'.twig', 'partials/teaser.twig'] with {post: program, is_first: loop.first, age_group: post.age_group} %}
+              </div>
+            {% endfor %}
+          </div> <!-- /.c-block-list__inner -->
+          <div class="text-center">
+            <a href="{{programslink}}?ages={{post.age_group.slug}}" class="button--outline button--outline--gray">{{ __('See all programs', 'GUNY-Single-Age') }}</a>
+          </div>
         </section>
-    </div> <!-- /.o-article -->
+      {% endif %}
+
+      {# Get Updates #}
+      {# <aside class="c-tip u-sm-gutter o-content-container">
+        <div class="c-tip__sticker sticker">
+          <svg class="icon--large" role="img" aria-hidden="true"><use xlink:href="#icon-envelope-o"></use></svg>
+        </div>
+        <div class="c-tip__inner">
+          {% include 'partials/form-email-signup.twig' with {form_id: post.slug, full_width: true} %}
+        </div> <!-- /.c-tip__content -->
+      </aside> #}
+
+
+      {# Upcoming Events #}
+      {% if upcoming_events %}
+        <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" data-id="section-events">
+          <h2>{{ __('Events', 'GUNY-Single-Age') }}</h2>
+          {% if post.events_text %}
+            <p class="c-block-list__text">{{post.events_text}}</p>
+          {% endif %}
+          <div class="c-block-list__inner">
+            {% for event in upcoming_events %}
+              <div class="c-block-list__item">
+                {% include ['partials/teaser-'~event.post_type~'.twig', 'partials/teaser.twig'] with {post: event} %}
+              </div>
+            {% endfor %}
+          </div>
+          <!-- /.c-block-list-inner -->
+          <div class="text-center">
+            <a href="{{eventslink}}?age_id={{post.age_group.id}}" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Single-Age') }}</a>
+          </div>
+        </section>
+        <!-- /.c-block-list -->
+      {% endif %}
+
+    </div><!-- /.o-article -->
   </article>
 {% endblock %}

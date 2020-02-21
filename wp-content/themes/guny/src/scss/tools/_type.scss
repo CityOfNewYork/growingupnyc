@@ -55,5 +55,5 @@
 @mixin text-uppercase {
   letter-spacing: .5px;
   line-height: 1;
-  text-transform: uppercase;
+  text-transform: capitalize;
 }

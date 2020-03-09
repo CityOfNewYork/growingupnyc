@@ -1,71 +1,82 @@
-<div class='wrap'>
+<div class='wrap wrap-media-cleaner'>
 
 	<?php
 		echo $admin->display_title( "Media Cleaner" );
 		$posts_per_page = get_option( 'wpmc_results_per_page', 20 );
 		$view = isset ( $_GET[ 'view' ] ) ? sanitize_text_field( $_GET[ 'view' ] ) : "issues";
 		$paged = isset ( $_GET[ 'paged' ] ) ? sanitize_text_field( $_GET[ 'paged' ] ) : 1;
-		$reset = isset ( $_GET[ 'reset' ] ) ? $_GET[ 'reset' ] : 0;
-		if ( $reset ) {
-			wpmc_reset();
-			$core->reset_issues();
-		}
 		$s = isset ( $_GET[ 's' ] ) ? sanitize_text_field( $_GET[ 's' ] ) : null;
-		$table_name = $wpdb->prefix . "mclean_scan";
-		$issues_count = $wpdb->get_var( "SELECT COUNT(*) FROM $table_name WHERE ignored = 0 AND deleted = 0" );
-		$total_size = $wpdb->get_var( "SELECT SUM(size) FROM $table_name WHERE ignored = 0 AND deleted = 0" );
-		$trash_total_size = $wpdb->get_var( "SELECT SUM(size) FROM $table_name WHERE ignored = 0 AND deleted = 1" );
-		$ignored_count = $wpdb->get_var( "SELECT COUNT(*) FROM $table_name WHERE ignored = 1" );
-		$deleted_count = $wpdb->get_var( "SELECT COUNT(*) FROM $table_name WHERE deleted = 1" );
+		$f = isset ( $_GET[ 'f' ] ) ? sanitize_text_field( $_GET[ 'f' ] ) : null;
+		$table_scan = $wpdb->prefix . "mclean_scan";
+		$table_refs = $wpdb->prefix . "mclean_refs";
+		$filterByTypeSQL = '';
+		if ( !empty( $f ) ) {
+			$availableFilters = [ 'NO_CONTENT', 'ORPHAN_FILE', 'ORPHAN_RETINA', 'ORPHAN_WEBP', 'ORPHAN_MEDIA' ];
+			if ( in_array( $f, $availableFilters ) )
+				$filterByTypeSQL = " AND issue = '$f'";
+			else
+				$f = null;
+		}
+
+		// Check the DB
+		// If does not exist, let's create it.
+		// TODO: When PHP 7 only, let's clean this and use anonymous functions.
+		$db_init = !( strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_scan'" ) ) != strtolower( $table_scan )
+			|| strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_refs'" ) ) != strtolower( $table_refs ) );
+		if ( !$db_init ) {
+			wpmc_create_database();
+			$db_init = !( strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_scan'" ) ) != strtolower( $table_scan )
+				|| strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_refs'" ) ) != strtolower( $table_refs ) );
+		}
+
+		// It still doesn't exist. That's not your lucky day :(
+		if ( !$db_init ) {
+			echo "<div class='notice notice-error'><p>";
+			_e( "<b>The database is not ready for Media Cleaner. The scan will not work.</b> Click on the <b>Reset</b> button, it re-creates the tables required by Media Cleaner. If this message still appear, contact the support.", 'media-cleaner' );
+			echo "</p></div>";
+		}
+
+		// Check the access rights to the uploads directory
+		$upload_folder = wp_upload_dir();
+		$basedir = $upload_folder['basedir'];
+		if ( !is_writable( $basedir ) ) {
+			echo "<div class='notice notice-error'><p>";
+			_e( 'The directory for uploads is not writable. Media Cleaner will only be able to scan.', 'media-cleaner' );
+			echo "</p></div>";
+		}
+
+		$issues_count = $wpdb->get_var( "SELECT COUNT(*) FROM $table_scan WHERE ignored = 0 AND deleted = 0" . $filterByTypeSQL );
+		$total_size = $wpdb->get_var( "SELECT SUM(size) FROM $table_scan WHERE ignored = 0 AND deleted = 0" . $filterByTypeSQL );
+		$trash_total_size = $wpdb->get_var( "SELECT SUM(size) FROM $table_scan WHERE ignored = 0 AND deleted = 1" . $filterByTypeSQL );
+		$ignored_count = $wpdb->get_var( "SELECT COUNT(*) FROM $table_scan WHERE ignored = 1" . $filterByTypeSQL );
+		$deleted_count = $wpdb->get_var( "SELECT COUNT(*) FROM $table_scan WHERE deleted = 1" . $filterByTypeSQL );
 
 		if ( $view == 'deleted' ) {
 			$items_count = $deleted_count;
 			$items = $wpdb->get_results( $wpdb->prepare( "SELECT id, type, postId, path, size, ignored, deleted, issue
-				FROM $table_name WHERE ignored = 0 AND deleted = 1 AND path LIKE %s
+				FROM $table_scan WHERE ignored = 0 AND deleted = 1 AND path LIKE %s $filterByTypeSQL
 				ORDER BY path, time
 				DESC LIMIT %d, %d", '%' . $s . '%', ( $paged - 1 ) * $posts_per_page, $posts_per_page ), OBJECT );
 		}
 		else if ( $view == 'ignored' ) {
 			$items_count = $ignored_count;
 			$items = $wpdb->get_results( $wpdb->prepare( "SELECT id, type, postId, path, size, ignored, deleted, issue
-				FROM $table_name
-				WHERE ignored = 1 AND deleted = 0 AND path LIKE %s
+				FROM $table_scan
+				WHERE ignored = 1 AND deleted = 0 AND path LIKE %s $filterByTypeSQL
 				ORDER BY path, time
 				DESC LIMIT %d, %d", '%' . $s . '%', ( $paged - 1 ) * $posts_per_page, $posts_per_page ), OBJECT );
 		}
 		else {
 			$items_count = $issues_count;
 			$items = $wpdb->get_results( $wpdb->prepare( "SELECT id, type, postId, path, size, ignored, deleted, issue
-				FROM $table_name
-				WHERE ignored = 0 AND deleted = 0  AND path LIKE %s
+				FROM $table_scan
+				WHERE ignored = 0 AND deleted = 0  AND path LIKE %s $filterByTypeSQL
 				ORDER BY path, time
 				DESC LIMIT %d, %d", '%' . $s . '%', ( $paged - 1 ) * $posts_per_page, $posts_per_page ), OBJECT );
 		}
 	?>
 
-	<style>
-		#wpmc-pages {
-			float: right;
-			position: relative;
-			top: 12px;
-		}
-
-		#wpmc-pages a {
-			text-decoration: none;
-			border: 1px solid black;
-			padding: 2px 5px;
-			border-radius: 4px;
-			background: #E9E9E9;
-			color: lightslategrey;
-			border-color: #BEBEBE;
-		}
-
-		#wpmc-pages .current {
-			font-weight: bold;
-		}
-	</style>
-
-	<div id="wpmc_actions" style='margin-top: 0px; background: #FFF; padding: 5px; border-radius: 4px; height: 28px; box-shadow: 0px 0px 6px #C2C2C2;'>
+	<div id="wpmc_actions">
 
 		<!-- SCAN -->
 		<?php if ( $view != 'deleted' ): ?>
@@ -92,18 +103,13 @@
 		?>
 		</a>
 
-		<!-- RESET -->
-		<?php if ( $view != 'deleted' ): ?>
-		<a id='wpmc_reset' href='?page=media-cleaner&reset=1' class='button-primary' style='float: right; margin-left: 5px;'><span style="top: 3px; position: relative; left: -5px;" class="dashicons dashicons-sos"></span><?php _e("Reset", 'media-cleaner'); ?></a>
-		<?php endif; ?>
-
 		<!-- DELETE ALL -->
 		<?php if ( $view == 'deleted' ): // i ?>
-		<a id='wpmc_recover_all' class='button-primary exclusive' style='float: right; margin-left: 5px;'><span style="top: 3px; position: relative; left: -5px;" class="dashicons dashicons-controls-repeat"></span><?php _e("Recover all", 'media-cleaner'); ?></a>
 		<a id='wpmc_empty_trash' class='button button-red exclusive' style='float: right; margin-left: 5px;'><span style="top: 3px; position: relative; left: -5px;" class="dashicons dashicons-trash"></span><?php _e("Empty trash", 'media-cleaner'); ?></a>
+		<a id='wpmc_recover_all' class='button-primary exclusive' style='float: right; margin-left: 5px;'><span style="top: 3px; position: relative; left: -5px;" class="dashicons dashicons-controls-repeat"></span><?php _e("Recover all", 'media-cleaner'); ?></a>
 		<?php else: // i ?>
-		<?php if ( $s ): // ii ?>
-		<a id='wpmc_delete_all' class='button button-red exclusive' data-filter="<?php echo esc_attr( $s ); ?>" style='float: right; margin-left: 5px;'><span style="top: 3px; position: relative; left: -5px;" class="dashicons dashicons-trash"></span><?php _e("Delete all search results", 'media-cleaner'); ?></a>
+		<?php if ( $f || $s ): // ii ?>
+		<a id='wpmc_delete_all' class='button button-red exclusive' data-filter='<?php echo esc_attr( $f ) ?>' data-search='<?php echo esc_attr( $s ) ?>' style='float: right; margin-left: 5px;'><span style="top: 3px; position: relative; left: -5px;" class="dashicons dashicons-trash"></span><?php _e("Delete these results", 'media-cleaner'); ?></a>
 		<?php else: // ii ?>
 		<a id='wpmc_delete_all' class='button button-red exclusive' style='float: right; margin-left: 5px;'><span style="top: 3px; position: relative; left: -5px;" class="dashicons dashicons-trash"></span><?php _e("Delete all", 'media-cleaner'); ?></a>
 		<?php endif; // ii ?>
@@ -111,11 +117,25 @@
 
 		<form id="posts-filter" action="upload.php" method="get" style='float: right;'>
 			<p class="search-box" style='margin-left: 5px; float: left;'>
-				<input type="search" name="s" class="exclusive" style="width: 120px;" value="<?php echo $s ? esc_attr( $s ) : ""; ?>">
+				<input type="search" name="s" placeholder="<?php _e('Search', 'media-cleaner' ); ?>" style="width: 120px;" value="<?php echo $s ? esc_attr( $s ) : ""; ?>">
+				<select name="f" id="filter-by-type" style="margin-top: -3px; font-size: 13px;">
+					<option <?php echo !$f ? 'selected="selected"' : ''; ?> value="0"><?php
+						_e('All Issues', 'media-cleaner' ); ?></option>
+					<option <?php echo $f === 'NO_CONTENT' ? 'selected="selected"' : ''; ?> value="NO_CONTENT"><?php
+						_e( 'Seems not use', 'media-cleaner' ); ?></option>
+					<option <?php echo $f === 'ORPHAN_MEDIA' ? 'selected="selected"' : ''; ?>value="ORPHAN_MEDIA"><?php
+						_e( 'No attached file', 'media-cleaner' ); ?></option>
+					<option <?php echo $f === 'ORPHAN_FILE' ? 'selected="selected"' : ''; ?>value="ORPHAN_FILE"><?php
+						_e( 'Not in Library', 'media-cleaner' ); ?></option>
+					<option <?php echo $f === 'ORPHAN_RETINA' ? 'selected="selected"' : ''; ?>value="ORPHAN_RETINA"><?php
+						_e( 'Orphan Retina', 'media-cleaner' ); ?></option>
+					<option <?php echo $f === 'ORPHAN_WEBP' ? 'selected="selected"' : ''; ?>value="ORPHAN_WEBP"><?php
+						_e( 'Orphan WebP', 'media-cleaner' ); ?></option>
+				</select>
 				<input type="hidden" name="page" value="media-cleaner">
 				<input type="hidden" name="view" value="<?php echo $view; ?>">
 				<input type="hidden" name="paged" value="1">
-				<input type="submit" class="button exclusive" value="<?php _e( 'Search', 'media-cleaner' ) ?>"><span style='border-right: #A2A2A2 solid 1px; margin-left: 5px; margin-right: 3px;'>&nbsp;</span>
+				<input type="submit" class="button exclusive" value="<?php _e( 'Search', 'media-cleaner' ); ?>"><span style='border-right: #A2A2A2 solid 1px; margin-left: 5px; margin-right: 3px;'>&nbsp;</span>
 			</p>
 		</form>
 
@@ -126,133 +146,169 @@
 
 	<p>
 		<?php
-			$method = "";
-			$table_scan = $wpdb->prefix . "mclean_scan";
-			$table_refs = $wpdb->prefix . "mclean_refs";
-			if ( strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_scan'" ) ) != strtolower( $table_scan ) ||
-				strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_refs'" ) ) != strtolower( $table_refs ) ) {
-					_e( "<div class='notice notice-error'><p><b>The database is not ready for Media Cleaner. The scan will not work.</b> Click on the <b>Reset</b> button, it re-creates the tables required by Media Cleaner. If this message still appear, contact the support.</p></div>", 'media-cleaner' );
-			}
-			else {
-				$method = get_option( 'wpmc_method', 'media' );
+			$method = get_option( 'wpmc_method', 'media' );
+			if ( $db_init ) {
 				if ( !$admin->is_registered() )
 					$method = 'media';
 
 				$hide_warning = get_option( 'wpmc_hide_warning', false );
-
 				if ( !$hide_warning ) {
-					_e( "<div class='notice notice-warning'><p><b style='color: red;'>Important.</b> <b>Backup your DB and your /uploads directory before using Media Cleaner. </b> The deleted files will be temporarily moved to the <b>uploads/wpmc-trash</b> directory. After testing your website, you can check the <a href='?page=media-cleaner&s&view=deleted'>trash</a> to either empty it or recover the media and files. The Media Cleaner does its best to be safe to use. However, WordPress being a very dynamic and pluggable system, it is impossible to predict all the situations in which your files are used. <b style='color: red;'>Again, please backup!</b> If you don't know how, give a try to this: <a href='https://meow.click/blogvault' target='_blank'>BlogVault</a>. <br /><br /><b style='color: red;'>Be thoughtful.</b> Don't blame Media Cleaner if it deleted too many or not enough of your files. It makes cleaning possible and this task is only possible this way; don't post a bad review because it broke your install. <b>If you have a proper backup, there is no risk</b>. Sorry for the lengthy message, but better be safe than sorry. You can disable this big warning in the options if you have a Pro license. Make sure you read this warning twice. Media Cleaner is awesome and always getting better so I hope you will enjoy it. Thank you :)</p></div>", 'media-cleaner' );
+					echo "<div class='notice notice-warning'><p>";
+					_e( "<b style='color: red;'>Important.</b> <b>Backup your DB and your /uploads directory before using Media Cleaner. </b> The deleted files will be temporarily moved to the <b>uploads/wpmc-trash</b> directory. After testing your website, you can check the <a href='?page=media-cleaner&s&view=deleted'>trash</a> to either empty it or recover the media and files. The Media Cleaner does its best to be safe to use. However, WordPress being a very dynamic and pluggable system, it is impossible to predict all the situations in which your files are used. <b style='color: red;'>Again, please backup!</b> If you don't know how, give a try to this: <a href='https://meow.click/blogvault' target='_blank'>BlogVault</a>. <br /><br /><b style='color: red;'>Be thoughtful.</b> Don't blame Media Cleaner if it deleted too many or not enough of your files. It makes cleaning possible and this task is only possible this way; don't post a bad review because it broke your install. <b>If you have a proper backup, there is no risk</b>. Sorry for the lengthy message, but better be safe than sorry. You can disable this big warning in the options if you have a Pro license. Make sure you read this warning twice. Media Cleaner is awesome and always getting better so I hope you will enjoy it. Thank you :)", 'media-cleaner' );
+					echo "</p></div>";
 				}
 
 				if ( !MEDIA_TRASH ) {
-					_e( "<div class='notice notice-warning'><p>The trash for the Media Library is disabled. Any media removed by the plugin will be <b>permanently deleted</b>. To enable it, modify your wp-config.php file and add this line (preferably at the top): <b>define( 'MEDIA_TRASH', true );</b></p></div>", 'media-cleaner' );
+					echo "<div class='notice notice-warning'>";
+					_e( "<p>The trash for the Media Library is disabled. Any media removed by the plugin will be <b>permanently deleted</b>. To enable it, modify your wp-config.php file and add this line (preferably at the top): <b>define( 'MEDIA_TRASH', true );</b>", 'media-cleaner' );
+					echo "</p></div>";
 				}
 			}
 
 			if ( !$admin->is_registered() ) {
-				echo "<div class='notice notice-info'><p>";
-				_e( "<b>This version is not Pro.</b> This plugin is a lot of work so please consider <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a> in order to receive support and to contribute in the evolution of it. Also, <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a> version will also give you the option <b>to scan the physical files in your /uploads folder</b> and extra checks for the common Page Builders.", 'media-cleaner' );
+				echo "<div class='notice notice-warning'><p>";
+				_e( "This plugin is a lot of work so please consider <a target='_blank' href='//meowapps.com/plugin/media-cleaner'>Media Cleaner Pro</a> in order to receive support and to contribute in the evolution of it. Also, <a target='_blank' href='//meowapps.com/plugin/media-cleaner'>Media Cleaner Pro</a> version will also give you the option <b>to scan the physical files in your /uploads folder</b> and extra checks for the common Page Builders.", 'media-cleaner' );
 				echo "</p></div>";
 
-				if ( class_exists( 'ACF' ) ) {
-					echo "<div class='notice notice-warning'><p>";
-					_e( "<b>ACF has been detected</b>. The free version might detect the files used by ACF correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
+				$unsupported = array();
+
+				if ( class_exists( 'ACF' ) || function_exists( 'acfw_globals' ) )
+					array_push( $unsupported, 'ACF' );
+
+				if ( function_exists( '_et_core_find_latest' ) )
+					array_push( $unsupported, 'Divi' );
+
+				if ( class_exists( 'Vc_Manager' ) )
+					array_push( $unsupported, 'Visual Composer' );
+
+				if ( function_exists( 'fusion_builder_map' ) )
+					array_push( $unsupported, 'Fusion Builder' );
+
+				if ( function_exists( 'elementor_load_plugin_textdomain' ) )
+					array_push( $unsupported, 'Elementor' );
+
+				if ( class_exists( 'FLBuilderModel' ) )
+					array_push( $unsupported, 'Beaver Builder' );
+
+				if ( class_exists( 'Oxygen_VSB_Dynamic_Shortcodes' ) )
+					array_push( $unsupported, 'Oxygen Builder' );
+
+				if ( class_exists( 'Brizy_Editor_Post' ) )
+					array_push( $unsupported, 'Brizy Editor' );
+
+				if ( function_exists( 'amd_zlrecipe_convert_to_recipe' ) )
+					array_push( $unsupported, 'ZipList Recipe' );
+
+				if ( class_exists( 'UberMenu' ) )
+					array_push( $unsupported, 'UberMenu' );
+
+				if ( class_exists( 'X_Bootstrap' ) )
+					array_push( $unsupported, 'Theme X' );
+
+				if ( class_exists( 'SiteOrigin_Panels' ) )
+					array_push( $unsupported, 'SiteOrigin PageBuilder' );
+
+				if ( defined( 'TASTY_PINS_PLUGIN_FILE' ) )
+					array_push( $unsupported, 'Tasty Pins' );
+
+				if ( class_exists( 'WCFMmp' ) )
+					array_push( $unsupported, 'WCFM Marketplace' );
+
+				if ( class_exists( 'RevSliderFront' ) )
+					array_push( $unsupported, 'Revolution Slider' );
+
+				if ( defined( 'WPESTATE_PLUGIN_URL' ) )
+					array_push( $unsupported, 'WP Residence' );
+
+				if ( defined( 'AV_FRAMEWORK_VERSION' ) )
+					array_push( $unsupported, 'Avia Framework' );
+
+				if ( class_exists( 'FAT_Portfolio' ) )
+					array_push( $unsupported, 'FAT Portfolio' );
+
+				if ( class_exists( 'YIKES_Custom_Product_Tabs' ) )
+					array_push( $unsupported, 'Yikes Custom Product Tabs' );
+
+				if ( function_exists( 'drts' ) )
+					array_push( $unsupported, 'Directories' );
+
+				if ( class_exists( 'ImageMapPro' ) )
+					array_push( $unsupported, 'Image Map Pro' );
+
+				if ( !empty( $unsupported ) ) {
+					echo "<div class='notice notice-error'><p>";
+					_e( "<b>Important note about the following plugin(s): </b>", 'media-cleaner' );
+					echo '<b>' . join( ', ', $unsupported ) . '</b>. ';
+					_e( "They require additional checks which are implemented in the <a target='_blank' href='//meowapps.com/plugin/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
 					echo "</p></div>";
 				}
-
-				if ( function_exists( '_et_core_find_latest' ) ) {
-					echo "<div class='notice notice-warning'><p>";
-					_e( "<b>Divi has been detected</b>. The free version might detect the files used by Divi correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
-					echo "</p></div>";
-				}
-
-				if ( class_exists( 'Vc_Manager' ) ) {
-					echo "<div class='notice notice-warning'><p>";
-					_e( "<b>Visual Composer has been detected</b>. The free version might detect the files used by Visual Composer correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
-					echo "</p></div>";
-				}
-
-				if ( function_exists( 'fusion_builder_map' ) ) {
-					echo "<div class='notice notice-warning'><p>";
-					_e( "<b>Fusion Builder has been detected</b>. The free version might detect the files used by Fusion Builder correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
-					echo "</p></div>";
-				}
-
-				if ( class_exists( 'FLBuilderModel' ) ) {
-					echo "<div class='notice notice-warning'><p>";
-					_e( "<b>Beaver Builder has been detected</b>. The free version might detect the files used by Beaver Builder correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
-					echo "</p></div>";
-				}
-
-				if ( function_exists( 'elementor_load_plugin_textdomain' ) ) {
-					echo "<div class='notice notice-warning'><p>";
-					_e( "<b>Elementor has been detected</b>. The free version might detect the files used by Elementor correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
-					echo "</p></div>";
-				}
-
-				if ( class_exists( 'Oxygen_VSB_Dynamic_Shortcodes' ) ) {
-					echo "<div class='notice notice-warning'><p>";
-					_e( "<b>Oxygen Builder has been detected</b>. The free version might detect the files used by Oxygen Builder correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
-					echo "</p></div>";
-				}
-
-				if ( class_exists( 'Brizy_Editor_Post' ) ) {
-					echo "<div class='notice notice-warning'><p>";
-					_e( "<b>Brizy has been detected</b>. The free version might detect the files used by Brizy correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
-					echo "</p></div>";
-				}
-
-				if ( function_exists( 'amd_zlrecipe_convert_to_recipe' ) ) {
-					echo "<div class='notice notice-warning'><p>";
-					_e( "<b>ZipList Recipe has been detected</b>. The free version might detect the files used by ZipList Recipe correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
-					echo "</p></div>";
-				}
-
-				if ( class_exists( 'UberMenu' ) ) {
-					echo "<div class='notice notice-warning'><p>";
-					_e( "<b>UberMenu has been detected</b>. The free version might detect the files used by UberMenu correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
-					echo "</p></div>";
-				}
-
-				if ( class_exists( 'X_Bootstrap' ) ) {
-					echo "<div class='notice notice-warning'><p>";
-					_e( "<b>Theme X has been detected</b>. The free version might detect the files used by Theme X correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
-					echo "</p></div>";
-				}
-
-				if ( class_exists( 'SiteOrigin_Panels' ) ) {
-					echo "<div class='notice notice-warning'><p>";
-					_e( "<b>SiteOrigin Page Builder has been detected</b>. The free version might detect the files used by SiteOrigin Page Builder correctly, but its full support is only available in <a target='_blank' href='//meowapps.com/media-cleaner'>Media Cleaner Pro</a>.", 'media-cleaner' );
-					echo "</p></div>";
-				}
-
 			}
 
-			$anychecks = get_option( 'wpmc_content', true ) || get_option( 'wpmc_posts', false ) 
-				|| get_option( 'wpmc_postmeta', false ) || get_option( 'wpmc_widgets', false );
+			$check_content = get_option( 'wpmc_content', true );
 			$check_library = get_option(' wpmc_media_library', true );
+			$live_content = get_option(' wpmc_live_content', true );
 
-			if ( $method == 'media' ) {
-				if ( !$anychecks )
-					_e( "<div class='error'><p>Media Cleaner will analyze your Media Library. However, There is <b>NOTHING MARKED TO BE CHECKED</b> in the Settings. Media Cleaner will therefore run a special scan: <b>only the broken medias will be detected as issues.</b></p></div>", 'media-cleaner' );
-				else
-					_e( "<div class='notice notice-success'><p>Media Cleaner will analyze your Media Library.</p></div>", 'media-cleaner' );
+			$access_settings = ' ' . sprintf(
+				// translators: %s is URL leading to the plugin settings page
+				__( '<a href="%s">Click here</a> to modify the settings.', 'media-cleaner' ),
+				'admin.php?page=wpmc_settings-menu' );
+
+			if ( $method == 'media' && ( $check_content || $live_content ) ) {
+				echo "<div class='notice notice-success'><p>";
+				_e( "Media Cleaner will analyze the Media Library for entries which aren't used in the content.", 'media-cleaner' );
+				echo $access_settings;
+				echo "</p></div>";
+			}
+			else if ( $method == 'media' ) {
+				echo "<div class='notice notice-error'><p>";
+				_e( "Media Cleaner will analyze the Media Library. Since <i>Content</i> has not be checked, a special scan will be ran: <u>only broken media entries</u> will be detected.", 'media-cleaner' );
+				echo $access_settings;
+				echo "</p></div>";
+			}
+			else if ( $method == 'files' && ( $check_content || $live_content ) && $check_library ) {
+				echo "<div class='notice notice-success'><p>";
+				_e( "Media Cleaner will analyze the filesystem for files which aren't registered in the Media Library and aren't used in the content.", 'media-cleaner' );
+				echo $access_settings;
+				echo "</p></div>";
+			}
+			else if ( $method == 'files' && $check_library ) {
+				echo "<div class='notice notice-success'><p>";
+				_e( "Media Cleaner will analyze the filesystem for files which aren't registered in the Media Library.", 'media-cleaner' );
+				echo $access_settings;
+				echo "</p></div>";
+			}
+			else if ( $method == 'files' && ( $check_content || $live_content ) ) {
+				echo "<div class='notice notice-success'><p>";
+				_e( "Media Cleaner will analyze the filesystem for files which aren't used in the content.", 'media-cleaner' );
+				echo $access_settings;
+				echo "</p></div>";
 			}
 			else if ( $method == 'files' ) {
-				if ( !$anychecks && !$check_library )
-					_e( "<div class='error'><p>Media Cleaner will analyze your Filesystem. However, There is <b>NOTHING MARKED TO BE CHECKED</b> in the Settings. If you scan now, all the files will be detected as <b>NOT USED</b>.</p></div>", 'media-cleaner' );
-				else
-					_e( "<div class='notice notice-success'><p>Media Cleaner will analyze your Filesystem.</p></div>", 'media-cleaner' );
+				echo "<div class='notice notice-error'><p>";
+				_e( "Media Cleaner will analyze the filesystem. <b>Neither <i>Content</i> or <i>Media Library</i> has been checked.</b> <u>Therefore, all the files will be listed as issues</u>.", 'media-cleaner' );
+				echo $access_settings;
+				echo "</p></div>";
+			}
+			else {
+				echo "<div class='notice notice-error'><p>";
+				_e( "This type of scan hasn't been set.", 'media-cleaner' );
+				echo "</p></div>";
 			}
 
-			echo sprintf( __( 'There are <b>%s issue(s)</b> with your files, accounting for <b>%s MB</b>. Your trash contains <b>%s MB.</b>', 'media-cleaner' ), number_format( $issues_count, 0 ), number_format( $total_size / 1000000, 2 ), number_format( $trash_total_size / 1000000, 2 ) );
+			echo sprintf(
+				// translators: %1$s is a number of found issues, %2$s is a size of detected files, %3$s is a total size of files in trash
+				__( 'There are <b>%1$s issue(s)</b> with your files, accounting for <b>%2$s MB</b>. Your trash contains <b>%3$s MB.</b>', 'media-cleaner' ),
+				number_format( $issues_count, 0 ),
+				number_format( $total_size / 1000000, 2 ),
+				number_format( $trash_total_size / 1000000, 2 )
+			);
 		?>
 	</p>
 
-	<div id='wpmc-pages'>
+	<div id='wpmc-paging'>
 	<?php
 	echo paginate_links(array(
-		'base' => '?page=media-cleaner&s=' . urlencode($s) . '&view=' . $view . '%_%',
+		'base' => '?page=media-cleaner&s=' . urlencode($s) . '&f=' . urlencode($f) . '&view=' . $view . '%_%',
 		'current' => $paged,
 		'format' => '&paged=%#%',
 		'total' => ceil( $items_count / $posts_per_page ),
@@ -267,11 +323,13 @@
 		<li class="all"><a <?php if ( $view == 'deleted' ) echo "class='current'"; ?> href='?page=media-cleaner&s=<?php echo $s; ?>&view=deleted'><?php _e( "Trash", 'media-cleaner' ); ?></a><span class="count">(<?php echo $deleted_count; ?>)</span></li>
 	</ul>
 
-	<table id='wpmc-table' class='wp-list-table widefat fixed media'>
+	<table id='wpmc-table' class='wp-list-table widefat fixed striped media'>
 
 		<thead>
 			<tr>
-				<th scope="col" id="cb" class="manage-column column-cb check-column"><input id="wpmc-cb-select-all" type="checkbox"></th>
+				<th scope="col" id="cb" class="manage-column column-cb check-column" style="padding: 8px 2px;">
+					<input id="wpmc-cb-select-all" type="checkbox">
+				</th>
 				<?php if ( !get_option( 'wpmc_hide_thumbnails', false ) ): ?>
 				<th style='width: 64px;'><?php _e( 'Thumb', 'media-cleaner' ) ?></th>
 				<?php endif; ?>
@@ -291,8 +349,10 @@
 		<tbody>
 			<?php
 				foreach ( $items as $issue ) {
-					$regex = "^(.*)(\\s\\(\\+.*)$";
-					$issue->path = preg_replace( '/' .$regex . '/i', '$1', $issue->path );
+					if ( $view == 'deleted' ) {
+						$regex = "^(.*)(\\s\\(\\+.*)$";
+						$issue->path = preg_replace( '/' .$regex . '/i', '$1', $issue->path );
+					}
 			?>
 			<tr>
 				<td><input type="checkbox" name="id" value="<?php echo $issue->id ?>"></td>
@@ -361,6 +421,18 @@
 		</tfoot>
 
 	</table>
+
+	<div id='wpmc-paging'>
+	<?php
+	echo paginate_links(array(
+		'base' => '?page=media-cleaner&s=' . urlencode($s) . '&view=' . $view . '%_%',
+		'current' => $paged,
+		'format' => '&paged=%#%',
+		'total' => ceil( $items_count / $posts_per_page ),
+		'prev_next' => false
+	));
+	?>
+	</div>
 </div>
 
 <div id="wpmc-dialog" class="hidden" style="max-width:800px"></div>

@@ -56,7 +56,7 @@
             <li class="c-list-box__subitem"><a href="{{post.link}}" class="button--full-width button--primary {{age_group.slug|sanitize|replace({(['-',language]|join):''})}}-text">{{post.title}}</a></li>
           {% endfor %}
           {% if age_group.slug in ["baby", "toddler", "pre-schooler", ["baby-", language_code]|join(''), ["toddler-",language_code]|join(''), ["pre-schooler-",language_code]|join('')] %}
-            <li class="c-list-box__subitem"><a href="{% if language_code != 'en' %}/{{language_code}}{% endif %}/brainbuilding" class="button--full-width button--primary {{age_group.slug|sanitize|replace({(['-',language]|join):''})}}-text">{{ __('Brain Building', 'GUNY-Homepage') }}</a></li>
+            <li class="c-list-box__subitem"><a href="{% if language_code != 'en' %}/{{language_code}}{% endif %}/brainbuilding?ages={{age_group.slug}}" class="button--full-width button--primary {{age_group.slug|sanitize|replace({(['-',language]|join):''})}}-text">{{ __('Brain Building', 'GUNY-Homepage') }}</a></li>
           {% endif %}
         </ol>
       </li>

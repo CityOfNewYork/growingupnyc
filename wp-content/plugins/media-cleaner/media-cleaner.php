@@ -3,7 +3,7 @@
 Plugin Name: Media Cleaner
 Plugin URI: https://meowapps.com
 Description: Clean your Media Library, many options, trash system.
-Version: 5.4.4
+Version: 5.5.8
 Author: Jordy Meow
 Author URI: https://meowapps.com
 Text Domain: media-cleaner
@@ -25,7 +25,7 @@ if ( is_admin() ) {
 
 	global $wpmc_version;
 	global $wpmc;
-	$wpmc_version = '5.4.4';
+	$wpmc_version = '5.5.8';
 
 	require __DIR__ . '/admin.php';
 	require __DIR__ . '/core.php';

@@ -23,13 +23,15 @@ class Search {
    * @param  {object} input The search input.
    */
   _suggestions(input) {
-    let data = JSON.parse(input.dataset.jsSearchSuggestions);
-
-    input._MissPlete = new MissPlete({
-      input: input,
-      options: data,
-      className: input.dataset.jsSearchDropdownClass
-    });
+    if (input.dataset.jsSearchSuggestions) {
+      let data = JSON.parse(input.dataset.jsSearchSuggestions);
+  
+      input._MissPlete = new MissPlete({
+        input: input,
+        options: data,
+        className: input.dataset.jsSearchDropdownClass
+      });
+    }
   }
 }
 

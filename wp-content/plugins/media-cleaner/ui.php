@@ -32,6 +32,7 @@ class Meow_WPMC_UI {
 	function __construct( $core, $admin ) {
 		$this->core = $core;
 		$this->admin = $admin;
+		add_action( 'init', array( $this, 'load_textdomain' ) );
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'wp_enqueue_scripts' ) );
 		add_action( 'admin_print_scripts', array( $this, 'admin_inline_js' ) );
@@ -54,8 +55,11 @@ class Meow_WPMC_UI {
 		return ob_get_clean();
 	}
 
+	function load_textdomain() {
+		load_plugin_textdomain( 'media-cleaner', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	}
+
 	function admin_menu() {
-		//load_plugin_textdomain( 'media-cleaner', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		add_media_page( 'Media Cleaner', 'Cleaner', 'manage_options', 'media-cleaner', array( $this, 'wpmc_screen' ) );
 	}
 
@@ -104,8 +108,8 @@ class Meow_WPMC_UI {
 			mediasBuffer:' . get_option( 'wpmc_medias_buffer', 100 ) . ',
 			analysisBuffer: ' . get_option( 'wpmc_analysis_buffer', 50 ) . ',
 			isPro: ' . ( $this->admin->is_registered()  ? '1' : '0') . ',
-			scanFiles: ' . ( ( get_option( 'wpmc_method', 'media' ) == 'files' && $this->admin->is_registered() ) ? '1' : '0' ) . ',
-			scanMedia: ' . ( get_option( 'wpmc_method', 'media' ) == 'media' ? '1' : '0' ) . ' };';
+			scanFiles: ' . ( ( $this->core->current_method == 'files' && $this->admin->is_registered() ) ? '1' : '0' ) . ',
+			scanMedia: ' . ( $this->core->current_method == 'media' ? '1' : '0' ) . ' };';
 		echo "\n</script>";
 	}
 
@@ -118,14 +122,12 @@ class Meow_WPMC_UI {
 	}
 
 	function display_metabox( $post ) {
-		$this->core->log( "Media Edit > Checking Media #{$post->ID}" );
-		$success = $this->core->check_media( $post->ID, true );
-		$this->core->log( "Success $success\n" );
-		if ( $success ) {
-			if ( array_key_exists( $this->core->last_analysis, $this->foundTypes ) )
-				echo $this->foundTypes[ $this->core->last_analysis ];
+		$originType = $this->core->reference_exists( null, $post->ID );
+		if ( $originType ) {
+			if ( array_key_exists( $originType, $this->foundTypes ) )
+				echo $this->foundTypes[ $originType ];
 			else
-				echo "It seems to be used as: " . $this->core->last_analysis;
+				echo "It seems to be used as: " . $originType;
 		}
 		else {
 			echo "Doesn't seem to be used.";

@@ -4,6 +4,11 @@ Description: Clean your Media Library and Uploads Folder.
 Author: Jordy Meow
 */
 
+const WPMC_TARGET_FILES = 'files';
+const WPMC_TARGET_MEDIAS = 'media';
+const WPMC_SOURCE_CONTENT = 'content';
+const WPMC_SOURCE_MEDIAS = 'media';
+
 function wpmc_pop_array(items, count) {
 	var newItems = [];
 	while ( newItems.length < count && items.length > 0 ) {
@@ -88,12 +93,11 @@ function wpmc_delete() {
 	wpmc_delete_do(items, items.length);
 }
 
-function wpmc_delete_all(isTrash, filter = '') {
-	var items = [];
+function wpmc_delete_all(isTrash, filter = {}) {
 	var data = {
 		action: 'wpmc_get_all_issues',
 		isTrash: isTrash ? 1 : 0,
-		s: filter
+		filter: filter
 	};
 
 	jQuery.post(ajaxurl, data, function (response) {
@@ -110,7 +114,8 @@ function wpmc_update_progress(current, totalcount, isDeleting) {
 	if (isDeleting === undefined)
   	isDeleting = false;
 	var action = isDeleting ? "Deleting" : "Analyzing";
-	jQuery('#wpmc_progression').html('<span class="dashicons dashicons-controls-play"></span> ' + action + ' ' + current + "/" + totalcount + " (" + Math.round(current / totalcount * 100) + "%)");
+	jQuery('#wpmc_progression').html('<span class="dashicons dashicons-controls-play"></span> ' + 
+		action + ' ' + current + "/" + totalcount + " (" + Math.round(current / totalcount * 100) + "%)");
 }
 
 function wpmc_delete_do(items, totalcount) {
@@ -178,65 +183,60 @@ function wpmc_new_context() {
 		currentPhase: null,
 
 		phases: {
-			preparePosts: {
+			extractReferencesFromPosts: {
 				init: function () {
 					this.progress = 0; // Scanned posts count
 					this.progressPrev = 0;
 					return this;
 				},
 				run: function () {
-					wpmc_prepare();
+					wpmc_extract_references_from(WPMC_SOURCE_CONTENT);
 				},
 				pause: function () {
-					jQuery('#wpmc_progression').html('<span class="dashicons dashicons-controls-pause"></span> Paused at preparing posts (' + this.progress + ' posts)');
+					jQuery('#wpmc_progression').html('<span class="dashicons dashicons-controls-pause"></span> Paused at preparing posts (' + 
+						this.progress + ' posts)');
 				},
 				skip: function () {
 					this.progress += wpmc_cfg.postsBuffer;
 				},
 				nextPhase: function () {
-					if (wpmc_cfg.scanMedia)
-						return wpmc.phases.prepareMedia;
-					if (wpmc_cfg.scanFiles)
-						return wpmc.phases.prepareFiles;
-					console.error('Configuration Error'); // This shouldn't happen
+					return wpmc.phases.extractReferencesFromMedias;
 				}
 			},
-			prepareFiles: {
+			extractReferencesFromMedias: {
 				init: function () {
-					this.progress = null; // The last scanned directory
-					this.progressPrev = null;
+					this.progress = 0; // Scanned posts count
+					this.progressPrev = 0;
 					return this;
 				},
 				run: function () {
-					wpmc_scan_type('files', this.progress);
+					wpmc_extract_references_from(WPMC_SOURCE_MEDIAS);
 				},
 				pause: function () {
-					jQuery('#wpmc_progression').html('<span class="dashicons dashicons-controls-pause"></span> Paused at preparing files (' + this.progress + ')');
+					jQuery('#wpmc_progression').html('<span class="dashicons dashicons-controls-pause"></span> Paused at preparing medias (' + 
+						this.progress + ' medias)');
 				},
 				skip: function () {
-					var dir = wpmc.dirs.pop();
-					if (dir) {
-						wpmc.currentPhase.progressPrev = wpmc.currentPhase.progress;
-						wpmc.currentPhase.progress = dir;
-					}
-					else
-						wpmc.currentPhase = this.nextPhase().init();
+					this.progress += wpmc_cfg.mediasBuffer;
 				},
 				nextPhase: function () {
-					return wpmc.phases.analyze;
+					return wpmc.phases.retrieveTargetsToCheck;
+					console.error('Configuration Error'); // This shouldn't happen
 				}
 			},
-			prepareMedia: {
+			retrieveTargetsToCheck: {
 				init: function () {
 					this.progress = 0; // Scanned media count
 					this.progressPrev = 0;
 					return this;
 				},
 				run: function () {
-					wpmc_scan_type('medias', null, this.progress);
+					wpmc_retrieve_targets_for(this.method, this.method === WPMC_TARGET_FILES ? this.progress : null, 
+						this.method === WPMC_TARGET_MEDIAS ? this.progress : 0);
 				},
 				pause: function () {
-					jQuery('#wpmc_progression').html('<span class="dashicons dashicons-controls-pause"></span> Paused at preparing media (' + this.progress + ' media)');
+					jQuery('#wpmc_progression').html('<span class="dashicons dashicons-controls-pause"></span> Paused at preparing media (' + 
+						this.progress + ' media)');
 				},
 				skip: function () {
 					this.progress += wpmc_cfg.mediasBuffer;
@@ -252,17 +252,18 @@ function wpmc_new_context() {
 					return this;
 				},
 				run: function () {
-					wpmc_scan_do();
+					wpmc_check_targets();
 				},
 				pause: function () {
 					var current = wpmc.total - (wpmc.files.length + wpmc.medias.length);
 					var totalcount = wpmc.total;
-					jQuery('#wpmc_progression').html('<span class="dashicons dashicons-controls-pause"></span> Paused at ' + current + "/" + totalcount + " (" + Math.round(current / totalcount * 100) + "%)");
+					jQuery('#wpmc_progression').html('<span class="dashicons dashicons-controls-pause"></span> Paused at ' + 
+						current + "/" + totalcount + " (" + Math.round(current / totalcount * 100) + "%)");
 				},
 				skip: function () {
 					if (wpmc.files.length)
 						this.currentFiles = wpmc_pop_array(wpmc.files, wpmc_cfg.analysisBuffer);
-					if (wpmc.medias.lenght)
+					if (wpmc.medias.length)
 						this.currentMedia = wpmc_pop_array(wpmc.medias, wpmc_cfg.analysisBuffer);
 				},
 				rollback: function () {
@@ -276,63 +277,46 @@ function wpmc_new_context() {
 	};
 }
 
-// WPMC GET INITIAL INFO
+// Extract References from Posts
 
-function wpmc_scan_type_finished() {
-
-}
-
-function wpmc_scan_type_next(type, path) {
-
-}
-
-function wpmc_prepare() {
+function wpmc_extract_references_from(source) {
 	if (!wpmc.currentPhase) return; // Aborted
-
 	if (wpmc.isPendingPause)
 		return wpmc_update_to_pause();
-
 	setTimeout(
 		function() {
 			if (!wpmc.currentPhase) return; // Aborted
-
-			jQuery('#wpmc_progression').html('<span class="dashicons dashicons-portfolio"></span> Preparing posts (' + wpmc.currentPhase.progress + ' posts)...');
-
+			jQuery('#wpmc_progression').html('<span class="dashicons dashicons-portfolio"></span> Extract references (' + 
+				wpmc.currentPhase.progress + ' ' + source + ')...');
 			jQuery.ajax({
 				type: 'POST',
 				url: ajaxurl,
 				dataType: 'text',
 				data: {
-					action: 'wpmc_prepare_do',
+					action: 'wpmc_extract_references',
+					source: source,
 					limit: wpmc.currentPhase.progress
 				},
 				timeout: wpmc_cfg.timeout + 5000 // Extra 5sec for fail-safe
-
 			}).done(function (response) {
 				if (!wpmc.currentPhase) return; // Aborted
-
 				var reply = wpmc_parse_response(response);
-
 				if (!reply.success)
 					return wpmc_handle_error(reply.message);
-
 				if (!reply.finished) {
 					wpmc.currentPhase.progressPrev = wpmc.currentPhase.progress;
 					wpmc.currentPhase.progress = reply.limit;
 				}
 				else wpmc.currentPhase = wpmc.currentPhase.nextPhase().init();
-
 				return wpmc.currentPhase.run();
-
 			}).fail(function (e) { // Server Error
 				wpmc_handle_error(e.statusText, e.status);
 			});
-
 		}, wpmc_cfg.delay
 	);
 }
 
-function wpmc_scan_type(type, path = null, limit = 0) {
+function wpmc_retrieve_targets_for(target, path = null, limit = 0) {
 	if (!wpmc.currentPhase) return; // Aborted
 
 	if (wpmc.isPendingPause)
@@ -342,10 +326,12 @@ function wpmc_scan_type(type, path = null, limit = 0) {
 		elpath = path.replace(/^.*[\\\/]/, '');
 		jQuery('#wpmc_progression').html('<span class="dashicons dashicons-portfolio"></span> Preparing files (' + elpath + ')...');
 	}
-	else if (type === 'medias')
+	else if (target === WPMC_TARGET_MEDIAS)
 		jQuery('#wpmc_progression').html('<span class="dashicons dashicons-admin-media"></span> Preparing medias (' + limit + ' medias)...');
-	else
+	else if (target === WPMC_TARGET_FILES)
 		jQuery('#wpmc_progression').html('<span class="dashicons dashicons-portfolio"></span> Preparing files...');
+	else
+		jQuery('#wpmc_progression').html('<span class="dashicons dashicons-portfolio"></span> Preparing...');
 
 	setTimeout(
 		function() {
@@ -354,9 +340,7 @@ function wpmc_scan_type(type, path = null, limit = 0) {
 				url: ajaxurl,
 				dataType: 'text',
 				data: {
-					action: 'wpmc_scan',
-					medias: type === 'medias',
-					files: type === 'files',
+					action: 'wpmc_retrieve_targets',
 					path: path,
 					limit: limit
 				},
@@ -366,14 +350,16 @@ function wpmc_scan_type(type, path = null, limit = 0) {
 				if (!wpmc.currentPhase) return; // Aborted
 
 				var reply = wpmc_parse_response(response);
+				var method = reply.method;
+				wpmc.currentPhase.method = method;
 
 				if (!reply.success)
 					return wpmc_handle_error(reply.message);
 
 				// Store results
 				for (var i = 0, len = reply.results.length; i < len; i++) {
-				  var r = reply.results[i];
-					if (type === 'files') {
+					var r = reply.results[i];
+					if (method === WPMC_TARGET_FILES) {
 						if ( r.type === 'dir' )
 							wpmc.dirs.push( r.path );
 						else if ( r.type === 'file' ) {
@@ -381,22 +367,22 @@ function wpmc_scan_type(type, path = null, limit = 0) {
 							wpmc.total++;
 						}
 					}
-					else if (type === 'medias') {
+					else if (method === WPMC_TARGET_MEDIAS) {
 						wpmc.medias.push( r );
 						wpmc.total++;
 					}
 				}
 
 				// Next query
-				if (type === 'medias') {
-					if (wpmc_cfg.scanFiles || !reply.finished) {
+				if (method === WPMC_TARGET_MEDIAS) {
+					if (!reply.finished) {
 						wpmc.currentPhase.progressPrev = wpmc.currentPhase.progress;
 						wpmc.currentPhase.progress = reply.limit;
 					}
 					else
 						wpmc.currentPhase = wpmc.currentPhase.nextPhase().init();
 				}
-				else if (type === 'files') {
+				else if (method === WPMC_TARGET_FILES) {
 					var dir = wpmc.dirs.pop();
 					if (dir) {
 						wpmc.currentPhase.progressPrev = wpmc.currentPhase.progress;
@@ -433,7 +419,6 @@ function wpmc_pause() {
 function wpmc_update_to_pause() {
 	if (wpmc.isPendingPause) {
 		wpmc.currentPhase.pause();
-
 		jQuery('#wpmc_pause').html('<span style="top: 3px; position: relative; left: -5px;" class="dashicons dashicons-controls-play"></span>Continue');
 		wpmc.isPendingPause = false;
 		wpmc.isPause = true;
@@ -493,9 +478,8 @@ function wpmc_update_to_error() {
 	wpmc.isPause = true;
 }
 
-function wpmc_scan_do() {
+function wpmc_check_targets() {
 	if (!wpmc.currentPhase) return; // Aborted
-
 	if (wpmc.isPendingPause)
 		return wpmc_update_to_pause();
 
@@ -505,20 +489,27 @@ function wpmc_scan_do() {
 	if (wpmc.files.length > 0) {
 		wpmc.currentPhase.currentFiles = wpmc_pop_array(wpmc.files, wpmc_cfg.analysisBuffer);
 		expectedSuccess = wpmc.currentPhase.currentFiles.length;
-		data = { action: 'wpmc_scan_do', type: 'file', data: wpmc.currentPhase.currentFiles };
+		data = { action: 'wpmc_check_targets', method: 'file', data: wpmc.currentPhase.currentFiles };
 	}
 	else if (wpmc.medias.length > 0) {
 		wpmc.currentPhase.currentMedia = wpmc_pop_array(wpmc.medias, wpmc_cfg.analysisBuffer);
 		expectedSuccess = wpmc.currentPhase.currentMedia.length;
-		data = { action: 'wpmc_scan_do', type: 'media', data: wpmc.currentPhase.currentMedia };
+		data = { action: 'wpmc_check_targets', method: 'media', data: wpmc.currentPhase.currentMedia };
 	}
 	else {
-		jQuery('#wpmc_progression').html(wpmc.issues + " issue(s) found. <a href='?page=media-cleaner'></span>Refresh</a>.");
-
+		jQuery('#wpmc_progression').html("");
+		var issueMsg = 'No issues were found.';
+		if (wpmc.issues > 1)
+			issueMsg = wpmc.issues + ' issues were found.';
+		else if (wpmc.issues === 1)
+			issueMsg = 'Only 1 issue was found.';
+		jQuery('#wpmc-table').html('<div style="padding: 20px; text-align: center;"><p style="font-size: 14px; margin: 0px 0px 10px 0px;">' + 
+			issueMsg + '</p><a class="button-primary" href="?page=media-cleaner">Display the results</a></div>');
 		wpmc = wpmc_new_context(); // Reset the context
 		jQuery('#wpmc_pause').hide();
 		jQuery('#wpmc_scan').html('<span style="top: 3px; position: relative; left: -5px;" class="dashicons dashicons-search"></span>Start Scan');
 		jQuery('#wpmc_actions').trigger('idle');
+		//location.reload();
 		return;
 	}
 
@@ -530,22 +521,15 @@ function wpmc_scan_do() {
 				dataType: 'text',
 				data: data,
 				timeout: wpmc_cfg.timeout + 5000 // Extra 5sec for fail-safe
-
 			}).done(function (response) {
 				var reply = wpmc_parse_response(response);
-
 				if (!reply.success)
 					return wpmc_handle_error(reply.message);
-
-				if (reply.result)
-					wpmc.issues += expectedSuccess - reply.result.success;
-
-				wpmc_scan_do();
-
+				wpmc.issues += expectedSuccess - reply.results;
+				wpmc_check_targets();
 			}).fail(function (e) { // Server Error
 				wpmc_handle_error(e.statusText, e.status);
 			});
-
 		}, wpmc_cfg.delay
 	);
 }
@@ -620,7 +604,7 @@ function wpmc_open_dialog(content) {
 			wrap.trigger('busy');
 			$('#wpmc_scan').html('Stop Scan');
 			$('#wpmc_pause').show();
-			wpmc.currentPhase = wpmc.phases.preparePosts.init();
+			wpmc.currentPhase = wpmc.phases.extractReferencesFromPosts.init();
 			wpmc.currentPhase.run();
 		});
 
@@ -637,10 +621,11 @@ function wpmc_open_dialog(content) {
 			var $this = $(this);
 			if ($this.hasClass('disabled')) return;
 			var filter = $this.data('filter') || '';
-			if (filter && filter != wrap.find('.search-box input[name="s"]').val()) {
+			var search = $this.data('search') || '';
+			if (search != wrap.find('.search-box input[name="s"]').val()) {
 				var dialog = wpmc_open_dialog({
-					title: 'Continue?',
-					body: 'You have modified the search terms and did not click on "Search".<br>The <b>current</b> results will be deleted. Do you want to continue?',
+					title: 'Warning',
+					body: 'You modified the search terms without clicking on the <i>Search</i> button to refresh the results. Therefore, the <b>current</b> results will be deleted. Do you want to continue?',
 					append: $('<div class="prompt">')
 						.append(
 							// Cancel Button
@@ -653,13 +638,35 @@ function wpmc_open_dialog(content) {
 							$('<a class="button button-primary continue" href="#">Continue</a>').on('click', function (ev) {
 								ev.preventDefault();
 								dialog.dialog('close');
-								wpmc_delete_all(false, filter);
+								wpmc_delete_all(false, { filter, search });
 							})
 						)
 				});
 				return;
 			}
-			wpmc_delete_all(false, filter);
+			else {
+				var dialog = wpmc_open_dialog({
+					title: 'Delete all',
+					body: '<b>All the issues will be moved to the trash</b>. Please make sure you have a backup. Do you want to continue?',
+					append: $('<div class="prompt">')
+						.append(
+							// Cancel Button
+							$('<a class="button cancel" href="#">Cancel</a>').on('click', function (ev) {
+								ev.preventDefault();
+								dialog.dialog('close');
+							})
+						).append(
+							// Continue Button
+							$('<a class="button button-primary continue" href="#">Continue</a>').on('click', function (ev) {
+								ev.preventDefault();
+								dialog.dialog('close');
+								wpmc_delete_all(false, { filter, search });
+							})
+						)
+				});
+				return;
+			}
+			//wpmc_delete_all(false, filter);
 		});
 
 		// Ignore Button
@@ -689,7 +696,7 @@ function wpmc_open_dialog(content) {
 			var $this = $(this);
 			var dialog = wpmc_open_dialog({
 				title: "Reset",
-				body:  "This will reset the Media Cleaner database. All the information related to your trash, your latest scan and ignored entries will be lost. Do you want to continue?",
+				body:  "The information related to the Media Cleaner's trash, latest scan and ignored entries will be lost. Do you want to continue?",
 				append: $('<div class="prompt">')
 					.append(
 						// Cancel Button

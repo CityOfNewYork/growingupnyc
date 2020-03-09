@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b4a2ec6e60d268cf35813e45c7e5346",
+    "content-hash": "4e3e0cd753d6f39343f9e64300c32bd8",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.133.9",
+            "version": "3.133.28",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "59e059bd6d25d315a03cdad10b79102df5cb0a1b"
+                "reference": "5ef2118011e39504484d70ed738eb8ede7f69287"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/59e059bd6d25d315a03cdad10b79102df5cb0a1b",
-                "reference": "59e059bd6d25d315a03cdad10b79102df5cb0a1b",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/5ef2118011e39504484d70ed738eb8ede7f69287",
+                "reference": "5ef2118011e39504484d70ed738eb8ede7f69287",
                 "shasum": ""
             },
             "require": {
@@ -88,7 +88,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-02-06T19:11:31+00:00"
+            "time": "2020-03-03T19:11:21+00:00"
         },
         {
             "name": "composer/installers",
@@ -792,16 +792,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.29.1",
+            "version": "2.31.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "e509be5bf2d703390e69e14496d9a1168452b0a2"
+                "reference": "bbc0ab53f41a4c6f223c18efcdbd9bc725eb5d2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/e509be5bf2d703390e69e14496d9a1168452b0a2",
-                "reference": "e509be5bf2d703390e69e14496d9a1168452b0a2",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/bbc0ab53f41a4c6f223c18efcdbd9bc725eb5d2d",
+                "reference": "bbc0ab53f41a4c6f223c18efcdbd9bc725eb5d2d",
                 "shasum": ""
             },
             "require": {
@@ -858,7 +858,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2020-01-21T09:36:43+00:00"
+            "time": "2020-03-01T11:11:58+00:00"
         },
         {
             "name": "nyco/wp-config",
@@ -1242,16 +1242,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.13.1",
+            "version": "v1.14.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "7b4aab9743c30be783b73de055d24a39cf4b954f"
+                "reference": "34094cfa9abe1f0f14f48f490772db7a775559f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/7b4aab9743c30be783b73de055d24a39cf4b954f",
-                "reference": "7b4aab9743c30be783b73de055d24a39cf4b954f",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/34094cfa9abe1f0f14f48f490772db7a775559f2",
+                "reference": "34094cfa9abe1f0f14f48f490772db7a775559f2",
                 "shasum": ""
             },
             "require": {
@@ -1263,7 +1263,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.13-dev"
+                    "dev-master": "1.14-dev"
                 }
             },
             "autoload": {
@@ -1297,20 +1297,20 @@
                 "portable",
                 "shim"
             ],
-            "time": "2019-11-27T14:18:11+00:00"
+            "time": "2020-01-13T11:15:53+00:00"
         },
         {
             "name": "symfony/translation",
-            "version": "v5.0.4",
+            "version": "v5.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "28e1054f1ea26c63762d9260c37cb1056ea62dbb"
+                "reference": "e9b93f42a1fd6aec6a0872d59ee5c8219a7d584b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/28e1054f1ea26c63762d9260c37cb1056ea62dbb",
-                "reference": "28e1054f1ea26c63762d9260c37cb1056ea62dbb",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/e9b93f42a1fd6aec6a0872d59ee5c8219a7d584b",
+                "reference": "e9b93f42a1fd6aec6a0872d59ee5c8219a7d584b",
                 "shasum": ""
             },
             "require": {
@@ -1374,7 +1374,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2020-01-21T08:40:24+00:00"
+            "time": "2020-02-04T07:41:34+00:00"
         },
         {
             "name": "symfony/translation-contracts",
@@ -1522,15 +1522,15 @@
         },
         {
             "name": "wpackagist-plugin/acf-to-rest-api",
-            "version": "3.1.0",
+            "version": "3.2.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/acf-to-rest-api/",
-                "reference": "tags/3.1.0"
+                "reference": "tags/3.2.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/acf-to-rest-api.3.1.0.zip",
+                "url": "https://downloads.wordpress.org/plugin/acf-to-rest-api.3.2.0.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1682,15 +1682,15 @@
         },
         {
             "name": "wpackagist-plugin/limit-login-attempts-reloaded",
-            "version": "2.9.0",
+            "version": "2.10.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/limit-login-attempts-reloaded/",
-                "reference": "tags/2.9.0"
+                "reference": "tags/2.10.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/limit-login-attempts-reloaded.2.9.0.zip",
+                "url": "https://downloads.wordpress.org/plugin/limit-login-attempts-reloaded.2.10.0.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1702,15 +1702,15 @@
         },
         {
             "name": "wpackagist-plugin/media-cleaner",
-            "version": "5.4.4",
+            "version": "5.5.8",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/media-cleaner/",
-                "reference": "tags/5.4.4"
+                "reference": "tags/5.5.8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/media-cleaner.5.4.4.zip",
+                "url": "https://downloads.wordpress.org/plugin/media-cleaner.5.5.8.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1742,15 +1742,15 @@
         },
         {
             "name": "wpackagist-plugin/query-monitor",
-            "version": "3.3.7",
+            "version": "3.5.2",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/query-monitor/",
-                "reference": "tags/3.3.7"
+                "reference": "tags/3.5.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/query-monitor.3.3.7.zip",
+                "url": "https://downloads.wordpress.org/plugin/query-monitor.3.5.2.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1762,15 +1762,15 @@
         },
         {
             "name": "wpackagist-plugin/simple-custom-post-order",
-            "version": "2.4.5",
+            "version": "2.4.9",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/simple-custom-post-order/",
-                "reference": "tags/2.4.5"
+                "reference": "tags/2.4.9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/simple-custom-post-order.2.4.5.zip",
+                "url": "https://downloads.wordpress.org/plugin/simple-custom-post-order.2.4.9.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1782,15 +1782,15 @@
         },
         {
             "name": "wpackagist-plugin/svg-support",
-            "version": "2.3.15",
+            "version": "2.3.17",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/svg-support/",
-                "reference": "tags/2.3.15"
+                "reference": "tags/2.3.17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/svg-support.2.3.15.zip",
+                "url": "https://downloads.wordpress.org/plugin/svg-support.2.3.17.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1802,15 +1802,15 @@
         },
         {
             "name": "wpackagist-plugin/taxonomy-terms-order",
-            "version": "1.5.7",
+            "version": "1.5.7.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/taxonomy-terms-order/",
-                "reference": "tags/1.5.7"
+                "reference": "tags/1.5.7.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/taxonomy-terms-order.1.5.7.zip",
+                "url": "https://downloads.wordpress.org/plugin/taxonomy-terms-order.1.5.7.1.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1822,15 +1822,15 @@
         },
         {
             "name": "wpackagist-plugin/the-events-calendar",
-            "version": "4.9.8",
+            "version": "4.8.2",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/the-events-calendar/",
-                "reference": "tags/4.9.8"
+                "reference": "tags/4.8.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/the-events-calendar.4.9.8.zip",
+                "url": "https://downloads.wordpress.org/plugin/the-events-calendar.4.8.2.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1842,15 +1842,15 @@
         },
         {
             "name": "wpackagist-plugin/timber-library",
-            "version": "1.11.0",
+            "version": "1.15.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/timber-library/",
-                "reference": "tags/1.11.0"
+                "reference": "tags/1.15.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/timber-library.1.11.0.zip",
+                "url": "https://downloads.wordpress.org/plugin/timber-library.1.15.1.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1862,15 +1862,15 @@
         },
         {
             "name": "wpackagist-plugin/tinymce-advanced",
-            "version": "5.2.1",
+            "version": "5.3.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/tinymce-advanced/",
-                "reference": "tags/5.2.1"
+                "reference": "trunk"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/tinymce-advanced.5.2.1.zip",
+                "url": "https://downloads.wordpress.org/plugin/tinymce-advanced.zip?timestamp=1581309812",
                 "reference": null,
                 "shasum": null
             },
@@ -1882,15 +1882,15 @@
         },
         {
             "name": "wpackagist-plugin/wordpress-importer",
-            "version": "0.6.4",
+            "version": "0.7",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/wordpress-importer/",
-                "reference": "tags/0.6.4"
+                "reference": "tags/0.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wordpress-importer.0.6.4.zip",
+                "url": "https://downloads.wordpress.org/plugin/wordpress-importer.0.7.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -1919,6 +1919,26 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/wp-all-export/"
+        },
+        {
+            "name": "wpackagist-plugin/wp-smartcrop",
+            "version": "2.0.5",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/wp-smartcrop/",
+                "reference": "tags/2.0.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/wp-smartcrop.2.0.5.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/wp-smartcrop/"
         },
         {
             "name": "wpackagist-plugin/wps-hide-login",

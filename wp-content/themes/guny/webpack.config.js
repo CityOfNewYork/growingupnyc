@@ -1,8 +1,8 @@
 var webpack = require('webpack');
 
-const config= {
+const config = {
   module: {
-    loaders: [
+    rules: [
       {
         loader: 'babel-loader',
         test: /\.js$/,
@@ -10,7 +10,7 @@ const config= {
         query: {
           presets: [
             [
-              'es2015',
+              '@babel/preset-env',
               {
                 'modules': false
               }
@@ -19,13 +19,13 @@ const config= {
         }
       },
       {
-        loader: 'json-loader',
-        test: /\.json/
+        loader: 'file-loader',
+        test: /\.json/,
+        type: 'javascript/auto'
       }
     ]
   },
   externals: {
-    'modernizr': 'Modernizr',
     'jquery': 'jQuery'
   },
   resolve: {
@@ -33,23 +33,25 @@ const config= {
   },
   plugins: [
     new webpack.ProvidePlugin({
-      Modernizr : 'modernizr',
       $: 'jquery',
       jQuery: 'jquery'
     })
   ],
-  devtool: 'inline-source-map'
+  devtool: 'inline-source-map',
+  performance: { hints: false }
 };
 
 // define additional plugins
-config.plugins = config.plugins||[];
+config.plugins = config.plugins || [];
 if (process.env.NODE_ENV === 'production') {
+  config.mode = 'production'
   config.plugins.push(new webpack.DefinePlugin({
     'process.env': {
       'NODE_ENV': `"production"`
     }
   }));
 } else {
+  config.mode = 'development'
   config.plugins.push(new webpack.DefinePlugin({
     'process.env': {
       'NODE_ENV': `"development"`

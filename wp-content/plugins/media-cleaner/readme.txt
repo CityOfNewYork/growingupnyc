@@ -3,9 +3,9 @@ Contributors: TigrouMeow
 Tags: clean, delete, file, files, images, image, media, library, upload, acf, gutenberg
 Donate link: https://commerce.coinbase.com/checkout/d047546a-77a8-41c8-9ea9-4a950f61832f
 Requires at least: 4.8
-Tested up to: 5.2
+Tested up to: 5.3
 Requires PHP: 7.0
-Stable tag: 5.4.4
+Stable tag: 5.5.8
 
 Clean your WordPress from unused or broken media and files. It has its own trash system and recovery features. Please read the description.
 
@@ -15,7 +15,7 @@ Media Cleaner cleans your Media Library from the media entries (and files) which
 
 **Before using this plugin, make sure you have a proper backup of your install. This step is not optional; it is required. You cannot trust any tools modifying or deleting your files.**
 
-For compatibility, Pro version and important information, please read this until the end. Last but not least, it is necessary to read the [tutorial](https://meowapps.com/media-cleaner-tutorial/). It is available on the official website, here: [Media Cleaner](https://meowapps.com/media-cleaner). 
+For compatibility, Pro version and important information, please read this until the end. Last but not least, it is necessary to read the [tutorial](https://meowapps.com/media-cleaner-tutorial/). It is available on the official website, here: [Media Cleaner](https://meowapps.com/plugin/media-cleaner/). 
 
 === VERY IMPORTANT ===
 
@@ -33,21 +33,24 @@ It works with any kind of media entries, including their retina and/or WebP vers
 
 The Pro version adds Filesystem Analysis, extra support for complex plugins, Live Site option and WP-CLI support. 
 
-With the Filesystem Analysis, [Media Cleaner Pro](https://meowapps.com/media-cleaner) scans your physical /uploads directory, and match it against the Media Library. It also has extra support for complex plugins, such as:
+With the Filesystem Analysis, [Media Cleaner Pro](https://meowapps.com/plugin/media-cleaner/) scans your physical /uploads directory, and match it against the Media Library. It also has extra support for complex plugins, such as:
 
 - ACF (+ ACF Widgets)
 - Divi Builder
 - Fusion Builder (Avada)
-- Visual Composer (WPBakery)
+- WPBakery Page Builder
+- Visual Composer
 - Elementor
 - Beaver Builder
 - Brizy Builder
 - Oxygen Builder
-- And more (Theme X, ZipList Recipe, UberMenu...)
+- Slider Revolution
+- Avia Framework
+- And more (Theme X, ZipList Recipe, WP Residence, WCFM MarketPlace, UberMenu...)
 
 The Live Site option will analyze the online version of your website, which might enhance the accuracy of the Cleaner in edge-cases.
 
-Last but not least, [Media Cleaner Pro](https://meowapps.com/media-cleaner) has support for WP-CLI. If you have direct access (SSH) to your server, you will be able to run the plugin at a much higher speed or have it ran automatically, if you like.
+Last but not least, [Media Cleaner Pro](https://meowapps.com/plugin/media-cleaner/) has support for WP-CLI. If you have direct access (SSH) to your server, you will be able to run the plugin at a much higher speed or have it ran automatically, if you like.
 
 === AGAIN, BE CAREFUL ===
 
@@ -70,6 +73,61 @@ Better to be safe than sorry. This plugin deletes files! Therefore, backup is no
 1. Media -> Media Cleaner
 
 == Changelog ==
+
+= 5.5.8 =
+* Add: Support for Image Map Pro.
+* Add: Support for Directories.
+* Update: Code cleaning and a bit of refactoring.
+* Update: Cleaner references table with null values when needed.
+* Fix: Check if the filename exists in the trash for every new upload (and if yes, give it a different filename). 
+* Fix: Avoid crash related to unserialization.
+* Fix: Ignore some other plugins' files which are not supposed to be scanned.
+* Info: This plugin is a lot of work. Please help me by giving it a nice review, [here](https://wordpress.org/support/plugin/media-cleaner/reviews/?rate=5#new-post).
+
+= 5.5.7 =
+* Update: UI improved in many ways, I hope you will love it more!
+* Add: Filter by issue, and allow to delete those specific issues.
+* Add: Support for the original image (-scaled) feature added in a recent version of WP.
+* Add: Support for Custom Product Tabs.
+* Add: Support for Support for FAT Portfolio.
+* Update: Better support for translations.
+* Update: Better support for Revolution Slider.
+* Update: Added additional checks for DOM parser and check if the DOM module is loaded.
+* Fix: 100% of the code was checked and a few tiny issues were fixed here and there.
+
+= 5.5.4 =
+* Update: Creates the DB tables automatically.
+* Add: Support for Revolution Slider.
+* Add: Support for WP Residence.
+* Add: Support for Avia Framework.
+
+= 5.5.3 =
+* Add: Check the IDs of the standard galleries.
+* Add: Support for the ACF groups.
+* Add: Support for the ACF fields for taxonomies.
+
+= 5.5.2 =
+* Update: Better support for WPBakery.
+* Fix: Issue with the URLs pointing at the plugin's tutorial page.
+* Fix: Avoid the scan to be halted by error logging.
+* Add: Basic support for WCFM MarketPlace.
+* Info: This plugin is a lot of work. Please help by giving it a nice review, here: https://wordpress.org/support/plugin/media-cleaner/reviews/?rate=5#new-post. Thank you :)
+
+= 5.5.1 =
+* Update: Admin refreshed to 2.4.
+* Fix: Support for ACF Aspect Ratio Crop, Tasty Pins, and more extensions.
+
+= 5.4.9 =
+* Fix: ACF File field wasn't being detected properly in some cases.
+* Fix: Support for WPBakery Masonry Grid and probably for many more cases than just this one.
+* Add: Ask for confirmation before deleting all the files at once.
+
+= 5.4.8 =
+* Fix: Widgets were not scanned.
+* Add: Support for Divi modules.
+
+= 5.4.6 =
+* Add: Option to disable the analysis of shortcodes.
 
 = 5.4.4 =
 * Add: Support for Brizy Builder.

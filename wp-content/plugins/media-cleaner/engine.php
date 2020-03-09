@@ -12,23 +12,23 @@ class Meow_WPMC_Engine {
 	*/
 
 	// Parse the posts for references (based on $limit and $limitsize for paging the scan)
-	function parse( $limit, $limitsize, &$message = '' ) {
+	function extractRefsFromContent( $limit, $limitsize, &$message = '' ) {
 		if ( empty( $limit ) )
 			$this->core->reset_issues();
 
-		$method = get_option( 'wpmc_method', 'media' );
+		$method = $this->core->current_method;
 		$check_library = get_option(' wpmc_media_library', true );
 		$check_content = get_option( 'wpmc_content', true );
-		$check_postmeta = get_option( 'wpmc_postmeta', false );
-		$check_posts = get_option( 'wpmc_posts', false );
-		$check_widgets = get_option( 'wpmc_widgets', false );
 
-		if ( $method == 'media' && $check_posts && !$check_content && !$check_postmeta && !$check_widgets ) {
-			$message = __( "Posts, Meta and Widgets analysis are all off. Done.", 'media-cleaner' );
+		if ( $method == 'media' && !$check_content ) {
+			$message = __( "Skipped, as Content is not selected.", 'media-cleaner' );
 			return true;
 		}
-		if ( $method == 'files' && $check_library && !$check_content && !$check_posts && !$check_postmeta && !$check_widgets ) {
-			$message = __( "Posts, Meta and Widgets analysis are all off. Done.", 'media-cleaner' );
+		// DEBUG: This condition was used in a previous version of the plugin
+		// but it looks like a mistake. The $check_library was removed.
+		// if ( $method == 'files' && $check_library && !$check_content ) {
+		if ( $method == 'files' && !$check_content ) {
+			$message = __( "Skipped, as Content is not selected.", 'media-cleaner' );
 			return true;
 		}
 
@@ -39,18 +39,9 @@ class Meow_WPMC_Engine {
 		// Maybe we could avoid to check more post_types.
 		// SELECT post_type, COUNT(*) FROM `wp_posts` GROUP BY post_type
 		$posts = $wpdb->get_col( $wpdb->prepare( "SELECT p.ID FROM $wpdb->posts p
-			WHERE p.post_status != 'inherit'
-			AND p.post_status != 'trash'
-			AND p.post_status != 'auto-draft'
-			AND p.post_type != 'attachment'
-			AND p.post_type != 'shop_order'
-			AND p.post_type != 'shop_order_refund'
-			AND p.post_type != 'nav_menu_item'
-			AND p.post_type != 'revision'
-			AND p.post_type != 'auto-draft'
-			AND p.post_type != 'wphb_minify_group'
-			AND p.post_type != 'customize_changeset'
-			AND p.post_type != 'oembed_cache'
+			WHERE p.post_status NOT IN ('inherit', 'trash', 'auto-draft')
+			AND p.post_type NOT IN ('attachment', 'shop_order', 'shop_order_refund', 'nav_menu_item', 'revision', 'auto-draft', 'wphb_minify_group', 'customize_changeset', 'oembed_cache', 'nf_sub')
+			AND p.post_type NOT LIKE 'dlssus_%'
 			AND p.post_type NOT LIKE 'ml-slide%'
 			AND p.post_type NOT LIKE '%acf-%'
 			AND p.post_type NOT LIKE '%edd_%'
@@ -60,8 +51,8 @@ class Meow_WPMC_Engine {
 
 		// Only at the beginning
 		if ( empty( $limit ) ) {
-			$this->core->log( "Parsed references:" );
-			if ( get_option( 'wpmc_widgets', false ) ) {
+			$this->core->log( "References from Content:" );
+			//if ( get_option( 'wpmc_widgets', false ) ) {
 
 				global $wp_registered_widgets;
 				$syswidgets = $wp_registered_widgets;
@@ -75,7 +66,7 @@ class Meow_WPMC_Engine {
 				}
 
 				do_action( 'wpmc_scan_widgets' );
-			}
+			//}
 			do_action( 'wpmc_scan_once' );
 		}
 
@@ -83,14 +74,10 @@ class Meow_WPMC_Engine {
 
 		foreach ( $posts as $post ) {
 			$this->core->timeout_check();
-			
-			// Check Meta
-			if ( $check_content || $check_postmeta )
-				do_action( 'wpmc_scan_postmeta', $post );
 
-			// Check Posts
-			if ( $check_content || $check_posts ) {
-				// Get HTML for this post
+			// Check content
+			if ( $check_content ) {
+				do_action( 'wpmc_scan_postmeta', $post );
 				$html = get_post_field( 'post_content', $post );
 				do_action( 'wpmc_scan_post', $html, $post );
 			}
@@ -107,7 +94,57 @@ class Meow_WPMC_Engine {
 		$finished = count( $posts ) < $limitsize;
 		if ( $finished )
 			$this->core->log();
-		$message = __( "Posts checked.", 'media-cleaner' );
+		$elapsed = $this->core->timeout_get_elapsed();
+		$message = sprintf(
+			// translators: %1$d is number of posts, %2$s is time in milliseconds
+			__( "Extracted references from %1\$d posts in %2\$s.", 'media-cleaner' ), count( $posts ), $elapsed
+		);
+		return $finished;
+	}
+
+	// Parse the posts for references (based on $limit and $limitsize for paging the scan)
+	function extractRefsFromLibrary( $limit, $limitsize, &$message = '' ) {
+		$method = $this->core->current_method;
+		if ( $method == 'media' ) {
+			$message = __( "Skipped, as it is not needed for the Media Library method.", 'media-cleaner' );
+			return true;
+		}
+		$check_library = get_option(' wpmc_media_library', true );
+		if ( !$check_library ) {
+			$message = __( "Skipped, as Media Library is not selected.", 'media-cleaner' );
+			return true;
+		}
+
+		global $wpdb;
+		$medias = $wpdb->get_col( $wpdb->prepare( "SELECT p.ID FROM $wpdb->posts p
+			WHERE p.post_status = 'inherit'
+			AND p.post_type = 'attachment'
+			LIMIT %d, %d", $limit, $limitsize
+			)
+		);
+
+		// Only at the beginning
+		if ( empty( $limit ) ) {
+			$this->core->log( "References from Media Library:" );
+		}
+
+		$this->core->timeout_check_start( count( $medias ) );
+		foreach ( $medias as $media ) {
+			$this->core->timeout_check();
+			// Check the media
+			$paths = $this->core->get_paths_from_attachment( $media );
+			$this->core->add_reference_url( $paths, 'MEDIA LIBRARY' );
+			$this->core->timeout_check_additem();
+		}
+
+		// Write the references found (and cached) by the parsers
+		$this->core->write_references();
+
+		$finished = count( $medias ) < $limitsize;
+		if ( $finished )
+			$this->core->log();
+		$elapsed = $this->core->timeout_get_elapsed();
+		$message = sprintf( __( "Extracted references from %d $medias in %s.", 'media-cleaner' ), count( $medias ), $elapsed );
 		return $finished;
 	}
 

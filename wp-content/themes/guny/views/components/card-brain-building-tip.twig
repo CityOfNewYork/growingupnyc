@@ -24,7 +24,7 @@
       {{ post.brainy_background }}
     {% else %}
       {{ post.brain_building_tip|slice(0, 60) ~ '...'  }}
-      <a href="{% if language_code !='en' %}/{{language_code}}{% endif %}/brainbuilding/{{post.slug}}" class="c-tip-card__link">{{ __('Try this tip', 'GUNY-Tips') }}<svg aria-hidden="true" class="icon--caret--small"><use xlink:href="#icon-caret-line-right"></use></svg></a>
+      <a href="{% if language_code !='en' %}/{{language_code}}{% endif %}/brainbuilding/{{post.slug}}" class="c-tip-card__link" title="{{ __('Try this tip:', 'GUNY-Tips') }} {{ post.brain_building_tip_name }}">{{ __('Try this tip', 'GUNY-Tips') }}<svg aria-hidden="true" class="icon--caret--small"><use xlink:href="#icon-caret-line-right"></use></svg></a>
       {% if post.terms('age_group') or post.terms('tip_category') %}
         <div class="c-card__tags">
           {% for term in post.terms('age_group') %}
@@ -43,6 +43,6 @@
 {# Powered by Vroom #}
 {% if logo == true %}
 <div class="c-tip-card__banner bg-color-brain-building-tip text-right">
-  <img class="c-tip-card__banner__img" src="/wp-content/themes/guny/assets/img/logo-vroom-white.png">
+  <img class="c-tip-card__banner__img" src="/wp-content/themes/guny/assets/img/logo-vroom-white{% if language_code != 'en' %}-{{language_code}}{% endif %}.png">
 </div>
 {% endif %}

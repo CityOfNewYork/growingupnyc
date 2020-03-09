@@ -4,10 +4,10 @@
 
 {% block sticker_content %}
   {% if post.multiday %}
-  <span class="event-month-date">{{post.start_datetime|date('M j')}} -</span>
-  <span class="event-month-date">{{post.end_datetime|date('M j')}}</span>
+  <span class="event-month-date" {% if language_code == 'es' %}style="text-transform: lowercase"{% endif %}>{{post.start_datetime|date('M j')}} -</span>
+  <span class="event-month-date" {% if language_code == 'es' %}style="text-transform: lowercase"{% endif %}>{{post.end_datetime|date('M j')}}</span>
   {% else %}
-  {{post.start_date_formatted}}
+  <span {% if language_code == 'es' %}style="text-transform: lowercase"{% endif %}>{{post.start_date_formatted}}</span>
   {% endif %}
 {% endblock %}
 

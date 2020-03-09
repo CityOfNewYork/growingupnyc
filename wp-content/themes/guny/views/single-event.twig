@@ -1,5 +1,34 @@
 {% extends "base.twig" %}
 
+{% block head_extras %}
+{# Events Schema #}
+<script type="application/ld+json">
+	{
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "{{post.title}}",
+    "description": "{{post.get_field('summary')|striptags}}",
+    "startDate": "{{post.start_datetime_formatted}}",
+    "endDate": "{{post.end_datetime_formatted}}",
+    "location": {
+      "@type": "Place",
+      "name": "{{post.venue}}",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "{{post.venue_address.address}}",
+        "addressLocality": "{{post.venue_address.city}}",
+        "postalCode": "{{post.venue_address.zip}}",
+        "addressRegion": "{{post.venue_address.region}}",
+        "addressCountry": "US"
+      }
+    },
+    "image": [
+      "{{post.image.src}}"
+    ]
+  }
+</script>
+
+{% endblock %}
 {% block content %}
 
   {% if is_archive %}
@@ -43,7 +72,7 @@
         <dt class="c-details-list__term">{{ __('Date', 'guny-events') }}</dt>
 
         <dd class="c-details-list__descr">
-          {{post.start_date_full}}
+          <span {% if language_code == 'es' %}style="text-transform: lowercase;"{% endif %}>{{post.start_date_full}}</span>
           {% if post.multiday %}
           - {{post.end_date_full}}
           {% endif %}

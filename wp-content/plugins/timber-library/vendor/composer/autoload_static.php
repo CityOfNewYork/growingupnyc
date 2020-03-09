@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6567439c14f5705c1376d806b5d78dc2
+class ComposerStaticInitad727149e88eb2fc8fad43689551e91f
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
@@ -133,6 +133,7 @@ class ComposerStaticInit6567439c14f5705c1376d806b5d78dc2
         'Composer\\Installers\\MagentoInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/MagentoInstaller.php',
         'Composer\\Installers\\MajimaInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/MajimaInstaller.php',
         'Composer\\Installers\\MakoInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/MakoInstaller.php',
+        'Composer\\Installers\\MantisBTInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/MantisBTInstaller.php',
         'Composer\\Installers\\MauticInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/MauticInstaller.php',
         'Composer\\Installers\\MayaInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/MayaInstaller.php',
         'Composer\\Installers\\MediaWikiInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/MediaWikiInstaller.php',
@@ -164,6 +165,7 @@ class ComposerStaticInit6567439c14f5705c1376d806b5d78dc2
         'Composer\\Installers\\SilverStripeInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/SilverStripeInstaller.php',
         'Composer\\Installers\\SiteDirectInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/SiteDirectInstaller.php',
         'Composer\\Installers\\SyDESInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/SyDESInstaller.php',
+        'Composer\\Installers\\SyliusInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/SyliusInstaller.php',
         'Composer\\Installers\\Symfony1Installer' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/Symfony1Installer.php',
         'Composer\\Installers\\TYPO3CmsInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/TYPO3CmsInstaller.php',
         'Composer\\Installers\\TYPO3FlowInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/TYPO3FlowInstaller.php',
@@ -213,6 +215,7 @@ class ComposerStaticInit6567439c14f5705c1376d806b5d78dc2
         'Timber\\Menu' => __DIR__ . '/../..' . '/lib/Menu.php',
         'Timber\\MenuItem' => __DIR__ . '/../..' . '/lib/MenuItem.php',
         'Timber\\Pagination' => __DIR__ . '/../..' . '/lib/Pagination.php',
+        'Timber\\PathHelper' => __DIR__ . '/../..' . '/lib/PathHelper.php',
         'Timber\\Post' => __DIR__ . '/../..' . '/lib/Post.php',
         'Timber\\PostCollection' => __DIR__ . '/../..' . '/lib/PostCollection.php',
         'Timber\\PostGetter' => __DIR__ . '/../..' . '/lib/PostGetter.php',
@@ -615,11 +618,11 @@ class ComposerStaticInit6567439c14f5705c1376d806b5d78dc2
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit6567439c14f5705c1376d806b5d78dc2::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit6567439c14f5705c1376d806b5d78dc2::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInit6567439c14f5705c1376d806b5d78dc2::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit6567439c14f5705c1376d806b5d78dc2::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit6567439c14f5705c1376d806b5d78dc2::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitad727149e88eb2fc8fad43689551e91f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitad727149e88eb2fc8fad43689551e91f::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInitad727149e88eb2fc8fad43689551e91f::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitad727149e88eb2fc8fad43689551e91f::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitad727149e88eb2fc8fad43689551e91f::$classMap;
 
         }, null, ClassLoader::class);
     }

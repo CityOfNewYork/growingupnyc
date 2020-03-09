@@ -113,7 +113,24 @@
         </section> <!-- /.o-content-container-text -->
       {% endif %}
     </div>
-    {% if post.related_posts %}
+
+    {# Tip #}
+    {% if post.get_field('brain_building_tip_enable') == 'Yes' and brain_building_tip %}
+      <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" data-id="section-brain-building">
+        <h2>{{ __('Brain Building', 'GUNY-Single-Age') }}</h2>
+        <p class="c-block-list__text">{{ post.brain_building_pretext }}</p>
+        <div class="c-block-list__inner">
+          {% include ['components/card-brain-building-tip.twig'] with {post: brain_building_tip, logo: true, full: true} %}
+        </div>
+        
+        <div class="text-center">
+          <a href="{{tipslink}}?ages={{post.age_group.slug}}" class="button--outline button--outline--gray">{{ __('See more tips', 'GUNY-Single-Age') }}</a>
+        </div>
+      </section>
+    {% endif %}
+      
+    {# Other programs #}
+    {% if post.get_field('show_other_programs') == 'Yes' and post.related_posts %}
     <div class="o-content-container c-block-list c-block-list--shade">
       <h2>{{ __('Other', 'GUNY-Single-Program') }} {{post.category.name}} {{ __('Programs', 'GUNY-Single-Program') }}</h2>
       <div class="c-block-list__inner">

@@ -147,27 +147,26 @@ BrainBuilding.getPrograms = function () {
 
 
 BrainBuilding.getTaxonomies = function () {
-  let result = this.programsAll.map(a => a.age_group);
+  // let result = this.programsAll.map(a => a.age_group);
 
   // age groups
-  let age_groups = _.uniq([].concat.apply([], this.programsAll.map(a => a.age_group)), function (x) {
+  let ageGroups = _.uniq([].concat.apply([], this.programsAll.map(a => a.age_group)), function (x) {
     return x.name;
   });
 
-  this.ageGroups = age_groups.sort((a, b) => a.description.localeCompare(b.description))
+  this.ageGroups = ageGroups.sort((a, b) => a.description.localeCompare(b.description))
   
   // tip types
-  let tip_types = _.uniq([].concat.apply([], this.programsAll.map(a => a.tip_category)), function (x) {
+  let types = _.uniq([].concat.apply([], this.programsAll.map(a => a.tip_category)), function (x) {
     return x.name;
   });
 
-  this.tipTypes = tip_types.sort((a, b) => a.name.localeCompare(b.name))
+  this.tipTypes = types.sort((a, b) => a.name.localeCompare(b.name))
 
 }
 
 BrainBuilding.parseQuery = function () {
   let query = this.$route.query;
-  let queryArr = [];
 
   if (query.ages == 'all') {
     this.checkedAllAges = true;

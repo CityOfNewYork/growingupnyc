@@ -73,6 +73,22 @@ class MeowApps_WPMC_Parser {
 		$wpmc->add_reference_url( $widgets_urls, 'WIDGET' );
 	}
 
+	public function get_post_galleries_ids( $id ) {
+		global $post;
+		$content_post = get_post( $id );
+		$content = $content_post->post_content;
+		$ids = array();
+		if ( preg_match_all('/\[gallery.*ids=.(.*).\]/', $content, $foundArrayIds ) ) {
+			if ( $foundArrayIds ) {
+				foreach ( $foundArrayIds[1] as $foundIds ) {
+					$newIds = explode( ',', $foundIds );
+					$ids = array_merge( $ids, $newIds );
+				}
+			}
+		}
+		return $ids;
+	}
+
 	public function scan_post( $html, $id ) {
 		global $wpmc;
 		$posts_images_urls = array();
@@ -96,6 +112,8 @@ class MeowApps_WPMC_Parser {
 			$posts_images_ids = array_merge( $posts_images_ids, $res[1] );
 
 		// Standard WP Gallery
+		$ids = $this->get_post_galleries_ids( $id );
+		$posts_images_ids = array_merge( $posts_images_ids, $ids );
 		$galleries = get_post_galleries_images( $id );
 		foreach ( $galleries as $gallery ) {
 			foreach ( $gallery as $image ) {
@@ -131,15 +149,19 @@ SQL;
 						array_push( $postmeta_images_ids, $meta );
 					continue;
 				}
-				$decoded = @unserialize( $meta );
-				if ( is_array( $decoded ) ) {
-					$wpmc->array_to_ids_or_urls( $decoded, $postmeta_images_ids, $postmeta_images_urls );
-					continue;
+				else if ( is_serialized( $meta ) ) {
+					$decoded = @unserialize( $meta );
+					if ( is_array( $decoded ) ) {
+						$wpmc->array_to_ids_or_urls( $decoded, $postmeta_images_ids, $postmeta_images_urls );
+						continue;
+					}
 				}
-				$exploded = explode( ',', $meta );
-				if ( is_array( $exploded ) ) {
-					$wpmc->array_to_ids_or_urls( $exploded, $postmeta_images_ids, $postmeta_images_urls );
-					continue;
+				else {
+					$exploded = explode( ',', $meta );
+					if ( is_array( $exploded ) ) {
+						$wpmc->array_to_ids_or_urls( $exploded, $postmeta_images_ids, $postmeta_images_urls );
+						continue;
+					}
 				}
 			}
 			$wpmc->add_reference_id( $postmeta_images_ids, 'META (ID)' );

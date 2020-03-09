@@ -131,7 +131,7 @@ ProgramsList.getPrograms = function() {
   ProgramsList.showLoader(this, this.programs)
 
   let filters = ProgramsList.generateFilterURL(this);
-  url = url + '&orderby=date&order=desc' + '&' +filters;
+  url = url + '&orderby=menu_order&order=asc' + '&' +filters;
 
   // update the query
   if ( this.programPage == 1){
@@ -389,9 +389,9 @@ ProgramsList.getIds = function(filter, slugs, posttype) {
     }
   });
   
-  let everyone_index = filter.map(function (e) { return e.slug; }).indexOf('everyone');
-  if ((everyone_index > 0 && posttype == 'afterschool-guide')){
-    arrIds.push(filter[everyone_index])
+  let everyoneIndex = filter.map(function (e) { return e.slug; }).indexOf('everyone');
+  if ((everyoneIndex > 0 && posttype == 'afterschool-guide')){
+    arrIds.push(filter[everyoneIndex])
   }
   
   return arrIds;

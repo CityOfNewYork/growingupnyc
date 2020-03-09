@@ -81,7 +81,7 @@
   {% for event in event_list %}
 
   <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
-    <h3>{{ event.date_header }}</h3>
+    <h3 {% if language_code == 'es' %}style="text-transform: lowercase"{% endif %}>{{ event.date_header }}</h3>
     {% for post in event.posts %}
     <div class="c-block-list__item">
       {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}

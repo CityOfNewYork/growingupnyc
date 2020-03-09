@@ -10,11 +10,7 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 	protected $isTemplateEdit = false; // indicates whether controlled is deligated by manage imports controller	
 
 	protected function init() {
-		parent::init();							
-		
-		error_reporting(0);
-		
-		//PMXI_Plugin::$session = PMXI_Session::get_instance();			
+		parent::init();
 
 		if ('PMXI_Admin_Manage' == PMXI_Plugin::getInstance()->getAdminCurrentScreen()->base) { // prereqisites are not checked when flow control is deligated
 			$id = $this->input->get('id');
@@ -72,7 +68,7 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 			or ! @$dom->loadXML($xml)// FIX: libxml xpath doesn't handle default namespace properly, so remove it upon XML load			
 		) {					
 			if ( ! PMXI_Plugin::is_ajax() ){
-				$this->errors->add('form-validation', __('WP All Import lost track of where you are.<br/><br/>Maybe you cleared your cookies or maybe it is just a temporary issue on your or your web host\'s end.<br/>If you can\'t do an import without seeing this error, change your session settings on the All Import -> Settings page.', 'wp_all_import_plugin')); 
+				$this->errors->add('form-validation', __('WP All Import lost track of where you are.<br/><br/>Maybe you cleared your cookies or maybe it is just a temporary issue on your or your web host\'s end.', 'wp_all_import_plugin'));
 				wp_redirect_or_javascript($this->baseUrl); die();
 			}
 		}
@@ -1004,7 +1000,7 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 			// validate
 			try {
 				if (empty($xml)){
-					$this->errors->add('form-validation', __('WP All Import lost track of where you are.<br/><br/>Maybe you cleared your cookies or maybe it is just a temporary issue on your web host\'s end.<br/>If you can\'t do an import without seeing this error, change your session settings on the All Import -> Settings page.', 'wp_all_import_plugin'));
+					$this->errors->add('form-validation', __('WP All Import lost track of where you are.<br/><br/>Maybe you cleared your cookies or maybe it is just a temporary issue on your web host\'s end.', 'wp_all_import_plugin'));
 				} elseif (empty($post['title'])) {				
 					$this->errors->add('form-validation', __('<strong>Warning</strong>: your title is blank.', 'wp_all_import_plugin'));
 					$this->data['title'] = "";
@@ -1020,7 +1016,7 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 			}
 			try {	
 				if (empty($xml)){
-					$this->errors->add('form-validation', __('WP All Import lost track of where you are.<br/><br/>Maybe you cleared your cookies or maybe it is just a temporary issue on your web host\'s end.<br/>If you can\'t do an import without seeing this error, change your session settings on the All Import -> Settings page.', 'wp_all_import_plugin'));
+					$this->errors->add('form-validation', __('WP All Import lost track of where you are.<br/><br/>Maybe you cleared your cookies or maybe it is just a temporary issue on your web host\'s end.', 'wp_all_import_plugin'));
 				} elseif (empty($post['content'])) {
 					$this->errors->add('form-validation', __('<strong>Warning</strong>: your content is blank.', 'wp_all_import_plugin'));
 					$this->data['content'] = "";				
@@ -1151,7 +1147,7 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 				$this->data['featured_images'] = false;
 				
 				if (empty($xml)){
-					$this->errors->add('form-validation', __('WP All Import lost track of where you are.<br/><br/>Maybe you cleared your cookies or maybe it is just a temporary issue on your web host\'s end.<br/>If you can\'t do an import without seeing this error, change your session settings on the All Import -> Settings page.', 'wp_all_import_plugin'));
+					$this->errors->add('form-validation', __('WP All Import lost track of where you are.<br/><br/>Maybe you cleared your cookies or maybe it is just a temporary issue on your web host\'s end.', 'wp_all_import_plugin'));
 				} 
 				else
 				{
@@ -2168,7 +2164,7 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 			if ( ! $this->errors->get_error_codes()) { // no validation errors found	
 
 				// Attributes fields logic
-				$post = apply_filters('pmxi_save_options', $post);					
+				$post = apply_filters('pmxi_save_options', $post, $this->isWizard);
 				
 				if ($this->isWizard) {
 
@@ -2354,7 +2350,13 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 
                 // Get all meta keys for requested post type
                 $hide_fields = array('_edit_lock', '_edit_last', '_wp_trash_meta_status', '_wp_trash_meta_time');
-                $records = get_posts( array('post_type' => $post['custom_type']) );
+				
+				if ( $post['custom_type'] == 'product' ) {
+					$records = get_posts( array('post_type' => array('product', 'product_variation')) );
+				} else {
+					$records = get_posts( array('post_type' => $post['custom_type']) );
+				}
+
                 if ( ! empty($records)){
                     foreach ($records as $record) {
                         $record_meta = get_post_meta($record->ID, '');
@@ -2457,7 +2459,7 @@ class PMXI_Admin_Import extends PMXI_Controller_Admin {
 				(empty(PMXI_Plugin::$session->source) ? array() : PMXI_Plugin::$session->source)
 				+ array(
 					'xpath' => PMXI_Plugin::$session->xpath,					
-					'options' => $import->options + PMXI_Plugin::$session->options,
+					'options' => ($this->data['update_previous']->isEmpty()) ? PMXI_Plugin::$session->options : $import->options + PMXI_Plugin::$session->options,
 					'count' => PMXI_Plugin::$session->count,
 					'friendly_name' => wp_all_import_clear_xss(PMXI_Plugin::$session->options['friendly_name']),
 					'feed_type' => PMXI_Plugin::$session->feed_type,

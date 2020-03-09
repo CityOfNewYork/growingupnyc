@@ -16,7 +16,7 @@ error_reporting(0);
 $context['language'] = ICL_LANGUAGE_CODE;
 error_reporting(WP_DEBUG);
 
-// Get the right events by age group
+// Get the relevant events by age group
 if ( $post->post_type == 'age' ) {
   $age_groups = $post->terms('age_group');
 
@@ -33,7 +33,10 @@ if ( $post->post_type == 'age' ) {
     )
   ), true );
   $context['upcoming_events'] = $upcoming_events;
-} elseif ( $post->post_type == 'program' ) {
+} 
+
+// Get the relevant programs based on category
+if ( $post->post_type == 'program' ) {
   $programs_cat = $post->terms('programs_cat');
   if ( $programs_cat ) {
     $post->category = $programs_cat[0];
@@ -52,6 +55,20 @@ if ( $post->post_type == 'age' ) {
   }
 }
 
+// Brain Building Tip - Get One
+$filter_args=array(
+  'posts_per_page' => 1,
+  'post_type' => 'brain-building-tip',
+  'tax_query' => array(
+    array(
+      'taxonomy' => 'age_group',
+      'field'    => 'slug',
+      'terms'    => $post->terms('age_group')[0]->slug,
+    ),
+  ),
+);
+$query = new WP_Query($filter_args);
+$context['brain_building_tip'] = Timber::get_post($query->posts[0]->ID);
 
 // Generation NYC homepage declaration
 if($post->post_type == 'page' && strpos($post->post_name, 'generationnyc') !== false){

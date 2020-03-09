@@ -70,7 +70,7 @@
                 <li><a href="{{post.link}}" class="c-list-box__subitem">{{post.title}}</a></li>
               {% endfor %}
               {% if age_group.slug in ["baby", "toddler", "pre-schooler", ["baby-", language_code]|join(''), ["toddler-",language_code]|join(''), ["pre-schooler-",language_code]|join('')] %}
-                <li><a href="{% if language_code != 'en' %}/{{language_code}}{% endif %}/brainbuilding" class="c-list-box__subitem">{{ __('Brain Building', 'GUNY-Homepage') }}</a></li>
+                <li><a href="{% if language_code != 'en' %}/{{language_code}}{% endif %}/brainbuilding?ages={{age_group.slug}}" class="c-list-box__subitem">{{ __('Brain Building', 'GUNY-Homepage') }}</a></li>
               {% endif %}
             </ol>
           </li>

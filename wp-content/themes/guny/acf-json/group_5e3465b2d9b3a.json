@@ -20,6 +20,30 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_5e56ecc06ebcb",
+            "label": "Enable Brain Building Tip",
+            "name": "brain_building_tip_enable",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Yes": "Yes",
+                "No": "No"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "No",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
         }
     ],
     "location": [
@@ -28,6 +52,13 @@
                 "param": "post_type",
                 "operator": "==",
                 "value": "age"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "program"
             }
         ]
     ],

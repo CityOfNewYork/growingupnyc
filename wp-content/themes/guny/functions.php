@@ -155,6 +155,18 @@ class GunySite extends TimberSite {
     $context['banner']['post'] = Timber::get_post($banner);
     $context['banner']['show'] = get_field('show_banner', $page_id);
 
+    // Alert - event temp
+    $event_alert_slug = 'covid-19';
+      $args = array(
+        'name'        => $event_alert_slug,
+        'post_type'   => 'banner',
+        'post_status' => 'publish',
+        'numberposts' => 1
+      );
+      $event_alert = get_posts($args);
+      
+      $context['event_alert'] = get_field( "banner_content", $event_alert[0]->ID );
+
     return $context;
   }
 

@@ -3,17 +3,39 @@
 {% block head_extras %}
 <style>
   .c-hero-ms__trips { background-color: #00965c; background-image: url(/wp-content/themes/guny/assets/img/hero-trips-landing.svg); }
+  .alert {
+      background: rgba(255, 220, 84, 0.75);
+      padding: 1.75rem 1rem 1.75rem;
+    }
+    @media(min-width:700px) {
+      .alert {
+        padding: 1.75rem 2.5rem 1.75rem;
+      }
+    }
+    @media(min-width:1200px) {
+      .alert {
+        padding: 1.75rem 5rem 1.75rem;
+      }
+    }
 </style>
 {% endblock %}
 
 {% block hero %}
 <div class="js-parallax">
-  <header class="c-hero c-hero--bg-secondary u-lg-gutter c-hero-ms__trips js-parallax-content">
+  <header class="c-hero c-hero--bg-secondary c-hero-ms__trips js-parallax-content">
     <div class="o-container js-parallax-text">
       <h1 class="c-hero__title">{{options.trip_landing_title}}</h1>
       <p class="c-hero__tagline">{{options.trip_landing_tagline}}</p>
     </div>
   </header>
+
+  {% if event_alert != '' %}
+    <div class="alert">
+      <div class="o-container">
+        {{event_alert}}
+      </div>
+    </div>
+  {% endif %}
 </div>
 {% endblock %}
 
@@ -29,9 +51,9 @@ js-sticky-container
     <li class="c-nav-list__item">
       <a href="#free-this-week" data-section="free-this-week" class="js-section c-nav-list__link">Free This Week<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
     </li>
-    <li class="c-nav-list__item">
+    {# <li class="c-nav-list__item">
       <a href="#events" data-section="events" class="js-section c-nav-list__link">Events<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
-    </li>
+    </li> #}
   </ol>
 {% endblock %}
 
@@ -64,7 +86,7 @@ js-sticky-container
       </div>
     </section>
 
-    <section data-id="events" class="c-block-list c-block-list-ms__trips c-block-list-ms__trips--week c-block-list--shade o-content-container u-sm-gutter">
+    {# <section data-id="events" class="c-block-list c-block-list-ms__trips c-block-list-ms__trips--week c-block-list--shade o-content-container u-sm-gutter">
       <h3 class="c-block-list-trips__title">Events</h3>
       <div class="c-block-list__inner">
         {% for post in upcoming_events %}
@@ -76,6 +98,6 @@ js-sticky-container
       <div class="text-center">
         <a class="button--outline button--outline--gray" href="/events">See All Free Events</a>
       </div>
-    </section>
+    </section> #}
 
 {% endblock %}

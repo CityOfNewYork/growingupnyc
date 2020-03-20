@@ -1,5 +1,13 @@
+{% if post.venue == "Virtual Event"%}
+<svg role="img" class="icon--xxsmall" aria-hidden="true"><use xlink:href="#icon-map-marker"></use></svg><a href="{{post.event_website}}" target="_blank">{{post.venue}},
+  {% for borough in post.terms('borough') %}
+    {{borough.name}}
+  {% endfor %}
+</a>
+{% else %}
 <svg role="img" class="icon--xxsmall" aria-hidden="true"><use xlink:href="#icon-map-marker"></use></svg><a href="{{post.google_map_link}}" target="_blank">{{post.venue}},
   {% for borough in post.terms('borough') %}
     {{borough.name}}
   {% endfor %}
 </a>
+{% endif %}

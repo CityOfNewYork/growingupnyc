@@ -12,9 +12,10 @@ if (strpos($post->post_content, 'script')) {
   $context['has_embed'] = true;
 }
 
-$templates = array( 'generic-microsite-page.twig' );
-
 $context['post'] = $post;
 $context['sections'] = Templating\get_sections();
 
+$context['last_modified'] = get_the_modified_date( $d, $post );
+
+$templates = array( 'generic-microsite-page.twig' );
 Timber::render( $templates, $context );

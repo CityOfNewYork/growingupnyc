@@ -22,4 +22,6 @@ if ($is_translated) {
   $context['top_widget'] = Timber::get_widgets('top_widget');
 }
 
+$context['last_modified'] = get_the_modified_date( $d, $post );
+
 Timber::render($templates, $context);

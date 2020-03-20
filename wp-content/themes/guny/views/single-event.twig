@@ -159,6 +159,9 @@
         </figure>
         {% endif %}
 
+      {% if post.venue != "Virtual Event"%}
+
+
         <h3>{{ __('Location Details', 'guny-events') }}</h3>
 
         {% if post.venue_address.address or post.venue_address.city or post.venue_address.region or post.venue_address.zip %}
@@ -182,6 +185,8 @@
         {{post.location_details}} <a href="{{post.google_directions_link}}" target="_blank">{{ __('Get directions to the location.', 'guny-events') }}</a>
 
         {{post.venue_map}}
+      {% endif %}
+
 
         {% if post.organizer %}
         <h3>{{ __('Event Organizer', 'guny-events') }}</h3>

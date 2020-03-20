@@ -1,5 +1,14 @@
 {% extends "microsite-base.twig" %}
 
+{% block head_extras %}
+	<style>
+		.alert {
+			background: rgba(255, 220, 84, 0.75);
+			padding: 1.75rem 0;
+		}
+	</style>
+{% endblock %}
+
 {% block content %}
 
 <div id="owl-demo" class="owl-carousel owl-theme carousel-ms">
@@ -24,6 +33,14 @@
     </p>
   </div> <!-- /.o-container -->
 </header>
+{% if event_alert != '' %}
+	<div class="alert u-sm-gutter">
+		<div class="o-container">
+			{{event_alert}}
+		</div>
+	</div>
+{% endif %}
+
 
 <section class="o-container u-bottom-spacing">
   <article class="o-article o-article-trip o-content-container--compact">

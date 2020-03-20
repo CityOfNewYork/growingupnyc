@@ -599,6 +599,21 @@ input[type="search"].form-field {
   }
 }
 
+.button--outline {
+  &--white {
+
+    &:focus {
+      color: $dark-gray-1;
+    }
+
+    .no-touchevents & {
+      &:hover {
+        color: $dark-gray-1;
+      }
+    }
+  }
+}
+
 // Trips page styles
 @import "microsite/trips";
 

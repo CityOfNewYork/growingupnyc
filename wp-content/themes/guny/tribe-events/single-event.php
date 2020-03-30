@@ -14,12 +14,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $context = Timber::get_context();
 $post = Timber::get_post(false, 'GunyEvent');
-$templates = array( 'single-event.twig', 'single.twig' );
 $context['post'] = $post;
 // check the language
 $context['language'] = ICL_LANGUAGE_CODE;
 
+// Determine virtual event
+$virtual = array_search('virtual', array_column(wp_get_post_terms($post->id, 'tribe_events_cat'), "slug"));
+if (is_int($virtual)) {
+  $context['virtual_event'] = true;
+} else {
+  $context['virtual_event'] = false;
+}
+
 // top menu widget
 $context['top_widget'] = Timber::get_widgets('top_widget');
 
+$templates = array( 'single-event.twig', 'single.twig' );
 Timber::render( $templates, $context );

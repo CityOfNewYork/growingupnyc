@@ -1,11 +1,11 @@
 {
-    "key": "group_590af7a79c6b6",
-    "title": "microsite home",
+    "key": "group_5e7a7dcdd7f64",
+    "title": "Landing Page Additional Content",
     "fields": [
         {
-            "key": "field_590af7bd16dcb",
-            "label": "homepage categories",
-            "name": "homepage_categories",
+            "key": "field_5e7a7dce2333c",
+            "label": "Landing Page Section",
+            "name": "landing_page_section",
             "type": "flexible_content",
             "instructions": "",
             "required": 0,
@@ -15,42 +15,20 @@
                 "class": "",
                 "id": ""
             },
-            "button_label": "Add Row",
-            "min": "",
-            "max": "",
-            "layouts": [
-                {
-                    "key": "590af7dce89c5",
-                    "name": "categories_list",
-                    "label": "Categories List",
+            "layouts": {
+                "591d458f24937": {
+                    "key": "591d458f24937",
+                    "name": "landing_page_section_content",
+                    "label": "Landing Page Section Content",
                     "display": "block",
                     "sub_fields": [
                         {
-                            "key": "field_590af7f016dcc",
-                            "label": "Excerpt",
-                            "name": "excerpt",
-                            "type": "textarea",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "maxlength": "",
-                            "rows": "",
-                            "new_lines": ""
-                        },
-                        {
-                            "key": "field_590af80a16dcd",
-                            "label": "Button Text",
-                            "name": "button_text",
+                            "key": "field_5e7a7dce3ba8e",
+                            "label": "Section Heading",
+                            "name": "landing_page_section_content_heading",
                             "type": "text",
                             "instructions": "",
-                            "required": 0,
+                            "required": 1,
                             "conditional_logic": 0,
                             "wrapper": {
                                 "width": "",
@@ -64,10 +42,10 @@
                             "maxlength": ""
                         },
                         {
-                            "key": "field_590af81916dce",
-                            "label": "Button Link",
-                            "name": "button_link",
-                            "type": "url",
+                            "key": "field_5e7a7dce3bb64",
+                            "label": "Section Body",
+                            "name": "landing_page_section_content_body",
+                            "type": "wysiwyg",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
@@ -77,19 +55,30 @@
                                 "id": ""
                             },
                             "default_value": "",
-                            "placeholder": ""
+                            "tabs": "all",
+                            "toolbar": "full",
+                            "media_upload": 1,
+                            "delay": 0
                         }
                     ],
                     "min": "",
                     "max": ""
                 }
-            ]
+            },
+            "button_label": "Add Row",
+            "min": "",
+            "max": ""
         }
     ],
     "location": [
         [
             {
-                "param": "page",
+                "param": "page_template",
+                "operator": "==",
+                "value": "template-landing_page.php"
+            },
+            {
+                "param": "page_parent",
                 "operator": "==",
                 "value": "6468"
             }

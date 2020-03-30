@@ -3,6 +3,11 @@
 {% block head_extras %}
 <style>
   .c-hero { background-color: #469BFF; background-image: url(/wp-content/themes/guny/assets/img/hero-programs.svg); }
+  .alert {
+    background: rgba(255, 220, 84, 0.75);
+    padding: 1.75rem 0rem;
+    margin-top: 25px;
+  }
 </style>
 {% endblock %}
 
@@ -67,8 +72,17 @@
         {% endif %}
       </ol>
     </div> <!-- /.o-content-container-compact -->
+
   </div> <!-- /.o-article-sidebar -->
   <div class="o-article js-sticky-article">
+    {% if post.banner_alert_show == 'Yes' %}
+      <div class="alert">
+        <div class="o-container">
+          {{program_page_alert}}
+        </div>
+      </div>
+    {% endif %}
+
     <div class="o-content-container--compact">
       {% if post.summary %}
         <section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" data-id="section-summary">

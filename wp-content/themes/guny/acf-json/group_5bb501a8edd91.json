@@ -50,6 +50,60 @@
             "multiple": 0,
             "return_format": "id",
             "ui": 1
+        },
+        {
+            "key": "field_5e7cd33af4baf",
+            "label": "Banner Alert Show",
+            "name": "banner_alert_show",
+            "type": "radio",
+            "instructions": "Select Yes to add an in-body alert.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Yes": "Yes",
+                "No": "No"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "No",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_5e7cd3b0f4bb0",
+            "label": "Banner Alert Message",
+            "name": "banner_alert_message",
+            "type": "post_object",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5e7cd33af4baf",
+                        "operator": "==",
+                        "value": "Yes"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "banner"
+            ],
+            "taxonomy": "",
+            "allow_null": 0,
+            "multiple": 0,
+            "return_format": "object",
+            "ui": 1
         }
     ],
     "location": [
@@ -74,7 +128,6 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
-    "description": "This banner is applied to a program (GU) or topic (Gen) page. It overwrites the global banner set for GU (home) or Gen (youth) pages.",
-    "modified": 1562694849
+    "active": true,
+    "description": "This banner is applied to a program (GU) or topic (Gen) page. It overwrites the global banner set for GU (home) or Gen (youth) pages."
 }

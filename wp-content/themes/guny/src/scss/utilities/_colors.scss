@@ -177,9 +177,19 @@
   background-color: $green !important;
 }
 
+.bg-dark-green,
+.hover\:bg-dark-green:hover {
+  background-color: $dark-green !important;
+}
+
 .bg-very-dark-green,
 .hover\:bg-very-dark-green:hover {
   background-color: $very-dark-green !important;
+}
+
+.text-dark-green,
+.hover\:text-dark-green:hover {
+  color: $dark-green !important;
 }
 
 .bg-purple,

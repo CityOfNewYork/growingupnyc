@@ -101,6 +101,9 @@ $banner = get_field('current_banner');
 $context['banner']['alt'] = new TimberPost($banner);
 $context['banner']['override'] = $post->update_banner;
 
+// in-body alert under banner
+$context['program_page_alert'] = get_field('banner_content', get_field('banner_alert_message', $post->id));
+
 // Last modified date
 $context['last_modified'] = get_the_modified_date( $d, $post );
 

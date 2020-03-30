@@ -172,6 +172,13 @@
     }
 
   }
+
+  &--green {
+    color: $dark-green;
+    &:after {
+      color: $color-text-invert;
+    }
+  }
 }
 
 .no-csstransforms3d .is-filled .signup-form__label-content {

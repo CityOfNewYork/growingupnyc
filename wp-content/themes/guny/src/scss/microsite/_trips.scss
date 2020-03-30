@@ -216,3 +216,65 @@
     margin-bottom: 5px;
   }
 }
+
+//Tips
+.c-tip-ms__trips {
+  text-align: center;
+  &,
+  .c-tip__sticker {
+    background: $green;
+  }
+
+  .c-tip__content {
+    text-align: center;
+  }
+}
+
+//SMS
+.c-tip--sms__trips {
+  &,
+  .c-tip__sticker {
+    background: $green;
+  }
+}
+
+.button--primary__green {
+  background: $dark-green;
+  color: $white;
+  border-color: $dark-green;
+  text-transform: none;
+  &:focus {
+    background: $very-dark-green;
+    border-color: $very-dark-green;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $very-dark-green;
+      border-color: $very-dark-green;
+    }
+  }
+
+  &[disabled],
+  &[disabled]:hover {
+    background: $dark-green;
+    border-color: $dark-green;
+    cursor: default;
+  }
+}
+
+// .signup-form__label-content--green {
+//   color: $dark-green;
+//   &:after {
+//     color: $white;
+//   }
+// }
+
+.dark-green-svg {
+  .stop1 {
+    stop-color: $green;
+  }
+  .stop2 {
+    stop-color: $dark-green;
+  }
+}

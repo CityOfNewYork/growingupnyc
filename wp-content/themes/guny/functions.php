@@ -163,9 +163,21 @@ class GunySite extends TimberSite {
         'post_status' => 'publish',
         'numberposts' => 1
       );
-      $event_alert = get_posts($args);
-      
-      $context['event_alert'] = get_field( "banner_content", $event_alert[0]->ID );
+    $event_alert = get_posts($args);
+    
+    $context['event_alert'] = get_field( "banner_content", $event_alert[0]->ID );
+
+     // Alert - program temp
+    $programs_alert_slug = 'programs-covid-19';
+      $args = array(
+        'name'        => $programs_alert_slug,
+        'post_type'   => 'banner',
+        'post_status' => 'publish',
+        'numberposts' => 1
+      );
+    $programs_alert = get_posts($args);
+    
+    $context['programs_alert'] = get_field( "banner_content", $programs_alert[0]->ID );
 
     return $context;
   }
@@ -481,6 +493,11 @@ class GunyEvent extends TimberPost {
   }
 }
 
+// Remove the events calendar pro related json-ld generation
+// https://gist.github.com/code-flow/11c2238a2242433a05e36dc27168f32e
+add_filter( 'tribe_events_widget_jsonld_enabled', false, 100, 1 );
+add_filter( 'tribe_json_ld_markup', '', 100, 1 );
+
 /**
  * Filter function used to remove the tinymce emoji plugin.
  *
@@ -647,6 +664,7 @@ $includes = [
   '/includes/summer_guides.php', // Summer guide functions
   '/includes/afterschool_guides.php', // Afterschool guide functions
   '/includes/brain-building-tip.php', // Brain Building Tips
+  '/includes/guny_landing_pages.php', // Brain Building Tips
   [ // REST
     '/includes/REST/guny_rest.php',
     '/includes/REST/guny_rest_afterschool.php', // expose fields to rest API

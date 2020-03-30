@@ -16,7 +16,7 @@ import ShareForm from './modules/share-form.js';
 import captchaResize from './modules/captchaResize.js';
 import rotatingTextAnimation from './modules/rotatingTextAnimation.js';
 import Search from './modules/search.js';
-// import EventsList from './modules/events.js';
+import EventsList from './modules/events.js';
 import ProgramsList from './modules/multi-filter.js';
 import BrainBuilding from './modules/brainbuilding.js';
 /* eslint-disable no-unused-vars */
@@ -74,8 +74,10 @@ window.accordion = accordion;
       && !(window.location.pathname.indexOf('events') >= 0)) {
     if (window.location.pathname.indexOf('brainbuilding') >= 0){
       new BrainBuilding().init();
-    } else {
+    } else if (window.location.pathname.indexOf('programs') >= 0){
       new ProgramsList().init();
+    } else if (window.location.pathname.indexOf('generationnyc') >= 0) {
+      new EventsList().init();
     }
   } 
 

@@ -1,7 +1,7 @@
 <form method="post" action="{{ shareAction }}" class="js-share-form js-needs-disclaimer is-active" novalidate>
 
 	<input type="hidden" name="action" value="{% if is_generation %}sms_gen_send{% else %}sms_gunyc_send{% endif %}">
-	<input type="hidden" name="sharetext" value="{{post.get_field('sms_intro_text')}}">
+	{# <input type="hidden" name="sharetext" value="{{post.get_field('sms_intro_text')}}"> #}
 	<input type="hidden" name="postid" value="{{post.id}}">
 	<input type="hidden" name="template" value="{{shareTemplate}}">
 	<input type="hidden" name="lang" value="{{language_code}}">
@@ -11,7 +11,7 @@
   <div class="form-container">
     <div class="signup-form__input signup-form__input--full sms-form__input--long">
       <label for="phone" class="signup-form__label sms-form__label">
-        <span class="signup-form__label-content{% if form_only %}--strong-blue{% endif %} 
+        <span class="signup-form__label-content{% if form_only %}--strong-blue{% endif %}{% if color != '' %} text-dark-{{color}}{% endif %} 
           sms-form__label-content" data-content="Phone Number">{{__('Phone Number', 'gunyc-share')}}</span>
       </label>
 
@@ -20,7 +20,7 @@
       {% include 'partials/share-form-spinner.twig' %}
     </div>
 
-    <button id="smsbutton" type="submit" class="button--primary button--primary__curved {% if is_generation %}button--primary__purple{% else %}button--simple button--simple--alt{% endif %} sms-form__submit">
+    <button id="smsbutton" type="submit" class="button--primary button--primary__curved {% if is_generation %}{% if color != '' %}button--primary__{{color}}{% else %}button--primary__purple{% endif %}{% else %}button--simple button--simple--alt{% endif %} sms-form__submit">
       <span class="send">{{__('Send', 'gunyc-share')}}</span>
       <span class="send__success">{{__('Send another', 'gunyc-share')}}</span>
     </button>

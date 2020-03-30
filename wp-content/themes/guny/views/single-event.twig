@@ -1,40 +1,65 @@
 {% extends "base.twig" %}
 
 {% block head_extras %}
-<style>
-  .alert {
-    background: rgba(255, 220, 84, 0.75);
-    padding: 1.75rem 0rem;
-  }
-</style>
-{# Events Schema #}
-<script type="application/ld+json">
-	{
-    "@context": "https://schema.org",
-    "@type": "Event",
-    "name": "{{post.title}}",
-    "description": "{{post.get_field('summary')|striptags}}",
-    "startDate": "{{post.start_datetime_formatted}}",
-    "endDate": "{{post.end_datetime_formatted}}",
-    "location": {
-      "@type": "Place",
-      "name": "{{post.venue}}",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "{{post.venue_address.address}}",
-        "addressLocality": "{{post.venue_address.city}}",
-        "postalCode": "{{post.venue_address.zip}}",
-        "addressRegion": "{{post.venue_address.region}}",
-        "addressCountry": "US"
-      }
-    },
-    "image": [
-      "{{post.image.src}}"
-    ]
-  }
-</script>
+  <style>
+    .alert {
+      background: rgba(255, 220, 84, 0.75);
+      padding: 1.75rem 0rem;
+    }
+  </style>
 
+  {# Events Schema #}
+  {% if virtual_event %}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        "name": "{{post.title}}",
+        "description": "{{post.get_field('summary')|striptags}}",
+        "startDate": "{{post.start_datetime_formatted}}",
+        "endDate": "{{post.end_datetime_formatted}}",
+        "eventStatus": "http://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+        "location": {
+          "@type": "VirtualLocation",
+          "url": "{{site.url}}{{current_url}}"
+          }
+        },
+        "image": [
+          "{{post.image.src}}"
+        ]
+      }
+    </script>
+  {% else %}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        "name": "{{post.title}}",
+        "description": "{{post.get_field('summary')|striptags}}",
+        "startDate": "{{post.start_datetime_formatted}}",
+        "endDate": "{{post.end_datetime_formatted}}",
+        "eventStatus": "http://schema.org/EventCancelled",
+        "location": {
+          "@type": "Place",
+          "name": "{{post.venue}}",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "{{post.venue_address.address}}",
+            "addressLocality": "{{post.venue_address.city}}",
+            "postalCode": "{{post.venue_address.zip}}",
+            "addressRegion": "{{post.venue_address.region}}",
+            "addressCountry": "US"
+          }
+        },
+        "image": [
+          "{{post.image.src}}"
+        ]
+      }
+    </script>
+  {% endif %}
 {% endblock %}
+
 {% block content %}
 
   {% if is_archive %}
@@ -159,9 +184,7 @@
         </figure>
         {% endif %}
 
-      {% if post.venue != "Virtual Event"%}
-
-
+      {% if virtual_event != true %}
         <h3>{{ __('Location Details', 'guny-events') }}</h3>
 
         {% if post.venue_address.address or post.venue_address.city or post.venue_address.region or post.venue_address.zip %}

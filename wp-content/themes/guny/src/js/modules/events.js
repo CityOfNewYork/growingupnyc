@@ -1,206 +1,252 @@
 'use strict';
+
+/**
+ * Virtual Events for Generation Landing
+ */
+
 import _ from 'underscore';
 import Vue from 'vue/dist/vue.common';
 import axios from 'axios';
 import router from './router'
 
-
 class EventsList {
-
+  
   constructor() {
-    if(document.documentElement.lang != 'en'){
-      this._baseURL = window.location.origin + '/' + document.documentElement.lang;
-    }else{
-      this._baseURL = window.location.origin;
-    }
+    this._baseURL = window.location.origin;
+    this._lang = '?lang=' + document.documentElement.lang;
+    this._el = '#' + $('div').find('[id^=vue]').attr('id');
+    this._posttype = this._el.replace(new RegExp("^" + '#vue-'), '')
+    this._utc = new Date().toJSON().slice(0, 10);
 
     this._events = {
       delimiters: ['v{', '}'],
-      el: '#vue-events',
+      el: this._el,
       router,
       data: {
-        eventsURL: this._baseURL + '/wp-json/wp/v2/tribe_events',
-        eventTypeURL: this._baseURL + '/wp-json/wp/v2/tribe_events_cat',
-        ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group',
-        boroughURL: this._baseURL + '/wp-json/wp/v2/borough',
-        eventTypes: null,
-        events: null,
+        posttype: this._posttype,
+        postsURL: this._baseURL + '/wp-json/tribe/events/v1/' + this._posttype + this._lang + '&per_page=100&page=1&start_date=' + this._utc,
+        postsAll: null,
+        posts: null,
+        ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group' + this._lang,
         ageGroups: null,
-        boroughs: null,
-        checkedEventType: [],
-        checkedAgeGroup: [],
+        checkedAgeGroup: ['teen','young-adult'],
+        checkedAllAges: false,
+        eventTypesURL: this._baseURL + '/wp-json/tribe/events/v1/' + 'categories' + this._lang,
+        eventTypes: null,
+        checkedEventType: ['virtual'],
+        checkedAllEventTypes: false,
+        boroughURL: this._baseURL + 'borough' + this._lang,
+        boroughNames: null,
         checkedBorough: [],
-        postType: 'tribe_events',
-        categories: null,
-        category: null,
-        eventPage: 1,
+        checkedAllBoroughs: false,
+        programPage: 1,
+        currentPage: 1,
+        maxPages: 1,
         errorMsg: false,
-        // currentMonth: this.currentDate.getMonth()
-        // currentDate: new Date()
-        currentDate: ''
+        isLoading: true,
+        totalResults: '',
+        showButton: false
       },
       watch: {
-        category: 'getEvents',
-        checkedEventType: 'getEvents',
-        checkedAgeGroup: 'getEvents',
-        checkedBorough: 'getEvents',
-        eventPage: 'getEvents'
+        checkedEventType: 'getPrograms',
+        checkedAgeGroup: 'getPrograms',
       },
-      mounted: function() {
-        this.getCurrentMonth(),
-        this.getCategories(),
-        this.parseQuery(),
-        this.getEvents()
+      mounted: function () {
+        axios.all([
+          axios.get(this.postsURL + '&categories=235'),
+        ])
+          .then(axios.spread((events) => {
+            this.filterTeens(events.data.events)
+            // this.postsAll = events.data.events
+            this.getTaxonomies();
+            this.parseQuery();
+            this.getPrograms();
+          }));
       },
       methods: {
-        getEvents: EventsList.getEvents,
-        generateFilterURL: EventsList.generateFilterURL,
+        getPrograms: EventsList.getPrograms,
+        getTaxonomies: EventsList.getTaxonomies,
+        selectAllEventTypes: EventsList.selectAllEventTypes,
         parseQuery: EventsList.parseQuery,
-        getCurrentMonth: EventsList.getCurrentMonth,
-        getCategories: EventsList.getCategories
-      }
+        loadMore: EventsList.loadMore,
+        filterTeens: EventsList.filterTeens,
+      },
+
     }
   }
 
   /**
    * Initialize
-   */
+   **/
   init() {
     this._events = new Vue(this._events);
   }
 }
 
-// get the events
-EventsList.getEvents = function() {
-  let url = this.eventsURL;
-
-  let filters = EventsList.generateFilterURL(this.checkedEventType, this.checkedAgeGroup, this.checkedBorough, this.eventPage);
-  url = url + '?' + filters;
-
-  // update the query
-  if ( this.eventPage == 1){
-    this.$router.push({query: {cat_id: this.checkedEventType, age_id: this.checkedAgeGroup, borough_id: this.checkedBorough }});
-  }else {
-    this.$router.push({query: {cat_id: this.checkedEventType, age_id: this.checkedAgeGroup, borough_id: this.checkedBorough, page: this.eventPage }});
-  }
-
-  axios
-  .get(url)
-  .then(response => {
-      this.events = response.data
-      if (this.events.length == 0) {
-        this.errorMsg = true;
-      } else {
-        this.errorMsg = false;
-      }
-    })
-  .catch(error => console.log(error))
-}
-
-// get the categories and their groups
-EventsList.getCategories = function() {
-  axios
-  .get(this.eventTypeURL)
-  .then(response => (this.eventTypes = response.data))
-  .catch(error => console.log(error))
-
-  axios
-  .get(this.ageGroupURL)
-  .then(response => (this.ageGroups = response.data))
-  .catch(error => console.log(error))
-
-  axios
-  .get(this.boroughURL)
-  .then(response => (this.boroughs = response.data))
-  .catch(error => console.log(error))
-}
 /**
- * Generate the string filter for all user chosen taxonomies
- * @param {array} - array with the ids of event types
- * @param {array} - array with the ids of age groups
- * @param {integer} - page number
- * @return {string} - string of all filters
+ * Request to get the posts and update router
  **/
-EventsList.generateFilterURL = function(types, ages, boroughs, page) {
+EventsList.getPrograms = function () {
+  this.checkedEventType.length != this.eventTypes.length ? this.checkedAllEventTypes = false : this.checkedAllEventTypes = true;
+
+  let types = this.checkedAllEventTypes ? this.eventTypes.map(a => a.slug) : this.checkedEventType;
+  let result;
+
+  // update router based on selection
+  if (this.checkedEventType.length == 1) {
+    this.$router.push({query:{}}).catch(err => { });
+  } else {
+    this.$router.push({
+      query:
+      {
+        event_category: this.checkedEventType.length < this.eventTypes.length ? this.checkedEventType : 'all',
+      }
+    }).catch(err => { });
+  }
+
+  // filter
+  if (this.checkedEventType.length > 1 ){
+    types = types.filter(e => e !== 'virtual')
+    result = this.postsAll.filter(function (e) {
+      return e.categories.find(x => types.includes(x.slug));
+    });
+  } else {
+    result = this.postsAll
+  }
+  this.posts = result.slice(0, 4);
+
+  if (this.posts.length == 0) {
+    this.errorMsg = true;
+    this.isLoading = false;
+    this.maxPages = 1;
+
+  } else {
+    this.errorMsg = false;
+    this.isLoading = false;
+    this.totalResults = this.posts.length;
+    if ((this.posts.length < this.postsAll.length) && (result.length != this.posts.length)) {
+      this.showButton = true;
+    } else {
+      this.showButton = false;
+    }
+  }
+
+}
+
+EventsList.generateFilterURL = function (data) {
   let filters = [];
+  let arrIds = [];
 
-  if ( types.length > 0 ) {
-    filters.push('tribe_events_cat[]=' + types.join('&tribe_events_cat[]='));
+  // event types
+  if (data.checkedEventType.length > 0) {
+    data.checkedEventType.length != data.eventTypes.length ? data.checkedAllEventTypes = false : data.checkedAllEventTypes = true;
+    arrIds = EventsList.getIds(data.eventTypes, data.checkedEventType).map(value => value.id)
+    filters.push('categories=' + arrIds.join('&categories='));
+  }
+  
+  // age groups
+  if (data.checkedAgeGroup.length > 0) {
+    data.checkedAgeGroup.length != data.ageGroups.length ? data.checkedAllAges = false : data.checkedAllAges = true;
+    arrIds = EventsList.getIds(data.ageGroups, data.checkedAgeGroup, data.posttype).map(value => value.id)
+    filters.push('age_group[]=' + arrIds.join('&age_group[]='));
   }
 
-  if ( ages.length > 0  ) {
-    filters.push('age_group[]=' + ages.join('&age_group[]='));
-  }
-
-  if ( boroughs.length > 0  ) {
-    filters.push('borough[]=' + boroughs.join('&borough[]='));
-  }
-
-  if (page > 1) {
-    filters.push('page=' + page);
+  if (data.programPage > 1) {
+    filters.push('page=' + data.programPage);
   }
 
   filters = filters.join('&');
-  
+
   return filters;
 }
 
+
+EventsList.getTaxonomies = function () {
+  // age groups
+  let ageGroups = _.uniq([].concat.apply([], this.postsAll.map(a => a.age_group)), function (x) {
+    return x.name;
+  });
+
+  this.ageGroups = ageGroups.sort((a, b) => a.description.localeCompare(b.description))
+
+  // tip types
+  let types = _.uniq([].concat.apply([], this.postsAll.map(a => a.categories)), function (x) {
+    return x.name;
+  });
+
+  this.eventTypes = types.sort((a, b) => a.name.localeCompare(b.name))
+
+}
+
+EventsList.parseQuery = function () {
+  let query = this.$route.query;
+
+  if (query.event_category == 'all') {
+    this.checkedAllEventTypes = true;
+    this.checkedEventType = this.eventTypes.map(a => a.slug);
+  }
+  if (!_.isEmpty(query.event_category) && query.event_category != 'all') {
+    this.checkedAllEventTypes = false;
+    if (_.isArray(query.event_category)) {
+      if (query.event_category.every((val, i, arr) => val === arr[0])) {
+        query.event_category = query.event_category[0];
+      } else {
+        this.checkedEventType = query.event_category
+      }
+    } else {
+      let index = this.eventTypes.map(function (e) { return e.slug; }).indexOf(query.event_category);
+      this.checkedEventType.push(this.eventTypes[index].slug);
+    }
+  }
+
+}
+
+EventsList.selectAllEventTypes = function () {
+  if (this.checkedAllEventTypes) {
+    this.checkedEventType = this.eventTypes.map(a => a.slug);
+  } else {
+    this.checkedEventType = [];
+  }
+}
+
+EventsList.loadMore = function () {
+  let types = this.checkedAllEventTypes ? this.eventTypes.map(a => a.slug) : this.checkedEventType;
+
+  if (this.checkedEventType.length > 1) {
+    types = types.filter(e => e !== 'virtual')
+    let result = this.postsAll.filter(function (e) {
+      return e.categories.find(x => types.includes(x.slug));
+    });
+    this.posts = this.posts.concat(result.slice(this.posts.length, 6 + this.posts.length));
+    if (result.length == this.posts.length) {
+      this.showButton = false;
+    } else {
+      this.showButton = true;
+    }
+  } else {
+    this.posts = this.posts.concat(this.postsAll.slice(this.posts.length, 6 + this.posts.length))
+    if (this.posts.length == this.postsAll.length) {
+      this.showButton = false;
+    } else {
+      this.showButton = true;
+    }
+  }
+
+}
+
 /**
- * Extracts the taxonomies from the url query
- * and updates the program type and age group arrays 
- **/
-EventsList.parseQuery = function() {
-  let query =this.$route.query;
+ * Filters events that are just teen and young adult
+ */
+EventsList.filterTeens = function (events) {
+  let ages = this.checkedAgeGroup
 
-  if (_.isArray(query.cat_id)){
-    if (query.cat_id.every( (val, i, arr) => val === arr[0] )){
-      query.cat_id = query.cat_id[0];
-    }else{
-      this.checkedEventType=query.cat_id.map(Number);
-    }
-  }
+  let result = events.filter(function (e) {
+    return e.age_group.find(x => ages.includes(x.slug));
+  });
 
-  if (!_.isArray(query.cat_id) && query.cat_id){
-    this.checkedEventType.push(parseInt(query.cat_id, 10));
-  }
-
-  if (_.isArray(query.age_id)){
-    if (query.age_id.every( (val, i, arr) => val === arr[0] )) {
-      query.age_id = query.age_id[0];
-    } else {
-      this.checkedAgeGroup=query.age_id.map(Number);
-    }
-  }
-
-  if (!_.isArray(query.age_id) && query.age_id) {
-    this.checkedAgeGroup.push(parseInt(query.age_id,10));
-  }
-
-  if (_.isArray(query.borough_id)){
-    if (query.borough_id.every( (val, i, arr) => val === arr[0] )) {
-      query.borough_id = query.borough_id[0];
-    } else {
-      this.checkedBorough=query.borough_id.map(Number);
-    }
-  }
-
-  if (!_.isArray(query.borough_id) && query.borough_id) {
-    this.checkedBorough.push(parseInt(query.borough_id,10));
-  }
-
-  if(query.page) {
-    this.eventPage=query.page;
-  }
+  this.postsAll = result;
 }
-
-// for the monthly pagination
-EventsList.getCurrentMonth = function() {
-  let eventDate = new Date();
-  this.currentDate = {
-    'month': eventDate.toLocaleString("en-us", { month: "long" }),
-    'year': eventDate.getFullYear()
-  }
-}
-
 
 export default EventsList;
+
+

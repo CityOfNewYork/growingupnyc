@@ -47,7 +47,8 @@
   {# Homepage Categories #}
   {% for top in post.get_field('homepage_categories') %}
     <div class="c-list-box c-list-box-ms">
-      <div class="c-list-box__item c-list-box-ms__item {{top.button_text|lower}}__item">
+      {# <div class="c-list-box__item c-list-box-ms__item {{top.button_text|lower}}__item"> #}
+      <div class="c-list-box__item c-list-box-ms__item {% if (top.button_text == 'Topics') or (top.button_text == 'Inspirations') %}{{top.button_text|lower}}{% else %}trips{% endif %}__item">
         <span class="c-list-box__text c-list-box-ms__text">{{top.excerpt}}</span>
         <a class="button--full-width button--primary button--primary__curved" href="{{top.button_link}}">{{top.button_text}}</a>
       </div>

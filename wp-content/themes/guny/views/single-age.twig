@@ -73,7 +73,7 @@
           {# events #}
           {% if upcoming_events %}
             <li class="c-nav-list__item">
-              <a href="#section-events" data-section="section-events" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Events', 'GUNY-Single-Age') }}" class="js-section c-nav-list__link {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">{{ __('Events', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+              <a href="#section-events" data-section="section-events" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Virtual Events', 'GUNY-Single-Age') }}" class="js-section c-nav-list__link {{post.age_group.slug|sanitize|replace({'-es':''})}}-secondary">{{ __('Virtual Events', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
             </li>
           {% endif %}
         </ol>
@@ -233,7 +233,7 @@
       {# Upcoming Events #}
       {% if upcoming_events %}
         <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" data-id="section-events">
-          <h2>{{ __('Events', 'GUNY-Single-Age') }}</h2>
+          <h2>{{ __('Virtual Events', 'GUNY-Single-Age') }}</h2>
           {% if post.events_text %}
             <p class="c-block-list__text">{{post.events_text}}</p>
           {% endif %}

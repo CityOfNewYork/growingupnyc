@@ -15,4 +15,8 @@ $context['archive_link'] = SummerGuides\get_archive_link();
 $context['domain'] = SummerGuides\get_translation_domain();
 $context['events_link'] = get_post_type_archive_link('tribe_events');
 
+// in-body alert under banner
+$landing_page = get_page_by_path('summer');
+$context['program_page_alert'] = get_field('banner_content', get_field('banner_alert_message', $landing_page->ID));
+
 Timber::render(array('single-summer-guide.twig'), $context);

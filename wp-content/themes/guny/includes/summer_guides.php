@@ -329,3 +329,11 @@ function get_pagination() {
   $pagination = new Timber\Pagination();
   return $pagination->get_pagination(array());
 }
+
+/**
+ * Get the alert
+ * @return string The alert
+ */
+function get_alert_content() {
+  return get_field('banner_content', get_field('banner_alert_message', get_controller_id()));
+}

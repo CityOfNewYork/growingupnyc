@@ -17,6 +17,7 @@ $context['domain'] = AfterschoolGuides\get_translation_domain();
 $context['archive_link'] = AfterschoolGuides\get_archive_link();
 $context['reset_link'] = AfterschoolGuides\get_reset_link();
 $context['pagination'] = AfterschoolGuides\get_pagination();
+$context['programs_alert'] = AfterschoolGuides\get_alert_content();
 $context['post_type'] = 'afterschool-guide';
 
 // Taxonomy Headings

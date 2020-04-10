@@ -26,9 +26,9 @@
     position: fixed;
 
     // Uses "not sticky" class to prevent jumping when going from absolute bottom to fixed top
-    &.is-not-sticky {
-      position: absolute;
-    }
+    // &.is-not-sticky {
+    //   position: absolute;
+    // }
 
     &.is-bottom {
       position: absolute;

@@ -120,6 +120,13 @@
                 "operator": "==",
                 "value": "program"
             }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "template-landing_page.php"
+            }
         ]
     ],
     "menu_order": 0,

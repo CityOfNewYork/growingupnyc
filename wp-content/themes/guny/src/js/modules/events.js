@@ -99,7 +99,7 @@ EventsList.getPrograms = function () {
     this.$router.push({
       query:
       {
-        event_category: this.checkedEventType.length < this.eventTypes.length ? this.checkedEventType : 'all',
+        event_category: this.checkedEventType.length < this.eventTypes.length ? _.without(this.checkedEventType, 'virtual') : 'all',
       }
     }).catch(err => { });
   }
@@ -181,11 +181,14 @@ EventsList.getTaxonomies = function () {
 EventsList.parseQuery = function () {
   let query = this.$route.query;
 
-  if (query.event_category == 'all') {
+  if (query.event_category == 'virtual') {
+    this.$router.push({query:{}}).catch(err => { });
+  }
+  else if (query.event_category == 'all') {
     this.checkedAllEventTypes = true;
     this.checkedEventType = this.eventTypes.map(a => a.slug);
   }
-  if (!_.isEmpty(query.event_category) && query.event_category != 'all') {
+  else if (!_.isEmpty(query.event_category) && query.event_category != 'all') {
     this.checkedAllEventTypes = false;
     if (_.isArray(query.event_category)) {
       if (query.event_category.every((val, i, arr) => val === arr[0])) {
@@ -205,7 +208,7 @@ EventsList.selectAllEventTypes = function () {
   if (this.checkedAllEventTypes) {
     this.checkedEventType = this.eventTypes.map(a => a.slug);
   } else {
-    this.checkedEventType = [];
+    this.checkedEventType = ['virtual'];
   }
 }
 

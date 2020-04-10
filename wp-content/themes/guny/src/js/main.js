@@ -68,22 +68,20 @@ window.accordion = accordion;
 
   new ContentShow();
 
+  let postTypes = ['summer', 'program', 'afterschool']
+
   // initialize vue on specific pages
   if ($('div').find('[id^=vue]').attr('id') != '' 
       && $('div').find('[id^=vue]').attr('id') != undefined
       && !(window.location.pathname.indexOf('events') >= 0)) {
     if (window.location.pathname.indexOf('brainbuilding') >= 0){
       new BrainBuilding().init();
-    } else if (window.location.pathname.indexOf('programs') >= 0){
+    } else if (postTypes.some(type => window.location.pathname.includes(type))){
       new ProgramsList().init();
     } else if (window.location.pathname.indexOf('generationnyc') >= 0) {
       new EventsList().init();
     }
-  } 
-
-  // if (window.location.pathname.indexOf('events') >= 0) {
-  //   new EventsList().init();
-  // }
+  }
 
   // Initialize share by email/sms forms.
   $(`.${ShareForm.CssClass.FORM}`).each((i, el) => {

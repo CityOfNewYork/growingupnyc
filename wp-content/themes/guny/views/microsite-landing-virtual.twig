@@ -80,12 +80,51 @@
     <div class="o-article o-article-ms o-article-ms__topics js-sticky-article">
       {# Section One #}
       {% for top in post.get_field('landing_page_section') %}
-        <section data-id="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" class="o-content-container--compact u-top-spacing u-bottom-spacing s-wysiwyg">
+        <section data-id="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" class="o-content-container--compact u-top-spacing u-bottom-spacing-small s-wysiwyg">
           {% if loop.index != 1 %}
           <h2>{{top.landing_page_section_content_heading}}</h2>
           {% endif %}
           {{top.landing_page_section_content_body}}
+          {% if top.landing_page_section_add_tip == "Yes" %}
+          <aside class="c-tip c-tip-ms__trips u-lg-gutter o-content-container">
+            <div class="c-tip__sticker sticker">
+              <svg class="icon--large" role="img" aria-hidden="true">
+                <title>Tip</title>
+                <use xlink:href="#icon-sms"></use>
+              </svg>
+            </div>
+            <h3 class="c-tip__content">{{top.landing_page_section_tip_title}}</h3>
+            <p class="c-tip__content">{{top.landing_page_section_tip_content}}</p>
+          </aside>
+          {% endif %}
+
         </section>
+
+        {# call out box #}
+        {% if top.landing_page_section_add_call_out == "Yes" %}
+          {% if top.landing_page_section_content_heading != 'Virtual Activities' %}
+            <section class="o-content-container--compact s-wysiwyg">
+                <div class="c-do-list">
+                  {{top.landing_page_section_call_out_box}}
+                  {% if top.landing_page_section_call_out_box_url != "" %}
+                    <a class="button--primary button--primary__curved button--primary__green button--topics__cta" href="{{top.landing_page_section_call_out_box_url}}" target="_blank">{{top.landing_page_section_call_out_box_button_text}}</a>
+                  {% endif %}
+                </div>
+            </section>
+          {% else %}
+            <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" data-id="section-events">
+              <div class="c-tip-card">
+                <p class="c-card__label">
+                  {{top.landing_page_section_call_out_box_title}}
+                </p>
+                {{top.landing_page_section_call_out_box}}
+                {% if top.landing_page_section_call_out_box_url != "" %}
+                  <a class="button--primary button--primary__curved button--primary__green button--topics__cta" href="{{top.landing_page_section_call_out_box_url}}" target="_blank">{{top.landing_page_section_call_out_box_button_text}}</a>
+                {% endif %}
+              </div>
+            </section>
+          {% endif %}
+        {% endif %}
         
         {# Events Section #}
         {% if top.landing_page_section_content_heading == 'Virtual Activities' %}
@@ -94,7 +133,7 @@
 
               {# categories #}
               <div class="c-list-box__item">
-                <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">Filter by type</h3>
+                <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">Filter all activities by type</h3>
                 <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
                   <li class="c-list-box__subitem" v-if="eventTypes!=null">
                     <label class="checkbox" >
@@ -131,13 +170,15 @@
                         <title>Date:</title>
                         <use xlink:href="#icon-calendar"></use>
                       </svg>
-                      <span class="nowrap">v{post.date_formatted.date_range}</span><br>
+                      <span class="nowrap" v-if="post.categories.some(e => e.slug === 'anytime')">Any Day</span>
+                      <span class="nowrap" v-else>v{post.date_formatted.date_range}</span><br>
 
                       <svg role="img" class="icon--xxsmall" aria-hidden="true">
                         <title>Time:</title>
                         <use xlink:href="#icon-clock-o"></use>
                       </svg>
-                      <span class="nowrap">v{post.date_formatted.time}</span>
+                      <span class="nowrap" v-if="post.categories.some(e => e.slug === 'anytime')">Anytime</span>
+                      <span class="nowrap" v-else>v{post.date_formatted.time}</span>
                     </div>
 
                     <div class="c-tip-card__content">
@@ -157,7 +198,7 @@
               
                 {# pagination #}
                 <div class="o-content-container--compact pagination text-center"v-if="!isLoading" v-cloak>
-                  <div class="paginate" v-if="(posts.length < 42) && (showButton)">
+                  <div class="paginate" v-if="(posts.length < 50) && (showButton)">
                     <router-link class="button--outline button--outline--gray paginate" :to="{ query: {event_category: checkedEventType }}" @click.native="loadMore();">{{ __('See more', 'guny') }}</router-link>
                   </div>
                 </div>

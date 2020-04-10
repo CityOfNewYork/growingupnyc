@@ -229,6 +229,7 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 .c-language-switcher-wrapper {
   // border-bottom: 2px solid $very-light-gray;
   .c-language__switcher {
+    background-color: $color-background;
     text-align: right;
     z-index: 1;
     .wpml-ls-legacy-list-horizontal {

@@ -11,6 +11,7 @@ $context['page_tagline'] = SummerGuides\get_tagline();
 $context['banner'] = SummerGuides\get_hero_banner_img();
 $context['filters'] = SummerGuides\get_filters();
 $context['post_type'] = 'summer-guide';
+$context['programs_alert'] = SummerGuides\get_alert_content();
 
 // Taxonomy Headings
 $taxonomies = get_object_taxonomies( 'summer-guide', object );

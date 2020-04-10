@@ -1,5 +1,16 @@
 {% extends 'base.twig' %}
 
+{% block head_extras %}
+	<style>
+		.alert {
+			background: rgba(255, 220, 84, 0.75);
+			padding: 1.75rem 0;
+			margin-top: 25px;
+		}
+	</style>
+{% endblock %}
+
+
 {% block content %}
 
   <div class="js-parallax">
@@ -78,6 +89,13 @@
     {% endif %}
 
     <div class="o-article js-sticky-article">
+      {% if program_page_alert != '' %}
+        <div class="alert">
+          <div class="o-container">
+            {{program_page_alert}}
+          </div>
+        </div>
+      {% endif %}
       <div class="o-content-container--compact">
 
         {% if post.content %}

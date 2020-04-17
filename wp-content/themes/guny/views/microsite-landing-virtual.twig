@@ -166,12 +166,27 @@
                     </div>
 
                     <div class="c-card__subtitle">
-                      <svg role="img" class="icon--xxsmall" aria-hidden="true">
-                        <title>Date:</title>
-                        <use xlink:href="#icon-calendar"></use>
-                      </svg>
-                      <span class="nowrap" v-if="post.categories.some(e => e.slug === 'anytime')">Any Day</span>
-                      <span class="nowrap" v-else>v{post.date_formatted.date_range}</span><br>
+                      <span class="nowrap" v-if="post.days_recurring == undefined">
+                        <svg role="img" class="icon--xxsmall" aria-hidden="true">
+                          <title>Date:</title>
+                          <use xlink:href="#icon-calendar"></use>
+                        </svg>
+                        <span class="nowrap" v-if="post.categories.some(e => e.slug === 'anytime')">Any Day</span>
+                        <span class="nowrap" v-else>
+                          <span class="nowrap" v-if="post.date_formatted.start_date != post.date_formatted.end_date">v{post.date_formatted.date_range}</span>
+                          <span class="nowrap" v-else>v{post.date_formatted.start_day}, v{post.date_formatted.start_date}</span>
+                        </span>
+                          <br>
+                      </span>
+
+                      <span v-if="post.days_recurring != undefined">
+                        <svg role="img" class="icon--xxsmall" aria-hidden="true" >
+                          <title>Date:</title>
+                          <use xlink:href="#icon-recurring"></use>
+                        </svg>
+                        <span>Every v{post.days_recurring} thru v{post.date_formatted.end_date}</span>
+                        <br>
+                      </span>
 
                       <svg role="img" class="icon--xxsmall" aria-hidden="true">
                         <title>Time:</title>

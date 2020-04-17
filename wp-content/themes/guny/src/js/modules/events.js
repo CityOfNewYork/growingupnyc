@@ -24,7 +24,7 @@ class EventsList {
       router,
       data: {
         posttype: this._posttype,
-        postsURL: this._baseURL + '/wp-json/tribe/events/v1/' + this._posttype + this._lang + '&per_page=100&page=1&start_date=' + this._utc,
+        postsURL: this._baseURL + '/wp-json/tribe/events/v1/' + this._posttype + this._lang + '&per_page=250&page=1&start_date=' + this._utc,
         postsAll: null,
         posts: null,
         ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group' + this._lang,
@@ -247,8 +247,15 @@ EventsList.filterTeens = function (events) {
     return e.age_group.find(x => ages.includes(x.slug));
   });
 
-  this.postsAll = result;
+  // dedup events that are recurring
+  let collapsedResults = result.filter((event, index, self) =>
+  index === self.findIndex((t) => (
+    t.title === event.title && t.date_formatted.time === event.date_formatted.time
+    ))
+  )
+  this.postsAll = collapsedResults;
 }
+
 
 export default EventsList;
 

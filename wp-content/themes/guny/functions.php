@@ -347,13 +347,13 @@ class GunyEvent extends TimberPost {
 
   public function start_datetime_formatted() {
     if (function_exists('tribe_get_start_date')) {
-      return date_i18n( __('Y-m-d\TH:m:s', 'guny-date-formats'), $this->start_datetime());
+      return date_i18n( __('Y-m-d\TH:m:sT', 'guny-date-formats'), $this->start_datetime());
     }
   }
 
   public function end_datetime_formatted() {
     if (function_exists('tribe_get_end_date')) {
-      return date_i18n( __('Y-m-d\TH:m:s', 'guny-date-formats'), $this->end_datetime());
+      return date_i18n( __('Y-m-d\TH:m:sT', 'guny-date-formats'), $this->end_datetime());
     }
   }
 

@@ -41,16 +41,16 @@
         <ol class="c-nav-list c-nav-list-ms__topics js-sticky js-section-set o-sticky-nav">
 
           {% for section in sections %}
-          {% if section.section_title %}
-          <li class="c-nav-list__item">
-            <a class="js-section c-nav-list__link" href="#section-{{ section.slug }}" data-section="section-{{ section.slug }}">
-              {{ section.section_title }} {# translation comes from page content #}
-              <svg aria-hidden="true" class="icon--caret">
-                <use xlink:href="#icon-caret-right"></use>
-              </svg>
-            </a>
-          </li>
-          {% endif %}
+            {% if section.section_display == "Yes" %}
+            <li class="c-nav-list__item">
+              <a class="js-section c-nav-list__link" href="#section-{{ section.slug }}" data-section="section-{{ section.slug }}">
+                {{ section.section_title }} {# translation comes from page content #}
+                <svg aria-hidden="true" class="icon--caret">
+                  <use xlink:href="#icon-caret-right"></use>
+                </svg>
+              </a>
+            </li>
+            {% endif %}
           {% endfor %}
 
         </ol>
@@ -71,13 +71,15 @@
           {% set section_previous = false %}
           {% set section_no_divider_after = ['newsletter-signup'] %}
           {% for key, section in sections %}
+            {% if section.section_display == "Yes" %}
 
-            {% include 'partials/' ~ section.acf_fc_layout ~ '.twig' with {title: section.section_title, id: 'section-' ~ section.slug, class: 'c-tip-ms__topics'} %}
+              {% include 'partials/' ~ section.acf_fc_layout ~ '.twig' with {title: section.section_title, id: 'section-' ~ section.slug, class: 'c-tip-ms__topics'} %}
 
-            {% if section_previous and section_previous in section_no_divider_after %}<hr>{% endif %}
+              {% if section_previous and section_previous in section_no_divider_after %}<hr>{% endif %}
 
-            {% set section_previous = section.acf_fc_layout %}
+              {% set section_previous = section.acf_fc_layout %}
 
+            {% endif %}
           {% endfor %}
         {% endif %}
 

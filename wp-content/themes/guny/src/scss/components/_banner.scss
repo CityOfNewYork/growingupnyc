@@ -227,7 +227,9 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 
 //Language switcher
 .c-language-switcher-wrapper {
-  // border-bottom: 2px solid $very-light-gray;
+  background-color: $color-background;
+  position: relative;
+  z-index: 3;
   .c-language__switcher {
     background-color: $color-background;
     text-align: right;

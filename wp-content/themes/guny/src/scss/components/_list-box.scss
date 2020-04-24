@@ -9,6 +9,7 @@
 // .c-list-box--secondary - More subdued box styling. Uses global palette colors and smaller boxes.
 // .c-list-box--tertiary - Smaller list box styling used for longer content items
 // .c-list-box--quaternary - List box style with a top level that closely resembles --primary and a secondary level that closely resembles --secondary
+// .c-list-box--quinary - List box style with a top level that closely resembles --quaternary without bullet or indentation
 //
 // markup:
 // <ul class="c-list-box {$modifiers}">
@@ -120,7 +121,8 @@
   }
 }
 
-.c-list-box--tertiary .c-list-box__heading {
+.c-list-box--tertiary .c-list-box__heading,
+.c-list-box--quinary .c-list-box__heading {
   background: $color-primary;
   color: $color-text-invert;
   @include font-size-large;
@@ -238,6 +240,11 @@
     margin-top: rem-calc(2);
   }
 
+  .no-icon {
+    text-indent: 0;
+    padding: rem-calc(15 30 15 30);
+  }
+
   @include media($bp-large) {
     padding-left: rem-calc(60);
   }
@@ -260,6 +267,13 @@
 .c-list-box__border {
   border-radius: 3px;
   padding: rem-calc(5 0);
+}
+
+.c-list-box--quinary .c-list-box__subitem {
+  background: $color-background-shade;
+  color: $color-text;
+  padding: rem-calc(15 30 15 30);
+  margin-bottom: rem-calc(2);
 }
 
 // Microsite

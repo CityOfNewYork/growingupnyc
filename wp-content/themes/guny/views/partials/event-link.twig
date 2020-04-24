@@ -1,4 +1,6 @@
-{% if virtual_event %}
+{% set event_cats = post.terms('tribe_events_cat')|keys %}
+
+{% if 'virtual' in event_cats %}
 
 <svg role="img" class="icon--xxsmall" aria-hidden="true"><use xlink:href="#icon-map-marker"></use></svg><a href="{{post.event_website}}" target="_blank">{{post.venue}},
   {% for borough in post.terms('borough') %}

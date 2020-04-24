@@ -27,6 +27,9 @@ const FIELD_BANNER_IMAGE = 'field_5a9dbafbc4617';
 // The theme options setting for the mobile banner image in group_5a9d9040b6b10.json
 const FIELD_BANNER_IMAGE_MOBILE = 'field_5e3ae9fb8700e';
 
+// The share template
+const SHARE_TEMPLATE = 'field_5e9f4df2bbab7';
+
 /**
  * Functions
  */
@@ -70,4 +73,12 @@ function get_hero_banner_img() {
  */
 function get_hero_banner_img_mobile() {
   return get_field(FIELD_BANNER_IMAGE_MOBILE, get_controller_id());
+}
+
+/**
+ * Get the share template name
+ * @return Object The media image object
+ */
+function get_share_template($id) {
+  return get_field(SHARE_TEMPLATE, $id)->post_name;
 }

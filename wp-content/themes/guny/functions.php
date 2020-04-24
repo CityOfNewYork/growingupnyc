@@ -58,13 +58,22 @@ class GunySite extends TimberSite {
               'value'   => 'Yes',
               'compare' => 'LIKE'
             ),
-            'start_date' => array(
-              'key'     => '_EventStartDate',
-              'value'   => date( 'Y-m-d H:i:s' ),
-              'compare' => '>=',
-              'type'    => 'DATETIME',
+            array(
+            'relation' => 'OR',
+              'start_date' => array(
+                'key'     => '_EventStartDate',
+                'value'   => date( 'Y-m-d H:i:s' ),
+                'compare' => '>=',
+                'type'    => 'DATETIME',
+              ),
+              'end_date' => array(
+                'key'     => '_EventEndDate',
+                'value'   => date( 'Y-m-d H:i:s' ),
+                'compare' => '>=',
+                'type'    => 'DATETIME',
+              ),
             ),
-          ),
+          )
         );
         if ( !empty( $tax_query ) ) {
           $top_event_params['tax_query'] = $tax_query;

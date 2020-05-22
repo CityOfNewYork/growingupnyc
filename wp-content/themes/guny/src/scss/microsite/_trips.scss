@@ -29,7 +29,7 @@
   }
 }
 
-.c-nav-list-ms__trips {
+.c-nav-list--dark-green {
   .c-nav-list__item {
     .c-nav-list__link {
       background: $green;
@@ -218,11 +218,11 @@
 }
 
 //Tips
-.c-tip-ms__trips {
+.c-tip--dark-green {
   text-align: center;
   &,
   .c-tip__sticker {
-    background: $green;
+    background: $dark-green;
   }
 
   .c-tip__content {
@@ -238,27 +238,27 @@
   }
 }
 
-.button--primary__green {
-  background: $dark-green;
+.button--primary__dark-green {
+  background: $green;
   color: $white;
-  border-color: $dark-green;
+  border-color: $green;
   text-transform: none;
   &:focus {
-    background: $very-dark-green;
-    border-color: $very-dark-green;
+    background: $dark-green;
+    border-color: $dark-green;
   }
 
   .no-touchevents & {
     &:hover {
-      background: $very-dark-green;
-      border-color: $very-dark-green;
+      background: $dark-green;
+      border-color: $dark-green;
     }
   }
 
   &[disabled],
   &[disabled]:hover {
-    background: $dark-green;
-    border-color: $dark-green;
+    background: $green;
+    border-color: $green;
     cursor: default;
   }
 }

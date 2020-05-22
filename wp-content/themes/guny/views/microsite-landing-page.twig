@@ -45,7 +45,7 @@
 {% block content%}
 
 	<div class="js-parallax">
-		<header class="c-hero c-hero--large bg-dark-green js-parallax-content">
+		<header class="c-hero c-hero--large bg-{{post.get_field('lp_theme')}} js-parallax-content">
 			<div class="o-container js-parallax-text">
 				<h1 class="c-hero__title">
 					{{page_title}}
@@ -75,7 +75,7 @@
 			class="o-article-sidebar">
 			{# Anchor Links #}
 			<div class="o-content-container--compact u-shift-up">
-				<ol class="c-nav-list c-nav-list-ms__trips js-sticky js-section-set o-sticky-nav">
+				<ol class="c-nav-list c-nav-list--{{post.get_field('lp_theme')}} js-sticky js-section-set o-sticky-nav">
 					{% for top in post.get_field('landing_page_section') %}
 						{% if loop.index != 1 %}
 							<li class="c-nav-list__item">
@@ -95,18 +95,21 @@
 		<div
 			class="o-article o-article-ms o-article-ms__topics js-sticky-article">
 			{# Section One #}
+
 			{% for top in post.get_field('landing_page_section') %}
 				<section data-id="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})|replace({'/':'-'})}}" class="o-content-container--compact u-top-spacing u-bottom-spacing-small s-wysiwyg">
 					{% if loop.index != 1 %}
 						<h2>{{top.landing_page_section_content_heading}}</h2>
 					{% endif %}
 					{{top.landing_page_section_content_body}}
+
+          {# TIP #}
 					{% if top.landing_page_section_add_tip == "Yes" %}
-						<aside class="c-tip c-tip-ms__trips u-lg-gutter o-content-container">
+						<aside class="c-tip c-tip--{{post.get_field('lp_theme')}} u-lg-gutter o-content-container">
 							<div class="c-tip__sticker sticker">
 								<svg class="icon--large" role="img" aria-hidden="true">
 									<title>Tip</title>
-									<use xlink:href="#icon-sms"></use>
+									<use xlink:href="#icon-{% if top.landing_page_section_tip_icon != '' %}{{top.landing_page_section_tip_icon}}{% else %}sms{% endif %}"></use>
 								</svg>
 							</div>
 							<h3 class="c-tip__content">{{top.landing_page_section_tip_title}}</h3>
@@ -142,6 +145,35 @@
 					{% endif %}
 				{% endif %}
 
+        {# Accordion #}
+        {% if top.landing_page_section_add_accordion == "Yes" %}
+          <section class="o-content-container--compact u-bottom-spacing">
+            <h2>{{top.landing_page_section_accordion_heading}}</h2>
+
+            <div class="o-content-container--text u-sm-gutter">
+              <p>{{top.landing_page_section_accordion_pretext}}</p>
+            </div>
+            <ul class="js-accordion c-list-box c-list-box--quinary u-sm-gutter">
+              {% if top.landing_page_section_accordion_details %}
+                {% for accordion in top.landing_page_section_accordion_details %}
+                  <li class="c-list-box__item">
+                    {% if accordion.landing_page_section_accordion_header != '' %}
+                      <h4 class="c-list-box__heading js-accordion__header bg-{{post.get_field('lp_theme')}} " id="section-header">{{ accordion.landing_page_section_accordion_header }}</h4>
+                    {% endif %}
+                    <ul class="c-list-box__content js-accordion__content" id="section-panel">
+                      {% for item in accordion.landing_page_section_accordion_items %}
+                        <li class="c-list-box__subitem">
+                          {{item.landing_page_section_accordion_item}}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                {% endfor %}
+              {% endif %}
+            </ul>
+          </section>
+        {% endif %}
+        
 				{# Events Section #}
 				{% if top.landing_page_section_content_heading == 'Virtual Activities' %}
 					<div id="vue-events">
@@ -252,20 +284,32 @@
 				<hr>
 			{% endfor %}
 
-			<aside class="c-tip c-tip--sms__trips c-tip-ms__trips u-lg-gutter o-content-container">
-				<div class="c-tip__sticker sticker">
-					<svg class="icon--large" role="img" aria-hidden="true">
-						<title>Tip</title>
-						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-check-outlined"></use>
-					</svg>
-				</div>
-				<p class="c-tip__content">{{post.get_field('sms_intro_text')}}</p>
+      {# Instagram feed #}
+      {# <div id="instagram-{{post.get_field('num_insta_posts')}}" class="gallery" v-cloak>
+        <div v-for="post in posts" class="gallery-card">
+          <a :href="post.permalink">
+            <img :src="post.media_url">
+          </a>
+          <p class="gallery-card-content">v{post.caption.slice(0,100) + '...'}</p>
+        </div>
+      </div> #}
 
-				<div id="share-by-text" class="sms-form-wrapper share-form">
-					{% include 'components/form-share.twig' with {form_only:false, color: "green", disclaimer_text: options.generation_disclaimer_text}%}
-				</div>
-				<footer class="c-tip__footer"></footer>
-			</aside>
+      {% if post.get_field('show_share') == 'Yes' %}
+        <aside class="c-tip c-tip--{{post.get_field('lp_theme')}} u-lg-gutter o-content-container">
+          <div class="c-tip__sticker sticker">
+            <svg class="icon--large" role="img" aria-hidden="true">
+              <title>Tip</title>
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-check-outlined"></use>
+            </svg>
+          </div>
+          <p class="c-tip__content">{{post.get_field('sms_intro_text')}}</p>
+
+          <div id="share-by-text" class="sms-form-wrapper share-form">
+            {% include 'components/form-share.twig' with {form_only:false, color: post.get_field('lp_theme'), disclaimer_text: options.generation_disclaimer_text}%}
+          </div>
+          <footer class="c-tip__footer"></footer>
+        </aside>
+      {% endif %}
 		</div>
 		<!-- /.o-article -->
 	</article>

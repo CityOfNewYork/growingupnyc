@@ -202,6 +202,11 @@
   background-color: $dark-blue !important;
 }
 
+.text-dark-blue,
+.hover\:text-dark-blue:hover {
+  color: $dark-blue !important;
+}
+
 .bg-black,
 .hover\:bg-black:hover {
   background-color: $black !important;

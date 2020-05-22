@@ -3,14 +3,7 @@
     {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] with {show_post_type: false} %}
   </div>
 {% else %}
-	{% if is_archive %}
-    {% set programs_link %}{{current_url}}{% endset %}
-  {% elseif language == 'es' %}
-    {% set programs_link = '/es/programs' %}
-  {% else %}
-    {% set programs_link = '/programs' %}
-  {% endif %}
   <p class="type--no-results">
-    {{ __('Sorry, we couldn’t find anything matching your search.', 'guny') }} <a href="{{ programs_link }}">{{ __('Clear filters', 'guny') }}</a>
+    {{ __('Sorry, we couldn’t find anything matching your search.', 'guny') }} <a href="{{ programslink }}">{{ __('Clear filters', 'guny') }}</a>
   </p>
 {% endfor %}

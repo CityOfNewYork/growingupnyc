@@ -1,0 +1,26 @@
+// Gallery
+
+.gallery {
+  display: block;
+
+  @include media($bp-medium) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+  }
+}
+
+.gallery-card {
+  display: block;
+  max-height: 100%;
+  border: 1px solid rgba(0, 0, 0, .1);
+
+  img {
+    display: block;
+    width: 100%;
+  }
+}
+
+.gallery-card-content {
+  padding: 5px;
+}

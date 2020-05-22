@@ -19,6 +19,7 @@ import Search from './modules/search.js';
 import EventsList from './modules/events.js';
 import ProgramsList from './modules/multi-filter.js';
 import BrainBuilding from './modules/brainbuilding.js';
+// import InstagramFeed from './modules/instagramFeed.js';
 /* eslint-disable no-unused-vars */
 import toggleOpen from './modules/toggleOpen.js';
 /* eslint-enable no-unused-vars */
@@ -54,6 +55,7 @@ function init() {
   rotatingTextAnimation();
   sectionHighlighter();
 
+  // new InstagramFeed().init()
   // Search
   new Search().init();
 }

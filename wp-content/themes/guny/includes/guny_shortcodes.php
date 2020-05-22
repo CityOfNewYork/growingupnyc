@@ -47,7 +47,8 @@ add_shortcode( 'button', 'guny_button' );
 function gny_button( $attr ) {
   $atts = shortcode_atts( array(
     'url' => null,
-    'text' => null
+    'text' => null,
+    'color' => null
   ), $attr );
 
   // Both URL and Text are required
@@ -56,7 +57,11 @@ function gny_button( $attr ) {
     return;
   }
 
-  return '<a href="' . $atts['url'] . '" class="button--primary button--primary__purple">' . $atts['text'] . '</a>';
+  if (empty($atts['color'])) {
+    return '<a href="' . $atts['url'] . '" class="button--primary button--primary__purple">' . $atts['text'] . '</a>';
+  } else {
+    return '<a href="' . $atts['url'] . '" class="button--primary button--primary__' . $atts['color'] . '">' . $atts['text'] . '</a>';
+  }
 }
 add_shortcode( 'gny_button', 'gny_button' );
 
@@ -65,8 +70,8 @@ add_shortcode( 'gny_button', 'gny_button' );
 */
 function guny_add_custom_shortcodes($shortcodes) {
   $shortcodes['NYC Logo'] = '[nyc_logo]';
-  $shortcodes['Button (Growing Up)'] = '[button url="" text=""]';
-  $shortcodes['Button (Generation)'] = '[gny_button url="" text=""]';
+  $shortcodes['Button (Growing Up)'] = '[button url="" text="" color=""]';
+  $shortcodes['Button (Generation)'] = '[gny_button url="" text="" color=""]';
   return $shortcodes;
 }
 add_filter( 'bsd_shortcode_list', 'guny_add_custom_shortcodes' );

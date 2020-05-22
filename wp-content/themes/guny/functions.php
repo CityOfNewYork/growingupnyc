@@ -125,6 +125,9 @@ class GunySite extends TimberSite {
     $context['ms_footer_menu_right'] = new TimberMenu('ms-footer-menu-right');
     $context['footer_menu_left'] = new TimberMenu('footer-menu-left');
     $context['site'] = $this;
+    $context['eventslink'] = get_post_type_archive_link('tribe_events');
+    $context['programslink'] = get_post_type_archive_link('program');
+
     $context['age_menu'] = Timber::get_terms('age_group', array(
       'orderby' => 'term_order',
       'hide_empty' => false,

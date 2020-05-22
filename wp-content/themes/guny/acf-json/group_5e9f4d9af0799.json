@@ -27,6 +27,33 @@
             "save_other_choice": 0
         },
         {
+            "key": "field_5eb1834a88593",
+            "label": "SMS Intro Text",
+            "name": "sms_intro_text",
+            "type": "text",
+            "instructions": "Add intro text for share.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5e9f4dccbbab6",
+                        "operator": "==",
+                        "value": "Yes"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_5e9f4df2bbab7",
             "label": "SMS Template",
             "name": "sms_template",

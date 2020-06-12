@@ -180,22 +180,41 @@ class WPML_TM_Post_Actions extends WPML_Translation_Job_Helper {
 
 	/**
 	 * @param int $post_id
-	 *
 	 */
 	public function save_translation_priority( $post_id ) {
-
-		$translation_priority = filter_var(
+		$translation_priority = (int) filter_var(
 			( isset( $_POST['icl_translation_priority'] ) ? $_POST['icl_translation_priority'] : '' ),
-			FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+			FILTER_SANITIZE_NUMBER_INT );
 
-		if( !$translation_priority ){
-			$assigned_priority = wp_get_object_terms( $post_id, 'translation_priority' );
+		if ( ! $translation_priority ) {
+			$assigned_priority = $this->get_term_obj( $post_id );
 
-			if( $assigned_priority ){
-				$translation_priority = $assigned_priority[0]->term_id;
+			if ( $assigned_priority ) {
+				$translation_priority = $assigned_priority->term_id;
+			} else {
+				$term = \WPML_TM_Translation_Priorities::get_default_term();
+				if ( $term ) {
+					$translation_priority = $term->term_id;
+				};
 			}
 		}
 
-		wp_set_post_terms( $post_id, array( (int) $translation_priority ), 'translation_priority' );
+		if ( $translation_priority ) {
+			wp_set_post_terms( $post_id, array( $translation_priority ), \WPML_TM_Translation_Priorities::TAXONOMY );
+		}
+	}
+
+	/**
+	 * @param int $element_id
+	 *
+	 * @return WP_Term|null
+	 */
+	private function get_term_obj( $element_id ) {
+		$terms = wp_get_object_terms( $element_id, \WPML_TM_Translation_Priorities::TAXONOMY );
+		if ( is_wp_error( $terms ) ) {
+			return null;
+		}
+
+		return empty( $terms ) ? null : $terms[0];
 	}
 }

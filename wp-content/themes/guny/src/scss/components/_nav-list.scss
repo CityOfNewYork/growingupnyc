@@ -56,22 +56,28 @@ $indicator-size: 10px;
   @include media($bp-large) {
     padding: rem-calc(28);
 
-    &:focus,
-    &.is-active {
-      &:after {
-        content: '';
-        display: block;
-        border: $indicator-size solid transparent;
-        border-left-color: inherit;
-        margin-top: -#{$indicator-size};
-        position: absolute;
-        right: -#{$indicator-size * 2};
-        top: 50%;
+
+
+    @if ($language == 'ar') or ($language == 'ur') {
+      &:focus,
+      &.is-active {
+        &:after {
+          content: '';
+          display: block;
+          border: $indicator-size solid transparent;
+          border-left-color: inherit;
+          margin-top: -#{$indicator-size};
+          position: absolute;
+          top: 50%;
+
+          left: -#{$indicator-size * 2};
+          transform: rotate(180deg);
+        }
       }
     }
-
-    .no-touchevents & {
-      &:hover {
+    @else {
+      &:focus,
+      &.is-active {
         &:after {
           content: '';
           display: block;
@@ -81,6 +87,42 @@ $indicator-size: 10px;
           position: absolute;
           right: -#{$indicator-size * 2};
           top: 50%;
+        }
+      }
+    }
+
+
+    @if ($language == 'ar') or ($language == 'ur') {
+      .no-touchevents & {
+        &:hover {
+          &:after {
+            content: '';
+            display: block;
+            border: $indicator-size solid transparent;
+            border-left-color: inherit;
+            margin-top: -#{$indicator-size};
+            position: absolute;
+            top: 50%;
+
+            left: -#{$indicator-size * 2};
+            transform: rotate(180deg);
+          }
+        }
+      }
+    }
+    @else {
+      .no-touchevents & {
+        &:hover {
+          &:after {
+            content: '';
+            display: block;
+            border: $indicator-size solid transparent;
+            border-left-color: inherit;
+            margin-top: -#{$indicator-size};
+            position: absolute;
+            right: -#{$indicator-size * 2};
+            top: 50%;
+          }
         }
       }
     }
@@ -102,6 +144,29 @@ $indicator-size: 10px;
     &:hover {
       background-color: $color-brain-building-tip;
       border-color: $color-brain-building-tip;
+    }
+  }
+}
+
+// .c-nav-list-summer 
+.c-nav-list--vivid-orange {
+  .c-nav-list__item {
+    .c-nav-list__link {
+      background: $vivid-orange;
+      border-color: $vivid-orange;
+
+      &:focus,
+      &.is-active {
+        background: $bright-red;
+        border-color: $bright-red;
+      }
+
+      .no-touchevents & {
+        &:hover {
+          background: $bright-red;
+          border-color: $bright-red;
+        }
+      }
     }
   }
 }

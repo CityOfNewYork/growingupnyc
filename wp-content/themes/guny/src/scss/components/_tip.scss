@@ -38,6 +38,10 @@
       }
     }
   }
+  
+  ul {
+    margin-left: rem-calc($outer-gutter-large);
+  }
 }
 
 // Tip Sticker
@@ -93,6 +97,19 @@
 //SMS
 .c-tip--sms {
   text-align: center;
+
+  .c-tip__content {
+    text-align: center;
+  }
+}
+
+//Tips - Summer
+.c-tip--vivid-orange {
+  text-align: center;
+  &,
+  .c-tip__sticker {
+    background: $vivid-orange;
+  }
 
   .c-tip__content {
     text-align: center;

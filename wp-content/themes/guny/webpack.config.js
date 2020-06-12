@@ -29,7 +29,12 @@ const config = {
     'jquery': 'jQuery'
   },
   resolve: {
-    modules: ['src', 'node_modules']
+    modules: [
+      'src',
+      'node_modules',
+      'node_modules/growingupnyc-patterns/src',
+      'node_modules/growingupnyc-patterns/dist'
+    ]
   },
   plugins: [
     new webpack.ProvidePlugin({

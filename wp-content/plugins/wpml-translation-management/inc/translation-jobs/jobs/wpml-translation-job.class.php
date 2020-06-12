@@ -62,7 +62,7 @@ abstract class WPML_Translation_Job extends WPML_Translation_Job_Helper {
 	/**
 	 * Checks whether the input user is allowed to edit this job
 	 *
-	 * @param stdClass|WP_User $user
+	 * @param WP_User $user
 	 *
 	 * @return bool
 	 */
@@ -82,9 +82,9 @@ abstract class WPML_Translation_Job extends WPML_Translation_Job_Helper {
 			)
 		);
 
-		return ( $user_can_take_this_job && $translator_has_job_language_pairs )
-			   || ( method_exists( $user, 'has_cap' ) && $user->has_cap( 'manage_options' ) )
-			   || ( ! method_exists( $user, 'has_cap' ) && user_can( $user->ID, 'manage_options' ) );
+		$user_can_translate = ( $user_can_take_this_job && $translator_has_job_language_pairs )
+		                      || user_can( $user, 'manage_options' );
+		return apply_filters( 'wpml_user_can_translate', $user_can_translate, $user );
 	}
 
 	/**

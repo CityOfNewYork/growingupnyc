@@ -77,11 +77,11 @@
 
       {# Last Modified Date #}
       <div id='last-modified-date' class="o-content-container--compact">
-        <section class="u-top-spacing-small">
+        <div class="u-top-spacing-small">
           <div class="o-content-container--text s-wysiwyg text-gray">
-            <p>{{ __('Updated', 'GUNY-Single-Program') }} {{last_modified}}</p>
+            <p>{{ __('Updated', 'GUNY-Single-Program') }} {{post.post_modified|date}}</p>
           </div>
-        </section>
+        </div>
       </div>
     </div>
 

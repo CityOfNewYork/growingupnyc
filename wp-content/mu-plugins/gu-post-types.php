@@ -136,7 +136,7 @@ class GUPostTypes {
         'supports' => array('title', 'excerpt', 'editor'),
         'has_archive' => true,
         'rewrite' => array(
-          'slug' => 'summer',
+          'slug' => 'summer-programs',
           'with_front' => false
         )
       )

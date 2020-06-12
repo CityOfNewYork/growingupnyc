@@ -89,9 +89,13 @@ class WPML_TM_REST_Jobs extends WPML_REST_Base {
 				'methods'  => WP_REST_Server::READABLE,
 				'callback' => array( $this, 'get_jobs' ),
 				'args'     => array(
+					'local_job_ids' => array(
+						'type'              => 'string',
+						'sanitize_callback' => array( 'WPML_REST_Arguments_Sanitation', 'string' ),
+					),
 					'scope'           => array(
 						'type'              => 'string',
-						'validate_callback' => array( $this, 'validate_scope' ),
+						'validate_callback' => array( 'WPML_TM_Jobs_Search_Params', 'is_valid_scope' ),
 						'sanitize_callback' => array( 'WPML_REST_Arguments_Sanitation', 'string' ),
 					),
 					'title'           => array(
@@ -109,6 +113,10 @@ class WPML_TM_REST_Jobs extends WPML_REST_Base {
 					'status'          => array(
 						'type'              => 'string',
 						'sanitize_callback' => array( 'WPML_REST_Arguments_Sanitation', 'string' ),
+					),
+					'needs_update' => array(
+						'type' => 'string',
+						'validate_callback' => array( 'WPML_TM_Jobs_Needs_Update_Param', 'is_valid' ),
 					),
 					'limit'           => array(
 						'type'              => 'integer',
@@ -272,25 +280,6 @@ class WPML_TM_REST_Jobs extends WPML_REST_Base {
 	 */
 	public function get_allowed_capabilities( WP_REST_Request $request ) {
 		return array( WPML_Manage_Translations_Role::CAPABILITY, WPML_Translator_Role::CAPABILITY );
-	}
-
-	/**
-	 * Validate scope
-	 *
-	 * @param string $scope Scope.
-	 *
-	 * @return bool
-	 */
-	public function validate_scope( $scope ) {
-		return in_array(
-			$scope,
-			array(
-				WPML_TM_Jobs_Search_Params::SCOPE_ALL,
-				WPML_TM_Jobs_Search_Params::SCOPE_REMOTE,
-				WPML_TM_Jobs_Search_Params::SCOPE_LOCAL,
-			),
-			true
-		);
 	}
 
 	/**

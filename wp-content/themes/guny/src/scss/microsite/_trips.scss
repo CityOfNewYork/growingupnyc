@@ -244,21 +244,21 @@
   border-color: $green;
   text-transform: none;
   &:focus {
-    background: $dark-green;
-    border-color: $dark-green;
+    background: $blue-green;
+    border-color: $blue-green;
   }
 
   .no-touchevents & {
     &:hover {
-      background: $dark-green;
-      border-color: $dark-green;
+      background: $blue-green;
+      border-color: $blue-green;
     }
   }
 
   &[disabled],
   &[disabled]:hover {
-    background: $green;
-    border-color: $green;
+    background: $blue-green;
+    border-color: $blue-green;
     cursor: default;
   }
 }

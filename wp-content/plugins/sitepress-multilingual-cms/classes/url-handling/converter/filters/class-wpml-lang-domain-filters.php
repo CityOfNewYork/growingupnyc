@@ -33,7 +33,7 @@ class WPML_Lang_Domain_Filters {
 		add_filter( 'login_url', array( $this, 'convert_url' ) );
 		add_filter( 'logout_url', array( $this, 'convert_logout_url' ) );
 		add_filter( 'admin_url', array( $this, 'admin_url_filter' ), 10, 2 );
-		add_filter( 'login_redirect', array( $this, 'convert_url' ), 1, 3);
+		add_filter( 'login_redirect', array( $this, 'convert_url' ), 1, 3 );
 	}
 
 	/**
@@ -51,8 +51,15 @@ class WPML_Lang_Domain_Filters {
 	 * @return array
 	 */
 	public function upload_dir_filter_callback( $upload_dir ) {
-		$upload_dir['url'] = $this->wpml_url_converter->convert_url( $upload_dir['url'] );
-		$upload_dir['baseurl'] = $this->wpml_url_converter->convert_url( $upload_dir['baseurl'] );
+		$convertWithMatchingTrailingSlash = function ( $url ) {
+			$hasTrailingSlash = '/' === substr( $url , -1 );
+			$newUrl           = $this->wpml_url_converter->convert_url( $url );
+
+			return $hasTrailingSlash ? trailingslashit( $newUrl ) : untrailingslashit( $newUrl );
+		};
+
+		$upload_dir['url']     = $convertWithMatchingTrailingSlash( $upload_dir['url'] );
+		$upload_dir['baseurl'] = $convertWithMatchingTrailingSlash( $upload_dir['baseurl'] );
 
 		return $upload_dir;
 	}
@@ -65,7 +72,7 @@ class WPML_Lang_Domain_Filters {
 	public function siteurl_callback( $url ) {
 		$getting_network_site_url = $this->debug_backtrace->is_function_in_call_stack( 'get_admin_url' ) && is_multisite();
 
-		if ( ! $this->debug_backtrace->is_function_in_call_stack( 'get_home_path' ) && ! $getting_network_site_url ) {
+		if ( ! $this->debug_backtrace->is_function_in_call_stack( 'get_home_path', false ) && ! $getting_network_site_url ) {
 			$parsed_url = wpml_parse_url( $url );
 			$host       = is_array( $parsed_url ) && isset( $parsed_url['host'] );
 			if ( $host && isset( $_SERVER['HTTP_HOST'] ) && $_SERVER['HTTP_HOST'] ) {

@@ -42,6 +42,8 @@
   padding: rem-calc(40 15);
   text-align: center;
 
+
+
   > * {
     position: relative;
     z-index: $z-index-hero-title;
@@ -60,6 +62,10 @@
     position: absolute;
     width: 100%;
     text-align: left;
+
+    @if ($language == 'ar') or ($language == 'ur') {
+      text-align: right;
+    }
   }
 }
 
@@ -70,7 +76,7 @@
     }
 
     .is-bottom .c-side-hero__content {
-      // left: rem-calc(-4); // accounts for border on container
+      left: rem-calc(-4); // accounts for border on container
       position: absolute;
       width: 100%;
     }

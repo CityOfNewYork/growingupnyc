@@ -28,7 +28,8 @@ add_shortcode( 'nyc_logo', 'guny_logo' );
 function guny_button( $attr ) {
   $atts = shortcode_atts( array(
     'url' => null,
-    'text' => null
+    'text' => null,
+    'color' => null
   ), $attr );
 
   // Both URL and Text are required
@@ -37,7 +38,11 @@ function guny_button( $attr ) {
     return;
   }
 
-  return '<a href="' . $atts['url'] . '" class="button--simple">' . $atts['text'] . '</a>';
+  if (empty($atts['color'])) {
+    return '<a href="' . $atts['url'] . '" class="button--primary button--primary__blue">' . $atts['text'] . '</a>';
+  } else {
+    return '<a href="' . $atts['url'] . '" class="button--primary button--primary__' . $atts['color'] . '">' . $atts['text'] . '</a>';
+  }
 }
 add_shortcode( 'button', 'guny_button' );
 

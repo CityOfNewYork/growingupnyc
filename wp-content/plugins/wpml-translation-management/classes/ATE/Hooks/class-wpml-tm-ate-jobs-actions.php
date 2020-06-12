@@ -1,5 +1,7 @@
 <?php
 
+use WPML\TM\ATE\JobRecords;
+
 /**
  * @author OnTheGo Systems
  */
@@ -25,6 +27,7 @@ class WPML_TM_ATE_Jobs_Actions implements IWPML_Action {
 	 */
 	private $translator_activation_records;
 
+	/** @var bool */
 	private $is_second_attempt_to_get_jobs_data = false;
 	/**
 	 * @var SitePress
@@ -34,6 +37,8 @@ class WPML_TM_ATE_Jobs_Actions implements IWPML_Action {
 	 * @var WPML_Current_Screen
 	 */
 	private $current_screen;
+
+	/** @var array */
 	private $trid_original_element_map = array();
 
 	/** @var WPML_TM_ATE_Jobs_Sync_Script_Loader */
@@ -47,7 +52,7 @@ class WPML_TM_ATE_Jobs_Actions implements IWPML_Action {
 	 * @param \SitePress                                 $sitepress
 	 * @param \WPML_Current_Screen                       $current_screen
 	 * @param \WPML_TM_AMS_Translator_Activation_Records $translator_activation_records
-     * @param WPML_TM_ATE_Jobs_Sync_Script_Loader                 $job_sync_script_loader
+	 * @param WPML_TM_ATE_Jobs_Sync_Script_Loader        $job_sync_script_loader
 	 */
 	public function __construct(
 		WPML_TM_ATE_API $ate_api,
@@ -56,6 +61,7 @@ class WPML_TM_ATE_Jobs_Actions implements IWPML_Action {
 		WPML_Current_Screen $current_screen,
 		WPML_TM_AMS_Translator_Activation_Records $translator_activation_records,
 		WPML_TM_ATE_Jobs_Sync_Script_Loader $job_sync_script_loader
+
 	) {
 		$this->ate_api                       = $ate_api;
 		$this->ate_jobs                      = $ate_jobs;
@@ -73,7 +79,6 @@ class WPML_TM_ATE_Jobs_Actions implements IWPML_Action {
 		add_action( 'wp', array( $this, 'update_jobs_on_current_screen' ) );
 
 		add_filter( 'wpml_tm_ate_jobs_data', array( $this, 'get_ate_jobs_data_filter' ), 10, 2 );
-		add_filter( 'wpml_tm_translation_queue_jobs_require_update', array( $this, 'update_jobs' ), 10, 3 );
 		add_filter( 'wpml_tm_ate_jobs_editor_url', array( $this, 'get_editor_url' ), 10, 3 );
 	}
 
@@ -122,10 +127,13 @@ class WPML_TM_ATE_Jobs_Actions implements IWPML_Action {
 		}
 
 		/** @var array $job_ids */
-		$job_ids = $jobs['local'];
-		$jobs    = array();
+		$job_ids        = $jobs['local'];
+		$jobs           = [];
+		$rid_to_job_map = [];
 		foreach ( $job_ids as $job_id ) {
-			$jobs[] = wpml_tm_create_ATE_job_creation_model( $job_id );
+			$rid                    = wpml_tm_get_records()->icl_translate_job_by_job_id( $job_id )->rid();
+			$rid_to_job_map[ $rid ] = $job_id;
+			$jobs[]                 = wpml_tm_create_ATE_job_creation_model( $job_id, $rid );
 		}
 		$response = $this->create_jobs( $jobs );
 
@@ -148,8 +156,12 @@ class WPML_TM_ATE_Jobs_Actions implements IWPML_Action {
 				$response_jobs = json_decode( wp_json_encode( $response_jobs, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES ), true );
 			}
 
+			$response_jobs = $this->map_response_jobs( $response_jobs, $rid_to_job_map );
+
+			$this->ate_jobs->warm_cache( array_keys( $response_jobs ) );
+
 			foreach ( $response_jobs as $wpml_job_id => $ate_job_id ) {
-				$this->ate_jobs->store( $wpml_job_id, array( WPML_TM_ATE_Job_Records::FIELD_ATE_JOB_ID => $ate_job_id ) );
+				$this->ate_jobs->store( $wpml_job_id, array( JobRecords::FIELD_ATE_JOB_ID => $ate_job_id ) );
 				wpml_tm_load_old_jobs_editor()->set( $wpml_job_id, WPML_TM_Editors::ATE );
 			}
 
@@ -161,6 +173,17 @@ class WPML_TM_ATE_Jobs_Actions implements IWPML_Action {
 				__( 'Jobs could not be created in Advanced Translation Editor. Please try again or contact the WPML support for help.',
 					'wpml-translation-management' ), 'wpml_tm_ate_create_job' );
 		}
+	}
+
+	private function map_response_jobs( $responseJobs, $rid_to_job_id_map ) {
+		$result = [];
+		foreach ( $responseJobs as $rid => $ate_job_id ) {
+			if ( isset( $rid_to_job_id_map[ $rid ] ) ) {
+				$result[ $rid_to_job_id_map[ $rid ] ] = $ate_job_id;
+			}
+		}
+
+		return $result;
 	}
 
 	/**
@@ -182,6 +205,50 @@ class WPML_TM_ATE_Jobs_Actions implements IWPML_Action {
 		$params = json_decode( wp_json_encode( array( 'jobs' => $jobs ) ), true );
 
 		return $this->ate_api->create_jobs( $params );
+	}
+
+	/**
+	 * After implementation of wpmltm-3211 and wpmltm-3391, we should not find missing ATE IDs anymore.
+	 * Some code below seems dead but we'll keep it for now in case we are missing a specific context.
+	 *
+	 * @link https://onthegosystems.myjetbrains.com/youtrack/issue/wpmltm-3211
+	 * @link https://onthegosystems.myjetbrains.com/youtrack/issue/wpmltm-3391
+	 */
+	private function get_ate_jobs_data( array $translation_jobs ) {
+		$ate_jobs_data      = array();
+		$skip_getting_data  = false;
+		$ate_jobs_to_create = array();
+
+		$this->ate_jobs->warm_cache( wpml_collect( $translation_jobs )->pluck( 'job_id' )->toArray() );
+
+		foreach ( $translation_jobs as $translation_job ) {
+			if ( $this->is_ate_translation_job( $translation_job ) ) {
+				$ate_job_id = $this->get_ate_job_id( $translation_job->job_id );
+				// Start of possibly dead code.
+				if ( ! $ate_job_id ) {
+					$ate_jobs_to_create[] = $translation_job->job_id;
+					$skip_getting_data    = true;
+				}
+				// End of possibly dead code.
+
+				if ( ! $skip_getting_data ) {
+					$ate_jobs_data[ $translation_job->job_id ] = [ 'ate_job_id' => $ate_job_id ];
+				}
+			}
+		}
+
+		// Start of possibly dead code.
+		if (
+			! $this->is_second_attempt_to_get_jobs_data &&
+			$ate_jobs_to_create &&
+			$this->added_translation_jobs( array( 'local' => $ate_jobs_to_create ) )
+		) {
+			$ate_jobs_data                            = $this->get_ate_jobs_data( $translation_jobs );
+			$this->is_second_attempt_to_get_jobs_data = true;
+		}
+		// End of possibly dead code.
+
+		return $ate_jobs_data;
 	}
 
 	/**
@@ -224,46 +291,8 @@ class WPML_TM_ATE_Jobs_Actions implements IWPML_Action {
 		return $this->get_ate_jobs_data( $translation_jobs );
 	}
 
-	private function get_ate_jobs_data( array $translation_jobs ) {
-		$ate_jobs_data      = array();
-		$skip_getting_data  = false;
-		$ate_jobs_to_create = array();
-
-		foreach ( $translation_jobs as $translation_job ) {
-			if ( $this->is_ate_translation_job( $translation_job ) ) {
-				$ate_job_id = $this->get_ate_job_id( $translation_job->job_id );
-				if ( ! $ate_job_id ) {
-					$ate_jobs_to_create[] = $translation_job->job_id;
-					$skip_getting_data    = true;
-				}
-
-				if ( ! $skip_getting_data ) {
-					$ate_jobs_data[ $translation_job->job_id ] = array(
-						'ate_job_id' => $ate_job_id,
-						'progress'   => $this->get_ate_job_progress( $translation_job->job_id ),
-					);
-				}
-			}
-		}
-
-		if (
-			! $this->is_second_attempt_to_get_jobs_data &&
-			$ate_jobs_to_create &&
-			$this->added_translation_jobs( array( 'local' => $ate_jobs_to_create ) )
-		) {
-			$ate_jobs_data                            = $this->get_ate_jobs_data( $translation_jobs );
-			$this->is_second_attempt_to_get_jobs_data = true;
-		}
-
-		return $ate_jobs_data;
-	}
-
 	private function get_ate_job_id( $job_id ) {
 		return $this->ate_jobs->get_ate_job_id( $job_id );
-	}
-
-	private function get_ate_job_progress( $job_id ) {
-		return $this->ate_jobs->get_ate_job_progress( $job_id );
 	}
 
 	public function update_jobs_on_current_screen() {
@@ -286,6 +315,8 @@ class WPML_TM_ATE_Jobs_Actions implements IWPML_Action {
 	}
 
 	/**
+	 * @todo: Remove this method in favor of the new SYNC/DOWNLOAD process.
+	 *
 	 * @param bool           $updated
 	 * @param array|stdClass $translation_jobs
 	 * @param bool           $ignore_errors
@@ -359,9 +390,8 @@ class WPML_TM_ATE_Jobs_Actions implements IWPML_Action {
 
 								continue;
 							}
-							
+
 							if ( $is_translations_applied ) {
-								$ate_job_data[ WPML_TM_ATE_Job_Records::FIELD_IS_EDITING ] = false;
 								$this->ate_jobs->store( $wpml_job_id, $ate_job_data );
 
 								if ( $this->must_acknowledge_ATE( $ate_job_data ) ) {

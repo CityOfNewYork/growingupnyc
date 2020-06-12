@@ -1,5 +1,7 @@
 <?php
 
+use WPML\TM\Menu\Dashboard\PostJobsRepository;
+
 class WPML_TM_Dashboard_Document_Row {
 
 	/** @var stdClass $data */
@@ -102,7 +104,7 @@ class WPML_TM_Dashboard_Document_Row {
 			$post_view_link    = $post_link_factory->view_link_anchor( $current_document->ID, __( 'View', 'wpml-translation-management' ) );
 		}
 
-		$jobs = $this->get_related_jobs_grouped_by_lang( $current_document->ID, $element_type );
+		$jobs = ( new PostJobsRepository() )->getJobsGroupedByLang( $current_document->ID, $element_type );
 
 		$post_edit_link = apply_filters( 'wpml_document_edit_item_link', $post_edit_link, __( 'Edit', 'wpml-translation-management' ), $current_document, $element_type, $this->get_type() );
 		if ( $post_edit_link ) {
@@ -328,35 +330,6 @@ class WPML_TM_Dashboard_Document_Row {
 		}
 
 		return false;
-	}
-
-	/**
-	 * @param int    $original_element_id
-	 * @param string $element_type
-	 *
-	 * @return array
-	 */
-	private function get_related_jobs_grouped_by_lang( $original_element_id, $element_type ) {
-		$params = new WPML_TM_Jobs_Search_Params();
-		$params->set_original_element_id( $original_element_id );
-		$params->set_job_types( $element_type );
-
-		$jobs   = wpml_tm_get_jobs_repository()->get( $params );
-		$result = array();
-
-		/** @var WPML_TM_Post_Job_Entity $job */
-		foreach ( $jobs as $job ) {
-			$result[ $job->get_target_language() ] = array(
-				'entity_id'      => $job->get_id(),
-				'job_id'         => $job->get_translate_job_id(),
-				'type'           => $job->get_type(),
-				'status'         => $job->get_status(),
-				'targetLanguage' => $job->get_target_language(),
-				'isLocal'        => 'local' === $job->get_translation_service(),
-			);
-		}
-
-		return $result;
 	}
 
 	private function get_general_status() {

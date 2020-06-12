@@ -32,14 +32,13 @@ if (($post->post_parent)>0) {
 }
 // temporary virtual events
 $context['virtual_event'] = true;
-$context['page_title'] = GunyLandingPages\get_title($post->ID);
-$context['page_tagline'] = GunyLandingPages\get_tagline($post->ID);
+$context['page_title'] = Templating\get_title($post->ID);
+$context['page_tagline'] = Templating\get_tagline($post->ID);
 $context['shareAction'] = admin_url( 'admin-ajax.php' );
 $context['shareHash'] = \SMNYC\hash($post->link);
-$context['shareTemplate'] = GunyLandingPages\get_share_template($post->ID);
+$context['shareTemplate'] = Templating\get_share_template($post->ID);
 $context['post'] = $post;
 $context['meta_desc'] = $post->meta_description;
 $context['meta_keywords'] = $post->meta_keywords;
-$context['eventslink'] = get_post_type_archive_link('tribe_events');
 
 Timber::render( $templates, $context );

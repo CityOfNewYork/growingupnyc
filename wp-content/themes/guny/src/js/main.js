@@ -17,12 +17,19 @@ import captchaResize from './modules/captchaResize.js';
 import rotatingTextAnimation from './modules/rotatingTextAnimation.js';
 import Search from './modules/search.js';
 import EventsList from './modules/events.js';
-import ProgramsList from './modules/multi-filter.js';
+
+import Programs from './modules/programs.js';
+import Afterschool from './modules/afterschool.js';
+import Summer from './modules/summer.js';
 import BrainBuilding from './modules/brainbuilding.js';
 // import InstagramFeed from './modules/instagramFeed.js';
+
 /* eslint-disable no-unused-vars */
 import toggleOpen from './modules/toggleOpen.js';
 /* eslint-enable no-unused-vars */
+
+// Growing Up NYC Patterns
+import Offcanvas from 'utilities/offcanvas/Offcanvas.common';
 
 function ready(fn) {
   if (document.readyState === 'loading') {
@@ -70,20 +77,47 @@ window.accordion = accordion;
 
   new ContentShow();
 
-  let postTypes = ['summer', 'program', 'afterschool']
+  /**
+   * Landing Pages with filters
+   */
 
-  // initialize vue on specific pages
-  if ($('div').find('[id^=vue]').attr('id') != '' 
-      && $('div').find('[id^=vue]').attr('id') != undefined
-      && !(window.location.pathname.indexOf('events') >= 0)) {
-    if (window.location.pathname.indexOf('brainbuilding') >= 0){
-      new BrainBuilding().init();
-    } else if (postTypes.some(type => window.location.pathname.includes(type))){
-      new ProgramsList().init();
-    } else if (window.location.pathname.indexOf('generationnyc') >= 0) {
+  let vueId = $('div').find('[id^=vue]').attr('id');
+  if (vueId != undefined){
+    if (vueId.indexOf('events') >= 0) {
       new EventsList().init();
     }
+    if (vueId.indexOf('summer') >= 0) {
+      new Summer().init();
+    }
+    if (vueId.indexOf('afterschool') >= 0) {
+      new Afterschool().init();
+    }
+    if (vueId.indexOf('program') >= 0) {
+      new Programs().init();
+    }
+    if (vueId.indexOf('brain-building') >= 0) {
+      new BrainBuilding().init();
+    }
   }
+
+  // Initialize OffCanvas based on html direction
+  if (['ar', 'ur'].includes(document.documentElement.lang)){
+    new Offcanvas({ sideSelector: 'left' });
+  } else {
+    new Offcanvas({ sideSelector: 'right' });
+  }
+  
+  // hide languages until ready for production
+  const wpmlClasses = document.querySelectorAll('.wpml-ls-item');
+  wpmlClasses.forEach(function (elem) {
+
+    const regex = /wpml-ls-item-([^ ]+).*/g;
+    const found = $(elem).attr('class').match(regex);
+    const languages = ['-ar', '-bn', '-fr', '-ht', '-ko', '-pl', '-ru', '-ur', '-zh-hant'];
+    if (languages.some(s => found[0].includes(s))) {
+      $(elem).hide();
+    }
+  });
 
   // Initialize share by email/sms forms.
   $(`.${ShareForm.CssClass.FORM}`).each((i, el) => {

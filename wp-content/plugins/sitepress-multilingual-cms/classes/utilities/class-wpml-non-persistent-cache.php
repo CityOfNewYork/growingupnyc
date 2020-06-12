@@ -4,7 +4,6 @@
  * Class WPML_Non_Persistent_Cache
  *
  * Implements non-persistent cache based on an array. Suitable to cache objects during single page load.
- *
  */
 class WPML_Non_Persistent_Cache {
 
@@ -16,12 +15,12 @@ class WPML_Non_Persistent_Cache {
 	/**
 	 * Retrieves the data contents from the cache, if it exists.
 	 *
-	 * @param string $key Cache key.
+	 * @param string $key   Cache key.
 	 * @param string $group Cache group.
-	 * @param bool $found Whether the key was found in the cache (passed by reference).
-	 *                    Disambiguates a return of false, a storable value.
+	 * @param bool   $found Whether the key was found in the cache (passed by reference).
+	 *                      Disambiguates a return of false, a storable value.
 	 *
-	 * @return bool
+	 * @return mixed|bool
 	 */
 	public static function get( $key, $group = 'default', &$found = null ) {
 		if (
@@ -40,8 +39,8 @@ class WPML_Non_Persistent_Cache {
 	/**
 	 * Sets the data contents into the cache.
 	 *
-	 * @param string $key Cache key.
-	 * @param mixed $data Data to store in cache.
+	 * @param string $key   Cache key.
+	 * @param mixed  $data  Data to store in cache.
 	 * @param string $group Cache group.
 	 *
 	 * @return bool
@@ -53,6 +52,25 @@ class WPML_Non_Persistent_Cache {
 		self::$cache[ $group ][ $key ] = $data;
 
 		return true;
+	}
+
+	/**
+	 * Executes callback function and caches its result.
+	 *
+	 * @param string   $key      Cache key.
+	 * @param callable $callback Callback function.
+	 * @param string   $group    Cache group.
+	 *
+	 * @return bool
+	 */
+	public static function execute_and_cache( $key, $callback, $group = 'default' ) {
+		$data = self::get( $key, $group, $found );
+		if ( ! $found ) {
+			$data = $callback();
+			self::set( $key, $data, $group );
+		}
+
+		return $data;
 	}
 
 	/**
@@ -69,12 +87,15 @@ class WPML_Non_Persistent_Cache {
 	/**
 	 * Flush cache group.
 	 *
-	 * @param string $group Cache group name.
+	 * @param array|string $groups Cache group name.
 	 *
 	 * @return bool
 	 */
-	public static function flush_group( $group = 'default' ) {
-		unset( self::$cache[ $group ] );
+	public static function flush_group( $groups = 'default' ) {
+		$groups = (array) $groups;
+		foreach ( $groups as $group ) {
+			unset( self::$cache[ $group ] );
+		}
 
 		return true;
 	}

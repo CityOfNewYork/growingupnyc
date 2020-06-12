@@ -241,60 +241,6 @@
                             "maxlength": ""
                         },
                         {
-                            "key": "field_5e9f5fbd59752",
-                            "label": "Tip Button Text",
-                            "name": "landing_page_section_tip_button_text",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": [
-                                [
-                                    {
-                                        "field": "field_5e8c7f54cbc06",
-                                        "operator": "==",
-                                        "value": "Yes"
-                                    }
-                                ]
-                            ],
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
-                        },
-                        {
-                            "key": "field_5e9f5fe259753",
-                            "label": "Tip URL",
-                            "name": "landing_page_section_tip_url",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": [
-                                [
-                                    {
-                                        "field": "field_5e8c7f54cbc06",
-                                        "operator": "==",
-                                        "value": "Yes"
-                                    }
-                                ]
-                            ],
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
-                        },
-                        {
                             "key": "field_5e8c7f6fcbc07",
                             "label": "Add Call Out",
                             "name": "landing_page_section_add_call_out",
@@ -405,43 +351,40 @@
                             "delay": 0
                         },
                         {
-                            "key": "field_5e8c7f05cbc04",
-                            "label": "Call Out Box Button Text",
-                            "name": "landing_page_section_call_out_box_button_text",
-                            "type": "text",
+                            "key": "field_5ee0f27d6a7fb",
+                            "label": "Add Filter",
+                            "name": "landing_page_add_filter",
+                            "type": "radio",
                             "instructions": "",
                             "required": 0,
-                            "conditional_logic": [
-                                [
-                                    {
-                                        "field": "field_5e8c7f6fcbc07",
-                                        "operator": "==",
-                                        "value": "Yes"
-                                    }
-                                ]
-                            ],
+                            "conditional_logic": 0,
                             "wrapper": {
                                 "width": "",
                                 "class": "",
                                 "id": ""
                             },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
+                            "choices": {
+                                "Yes": "Yes",
+                                "No": "No"
+                            },
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "default_value": "No",
+                            "layout": "vertical",
+                            "return_format": "value",
+                            "save_other_choice": 0
                         },
                         {
-                            "key": "field_5e8c7f18cbc05",
-                            "label": "Call Out Box URL",
-                            "name": "landing_page_section_call_out_box_url",
-                            "type": "text",
-                            "instructions": "",
+                            "key": "field_5ee0f2f76a7fd",
+                            "label": "Filtered Posts",
+                            "name": "landing_page_filtered_posts",
+                            "type": "select",
+                            "instructions": "Select the post type you would like to filter.",
                             "required": 0,
                             "conditional_logic": [
                                 [
                                     {
-                                        "field": "field_5e8c7f6fcbc07",
+                                        "field": "field_5ee0f27d6a7fb",
                                         "operator": "==",
                                         "value": "Yes"
                                     }
@@ -452,11 +395,76 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "default_value": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "maxlength": ""
+                            "choices": {
+                                "events": "events"
+                            },
+                            "default_value": "events",
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "return_format": "value",
+                            "ajax": 0,
+                            "placeholder": ""
+                        },
+                        {
+                            "key": "field_5ee0f3856a7fe",
+                            "label": "Filters - Age Groups",
+                            "name": "landing_page_age_group_filters",
+                            "type": "taxonomy",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_5ee0f27d6a7fb",
+                                        "operator": "==",
+                                        "value": "Yes"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "taxonomy": "age_group",
+                            "field_type": "checkbox",
+                            "add_term": 0,
+                            "save_terms": 0,
+                            "load_terms": 0,
+                            "return_format": "object",
+                            "multiple": 0,
+                            "allow_null": 0
+                        },
+                        {
+                            "key": "field_5ee0f3eb6a7ff",
+                            "label": "Filters - Event Categories",
+                            "name": "landing_page_event_cat_filters",
+                            "type": "taxonomy",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_5ee0f2f76a7fd",
+                                        "operator": "==",
+                                        "value": "events"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "taxonomy": "tribe_events_cat",
+                            "field_type": "checkbox",
+                            "add_term": 0,
+                            "save_terms": 0,
+                            "load_terms": 0,
+                            "return_format": "id",
+                            "multiple": 0,
+                            "allow_null": 0
                         },
                         {
                             "key": "field_5ea0569d89528",
@@ -638,7 +646,7 @@
             "label": "Theme",
             "name": "lp_theme",
             "type": "select",
-            "instructions": "",
+            "instructions": "blue: Default GUNYC\r\ndark-blue: Inspirations\r\npurple: Topics\r\ngreen: Trips\r\norange: Summer",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -647,11 +655,13 @@
                 "id": ""
             },
             "choices": {
+                "blue": "Default",
                 "dark-blue": "Inspirations",
                 "purple": "Topics",
-                "dark-green": "Trips"
+                "dark-green": "Trips",
+                "vivid-orange": "Summer"
             },
-            "default_value": [],
+            "default_value": "blue",
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,

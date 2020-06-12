@@ -174,7 +174,7 @@ class WPML_Save_Translation_Data_Action extends WPML_Translation_Job_Helper_With
 						$postarr['post_date_gmt'] = $existing_post->post_date_gmt;
 					}
 
-					$new_post_id = $iclTranslationManagement->icl_insert_post( $postarr, $job->language_code );
+					$new_post_id = wpml_get_create_post_helper()->insert_post( $postarr, $job->language_code );
 
 					icl_cache_clear( $postarr['post_type'] . 's_per_language' ); // clear post counter per language in cache
 
@@ -205,13 +205,7 @@ class WPML_Save_Translation_Data_Action extends WPML_Translation_Job_Helper_With
 						}
 					}
 
-					//sync plugins texts
-					$cf_translation_settings = $this->get_tm_setting( array( 'custom_fields_translation' ) );
-					foreach ( (array) $cf_translation_settings as $cf => $op ) {
-						if ( 1 === (int) $op && get_post_meta( $original_post->ID, $cf ) ) {
-							update_post_meta( $new_post_id, $cf, get_post_meta( $original_post->ID, $cf, true ) );
-						}
-					}
+					$sitepress->copy_custom_fields( $original_post->ID, $new_post_id );
 
 					// set specific custom fields
 					$copied_custom_fields = array( '_top_nav_excluded', '_cms_nav_minihome' );
@@ -228,7 +222,11 @@ class WPML_Save_Translation_Data_Action extends WPML_Translation_Job_Helper_With
 						}
 					}
 
-					$this->package_helper->save_job_custom_fields( $job, $new_post_id, (array) $cf_translation_settings );
+					$this->package_helper->save_job_custom_fields(
+						$job,
+						$new_post_id,
+						\WPML\TM\Settings\Repository::getCustomFields()
+					);
 
 					$link = get_edit_post_link( $new_post_id );
 					if ( $link == '' ) {

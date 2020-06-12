@@ -66,14 +66,42 @@ class WPML_TM_Translation_Services_Admin_Active_Template {
 			$authentication_message[] = __( 'Please, check the %2$s page for more details.', 'wpml-translation-management' );
 
 			$model['strings']['authentication'] = array(
-				'description'         => implode( ' ', $authentication_message ),
-				'authenticate_button' => __( 'Authenticate', 'wpml-translation-management' ),
-				'de_authorize_button' => __( 'De-authorize', 'wpml-translation-management' ),
-				'is_authorized'       => sprintf( __( '%s is authorized.', 'wpml-translation-management' ), $this->active_service->get_name() ),
+				'description'               => implode( ' ', $authentication_message ),
+				'authenticate_button'       => __( 'Authenticate', 'wpml-translation-management' ),
+				'de_authorize_button'       => __( 'De-authorize', 'wpml-translation-management' ),
+				'update_credentials_button' => __( 'Update credentials', 'wpml-translation-management' ),
+				'is_authorized' => $this->is_authorized_text( $this->active_service->get_name() ),
 			);
 		}
 
 		return $model;
+	}
+
+	private function is_authorized_text( $serviceName ) {
+		$query_args = [
+			'page' => WPML_TM_FOLDER . WPML_Translation_Management::PAGE_SLUG_MANAGEMENT,
+			'sm'   => 'dashboard',
+		];
+
+		$href = add_query_arg( $query_args, admin_url( 'admin.php' ) );
+
+
+		$dashboard = '<a href="' . $href . '">' .
+		             __( 'Translation Dashboard', 'wpml-translation-management' ) .
+		             '</a>';
+
+		$isAuthorized = sprintf(
+			__( 'Success! You can now send content to %s.', 'wpml-translation-management' ),
+			$serviceName
+		);
+		$isAuthorized .= '<br/>';
+		//translators: "%s" is replaced with the link to the "Translation Dashboard"
+		$isAuthorized .= sprintf(
+			__( 'Go to the %s to choose the content and send it to translation.', 'wpml-translation-management' ),
+			$dashboard
+		);
+
+		return $isAuthorized;
 	}
 
 	private function should_refresh_data() {

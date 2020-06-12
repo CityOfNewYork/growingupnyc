@@ -17,8 +17,18 @@ class WPML_TM_Wizard_Steps implements IWPML_Action {
 	/** @var SitePress $sitepress */
 	private $sitepress;
 
+	/** @var \WPML_Language_Pair_Records */
 	private $language_pair_records;
 
+	/**
+	 * WPML_TM_Wizard_Steps constructor.
+	 *
+	 * @param \WPML_Translation_Manager_Records                   $translation_manager_records
+	 * @param \WPML_Translator_Records                            $translator_records
+	 * @param \WPML_TM_Translation_Services_Admin_Section_Factory $translation_services_factory
+	 * @param \WPML_Language_Pair_Records                         $language_pair_records
+	 * @param \SitePress                                          $sitepress
+	 */
 	public function __construct(
 		WPML_Translation_Manager_Records $translation_manager_records,
 		WPML_Translator_Records $translator_records,
@@ -42,6 +52,9 @@ class WPML_TM_Wizard_Steps implements IWPML_Action {
 		add_filter( 'wp_ajax_' . self::STORE_MODE_ACTION, array( $this, 'store_mode' ) );
 	}
 
+	/**
+	 * @return \WPML_TM_Wizard_Who_Will_Translate_Step
+	 */
 	public function who_will_translate_step() {
 
 		$translation_manager_settings = new WPML_Translation_Manager_Settings(
@@ -60,14 +73,16 @@ class WPML_TM_Wizard_Steps implements IWPML_Action {
 			$translation_manager_settings,
 			$translator_settings,
 			$this->translation_services_factory,
-			get_option( WPML_TM_Wizard_Options::WHO_WILL_TRANSLATE_MODE, array() )
+			get_option( WPML_TM_Wizard_Options::WHO_WILL_TRANSLATE_MODE, [] )
 		);
 
 		return $step;
 	}
 
-
-	public function render_step( $content ) {
+	/**
+	 * @return string
+	 */
+	public function render_step() {
 		$step_slug = $this->get_step_slug();
 
 		$this->save_current_step( $step_slug );
@@ -77,6 +92,11 @@ class WPML_TM_Wizard_Steps implements IWPML_Action {
 		return $step->render();
 	}
 
+	/**
+	 * @param string $step_slug
+	 *
+	 * @return \WPML_TM_Wizard_Summary_Step|\WPML_TM_Wizard_Translation_Editor_Step|\WPML_TM_Wizard_Who_Will_Translate_Step|null
+	 */
 	public function get_step( $step_slug ) {
 		switch ( $step_slug ) {
 
@@ -100,31 +120,39 @@ class WPML_TM_Wizard_Steps implements IWPML_Action {
 					$this->get_active_translation_service()
 				);
 		}
+
+		return null;
 	}
 
+	/**
+	 * @return bool|mixed
+	 */
 	private function get_tm_settings_with_reset_defaults() {
-		$tm_settings = $this->sitepress->get_setting( 'translation-management', array() );
+		$tm_settings = $this->sitepress->get_setting( 'translation-management', [] );
 		$tm_settings[ WPML_TM_Post_Edit_TM_Editor_Mode::TM_KEY_GLOBAL_USE_NATIVE ]        = false;
-		$tm_settings[ WPML_TM_Post_Edit_TM_Editor_Mode::TM_KEY_FOR_POST_TYPE_USE_NATIVE ] = array();
+		$tm_settings[ WPML_TM_Post_Edit_TM_Editor_Mode::TM_KEY_FOR_POST_TYPE_USE_NATIVE ] = [];
 		$this->sitepress->set_setting( 'translation-management', $tm_settings, true );
+
 		return $tm_settings;
 	}
 
-	public function done() {
-		$who_will_translate_mode = get_option( WPML_TM_Wizard_Options::WHO_WILL_TRANSLATE_MODE, array() );
+	/**
+	 * @param bool $skip_json_response
+	 */
+	public function done( $skip_json_response = false ) {
+		$who_will_translate_mode = get_option( WPML_TM_Wizard_Options::WHO_WILL_TRANSLATE_MODE, [] );
 
 		// We need to delete any Translators, Translation Managers or the translation service
 		// if the user didn't select that mode in the end. eg They changed their mind while
 		// running the wizard.
-
 		if ( 'false' === $who_will_translate_mode['user'] ) {
 			$this->translator_records->delete_all();
 		}
 
 		if ( 'false' === $who_will_translate_mode['leaveChoice'] ) {
 			$translation_managers = $this->translation_manager_records->get_users_with_capability();
-			foreach( $translation_managers as $translation_manager ) {
-				if ( ! user_can( $translation_manager->ID, 'manage_options') ) {
+			foreach ( $translation_managers as $translation_manager ) {
+				if ( ! user_can( $translation_manager->ID, 'manage_options' ) ) {
 					$this->translation_manager_records->delete( $translation_manager->ID );
 				}
 			}
@@ -141,9 +169,12 @@ class WPML_TM_Wizard_Steps implements IWPML_Action {
 			$this->set_current_user_to_translate_all_langs();
 		}
 
-
 		delete_option( WPML_TM_Wizard_Options::CURRENT_STEP );
 		delete_option( WPML_TM_Wizard_Options::WHO_WILL_TRANSLATE_MODE );
+
+		if ( $skip_json_response ) {
+			return;
+		}
 
 		wp_send_json_success();
 	}
@@ -161,19 +192,23 @@ class WPML_TM_Wizard_Steps implements IWPML_Action {
 		do_action( 'wpml_tm_ate_synchronize_translators' );
 	}
 
-	private function set_current_user_as_translation_manager() {
-		$current_user = wp_get_current_user();
-		$current_user->add_cap( WPML_Manage_Translations_Role::CAPABILITY );
-	}
-
+	/**
+	 * @param string $step_slug
+	 */
 	private function save_current_step( $step_slug ) {
 		update_option( WPML_TM_Wizard_Options::CURRENT_STEP, $step_slug );
 	}
 
+	/**
+	 * @return string|string[]
+	 */
 	private function get_step_slug() {
 		return str_replace( 'wpml_wizard_fetch_', '', current_filter() );
 	}
 
+	/**
+	 * @return \WPML_TP_Service|null
+	 */
 	private function get_active_translation_service() {
 		$active_service = $this->sitepress->get_setting( 'translation_service' );
 

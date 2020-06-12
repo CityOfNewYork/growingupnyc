@@ -232,6 +232,15 @@ class WPML_TM_Xliff_Writer {
 				if ( 1 === (int) $element->field_translate ) {
 					$field_data_translated = base64_decode( $element->field_data_translated );
 					$field_data            = base64_decode( $element->field_data );
+
+					/**
+					 * It modifies the content of a single field data which represents, for example, one paragraph in post content.
+					 *
+					 * @since 2.10.0
+					 * @param string $field_data
+					 */
+					$field_data = apply_filters( 'wpml_tm_xliff_unit_field_data', $field_data );
+
 					if ( 0 === strpos( $element->field_type, 'field-' ) ) {
 						$field_data_translated = apply_filters( 'wpml_tm_xliff_export_translated_cf',
 						                                        $field_data_translated,

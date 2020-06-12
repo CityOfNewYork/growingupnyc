@@ -211,6 +211,9 @@
   vertical-align: middle;
   @include span-columns(6 of 12);
   @include omega(even);
+  @if ($language == 'ar') or ($language == 'ur') {
+    float: right;
+  }
 }
 
 .signup-form__checkbox-list {

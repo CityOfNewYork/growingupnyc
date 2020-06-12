@@ -49,41 +49,44 @@ gulp.task('styles:lint', function () {
 
 gulp.task('styles:clean', (callback) => {
   del([
-    'default-*.css',
-    'default-*.css.map',
-    'microsite-*.css',
-    'microsite-*.css.map'
+    './assets/styles/default-*.css',
+    './assets/styles/default-*.css.map',
+    './assets/styles/style-*.css',
+    './assets/styles/style-*.css.map',
+    './assets/styles/microsite-*.css',
+    './assets/styles/microsite-*.css.map'
   ])
   callback()
 });
 
 gulp.task('styles:sass', gulp.series('styles:lint', function () {
   return gulp.src([
-    source + 'scss/default.scss',
-    source + 'scss/microsite.scss'
-    ])
+    source + 'scss/style-*.scss',
+  ])
     .pipe(cssGlobbing({
       extensions: ['.scss']
     }))
     .pipe(sourcemaps.init())
-    .pipe(sass({ includePaths: 
-      [
-        'node_modules', 
-        require('bourbon-neat').includePaths, 
-        require('bourbon').includePaths
-      ] 
+    .pipe(sass({
+      includePaths:
+        [
+          'node_modules',
+          'node_modules/growingupnyc-patterns/src',
+          require('bourbon-neat').includePaths,
+          require('bourbon').includePaths
+        ]
     }))
     .pipe(postcss([
       autoprefixer([
-        'last 2 versions', 
-        'ie 9-11', 
+        'last 2 versions',
+        'ie 9-11',
         'iOS 8'
       ]),
       cssnano()
     ]))
     .pipe(hashFilename())
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./'))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./assets/styles'))
     .pipe(browserSync.stream({ match: '**/*.css' }))
     .pipe(notify({ message: 'Styles task complete' }));
 }));

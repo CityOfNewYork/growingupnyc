@@ -79,14 +79,5 @@ $banner = get_field('current_banner');
 $context['banner']['alt'] = new TimberPost($banner);
 $context['banner']['override'] = $post->update_banner;
 
-// Last modified date
-$context['last_modified'] = get_the_modified_date( $d, $post );
-
-// archive links
-$context['tipslink'] = get_post_type_archive_link('brain-building-tip');
-$context['programslink'] = get_post_type_archive_link('program');
-$context['eventslink'] = get_post_type_archive_link('tribe_events');
-
-
 $templates = array( 'single-age.twig');
 Timber::render( $templates, $context );

@@ -481,12 +481,12 @@ LANG_WITH_FLAG;
 		global $sitepress, $wpdb;
 
 		$_ld                = $sitepress->get_language_details( $job->source_language_code );
-		$job->from_language = $_ld[ 'display_name' ];
+		$job->from_language = isset( $_ld['display_name'] ) ? $_ld['display_name'] : '';
 		$_ld                = $sitepress->get_language_details( $job->language_code );
-		$job->to_language   = $_ld[ 'display_name' ];
+		$job->to_language   = isset( $_ld['display_name'] ) ? $_ld['display_name'] : '';
 		$job                = $this->add_job_elements( $job, $include_non_translatable_elements );
 
-		//do we have a previous version
+		// Do we have a previous version?
 		if ( $revisions > 0 ) {
 			$query               = "SELECT MAX(job_id)
 									FROM {$wpdb->prefix}icl_translate_job

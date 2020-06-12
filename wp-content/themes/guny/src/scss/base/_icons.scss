@@ -78,3 +78,11 @@
   margin-top: rem-calc(-3);
   margin-right: rem-calc(-4);
 }
+
+@if ($language == 'ar') or ($language == 'ur') {
+  .icon--caret,
+  .icon--caret--small,
+  .icon--caret--xxsmall {
+    transform: rotate(180deg);
+  }
+}

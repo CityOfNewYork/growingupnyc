@@ -23,8 +23,14 @@
   top: 50%;
   margin-top: rem-calc(-11);
   position: absolute;
-  right: rem-calc(14);
   width: rem-calc(22);
+
+  @if ($language == 'ar') or ($language == 'ur') {
+    left: rem-calc(14);
+  }
+  @else {
+    right: rem-calc(14);
+  }
 }
 
 .is-expanded .o-accordion__caret {

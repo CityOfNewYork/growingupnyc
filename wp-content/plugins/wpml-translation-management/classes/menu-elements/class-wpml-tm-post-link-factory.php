@@ -5,7 +5,14 @@
  *
  * Creates post links for the TM dashboard and the translation queue
  */
-class WPML_TM_Post_Link_Factory extends WPML_SP_User {
+class WPML_TM_Post_Link_Factory {
+
+	/** @var SitePress $sitepress */
+	private $sitepress;
+
+	public function __construct( SitePress $sitepress ) {
+		$this->sitepress = $sitepress;
+	}
 
 	/**
 	 * Link to the front end, link text is the post title

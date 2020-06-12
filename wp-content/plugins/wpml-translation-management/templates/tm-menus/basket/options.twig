@@ -72,12 +72,3 @@
     </div>
 
 </form>
-
-{% if current_user_only_translator %}
-    <script type="text/javascript">
-		jQuery( 'document' ).ready( function( $ ) {
-			tm_basket_data.strings['jobs_committed'] = '{{ strings.jobs_committed|raw }}';
-			tm_basket_data.strings['jobs_committing'] = '{{ strings.jobs_committing|raw }}';
-		});
-    </script>
-{% endif %}

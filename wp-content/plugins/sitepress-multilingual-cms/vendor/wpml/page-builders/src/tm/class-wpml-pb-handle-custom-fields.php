@@ -23,7 +23,7 @@ class WPML_PB_Handle_Custom_Fields {
 	 * @return bool
 	 */
 	public function is_page_builder_page_filter( $is_page_builder_page, WP_Post $post ) {
-		if ( get_post_meta( $post->ID, $this->data_settings->get_meta_field() ) ) {
+		if ( $this->data_settings->is_handling_post( $post->ID ) ) {
 			$is_page_builder_page = true;
 		}
 
@@ -38,10 +38,37 @@ class WPML_PB_Handle_Custom_Fields {
 		$fields = array_merge( $this->data_settings->get_fields_to_copy(), $this->data_settings->get_fields_to_save() );
 
 		foreach ( $fields as $field ) {
-			$original_field = get_post_meta( $original_post_id, $field, true );
-			if ( $original_field ) {
-				update_post_meta( $new_post_id, $field, $original_field );
-			}
+			self::copy_field( $new_post_id, $original_post_id, $field );
 		}
+	}
+
+	/**
+	 * @param int $new_post_id
+	 * @param int $original_post_id
+	 * @param string $field
+	 */
+	public static function copy_field( $new_post_id, $original_post_id, $field ) {
+		$original_field = get_post_meta( $original_post_id, $field, true );
+		if ( $original_field ) {
+			update_post_meta( $new_post_id, $field, self::slash_json( $original_field ) );
+		}
+	}
+
+	/**
+	 * @param mixed $data
+	 *
+	 * @return mixed string
+	 */
+	public static function slash_json( $data ) {
+		if ( ! is_string( $data ) ) {
+			return $data;
+		}
+
+ 		json_decode( $data );
+		if ( json_last_error() === JSON_ERROR_NONE ) {
+			return wp_slash( $data );
+		}
+		return $data;
+
 	}
 }

@@ -1,12 +1,8 @@
 <?php
 
-class WPML_TM_All_Admins_To_Translation_Managers implements IWPML_Action, IWPML_Backend_Action_Loader, IWPML_CLI_Action_Loader {
+class WPML_TM_All_Admins_To_Translation_Managers implements IWPML_Backend_Action, IWPML_CLI_Action {
 
 	const HAS_RUN_OPTION = 'WPML_Upgrade_All_Admins_To_Manage_Translations_Has_Run';
-
-	public function create() {
-		return $this;
-	}
 
 	public function add_hooks() {
 		if ( ! get_option( self::HAS_RUN_OPTION ) ) {

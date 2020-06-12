@@ -125,8 +125,13 @@ class GunySite extends TimberSite {
     $context['ms_footer_menu_right'] = new TimberMenu('ms-footer-menu-right');
     $context['footer_menu_left'] = new TimberMenu('footer-menu-left');
     $context['site'] = $this;
-    $context['eventslink'] = get_post_type_archive_link('tribe_events');
-    $context['programslink'] = get_post_type_archive_link('program');
+
+    // archive links
+    $context['events_link'] = get_post_type_archive_link('tribe_events');
+    $context['programs_link'] = get_post_type_archive_link('program');
+    $context['tips_link'] = get_post_type_archive_link('brain-building-tip');
+    $context['summer_link'] = get_post_type_archive_link('summer-guide');
+    $context['afterschool_link'] = get_post_type_archive_link('afterschool-guide');
 
     $context['age_menu'] = Timber::get_terms('age_group', array(
       'orderby' => 'term_order',
@@ -190,6 +195,7 @@ class GunySite extends TimberSite {
     $programs_alert = get_posts($args);
     
     $context['programs_alert'] = get_field( "banner_content", $programs_alert[0]->ID );
+    $context['direction'] = (ICL_LANGUAGE_CODE === 'ar' || ICL_LANGUAGE_CODE === 'ur') ? 'rtl' : 'ltr';
 
     return $context;
   }
@@ -657,6 +663,12 @@ function filter_add_rest_orderby_params( $params ) {
 	return $params;
 }
 
+// extract the slugs for an object
+function getSlugs($obj) {
+  // pre_dump($obj);
+  return array_column($obj, 'slug');
+}
+
 /**
  * Includes
  */
@@ -673,10 +685,7 @@ $includes = [
   '/includes/routing.php', // Routing
   '/includes/search.php', // Search functions
   '/includes/404.php', // 404 functions
-  '/includes/summer_guides.php', // Summer guide functions
-  '/includes/afterschool_guides.php', // Afterschool guide functions
-  '/includes/brain-building-tip.php', // Brain Building Tips
-  '/includes/guny_landing_pages.php', // Brain Building Tips
+  '/includes/templating.php', // Template functions
   [ // REST
     '/includes/REST/guny_rest.php',
     '/includes/REST/guny_rest_afterschool.php', // expose fields to rest API
@@ -695,8 +704,7 @@ $includes = [
     '/includes/get_latest_recurring_event.php' // Get latest of a recurring event
   ],
   [ // Nyco
-    '/vendor/nyco/wp-assets/dist/style.php', // Enqueue functions
-    '/vendor/nyco/wp-assets/dist/script.php' // Enqueue functions
+    '/includes/styles_and_scripts.php', // Get latest of a recurring event
   ],
   [ // Wpml
     '/includes/term_translations.php', // Term translation helpers

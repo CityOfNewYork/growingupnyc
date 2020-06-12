@@ -9,6 +9,10 @@
   padding-right: rem-calc($outer-gutter);
   position: relative;
 
+  @if ($language == 'ar') or ($language == 'ur') {
+    text-align: right;
+  }
+
   @include media($bp-small) {
     padding-left: rem-calc($outer-gutter-small);
     padding-right: rem-calc($outer-gutter-small);
@@ -38,6 +42,11 @@
     margin-left: 0;
     margin-right: 0;
     @include span-columns(4);
+
+    @if ($language == 'ar') or ($language == 'ur') {
+      float: right;
+      margin-right: 0;
+    }
   }
 }
 
@@ -61,6 +70,11 @@
 .o-article--shift {
   @include media($bp-large) {
     @include shift(4);
+
+    @if ($language == 'ar') or ($language == 'ur') {
+      @include shift(0);
+
+    }
   }
 }
 
@@ -73,4 +87,10 @@
   right: 0;
   top: 0;
   width: 50%;
+}
+
+
+// Applied only to single-summer-guide.twig
+.o-pa-top {
+  padding-top: 60px;
 }

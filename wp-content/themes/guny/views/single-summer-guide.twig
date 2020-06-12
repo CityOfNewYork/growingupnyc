@@ -18,47 +18,24 @@
       <div class="o-container js-parallax-text">
 
         <h1 class="c-hero__title--long">
-
           <span class="c-hero__sticker sticker bg-vivid-orange">
             <svg aria-hidden="true" class="icon--medium"><use xlink:href="#icon-summer-guides"></use></svg>
           </span>
 
           {{ post.title }}
-
         </h1>
 
-        <p class="c-hero__tagline"></p>
-
-        <p class="c-hero__tagline">
-          {% set colors = ['bright-red', 'vivid-orange', 'bright-red', 'vivid-orange', 'bright-red', 'vivid-orange'] %}
-          {% for key, value in taxonomies %}
-
-            {% if key != 'borough' and key != 'time' %}
-
-              {% set i = loop.index %}
-
-              {% for term in post.terms(key) %}
-                {% if key == 'age_group' %}
-                  <a class="button--pill bg-bright-red hover:bg-vivid-orange" href="{{ archive_link }}?ages={{ term.slug }}">
-                    {{ term.name }}
-                  </a>
-                {% elseif key == 'summer_programs_cat' %}
-                  <a class="button--pill bg-vivid-orange hover:bg-bright-red" href="{{ archive_link }}?interests={{ term.slug }}">
-                    {{ term.name }}
-                  </a>
-                {% elseif key == 'activity_type' %}
-                  <a class="button--pill bg-vivid-orange hover:bg-bright-red" href="{{ archive_link }}?activity_types={{ term.slug }}">
-                  {{ term.name }}
-                </a>
-                {% endif %}
-              {% endfor %}
-
-
-            {% endif %}
-
+        <p class="c-hero__tags">
+          {% for term in post.terms('age_group') %}
+            <a href="{{summer_link}}?ages={{term.slug}}" class="button--pill bg-bright-red hover:bg-vivid-orange">{{term.name}}</a>
+            {% endfor %}
+          {% for term in post.terms('summer_programs_cat') %}
+            <a href="{{summer_link}}?interests={{term.slug}}" class="button--pill bg-vivid-orange hover:bg-bright-red">{{term.name}}</a>
+            {% endfor %}
+          {% for term in post.terms('activity_type') %}
+            <a href="{{summer_link}}?activity_types={{term.slug}}" class="button--pill bg-vivid-orange hover:bg-bright-red">{{term.name}}</a>
           {% endfor %}
         </p>
-
       </div>
     </header>
   </div>

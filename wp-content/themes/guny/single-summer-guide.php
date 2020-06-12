@@ -9,11 +9,7 @@ $post = Timber::get_post();
 
 $context['post'] = $post;
 
-$context['taxonomies'] = SummerGuides\get_taxonomies();
 $context['sections'] = Templating\get_sections();
-$context['archive_link'] = SummerGuides\get_archive_link();
-$context['domain'] = SummerGuides\get_translation_domain();
-$context['events_link'] = get_post_type_archive_link('tribe_events');
 
 // in-body alert under banner
 $landing_page = get_page_by_path('summer');

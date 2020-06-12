@@ -125,6 +125,9 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
   padding-top: rem-calc(30);
   padding-bottom: rem-calc(6);
   // max-width: 65%;
+  @if ($language == 'ar') or ($language == 'ur') {
+    float: left;
+  }
 
   li {
     margin-left: 0;
@@ -133,6 +136,9 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
 
     &:last-child {
       margin-right: 0;
+      @if ($language == 'ar') or ($language == 'ur') {
+        margin-right: rem-calc(6);
+      }
     }
 
     a {
@@ -158,9 +164,18 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
       }
       @include media($bp-small) {
         margin-left: rem-calc(16);
+        
+        @if ($language == 'ar') or ($language == 'ur') {
+          margin-right: rem-calc(16);
+          margin-left: 0;
+        }
       }
       @include media($bp-large) {
         margin-left: rem-calc(56);
+        @if ($language == 'ar') or ($language == 'ur') {
+          margin-right: rem-calc(56);
+          margin-left: 0;
+        }
       }
     }
   }
@@ -234,6 +249,9 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
     background-color: $color-background;
     text-align: right;
     z-index: 1;
+    @if ($language == 'ar') or ($language == 'ur') {
+      text-align: left;
+    }
     .wpml-ls-legacy-list-horizontal {
       padding: 7px 0 0;
       li {
@@ -242,6 +260,9 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
           margin-right: 0;
           a {
             padding-right: 0;
+            @if ($language == 'ar') or ($language == 'ur') {
+              padding-left: 0;
+            }
           }
         }
         a {
@@ -263,6 +284,9 @@ $width-banner-logo-large: $width-banner-logo * 2.4;
               position: relative;
               top: rem-calc(2);
               margin-right: rem-calc(3);
+              @if ($language == 'ar') or ($language == 'ur') {
+                margin-left: rem-calc(3);
+              }
             }
           }
         }

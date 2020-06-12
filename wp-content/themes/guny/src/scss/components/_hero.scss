@@ -149,9 +149,15 @@
     box-shadow: none;
     height: rem-calc(65);
     line-height: rem-calc(65);
-    margin-right: rem-calc(20);
     position: static;
     width: rem-calc(65);
+
+    @if ($language == 'ar') or ($language == 'ur') {
+      margin-left: rem-calc(20);
+    }
+    @else {
+      margin-right: rem-calc(20);
+    }
   }
 }
 
@@ -167,7 +173,11 @@
   margin-top: rem-calc(10);
   margin-bottom: rem-calc(15);
   position: relative;
-  z-index: 1; // Set z-index for text to appear on top of bg image
+  z-index: 1;
+  // Set z-index for text to appear on top of bg image
+  @if ($language == 'ar') or ($language == 'ur') {
+    text-align: right;
+  }
 
   @include media($bp-medium) {
     font-size: rem-calc($font-size-x-large);
@@ -176,13 +186,17 @@
   @include media($bp-large) {
     @include span-columns(6);
     @include omega;
+
+    @if ($language == 'ar') or ($language == 'ur') {
+      float: right;
+    }
   }
 }
 
 .c-hero--long-text .c-hero__tagline {
   font-size: rem-calc($font-size-large * $font-size-ratio);
   line-height: 1.3;
-  margin-top: 0;
+  margin-top: rem-calc(10);
 
   + .c-hero__tagline {
     margin-top: rem-calc(15);
@@ -190,11 +204,17 @@
 
   @include media($bp-medium) {
     font-size: rem-calc($font-size-large);
+    @if ($language == 'ar') or ($language == 'ur') {
+      float: right;
+    }
   }
 
   @include media($bp-large) {
     @include span-columns(9);
     @include omega;
+    @if ($language == 'ar') or ($language == 'ur') {
+      float: right;
+    }
   }
 }
 
@@ -273,5 +293,18 @@
 
   @include media($bp-medium) {
     padding-top: 0;
+  }
+}
+
+.c-hero__tags {
+  margin-top: rem-calc(10);
+  @if ($language == 'ar') or ($language == 'ur') {
+    float: right;
+  }
+  @include media($bp-medium) {
+    @include span-columns(6);
+    @if ($language == 'ar') or ($language == 'ur') {
+      float: right;
+    }
   }
 }

@@ -242,16 +242,16 @@
   text-transform: none;
 
   &:focus {
-    background: $very-dark-blue-1;
-    border-color: $very-dark-blue-1;
+    background: $strong-blue;
+    border-color: $strong-blue;
     color: $white;
   }
 
   .no-touchevents & {
     &:hover {
-      background: $very-dark-blue-1;
-      border-color: $very-dark-blue-1;
-      color: $white;
+      background: $strong-blue;
+      border-color: $strong-blue;
+      color: $white !important;
     }
   }
 }

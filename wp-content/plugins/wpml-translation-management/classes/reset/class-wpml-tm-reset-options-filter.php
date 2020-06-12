@@ -25,7 +25,6 @@ class WPML_TM_Reset_Options_Filter implements IWPML_Action {
 	 * @return array
 	 */
 	public function reset_options( array $options ) {
-		$options[] = WPML_TM_ATE_Job_Records::WPML_TM_ATE_JOB_RECORDS;
 		$options[] = WPML_TM_ATE_Authentication::AMS_DATA_KEY;
 		$options[] = WPML_TM_All_Admins_To_Translation_Managers::HAS_RUN_OPTION;
 		$options[] = WPML_TM_Wizard_Options::WIZARD_COMPLETE_FOR_MANAGER;

@@ -44,8 +44,10 @@
       h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
     })(document);
   </script>
-  {{ function('Nyco\\Enqueue\\style', 'default') }}
-  {{ function('Nyco\\Enqueue\\style', 'microsite') }}
+  
+  {{ function('enqueue_language_style', 'style') }}
+
+
   {{ function('wp_head') }}
   {% block head_extras %}{% endblock %}
   {% block scripts_head %}
@@ -60,7 +62,7 @@
     <a href="#main" class="show-for-keyboard">Skip to main content</a>
     <nav class="o-offcanvas__side js-offcanvas__side" id="generationnyc-menu" role="navigation" aria-label="generationnyc-menu-heading">
       <h2 id="generationnyc-menu-heading" class="show-for-screen-reader">Resources by Type</h2>
-      <button data-toggle="offcanvas-generationnyc" class="o-offcanvas__close button--text-microsite"><svg class="icon--small" role="img"><title>Close Resources by Type</title><use xlink:href="#icon-close"></use></svg></button>
+      <button data-js="offcanvas-generationnyc" class="o-offcanvas__close button--text-microsite"><svg class="icon--small" role="img"><title>Close Resources by Type</title><use xlink:href="#icon-close"></use></svg></button>
       <ol class="c-list-box c-list-box--microsite" data-multiselectable="true">
         {% for menu_item in ms_menu.get_items %}
           <li class="c-list-box__item">
@@ -72,7 +74,7 @@
       </ol>
     </nav>
 
-    <div class="o-offcanvas__main">
+    <div class="o-offcanvas__main js-offcanvas__main">
       {% block header %}
         <header class="c-banner">
           <div class="o-container">
@@ -83,7 +85,7 @@
                   <li class="o-inline__item desktop-only"><a href="{{menu_item.link}}" class="c-banner__link">{{menu_item.title}}</a></li>
                 {% endfor %}
               {# Menu toggle on mobile #}
-                <li class="o-inline__item mobile-only__nav"><a href="#mobile-nav" data-toggle="offcanvas-generationnyc" class="c-banner__link">Menu</a></li>
+                <li class="o-inline__item mobile-only__nav"><a href="#mobile-nav" data-js="offcanvas-generationnyc" class="c-banner__link">Menu</a></li>
               {# end of Menu toggle on mobile #}
 
               {% if function('Search\\visible') %}
@@ -195,16 +197,12 @@
       {% endif %}
       {# alert banner end #}
 
-      <a class="o-offcanvas__overlay" data-toggle="offcanvas-generationnyc" aria-hidden="true"></a>
+      <a class="o-offcanvas__overlay" data-js="offcanvas-generationnyc" aria-hidden="true"></a>
     </div> <!-- /.o-offcanvas__main -->
   </div> <!-- /.o-offcanvas -->
 
-  {{ function('Nyco\\Enqueue\\script', 'source', '.min') }}
+  {{ function('enqueue_script', 'source') }}
+
   {{ wp_footer }}
 
-  <script type="text/javascript">
-    var prod_dcsId_val = "dcs222bzsl0e9yqub15qsk92g_5z5q";
-    var prod_host = "growingupnyc.cityofnewyork.us/generationnyc";
-  </script>
-  <script type="text/javascript" src="//www1.nyc.gov/assets/home/js/webtrends/webtrends_v10.js"></script>
 </body>

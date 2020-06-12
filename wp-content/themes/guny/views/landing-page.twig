@@ -41,9 +41,12 @@
 {% endblock %}
 
 {% block content%}
+  {% if post.get_field('lp_theme') == 'vivid-orange' %}
+    {% set colors_header = 'bg-pure-orange' %}
+  {% endif %}
 
 	<div class="js-parallax">
-		<header class="c-hero c-hero--large bg-color-primary js-parallax-content">
+		<header class="c-hero c-hero--large {% if colors_header %}{{colors_header}}{% else %}bg-color-primary{% endif %} js-parallax-content">
 			<div class="o-container js-parallax-text">
 				<h1 class="c-hero__title">
 					{{page_title}}
@@ -73,7 +76,7 @@
 			class="o-article-sidebar">
 			{# Anchor Links #}
 			<div class="o-content-container--compact u-shift-up">
-				<ol class="c-nav-list c-nav-list-ms__trips js-sticky js-section-set o-sticky-nav">
+				<ol class="c-nav-list c-nav-list--{{post.get_field('lp_theme')}} js-sticky js-section-set o-sticky-nav">
 					{% for top in post.get_field('landing_page_section') %}
 						{% if loop.index != 1 %}
 							<li class="c-nav-list__item">
@@ -102,7 +105,7 @@
 				</section>
         {# Tip #}
         {% if top.landing_page_section_add_tip == "Yes" %}
-          <aside class="c-tip u-lg-gutter o-content-container">
+          <aside class="c-tip c-tip--{{post.get_field('lp_theme')}} u-lg-gutter o-content-container">
             <div class="c-tip__sticker sticker">
               <svg class="icon--large" role="img" aria-hidden="true">
                 <title>Tip</title>
@@ -111,11 +114,6 @@
             </div>
             <h3 class="c-tip__content text-center">{{top.landing_page_section_tip_title}}</h3>
             <p class="c-tip__content">{{top.landing_page_section_tip_content}}</p>
-            {% if top.landing_page_section_tip_url != "" %}
-            <div class="text-center">
-              <a class="button--primary button--primary__curved button--simple button--simple--alt" href="{{top.landing_page_section_tip_url}}" target="_blank">{{top.landing_page_section_tip_button_text}}</a>
-            </div>
-            {% endif %}
           </aside>
         {% endif %}
 
@@ -125,9 +123,6 @@
             <div class="{% if top.landing_page_section_add_call_out_to_card == 'Yes' %}c-tip-card{% else %}c-do-list{% endif %}">
               <h3 class="c-tip-card__header">{{top.landing_page_section_call_out_box_title}}</h3>
 								<p>{{top.landing_page_section_call_out_box}}</p>
-              {% if top.landing_page_section_call_out_box_url != "" %}
-                <a class="button--primary button--primary__curved button--simple button--simple--alt" href="{{top.landing_page_section_call_out_box_url}}" target="_blank">{{top.landing_page_section_call_out_box_button_text}}</a>
-              {% endif %}
             </div>
           </section>
 				{% endif %}
@@ -145,7 +140,7 @@
                 {% for accordion in top.landing_page_section_accordion_details %}
                   <li class="c-list-box__item">
                     {% if accordion.landing_page_section_accordion_header != '' %}
-                      <h4 class="c-list-box__heading js-accordion__header" id="section-header">{{ accordion.landing_page_section_accordion_header }}</h4>
+                      <h4 class="c-list-box__heading bg-{{post.get_field('lp_theme')}} js-accordion__header" id="section-header">{{ accordion.landing_page_section_accordion_header }}</h4>
                     {% endif %}
                     <ul class="c-list-box__content js-accordion__content" id="section-panel">
                       {% for item in accordion.landing_page_section_accordion_items %}
@@ -163,34 +158,153 @@
 				<hr>
         
         {# Upcoming Events #}
-        {% if top.landing_page_section_content_heading == 'Virtual Activities' %}
-          {% if upcoming_events %}
-            <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" data-id="section-events">
-              {% if post.events_text %}
-                <p class="c-block-list__text">{{post.events_text}}</p>
-              {% endif %}
-              {# <div class="c-block-list__inner"> #}
+        {% if top.landing_page_add_filter == 'Yes' %}
+          {% if post.get_field('lp_theme') == 'vivid-orange' %}
+            {% set colors_head = 'bg-vivid-orange' %}
+            {% set colors_alt = 'bg-bright-red' %}
+            {% set colors_content = 'bg-pure-orange' %}
+            {% set colors_indicator = 'orange' %}
+          {% endif %}
+
+					<div id="vue-{{top.landing_page_filtered_posts}}" data-age='{{function("getSlugs", top.landing_page_age_group_filters)|json_encode}}' data-events="{{top.landing_page_event_cat_filters|json_encode}}">
+						<div
+							class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false" v-cloak>
+
+							{# categories #}
+							<div class="c-list-box__item">
+								<h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="type-filter-heading">Filter all activities by type</h3>
+								<ul class="js-accordion__content c-list-box__content {{colors_content}}" id="type-filter-panel">
+									<li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}" v-if="eventTypes!=null">
+										<label class="checkbox">
+											<input type="checkbox" v-model="checkedAllEventTypes" @change="selectAllEventTypes" class="checkbox__field">
+											<svg class="checkbox__indicator ">
+												<use xlink:href="#icon-check"></use>
+											</svg>
+											{{ __('Select All', 'guny') }}
+										</label>
+									</li>
+									<li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}" v-for="category in eventTypes" v-if="category.slug !='summer'">
+										<label class="checkbox" :for="category.slug">
+											<input type="checkbox" :id="category.slug" :value="category.slug" v-model="checkedEventType" class="checkbox__field">
+											<svg class="checkbox__indicator-{{colors_indicator}}">
+												<use xlink:href="#icon-check"></use>
+											</svg>
+											<span v-html="category.name"></span>
+										</label>
+									</li>
+								</ul>
+							</div>
+
+							<div id="posts-loaded" class="c-block-list--shade o-content-container--p-0 u-bottom-spacing-small" v-if="!isLoading" v-cloak>
+
+								<div
+									class="o-col-2 c-block-list__item-px-0" v-for="post in posts" v-cloak>
+									{# CARD #}
+									<div class="c-tip-card">
+
+										<div class="c-tip-card__header">
+
+											<div class="c-tip-card__title" :title="post.title">
+												<span v-html="post.title"></span>
+											</div>
+										</div>
+
+										<div class="c-card__subtitle">
+											<span class="nowrap" v-if="post.days_recurring == undefined">
+												<svg role="img" class="icon--xxsmall" aria-hidden="true">
+													<title>Date:</title>
+													<use xlink:href="#icon-calendar"></use>
+												</svg>
+												<span class="nowrap" v-if="post.categories.some(e => e.slug === 'anytime')">Any Day</span>
+												<span class="nowrap" v-else>
+													<span class="nowrap" v-if="post.date_formatted.start_date != post.date_formatted.end_date">v{post.date_formatted.date_range}</span>
+													<span class="nowrap" v-else>v{post.date_formatted.start_day}, v{post.date_formatted.start_date}</span>
+												</span>
+												<br>
+											</span>
+
+											<span v-if="post.days_recurring != undefined">
+												<svg role="img" class="icon--xxsmall" aria-hidden="true">
+													<title>Date:</title>
+													<use xlink:href="#icon-recurring"></use>
+												</svg>
+												<span>Every v{post.days_recurring} thru v{post.date_formatted.end_date}</span>
+												<br>
+											</span>
+
+											<svg role="img" class="icon--xxsmall" aria-hidden="true">
+												<title>Time:</title>
+												<use xlink:href="#icon-clock-o"></use>
+											</svg>
+											<span class="nowrap" v-if="post.categories.some(e => e.slug === 'anytime')">Anytime</span>
+											<span class="nowrap" v-else>v{post.date_formatted.time}</span>
+										</div>
+
+										<div class="c-tip-card__content">
+											<span v-html="post.about_this_event"></span>
+											<a :href="post.website" class="c-tip-card__link" :title="`{{ __('Go to activity website: ', 'GUNY-Tips') }}` + post.website">Go to activity website<svg aria-hidden="true" class="icon--caret--small">
+													<use xlink:href="#icon-caret-line-right"></use>
+												</svg>
+											</a>
+										</div>
+
+										<div class="c-card__tags" v-if="post.categories">
+                      <span v-for="term in post.age_group ">
+												<div class="button--pill {{colors_alt}}">
+													<span v-html="term.name"></span>
+												</div>
+											</span>
+											<span v-for="term in post.categories">
+                        <div class="button--pill {{colors_head}}" v-if="term.slug != 'summer'">
+                          <span v-html="term.name"></span>
+                        </div>
+											</span>
+										</div>
+									</div>
+
+								</div>
+								<p class="type--no-results--padding" v-if="errorMsg">{{ __('Sorry, there are no events for this category right now. Check again later.', 'guny') }}</p>
+
+								{# pagination #}
+								<div class="o-content-container--compact pagination text-center" v-if="!isLoading" v-cloak>
+									<div class="paginate" v-if="(posts.length < 50) && (showButton)">
+										<router-link class="button--outline button--outline--gray paginate" :to="{ query: {event_category: checkedEventType }}" @click.native="loadMore();">{{ __('See more', 'guny') }}</router-link>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				{% else %}
+          {% if top.landing_page_section_content_heading == 'Virtual Activities' %}
+            {% if upcoming_events %}
+              <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" data-id="section-events">
+                {% if post.events_text %}
+                  <p class="c-block-list__text">{{post.events_text}}</p>
+                {% endif %}
+                {# <div class="c-block-list__inner"> #}
                 {% for event in upcoming_events %}
                   <div class="c-block-list__item">
                     {% include ['partials/teaser-'~event.post_type~'.twig', 'partials/teaser.twig'] with {post: event} %}
                   </div>
                 {% endfor %}
-              {# </div> #}
-              <!-- /.c-block-list-inner -->
-              <div class="text-center">
-                <a href="{{eventslink}}?age_id=7&age_id=8" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Single-Age') }}</a>
-              </div>
-            </section>
-            <!-- /.c-block-list -->
+                {# </div> #}
+                <!-- /.c-block-list-inner -->
+                <div class="text-center">
+                  <a href="{{events_link}}?age_id=7&age_id=8" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Single-Age') }}</a>
+                </div>
+              </section>
+              <!-- /.c-block-list -->
+            {% endif %}
           {% endif %}
-        {% endif %}
+				{% endif %}
 			{% endfor %}
 
 
 
       {# Share #}
       {% if post.get_field('show_share') == 'Yes' %}
-        <aside class="c-tip text-center u-lg-gutter o-content-container">
+        <aside class="c-tip c-tip--{{post.get_field('lp_theme')}} text-center u-lg-gutter o-content-container">
           <div class="c-tip__sticker sticker">
             <svg class="icon--large" role="img" aria-hidden="true">
               <title>Share</title>
@@ -200,7 +314,7 @@
           <p class="c-tip__content">{{post.get_field('sms_intro_text')}}</p>
 
           <div id="share-by-text" class="sms-form-wrapper share-form">
-            {% include 'components/form-share.twig' with {form_only:false, disclaimer_text: options.gunyc_disclaimer_text}%}
+            {% include 'components/form-share.twig' with {form_only:false, color: post.get_field('lp_theme'), disclaimer_text: options.gunyc_disclaimer_text}%}
           </div>
           <footer class="c-tip__footer"></footer>
         </aside>

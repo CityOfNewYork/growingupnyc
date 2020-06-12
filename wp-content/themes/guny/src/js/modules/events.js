@@ -10,32 +10,33 @@ import axios from 'axios';
 import router from './router'
 
 class EventsList {
-  
+
   constructor() {
-    this._baseURL = window.location.origin;
-    this._lang = '?lang=' + document.documentElement.lang;
-    this._el = '#' + $('div').find('[id^=vue]').attr('id');
-    this._posttype = this._el.replace(new RegExp("^" + '#vue-'), '')
-    this._utc = new Date().toJSON().slice(0, 10);
+    const baseURL = window.location.origin;
+    const el = '#' + $('div').find('[id^=vue]').attr('id');
+    const posttype = el.replace(new RegExp("^" + '#vue-'), '')
+    const utc = new Date().toJSON().slice(0, 10);
+    const ages = JSON.parse($('div').find('[id^=vue]').attr('data-age'));
+    const cats = JSON.parse($('div').find('[id^=vue]').attr('data-events')).join('&categories[]=');
 
     this._events = {
       delimiters: ['v{', '}'],
-      el: this._el,
+      el: el,
       router,
       data: {
-        posttype: this._posttype,
-        postsURL: this._baseURL + '/wp-json/tribe/events/v1/' + this._posttype + this._lang + '&per_page=250&page=1&start_date=' + this._utc,
+        posttype: posttype,
+        postsURL: baseURL + '/wp-json/tribe/events/v1/' + posttype + '?per_page=250&page=1&start_date=' + utc,
         postsAll: null,
         posts: null,
-        ageGroupURL: this._baseURL + '/wp-json/wp/v2/age_group' + this._lang,
+        ageGroupURL: baseURL + '/wp-json/wp/v2/age_group',
         ageGroups: null,
-        checkedAgeGroup: ['teen','young-adult'],
+        checkedAgeGroup: ages,
         checkedAllAges: false,
-        eventTypesURL: this._baseURL + '/wp-json/tribe/events/v1/' + 'categories' + this._lang,
+        eventTypesURL: baseURL + '/wp-json/tribe/events/v1/' + 'categories',
         eventTypes: null,
         checkedEventType: ['virtual'],
         checkedAllEventTypes: false,
-        boroughURL: this._baseURL + 'borough' + this._lang,
+        boroughURL: baseURL + 'borough',
         boroughNames: null,
         checkedBorough: [],
         checkedAllBoroughs: false,
@@ -53,10 +54,10 @@ class EventsList {
       },
       mounted: function () {
         axios.all([
-          axios.get(this.postsURL + '&categories=235'),
+          axios.get(this.postsURL + '&categories[]=' + cats),
         ])
           .then(axios.spread((events) => {
-            this.filterTeens(events.data.events)
+            this.filterPosts(events.data.events)
             // this.postsAll = events.data.events
             this.getTaxonomies();
             this.parseQuery();
@@ -69,7 +70,7 @@ class EventsList {
         selectAllEventTypes: EventsList.selectAllEventTypes,
         parseQuery: EventsList.parseQuery,
         loadMore: EventsList.loadMore,
-        filterTeens: EventsList.filterTeens,
+        filterPosts: EventsList.filterPosts,
       },
 
     }
@@ -94,7 +95,7 @@ EventsList.getPrograms = function () {
 
   // update router based on selection
   if (this.checkedEventType.length == 1) {
-    this.$router.push({query:{}}).catch(err => { });
+    this.$router.push({ query: {} }).catch(err => { });
   } else {
     this.$router.push({
       query:
@@ -105,7 +106,7 @@ EventsList.getPrograms = function () {
   }
 
   // filter
-  if (this.checkedEventType.length > 1 ){
+  if (this.checkedEventType.length > 1) {
     types = types.filter(e => e !== 'virtual')
     result = this.postsAll.filter(function (e) {
       return e.categories.find(x => types.includes(x.slug));
@@ -143,7 +144,7 @@ EventsList.generateFilterURL = function (data) {
     arrIds = EventsList.getIds(data.eventTypes, data.checkedEventType).map(value => value.id)
     filters.push('categories=' + arrIds.join('&categories='));
   }
-  
+
   // age groups
   if (data.checkedAgeGroup.length > 0) {
     data.checkedAgeGroup.length != data.ageGroups.length ? data.checkedAllAges = false : data.checkedAllAges = true;
@@ -182,7 +183,7 @@ EventsList.parseQuery = function () {
   let query = this.$route.query;
 
   if (query.event_category == 'virtual') {
-    this.$router.push({query:{}}).catch(err => { });
+    this.$router.push({ query: {} }).catch(err => { });
   }
   else if (query.event_category == 'all') {
     this.checkedAllEventTypes = true;
@@ -240,7 +241,7 @@ EventsList.loadMore = function () {
 /**
  * Filters events that are just teen and young adult
  */
-EventsList.filterTeens = function (events) {
+EventsList.filterPosts = function (events) {
   let ages = this.checkedAgeGroup
 
   let result = events.filter(function (e) {
@@ -249,14 +250,11 @@ EventsList.filterTeens = function (events) {
 
   // dedup events that are recurring
   let collapsedResults = result.filter((event, index, self) =>
-  index === self.findIndex((t) => (
-    t.title === event.title && t.date_formatted.time === event.date_formatted.time
+    index === self.findIndex((t) => (
+      t.title === event.title && t.date_formatted.time === event.date_formatted.time
     ))
   )
   this.postsAll = collapsedResults;
 }
 
-
 export default EventsList;
-
-

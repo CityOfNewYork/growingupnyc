@@ -11,7 +11,7 @@
 
 
 {% block subtitle %}
-  {{ function('AfterschoolGuides\\get_dates', post.id) }}
+  {{ function('Templating\\get_dates', post.id) }}
 {% endblock %}
 
 {% block tags %}
@@ -34,7 +34,7 @@
       <use xlink:href="#icon-map-marker"></use>
     </svg>
     <span>
-      {{ function('AfterschoolGuides\\get_location_description', post.id) }}
+      {{ function('Templating\\get_location_description', post.id) }}
     </span>
   </p>
 {% endblock %}

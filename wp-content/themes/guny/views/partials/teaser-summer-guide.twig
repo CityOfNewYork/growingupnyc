@@ -10,15 +10,15 @@
 {% endblock %}
 
 {% block subtitle %}
-  {{ function('SummerGuides\\get_dates', post.id) }}
+  {{ function('Templating\\get_dates', post.id) }}
 {% endblock %}
 
 {% block tags %}
   {% for term in post.terms('summer_programs_cat') %}
-    <a href="/summer/?summer_category={{term.slug}}" class="button--pill bg-vivid-orange">{{term.name}}</a>
+    <a href="/summer-programs/?summer_category={{term.slug}}" class="button--pill bg-vivid-orange">{{term.name}}</a>
   {% endfor %}
   {% for term in post.terms('age_group') %}
-    <a href="/summer/?ages={{term.slug}}" class="button--pill bg-bright-red button--pill--alt">{{term.name}}</a>
+    <a href="/summer-programs/?ages={{term.slug}}" class="button--pill bg-bright-red button--pill--alt">{{term.name}}</a>
   {% endfor %}
 {% endblock %}
 
@@ -34,7 +34,7 @@
     <use xlink:href="#icon-map-marker"></use>
   </svg>
     <span>
-      {{ function('SummerGuides\\get_location_description', post.id) }}
+      {{ function('Templating\\get_location_description', post.id) }}
     </span>
   </p>
 {% endblock %}

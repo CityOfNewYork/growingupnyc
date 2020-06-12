@@ -75,6 +75,7 @@ var WPML_TM = WPML_TM || {};
 			self.translationComplete = self.$el.find(':checkbox[name=complete]');
 			self.showProgressBar();
 			self.maybeShowTranslationComplete();
+			self.maybeHideHideCompletedSwitcher();
 
 			window.onbeforeunload = function (e) {
 				if (self.isDirty()) {
@@ -116,6 +117,12 @@ var WPML_TM = WPML_TM || {};
 				self.translationComplete.parent().hide();
 			} else {
 				self.translationComplete.prop('checked', WpmlTmEditorModel.translation_is_complete);
+			}
+		},
+		maybeHideHideCompletedSwitcher: function () {
+			var self = this;
+			if (!WpmlTmEditorModel.display_hide_completed_switcher) {
+				self.$el.find('#wpml_tm_toggle_translated').parent().hide();
 			}
 		},
 		progressBar: function () {

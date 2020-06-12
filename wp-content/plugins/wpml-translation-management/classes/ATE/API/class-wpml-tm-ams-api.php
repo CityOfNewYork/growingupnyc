@@ -1,5 +1,8 @@
 <?php
 
+use WPML\TM\ATE\Log\Entry;
+use WPML\TM\ATE\Log\ErrorEvents;
+
 /**
  * @author OnTheGo Systems
  */
@@ -85,7 +88,8 @@ class WPML_TM_AMS_API {
 
 	/**
 	 * @return array|mixed|null|object|WP_Error
-	 * @throws \InvalidArgumentException
+	 *
+	 * @throws \InvalidArgumentException Exception.
 	 */
 	public function get_status() {
 		$result = null;
@@ -106,7 +110,7 @@ class WPML_TM_AMS_API {
 
 				if ( ! is_wp_error( $result ) ) {
 					$registration_data = $this->get_registration_data();
-					if ( (bool) $response_body['activated'] ) {
+					if ( isset( $response_body['activated'] ) && (bool) $response_body['activated'] ) {
 						$registration_data['status'] = WPML_TM_ATE_Authentication::AMS_STATUS_ACTIVE;
 						$this->set_registration_data( $registration_data );
 					}
@@ -261,6 +265,17 @@ class WPML_TM_AMS_API {
 			}
 		}
 
+		if ( $response_errors ) {
+			$entry              = new Entry();
+			$entry->event       = ErrorEvents::SERVER_AMS;
+			$entry->description = $response_errors->get_error_message();
+			$entry->extraData   = [
+				'errorData' => $response_errors->get_error_data(),
+			];
+
+			wpml_tm_ate_ams_log( $entry );
+		}
+
 		return $response_errors;
 	}
 
@@ -290,7 +305,7 @@ class WPML_TM_AMS_API {
 	/**
 	 * @return array
 	 */
-	private function get_registration_data() {
+	public function get_registration_data() {
 		return get_option( WPML_TM_ATE_Authentication::AMS_DATA_KEY, array() );
 	}
 

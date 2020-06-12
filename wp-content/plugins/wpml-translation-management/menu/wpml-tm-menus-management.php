@@ -1,5 +1,8 @@
 <?php
 
+use WPML\TM\Menu\TranslationBasket\Utility;
+use function WPML\Container\make;
+
 class WPML_TM_Menus_Management extends WPML_TM_Menus {
 
 	const SKIP_TM_WIZARD_META_KEY = 'wpml_skip_tm_wizard';
@@ -13,9 +16,6 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 	/** @var WPML_Translator_Records $translator_records */
 	private $translator_records;
 
-	/** @var WPML_Jobs_Fetch_Log_UI $logger */
-	private $logger_ui;
-
 	private $active_languages;
 	private $translatable_types;
 	private $current_language;
@@ -24,6 +24,7 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 	private $post_statuses;
 	private $selected_languages;
 	private $source_language;
+	/** @var \WPML_TM_Translation_Priorities */
 	private $translation_priorities;
 	private $dashboard_title_sort_link;
 	private $dashboard_date_sort_link;
@@ -31,6 +32,10 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 	private $selected_posts = array();
 	private $translation_filter;
 	private $found_documents;
+	/**
+	 * @var \Mockery\MockInterface
+	 */
+	private $admin_sections;
 
 	public function __construct(
 		IWPML_Template_Service $template_service,
@@ -41,9 +46,10 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 		$this->manager_records    = $manager_records;
 		$this->translator_records = $translator_records;
 
-		$logger_settings = new WPML_Jobs_Fetch_Log_Settings();
 		$wpml_wp_api     = new WPML_WP_API();
-		$this->logger_ui = new WPML_Jobs_Fetch_Log_UI( $logger_settings, $wpml_wp_api );
+
+		$this->admin_sections = WPML\Container\make( 'WPML_TM_Admin_Sections' );
+		$this->admin_sections->init_hooks();
 
 		parent::__construct();
 	}
@@ -83,34 +89,43 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 			?>
 		</div>
 		<?php
-
 	}
 
+	/**
+	 * It builds all the sections.
+	 */
 	protected function build_tab_items() {
 		$this->tab_items = array();
 
 		$this->build_dashboard_item();
 		$this->build_basket_item();
 
-		foreach ( $this->get_admin_section_factories() as $factory ) {
-			/** @var IWPML_TM_Admin_Section_Factory $factory */
-			if ( in_array( 'IWPML_TM_Admin_Section_Factory', class_implements( $factory ), true ) ) {
-				$sections_factory = new $factory();
-				$section          = $sections_factory->create();
-				/** @var IWPML_TM_Admin_Section $section */
-				if ( in_array( 'IWPML_TM_Admin_Section', class_implements( $section ), true ) && $section->is_visible() ) {
-					$this->tab_items[ $section->get_slug() ] = array(
-						'caption'          => $section->get_caption(),
-						'current_user_can' => $section->get_capabilities(),
-						'callback'         => $section->get_callback(),
-					);
-				}
-			}
+		/** @var \WPML_TM_Admin_Sections $admin_sections */
+		foreach ( $this->admin_sections->get_tab_items() as $slug => $tab_item ) {
+
+			$this->tab_items[ $slug ] = $tab_item;
 		}
 
 		$this->build_translation_jobs_item();
 		$this->build_tp_com_log_item();
-		$this->build_tp_pickup_log_item();
+
+		$this->reorder_items();
+	}
+
+	/**
+	 * It reorders all items based on their `order` key as well as the order (index) they were added.
+	 */
+	private function reorder_items() {
+		$order_of_sections = array();
+		$tab_items         = $this->tab_items;
+
+		foreach ( $tab_items as $key => $value ) {
+			$order_of_sections[ $key ] = (int) $value['order'];
+		}
+
+		if ( array_multisort( $order_of_sections, SORT_ASC, $tab_items ) ) {
+			$this->tab_items = $tab_items;
+		}
 	}
 
 	public function should_show_wizard() {
@@ -158,6 +173,7 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 			'caption'          => __( 'Translation Dashboard', 'wpml-translation-management' ),
 			'current_user_can' => array( WPML_Manage_Translations_Role::CAPABILITY, 'manage_options' ),
 			'callback'         => array( $this, 'build_content_dashboard' ),
+			'order'            => 100,
 		);
 	}
 
@@ -178,8 +194,6 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 
 	/**
 	 * Used only by unit tests at the moment
-	 *
-	 * @return mixed
 	 */
 	private function build_dashboard_data() {
 		$this->build_dashboard_filter_arguments();
@@ -192,8 +206,8 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 		$this->current_language = $sitepress->get_current_language();
 		$this->source_language  = TranslationProxy_Basket::get_source_language();
 
-		if ( isset( $_COOKIE['translation_dashboard_filter'] ) ) {
-			parse_str( $_COOKIE['translation_dashboard_filter'], $this->translation_filter );
+		if ( isset( $_COOKIE['wp-translation_dashboard_filter'] ) ) {
+			parse_str( $_COOKIE['wp-translation_dashboard_filter'], $this->translation_filter );
 
 			$this->translation_filter = filter_var_array(
 				$this->translation_filter,
@@ -210,6 +224,11 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 				)
 			);
 		}
+
+		$this->translation_filter['sort_by']    = isset( $_SESSION['wp-translation_dashboard_filter']['sort_by'] ) ?
+			$_SESSION['wp-translation_dashboard_filter']['sort_by'] : null;
+		$this->translation_filter['sort_order'] = isset( $_SESSION['wp-translation_dashboard_filter']['sort_order'] ) ?
+			$_SESSION['wp-translation_dashboard_filter']['sort_order'] : null;
 
 		if ( $this->source_language || ! isset( $this->translation_filter['from_lang'] ) ) {
 			if ( $this->source_language ) {
@@ -472,7 +491,7 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 					</td>
 					<td>
 						<label>
-							<input type="radio" id="duplicate-all" value="2" name="radio-action-all" <?php echo $duplicate_checked; ?> /> 
+							<input type="radio" id="duplicate-all" value="2" name="radio-action-all" <?php echo $duplicate_checked; ?> />
 																												<?php
 																												echo esc_html__(
 																													'Duplicate content',
@@ -501,7 +520,8 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 					?>
 					<tr>
 						<th>
-							<img src="<?php echo esc_url( $flags->get_flag_url( $lang['code'] ) ); ?>"/> <strong><?php echo esc_html( $lang['display_name'] ); ?></strong>
+							<img width="18" height="12" src="<?php echo esc_url( $flags->get_flag_url( $lang['code'] ) ); ?>" alt="<?php echo esc_url( sprintf( __( 'Flag for %s', 'wpml-translation-management' ), $lang['code'] ) ); ?>"/>
+							<strong><?php echo esc_html( $lang['display_name'] ); ?></strong>
 						</th>
 						<td>
 							<label <?php echo $translate_tooltip_attributes; ?>>
@@ -627,7 +647,7 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 	}
 
 	private function build_content_dashboard_documents_body() {
-		global $sitepress, $wpdb;
+		global $sitepress;
 
 		if ( ! $this->documents ) {
 			?>
@@ -696,6 +716,7 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 				'caption'          => $this->build_basket_item_caption( $basket_items_count ),
 				'current_user_can' => WPML_Manage_Translations_Role::CAPABILITY,
 				'callback'         => array( $this, 'build_content_basket' ),
+				'order'            => 101
 			);
 
 		}
@@ -779,24 +800,13 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 				__( '%1$s|WPML|%2$s', 'wpml-translation-management' ), htmlspecialchars_decode( get_option( 'blogname' ), ENT_QUOTES ), $source_language
 			);
 			$basket_name_placeholder = $basket->get_unique_basket_name( $basket_name_placeholder, $basket_name_max_length );
-			$basket_languages        = TranslationProxy_Basket::get_target_languages();
-			$target_languages        = array();
-			$translators_dropdowns   = array();
 
-			if ( $basket_languages ) {
-				$target_languages = $sitepress->get_active_languages();
+			$utility                      = make( Utility::class );
+			$target_languages             = $utility->getTargetLanguages();
+			$isTheOnlyAvailableTranslator = $utility->isTheOnlyAvailableTranslatorForTargetLanguages( $target_languages );
 
-				foreach ( $target_languages as $key => $lang ) {
-					if ( ! in_array( $lang['code'], $basket_languages, true )
-					     || TranslationProxy_Basket::get_source_language() === $lang['code']
-					) {
-						unset( $target_languages[ $key ] );
-					} else {
-						$translators_dropdowns[ $lang['code'] ]    = $this->get_translators_dropdown( $lang['code'] );
-						$target_languages[ $lang['code'] ]['flag'] = $sitepress->get_flag_img( $lang['code'] );
-					}
-				}
-			}
+			$translators_dropdowns = \wpml_collect( $target_languages )->pluck( 'code', 'code' )
+			                                                           ->map( [ $this, 'get_translators_dropdown' ] );
 
 			$tooltip_content = esc_html__( 'This deadline is what WPML suggests according to the amount of work that you already sent to this translator. You can modify this date to set the deadline manually.', 'wpml-translation-management' );
 
@@ -814,14 +824,6 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 					'batch_deadline_label'   => __( 'Suggested deadline:', 'wpml-translation-management' ),
 					'batch_deadline_tooltip' => $tooltip_content,
 					'button_send_all'        => __( 'Send all items for translation', 'wpml-translation-management' ),
-					'jobs_committed'         => sprintf( '<p>%s</p><p>%s <a href="%s">%s</a></p>',
-						__( 'Translation jobs ready...', 'wpml-translation-management' ),
-						/* translators: This text is followed by 'Translation Queue'. eg To translate these jobs, go to the Translation Queue */
-						__( 'To translate these jobs, go to the', 'wpml-translation-management' ),
-						admin_url( 'admin.php?page=' . WPML_TM_FOLDER . '/menu/translations-queue.php' ),
-						__( 'Translation Queue', 'wpml-translation-management' )
-					),
-					'jobs_committing'        => __( 'Preparing for translation...', 'wpml-translation-management' ),
 				),
 				'source_language'              => $sitepress->get_language_details( $source_language ),
 				'source_language_flag'         => $sitepress->get_flag_img( $source_language ),
@@ -839,13 +841,10 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 					'_icl_nonce_send_basket_commit' => wp_create_nonce( 'send_basket_commit_nonce' ),
 					'_icl_nonce_check_basket_name'  => wp_create_nonce( 'check_basket_name_nonce' ),
 					'_icl_nonce_refresh_deadline'   => wp_create_nonce( 'wpml-tm-jobs-deadline-estimate-ajax-action' ),
+					'_icl_nonce_rollback_basket'    => wp_create_nonce( 'rollback_basket_nonce' ),
 				),
 				'translation_service_enabled'  => $translation_service_enabled,
-				'current_user_only_translator' => $this->is_current_user_only_translator_for_all(
-					TranslationProxy_Basket::get_source_language(),
-					$target_languages
-				),
-
+				'current_user_only_translator' => $isTheOnlyAvailableTranslator,
 			);
 			echo $this->template_service->show( $model, 'basket/options.twig' );
 		}
@@ -853,26 +852,7 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 		do_action( 'wpml_translation_basket_page_after' );
 	}
 
-	private function is_current_user_only_translator_for_all( $source_language, $target_languages ) {
-		global $wpdb;
-
-		if ( TranslationProxy::is_current_service_active_and_authenticated() ) {
-			return false;
-		}
-
-		$current_user_id = get_current_user_id();
-
-		$translator_records = new WPML_Translator_Records( $wpdb, new WPML_WP_User_Query_Factory() );
-		$translators        = $translator_records->get_users_with_languages(
-			$source_language,
-			array_keys( $target_languages ),
-			false
-		);
-
-		return count( $translators ) === 1 && $translators[0]->ID === $current_user_id;
-	}
-
-	private function get_translators_dropdown( $lang_code ) {
+	public function get_translators_dropdown( $lang_code ) {
 		$selected_translator = TranslationProxy_Service::get_wpml_translator_id();
 
 		$args = array(
@@ -896,6 +876,7 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 				'caption'          => __( 'Translation Jobs', 'wpml-translation-management' ),
 				'current_user_can' => WPML_Manage_Translations_Role::CAPABILITY,
 				'callback'         => array( $this, 'build_content_translation_jobs' ),
+				'order'            => 100000,
 			);
 		}
 	}
@@ -907,9 +888,12 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 
 	private function build_tp_com_log_item() {
 		if ( isset( $_GET['sm'] ) && 'com-log' === $_GET['sm'] ) {
-			$this->tab_items['com-log']['caption']          = __( 'Communication Log', 'wpml-translation-management' );
-			$this->tab_items['com-log']['callback']         = array( $this, 'build_tp_com_log' );
-			$this->tab_items['com-log']['current_user_can'] = 'manage_options';
+			$this->tab_items['com-log'] = array(
+				'caption'          => __( 'Communication Log', 'wpml-translation-management' ),
+				'current_user_can' => 'manage_options',
+				'callback'         => array( $this, 'build_tp_com_log' ),
+				'order'            => 1000000,
+			);
 		}
 	}
 
@@ -963,35 +947,6 @@ class WPML_TM_Menus_Management extends WPML_TM_Menus {
 
 		</form>
 		<?php
-	}
-
-	private function build_tp_pickup_log_item() {
-		$logger_settings = new WPML_Jobs_Fetch_Log_Settings();
-
-		if ( isset( $_GET['sm'] ) && $logger_settings->get_ui_key() === $_GET['sm'] ) {
-			$this->tab_items[ $logger_settings->get_ui_key() ]['caption']          = __( 'Content updates log', 'wpml-translation-management' );
-			$this->tab_items[ $logger_settings->get_ui_key() ]['callback']         = array(
-				$this,
-				'build_tp_pickup_log',
-			);
-			$this->tab_items[ $logger_settings->get_ui_key() ]['current_user_can'] = 'manage_options';
-		}
-	}
-
-	public function build_tp_pickup_log() {
-		$this->logger_ui->render();
-	}
-
-	/**
-	 * @return array
-	 */
-	private function get_admin_section_factories() {
-		$admin_sections_factories = array(
-			'WPML_TM_Translation_Roles_Section_Factory',
-			'WPML_TM_Translation_Services_Admin_Section_Factory',
-		);
-
-		return apply_filters( 'wpml_tm_admin_sections_factories', $admin_sections_factories );
 	}
 
 	public function get_dashboard_documents() {

@@ -14,6 +14,10 @@ class WPML_Translation_Jobs_Migration_Hooks_Factory implements IWPML_Backend_Act
 		$wpml_notices->remove_notice( WPML_Translation_Jobs_Migration_Notice::NOTICE_GROUP_ID, 'all-translation-jobs-migration' );
 		$wpml_notices->remove_notice( WPML_Translation_Jobs_Migration_Notice::NOTICE_GROUP_ID, 'translation-jobs-migration' );
 
+		if ( ! $this->should_add_migration_hooks() ) {
+			return null;
+		}
+
 		$migration_state = new WPML_TM_Jobs_Migration_State();
 		if ( $migration_state->is_skipped() ) {
 			return new WPML_TM_Restore_Skipped_Migration( $migration_state );
@@ -64,5 +68,43 @@ class WPML_Translation_Jobs_Migration_Hooks_Factory implements IWPML_Backend_Act
 			wpml_get_upgrade_schema(),
 			$migration_state
 		);
+	}
+
+	/**
+	 * Check if location is allowed to add migration hooks.
+	 */
+	private function should_add_migration_hooks() {
+		$allowed_uris = array(
+			'/.*page=sitepress-multilingual-cms.*/',
+			'/.*page=wpml-string-translation.*/',
+			'/.*page=wpml-translation-management.*/',
+		);
+
+		if ( wp_doing_ajax() ) {
+			return true;
+		}
+
+		$uri = $this->get_request_uri();
+
+		foreach ( $allowed_uris as $pattern ) {
+			if ( preg_match( $pattern, $uri ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Get request uri.
+	 *
+	 * @return string
+	 */
+	private function get_request_uri() {
+		if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+			return filter_var( wp_unslash( $_SERVER['REQUEST_URI'] ), FILTER_SANITIZE_STRING );
+		}
+
+		return '';
 	}
 }

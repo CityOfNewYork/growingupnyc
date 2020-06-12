@@ -1,19 +1,21 @@
 <?php
 
+use WPML\TM\ATE\JobRecords;
+
 /**
  * @author OnTheGo Systems
  */
 class WPML_TM_ATE_Jobs {
 
-	/** @var WPML_TM_ATE_Job_Records $records */
+	/** @var JobRecords $records */
 	private $records;
 
 	/**
 	 * WPML_TM_ATE_Jobs constructor.
 	 *
-	 * @param WPML_TM_ATE_Job_Records $records
+	 * @param JobRecords $records
 	 */
-	public function __construct( WPML_TM_ATE_Job_Records $records ) {
+	public function __construct( JobRecords $records ) {
 		$this->records = $records;
 	}
 
@@ -26,17 +28,6 @@ class WPML_TM_ATE_Jobs {
 		$wpml_job_id = (int) $wpml_job_id;
 
 		return $this->records->get_ate_job_id( $wpml_job_id );
-	}
-
-	/**
-	 * @param int $wpml_job_id
-	 *
-	 * @return int
-	 */
-	public function get_ate_job_progress( $wpml_job_id ) {
-		$wpml_job_id = (int) $wpml_job_id;
-
-		return $this->records->get_ate_job_progress( $wpml_job_id );
 	}
 
 	/**
@@ -100,7 +91,7 @@ class WPML_TM_ATE_Jobs {
 	 *
 	 * @param string $xliff
 	 *
-	 * @return bool
+	 * @return bool|int
 	 * @throws \Requests_Exception|Exception
 	 */
 	public function apply( $xliff ) {
@@ -113,19 +104,61 @@ class WPML_TM_ATE_Jobs {
 		}
 
 		kses_remove_filters();
+		$job_data = $this->filterJobData( $job_data );
+		$wpml_job_id = $job_data['job_id'];
 
 		try {
 			$is_saved = wpml_tm_save_data( $job_data, false );
 		} catch ( Exception $e ) {
 			throw new Exception(
-				'The XLIFF file could not be applied to the content of the job ID: ' . $job_data['job_id'],
+				'The XLIFF file could not be applied to the content of the job ID: ' . $wpml_job_id,
 				$e->getCode()
 			);
 		}
 
 		kses_init();
 
-		return $is_saved;
+		return $is_saved ? $wpml_job_id : false;
+	}
+
+	private function filterJobData( $jobData ) {
+		/**
+		 * It lets modify $job_data, which is especially usefull when we want to alter `data` of field.
+		 *
+		 * @param  array  $jobData {
+		 *    @type int $job_id
+		 *    @type array fields {
+		 *       @type string $data Translated content
+		 *       @type int $finished
+		 *       @type int $tid
+		 *       @type string $field_type
+		 *       @type string $format
+		 *    }
+		 *    @type int $complete
+ 		 * }
+		 * @param  callable $getJobTargetLanguage The callback which expects $jobId as parameter
+		 *
+		 * @since 2.10.0
+		 */
+		$filteredJobData = apply_filters(
+			'wpml_tm_ate_job_data_from_xliff',
+			$jobData,
+			$this->getJobTargetLanguageCallback()
+		);
+
+		if ( array_key_exists( 'id', $filteredJobData ) && array_key_exists( 'fields', $filteredJobData ) ) {
+			$jobData = $filteredJobData;
+		}
+
+		return $jobData;
+	}
+
+	private function getJobTargetLanguageCallback() {
+		return function ( $jobId ) {
+			$job = wpml_tm_get_jobs_repository()->get_job( $jobId, \WPML_TM_Job_Entity::POST_TYPE );
+
+			return $job ? $job->get_target_language() : null;
+		};
 	}
 
 	/**
@@ -135,5 +168,12 @@ class WPML_TM_ATE_Jobs {
 	 */
 	public function is_editing_job( $wpml_job_id ) {
 		return $this->records->is_editing_job( $wpml_job_id );
+	}
+
+	/**
+	 * @param array $wpml_job_ids
+	 */
+	public function warm_cache( array $wpml_job_ids ) {
+		$this->records->warmCache( $wpml_job_ids );
 	}
 }

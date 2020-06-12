@@ -10,6 +10,7 @@ abstract class WPML_Post_Translation extends WPML_Element_Translation {
 
 	protected $settings;
 	protected $post_translation_sync;
+	public static $defer_term_counting = false;
 
 	/**
 	 * @var WPML_Debug_BackTrace
@@ -31,7 +32,8 @@ abstract class WPML_Post_Translation extends WPML_Element_Translation {
 
 	public function init() {
 		if ( $this->is_setup_complete() ) {
-			add_action ( 'save_post', array( $this, 'save_post_actions' ), 100, 2 );
+			add_action( 'save_post', array( $this, 'save_post_actions' ), 100, 2 );
+			add_action( 'shutdown', array( $this, 'shutdown_action' ), PHP_INT_MAX );
 		}
 	}
 
@@ -73,6 +75,13 @@ abstract class WPML_Post_Translation extends WPML_Element_Translation {
 	 * @return void
 	 */
 	public abstract function save_post_actions( $pidd, $post );
+
+	public function shutdown_action() {
+		if ( self::$defer_term_counting ) {
+			self::$defer_term_counting = false;
+			wp_defer_term_counting( false );
+		}
+	}
 
 	public function trash_translation ( $trans_id ) {
 		if ( !WPML_WordPress_Actions::is_bulk_trash( $trans_id ) ) {
@@ -178,7 +187,6 @@ abstract class WPML_Post_Translation extends WPML_Element_Translation {
 			require_once WPML_PLUGIN_PATH . '/inc/cache.php';
 		}
 		icl_cache_clear( $post_vars['post_type'] . 's_per_language', true );
-		wp_defer_term_counting( false );
 		if ( ! in_array( $post_vars['post_type'], array( 'nav_menu_item', 'attachment' ), true ) ) {
 			do_action( 'wpml_tm_save_post', $post_vars['ID'], get_post( $post_vars['ID'] ), false );
 		}
@@ -236,8 +244,7 @@ abstract class WPML_Post_Translation extends WPML_Element_Translation {
 			return false;
 		}
 		$is_auto_draft              = isset( $post->post_status ) && $post->post_status === 'auto-draft';
-		$is_editing_different_post  = array_key_exists( 'post_ID', $_POST ) && (int) $_POST['post_ID']
-		                              && $post->ID != $_POST['post_ID'];
+		$is_editing_different_post  = $this->is_editing_different_post( $post->ID );
 		$is_saving_a_revision       = array_key_exists( 'post_type', $_POST ) && 'revision' === $_POST['post_type'];
 		$is_untrashing              = array_key_exists( 'action', $_GET ) && 'untrash' === $_GET['action'];
 		$is_auto_save               = array_key_exists( 'autosave', $_POST );
@@ -257,6 +264,15 @@ abstract class WPML_Post_Translation extends WPML_Element_Translation {
 		              || $is_scheduled_to_be_trashed
 		              || $is_add_meta_action
 		              || $is_untrashing );
+	}
+
+	/**
+	 * @param int $post_id
+	 *
+	 * @return bool
+	 */
+	protected function is_editing_different_post( $post_id ) {
+		return array_key_exists( 'post_ID', $_POST ) && (int) $_POST['post_ID'] && $post_id != $_POST['post_ID'];
 	}
 
 	protected function get_element_join() {
@@ -343,7 +359,7 @@ abstract class WPML_Post_Translation extends WPML_Element_Translation {
 	 */
 	private function get_debug_backtrace() {
 		if ( ! $this->debug_backtrace ) {
-			$this->debug_backtrace = new WPML_Debug_BackTrace( phpversion(), 20 );
+			$this->debug_backtrace = new WPML\Utils\DebugBackTrace( 20 );
 		}
 
 		return $this->debug_backtrace;
@@ -380,5 +396,28 @@ abstract class WPML_Post_Translation extends WPML_Element_Translation {
 		$post_vars['post_type'] = isset( $post_vars['post_type'] ) ? $post_vars['post_type'] : $post->post_type;
 
 		return $post_vars;
+	}
+
+	/**
+	 * @param bool $defer
+	 */
+	protected function defer_term_counting() {
+		if ( ! self::$defer_term_counting ) {
+			self::$defer_term_counting = true;
+			wp_defer_term_counting( true );
+		}
+	}
+
+	/**
+	 * @return self|WPML_Frontend_Post_Actions|WPML_Admin_Post_Actions
+	 */
+	public static function getGlobalInstance() {
+		global $wpml_post_translations, $sitepress;
+
+		if ( ! isset( $wpml_post_translations ) ) {
+			wpml_load_post_translation( is_admin(), $sitepress->get_settings() );
+		}
+
+		return $wpml_post_translations;
 	}
 }

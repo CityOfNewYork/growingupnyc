@@ -197,10 +197,16 @@ input[type="search"].form-field {
 .checkbox {
   cursor: pointer;
   position: relative;
+  @if ($language == 'ar') or ($language == 'ur') {
+    position: initial;
+  }
 }
 
 .checkbox__field {
   position: absolute;
+  @if ($language == 'ar') or ($language == 'ur') {
+    position: absolute;
+  }
   opacity: 0;
   z-index: -1;
 }
@@ -269,6 +275,24 @@ input[type="search"].form-field {
 
 .checkbox__field:checked + .checkbox__indicator-orange {
   color: $vivid-orange;
+}
+
+// dark-green
+.checkbox__indicator-dark-green {
+  @extend .checkbox__indicator;
+}
+
+.checkbox__field:checked + .checkbox__indicator-dark-green {
+  color: $dark-green;
+}
+
+// dark-blue
+.checkbox__indicator-dark-blue {
+  @extend .checkbox__indicator;
+}
+
+.checkbox__field:checked + .checkbox__indicator-dark-blue {
+  color: $dark-blue;
 }
 
 .input__field {

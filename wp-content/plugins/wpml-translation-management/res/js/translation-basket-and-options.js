@@ -44,7 +44,7 @@
 					return false;
 				}
 			);
-			
+
 			function Translation_Jobs() {
 				var form = jQuery('#translation-jobs-translators-form');
 				var form_send_button = form.find('.button-primary');
@@ -63,10 +63,10 @@
 
 				var init = function () {
 					form.bind('submit', submit_form);
-					
+
 					// prevent sending basket by pressing Enter
 					form.bind("keypress", function(e) {
-						if (e.keyCode == 13) {               
+						if (e.keyCode == 13) {
 							e.preventDefault();
 							return false;
 						}
@@ -245,12 +245,12 @@
 
 					return translators;
 				};
-				
+
 				var get_extra_fields = function () {
 					var items  =  jQuery('#basket_extra_fields_list').find(':input').get();
 					var string = '';
 					var items_total = jQuery(items).length;
-					
+
 					if (items_total > 0) {
 						jQuery(items).each(function (index, elm) {
 							string += elm.name +":"+ jQuery(elm).val();
@@ -259,8 +259,17 @@
 							}
 						});
 					}
-					
+
 					return encodeURIComponent(string);
+				};
+
+				var sending_only_to_professional_translation = function (translators) {
+					var isProfessionalTranslator = function (translator) {
+						return translator.match(/^ts-\d+$/);
+					};
+
+					var translatorsArray = Object.values(translators);
+					return translatorsArray.length === translatorsArray.filter(isProfessionalTranslator).length;
 				};
 
 				var submit_form = function (e) {
@@ -279,7 +288,6 @@
 
 					var basket_name = get_basket_name();
 					var translators = get_translators();
-
 					translation_jobs_basket_form.find('.row-actions').hide();
 
 					form_send_button.attr('disabled', 'disabled').hide();
@@ -287,7 +295,11 @@
 
 					message_box.show();
 
-					update_message('<h4>' + tm_basket_data.strings['sending_batch'].replace('%s', '<span>' + basket_name + '</span>') + '</h4>', true, 'sending', false);
+					var header = sending_only_to_professional_translation(translators) ?
+						tm_basket_data.strings['sending_batch_to_ts'] :
+						tm_basket_data.strings['sending_batch'];
+
+					update_message('<h4>' + header + '</h4>', true, 'sending', false);
 
 
 					if (typeof translators === 'undefined' || translators.length === 0) {
@@ -343,7 +355,7 @@
 							},
 							error:    function (jqXHR, textStatus) {
 								show_errors(jqXHR, textStatus);
-                                batch_send_basket_to_tp_rollback();
+                                show_rollback_message();
 							}
 						}
 					);
@@ -353,10 +365,9 @@
 				};
 
                 var progressbar_finish_text = '100%';
-                var progressbar_callback = function(){
-                    // trigger an event that it's complete.
-					jQuery(document).trigger('wpml-tm-basket-commit-complete', progress_bar_object);
-                };
+				var progressbar_callback = function (progress_bar) {
+					progress_bar.dom.remove();
+				};
 
 				var update_basket_badge_count = function (count) {
 					var badge = jQuery('#wpml-basket-items');
@@ -379,9 +390,9 @@
 						batch_size = Math.ceil(20 / langs.length); // 1 to 20
 						batch_size = Math.min(5, batch_size); // 1 to 5
 					}
-					
+
 					batch_number++;
-					
+
 					var extra_fields = get_extra_fields();
 
 					var batch_length = batch_basket_items.length;
@@ -437,8 +448,12 @@
                                 }
                             },
                             error: function (jqXHR, textStatus) {
+                            	if (jqXHR.status >= 500) {
+									request_rollback_for_batch(basket_name);
+								}
+
                                 show_errors(jqXHR, textStatus);
-                                batch_send_basket_to_tp_rollback();
+                                show_rollback_message();
                             }
                         }
                     );
@@ -488,7 +503,7 @@
                                 result = result.data;
 								if (success) {
                                     if(typeof result.result.is_local !== 'undefined' && result.result.is_local ) {
-                                        var message = tm_basket_data.strings['jobs_committed_local'];
+                                        var message = tm_basket_data.strings['jobs_sent_to_local_translator'];
 
                                         if(typeof result.result.emails_did_not_sent !== 'undefined' && result.result.emails_did_not_sent ){
                                         	message = message.replace(/<ul><li>[\s\S]*?<\/li>/, '<ul>' + tm_basket_data.strings['jobs_emails_local_did_not_sent'] );
@@ -511,7 +526,7 @@
 										);
 										links.appendTo(message);
 									}
-									update_message(message, false, 'updated', true);
+									update_message(message, false, 'updated', false);
 									var call_to_action = false;
 									/** @namespace result.result.call_to_action */
 									if(typeof result.result.call_to_action !== 'undefined') {
@@ -523,23 +538,39 @@
 
 								} else {
                                     handle_response(result);
-                                    batch_send_basket_to_tp_rollback();
+                                    show_rollback_message();
 								}
                             },
 							error:    function (jqXHR, textStatus) {
 								show_errors(jqXHR, textStatus);
-                                batch_send_basket_to_tp_rollback();
+                                show_rollback_message();
                             }
 						}
 					);
 				};
 
-                var batch_send_basket_to_tp_rollback = function () {
+                var show_rollback_message = function () {
                     update_message(tm_basket_data.strings['rollbacks'], false, 'error', false);
                     update_message(tm_basket_data.strings['rolled'], false, 'error', true);
                     progress_bar_object.complete(progressbar_finish_text, progressbar_callback);
                 };
 
+                var request_rollback_for_batch = function(basket_name) {
+                	var action = 'rollback_basket';
+
+					jQuery.ajax(
+						{
+							type: "POST",
+							url: ajaxurl,
+							dataType: 'json',
+							data: {
+								action: action,
+								_icl_nonce: get_nonce(action),
+								basket_name: basket_name
+							}
+						}
+					);
+				};
 
 				var batch_send_basket_to_tp_completed = function (response) {
 					progress_bar_object.complete(progressbar_finish_text, progressbar_callback);
@@ -565,7 +596,7 @@
 					} else {
                         form_delete_button.removeAttr('disabled');
                         form_send_button.removeAttr('disabled').show();
-                        batch_send_basket_to_tp_rollback();
+                        show_rollback_message();
 					}
 				};
 

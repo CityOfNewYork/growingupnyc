@@ -256,9 +256,17 @@ abstract class WPML_Element_Translation_Job extends WPML_Translation_Job {
 		);
 	}
 
+	/**
+	 * @param int $job_id
+	 *
+	 * @return bool|stdClass|WPML_Element_Translation_Job
+	 */
 	protected function load_job_data( $job_id ) {
+		if ( $this->job_factory ) {
+			return $this->job_factory->get_translation_job( $job_id, false, 1 );
+		}
 
-		return $this->job_factory->get_translation_job( $job_id, false, 1 );
+		return false;
 	}
 
 	protected function save_updated_assignment() {

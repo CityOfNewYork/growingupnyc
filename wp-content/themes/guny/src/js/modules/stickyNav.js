@@ -82,19 +82,37 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
   */
   function updateDimensions(forceClear) {
     if (isSticky && !forceClear) {
-      $elem.css({
-        left: leftOffset + 'px',
-        width: elemWidth + 'px',
-        top: '',
-        bottom: ''
-      });
+      if (['ar', 'ur'].includes(document.documentElement.lang)) {
+        $elem.css({
+          right: 'auto',
+          width: elemWidth + 'px',
+          top: '',
+          bottom: ''
+        });
+      } else {
+        $elem.css({
+          left: leftOffset + 'px',
+          width: elemWidth + 'px',
+          top: '',
+          bottom: ''
+        });
+      }
     } else if (isAbsolute && !forceClear) {
-      $elem.css({
-        left: $elemContainer.css('padding-left'),
-        width: elemWidth + 'px',
-        top: 'auto',
-        bottom: $elemContainer.css('padding-bottom')
-      });
+      if (['ar', 'ur'].includes(document.documentElement.lang)) {
+        $elem.css({
+          right: $elemContainer.css('padding-left'),
+          width: elemWidth + 'px',
+          top: 'auto',
+          bottom: $elemContainer.css('padding-bottom')
+        });
+      }else {
+        $elem.css({
+          left: $elemContainer.css('padding-left'),
+          width: elemWidth + 'px',
+          top: 'auto',
+          bottom: $elemContainer.css('padding-bottom')
+        });
+      }
     } else {
       $elem.css({
         left: '',

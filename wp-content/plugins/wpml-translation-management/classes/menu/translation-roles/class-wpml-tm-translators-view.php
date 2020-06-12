@@ -78,7 +78,7 @@ abstract class WPML_TM_Translators_View extends WPML_Twig_Template_Loader {
 	}
 
 	private function add_roles() {
-		$this->model['wp_roles'] = WPML_WP_Roles::get_subscriber_roles();
+		$this->model['wp_roles'] = WPML_WP_Roles::get_roles_up_to_user_level( wp_get_current_user() );
 	}
 
 	public function add_add_translator_dialog() {

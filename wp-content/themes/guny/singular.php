@@ -79,6 +79,15 @@ else{
 }
 $context['post'] = $post;
 
+/**
+ * Section Headers and Jump Nav - English only
+ */
+$en_parent_id = icl_object_id($post->ID, 'page', false,'en');
+$context['eligibility'] = get_field('jump_nav_heading_-_eligibility', $en_parent_id);
+$context['application'] = get_field('jump_nav_heading_-_application', $en_parent_id);
+$context['whats_needed'] = get_field('whats_needed_heading', $en_parent_id);
+$context['help'] = get_field('jump_nav_heading_-_help', $en_parent_id);
+
 // SHARE - SMS
 $context['shareAction'] = admin_url( 'admin-ajax.php' );
 $context['shareHash'] = \SMNYC\hash($post->link);
@@ -104,16 +113,8 @@ $context['banner']['override'] = $post->update_banner;
 // in-body alert under banner
 $context['program_page_alert'] = get_field('banner_content', get_field('banner_alert_message', $post->id));
 
-// Last modified date
-$context['last_modified'] = get_the_modified_date( $d, $post );
-
-$url = '/';
-if(ICL_LANGUAGE_CODE != 'en'){
-  $url = $url.ICL_LANGUAGE_CODE.'/';
-}
-
-$context['eventslink'] = get_post_type_archive_link('tribe_events');
-$context['programslink'] = get_post_type_archive_link('program');
+$context['events_link'] = get_post_type_archive_link('tribe_events');
+$context['programs_link'] = get_post_type_archive_link('program');
 
 $context['custom_favicon'] = get_field('updated_favicon', $post->id);
 Timber::render( $templates, $context );

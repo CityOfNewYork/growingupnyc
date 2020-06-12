@@ -41,9 +41,16 @@
   ul {
     list-style: none;
     padding-left: rem-calc(10);
+    
+    @if ($language == 'ar') or ($language == 'ur') {
+      padding-right: rem-calc(10);
+    }
 
     @include media($bp-large) {
       padding-left: rem-calc(30);
+      @if ($language == 'ar') or ($language == 'ur') {
+        padding-right: rem-calc(30);
+      }
     }
   }
 
@@ -57,6 +64,10 @@
       margin-top: rem-calc(2);
       opacity: .2;
       vertical-align: middle;
+      
+      @if ($language == 'ar') or ($language == 'ur') {
+        margin-left: rem-calc(8.8);
+      }
     }
   }
 }

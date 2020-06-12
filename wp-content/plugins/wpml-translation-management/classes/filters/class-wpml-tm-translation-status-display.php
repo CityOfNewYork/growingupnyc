@@ -18,7 +18,7 @@ class WPML_TM_Translation_Status_Display {
 	/**
 	 * @var WPML_TM_API
 	 */
-	private $tm_api;
+	protected $tm_api;
 
 	/**
 	 * @var WPML_Post_Translation
@@ -28,7 +28,7 @@ class WPML_TM_Translation_Status_Display {
 	/**
 	 * @var SitePress
 	 */
-	private $sitepress;
+	protected $sitepress;
 
 	private $original_links = array();
 	private $tm_editor_links = array();
@@ -122,10 +122,10 @@ class WPML_TM_Translation_Status_Display {
 		if ( $this->is_in_progress( $trid, $lang ) ) {
 			$css_class = 'otgs-ico-in-progress';
 		} elseif ( $this->is_in_basket( $trid, $lang )
-		           || ( ! $this->is_lang_pair_allowed( $lang, $source_lang ) && $element_id )
+		           || ( ! $this->is_lang_pair_allowed( $lang, $source_lang, $post_id ) && $element_id )
 		) {
 			$css_class .= ' otgs-ico-edit-disabled';
-		} elseif ( ! $this->is_lang_pair_allowed( $lang, $source_lang ) && ! $element_id ) {
+		} elseif ( ! $this->is_lang_pair_allowed( $lang, $source_lang, $post_id ) && ! $element_id ) {
 			$css_class .= ' otgs-ico-add-disabled';
 		}
 
@@ -136,7 +136,7 @@ class WPML_TM_Translation_Status_Display {
 		$source_lang = $this->post_translations->get_element_lang_code( $original_post_id );
 
 		$this->maybe_load_stats( $trid );
-		if ( $this->is_remote( $trid, $lang ) ) {
+		if ( $this->is_remote( $trid, $lang ) && $this->is_in_progress( $trid, $lang ) ) {
 			$language = $this->sitepress->get_language_details( $lang );
 			$text     = sprintf(
 				__(
@@ -151,10 +151,10 @@ class WPML_TM_Translation_Status_Display {
 				'Cannot edit this item, because it is currently in the translation basket.',
 				'wpml-translation-management'
 			);
-		} elseif ( $this->is_lang_pair_allowed( $lang ) && $this->is_in_progress( $trid, $lang ) ) {
+		} elseif ( $this->is_lang_pair_allowed( $lang, null, $original_post_id ) && $this->is_in_progress( $trid, $lang ) ) {
 			$language = $this->sitepress->get_language_details( $lang );
 			$text     = sprintf( __( 'Edit the %s translation', 'wpml-translation-management' ), $language['display_name'] );
-		} elseif ( ! $this->is_lang_pair_allowed( $lang, $source_lang ) ) {
+		} elseif ( ! $this->is_lang_pair_allowed( $lang, $source_lang, $original_post_id ) ) {
 			$language        = $this->sitepress->get_language_details( $lang );
 			$source_language = $this->sitepress->get_language_details( $source_lang );
 			$text            = sprintf(
@@ -203,7 +203,7 @@ class WPML_TM_Translation_Status_Display {
 		if (
 				$is_remote_job_in_progress ||
 				$this->is_in_basket( $trid, $lang ) ||
-				! $this->is_lang_pair_allowed( $lang, $source_lang )
+				! $this->is_lang_pair_allowed( $lang, $source_lang, $post_id )
 		) {
 			$link = '';
 			$this->original_links[ $post_id ][ $lang ][ $trid ] = ''; // Also block the native editor
@@ -212,6 +212,12 @@ class WPML_TM_Translation_Status_Display {
 
 			if ( $is_local_job_in_progress || $translation_exists ) {
 				$job_id = $this->job_factory->job_id_by_trid_and_lang( $trid, $lang );
+				if ( $job_id && ! is_admin() ) {
+					$job_object = $this->job_factory->get_translation_job( $job_id, false, 0, true );
+					if ( $job_object && ! $job_object->user_can_translate( wp_get_current_user() ) ) {
+						return $link;
+					}
+				}
 			}
 
 			if ( $job_id ) {
@@ -284,7 +290,7 @@ class WPML_TM_Translation_Status_Display {
 	private function get_return_url() {
 		$args = array( 'wpml_tm_saved', 'wpml_tm_cancel' );
 
-		if ( wpml_is_ajax() ) {
+		if ( wpml_is_ajax() || ! is_admin() ) {
 			if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
 				return remove_query_arg( $args, $_SERVER['HTTP_REFERER'] );
 			}
@@ -298,21 +304,25 @@ class WPML_TM_Translation_Status_Display {
 	/**
 	 * @param string $lang_to
 	 * @param string $lang_from
+	 * @param int    $post_id
 	 *
 	 * @return bool
 	 */
-	private function is_lang_pair_allowed( $lang_to, $lang_from = null ) {
+	protected function is_lang_pair_allowed( $lang_to, $lang_from = null, $post_id = 0 ) {
 
 		return $this->tm_api->is_translator_filter(
-			false, $this->sitepress->get_wp_api()->get_current_user_id(),
-			array(
+			false,
+			$this->sitepress->get_wp_api()->get_current_user_id(),
+			[
 				'lang_from'      => $lang_from ? $lang_from : $this->sitepress->get_current_language(),
 				'lang_to'        => $lang_to,
 				'admin_override' => $this->is_current_user_admin(),
-			) );
+				'post_id'        => $post_id,
+			]
+		);
 	}
 
-	private function is_current_user_admin() {
+	protected function is_current_user_admin() {
 
 		return $this->sitepress->get_wp_api()
 		                       ->current_user_can( 'manage_options' );

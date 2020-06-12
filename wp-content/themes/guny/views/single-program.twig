@@ -18,7 +18,7 @@
       <h1 class="c-hero__title--long">
         {% if post.category %}
         <span class="c-hero__sticker sticker">
-          <svg aria-hidden="true" class="icon--medium"><use xlink:href="#icon-{{post.category.slug|replace({'-es':''})}}"></use></svg>
+          <svg aria-hidden="true" class="icon--medium"><use xlink:href="#icon-{{post.category.slug|replace({(['-',language_code]|join):''})}}"></use></svg>
         </span>
         {% endif %}
           {{post.plain_language_program_name}}
@@ -27,12 +27,12 @@
         {{post.program_name}}{% if post.acronym %} ({{post.acronym}}){% endif %}
         | {{post.government_agency}}
       </p>
-      <p class="c-hero__tagline">
+      <p class="c-hero__tags">
       {% for term in post.terms('programs_cat') %}
-        <a href="{{programslink}}?category={{term.slug}}" class="button--pill">{{term.name}}</a>
+        <a href="{{programs_link}}?category={{term.slug}}" class="button--pill">{{term.name}}</a>
       {% endfor %}
       {% for term in post.terms('age_group') %}
-        <a href="{{programslink}}?ages={{term.slug}}" class="button--pill button--pill--alt">{{term.name}}</a>
+        <a href="{{programs_link}}?ages={{term.slug}}" class="button--pill button--pill--alt">{{term.name}}</a>
       {% endfor %}
     </p>
     </div>
@@ -42,25 +42,19 @@
   <div class="o-article-sidebar">
     <div class="o-content-container--compact u-shift-up">
       <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
-        {% if post.summary %}
-        <li class="c-nav-list__item">
-          <a href="#section-summary" data-section="section-summary" class="js-section c-nav-list__link">
-            {{post.get_field('jump_nav_heading_-_summary')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
-        </li>
-        {% endif %}
         {% if post.eligibility %}
         <li class="c-nav-list__item">
-          <a href="#section-eligibility" data-section="section-eligibility" class="js-section c-nav-list__link">{{post.get_field('jump_nav_heading_-_eligibility')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+          <a href="#section-eligibility" data-section="section-eligibility" class="js-section c-nav-list__link">{% if eligibility != '' %}{{ __(eligibility, 'GUNY-Single-Program') }}{% else %}{{ __("Am I eligibile?", 'GUNY-Single-Program') }}{% endif %}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
         </li>
         {% endif %}
         {% if post.whats_needed or post.how_to_apply %}
         <li class="c-nav-list__item">
-          <a href="#section-application" data-section="section-application" class="js-section c-nav-list__link">{{post.get_field('jump_nav_heading_-_application')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+          <a href="#section-application" data-section="section-application" class="js-section c-nav-list__link">{% if application != '' %}{{ __(application, 'GUNY-Single-Program') }}{% else %}{{ __("I'm ready to apply", 'GUNY-Single-Program') }}{% endif %}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
         </li>
         {% endif %}
         {% if post.get_help %}
         <li class="c-nav-list__item">
-          <a href="#section-help" data-section="section-help" class="js-section c-nav-list__link">{{post.get_field('jump_nav_heading_-_help')}}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+          <a href="#section-help" data-section="section-help" class="js-section c-nav-list__link">{% if help != '' %}{{ __(help, 'GUNY-Single-Program') }}{% else %}{{ __("How can I get help?", 'GUNY-Single-Program') }}{% endif %}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
         </li>
         {% endif %}
       </ol>
@@ -90,7 +84,7 @@
       {% endif %}
       {% if post.eligibility %}
         <section class="o-content-container--text s-wysiwyg u-top-spacing-small u-bottom-spacing-small" data-id="section-eligibility">
-          <h2>{{post.get_field('eligibility_heading')}}</h2>
+          <h2>{% if eligibility != '' %}{{ __(eligibility, 'GUNY-Single-Program') }}{% else %}{{ __("Am I eligibile?", 'GUNY-Single-Program') }}{% endif %}</h2>
           {{post.get_field('eligibility')}}
         </section> <!-- /.o-content-container-text -->
         <hr>
@@ -99,14 +93,14 @@
         <section data-id="section-application" class="u-top-spacing-small u-bottom-spacing-small">
           {% if post.whats_needed %}
           <div class="o-content-container--text s-wysiwyg{% if post.how_to_apply %} u-bottom-spacing-small{% endif %}">
-            <h2>{{post.get_field('whats_needed_heading')}}</h2>
+            <h2>{% if whats_needed != '' %}{{ __(whats_needed, 'GUNY-Single-Program') }}{% else %}{{ __("What will I need to apply?", 'GUNY-Single-Program') }}{% endif %}</h2>
             {{post.get_field('whats_needed')}}
           </div>
           <hr>
           {% endif %}
           {% if post.how_to_apply %}
           <div class="o-content-container--text s-wysiwyg{% if post.whats_needed %} u-top-spacing-small{% endif %}">
-            <h2>{{post.get_field('how_to_apply_heading')}}</h2>
+            <h2>{% if application != '' %}{{ __(application, 'GUNY-Single-Program') }}{% else %}{{ __("I'm ready to apply", 'GUNY-Single-Program') }}{% endif %}</h2>
             {{post.get_field('how_to_apply')}}
           </div>
           {% endif %}
@@ -115,7 +109,7 @@
       {% endif %}
       {% if post.get_help %}
         <section id="section-help" class="u-top-spacing-small u-bottom-spacing-small o-content-container--text s-wysiwyg">
-          <h2>{{post.get_field('get_help_heading')}}</h2>
+          <h2>{% if help != '' %}{{ __(help, 'GUNY-Single-Program') }}{% else %}{{ __("How can I get help?", 'GUNY-Single-Program') }}{% endif %}</h2>
           {{post.get_field('get_help')}}
         </section> <!-- /.o-content-container-text -->
       {% endif %}
@@ -131,7 +125,7 @@
         </div>
         
         <div class="text-center">
-          <a href="{{tipslink}}?ages={{post.age_group.slug}}" class="button--outline button--outline--gray">{{ __('See more tips', 'GUNY-Single-Age') }}</a>
+          <a href="{{tips_link}}?ages={{post.age_group.slug}}" class="button--outline button--outline--gray">{{ __('See more tips', 'GUNY-Single-Age') }}</a>
         </div>
       </section>
     {% endif %}
@@ -148,7 +142,7 @@
         {% endfor %}
       </div> <!-- /.c-block-list__inner -->
       <div class="text-center">
-        <a href="{{programslink}}" class="button--outline button--outline--gray">{{ __('See all programs', 'GUNY-Single-Program') }}</a>
+        <a href="{{programs_link}}" class="button--outline button--outline--gray">{{ __('See all programs', 'GUNY-Single-Program') }}</a>
       </div>
     </div>
     {% endif %}
@@ -158,11 +152,11 @@
     {% endif %}
 
     <div id='last-modified-date' class="o-content-container--compact">
-      <section class="u-top-spacing-small">
+      <div class="u-top-spacing-small">
         <div class="o-content-container--text s-wysiwyg text-gray">
-          <p>{{ __('Updated', 'GUNY-Single-Program') }} {{last_modified}}</p>
+          <p>{{ __('Updated', 'GUNY-Single-Program') }} {{post.post_modified|date}}</p>
         </div>
-      </section>
+      </div>
     </div>
 
   </div> <!-- /.o-article -->

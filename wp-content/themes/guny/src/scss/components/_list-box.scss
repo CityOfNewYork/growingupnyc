@@ -70,6 +70,9 @@
   margin-bottom: 0;
   text-align: left;
   width: 100%;
+  @if ($language == 'ar') or ($language == 'ur') {
+    text-align: right;
+  }
 }
 
 .c-list-box--primary .c-list-box__heading,
@@ -224,6 +227,9 @@
   color: $color-text-invert;
   @include font-size-small;
   padding: rem-calc(16 28);
+  @if ($language == 'ar') or ($language == 'ur') {
+    padding: rem-calc(16 28);
+  }
 }
 
 .c-list-box--tertiary .c-list-box__subitem {

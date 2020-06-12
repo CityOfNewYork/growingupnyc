@@ -1,11 +1,13 @@
 <?php
 
+use WPML\WP\OptionManager;
+
 /**
  * @author OnTheGo Systems
  */
 class WPML_TM_AMS_Check_Website_ID implements IWPML_Action {
 
-	/** @var WPML_Option_Manager $option_manager */
+	/** @var \WPML\WP\OptionManager $option_manager */
 	private $option_manager;
 
 	/** @var WPML_TM_ATE_API $ate_api */
@@ -15,7 +17,7 @@ class WPML_TM_AMS_Check_Website_ID implements IWPML_Action {
 	private $ams_api;
 
 	public function __construct(
-		WPML_Option_Manager $option_manager,
+		OptionManager $option_manager,
 		WPML_TM_ATE_API $ate_api,
 		WPML_TM_AMS_API $ams_api
 	) {

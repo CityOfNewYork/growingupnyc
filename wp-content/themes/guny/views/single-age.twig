@@ -100,7 +100,7 @@
           </div>
           
           <div class="text-center">
-            <a href="{{tipslink}}?ages={{post.age_group.slug}}" class="button--outline button--outline--gray">{{ __('See more tips', 'GUNY-Single-Age') }}</a>
+            <a href="{{tips_link}}?ages={{post.age_group.slug}}" class="button--outline button--outline--gray">{{ __('See more tips', 'GUNY-Single-Age') }}</a>
           </div>
         </section>
 
@@ -214,7 +214,7 @@
             {% endfor %}
           </div> <!-- /.c-block-list__inner -->
           <div class="text-center">
-            <a href="{{programslink}}?ages={{post.age_group.slug}}" class="button--outline button--outline--gray">{{ __('See all programs', 'GUNY-Single-Age') }}</a>
+            <a href="{{programs_link}}?ages={{post.age_group.slug}}" class="button--outline button--outline--gray">{{ __('See all programs', 'GUNY-Single-Age') }}</a>
           </div>
         </section>
       {% endif %}
@@ -246,7 +246,7 @@
           </div>
           <!-- /.c-block-list-inner -->
           <div class="text-center">
-            <a href="{{eventslink}}?age_id={{post.age_group.id}}" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Single-Age') }}</a>
+            <a href="{{events_link}}?age_id={{post.age_group.id}}" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Single-Age') }}</a>
           </div>
         </section>
         <!-- /.c-block-list -->

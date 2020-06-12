@@ -169,7 +169,7 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 		$icl_methods['translationproxy.test_xmlrpc']        = '__return_true';
 		$icl_methods['translationproxy.updated_job_status'] = array(
 			$this,
-			'xmlrpc_updated_job_status_with_log',
+			'xmlrpc_updated_job_status',
 		);
 
 		$methods = array_merge( $methods, $icl_methods );
@@ -188,7 +188,7 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 	 *
 	 * @return int|IXR_Error
 	 */
-	public function xmlrpc_updated_job_status_with_log( $args ) {
+	public function xmlrpc_updated_job_status( $args ) {
 		global $wpdb;
 
 		$tp_id     = isset( $args[0] ) ? $args[0] : 0;
@@ -231,19 +231,6 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 
 				}
 
-				if ( $job_updated ) {
-					$logger = new WPML_Jobs_XMLRPC_Fetch_Log( $this, new WPML_Jobs_Fetch_Log_Settings(), new WPML_Jobs_Fetch_Log_Job( $this ) );
-
-					$job_data = array(
-						'id'              => $tp_id,
-						'cms_id'          => $cms_id,
-						'job_state'       => $status,
-						'source_language' => false,
-						'target_language' => false
-					);
-					$logger->log_job_data( $job_data );
-				}
-
 				return 1;
 
 			}
@@ -262,29 +249,6 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 	private function authenticate_request( $tp_id, $cms_id, $status, $signature ) {
 		$project = TranslationProxy::get_current_project();
 		return sha1( $project->id . $project->access_key . $tp_id . $cms_id . $status ) === $signature;
-	}
-
-	/**
-	 * @param array $args
-	 * @param bool  $bypass_auth
-	 *
-	 * @return int|string
-	 */
-	function poll_updated_job_status_with_log( $args, $bypass_auth = false ) {
-		$project = TranslationProxy::get_current_project();
-		$update  = new WPML_TM_Job_Update( $this, $project );
-
-		$ret = $update->updated_job_status_with_log( $args, $bypass_auth );
-
-		if ( null !== $update->get_last_job_data() ) {
-			$logger_settings = new WPML_Jobs_Fetch_Log_Settings();
-			$fetch_log_job   = new WPML_Jobs_Fetch_Log_Job( $this );
-			$logger          = new WPML_Jobs_Poll_Fetch_Log( $this, $logger_settings, $fetch_log_job );
-
-			$logger->log_job_data( $update->get_last_job_data() );
-		}
-
-		return $ret;
 	}
 
 	/**

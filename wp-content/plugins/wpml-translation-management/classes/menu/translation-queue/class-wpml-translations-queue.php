@@ -1,5 +1,7 @@
 <?php
 
+use function WPML\Container\make;
+
 class WPML_Translations_Queue {
 
 	/** @var  SitePress $sitepress */
@@ -77,9 +79,8 @@ class WPML_Translations_Queue {
 		/**
 		 * @var TranslationManagement        $iclTranslationManagement
 		 * @var WPML_Translation_Job_Factory $wpml_translation_job_factory
-		 * @var WPML_Post_Translation        $wpml_post_translations;
 		 */
-		global $iclTranslationManagement, $wpml_translation_job_factory, $wpml_post_translations;
+		global $iclTranslationManagement, $wpml_translation_job_factory;
 
 		$translation_jobs = array();
 		$job_types        = array();
@@ -177,11 +178,6 @@ class WPML_Translations_Queue {
 				}
 
 				$translation_jobs = $wpml_translation_job_factory->get_translation_jobs( (array) $icl_translation_filter );
-				$has_updated_jobs = $this->translation_jobs_require_update( $translation_jobs );
-
-				if ( $has_updated_jobs ) {
-					$translation_jobs = $wpml_translation_job_factory->get_translation_jobs( (array) $icl_translation_filter );
-				}
 			}
 		}
 		?>
@@ -330,9 +326,8 @@ class WPML_Translations_Queue {
 					$this->sitepress,
 					$iclTranslationManagement,
 					$tm_api,
-					$post_link_factory,
-					$translation_jobs,
-					$wpml_post_translations
+					\WPML\TM\Jobs\Utils\ElementLinkFactory::create(),
+					$translation_jobs
 				);
 				$translation_jobs             = $translation_queue_jobs_model->get();
 
@@ -376,35 +371,16 @@ class WPML_Translations_Queue {
 	}
 
 	/**
-	 * This method will return true if at least one ATE job was applied
-	 * and false otherwise. This is used to maybe refresh the collection of
-	 * displayed jobs.
-	 *
-	 * @param stdClass[] $displayed_jobs
-	 *
-	 * @return bool
-	 */
-	public function translation_jobs_require_update( $displayed_jobs ) {
-		$ate_displayed_jobs  = array();
-		$ate_job_ids_to_sync = wpml_tm_get_ate_jobs_repository()->get_jobs_to_sync()->map_to_property( 'translate_job_id' );
-
-		foreach ( $displayed_jobs as $displayed_job ) {
-			if ( in_array( (int) $displayed_job->job_id, $ate_job_ids_to_sync, true ) ) {
-				$ate_displayed_jobs[] = $displayed_job;
-			}
-		}
-
-		return (bool) apply_filters( 'wpml_tm_translation_queue_jobs_require_update', false, $ate_displayed_jobs, true );
-	}
-
-	/**
 	 * @param $translation_jobs
 	 * @param $has_actions
 	 * @param $open_job
 	 */
 	public function show_table( $translation_jobs, $has_actions, $open_job ) {
 		?>
-			<table class="widefat striped icl-translation-jobs" id="icl-translation-jobs" cellspacing="0">
+			<table class="widefat striped icl-translation-jobs" id="icl-translation-jobs" cellspacing="0"
+				data-string-complete="<?php esc_attr_e( 'Complete', 'wpml-translation-management'); ?>"
+				data-string-edit="<?php esc_attr_e( 'Edit', 'wpml-translation-management'); ?>"
+			>
 		<?php foreach ( array( 'thead', 'tfoot' ) as $element_type ) { ?>
 				<<?php echo $element_type; ?>>
 				<tr>
@@ -452,7 +428,7 @@ class WPML_Translations_Queue {
 		  $ate_jobs = apply_filters( 'wpml_tm_ate_jobs_data', array(), $translation_jobs['jobs'] );
 
 		  foreach ( $translation_jobs['jobs'] as $index => $job ) { ?>
-						<tr<?php echo $this->get_row_css_class_attribute( $job ); ?>>
+						<tr<?php echo $this->get_row_css_attribute( $job ); ?>>
 							<?php if ( $has_actions ) { ?>
 							<td>
 									<input type="checkbox" name="job[<?php echo $job->job_id ?>]" value="1"/>
@@ -482,13 +458,9 @@ class WPML_Translations_Queue {
 				  <?php
 				  if ( $job->original_doc_id ) {
 					  $ate_job_id       = null;
-					  $ate_job_progress = array();
 					  if ( array_key_exists( $job->job_id, $ate_jobs ) ) {
 						  if ( array_key_exists( 'ate_job_id', $ate_jobs[ $job->job_id ] ) ) {
 							  $ate_job_id = $ate_jobs[ $job->job_id ]['ate_job_id'];
-						  }
-						  if ( array_key_exists( 'progress', $ate_jobs[ $job->job_id ] ) ) {
-							  $ate_job_progress = $ate_jobs[ $job->job_id ]['progress'];
 						  }
 					  }
 					  ?>
@@ -497,7 +469,6 @@ class WPML_Translations_Queue {
 										   data-job-id="<?php echo $job->job_id ?>"
 										   data-ate-job-id="<?php echo esc_attr( $ate_job_id ); ?>"
 										   data-ate-job-url="<?php echo $job->edit_url ?>"
-										   data-job-progress="<?php echo esc_attr( wp_json_encode( $ate_job_progress ) ); ?>"
 										   data-ate-auto-open="<?php echo $job->job_id === $open_job ?>"
 										>
 						<?php echo $job->button_text; ?>
@@ -636,8 +607,8 @@ class WPML_Translations_Queue {
 	 *
 	 * @return string
 	 */
-	private function get_row_css_class_attribute( $job ) {
-		$classes = array();
+	private function get_row_css_attribute( $job ) {
+		$classes = [ 'js-wpml-job-row' ];
 
 		if ( isset( $job->deadline_date ) && ICL_TM_COMPLETE !== (int) $job->status ) {
 			$deadline_day = date( 'Y-m-d', strtotime( $job->deadline_date ) );
@@ -648,11 +619,7 @@ class WPML_Translations_Queue {
 			}
 		}
 
-		if ( $classes ) {
-			return ' class="' . esc_attr( implode( ' ', $classes ) ) . '"';
-		}
-
-		return '';
+		return ' class="' . esc_attr( implode( ' ', $classes ) ) . '" data-job-id="' . $job->job_id . '"';
 	}
 
 	/**
@@ -682,7 +649,7 @@ class WPML_Translations_Queue {
 		$editor_url = apply_filters( 'wpml_tm_ate_jobs_editor_url', null, $job_id, $this->get_return_url() );
 
 		if ( $editor_url ) {
-			wpml_tm_get_ate_job_records()->set_editing_job( $job_id, true );
+			make( \WPML\TM\ATE\Sync\Trigger::class )->setSyncRequiredForCurrentUser();
 			wpml_tm_load_old_jobs_editor()->set( $job_id, WPML_TM_Editors::ATE );
 
 			wp_safe_redirect( $editor_url );
@@ -726,8 +693,8 @@ class WPML_Translations_Queue {
 	public static function get_cookie_filters() {
 		$filters = array();
 
-		if ( isset( $_COOKIE['translation_ujobs_filter'] ) ) {
-			parse_str( $_COOKIE['translation_ujobs_filter'], $filters );
+		if ( isset( $_COOKIE['wp-translation_ujobs_filter'] ) ) {
+			parse_str( $_COOKIE['wp-translation_ujobs_filter'], $filters );
 
 			$filters = filter_var_array(
 				$filters,

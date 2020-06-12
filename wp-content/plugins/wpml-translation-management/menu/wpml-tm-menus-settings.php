@@ -22,10 +22,6 @@ class WPML_TM_Menus_Settings extends WPML_TM_Menus {
 		global $sitepress, $iclTranslationManagement;
 		$is_admin = current_user_can( 'manage_options' );
 
-		if ( $this->is_end_user_feature_enabled() && $is_admin ) {
-			$this->mcsetup_sections['ml-content-setup-sec-0'] = esc_html__( 'General settings', 'wpml-translation-management' );
-		}
-
 		$this->mcsetup_sections['ml-content-setup-sec-1'] = esc_html__( 'How to translate posts and pages', 'wpml-translation-management' );
 
 		if ( $is_admin ) {
@@ -150,38 +146,6 @@ class WPML_TM_Menus_Settings extends WPML_TM_Menus {
 				</p>
 			</div>
 		</div>
-
-		<?php if ( $this->should_show_mcsetup_section( 'ml-content-setup-sec-0' ) ) : ?>
-			<div class="wpml-section" id="ml-content-setup-sec-0">
-
-				<div class="wpml-section-header">
-					<h3><?php echo esc_html__( 'General settings', 'wpml-translation-management' ); ?></h3>
-				</div>
-
-				<div class="wpml-section-content">
-					<form id="wpml-tm-general-settings" action="">
-						<ul>
-							<li>
-								<label>
-									<?php
-									$disabling_option = new WPML_End_User_Account_Creation_Disabled_Option();
-									$is_disabled      = $disabling_option->is_disabled();
-									?>
-									<input type="checkbox" name="wpml-disabling" value="1"
-										<?php checked( true, $is_disabled ) ?>
-										   data-nonce="<?php echo wp_create_nonce( WPML_End_User_Account_Creation_Disabled::NONCE ) ?>"
-									/>
-									<?php echo esc_html__( 'Disable the possibility of creating accounts for users on wpml.org',
-									                       'wpml-translation-management' ) ?>
-									<span class="spinner" style="float:none;"> </span>
-								</label>
-							</li>
-						</ul>
-
-					</form>
-				</div>
-			</div><!-- #ml-content-setup-sec-0 -->
-		<?php endif; ?>
 
 		<?php if ( $this->should_show_mcsetup_section( 'ml-content-setup-sec-1' ) ) : ?>
 			<div class="wpml-section" id="ml-content-setup-sec-1">
@@ -655,14 +619,5 @@ class WPML_TM_Menus_Settings extends WPML_TM_Menus {
 		}
 
 		return $this->translate_link_targets_ui;
-	}
-
-	private function is_end_user_feature_enabled() {
-		if ( null === $this->end_user_feature_enabled ) {
-			$end_user_factory = new WPML_End_User_Loader_Factory();
-			$this->end_user_feature_enabled =  $end_user_factory->is_end_user_feature_enabled();
-		}
-
-		return $this->end_user_feature_enabled;
 	}
 }

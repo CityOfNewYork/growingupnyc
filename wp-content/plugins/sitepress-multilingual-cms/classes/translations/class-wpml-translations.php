@@ -66,7 +66,7 @@ class WPML_Translations extends WPML_SP_User {
 			$group_by = implode( ' ', $sql_parts['group_by'] );
 
 			$query = "
-				SELECT wpml_translations.translation_id, wpml_translations.language_code, wpml_translations.element_id, wpml_translations.source_language_code, wpml_translations.element_type, NULLIF(wpml_translations.source_language_code, '') IS NULL AS original 
+				SELECT wpml_translations.translation_id, wpml_translations.language_code, wpml_translations.element_id, wpml_translations.source_language_code, wpml_translations.element_type, NULLIF(wpml_translations.source_language_code, '') IS NULL AS original
 				{$select}
 				FROM {$this->sitepress->get_wpdb()->prefix}icl_translations wpml_translations
 					 {$join}
@@ -80,9 +80,6 @@ class WPML_Translations extends WPML_SP_User {
 				if ( $this->must_ignore_translation( $translation ) ) {
 					continue;
 				}
-
-				$cached_object_key = $translation->element_id . '#' . $wpml_element_type . '#0#' . $translation->language_code;
-				wp_cache_set( $cached_object_key, $cached_object_key, 'icl_object_id' );
 
 				$translations[ $translation->language_code ] = $translation;
 			}
@@ -239,13 +236,15 @@ class WPML_Translations extends WPML_SP_User {
 	private function get_sql_parts_for_post( $element_type, $sql_parts ) {
 		$sql_parts['select'][] = ', p.post_title, p.post_status';
 		$sql_parts['join'][]   = " LEFT JOIN {$this->sitepress->get_wpdb()->posts} p ON wpml_translations.element_id=p.ID";
+
 		if ( ! $this->all_statuses && 'post_attachment' !== $element_type && ! is_admin() ) {
+			$public_statuses_where = $this->get_public_statuses();
 			// the current user may not be the admin but may have read private post/page caps!
 			if ( current_user_can( 'read_private_pages' ) || current_user_can( 'read_private_posts' ) ) {
-				$sql_parts['where'][] = " AND (p.post_status IN ('publish', 'draft', 'private', 'pending' ))";
+				$sql_parts['where'][] = " AND (p.post_status IN (" . $public_statuses_where . ", 'draft', 'private', 'pending' ))";
 			} else {
 				$sql_parts['where'][] = ' AND (';
-				$sql_parts['where'][] = "p.post_status = 'publish' ";
+				$sql_parts['where'][] = "p.post_status  IN (" . $public_statuses_where . ") ";
 				if ( $uid = $this->sitepress->get_current_user()->ID ) {
 					$sql_parts['where'][] = $this->sitepress->get_wpdb()->prepare( " OR (post_status in ('draft', 'private', 'pending') AND  post_author = %d)", $uid );
 				}
@@ -254,6 +253,13 @@ class WPML_Translations extends WPML_SP_User {
 		}
 
 		return $sql_parts;
+	}
+
+	/**
+	 * @return string
+	 */
+	private function get_public_statuses() {
+		return wpml_prepare_in( get_post_stati( [ 'public' => true ] ) );
 	}
 
 	/**
@@ -277,8 +283,23 @@ class WPML_Translations extends WPML_SP_User {
 	 *
 	 * @return bool
 	 */
-	private function must_ignore_translation( $translation ) {
-		return $this->wpml_element_type_is_taxonomy( $translation->element_type ) && $this->skip_empty && $translation->instances === 0 && ( ! $this->skip_recursions && ! _icl_tax_has_objects_recursive( $translation->element_id ) );
+	private function must_ignore_translation( stdClass $translation ) {
+		return $this->skip_empty
+		       && (
+		       	    ! $translation->element_id
+		            || $this->must_ignore_translation_for_taxonomy( $translation )
+		       );
+	}
+
+	/**
+	 * @param stdClass $translation
+	 *
+	 * @return bool
+	 */
+	private function must_ignore_translation_for_taxonomy( stdClass $translation ) {
+		return $this->wpml_element_type_is_taxonomy( $translation->element_type )
+		       && $translation->instances === 0
+		       && ( ! $this->skip_recursions && ! _icl_tax_has_objects_recursive( $translation->element_id ) );
 	}
 
 	/**

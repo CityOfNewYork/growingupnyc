@@ -351,31 +351,60 @@
   }
 }
 
-//Curved purple button
+//Curved blue button
 .button--primary__blue {
   background: $strong-blue;
   color: $white;
   border-color: $strong-blue;
   text-transform: none;
   &:focus {
-    background: $white;
-    border-color: $white;
-    color: $strong-blue;
+    background: $blue-2;
+    border-color: $blue-2;
+    color: $white;
   }
 
   .no-touchevents & {
     &:hover {
-      background: $white;
-      border-color: $white;
-      color: $strong-blue;
+      background: $blue-2;
+      border-color: $blue-2;
+      color: $white !important;
     }
   }
 
   &[disabled],
   &[disabled]:hover {
-    background: $strong-blue;
-    border-color: $strong-blue;
+    background: $blue-2;
+    border-color: $blue-2;
     color: $white;
+    cursor: default;
+  }
+}
+
+//Curved orange button
+.button--primary__vivid-orange {
+  background: $bright-red;
+  color: $white;
+  border-color: $bright-red;
+  text-transform: none;
+  &:focus {
+    background: $pure-orange;
+    border-color: $white;
+    color: $white !important;
+  }
+
+  .no-touchevents & {
+    &:hover {
+      background: $pure-orange;
+      border-color: $pure-orange;
+      color: $white !important;
+    }
+  }
+
+  &[disabled],
+  &[disabled]:hover {
+    background: $pure-orange;
+    border-color: $pure-orange;
+    color: $white !important;
     cursor: default;
   }
 }

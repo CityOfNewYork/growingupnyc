@@ -72,23 +72,25 @@ class WPML_TM_ICL_Translations extends WPML_TM_Record_User {
 	 * @return WPML_TM_ICL_Translations[]
 	 */
 	public function translations() {
-		if ( (bool) $this->related === false ) {
+		if ( false === (bool) $this->related ) {
 			$trid = $this->trid();
 
-			$found = false;
-			$cache = new WPML_WP_Cache( 'WPML_TM_ICL_Translations::translations' );
-			$this->related = $cache->get( $trid, $found );
+			$found           = false;
+			$cache           = new WPML_WP_Cache( 'WPML_TM_ICL_Translations::translations' );
+			$translation_ids = $cache->get( $trid, $found );
 
 			if ( ! $found ) {
 				$translation_ids = $this->wpdb->get_results(
 					"SELECT translation_id, language_code
 				    FROM {$this->wpdb->prefix}{$this->table}
 				    WHERE trid = " . $trid );
-				foreach ( $translation_ids as $row ) {
-					$this->related[ $row->language_code ] = $this->tm_records
-						->icl_translations_by_translation_id( $row->translation_id );
-				}
-				$cache->set( $trid, $this->related );
+
+				$cache->set( $trid, $translation_ids );
+			}
+
+			foreach ( $translation_ids as $row ) {
+				$this->related[ $row->language_code ] = $this->tm_records
+					->icl_translations_by_translation_id( $row->translation_id );
 			}
 		}
 

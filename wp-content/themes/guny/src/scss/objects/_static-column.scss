@@ -26,9 +26,9 @@
     position: fixed;
 
     // Uses "not sticky" class to prevent jumping when going from absolute bottom to fixed top
-    // &.is-not-sticky {
-    //   position: absolute;
-    // }
+    &.is-not-sticky {
+      position: fixed;
+    }
 
     &.is-bottom {
       position: absolute;
@@ -40,11 +40,19 @@
   .o-static-column--left {
     border-left: 4px solid $color-background;
     left: 0;
+
+    @if ($language == 'ar') or ($language == 'ur') {
+      right: 0;
+    }
   }
 
   .o-static-column--right {
     border-right: 4px solid $color-background;
     right: 0;
+
+    @if ($language == 'ar') or ($language == 'ur') {
+      left: 0;
+    }
   }
 
   // Scroll Column
@@ -54,5 +62,9 @@
 
   .o-scroll-column--right {
     margin-left: 60%;
+
+    @if ($language == 'ar') or ($language == 'ur') {
+      margin-right: 60%;
+    }
   }
 }

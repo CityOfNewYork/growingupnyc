@@ -118,19 +118,15 @@ class WPML_TM_Action_Helper {
 	}
 
 	private function get_post_custom_fields( $post ) {
-		global $iclTranslationManagement;
-
 		$custom_fields_values = array();
 
-		if ( isset( $iclTranslationManagement->settings['custom_fields_translation'] ) && is_array( $iclTranslationManagement->settings['custom_fields_translation'] ) ) {
-			foreach ( $iclTranslationManagement->settings['custom_fields_translation'] as $cf => $op ) {
-				if ( in_array( (int) $op, array( WPML_TRANSLATE_CUSTOM_FIELD, WPML_COPY_ONCE_CUSTOM_FIELD ), true ) ) {
-					$value = get_post_meta( $post->ID, $cf, true );
-					if ( is_scalar( $value ) ) {
-						$custom_fields_values[] = $value;
-					} else {
-						$custom_fields_values[] = wp_json_encode( $value );
-					}
+		foreach (\WPML\TM\Settings\Repository::getCustomFields() as $cf => $op ) {
+			if ( in_array( (int) $op, array( WPML_TRANSLATE_CUSTOM_FIELD, WPML_COPY_ONCE_CUSTOM_FIELD ), true ) ) {
+				$value = get_post_meta( $post->ID, $cf, true );
+				if ( is_scalar( $value ) ) {
+					$custom_fields_values[] = $value;
+				} else {
+					$custom_fields_values[] = wp_json_encode( $value );
 				}
 			}
 		}

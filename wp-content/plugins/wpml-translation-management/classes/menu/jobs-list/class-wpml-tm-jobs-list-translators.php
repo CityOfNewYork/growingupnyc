@@ -19,17 +19,25 @@ class WPML_TM_Jobs_List_Translators {
 	}
 
 	private function map( $translator ) {
-		$language_codes = array_flip( icl_get_languages_codes() );
+		$language_codes = array_keys( array_flip( icl_get_languages_codes() ) );
 		$new_pairs      = array();
 		foreach ( $translator->language_pairs as $source => $targets ) {
+			$source_language = in_array( $source, $language_codes, true ) ? $source : '';
+			if ( ! $source_language ) {
+				continue;
+			}
+
 			foreach ( $targets as $target ) {
-				$source_language = isset( $language_codes[ $source ] ) ? $language_codes[ $source ] : '';
-				$target_language = isset( $language_codes[ $target ] ) ? $language_codes[ $target ] : '';
-				$new_pair        = array(
+				$target_language = in_array( $target, $language_codes, true ) ? $target : '';
+				if ( ! $target_language ) {
+					continue;
+				}
+
+				$new_pair    = array(
 					'source' => $source_language,
 					'target' => $target_language,
 				);
-				$new_pairs[]     = $new_pair;
+				$new_pairs[] = $new_pair;
 			}
 		};
 		$translator->language_pairs = $new_pairs;

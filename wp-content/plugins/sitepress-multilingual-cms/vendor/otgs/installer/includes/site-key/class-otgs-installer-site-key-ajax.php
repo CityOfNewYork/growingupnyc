@@ -23,6 +23,7 @@ class OTGS_Installer_Site_Key_Ajax {
 		add_action( 'wp_ajax_save_site_key', array( $this, 'save' ) );
 		add_action( 'wp_ajax_remove_site_key', array( $this, 'remove' ) );
 		add_action( 'wp_ajax_update_site_key', array( $this, 'update' ) );
+		add_action( 'wp_ajax_find_account', [ $this, 'find' ] );
 	}
 
 	public function save() {
@@ -49,11 +50,12 @@ class OTGS_Installer_Site_Key_Ajax {
 				$repository = $this->repositories->get( $repository );
 				$repository->set_subscription( $subscription_data );
 				$this->repositories->save_subscription( $repository );
+				$this->repositories->refresh();
 				$this->clean_plugins_update_cache();
 			} else {
 				$error = __( 'Invalid site key for the current site.', 'installer' ) . '<br /><div class="installer-footnote">' . __( 'Please note that the site key is case sensitive.', 'installer' ) . '</div>';
 			}
-		} catch ( OTGS_Installer_Site_Key_Exception $e ) {
+		} catch ( Exception $e ) {
 			$repository_data = $this->repositories->get( $repository );
 			$error           = $this->get_error_message( $e, $repository_data );
 		}
@@ -76,11 +78,12 @@ class OTGS_Installer_Site_Key_Ajax {
 			$repository = $this->repositories->get( $repository );
 			$repository->set_subscription( null );
 			$this->repositories->save_subscription( $repository );
+
 			$this->clean_plugins_update_cache();
 		}
 
-		wp_send_json_success();
 		$this->repositories->refresh();
+		wp_send_json_success();
 	}
 
 	public function update() {
@@ -110,9 +113,15 @@ class OTGS_Installer_Site_Key_Ajax {
 					}
 
 					$this->repositories->save_subscription( $repository_data );
-					$this->repositories->refresh();
+					$messages = $this->repositories->refresh( true );
+
+					if ( is_array( $messages ) ) {
+						$error .= implode( '', $messages );
+					}
+
+
 					$this->clean_plugins_update_cache();
-				} catch ( OTGS_Installer_Site_Key_Exception $e ) {
+				} catch ( Exception $e ) {
 					$error = $this->get_error_message( $e, $repository_data );
 				}
 			}
@@ -121,6 +130,35 @@ class OTGS_Installer_Site_Key_Ajax {
 
 		wp_send_json_success( array( 'error' => $error ) );
 	}
+
+	public function find() {
+		$repository = isset( $_POST['repository_id'] ) ? sanitize_text_field( $_POST['repository_id'] ) : null;
+		$nonce      = isset( $_POST['nonce'] ) ? $_POST['nonce'] : null;
+		$email      = isset( $_POST['email'] ) ? sanitize_text_field( $_POST['email'] ) : null;
+		$success    = false;
+
+		if ( $nonce && $repository && $email && wp_verify_nonce( $nonce, 'find_account_' . $repository ) ) {
+			$repository_data = $this->repositories->get( $repository );
+			$siteKey         = $repository_data->get_subscription()->get_site_key();
+
+			$args['body'] = [
+				'action'   => 'user_email_exists',
+				'umail'    => MD5( $email . $siteKey ),
+				'site_key' => $siteKey,
+				'site_url' => get_site_url()
+			];
+
+			$response = wp_remote_post( $repository_data->get_api_url(), $args );
+			if ( $response ) {
+				$body    = json_decode( wp_remote_retrieve_body( $response ) );
+				$success = isset( $body->success ) ? 'Success' === $body->success : false;
+			}
+		}
+
+		wp_send_json_success( [ 'found' => $success ] );
+
+	}
+
 
 	private function get_error_message( Exception $e, OTGS_Installer_Repository $repository_data ) {
 		$error = $e->getMessage();

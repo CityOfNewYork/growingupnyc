@@ -20,7 +20,11 @@
       {% include 'partials/share-form-spinner.twig' %}
     </div>
 
-    <button id="smsbutton" type="submit" class="button--primary button--primary__curved {% if is_generation %}{% if color != '' %}button--primary__{{color}}{% else %}button--primary__purple{% endif %}{% else %}button--simple button--simple--alt{% endif %} sms-form__submit">
+    <button id="smsbutton" type="submit" class="button--primary button--primary__curved {% if is_generation %}{% if color != '' %}button--primary__{{color}}{% else %}button--primary__purple{% endif %}{% else %}{% if color != '' %}button--primary__{{color}}{% else %}button--simple button--simple--alt{% endif %}{% endif %} sms-form__submit">
+
+
+
+
       <span class="send">{{__('Send', 'gunyc-share')}}</span>
       <span class="send__success">{{__('Send another', 'gunyc-share')}}</span>
     </button>

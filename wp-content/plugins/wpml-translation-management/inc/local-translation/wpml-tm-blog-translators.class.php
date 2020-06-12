@@ -13,18 +13,25 @@ class WPML_TM_Blog_Translators {
 	/** @var WPML_Translator_Records $translator_records */
 	private $translator_records;
 
-	/** @var stdClass[] $all_translators */
-	private $all_translators;
+	/** @var  WPML_Cache_Factory */
+	private $cache_factory;
 
 	/**
-	 * @param SitePress               $sitepress
-	 * @param WPML_TM_Records         $tm_records
+	 * @param SitePress $sitepress
+	 * @param WPML_TM_Records $tm_records
 	 * @param WPML_Translator_Records $translator_records
+	 * @param WPML_Cache_Factory $cache_factory
 	 */
-	public function __construct( SitePress $sitepress, WPML_TM_Records $tm_records, WPML_Translator_Records $translator_records ) {
+	public function __construct(
+		SitePress $sitepress,
+		WPML_TM_Records $tm_records,
+		WPML_Translator_Records $translator_records,
+		WPML_Cache_Factory $cache_factory
+	) {
 		$this->sitepress          = $sitepress;
 		$this->tm_records         = $tm_records;
 		$this->translator_records = $translator_records;
+		$this->cache_factory      = $cache_factory;
 	}
 
 	/**
@@ -33,7 +40,11 @@ class WPML_TM_Blog_Translators {
 	 * @return bool
 	 */
 	public function has_translators() {
-		return (bool) $this->get_raw_blog_translators();
+		$cache = $this->cache_factory->get( 'WPML_TM_Blog_Translators::has_translators' );
+
+		return $cache->execute_and_cache( 'has-translators', function () {
+			return $this->translator_records->has_users_with_capability();
+		} );
 	}
 
 	/**
@@ -80,11 +91,11 @@ class WPML_TM_Blog_Translators {
 	 * @return array
 	 */
 	public function get_raw_blog_translators() {
-		if ( null === $this->all_translators ) {
-			$this->all_translators = $this->translator_records->get_users_with_capability();
-		}
+		$cache = $this->cache_factory->get( 'WPML_TM_Blog_Translators::get_raw_blog_translators' );
 
-		return $this->all_translators;
+		return $cache->execute_and_cache( 'has-translators', function () {
+			return $this->translator_records->get_users_with_capability();
+		} );
 	}
 
 	/**

@@ -27,6 +27,9 @@
 .c-footer__section {
   @include media($bp-large) {
     @include span-columns(6);
+    @if ($language == 'ar') or ($language == 'ur') {
+      float: right;
+    }
   }
 }
 
@@ -50,14 +53,27 @@
 .c-footer__logo {
   @include span-columns(6);
 
+  @if ($language == 'ar') or ($language == 'ur') {
+    float: right;
+  }
+
   + .c-footer__logo {
     @include omega;
+
   }
   @include media($bp-medium) {
     @include span-columns(4 of 12);
+    
+    @if ($language == 'ar') or ($language == 'ur') {
+      float: right;
+    }
 
     + .c-footer__logo {
       @include shift(2);
+      @if ($language == 'ar') or ($language == 'ur') {
+        // @include shift(-2);
+        margin-right: 17.1875%;
+      }
     }
   }
 }
@@ -104,6 +120,12 @@
 .c-footer__column {
   @include span-columns(6 of 12);
   @include omega(even);
+
+  @if ($language == 'ar') or ($language == 'ur') {
+    // @include shift(-2);
+    float: right;
+    text-align: right;
+  }
 }
 
 // Footer Navigation Item

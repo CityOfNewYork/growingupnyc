@@ -282,7 +282,8 @@ class WPML_Abstract_Job_Collection {
 		if ( $overdue ) {
 			$today_date = date( 'Y-m-d' );
 
-			$where .= $this->wpdb->prepare( " AND j.deadline_date IS NOT NULL AND j.completed_date IS NULL AND j.deadline_date < %s AND j.deadline_date <> '0000-00-00 00:00:00'", $today_date );
+			$statusCond = wpml_prepare_in( [ ICL_TM_WAITING_FOR_TRANSLATOR, ICL_TM_IN_PROGRESS ], '%d' );
+			$where      .= $this->wpdb->prepare( " AND j.deadline_date IS NOT NULL AND s.status IN ({$statusCond}) AND j.deadline_date < %s AND j.deadline_date <> '0000-00-00 00:00:00'", $today_date );
 		}
 
 		return $where;

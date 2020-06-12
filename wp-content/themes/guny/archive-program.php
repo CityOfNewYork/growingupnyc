@@ -6,20 +6,26 @@
 *
 */
 $context = Timber::get_context();
-$context['top_widget'] = Timber::get_widgets('top_widget');
-$templates = array( 'list-program.twig', 'list.twig' );
 
+$context['top_widget'] = Timber::get_widgets('top_widget');
+
+$path = '/programs';
+
+$context['page_title'] = Templating\get_title($path);
+$context['page_tagline'] = Templating\get_tagline($path);
+$context['banner'] = Templating\get_hero_banner_img($path);
+$context['programs_alert'] = Templating\get_alert_content($path);
 $context['post_type'] = 'program';
+
 // meta tags
-$context['meta_desc'] = get_field('program_landing_meta_desc', 'option');
-$context['meta_keywords'] = get_field('program_landing_meta_keywords', 'option');
+$context['meta_desc'] = get_field('meta_description', Templating\get_controller_id($path));
+$context['meta_keywords'] = get_field('meta_keywords', Templating\get_controller_id($path));
+$context['meta_noindex'] = get_field('meta_noindex', Templating\get_controller_id($path));
 
 // Taxonomy Headings
 $taxonomies = get_object_taxonomies( 'program', object );
 $context['age_group_heading']=$taxonomies['age_group']->label;
 $context['program_category_heading']=$taxonomies['programs_cat']->label;
 
-// check the language
-$context['language'] = ICL_LANGUAGE_CODE;
-
+$templates = array( 'list-program.twig', 'list.twig' );
 Timber::render( $templates, $context );

@@ -108,15 +108,16 @@ window.accordion = accordion;
   }
   
   // hide languages until ready for production
-  const wpmlClasses = document.querySelectorAll('.wpml-ls-item');
+  const wpmlClasses = Array.prototype.slice.call(document.querySelectorAll('.wpml-ls-item'));
   wpmlClasses.forEach(function (elem) {
-
     const regex = /wpml-ls-item-([^ ]+).*/g;
     const found = $(elem).attr('class').match(regex);
     const languages = ['-ar', '-bn', '-fr', '-ht', '-ko', '-pl', '-ru', '-ur', '-zh-hant'];
-    if (languages.some(s => found[0].includes(s))) {
-      $(elem).hide();
-    }
+    languages.forEach(function(lang) {
+      if (found[0].includes(lang)){
+        $(elem).hide();
+      }
+    });
   });
 
   // Initialize share by email/sms forms.

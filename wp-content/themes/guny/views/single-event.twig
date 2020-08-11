@@ -62,6 +62,10 @@
 
 {% block content %}
 
+  {% if language_code != 'en' %}
+    {% include ['partials/google-translate.twig'] %}
+  {% endif %}
+
   {% if is_archive %}
     {% set event_link %}{{current_url}}{% endset %}
   {% elseif language == 'en' %}
@@ -103,8 +107,10 @@
     {% endif %}
   </header>
 
-  <section class="o-container u-bottom-spacing">
-    <aside class="o-article-sidebar o-content-container--compact u-lg-gutter">
+  <div id="google_translate_element" class="hidden"></div>
+  
+  <section class="o-container u-bottom-spacing desktop:flex">
+    <aside class="o-article-sidebar o-content-container--compact u-lg-gutter desktop:w-sidebar">
       <dl class="c-details-list">
 
         <dt class="c-details-list__term">{{ __('Date', 'guny-events') }}</dt>
@@ -170,7 +176,7 @@
 
       </dl>
     </aside>
-    <article class="o-article o-content-container--compact">
+    <article class="o-article o-content-container--compact desktop:w-article">
       <div class="o-content-container--text s-wysiwyg">
 
         {% if post.summary %}

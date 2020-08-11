@@ -150,6 +150,8 @@ class GunySite extends TimberSite {
       $context['search_widgets']=get_search_widget('search_guny_widgets');
     }
 
+    $context['direction'] = (ICL_LANGUAGE_CODE === 'ar' || ICL_LANGUAGE_CODE === 'ur') ? 'rtl' : 'ltr';
+
     if (is_front_page()) {
       $context['top_widget'] = Timber::get_widgets('top_widget');
     }
@@ -181,7 +183,7 @@ class GunySite extends TimberSite {
         'numberposts' => 1
       );
     $event_alert = get_posts($args);
-    
+
     $context['event_alert'] = get_field( "banner_content", $event_alert[0]->ID );
 
      // Alert - program temp
@@ -193,7 +195,7 @@ class GunySite extends TimberSite {
         'numberposts' => 1
       );
     $programs_alert = get_posts($args);
-    
+
     $context['programs_alert'] = get_field( "banner_content", $programs_alert[0]->ID );
     $context['direction'] = (ICL_LANGUAGE_CODE === 'ar' || ICL_LANGUAGE_CODE === 'ur') ? 'rtl' : 'ltr';
 
@@ -381,7 +383,7 @@ class GunyEvent extends TimberPost {
     }
   }
 
-  
+
 
   public function end_date_full() {
     if (function_exists('tribe_get_end_date')) {
@@ -573,9 +575,6 @@ function guny_titles( $title ){
     // set the title to the program name instead of plain language
     $title=$_post->brain_building_tip_name . ' - ' . get_bloginfo('name', 'display');
   }
-  else if(get_post_type() == "summer-guide"){
-    $title = get_post_type_object('summer-guide')->labels->singular_name.' - ' . get_bloginfo('name', 'display');
-  }
 
   if ( preg_match('search') || !empty($_GET['s'])) {
     $title = __('Search - Growing Up NYC', 'guny-search');
@@ -709,9 +708,6 @@ $includes = [
   [ // Wpml
     '/includes/term_translations.php', // Term translation helpers
   ],
-  [ // michelf
-    '/vendor/michelf/php-markdown/Michelf/Markdown.inc.php' // Markdown parser
-  ]
 ];
 
 for ($i=0; $i < sizeof($includes); $i++) {

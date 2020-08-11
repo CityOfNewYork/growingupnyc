@@ -7,7 +7,6 @@
 <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
 <html lang="{{language_code}}" dir="{{direction}}" class="no-js">
-
 <!--<![endif]-->
 <head>
   <meta charset="utf-8">
@@ -25,6 +24,7 @@
   <link rel="apple-touch-icon-precomposed" sizes="76x76" href="{{theme.path}}/assets/img/growningup-Icon-App-76x76@3x.png">
   <link rel="stylesheet" href="{{theme.path}}/src/css/font-awesome.min.css" type="text/css" media="screen">
   <link rel="stylesheet" href="{{theme.path}}/src/css/animate.css" type="text/css" media="screen">
+
   <script>
     (function(d) {
       var config = {
@@ -40,9 +40,10 @@
       h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
     })(document);
   </script>
-  {{ function('enqueue_language_style', 'style') }}
 
+  {{ function('enqueue_language_style', 'style') }}
   {{ function('wp_head') }}
+
   {% block head_extras %}{% endblock %}
   {% block scripts_head %}
     {% include 'partials/scripts-google-analytics.twig' %}
@@ -51,12 +52,12 @@
 
 <body class="{{body_class}}" data-template="base.twig">
   {% include 'partials/scripts-google-tag-manager.twig' %}
-  {% include 'partials/svg-sprite.twig' %}
+
   <div class="o-offcanvas js-offcanvas" id="offcanvas-ages">
     <a href="#main" class="show-for-keyboard">Skip to main content</a>
     <nav class="o-offcanvas__side js-offcanvas__side" id="ages" role="navigation" aria-label="ages-heading">
       <h2 id="ages-heading" class="show-for-screen-reader">Resources by Age</h2>
-      <button data-js="offcanvas-ages" class="o-offcanvas__close  button--text"><svg class="icon--small" role="img"><title>Close Resources by Age</title><use xlink:href="#icon-close"></use></svg></button>
+      <button data-js="offcanvas-ages" data-toggle="offcanvas-ages" class="o-offcanvas__close button--text"><svg class="icon--small" role="img"><title>Close Resources by Age</title><use xlink:href="#icon-close"></use></svg></button>
       <ol class="js-accordion c-list-box c-list-box--secondary" data-multiselectable="true">
         {% for age_group in age_menu %}
           <li class="c-list-box__item">
@@ -73,34 +74,35 @@
         {% endfor %}
       </ol>
       <div class="u-top-spacing-small text-center">
-        <a href="#ages" data-toggle="offcanvas-ages" class="show-for-keyboard">Close Resources by Age</a>
+        <a href="#ages" data-js="offcanvas-ages" class="show-for-keyboard">Close Resources by Age</a>
       </div>
     </nav>
 
     <div class="o-offcanvas__main js-offcanvas__main">
       {{top_widget}}
-      {% block header %}
-        <header class="c-banner">
-          <div class="o-container">
-            <a href="{{site.url}}" class="c-banner__logo-wrapper c-banner__logo-wrapper{% if not top_widget %}-no-menu{% endif %}"><span class="c-banner__logo c-banner__logo">{{site.name}}</span></a>
-            <nav class="c-banner__nav" role="navigation" aria-label="Primary">
-              <ul class="o-inline">
+			<span data-js="translate" class="hidden">{{__('Translate', 'guny')}}</span>
+			<span data-js="pick-a-language" class="hidden">{{__('Pick a language', 'guny')}}</span>
 
+      {% block header %}
+        <header class="o-navigation">
+          <div class="o-container">
+            <a href="{{site.url}}" class="o-navigation__logo-wrapper o-navigation__logo-wrapper-no-menu"><span class="o-navigation__logo">{{site.name}}</span></a>
+            <nav class="o-navigation__nav" role="navigation" aria-label="Primary">
+              <ul class="o-inline">
                 {% for menu_item in menu.get_items %}
-                <li class="o-inline__item"><a href="{{menu_item.link}}" class="c-banner__link">{{menu_item.title}}</a></li>
+                <li class="o-inline__item"><a href="{{menu_item.link}}" class="o-navigation__nav-link">{{menu_item.title}}</a></li>
                 {% endfor %}
 
-                <li class="o-inline__item"><a href="#ages" data-js="offcanvas-ages" class="c-banner__link">{{ __('Ages', 'GUNY-Primary-Menu') }}</a></li>
+                <li class="o-inline__item"><a href="#ages" data-js="offcanvas-ages" data-toggle="offcanvas-ages" class="o-navigation__nav-link">{{ __('Ages', 'GUNY-Primary-Menu') }}</a></li>
 
                 {% if function('Search\\visible') %}
                 <li class="o-inline__item">
-                   <a class="c-banner__link" href="#search" data-toggle="overlay-search" data-toggle-class="fadeInDown">
-                     <svg class="c-banner__icon c-banner__icon__search" role="img"><title>Search</title><use xlink:href="#icon-search"></use></svg>
-                     <svg class="c-banner__icon c-banner__icon__close" role="img"><title>Search</title><use xlink:href="#icon-close"></use></svg>
+                   <a class="o-navigation__nav-link" href="#search" data-toggle="overlay-search" data-toggle-class="fadeInDown">
+                     <svg class="o-navigation__icon o-navigation__icon__search" role="img"><title>Search</title><use xlink:href="#icon-search"></use></svg>
+                     <svg class="o-navigation__icon o-navigation__icon__close" role="img"><title>Search</title><use xlink:href="#icon-close"></use></svg>
                    </a>
                 </li>
                 {% endif %}
-
               </ul>
             </nav>
           </div>
@@ -112,6 +114,9 @@
 
       {% endblock %}
 
+      <a class="o-offcanvas__overlay" data-js="offcanvas-ages" aria-hidden="true"></a>
+
+      {# Main Content #}
       <main id="main" role="main">
         {% block content %}
           <section class="post-list small-12 columns">
@@ -120,88 +125,12 @@
         {% endblock %}
       </main> <!-- /#main -->
 
-      <footer class="c-footer" role="contentinfo">
-        <div class="o-container">
-          <div class="c-footer__section">
-            <div class="c-footer__logos">
-              <figure class="c-footer__logo">
-                <img alt="Growing Up NYC" src="{{theme.link}}/assets/img/logo-gunyc-white@236px.png" width="118">
-              </figure>
-              <figure class="c-footer__logo">
-                <a href="http://www1.nyc.gov/site/childrenscabinet/index.page" target="_blank"><img alt="Link to NYC Children's Cabinet website" src="{{theme.link}}/assets/img/NYC-childrens-cabinet.svg" height="69" width="157"></a>
-              </figure>
-            </div>
-            <nav role="navigation" class="c-footer__nav" aria-label="Secondary">
-              <ul class="c-footer__column">
-                <li class="c-footer__nav-item">
-                  <a class="c-footer__link" href="{{ site.url }}">{{ __('Home', 'GUNY-Footer') }}</a>
-                </li>
-                {% if menu.id %}{% for m in menu.get_items %}
-                <li class="c-footer__nav-item {{ m._menu_item_classes|join(' ') }}">
-                  <a class="c-footer__link" href="{{ m.link }}"
-                  {% if m.attr_title != '' %}title="{{ m.attr_title }}"{% else %}title="{{ m.title }}"{% endif %}
-                  {% if m.target != '' %}target="{{ m.target }}"{% endif %}
-                  {% if m.xfn != '' %}rel="{{ m.xfn }}"{% endif %}
-                  >
-                    {{ m.title }}
-                  </a>
-                </li>
-                {% endfor %}{% endif %}
-                {% if footer_menu_primary_additional.id %}{% for m in footer_menu_primary_additional.get_items %}
-                <li class="c-footer__nav-item {{ m._menu_item_classes|join(' ') }}">
-                  <a class="c-footer__link" href="{{ m.link }}"
-                  {% if m.attr_title != '' %}title="{{ m.attr_title }}"{% else %}title="{{ m.title }}"{% endif %}
-                  {% if m.target != '' %}target="{{ m.target }}"{% endif %}
-                  {% if m.xfn != '' %}rel="{{ m.xfn }}"{% endif %}
-                  >
-                    {{ m.title }}
-                  </a>
-                </li>
-                {% endfor %}{% endif %}
-                {% if footer_menu_left.id %}{% for m in footer_menu_left.get_items %}
-                <li class="c-footer__nav-item {{ m._menu_item_classes|join(' ') }}">
-                  <a class="c-footer__link" href="{{ m.link }}"
-                  {% if m.attr_title != '' %}title="{{ m.attr_title }}"{% else %}title="{{ m.title }}"{% endif %}
-                  {% if m.target != '' %}target="{{ m.target }}"{% endif %}
-                  {% if m.xfn != '' %}rel="{{ m.xfn }}"{% endif %}
-                  >
-                    {{ m.title }}
-                  </a>
-                </li>
-                {% endfor %}{% endif %}
-              </ul>
-              <ul class="c-footer__column">
-                {% if footer_menu_right.id %}{% for m in footer_menu_right.get_items %}
-                <li class="c-footer__nav-item {{ m._menu_item_classes|join(' ') }}">
-                  <a class="c-footer__link" href="{{ m.link }}"
-                  {% if m.attr_title != '' %}title="{{ m.attr_title }}"{% else %}title="{{ m.title }}"{% endif %}
-                  {% if m.target != '' %}target="{{ m.target }}"{% endif %}
-                  {% if m.xfn != '' %}rel="{{ m.xfn }}"{% endif %}
-                  >
-                    {{ m.title }}
-                  </a>
-                </li>
-                {% endfor %}{% endif %}
-              </ul>
-            </nav>
-          </div>
-          <div class="c-footer__signup">
-            {% include 'partials/form-email-signup.twig' with {form_id: 'footer'} %}
-          </div> <!-- /.c-footer__signup -->
-        </div> <!-- /.o-container -->
-        <div class="o-container">
-          <div class="c-footer__footer">
-            <p>&copy; {{now|date('Y')}} {{ __('City of New York. All Rights Reserved.', 'GUNY-Footer') }}<br>{{ __('NYC is a trademark and service mark of the City of New York', 'GUNY-Footer') }}</p>
-          </div>
-        </div>
-        <div class="c-footer__reached"></div>
-      </footer> <!-- /.c-footer -->
+      {# Footer #}
+      {% include 'objects/footer.twig' %}
 
-      {# alert banner #}
+      {# Alert Banner #}
       {% include 'banner.twig' %}
-      {# alert banner end #}
 
-      <a class="o-offcanvas__overlay" data-js="offcanvas-ages" aria-hidden="true"></a>
     </div> <!-- /.o-offcanvas__main -->
   </div> <!-- /.o-offcanvas -->
 
@@ -209,4 +138,10 @@
 
   {{ wp_footer }}
 
+  {# Icons #}
+  <div class="hidden" aria-hidden="true">
+    {% include 'partials/svg-sprite.twig' %}
+  </div>
+
   </body>
+</html>

@@ -8,8 +8,13 @@ $context = Timber::get_context();
 $post = Timber::get_post();
 
 $context['post'] = $post;
+// pre_dump($post);
 
-$context['sections'] = Templating\get_sections();
+$context['top_widget'] = Timber::get_widgets('top_widget');
+
+$context['archive_link'] = get_post_type_archive_link('summer-guide');
+$context['domain'] = 'GUNY-Seasonal';
+$context['eventslink'] = get_post_type_archive_link('tribe_events');
 
 // in-body alert under banner
 $landing_page = get_page_by_path('summer');

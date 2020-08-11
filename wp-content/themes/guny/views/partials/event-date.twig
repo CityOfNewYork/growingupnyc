@@ -2,11 +2,11 @@
 {% if post.all_day %}
   All Day
 {% elseif post.multiday %}
-<span class="nowrap">{{post.start_datetime|date('D M j g:i A')}}</span>
-- <span class="nowrap">{{post.end_datetime|date('D M j g:i A')}}</span>
+<span class="whitespace-no-wrap">{{post.start_datetime|date('D M j g:i A')}}</span>
+- <span class="whitespace-no-wrap">{{post.end_datetime|date('D M j g:i A')}}</span>
 {% else %}
-  <span class="nowrap">{{post.start_datetime|date('g:i A')}}</span>
+  <span class="whitespace-no-wrap">{{post.start_datetime|date('g:i A')}}</span>
   {% if not post.multiday and post.end_datetime != post.start_datetime %}
-    - <span class="nowrap">{{post.end_datetime|date('g:i A')}}</span>
+    - <span class="whitespace-no-wrap">{{post.end_datetime|date('g:i A')}}</span>
   {% endif %}
 {% endif %}

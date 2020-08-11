@@ -12,7 +12,8 @@ $context['page_title'] = Templating\get_title($path);
 $context['page_tagline'] = Templating\get_tagline($path);
 $context['banner'] = Templating\get_hero_banner_img($path);
 $context['post_type'] = 'summer-guide';
-$context['programs_alert'] = Templating\get_alert_content($path);
+$context['programs_alert'] = SummerGuides\get_alert_content();
+$context['top_widget'] = Timber::get_widgets('top_widget');
 
 // Taxonomy Headings
 $taxonomies = get_object_taxonomies( 'summer-guide', object );

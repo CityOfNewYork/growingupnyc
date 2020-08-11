@@ -122,8 +122,8 @@ function get_rest_summer_age_groups( $object ) {
 function get_rest_summer_google_map_link( $object ) {
   $loc_obj = new stdClass();
 
-  preg_match('#\((.*?)\)#', $object['acf']['location_description'], $post_loc);
-  preg_match('#\[(.*?)\]#', $object['acf']['location_description'], $post_loc_name);
+  preg_match('#\((.*?)\)#', $object['acf']['s_location_description'], $post_loc);
+  preg_match('#\[(.*?)\]#', $object['acf']['s_location_description'], $post_loc_name);
   
   $loc_obj->google_map_link = $post_loc[1];
   $loc_obj->location_name = $post_loc_name[1];

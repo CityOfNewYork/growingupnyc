@@ -15,6 +15,8 @@ $context['banner'] = Templating\get_hero_banner_img($path);
 $context['programs_alert'] = Templating\get_alert_content($path);
 $context['post_type'] = 'afterschool-guide';
 
+$context['top_widget'] = Timber::get_widgets('top_widget');
+
 // Taxonomy Headings
 $taxonomies = get_object_taxonomies( 'afterschool-guide', object );
 $context['age_group_heading']=$taxonomies['age_group']->label;

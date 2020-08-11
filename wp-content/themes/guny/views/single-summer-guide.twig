@@ -10,11 +10,10 @@
 	</style>
 {% endblock %}
 
-
 {% block content %}
 
   <div class="js-parallax">
-    <header class="c-hero c-hero--large c-hero--long-text bg-pure-orange bg-splatter-pure-orange js-parallax-content">
+    <header class="c-hero c-hero--large c-hero--long-text bg-color-orange bg-splatter-pure-orange js-parallax-content">
       <div class="o-container js-parallax-text">
 
         <h1 class="c-hero__title--long">
@@ -22,7 +21,8 @@
             <svg aria-hidden="true" class="icon--medium"><use xlink:href="#icon-summer-guides"></use></svg>
           </span>
 
-          {{ post.title }}
+          {{ post.s_program_title_translated }}
+
         </h1>
 
         <p class="c-hero__tags">
@@ -40,64 +40,107 @@
     </header>
   </div>
 
-  <article class="o-container u-bottom-spacing-small js-sticky-container">
+  <article class="o-container u-bottom-spacing-small js-sticky-container o-pa-top">
 
-    {% if sections %}
-    <aside class="o-article-sidebar">
-      <div class="o-content-container--compact u-shift-up">
-        <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
+    <aside class="o-article-sidebar o-content-container--compact u-lg-gutter">
+      <dl class="c-details-list">
 
-          {% for section in sections %}
-          {% if section.section_title %}
-          <li class="c-nav-list__item">
-            <a class="js-section c-nav-list__link bg-vivid-orange border-vivid-orange hover:border-bright-red hover:bg-bright-red" href="#section-{{ section.slug }}" data-section="section-{{ section.slug }}">
-              {{ section.section_title }} {# translation comes from page content #}
-              <svg aria-hidden="true" class="icon--caret">
-                <use xlink:href="#icon-caret-right"></use>
-              </svg>
-            </a>
-          </li>
-          {% endif %}
-          {% endfor %}
-
-        </ol>
-      </div>
-    </aside>
-    {% endif %}
-
-    <div class="o-article js-sticky-article">
-      {% if program_page_alert != '' %}
-        <div class="alert">
-          <div class="o-container">
-            {{program_page_alert}}
-          </div>
-        </div>
-      {% endif %}
-      <div class="o-content-container--compact">
-
-        {% if post.content %}
-        <section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" data-id="section-summary">
-          {{ post.content }} {# translation comes from page content #}
-        </section>
+        {% if post.s_eligibility %}
+				<dt class="c-details-list__term">{{ __('Who', 'GUNY-Seasonal') }}</dt>
+        <dd class="c-details-list__descr">
+          <span>{{post.s_eligibility}}</span>
+        </dd>
         {% endif %}
 
-        {% if sections %}
-          {% set section_previous = true %}
-          {% set section_no_divider_after = ['newsletter-signup', 'related-events'] %}
-          {% for key, section in sections %}
+        {% if post.s_when %}
+        <dt class="c-details-list__term">{{ __('When', 'GUNY-Seasonal') }}</dt>
+        <dd class="c-details-list__descr">
+          <span>{{post.s_when}}</span>
+        </dd>
+        {% endif %}
 
-            {% include 'partials/' ~ section.acf_fc_layout ~ '.twig' with {title: section.section_title, id: 'section-' ~ section.slug, class: ''} %}
-
-            {% if section_previous and section_previous in section_no_divider_after %}<hr>{% endif %}
-
-            {% set section_previous = section.acf_fc_layout %}
-
+        {% if post.s_where %}
+        <dt class="c-details-list__term">{{ __('Where', 'GUNY-Seasonal') }}</dt>
+        <dd class="c-details-list__descr">
+          {{post.s_where}}
+          {% for borough in post.terms('borough') %}
+          {{borough.name}}
           {% endfor %}
+        </dd>
+        {% endif %}
+
+        <dt class="c-details-list__term">{{ __('Cost', 'GUNY-Seasonal') }}</dt>
+        <dd class="c-details-list__descr">
+        {% if post.s_cost %}
+          {{post.s_cost}}
+          {% else %}
+          {{ __('Free', 'GUNY-Seasonal') }}
+        {% endif %}
+        </dd>
+
+        {% if post.s_website %}
+        <dt class="c-details-list__term">{{ __('More Information', 'GUNY-Seasonal') }}</dt>
+        <dd class="c-details-list__descr"><a href="{{post.s_website}}" target="_blank">{{ __('Visit the activity website', 'GUNY-Seasonal') }}</a></dd>
+        {% endif %}
+
+      </dl>
+    </aside>
+
+    <div class="o-article js-sticky-article">
+      <div class="o-content-container--compact">
+
+        {% if post.s_description %}
+        <section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" data-id="section-summary">
+          {{ post.s_description }}
+        </section>
+				{% endif %}
+
+        {% if post.s_how_to_apply %}
+				<hr>
+				<section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" data-id="how-to-apply">
+          <h2 id="section-how-to-apply-">{{ post.s_how_to_apply_title }}</h2>
+          {{ post.s_how_to_apply }}
+				</section>
+				{% endif %}
+
+				{% if post.s_cta_url %}
+				<section class="o-content-container--text s-wysiwyg u-bottom-spacing-small" data-id="call-to-action">
+					<button>
+					{% if post.s_cta_new_window %}
+						<a href="{{ post.s_cta_url }}" class="button--outline button--outline--gray aligncenter" target="_blank">{{ post.s_cta_title }}</a>
+        	{% else %}
+						<a href="{{ post.s_cta_url }}" class="button--outline button--outline--gray aligncenter">{{ post.s_cta_title }}</a>
+					{% endif %}
+					</button>
+				</section>
+				{% endif %}
+
+        {# Events #}
+        {% if post.relevant_events %}
+        <hr>
+          <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" data-id="section-events">
+            <h2>{{ __('Events', 'GUNY-Single-Age') }}</h2>
+              <p class="c-block-list__text">{{post.events_text}}</p>
+            {# {% endif %} #}
+            <div class="c-block-list__inner">
+            {% for event in post.relevant_events %}
+            {% set single_event = TimberPost(event, 'GunyEvent') %}
+                <div class="c-block-list__item">
+                  {% include ['partials/teaser-tribe_events.twig', 'partials/teaser.twig'] with {post: single_event} %}
+                </div>
+              {% endfor %}
+            </div>
+            <!-- /.c-block-list-inner -->
+            <div class="text-center">
+              <a href="{{eventslink}}" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Single-Age') }}</a>
+            </div>
+          </section>
         {% endif %}
 
       </div>
     </div>
 
   </article>
+
 
 {% endblock %}

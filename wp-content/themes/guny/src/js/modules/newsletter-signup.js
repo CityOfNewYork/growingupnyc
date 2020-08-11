@@ -1,6 +1,8 @@
 /**
 * Validate a form and submit via the signup API
 */
+// import zipcodes from './data/zipcodes.json'
+// import formErrors from './data/form-errors.json'
 
 export default function() {
   // const $signupForms = $('.guny-signup');

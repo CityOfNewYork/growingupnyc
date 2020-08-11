@@ -7,7 +7,7 @@
       <span class="sticker sticker--small c-tip-card__sticker" aria-hidden="true">
         <svg class="icon--medium">
           <title>{{ category.name }}</title>
-          <use xlink:href="#icon-{{post.terms('tip_category')[0].slug|replace({'-es':''})}}"></use>
+          <use xlink:href="#icon-{{post.terms('tip_category')[0].slug|replace({(['-',language_code]|join):''})}}"></use>
         </svg>
       </span>
     </a>
@@ -24,11 +24,11 @@
       {{ post.brainy_background }}
     {% else %}
       {{ post.brain_building_tip|slice(0, 60) ~ '...'  }}
-      <a href="{% if language_code !='en' %}/{{language_code}}{% endif %}/brainbuilding/{{post.slug}}" class="c-tip-card__link" title="{{ __('Try this tip:', 'GUNY-Tips') }} {{ post.brain_building_tip_name }}">{{ __('Try this tip', 'GUNY-Tips') }}<svg aria-hidden="true" class="icon--caret--small"><use xlink:href="#icon-caret-line-right"></use></svg></a>
+      <a href="{% if language_code !='en' %}/{{language_code}}{% endif %}/brainbuilding/{{post.slug}}" class="c-tip-card__link">{{ __('Try this tip', 'GUNY-Tips') }}<svg aria-hidden="true" class="icon--caret--small"><use xlink:href="#icon-caret-line-right"></use></svg></a>
       {% if post.terms('age_group') or post.terms('tip_category') %}
         <div class="c-card__tags">
           {% for term in post.terms('age_group') %}
-            <a href="{{ages_link}}?ages={{term.slug}}" class="button--pill button--pill--{{term.slug|replace({'-es':''})}}">{{ term.name }}</a>
+            <a href="{{tips_link}}?ages={{term.slug}}" class="button--pill button--pill--{{term.slug|replace({(['-',language_code]|join):''})}}">{{ term.name }}</a>
           {% endfor %}
           {% for term in post.terms('tip_category') %}
             <a href="{{tips_link}}?tip_category={{term.slug}}" class="button--pill">{{ term.name }}</a>
@@ -38,11 +38,14 @@
     {% endif %}
   </div>
 
-
 </div>
 {# Powered by Vroom #}
 {% if logo == true %}
 <div class="c-tip-card__banner bg-color-brain-building-tip text-right">
-  <img class="c-tip-card__banner__img" src="/wp-content/themes/guny/assets/img/logo-vroom-white{% if language_code != 'en' %}-{{language_code}}{% endif %}.png">
+  {# <img class="c-tip-card__banner__img" src="/wp-content/themes/guny/assets/img/logo-vroom-white.png"> #}
+  <svg class="icon--vroom">
+    <title>Vroom Logo</title>
+    <use xlink:href="#icon-vroom-logo-white{% if language_code != 'en' %}-{{language_code}}{% endif %}"></use>
+  </svg>
 </div>
 {% endif %}

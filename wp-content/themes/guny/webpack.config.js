@@ -1,12 +1,16 @@
+var path = require('path');
 var webpack = require('webpack');
 
 const config = {
+  devtool: 'inline-source-map',
+  performance: { hints: false },
+  mode: process.env.NODE_ENV,
   module: {
     rules: [
       {
         loader: 'babel-loader',
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /.\/node_modules\/growingupnyc-patterns\/src/,
         query: {
           presets: [
             [
@@ -30,38 +34,22 @@ const config = {
   },
   resolve: {
     modules: [
-      'src',
-      'node_modules',
-      'node_modules/growingupnyc-patterns/src',
+      'src', 
+      'node_modules', 
+      'node_modules/growingupnyc-patterns/src', 
       'node_modules/growingupnyc-patterns/dist'
-    ]
+      ]
   },
   plugins: [
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery'
-    })
+    }),
   ],
-  devtool: 'inline-source-map',
-  performance: { hints: false }
+  // output: {
+  //   filename: 'bundle.js',
+  //   path: path.resolve(__dirname, 'assets/js'),
+  // }
 };
-
-// define additional plugins
-config.plugins = config.plugins || [];
-if (process.env.NODE_ENV === 'production') {
-  config.mode = 'production'
-  config.plugins.push(new webpack.DefinePlugin({
-    'process.env': {
-      'NODE_ENV': `"production"`
-    }
-  }));
-} else {
-  config.mode = 'development'
-  config.plugins.push(new webpack.DefinePlugin({
-    'process.env': {
-      'NODE_ENV': `"development"`
-    }
-  }));
-}
 
 module.exports = config;

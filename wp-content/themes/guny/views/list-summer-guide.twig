@@ -201,13 +201,13 @@
           </a>
 
           <h3 class="c-card__title">
-            <a :href="post.link" :title="post.title" rel="bookmark">
-              v{ post.title }
+            <a :href="post.link" :title="post.acf.s_program_title_translated" rel="bookmark">
+              v{ post.acf.s_program_title_translated }
             </a>
           </h3>
 
           <div class="c-card__subtitle">
-            v{ post.acf.plain_text_date}
+            v{ post.acf.s_dates}
           </div>
 
 
@@ -223,9 +223,9 @@
             </span>
           </div>
 
-          <hr class="c-card__cta-divider" v-if="post.acf.cta_title!=''">
-          <a class="c-card__cta" :href="post.acf.cta_href" target="_blank" rel="nofollow" v-if="post.acf.cta_new_window">v{ post.acf.cta_title }</a>
-          <a class="c-card__cta" :href="post.acf.cta_href" v-if="!post.acf.cta_new_window">v{ post.acf.cta_title }</a>
+          <hr class="c-card__cta-divider" v-if="post.acf.s_cta_url!=''">
+          <a class="c-card__cta" :href="post.acf.s_cta_url" target="_blank" rel="nofollow" v-if="post.acf.s_cta_new_window">v{ post.acf.s_cta_title }</a>
+          <a class="c-card__cta" :href="post.acf.s_cta_url" v-if="!post.acf.s_cta_new_window">v{ post.acf.s_cta_title }</a>
 
           <div class="c-card__body">
             v{ post.excerpt }

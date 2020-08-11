@@ -18,7 +18,7 @@ $context['featured_image'] = $featured_image;
 // ... disabling error messages isn't debug friendly...
 // ... disable error reporting for this line only.
 error_reporting(0);
-$context['language'] = ICL_LANGUAGE_CODE;
+// $context['language'] = ICL_LANGUAGE_CODE;
 error_reporting(WP_DEBUG);
 $templates = array( 'home.twig' );
 

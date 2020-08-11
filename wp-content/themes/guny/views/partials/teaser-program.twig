@@ -1,13 +1,13 @@
 {% extends "partials/teaser.twig" %}
 
-{% block classes %}{{is_first ? "c-card--hero #{age_group.slug|sanitize|replace({'-es':''})}-gradient"}}{% endblock %}
+{% block classes %}{{is_first ? "c-card--hero #{age_group.slug|sanitize|replace({(['-',language_code]|join):''})}-gradient"}}{% endblock %}
 
 {% block sticker %}
   {% set category = post.terms('programs_cat')|first %}
   {% if category %}
     <a href="{{post.link}}">
       <div class="c-card__sticker sticker" aria-hidden="true">
-        <svg class="icon--large"><title>{{ category.name }}</title><use xlink:href="#icon-{{ category.slug|replace({'-es':''}) }}"></use></svg>
+        <svg class="icon--large"><title>{{ category.name }}</title><use xlink:href="#icon-{{ category.slug|replace({(['-',language_code]|join):''}) }}"></use></svg>
       </div>
     </a>
   {% endif %}

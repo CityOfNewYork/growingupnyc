@@ -26,7 +26,7 @@
   {% endfor %}
 
   {% for term in post.terms('age_group') %}
-  <a href="{{ event_link }}?age_id={{ function('Wpml\\get_translated_term_id', term.ID, 'tribe_events_cat') }}{% if current_month %}&amp;eventDate={{ current_month }}{% endif %}"
+  <a href="{{ event_link }}?age_id={{ function('Wpml\\get_translated_term_id', term.ID, 'tribe_events_cat') }}"
      class="button--pill button--pill--alt">
       {{ term.name }}
   </a>

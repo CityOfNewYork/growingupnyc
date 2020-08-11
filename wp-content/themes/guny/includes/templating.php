@@ -42,6 +42,14 @@ function get_controller_id($path) {
 }
 
 /**
+ * Get the archive of the post type by it's slug
+ * @return string The post type archive link
+ */
+function get_archive_link($post_type) {
+  return get_post_type_archive_link($post_type);
+}
+
+/**
  * Get the hero banner image for the archive page
  * @return Object The media image object
  */

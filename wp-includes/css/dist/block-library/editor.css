@@ -557,6 +557,7 @@ div[data-type="core/freeform"].is-selected .block-library-rich-text__tinymce::af
   display: none;
   width: auto;
   margin: 0 -14px;
+  position: -webkit-sticky;
   position: sticky;
   z-index: 10;
   top: 14px;

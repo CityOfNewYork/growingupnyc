@@ -25,5 +25,5 @@ $taxonomies = get_object_taxonomies( 'program', object );
 $context['age_group_heading']=$taxonomies['age_group']->label;
 $context['program_category_heading']=$taxonomies['programs_cat']->label;
 
-$template = 'list-program.twig';
+$template = 'program/archive.twig';
 Timber::render( $template, $context );

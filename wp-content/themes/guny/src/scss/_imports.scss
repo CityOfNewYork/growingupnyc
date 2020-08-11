@@ -16,8 +16,6 @@
 @import "tools/splatter";
 @import "tools/media";
 
-
-
 // // Objects (Design patterns)
 // // =====================
 // @import "objects/accordion";
@@ -35,25 +33,25 @@
 
 // // Components (Styled pieces of UI)
 // // =====================
-// @import "components/age-guide-card.scss";
-// @import "components/gallery.scss";
-// @import "components/alert.scss";
-@import "components/hero.scss";
-// @import "components/arrow-pager.scss";
-@import "components/list-box.scss";
-// @import "components/banner.scss";
-// @import "components/nav-list.scss";
-// @import "components/block-list.scss";
-// @import "components/share.scss";
-// @import "components/card.scss";
-// @import "components/side-hero.scss";
-// @import "components/content-tout.scss";
-// @import "components/signup-form.scss";
-// @import "components/details-list.scss";
-@import "components/tip-card.scss";
-// @import "components/disclaimer.scss";
-@import "components/tip.scss";
-// @import "components/footer.scss";
+@import "components/age-guide-card";
+// @import "components/gallery";
+// @import "components/alert";
+@import "components/hero";
+// @import "components/arrow-pager";
+@import "components/list-box";
+// @import "components/banner";
+// @import "components/nav-list";
+// @import "components/block-list";
+// @import "components/share";
+// @import "components/card";
+// @import "components/side-hero";
+// @import "components/content-tout";
+@import "components/signup-form";
+// @import "components/details-list";
+@import "components/tip-card";
+@import "components/disclaimer";
+@import "components/tip";
+// @import "components/footer";
 
 // // Elements (Styles for common HTML elements)
 @import "elements/logo-banner";

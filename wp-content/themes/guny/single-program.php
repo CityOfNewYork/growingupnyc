@@ -43,7 +43,6 @@ $filter_args=array(
 $query = new WP_Query($filter_args);
 $context['brain_building_tip'] = Timber::get_post($query->posts[0]->ID);
 
-$templates = 'single-program.twig';
 $context['post'] = $post;
 
 // SHARE - SMS
@@ -71,4 +70,7 @@ $context['events_link'] = get_post_type_archive_link('tribe_events');
 $context['programs_link'] = get_post_type_archive_link('program');
 
 $context['custom_favicon'] = get_field('updated_favicon', $post->id);
-Timber::render( $templates, $context );
+
+$template = 'program/single.twig';
+
+Timber::render( $template, $context );

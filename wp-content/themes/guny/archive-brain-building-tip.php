@@ -25,4 +25,5 @@ $context['meta_desc'] = get_field('meta_description', Templating\get_controller_
 $context['meta_keywords'] = get_field('meta_keywords', Templating\get_controller_id($path));
 $context['meta_noindex'] = get_field('meta_noindex', Templating\get_controller_id($path));
   
-Timber::render(array('list-brain-building-tip.twig'), $context);
+$template = 'brain-building-tip/archive.twig';
+Timber::render($template, $context);

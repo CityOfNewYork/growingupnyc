@@ -68,4 +68,5 @@ $context['shareTemplate'] = "growingupnyc-".$post->post_type;
 /**
  * Render template with context
  */
-Timber::render(array('single-brain-building-tip.twig'), $context);
+$template = 'brain-building-tip/single.twig';
+Timber::render($template, $context);

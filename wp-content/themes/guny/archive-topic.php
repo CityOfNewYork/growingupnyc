@@ -25,10 +25,11 @@ $context['topic_menu'] = Timber::get_terms('topic_group', array(
   'orderby' => 'term_order',
   'hide_empty' => false,
 ));
-$templates = array( 'list-topic.twig', 'microsite-list.twig' );
 
 // meta tags
 $context['meta_desc'] = get_field('topic_landing_meta_desc', 'option');
 $context['meta_keywords'] = get_field('topic_landing_meta_keywords', 'option');
 
-Timber::render( $templates, $context );
+$template = 'topic/landing.twig';
+
+Timber::render( $template, $context );

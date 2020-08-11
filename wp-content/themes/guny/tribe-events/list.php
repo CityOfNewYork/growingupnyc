@@ -234,8 +234,6 @@ $sitepress->switch_lang($original_lang);
 // Adding the language
 $context['language'] = $sitepress;
 
-$templates = array( 'list-events.twig', 'index.twig' );
-
 // top menu widget
 $context['top_widget'] = Timber::get_widgets('top_widget');
 
@@ -243,4 +241,7 @@ $context['top_widget'] = Timber::get_widgets('top_widget');
 $context['meta_desc'] = get_field('event_landing_meta_desc', 'option');
 $context['meta_keywords'] = get_field('event_landing_meta_keywords', 'option');
 
-Timber::render( $templates, $context );
+$template = 'tribe_events/archive.twig';
+
+
+Timber::render( $template, $context );

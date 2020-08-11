@@ -85,7 +85,7 @@ gulp.task('styles:sass', gulp.series('styles:lint', function () {
       cssnano()
     ]))
     .pipe(hashFilename())
-    .pipe(sourcemaps.write('./assets/styles'))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('./assets/styles'))
     .pipe(browserSync.stream({ match: '**/*.css' }))
     .pipe(notify({ message: 'Styles task complete' }));

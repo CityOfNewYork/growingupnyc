@@ -1,5 +1,7 @@
 <?php
 
+require_once ("../Spyc.php");
+
 function roundTrip($a) { return Spyc::YAMLLoad(Spyc::YAMLDump(array('x' => $a))); }
 
 

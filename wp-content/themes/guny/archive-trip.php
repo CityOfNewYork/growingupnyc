@@ -63,10 +63,10 @@ $context['upcoming_events'] = $upcoming_events;
 // $context['upcoming_events'] = Timber::get_posts( $upcoming_events ) ;
 
 
-$templates = array( 'list-trip-landing.twig', 'microsite-list.twig' );
+$template = 'trip/landing.twig';
 
 // meta tags
 $context['meta_desc'] = get_field('trip_landing_meta_desc', 'option');
 $context['meta_keywords'] = get_field('trip_landing_meta_keywords', 'option');
 
-Timber::render( $templates, $context );
+Timber::render( $template, $context );

@@ -79,5 +79,5 @@ $banner = get_field('current_banner');
 $context['banner']['alt'] = new TimberPost($banner);
 $context['banner']['override'] = $post->update_banner;
 
-$templates = array( 'single-age.twig');
-Timber::render( $templates, $context );
+$template = 'age/single.twig';
+Timber::render( $template, $context );

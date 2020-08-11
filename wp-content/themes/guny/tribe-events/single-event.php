@@ -29,5 +29,6 @@ if (is_int($virtual)) {
 // top menu widget
 $context['top_widget'] = Timber::get_widgets('top_widget');
 
-$templates = array( 'single-event.twig', 'single.twig' );
-Timber::render( $templates, $context );
+$template = 'tribe_events/single.twig';
+
+Timber::render( $template, $context );

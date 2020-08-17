@@ -57,6 +57,6 @@ function guny_update_age_picker_field( $term_id ) {
   if ( isset( $_POST['include_in_age_picker'] ) ) {
     $include = boolval($_POST['include_in_age_picker']);
   }
-  update_term_meta( $term_id, 'include-in-age-picker', $include, true );
+  update_term_meta( $term_id, 'include-in-age-picker', $include, '' );
 }
 add_action( 'edited_age_group', 'guny_update_age_picker_field' );

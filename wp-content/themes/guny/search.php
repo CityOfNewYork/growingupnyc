@@ -62,7 +62,6 @@ $context['search'] = Timber::compile($templates_form, $context);
 $context['facet_post_type'] = Timber::compile($templates_filters, $context);
 $context['results'] = Timber::compile($templates_results, $context);
 $context['pagination'] = Timber::compile($templates_pagination, $context);
-$context['top_widget'] = Timber::get_widgets('top_widget');
 
 $templates = array('search.twig');
 

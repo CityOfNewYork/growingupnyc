@@ -19,7 +19,6 @@ $context['meta_desc'] = get_field('meta_description', Templating\get_controller_
 $context['meta_keywords'] = get_field('meta_keywords', Templating\get_controller_id($path));
 $context['meta_noindex'] = get_field('meta_noindex', Templating\get_controller_id($path));
 
-$context['top_widget'] = Timber::get_widgets('top_widget');
 // Taxonomy Headings
 $taxonomies = get_object_taxonomies( 'program', object );
 $context['age_group_heading']=$taxonomies['age_group']->label;

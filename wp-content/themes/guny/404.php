@@ -4,7 +4,6 @@
 */
 
 $context = Timber::get_context();
-$context['top_widget'] = Timber::get_widgets('top_widget');
 $post_id = NotFound\get_controller_id();
 $post = Timber::get_post($post_id);
 

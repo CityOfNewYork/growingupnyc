@@ -79,9 +79,7 @@
     </nav>
 
     <div class="o-offcanvas__main js-offcanvas__main">
-      {{top_widget}}
-			<span data-js="translate" class="hidden">{{__('Translate', 'guny')}}</span>
-			<span data-js="pick-a-language" class="hidden">{{__('Pick a language', 'guny')}}</span>
+      {% include 'objects/language-switcher.twig' %}
 
       {% block header %}
         <header class="o-navigation">

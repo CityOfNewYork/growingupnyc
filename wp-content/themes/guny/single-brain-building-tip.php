@@ -49,16 +49,10 @@ $context['relevant_tips'] = $tips;
 $context['tips_link'] = get_post_type_archive_link('brain-building-tip');
 $context['ages_link'] = ICL_LANGUAGE_CODE != 'en'? '/'.ICL_LANGUAGE_CODE.'/brainbuilding/' : '/brainbuilding/';
 
-// WPML language switcher
-$context['top_widget'] = Timber::get_widgets('top_widget');
-
 // SMS share
 $context['shareAction'] = admin_url( 'admin-ajax.php' );
 $context['shareHash'] = \SMNYC\hash(get_permalink($post->ID));
 $context['shareTemplate'] = "growingupnyc-".$post->post_type;
-
-// WPML language switcher
-$context['top_widget'] = Timber::get_widgets('top_widget');
 
 // SMS share
 $context['shareAction'] = admin_url( 'admin-ajax.php' );

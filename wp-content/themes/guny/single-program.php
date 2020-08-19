@@ -50,9 +50,6 @@ $context['shareAction'] = admin_url( 'admin-ajax.php' );
 $context['shareHash'] = \SMNYC\hash($post->link);
 $context['shareTemplate'] = "growingupnyc-".$post->post_type;
 
-// top menu widget
-$context['top_widget'] = Timber::get_widgets('top_widget');
-
 // meta tags
 $context['meta_desc'] = get_field('meta_description', $post->id);
 $context['meta_keywords'] = get_field('meta_keywords', $post->id);

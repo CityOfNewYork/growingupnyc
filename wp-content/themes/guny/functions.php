@@ -152,9 +152,6 @@ class GunySite extends TimberSite {
 
     $context['direction'] = (ICL_LANGUAGE_CODE === 'ar' || ICL_LANGUAGE_CODE === 'ur') ? 'rtl' : 'ltr';
 
-    if (is_front_page()) {
-      $context['top_widget'] = Timber::get_widgets('top_widget');
-    }
     $context['top_events'] = $this->get_featured_events(3);
     $context['is_archive'] = is_archive();
     $context['current_url'] = strtok($_SERVER["REQUEST_URI"],'?');

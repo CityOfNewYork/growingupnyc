@@ -5,7 +5,6 @@
  */
 
 $context = Timber::get_context();
-$context['top_widget'] = Timber::get_widgets('top_widget');
 
 $path = '/brainbuilding';
 

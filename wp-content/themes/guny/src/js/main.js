@@ -88,7 +88,7 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
   if (window.location.pathname.indexOf('generationnyc') >= 0) {
     owlSettings();
   } else {
-    
+
     new AlertBanner();
     if (window.location.pathname === '/') {
       new Animations("rotating-text__entry", 2000, 200);
@@ -106,7 +106,7 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
     if (!isIE) {
       new Scroll();
     }
-    
+
     new Search();
     new SectionHighlighter()
     new StaticColumn();

@@ -1,10 +1,15 @@
 <div class="c-language-switcher-wrapper">
-	<div class="o-container c-language__switcher">
+	<div class="o-container c-language__switcher desktop:flex flex-col">
     {% do action('wpml_add_language_selector') %}
 
     <span data-js="translate" class="hidden">{{__('Translate', 'guny')}}</span>
     <span data-js="pick-a-language" class="hidden">{{__('Pick a language', 'guny')}}</span>
-    
+    <span class="google-translate-logo mx-4 mb-5 tablet:mb-0">
+      <svg class="icon--google" role="img">
+        <title>Powered by Google Translate</title>
+        <use xlink:href="#icon-google-translate"></use>
+      </svg>
+    </span>
 	</div>
 
 </div>

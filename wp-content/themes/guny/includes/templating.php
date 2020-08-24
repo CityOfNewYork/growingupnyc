@@ -28,6 +28,8 @@ const FIELD_BANNER_IMAGE_MOBILE = 'field_5e3ae9fb8700e';
 // The share template
 const SHARE_TEMPLATE = 'field_5e9f4df2bbab7';
 
+const SECTION_ID = 'field_5a78cc2bc5e51';
+
 /**
  * Functions
  */
@@ -47,6 +49,28 @@ function get_controller_id($path) {
  */
 function get_archive_link($post_type) {
   return get_post_type_archive_link($post_type);
+}
+
+
+/**
+ * Gets the sections by ACF field id and formats them with slugs based on the
+ * section title.
+ * @return array The collection of sections for the post.
+ */
+function get_sections($id = null) {
+  $sections = get_field(SECTION_ID, $id);
+  if ($sections) {
+    foreach ($sections as $key => $value) {
+
+      if (isset($value['section_title'])) {
+        $sections[$key]['slug'] = strtolower(
+          str_replace(' ', '-', $value['section_title'])
+        );
+      }
+
+    }
+  }
+  return $sections;
 }
 
 /**

@@ -1,18 +1,19 @@
 <?php
-
 /**
-* Configure TinyMCE settings
-*/
-function guny_configure_tinymce( $init ) {
+ * Plugin Name: Configure TinyMCE Settings
+ * Description: Configuration for the classic WordPress text editor. Adds p, h2, h3, h4, and h5 block options to the TinyMCE editor. Removes the blockquote block. Removes underline, alignjustify, and forecolor from advanced toolbar. Removes the TinyMCE Emoji Plugin.
+ * Author: Blue State Digital
+ */
+
+add_filter( 'tiny_mce_before_init', function($init){
   $init['block_formats'] = 'Paragraph=p;Heading 2=h2;Heading 3=h3;';
   return $init;
-}
-add_filter( 'tiny_mce_before_init', 'guny_configure_tinymce' );
+} );
 
 /**
 * Remove buttons from the primary toolbar
 */
-function guny_mce_buttons( $buttons ) {
+add_filter( 'mce_buttons', function($buttons) {
   $remove = array(
     'blockquote',
     'alignleft',
@@ -23,13 +24,12 @@ function guny_mce_buttons( $buttons ) {
     'wp_more'
   );
   return array_diff( $buttons, $remove );
-}
-add_filter( 'mce_buttons', 'guny_mce_buttons' );
+} );
 
 /**
 * Remove buttons from the advanced toolbar
 */
-function guny_mce_buttons_2( $buttons ) {
+add_filter( 'mce_buttons_2', function($buttons) {
   $remove = array(
     'underline',
     'alignjustify',
@@ -43,27 +43,16 @@ function guny_mce_buttons_2( $buttons ) {
     'wp_help'
   );
   return array_diff( $buttons, $remove );
-}
-add_filter( 'mce_buttons_2', 'guny_mce_buttons_2' );
+});
 
 /**
 * Add buttons to the advanced toolbar
 */
-function guny_mce_buttons_3( $buttons ) {
+add_filter( 'mce_buttons_3', function($buttons) {
   $buttons = array(
     'cut',
     'copy',
     'paste'
   );
   return $buttons;
-}
-add_filter( 'mce_buttons_3', 'guny_mce_buttons_3' );
-
-/**
-* Remove buttons from the basic ACF toolbar
-*/
-function guny_acf_toolbars( $toolbars ) {
-  $toolbars['Basic'][1] = array( 'italic', 'link', 'unlink' );
-  return $toolbars;
-}
-add_filter( 'acf/fields/wysiwyg/toolbars' , 'guny_acf_toolbars'  );
+});

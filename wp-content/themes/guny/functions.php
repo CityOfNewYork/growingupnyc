@@ -661,7 +661,6 @@ function filter_add_rest_orderby_params( $params ) {
 
 // extract the slugs for an object
 function getSlugs($obj) {
-  // pre_dump($obj);
   return array_column($obj, 'slug');
 }
 
@@ -670,18 +669,28 @@ function getSlugs($obj) {
  */
 
 $includes = [
-  '/includes/guny_editor_styles.php', // Customize TinyMCE settings
-  '/includes/guny_shortcodes.php', // Custom Shortcodes
-  '/includes/guny_meta_boxes.php', // Customize Wordpress meta boxes
-  '/includes/guny_top_widgets.php', // Add Top Afterschool Widget
-  '/includes/guny_term_meta.php', // Add custom meta fields to taxonomies
-  '/includes/guny_facetwp.php', // Customize Facet WP output
-  '/includes/guny_filter_events.php', // Event filters
-  '/includes/hide_child_events.php', // Hide child events in WP Admin
+  '/includes/gunyc_shortcodes.php', // Custom Shortcodes
+  '/includes/gunyc_meta_boxes.php', // Customize Wordpress meta boxes
+  '/includes/gunyc_top_widgets.php', // Add Top Afterschool Widget
+  '/includes/gunyc_term_meta.php', // Add custom meta fields to taxonomies
+  '/includes/gunyc_facetwp.php', // Customize Facet WP output
   '/includes/routing.php', // Routing
   '/includes/search.php', // Search functions
   '/includes/404.php', // 404 functions
   '/includes/templating.php', // Template functions
+  '/includes/get_focal_point.php', // Focal point functions
+  '/includes/format_posts.php', // Format posts based on their type
+  '/includes/parameters.php', // Parameter functions for templates
+  '/includes/gunyc-pages.php',
+  '/includes/location_description.php', // Date option custom field
+  '/includes/date_options.php', // Date option custom field
+  '/includes/styles_and_scripts.php', // Get latest of a recurring event
+  '/includes/term_translations.php', // Term translation helpers
+  [ //Events
+    '/includes/gunyc_filter_events.php', // Event filters
+    '/includes/hide_child_events.php', // Hide child events in WP Admin
+    '/includes/get_latest_recurring_event.php', // Get latest of a recurring event
+  ],
   [ // REST
     '/includes/REST/guny_rest.php',
     '/includes/REST/guny_rest_afterschool.php', // expose fields to rest API
@@ -689,22 +698,7 @@ $includes = [
     '/includes/REST/guny_rest_programs.php',
     '/includes/REST/guny_rest_summer.php',
     '/includes/REST/guny_rest_tips.php',
-  ],
-  [ // Templating
-    '/includes/get_focal_point.php', // Focal point functions
-    '/includes/format_posts.php', // Format posts based on their type
-    '/includes/parameters.php', // Parameter functions for templates
-    '/includes/flexible_content.php', // Working with ACF Flexible Content
-    '/includes/location_description.php', // Date option custom field
-    '/includes/date_options.php', // Date option custom field
-    '/includes/get_latest_recurring_event.php' // Get latest of a recurring event
-  ],
-  [ // Nyco
-    '/includes/styles_and_scripts.php', // Get latest of a recurring event
-  ],
-  [ // Wpml
-    '/includes/term_translations.php', // Term translation helpers
-  ],
+  ]
 ];
 
 for ($i=0; $i < sizeof($includes); $i++) {

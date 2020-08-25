@@ -3,6 +3,35 @@
     "title": "Landing Page Content",
     "fields": [
         {
+            "key": "field_5eb18eccecaaa",
+            "label": "Theme",
+            "name": "lp_theme",
+            "type": "select",
+            "instructions": "Select a theme for this page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "afterschool": "Afterschool",
+                "default": "Default",
+                "inspirations": "Inspirations",
+                "summer": "Summer",
+                "topics": "Topics",
+                "trips": "Trips"
+            },
+            "default_value": "default",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
             "key": "field_5a9d9040cb271",
             "label": "Tagline",
             "name": "tagline",
@@ -640,34 +669,6 @@
             "button_label": "Add Row",
             "min": "",
             "max": ""
-        },
-        {
-            "key": "field_5eb18eccecaaa",
-            "label": "Theme",
-            "name": "lp_theme",
-            "type": "select",
-            "instructions": "blue: Default GUNYC\r\ndark-blue: Inspirations\r\npurple: Topics\r\ngreen: Trips\r\norange: Summer",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "blue": "Default",
-                "dark-blue": "Inspirations",
-                "purple": "Topics",
-                "dark-green": "Trips",
-                "vivid-orange": "Summer"
-            },
-            "default_value": "blue",
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 0,
-            "return_format": "value",
-            "ajax": 0,
-            "placeholder": ""
         }
     ],
     "location": [

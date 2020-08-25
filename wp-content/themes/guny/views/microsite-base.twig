@@ -50,12 +50,13 @@
   {{ function('wp_head') }}
   {% block head_extras %}{% endblock %}
   {% block scripts_head %}
-    {% include 'partials/scripts-google-analytics.twig' %}
+    {% include 'services/google-analytics.twig' %}
+    {% include 'services/google-tag-manager.twig' %}
   {% endblock %}
 </head>
 
 <body class="{{body_class}}" data-template="base.twig">
-  {% include 'partials/scripts-google-tag-manager.twig' %}
+  {% include 'services/google-tag-manager-noscript.twig' %}
   <div class="hidden" aria-hidden="true" style="display:none;">
   {% include 'partials/svg-sprite.twig' %}
   </div>

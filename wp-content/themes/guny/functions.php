@@ -692,12 +692,12 @@ $includes = [
     '/includes/get_latest_recurring_event.php', // Get latest of a recurring event
   ],
   [ // REST
-    '/includes/REST/guny_rest.php',
-    '/includes/REST/guny_rest_afterschool.php', // expose fields to rest API
-    '/includes/REST/guny_rest_events.php',
-    '/includes/REST/guny_rest_programs.php',
-    '/includes/REST/guny_rest_summer.php',
-    '/includes/REST/guny_rest_tips.php',
+    '/includes/REST/gunyc_rest.php',
+    '/includes/REST/gunyc_rest_afterschool.php', // expose fields to rest API
+    '/includes/REST/gunyc_rest_events.php',
+    '/includes/REST/gunyc_rest_programs.php',
+    '/includes/REST/gunyc_rest_summer.php',
+    '/includes/REST/gunyc_rest_tips.php',
   ]
 ];
 

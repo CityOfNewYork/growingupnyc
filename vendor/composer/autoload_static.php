@@ -46,6 +46,10 @@ class ComposerStaticInit3c0c47bdd559dc86d448f15792196e85
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
         ),
+        'M' => 
+        array (
+            'Michelf\\' => 8,
+        ),
         'J' => 
         array (
             'JmesPath\\' => 9,
@@ -130,6 +134,10 @@ class ComposerStaticInit3c0c47bdd559dc86d448f15792196e85
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'Michelf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/michelf/php-markdown/Michelf',
         ),
         'JmesPath\\' => 
         array (

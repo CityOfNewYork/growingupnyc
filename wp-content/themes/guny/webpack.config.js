@@ -10,7 +10,7 @@ const config = {
       {
         loader: 'babel-loader',
         test: /\.js$/,
-        exclude: /.\/node_modules\/growingupnyc-patterns\/src/,
+        exclude: /.\/node_modules\/@nycopportunity\/growingup-patterns\/src/,
         query: {
           presets: [
             [
@@ -34,10 +34,10 @@ const config = {
   },
   resolve: {
     modules: [
-      'src', 
-      'node_modules', 
-      'node_modules/growingupnyc-patterns/src', 
-      'node_modules/growingupnyc-patterns/dist'
+      'src',
+      'node_modules',
+      'node_modules/@nycopportunity/growingup-patterns/src',
+      'node_modules/@nycopportunity/growingup-patterns/dist'
       ]
   },
   plugins: [

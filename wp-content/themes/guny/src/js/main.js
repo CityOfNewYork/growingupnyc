@@ -96,6 +96,10 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
     new ContentShow();
     new FormEffects();
     new LanguageSwitcher();
+    // if (window.location.pathname.indexOf('events') === -1) {
+    //   document.querySelector('.google-translate-logo').style.display = 'none';
+    //   document.querySelector('.google-translate-logo').style.backgroundColor = 'blue';
+    // }
     new Newsletter();
     new Overlay();
 

@@ -79,12 +79,12 @@
     </nav>
 
     <div class="o-offcanvas__main js-offcanvas__main">
-      {% include 'objects/language-switcher.twig' %}
 
       {% block header %}
         <header class="o-navigation">
           <div class="o-container">
             <a href="{{site.url}}" class="o-navigation__logo-wrapper o-navigation__logo-wrapper-no-menu"><span class="o-navigation__logo">{{site.name}}</span></a>
+            {% include 'objects/language-switcher.twig' %}
             <nav class="o-navigation__nav" role="navigation" aria-label="Primary">
               <ul class="o-inline">
                 {% for menu_item in menu.get_items %}

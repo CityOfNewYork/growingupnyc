@@ -33,7 +33,7 @@ $context['brain_building_tip'] = Timber::get_post($query->posts[0]->ID);
 
 // Generation NYC homepage declaration
 if($post->post_type == 'page' && strpos($post->post_name, 'generationnyc') !== false){
-  $templates = array( 'micro-site-homepage.twig' );
+  $templates = array( 'microsite-homepage.twig' );
 }
 else{
   $templates = array( 'single-' . $post->ID . '.twig', 'single-' . $post->post_type . '.twig', 'single.twig' );

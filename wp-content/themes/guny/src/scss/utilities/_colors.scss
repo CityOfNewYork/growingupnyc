@@ -136,6 +136,11 @@
   background-color: $blue-2 !important;
 }
 
+.border-blue-2,
+.hover\:border-blue-2:hover {
+  border-color: $blue-2 !important;
+}
+
 .stop-color-blue-2,
 .hover\:stop-color-blue-2:hover {
   stop-color: $blue-2 !important;
@@ -187,6 +192,11 @@
   background-color: $very-dark-green !important;
 }
 
+.border-very-dark-green,
+.hover\:border-very-dark-green:hover {
+  border-color: $very-dark-green !important;
+}
+
 .text-dark-green,
 .hover\:text-dark-green:hover {
   color: $dark-green !important;
@@ -195,6 +205,26 @@
 .bg-purple,
 .hover\:bg-purple:hover {
   background-color: $purple !important;
+}
+
+.bg-light-purple,
+.hover\:bg-light-purple:hover {
+  background-color: $light-purple !important;
+}
+
+.border-light-purple,
+.hover\:border-light-purple:hover {
+  border-color: $light-purple !important;
+}
+
+.bg-dark-purple,
+.hover\:bg-dark-purple:hover {
+  background-color: $dark-purple !important;
+}
+
+.border-dark-purple,
+.hover\:border-dark-purple:hover {
+  border-color: $dark-purple !important;
 }
 
 .bg-dark-blue,

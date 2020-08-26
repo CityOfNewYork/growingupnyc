@@ -67,10 +67,13 @@ function gny_button( $attr ) {
     return;
   }
 
-  if (empty($atts['color'])) {
-    return '<a href="' . $atts['url'] . '" class="button--primary button--primary__purple">' . $atts['text'] . '</a>';
+  if ($atts['color'] == 'inspirations') {
+    return '<a href="' . $atts['url'] . '" class="button--primary bg-strong-blue hover:bg-blue-2 text-white">' . $atts['text'] . '</a>';
+  }
+  else if ($atts['color'] == 'trips') {
+    return '<a href="' . $atts['url'] . '" class="button--primary bg-dark-green hover:bg-very-dark-green text-white">' . $atts['text'] . '</a>';
   } else {
-    return '<a href="' . $atts['url'] . '" class="button--primary button--primary__' . $atts['color'] . '">' . $atts['text'] . '</a>';
+    return '<a href="' . $atts['url'] . '" class="button--primary bg-dark-purple hover:bg-light-purple text-white">' . $atts['text'] . '</a>';
   }
 }
 add_shortcode( 'gny_button', 'gny_button' );
@@ -84,6 +87,8 @@ function guny_add_custom_shortcodes($shortcodes) {
   $shortcodes['Summer Button'] = '[button url="" text="" color="summer"]';
   $shortcodes['Afterschool Button'] = '[button url="" text="" color="afterschool"]';
   $shortcodes['Button (Generation)'] = '[gny_button url="" text="" color=""]';
+  $shortcodes['Trips Button'] = '[gny_button url="" text="" color="trips"]';
+  $shortcodes['Inspiration Button'] = '[gny_button url="" text="" color="inspirations"]';
   return $shortcodes;
 }
 add_filter( 'bsd_shortcode_list', 'guny_add_custom_shortcodes' );

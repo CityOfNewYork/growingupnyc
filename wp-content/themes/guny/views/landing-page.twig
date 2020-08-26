@@ -1,23 +1,22 @@
 {% extends "base.twig" %}
 
 {# Theme settings #}
-
 {% if post.get_field('lp_theme') == 'afterschool' %}
 	{% set colors_primary = 'bg-color-blue' %}
-	{% set colors_secondary= 'bg-color-blue-dark' %}
+	{% set colors_secondary = 'bg-color-blue-dark' %}
 	{% set colors_tertiary = 'bg-color-blue-mid' %}
+	{% set border_tertiary = 'border-color-blue-mid' %}
 {% elseif post.get_field('lp_theme') == 'summer' %}
-	{% set colors_primary = 'bg-color-orange-light' %}
-	{% set colors_secondary= 'bg-color-orange' %}
-	{% set colors_tertiary = 'bg-color-orange-dark' %}
+	{% set colors_primary = 'bg-color-orange' %}
+	{% set colors_secondary = 'bg-color-orange-dark' %}
+	{% set colors_tertiary = 'bg-color-orange-light' %}
+	{% set border_tertiary = 'border-color-orange-light' %}
 {% else %}
   {% set colors_primary = 'bg-color-blue-light' %}
-  {% set colors_secondary= 'bg-color-blue' %}
-  {% set colors_tertiary = 'bg-color-blue-light' %}
+  {% set colors_secondary = 'bg-color-blue' %}
+  {% set colors_tertiary = 'bg-color-blue-dark' %}
+  {% set border_tertiary = 'border-color-blue-dark' %}
 {% endif %}
-
-
-
 
 {% block head_extras %}
 	<style>
@@ -60,10 +59,6 @@
 {% endblock %}
 
 {% block content%}
-
-
-
-
 	<div class="js-parallax">
 		<header class="c-hero c-hero--large {{colors_primary}} js-parallax-content">
 			<div class="o-container js-parallax-text">
@@ -98,7 +93,7 @@
 					{% for top in post.get_field('landing_page_section') %}
 						{% if loop.index != 1 %}
 							<li class="c-nav-list__item">
-								<a href="#{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" data-section="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" class="js-section c-nav-list__link {{colors_secondary}} hover:{{colors_tertiary}}">{{top.landing_page_section_content_heading}}<svg aria-hidden="true" class="icon--caret">
+								<a href="#{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" data-section="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" class="js-section c-nav-list__link {{colors_secondary}} hover:{{colors_tertiary}} hover:{{border_tertiary}}">{{top.landing_page_section_content_heading}}<svg aria-hidden="true" class="icon--caret">
 										<use xlink:href="#icon-caret-right"></use>
 									</svg>
 								</a>
@@ -308,12 +303,10 @@
 				{% endif %}
 			{% endfor %}
 
-
-
       {# Share #}
       {% if post.get_field('show_share') == 'Yes' %}
-        <aside class="c-tip {{colors_tertiary}} text-center u-lg-gutter o-content-container">
-          <div class="c-tip__sticker sticker {{colors_tertiary}}">
+        <aside class="c-tip {{colors_primary}} text-center u-lg-gutter o-content-container">
+          <div class="c-tip__sticker sticker {{colors_primary}}">
             <svg class="icon--large" role="img" aria-hidden="true">
               <title>Share</title>
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-check-outlined"></use>
@@ -323,14 +316,13 @@
           <p class="c-tip__content">{{post.get_field('sms_intro_text')}}</p>
 
           <div id="share-by-text" class="sms-form-wrapper share-form">
-            {% include 'components/gunyc-share-form.twig' with {form_only:false, button_color: colors_secondary, button_hover: colors_primary, disclaimer_text: options.gunyc_disclaimer_text}%}
+            {% include 'components/gunyc-share-form.twig' with {form_only:false, button_color: colors_secondary, button_hover: colors_tertiary, disclaimer_text: options.gunyc_disclaimer_text}%}
           </div>
           <footer class="c-tip__footer"></footer>
         </aside>
       {% endif %}
 
 		</div>
-		<!-- /.o-article -->
 	</article>
 {% endblock %}
 

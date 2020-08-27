@@ -29,8 +29,8 @@ var browserSync = require('browser-sync').create(),
  */
 var dist = 'assets/',
   source = 'src/',
-  patterns = 'node_modules/growingupnyc-patterns/src/',
-  patternsDist = 'node_modules/growingupnyc-patterns/dist/',
+  patterns = 'node_modules/@nycopportunity/growingup-patterns/src/',
+  patternsDist = 'node_modules/@nycopportunity/growingup-patterns/dist/',
   views = 'views/';
 
 /**
@@ -71,7 +71,7 @@ gulp.task('styles:sass', gulp.series('styles:lint', function () {
     .pipe(sass({ includePaths:
       [
         'node_modules',
-        'node_modules/growingupnyc-patterns/src',
+        'node_modules/@nycopportunity/growingup-patterns/src',
         require('bourbon-neat').includePaths,
         require('bourbon').includePaths
       ]
@@ -111,7 +111,7 @@ gulp.task('images', function () {
  * Icons - copy icons into main directory
  */
 gulp.task('icons', function () {
-  return gulp.src(patternsDist + 'icons.svg')
+  return gulp.src(patternsDist + 'svg/icons.svg')
     .pipe(rename('svg-sprite.twig'))
     .pipe(gulp.dest(views + 'partials'));
 });

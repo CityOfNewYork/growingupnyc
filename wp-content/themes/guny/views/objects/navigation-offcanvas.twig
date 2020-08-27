@@ -3,6 +3,7 @@
 		<a href="{{site.url}}" class="o-navigation__logo-wrapper o-navigation__logo-wrapper-no-menu">
 			<span class="o-navigation__logo">{{site.name}}</span>
 		</a>
+		{% include 'objects/language-switcher.twig' %}
 		<nav class="o-navigation__nav" role="navigation" aria-label="Primary">
 			<ul class="o-inline">
 				{% for menu_item in menu.get_items %}
@@ -19,11 +20,11 @@
 					<li class="o-inline__item">
 						<a class="o-navigation__nav-link" href="#search" data-toggle="overlay-search" data-toggle-class="fadeInDown">
 							<svg class="o-navigation__icon o-navigation__icon__search" role="img">
-								<title>{{__('Search', 'GUNYC')}}</title>
+								<title>Search</title>
 								<use xlink:href="#icon-search"></use>
 							</svg>
 							<svg class="o-navigation__icon o-navigation__icon__close" role="img">
-								<title>{{__('Search', 'GUNYC')}}</title>
+								<title>Search</title>
 								<use xlink:href="#icon-close"></use>
 							</svg>
 						</a>
@@ -40,4 +41,3 @@
 
 {# Offcanvas Overlay #}
 <a class="o-offcanvas__overlay" data-js="offcanvas-ages" aria-hidden="true"></a>
-

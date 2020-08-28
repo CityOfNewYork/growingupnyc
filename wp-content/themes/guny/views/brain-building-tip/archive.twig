@@ -173,7 +173,7 @@
 
 					<div class="c-card__tags" v-if="post.tip_category">
 						<span v-for="term in post.age_group">
-							<a :href="'?ages=' + term.slug" :class="'button--pill button--pill--' + term.slug.replace('-es','')">v{ term.name }</a>
+							<a :href="'?ages=' + term.slug" :class="'button--pill bg-' + term.slug.replace('-es','') + '--primary hover:bg-' + term.slug.replace('-es','') + '--secondary' ">v{ term.name }</a>
 						</span>
 						<span v-for="term in post.tip_category">
 							<a :href="'?tip_category=' + term.slug" class="button--pill">v{ term.name }</a>

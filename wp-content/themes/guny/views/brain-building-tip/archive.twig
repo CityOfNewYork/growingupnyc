@@ -153,7 +153,7 @@
 							<span class="sticker sticker--small c-tip-card__sticker" aria-hidden="true">
 								<svg class="icon--medium">
 									<title>v{ post.tip_category[0].name }</title>
-									<use :xlink:href="'#icon-' + post.tip_category[0].slug.replace('-es','')"></use>
+									<use :xlink:href="'#icon-' + post.tip_category[0].slug.replace('-'+'{{language_code}}','')"></use>
 								</svg>
 							</span>
 						</a>
@@ -173,7 +173,7 @@
 
 					<div class="c-card__tags" v-if="post.tip_category">
 						<span v-for="term in post.age_group">
-							<a :href="'?ages=' + term.slug" :class="'button--pill bg-' + term.slug.replace('-es','') + '--primary hover:bg-' + term.slug.replace('-es','') + '--secondary' ">v{ term.name }</a>
+							<a :href="'?ages=' + term.slug" :class="'button--pill bg-' + term.slug.replace('-'+'{{language_code}}','') + '--primary hover:bg-' + term.slug.replace('-'+'{{language_code}}','') + '--secondary' ">v{ term.name }</a>
 						</span>
 						<span v-for="term in post.tip_category">
 							<a :href="'?tip_category=' + term.slug" class="button--pill">v{ term.name }</a>

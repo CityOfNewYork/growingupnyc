@@ -2,20 +2,17 @@
 
 {# Theme settings #}
 {% if post.get_field('lp_theme') == 'afterschool' %}
-	{% set colors_primary = 'bg-color-blue' %}
-	{% set colors_secondary = 'bg-color-blue-dark' %}
-	{% set colors_tertiary = 'bg-color-blue-mid' %}
-	{% set border_tertiary = 'border-color-blue-mid' %}
+	{% set colors_primary = 'color-blue' %}
+	{% set colors_secondary = 'color-blue-dark' %}
+	{% set colors_tertiary = 'color-blue-mid' %}
 {% elseif post.get_field('lp_theme') == 'summer' %}
-	{% set colors_primary = 'bg-color-orange' %}
-	{% set colors_secondary = 'bg-color-orange-dark' %}
-	{% set colors_tertiary = 'bg-color-orange-light' %}
-	{% set border_tertiary = 'border-color-orange-light' %}
+	{% set colors_primary = 'color-orange' %}
+	{% set colors_secondary = 'color-orange-dark' %}
+	{% set colors_tertiary = 'color-orange-light' %}
 {% else %}
-  {% set colors_primary = 'bg-color-blue-light' %}
-  {% set colors_secondary = 'bg-color-blue' %}
-  {% set colors_tertiary = 'bg-color-blue-dark' %}
-  {% set border_tertiary = 'border-color-blue-dark' %}
+  {% set colors_primary = 'color-blue-light' %}
+  {% set colors_secondary = 'color-blue' %}
+  {% set colors_tertiary = 'color-blue-dark' %}
 {% endif %}
 
 {% block head_extras %}
@@ -60,7 +57,7 @@
 
 {% block content%}
 	<div class="js-parallax">
-		<header class="c-hero c-hero--large {{colors_primary}} js-parallax-content">
+		<header class="c-hero c-hero--large bg-{{colors_primary}} js-parallax-content">
 			<div class="o-container js-parallax-text">
 				<h1 class="c-hero__title">
 					{{page_title}}
@@ -93,7 +90,7 @@
 					{% for top in post.get_field('landing_page_section') %}
 						{% if loop.index != 1 %}
 							<li class="c-nav-list__item">
-								<a href="#{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" data-section="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" class="js-section c-nav-list__link {{colors_secondary}} hover:{{colors_tertiary}} hover:{{border_tertiary}}">{{top.landing_page_section_content_heading}}<svg aria-hidden="true" class="icon--caret">
+								<a href="#{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" data-section="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" class="js-section c-nav-list__link bg-{{colors_secondary}} hover:bg-{{colors_tertiary}} hover:border-{{colors_tertiary}} text-color-white">{{top.landing_page_section_content_heading}}<svg aria-hidden="true" class="icon--caret">
 										<use xlink:href="#icon-caret-right"></use>
 									</svg>
 								</a>
@@ -117,8 +114,8 @@
 				</section>
         {# Tip #}
         {% if top.landing_page_section_add_tip == "Yes" %}
-          <aside class="c-tip {{colors_primary}} u-lg-gutter o-content-container">
-            <div class="c-tip__sticker sticker {{colors_primary}}">
+          <aside class="c-tip bg-{{colors_primary}} u-lg-gutter o-content-container">
+            <div class="c-tip__sticker sticker bg-{{colors_primary}}">
               <svg class="icon--large" role="img" aria-hidden="true">
                 <title>{{__('Tip', 'GUNYC')}}</title>
                 <use xlink:href="#icon-{% if top.landing_page_section_tip_icon != '' %}{{top.landing_page_section_tip_icon}}{% else %}lightbulb{% endif %}"></use>
@@ -152,7 +149,7 @@
                 {% for accordion in top.landing_page_section_accordion_details %}
                   <li class="c-list-box__item">
                     {% if accordion.landing_page_section_accordion_header != '' %}
-                      <h4 class="c-list-box__heading {{colors_secondary}} js-accordion__header" id="section-header">{{ accordion.landing_page_section_accordion_header }}</h4>
+                      <h4 class="c-list-box__heading bg-{{colors_secondary}} js-accordion__header" id="section-header">{{ accordion.landing_page_section_accordion_header }}</h4>
                     {% endif %}
                     <ul class="c-list-box__content js-accordion__content" id="section-panel">
                       {% for item in accordion.landing_page_section_accordion_items %}
@@ -178,9 +175,9 @@
 
 							{# categories #}
 							<div class="c-list-box__item">
-								<h3 class="js-accordion__header c-list-box__heading {{colors_secondary}}" id="type-filter-heading">Filter all activities by type</h3>
-								<ul class="js-accordion__content c-list-box__content {{colors_tertiary}}" id="type-filter-panel">
-									<li class="c-list-box__subitem {{colors_tertiary}} hover:{{colors_secondary}}" v-if="eventTypes!=null">
+								<h3 class="js-accordion__header c-list-box__heading bg-{{colors_secondary}}" id="type-filter-heading">Filter all activities by type</h3>
+								<ul class="js-accordion__content c-list-box__content bg-{{colors_tertiary}}" id="type-filter-panel">
+									<li class="c-list-box__subitem bg-{{colors_tertiary}} hover:bg-{{colors_secondary}}" v-if="eventTypes!=null">
 										<label class="checkbox">
 											<input type="checkbox" v-model="checkedAllEventTypes" @change="selectAllEventTypes" class="checkbox__field">
 											<svg class="checkbox__indicator ">
@@ -189,7 +186,7 @@
 											{{ __('Select All', 'guny') }}
 										</label>
 									</li>
-									<li class="c-list-box__subitem {{colors_tertiary}} hover:{{colors_secondary}}" v-for="category in eventTypes" v-if="category.slug !='summer'">
+									<li class="c-list-box__subitem bg-{{colors_tertiary}} hover:bg-{{colors_secondary}}" v-for="category in eventTypes" v-if="category.slug !='summer'">
 										<label class="checkbox" :for="category.slug">
 											<input type="checkbox" :id="category.slug" :value="category.slug" v-model="checkedEventType" class="checkbox__field">
 											<svg class="checkbox__indicator">
@@ -201,7 +198,7 @@
 								</ul>
 							</div>
 
-							<div id="posts-loaded" class="c-block-list--shade o-content-container--p-0 u-bottom-spacing-small" v-if="!isLoading" v-cloak>
+							<div id="posts-loaded" class="c-block-list--shade o-content-container--p-0" v-if="!isLoading" v-cloak>
 
 								<div class="o-col-2 c-block-list__item-px-0" v-for="post in posts" v-cloak>
 									{# CARD #}
@@ -228,7 +225,7 @@
 
 											<span v-if="post.days_recurring != undefined">
 												<svg role="img" class="icon--xxsmall" aria-hidden="true">
-													<title>Date:</title>
+													<title>{{__('Date:', 'GUNYC')}}</title>
 													<use xlink:href="#icon-recurring"></use>
 												</svg>
 												<span>{{__('Every', 'GUNYC')}} v{post.days_recurring} {{__('thru', 'GUNYC')}} v{post.date_formatted.end_date}</span>
@@ -236,7 +233,7 @@
 											</span>
 
 											<svg role="img" class="icon--xxsmall" aria-hidden="true">
-												<title>Time:</title>
+												<title>{{__('Time:', 'GUNYC')}}</title>
 												<use xlink:href="#icon-clock-o"></use>
 											</svg>
 											<span class="nowrap" v-if="post.categories.some(e => e.slug === 'anytime')">Anytime</span>
@@ -253,12 +250,12 @@
 
 										<div class="c-card__tags" v-if="post.categories">
                       <span v-for="term in post.age_group ">
-												<div class="button--pill {{colors_primary}}">
+												<div class="button--pill bg-{{colors_primary}}">
 													<span v-html="term.name"></span>
 												</div>
 											</span>
 											<span v-for="term in post.categories">
-                        <div class="button--pill {{colors_secondary}}" v-if="term.slug != 'summer'">
+                        <div class="button--pill bg-{{colors_secondary}}" v-if="term.slug != 'summer'">
                           <span v-html="term.name"></span>
                         </div>
 											</span>
@@ -266,7 +263,7 @@
 									</div>
 
 								</div>
-								<p class="type--no-results--padding" v-if="errorMsg">{{ __('Sorry, there are no events for this category right now. Check again later.', 'guny') }}</p>
+								<p class="p-6" v-if="errorMsg">{{ __('Sorry, there are no events for this category right now. Check again later.', 'guny') }}</p>
 
 								{# pagination #}
 								<div class="o-content-container--compact pagination text-center" v-if="!isLoading" v-cloak>
@@ -285,13 +282,13 @@
                 {% if post.events_text %}
                   <p class="c-block-list__text">{{post.events_text}}</p>
                 {% endif %}
-                {# <div class="c-block-list__inner"> #}
+
                 {% for event in upcoming_events %}
                   <div class="c-block-list__item">
                     {% include ['partials/teaser-'~event.post_type~'.twig', 'partials/teaser.twig'] with {post: event} %}
                   </div>
                 {% endfor %}
-                {# </div> #}
+
                 <!-- /.c-block-list-inner -->
                 <div class="text-center">
                   <a href="{{events_link}}?age_id=7&age_id=8" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Single-Age') }}</a>
@@ -305,10 +302,10 @@
 
       {# Share #}
       {% if post.get_field('show_share') == 'Yes' %}
-        <aside class="c-tip {{colors_primary}} text-center u-lg-gutter o-content-container">
-          <div class="c-tip__sticker sticker {{colors_primary}}">
+        <aside class="c-tip bg-{{colors_primary}} text-center u-lg-gutter o-content-container">
+          <div class="c-tip__sticker sticker bg-{{colors_primary}}">
             <svg class="icon--large" role="img" aria-hidden="true">
-              <title>Share</title>
+              <title>{{__('Share', 'GUNYC')}}</title>
               <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-check-outlined"></use>
             </svg>
           </div>
@@ -316,7 +313,7 @@
           <p class="c-tip__content">{{post.get_field('sms_intro_text')}}</p>
 
           <div id="share-by-text" class="sms-form-wrapper share-form">
-            {% include 'components/gunyc-share-form.twig' with {form_only:false, button_color: colors_secondary, button_hover: colors_tertiary, disclaimer_text: options.gunyc_disclaimer_text}%}
+            {% include 'components/gunyc-share-form.twig' with {form_only:false, color: colors_primary, button_color: colors_secondary, button_hover: colors_tertiary, disclaimer_text: options.gunyc_disclaimer_text}%}
           </div>
           <footer class="c-tip__footer"></footer>
         </aside>

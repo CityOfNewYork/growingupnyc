@@ -53,9 +53,17 @@
 			display: none;
 		}
 	</style>
+  {% if post.get_field('mt_google_translate') == 'Yes' and language_code != 'en' %}
+    {% include ['partials/google-translate.twig'] %}
+  {% endif %}
 {% endblock %}
 
 {% block content%}
+  {% if post.get_field('mt_google_translate') == 'Yes' and language_code != 'en' %}
+    <div machine-translate="{{post.get_field('mt_google_translate')}}"></div>
+    <div id="google_translate_element" class="hidden"></div>
+  {% endif %}
+
 	<div class="js-parallax">
 		<header class="c-hero c-hero--large bg-{{colors_primary}} js-parallax-content">
 			<div class="o-container js-parallax-text">

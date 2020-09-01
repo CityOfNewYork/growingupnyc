@@ -132,7 +132,8 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
      * Google Translate
      */
     window.onload = function () {
-      if (window.location.pathname.indexOf('events') >= 0 && document.documentElement.lang != 'en') {
+      if ((window.location.pathname.indexOf('events') >= 0 && document.documentElement.lang != 'en')||
+        (document.querySelector('[machine-translate="Yes"]') != null)) {
         googleTranslateElementInit()
       }
     }

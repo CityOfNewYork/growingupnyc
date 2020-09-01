@@ -13,13 +13,25 @@ $context['meta_noindex'] = $post->meta_noindex;
 $featured_image = get_the_post_thumbnail_url($post);
 $context['featured_image'] = $featured_image;
 
-// Check the language
-// Global constants are not good practice...
-// ... disabling error messages isn't debug friendly...
-// ... disable error reporting for this line only.
-error_reporting(0);
-// $context['language'] = ICL_LANGUAGE_CODE;
-error_reporting(WP_DEBUG);
-$templates = array( 'home.twig' );
+/**
+ * Top 3 programs based on menu order in CMS
+ */
+$filter_args=array(
+  'posts_per_page' => 3,
+  'post_type' => 'program',
+  'orderby' => 'menu_order',
+  'order' => 'ASC',
+);
+$programs = array();
+$query = new WP_Query($filter_args);
+foreach($query->posts as $p) {
+  $a = get_the_terms($p->ID, 'programs_cat');
+  $p->programs_cat = $a;
+  $p->link = ICL_LANGUAGE_CODE != 'en'? '/'.ICL_LANGUAGE_CODE.'/programs/'.$p->post_name: '/programs/'.$p->post_name;
+  array_push($programs, $p);
+}
+$context['top_programs']=$programs;
 
-Timber::render( $templates, $context );
+$template = 'home.twig';
+
+Timber::render( $template, $context );

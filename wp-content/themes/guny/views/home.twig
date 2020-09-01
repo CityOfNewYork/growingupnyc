@@ -75,36 +75,21 @@
     {% endfor %}
   </ol>
 
-		{% if is_archive %}
-			{% set event_link %}{{current_url}}{% endset %}
-		{% elseif language_code == 'en' %}
-			{% set event_link = '/events' %}
-		{% else %}
-			{% set event_link = ['/',language_code,'/events']|join %}
-		{% endif %}
-
-		<div class="c-block-list c-block-list--shade o-content-container">
-			<h2>{{ __('Virtual Events', 'GUNY-Homepage') }}</h2>
-			<div class="c-block-list__inner">
-				{% for post in top_events %}
-					<div class="c-block-list__item">
-						{% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
-					</div>
-					<!-- /.c-block-list__item -->
-				{% endfor %}
-			</div>
-			<div class="text-center">
-				<a href="{{event_link}}" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Homepage') }}</a>
-			</div>
-		</div>
-		<!-- /.c-content-container.c-content-container--shade -->
-	</section>
-	<!-- /.o-scroll-column.o-scroll-column--right -->
+  <div class="c-block-list c-block-list--shade o-content-container">
+    <h2>{{ __('Featured programs', 'GUNY-Homepage') }}</h2>
+    <div class="c-block-list__inner">
+      {% for post in top_programs %}
+        <div class="c-block-list__item">
+          {% include 'partials/teaser-'~post.post_type~'.twig' %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="text-center">
+      <a href="{{programs_link}}" class="button--outline button--outline--gray">{{ __('See all programs', 'GUNY-Homepage') }}</a>
+    </div>
+  </div>
+</section>
 {% endblock %}
 
 {% block scripts_extra %}
-{# <script type="text/javascript">
-   new Animations();
-</script> #}
-
 {% endblock %}

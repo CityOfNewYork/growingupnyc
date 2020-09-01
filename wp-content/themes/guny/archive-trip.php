@@ -46,7 +46,7 @@ $taxquery = array(
     'terms' => array('teen' , 'young-adult'),
   )
 );
-$upcoming_events = GunySite::get_featured_events( 3 , $taxquery , true );
+$upcoming_events = get_featured_events( 3 , $taxquery , true );
 $context['upcoming_events'] = $upcoming_events;
 
 // $upcoming_events = array(

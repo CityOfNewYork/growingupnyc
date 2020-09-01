@@ -15,7 +15,7 @@ if (($post->post_parent)>0) {
 
   // upcoming events for young children
   $lang = ICL_LANGUAGE_CODE == 'en' ? '': '-'.ICL_LANGUAGE_CODE;
-  $upcoming_events = GunySite::get_featured_events( 3, array(
+  $upcoming_events = get_featured_events( 3, array(
     'relation' => 'OR',
     array(
       'taxonomy' => 'age_group',

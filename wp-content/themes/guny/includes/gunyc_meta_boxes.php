@@ -16,3 +16,11 @@ function guny_remove_event_options() {
   remove_meta_box( 'tagsdiv-post_tag', 'tribe_events', 'side');
 }
 add_action( 'add_meta_boxes_tribe_events', 'guny_remove_event_options' );
+
+/**
+ * Post expiration plugin for all custom post types
+ */
+function add_expire_date_metabox_custom_post_types() {
+  add_meta_box( 'hugu_ped_expire_date_metabox', __( 'Expiration Date', 'hugu'), 'hugu_ped_expire_date_metabox_callback', array( 'program', 'summer-guide', 'afterschool-guide' ), 'side', 'high' );
+}
+add_action( 'add_meta_boxes', 'add_expire_date_metabox_custom_post_types' );

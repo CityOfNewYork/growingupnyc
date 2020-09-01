@@ -56,3 +56,17 @@ add_filter( 'mce_buttons_3', function($buttons) {
   );
   return $buttons;
 });
+
+/**
+ * Filter function used to remove the tinymce emoji plugin.
+ * Taken from https://wordpress.org/plugins/disable-emojis/
+ * @param  array $plugins
+ * @return array Difference between the two arrays
+ */
+add_filter('tiny_mce_plugins', function ($plugins) {
+  if (is_array($plugins)) {
+    return array_diff($plugins, array( 'wpemoji' ));
+  } else {
+    return array();
+  }
+});

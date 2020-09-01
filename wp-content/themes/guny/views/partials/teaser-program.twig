@@ -3,7 +3,12 @@
 {% block classes %}{{is_first ? "c-card--hero #{age_group.slug|sanitize|replace({(['-',language_code]|join):''})}-gradient"}}{% endblock %}
 
 {% block sticker %}
-  {% set category = post.terms('programs_cat')|first %}
+  {% if post.terms('programs_cat') %}
+    {% set category = post.terms('programs_cat')|first %}
+  {% else %}
+    {% set category = post.programs_cat|first %}
+  {% endif %}
+
   {% if category %}
     <a href="{{post.link}}">
       <div class="c-card__sticker sticker" aria-hidden="true">

@@ -16,7 +16,7 @@
 
         <p class="c-hero__tagline">
         {% for term in post.terms('age_group') %}
-          <a href="{{ages_link}}?ages={{term.slug}}" class="button--pill button--pill--{{term.slug|replace({(['-',language_code]|join):''})}}">{{term.name}}</a>
+          <a href="{{ages_link}}?ages={{term.slug}}" class="button--pill bg-{{term.slug|replace({(['-',language_code]|join):''})}}--primary">{{term.name}}</a>
         {% endfor %}
         {% for term in post.terms('tip_category') %}
           <a href="{{tips_link}}?tip_category={{term.slug}}" class="button--pill">{{term.name}}</a>
@@ -116,7 +116,7 @@
 
           <div class="c-block-list c-block-list--shade o-content-container--p-0 u-bottom-spacing-small" data-id="section-relevant-tips">
             <div class="c-block-list">
-              {% for tip in relevant_tips %} 
+              {% for tip in relevant_tips %}
               {% set tip = TimberPost(tip.ID) %}
 
               <div class="o-col-2 c-block-list__item-px-0">

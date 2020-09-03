@@ -54,7 +54,7 @@
 		}
 	</style>
   {% if post.get_field('mt_google_translate') == 'Yes' and language_code != 'en' %}
-    {% include ['partials/google-translate.twig'] %}
+    {% include ['services/google-translate.twig'] %}
   {% endif %}
 {% endblock %}
 
@@ -259,7 +259,7 @@
 								<p class="p-6" v-if="errorMsg">{{ __('Sorry, there are no events for this category right now. Check again later.', 'guny') }}</p>
 
 								{# pagination #}
-								<div class="o-content-container--compact pagination text-center" v-if="!isLoading" v-cloak>
+								<div class="o-content-container--compact pagination text-center pb-6" v-if="!isLoading" v-cloak>
 									<div class="paginate" v-if="(posts.length < 50) && (showButton)">
 										<router-link class="button--outline button--outline--gray paginate" :to="{ query: {event_category: checkedEventType }}" @click.native="loadMore();">{{ __('See more', 'guny') }}</router-link>
 									</div>

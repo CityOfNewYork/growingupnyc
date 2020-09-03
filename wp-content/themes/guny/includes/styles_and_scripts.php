@@ -10,7 +10,7 @@ use NYCO\WpAssets as WpAssets;
 function enqueue_language_style($name) {
   $WpAssets = new WpAssets();
 
-  $languages = array('ar', 'ru', 'ko', 'ur', 'zh-hant');
+  $languages = array('ar', 'ru', 'ur', 'zh-hant');
   $lang = (!in_array(ICL_LANGUAGE_CODE, $languages))
     ? 'default' : ICL_LANGUAGE_CODE;
 

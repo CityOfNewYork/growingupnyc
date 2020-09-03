@@ -63,7 +63,7 @@
 {% block content %}
 
   {% if language_code != 'en' %}
-    {% include ['partials/google-translate.twig'] %}
+    {% include ['services/google-translate.twig'] %}
   {% endif %}
 
   {% if is_archive %}

@@ -30,10 +30,12 @@
   <header class="c-hero js-parallax-content">
     <div class="o-container js-parallax-text">
       <h1 class="c-hero__title">{{page_title}}</h1>
-      <p class="c-hero__tagline desktop:w-6/12">{{page_tagline}}</p>
+      <div class="c-hero__tagline desktop:w-6/12 pt-2">
+        {{page_tagline}}
+      </div>
     </div>
   </header>
-  
+
   {% if programs_alert != '' %}
     <div class="alert">
       <div class="o-container">

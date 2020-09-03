@@ -16,7 +16,7 @@
 
         <p class="c-hero__tagline">
         {% for term in post.terms('age_group') %}
-          <a href="{{ages_link}}?ages={{term.slug}}" class="button--pill bg-{{term.slug|replace({(['-',language_code]|join):''})}}">{{term.name}}</a>
+          <a href="{{ages_link}}?ages={{term.slug}}" class="button--pill bg-{{term.slug|replace({(['-',language_code]|join):''})}}--primary">{{term.name}}</a>
         {% endfor %}
         {% for term in post.terms('tip_category') %}
           <a href="{{tips_link}}?tip_category={{term.slug}}" class="button--pill">{{term.name}}</a>
@@ -34,14 +34,14 @@
         <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
 
           <li class="c-nav-list__item">
-            <a href="#section-tip" data-section="section-tip" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Tip', 'GUNY-Tips') }}" class="js-section c-nav-list__link">{{ __('Tip', 'GUNY-Tips') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg>
+            <a href="#section-tip" data-section="section-tip" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Tip', 'GUNY-Tips') }}" class="js-section c-nav-list__link hover:bg-color-blue-light hover:border-color-blue-light text-color-white">{{ __('Tip', 'GUNY-Tips') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg>
             </a>
           </li>
           <li class="c-nav-list__item">
-            <a href="#section-age-guides" data-section="section-age-guides" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Age Guides', 'GUNY-Tips') }}"  class="js-section c-nav-list__link">{{ __('Related Age Guides', 'GUNY-Tips') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+            <a href="#section-age-guides" data-section="section-age-guides" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Age Guides', 'GUNY-Tips') }}"  class="js-section c-nav-list__link hover:bg-color-blue-light hover:border-color-blue-light text-color-white">{{ __('Related Age Guides', 'GUNY-Tips') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
           </li>
           <li class="c-nav-list__item">
-            <a href="#section-relevant-tips" data-section="section-relevant-tips" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Relevant Tips', 'GUNY-Tips') }}"  class="js-section c-nav-list__link">{{ __('More Tips Like This', 'GUNY-Tips') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+            <a href="#section-relevant-tips" data-section="section-relevant-tips" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Relevant Tips', 'GUNY-Tips') }}"  class="js-section c-nav-list__link hover:bg-color-blue-light hover:border-color-blue-light text-color-white">{{ __('More Tips Like This', 'GUNY-Tips') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
           </li>
         </ol>
       </div>
@@ -116,7 +116,7 @@
 
           <div class="c-block-list c-block-list--shade o-content-container--p-0 u-bottom-spacing-small" data-id="section-relevant-tips">
             <div class="c-block-list">
-              {% for tip in relevant_tips %} 
+              {% for tip in relevant_tips %}
               {% set tip = TimberPost(tip.ID) %}
 
               <div class="o-col-2 c-block-list__item-px-0">

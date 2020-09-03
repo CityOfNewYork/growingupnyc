@@ -26,6 +26,8 @@ if (is_int($virtual)) {
   $context['virtual_event'] = false;
 }
 
+$context['machine_translate'] = true;
+
 // top menu widget
 $template = 'tribe_events/single.twig';
 

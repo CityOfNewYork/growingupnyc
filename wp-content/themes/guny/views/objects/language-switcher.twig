@@ -1,30 +1,31 @@
-<div class="c-language-switcher-wrapper">
-  <div class="c-language__switcher">
-    <div class="pick-language-close-wrapper inline-block flex justify-between">
-      <span class="text-left pick-a-language" data-js="js-pick-a-language">{{__('Pick a language', 'guny')}}</span>
-      <button class="button--text close-language-switcher" data-js='close-mobile-language-menu'>
+<div class="c-language-switcher">
+  <div class="c-language-switcher__content" data-js="ls-options">
+    <div class="c-language-switcher-controller inline-block flex justify-between pt-6 pb-6">
+      <span class="text-left">{{__('Pick a language', 'guny')}}</span>
+      <button class="button--text close-language-switcher" data-js="close-language-menu">
         <svg class="icon--small" role="img">
           <title>Close Button</title>
           <use xlink:href="#icon-close"></use>
         </svg>
       </button>
     </div>
-    <div class="language-list-button-wrapper flex">
-      {% do action('wpml_add_language_selector') %}
-      <a class="translate-title" data-js='js-translate'>
-        <svg class="" role="img">
-          <title>Languages List Button</title>
-          <use xlink:href="#icon-translate"></use>
-        </svg>
-        <span>{{__('Translate', 'guny')}}</span>
-      </a>
-    </div>
+    {% do action('wpml_add_language_selector') %}
   </div>
-  <span class="google-translate-logo my-5 tablet:my-0 tablet:mb-0">
-    <svg class="icon--google" role="img">
-      <title>Powered by Google Translate</title>
-      <use xlink:href="#icon-google-translate"></use>
+  <a class="c-language-switcher__translate" data-js='translate'>
+    <svg class="" role="img">
+      <title>Languages List Button</title>
+      <use xlink:href="#icon-translate"></use>
     </svg>
-  </span>
-
+    <span>{{__('Translate', 'guny')}}</span>
+  </a>
 </div>
+{% if machine_translate %}
+
+<span class="c-language-switcher-logo">
+  <svg class="icon--google" role="img">
+    <title>Powered by Google Translate</title>
+    <use xlink:href="#icon-google-translate"></use>
+  </svg>
+</span>
+{% endif %}
+

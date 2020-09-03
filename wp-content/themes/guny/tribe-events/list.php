@@ -238,6 +238,8 @@ $context['language'] = $sitepress;
 $context['meta_desc'] = get_field('event_landing_meta_desc', 'option');
 $context['meta_keywords'] = get_field('event_landing_meta_keywords', 'option');
 
+$context['machine_translate'] = true;
+
 $template = 'tribe_events/archive.twig';
 
 

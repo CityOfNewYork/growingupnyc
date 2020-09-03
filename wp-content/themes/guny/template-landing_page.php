@@ -41,4 +41,7 @@ $context['post'] = $post;
 $context['meta_desc'] = $post->meta_description;
 $context['meta_keywords'] = $post->meta_keywords;
 
+if ($post->mt_google_translate == 'Yes'){
+  $context['machine_translate'] = true;
+}
 Timber::render( $templates, $context );

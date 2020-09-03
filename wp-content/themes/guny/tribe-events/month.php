@@ -116,6 +116,8 @@ if ( $borough_id > 0 ) {
   $context['current_borough_filter'] = $context['all_boroughs']['name'];
 }
 
+$context['machine_translate'] = true;
+
 $template = 'tribe_events/archive.twig';
 
 Timber::render( $template, $context );

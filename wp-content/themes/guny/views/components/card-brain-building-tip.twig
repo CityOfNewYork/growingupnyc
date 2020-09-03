@@ -28,7 +28,7 @@
       {% if post.terms('age_group') or post.terms('tip_category') %}
         <div class="c-card__tags">
           {% for term in post.terms('age_group') %}
-            <a href="{{tips_link}}?ages={{term.slug}}" class="button--pill button--pill--{{term.slug|replace({(['-',language_code]|join):''})}}">{{ term.name }}</a>
+            <a href="{{tips_link}}?ages={{term.slug}}" class="button--pill bg-{{term.slug|replace({(['-',language_code]|join):''})}}--primary">{{ term.name }}</a>
           {% endfor %}
           {% for term in post.terms('tip_category') %}
             <a href="{{tips_link}}?tip_category={{term.slug}}" class="button--pill">{{ term.name }}</a>

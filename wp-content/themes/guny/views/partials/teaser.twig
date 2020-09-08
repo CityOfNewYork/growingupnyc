@@ -1,6 +1,8 @@
-<div class="c-card {% block classes %}{% endblock %}">
+<div class="c-card {% block classes %}{% endblock %} flex">
 
   {% block sticker %}
+		{# <pre>{{dump(post)}}</pre> #}
+
   <a href="{{ post.link }}">
     <div class="c-card__sticker sticker {% block classes_sticker %}{% endblock %}" aria-hidden="true">
       {% block sticker_content %}{% endblock %}
@@ -47,7 +49,7 @@
 
   {% block tags_block %}
   {% if post.terms %}
-    <div class="c-card__tags">
+    <div class="c-card__tags order-last">
     {% block tags %}
       {% for term in post.terms('age_group') %}
         <a href="{{term.link}}" class="button--pill button--pill--alt">{{ term.name }}</a>

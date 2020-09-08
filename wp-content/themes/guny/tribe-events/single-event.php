@@ -26,8 +26,9 @@ if (is_int($virtual)) {
   $context['virtual_event'] = false;
 }
 
-// top menu widget
-$context['top_widget'] = Timber::get_widgets('top_widget');
+$context['machine_translate'] = true;
 
-$templates = array( 'single-event.twig', 'single.twig' );
-Timber::render( $templates, $context );
+// top menu widget
+$template = 'tribe_events/single.twig';
+
+Timber::render( $template, $context );

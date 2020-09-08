@@ -1,0 +1,28 @@
+{# initialize local variables current_banner, show_banner #}
+{% set current_banner, show_banner = null, false %}
+
+{# display global banner #}
+{% if not banner.override %}
+  {% set current_banner, show_banner = banner.post, banner.show %}
+{# display post-specific alternative banner (singular.php) #}
+{% else %}
+  {% set current_banner = banner.alt %}
+{% endif %}
+
+{% if show_banner or banner.override %}
+  <div class="o-alert-banner hidden" aria-describedby="dialog-desc-{{current_banner.slug}}" aria-labelledby="dialog-title-{{current_banner.slug}}" data-alert="{{current_banner.slug}}" data-js="alert-banner-{{current_banner.slug}}" id="banner-{{current_banner.slug}}" role="dialog">
+    <div class="show-for-screen-reader" id="dialog-title-{{current_banner.slug}}">{{__('Notification Banner', 'GUNYC')}}</div>
+    <div class="o-alert-banner__content" id="dialog-desc-{{current_banner.slug}}">
+      <div class="o-container">{{current_banner.banner_content}}</div>
+    </div>
+    <button aria-label="close" class="o-alert__button" data-js="alert-controller" type="button">
+      <svg class="icon--small" role="img">
+        <title>{{__('Close', 'GUNYC')}}</title>
+        <use xlink:href="#icon-close"></use>
+      </svg>
+    </button>
+  </div>
+{% endif %}
+
+
+

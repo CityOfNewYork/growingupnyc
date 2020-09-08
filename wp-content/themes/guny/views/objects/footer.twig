@@ -1,0 +1,82 @@
+ <footer class="o-footer" role="contentinfo">
+        <div class="o-container flex flex-wrap">
+          <div class="o-footer__section w-full desktop:w-1/2 flex-col flex-wrap">
+            <div class="o-footer__logos flex">
+              <div class="o-footer__logo w-1/2">
+                <figure class="">
+                  <svg class="icon--logo-guny"><title>Growing Up NYC Logo</title><use xlink:href="#icon-growingupnyc-logo-white"></use></svg>
+                </figure>
+              </div>
+                {# <img alt="Growing Up NYC" src="{{theme.link}}/assets/img/logo-gunyc-white@236px.png" width="118"> #}
+              <div class="o-footer__logo w-1/2">
+                <figure class="">
+                  <svg class="icon--logo"><title>Childrens Cabinet</title><use xlink:href="#icon-nyc-childrens-cabinet"></use></svg>
+                </figure>
+              </div>
+                {# <a href="http://www1.nyc.gov/site/childrenscabinet/index.page" target="_blank"><img alt="Link to NYC Children's Cabinet website" src="{{theme.link}}/assets/img/NYC-childrens-cabinet.svg" height="69" width="157"></a> #}
+            </div>
+            <nav role="navigation" class="o-footer__nav flex" aria-label="Secondary">
+              <ul class="o-footer__column w-1/2">
+                <li class="o-footer__nav-item">
+                  <a class="o-footer__link" href="{{ site.url }}">{{ __('Home', 'GUNY-Footer') }}</a>
+                </li>
+                {% if menu.id %}{% for m in menu.get_items %}
+                <li class="o-footer__nav-item {{ m._menu_item_classes|join(' ') }}">
+                  <a class="o-footer__link" href="{{ m.link }}"
+                  {% if m.attr_title != '' %}title="{{ m.attr_title }}"{% else %}title="{{ m.title }}"{% endif %}
+                  {% if m.target != '' %}target="{{ m.target }}"{% endif %}
+                  {% if m.xfn != '' %}rel="{{ m.xfn }}"{% endif %}
+                  >
+                    {{ m.title }}
+                  </a>
+                </li>
+                {% endfor %}{% endif %}
+                {% if footer_menu_primary_additional.id %}{% for m in footer_menu_primary_additional.get_items %}
+                <li class="o-footer__nav-item {{ m._menu_item_classes|join(' ') }}">
+                  <a class="o-footer__link" href="{{ m.link }}"
+                  {% if m.attr_title != '' %}title="{{ m.attr_title }}"{% else %}title="{{ m.title }}"{% endif %}
+                  {% if m.target != '' %}target="{{ m.target }}"{% endif %}
+                  {% if m.xfn != '' %}rel="{{ m.xfn }}"{% endif %}
+                  >
+                    {{ m.title }}
+                  </a>
+                </li>
+                {% endfor %}{% endif %}
+                {% if footer_menu_left.id %}{% for m in footer_menu_left.get_items %}
+                <li class="o-footer__nav-item {{ m._menu_item_classes|join(' ') }}">
+                  <a class="o-footer__link" href="{{ m.link }}"
+                  {% if m.attr_title != '' %}title="{{ m.attr_title }}"{% else %}title="{{ m.title }}"{% endif %}
+                  {% if m.target != '' %}target="{{ m.target }}"{% endif %}
+                  {% if m.xfn != '' %}rel="{{ m.xfn }}"{% endif %}
+                  >
+                    {{ m.title }}
+                  </a>
+                </li>
+                {% endfor %}{% endif %}
+              </ul>
+              <ul class="c-footer__column w-1/2">
+                {% if footer_menu_right.id %}{% for m in footer_menu_right.get_items %}
+                <li class="o-footer__nav-item {{ m._menu_item_classes|join(' ') }}">
+                  <a class="o-footer__link" href="{{ m.link }}"
+                  {% if m.attr_title != '' %}title="{{ m.attr_title }}"{% else %}title="{{ m.title }}"{% endif %}
+                  {% if m.target != '' %}target="{{ m.target }}"{% endif %}
+                  {% if m.xfn != '' %}rel="{{ m.xfn }}"{% endif %}
+                  >
+                    {{ m.title }}
+                  </a>
+                </li>
+                {% endfor %}{% endif %}
+              </ul>
+            </nav>
+          </div>
+          <div class="o-footer__signup w-full desktop:mt-0 desktop:w-1/2">
+            {% include 'partials/form-email-signup.twig' with {form_id: 'footer'} %}
+          </div> <!-- /.o -->
+        </div> <!-- /.o-container -->
+        <div class="o-container">
+          <div class="o-footer__footer">
+            <p>&copy; {{now|date('Y')}} {{ __('City of New York. All Rights Reserved.', 'GUNY-Footer') }}<br>{{ __('NYC is a trademark and service mark of the City of New York', 'GUNY-Footer') }}</p>
+          </div>
+        </div>
+        <div class="o-footer__reached"></div>
+      </footer> <!-- /.o -->

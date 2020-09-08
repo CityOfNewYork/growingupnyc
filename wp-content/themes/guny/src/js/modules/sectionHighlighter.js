@@ -5,18 +5,18 @@
 */
 
 export default function() {
-  var $navigationLinks = $('.js-section-set > li > a');
+	var $navigationLinks = $('.js-section-set > li > a');
   var $sections = $("section");
   var $sectionsReversed = $($("section").get().reverse());
   var sectionIdTonavigationLink = {};
   //var eTop = $('#free-day-trips').offset().top;
 
   $sections.each(function() {
-    var section = $(this);
+		var section = $(this);
 
     // fallback for acf_fc_layout sections
     if (!section.attr('data-id') && section.attr('id')) {
-      section.attr('data-id', section.attr('id'));
+			section.attr('data-id', section.attr('id'));
       section.removeAttr('id');
     }
 
@@ -26,20 +26,21 @@ export default function() {
   });
 
   function optimized() {
-    var scrollPosition = $(window).scrollTop();
+		var scrollPosition = $(window).scrollTop();
 
     $sectionsReversed.each(function() {
-      var currentSection = $(this);
+			var currentSection = $(this);
+			// console.log(currentSection)
       var sectionTop = currentSection.offset().top;
 
       // if(currentSection.is('section:first-child') && sectionTop > scrollPosition){
-      //   console.log('scrollPosition', scrollPosition);
-      //   console.log('sectionTop', sectionTop);
-      // }
+				//   console.log('scrollPosition', scrollPosition);
+				//   console.log('sectionTop', sectionTop);
+				// }
 
-      if (scrollPosition >= sectionTop || (currentSection.is('section:first-child') && sectionTop > scrollPosition)) {
-        var id = currentSection.attr('data-id');
-        var $navigationLink = sectionIdTonavigationLink[id];
+				if (scrollPosition >= sectionTop || (currentSection.is('section:first-child') && sectionTop > scrollPosition)) {
+					var id = currentSection.attr('data-id');
+					var $navigationLink = sectionIdTonavigationLink[id];
         if (!$navigationLink.hasClass('is-active') || !$('section').hasClass('o-content-container--compact')) {
             $navigationLinks.removeClass('is-active');
             $navigationLink.addClass('is-active');

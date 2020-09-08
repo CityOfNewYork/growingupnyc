@@ -16,7 +16,7 @@ if ( $post->post_type == 'age' ) {
     $age_group_id=$post->age_group->id;
     $context['age_group_id'] = $age_group_id;
   }
-  $upcoming_events = GunySite::get_featured_events( 3, array(
+  $upcoming_events = get_featured_events( 3, array(
     array(
       'taxonomy' => 'age_group',
       'field' => $age_group_id,
@@ -66,9 +66,6 @@ $context['shareAction'] = admin_url( 'admin-ajax.php' );
 $context['shareHash'] = \SMNYC\hash($post->link);
 $context['shareTemplate'] = "growingupnyc-".$post->post_type;
 
-// Language Switcher
-$context['top_widget'] = Timber::get_widgets('top_widget');
-
 // meta tags
 $context['meta_desc'] = get_field('meta_description', $post->id);
 $context['meta_keywords'] = get_field('meta_keywords', $post->id);
@@ -79,5 +76,5 @@ $banner = get_field('current_banner');
 $context['banner']['alt'] = new TimberPost($banner);
 $context['banner']['override'] = $post->update_banner;
 
-$templates = array( 'single-age.twig');
-Timber::render( $templates, $context );
+$template = 'age/single.twig';
+Timber::render( $template, $context );

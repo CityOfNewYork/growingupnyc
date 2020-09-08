@@ -7,13 +7,10 @@
 */
 $context = Timber::get_context();
 
-$context['top_widget'] = Timber::get_widgets('top_widget');
-
 $path = '/programs';
 
 $context['page_title'] = Templating\get_title($path);
 $context['page_tagline'] = Templating\get_tagline($path);
-$context['banner'] = Templating\get_hero_banner_img($path);
 $context['programs_alert'] = Templating\get_alert_content($path);
 $context['post_type'] = 'program';
 
@@ -27,5 +24,5 @@ $taxonomies = get_object_taxonomies( 'program', object );
 $context['age_group_heading']=$taxonomies['age_group']->label;
 $context['program_category_heading']=$taxonomies['programs_cat']->label;
 
-$templates = array( 'list-program.twig', 'list.twig' );
-Timber::render( $templates, $context );
+$template = 'program/archive.twig';
+Timber::render( $template, $context );

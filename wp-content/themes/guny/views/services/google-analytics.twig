@@ -1,0 +1,15 @@
+{% if constant('GOOGLE_ANALYTICS') != '' %}
+  <!-- Google Analytics -->
+  <script async src='https://www.googletagmanager.com/gtag/js?id={{ constant('GOOGLE_ANALYTICS') }}'></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    {% if 'programs' in current_url %}
+    gtag('config', "{{ constant('GOOGLE_ANALYTICS') }}", { 'optimize_id': "{{ constant('GOOGLE_OPTIMIZE_CONTAINER_ID') }}" });
+    {% else %}
+    gtag('config', "{{ constant('GOOGLE_ANALYTICS') }}");
+    {% endif %}
+  </script>
+  <!-- End Google Analytics -->
+  {% endif  %}

@@ -1,7 +1,7 @@
 <?php
 
 use NYCO\WpAssets as WpAssets;
- 
+
 /**
  * Enqueue a hashed style based on it's name and language prefix.
  * @param  [string] $name the name of the stylesheet source
@@ -10,15 +10,17 @@ use NYCO\WpAssets as WpAssets;
 function enqueue_language_style($name) {
   $WpAssets = new WpAssets();
 
-  $languages = array('ar', 'es', 'ko', 'ur', 'zh-hant');
+  $languages = array('ar', 'ru', 'ur', 'zh-hant');
   $lang = (!in_array(ICL_LANGUAGE_CODE, $languages))
     ? 'default' : ICL_LANGUAGE_CODE;
 
-  $style = $WpAssets->addStyle("$name-$lang", true, [], null, 'all', '');
 
   // Generation style
   if (strpos(strtok($_SERVER["REQUEST_URI"],'?'), 'generation')) {
     $lang = 'microsite';
+    $style = $WpAssets->addStyle("$name-gunyc-og", true, [], null, 'all', '');
+    $style = $WpAssets->addStyle("$name-$lang", true, [], null, 'all', '');
+  } else {
     $style = $WpAssets->addStyle("$name-$lang", true, [], null, 'all', '');
   }
 }

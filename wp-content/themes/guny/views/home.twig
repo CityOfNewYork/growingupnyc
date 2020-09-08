@@ -79,6 +79,7 @@
     <h2>{{ __('Featured Programs', 'GUNY-Homepage') }}</h2>
     <div class="c-block-list__inner">
       {% for post in top_programs %}
+        {% set post = TimberPost(post) %}
         <div class="c-block-list__item">
           {% include 'partials/teaser-'~post.post_type~'.twig' %}
         </div>

@@ -107,7 +107,7 @@
 
       {% else %}
         {% if post.tip %}
-          <section class="c-tip u-sm-gutter bg-{{post.age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--secondary o-content-container" id="tip-{{(post.title|split(' '))|join('-')}}" data-id="section-quick-tip">
+          <section class="c-tip u-sm-gutter bg-{{post.age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--secondary o-content-container text-center" id="tip-{{(post.title|split(' '))|join('-')}}" data-id="section-quick-tip">
             <div id="section-quick-tip" class="c-tip__sticker sticker bg-{{post.age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--secondary">
               <svg class="icon--large" role="img" aria-hidden="true"><title>Tip</title><use xlink:href="#icon-lightbulb"></use></svg>
             </div>

@@ -1,9 +1,13 @@
 {# Google Translate #}
 <script type="text/javascript">
 	function googleTranslateElementInit() {
+    let lang = document.documentElement.lang;
+    if (lang == 'zh-hant') {
+      lang = 'zh-TW';
+    }
     new google.translate.TranslateElement({
       pageLanguage: 'en',
-      includedLanguages: document.documentElement.lang + ',\'en\'',
+      includedLanguages: lang + ',\'en\'',
       autoDisplay: false
     }, 'google_translate_element');
     var a = document.querySelector('#google_translate_element select');
@@ -12,7 +16,7 @@
     } else {
       a.selectedIndex = 0
       a.dispatchEvent(new Event('change'))
-    } 
+    }
     a.dispatchEvent(new Event('change'))
   }
 </script>

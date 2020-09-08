@@ -19,31 +19,31 @@
 	<style>
 		{% if post.hero_banner %}
 			.c-hero {
-				background-image: url({{TimberImage(post.hero_banner)|resize(480,161)}});
-			}
-			@media(-webkit-min-device-pixel-ratio: 2),
-			(min-resolution: 192dpi) {
-				.c-hero {
-					background-image: url({{TimberImage(post.hero_banner)|resize(960,322)}});
-				}
-			}
-			@media(min-width:480px) {
-				.c-hero {
-					background-image: url({{TimberImage(post.hero_banner)|resize(700,235)}});
-				}
-			}
-			@media(min-width:480px) and(-webkit-min-device-pixel-ratio: 2),
-			(min-width:480px) and(min-resolution: 192dpi) {
-				.c-hero {
-					background-image: url({{TimberImage(post.hero_banner)|resize(1400,470)}});
-				}
-			}
-			@media(min-width:700px) {
-				.c-hero {
-					background-image: url({{TimberImage(post.hero_banner)}});
-					padding-top: 7rem;
-				}
-			}
+        background-image: url({{TimberImage(post.hero_banner)|resize(480,161)}});
+      }
+      @media(-webkit-min-device-pixel-ratio: 2),
+      (min-resolution: 192dpi) {
+        .c-hero {
+          background-image: url({{TimberImage(post.hero_banner)|resize(960,322)}});
+        }
+      }
+      @media(min-width:480px) {
+        .c-hero {
+          background-image: url({{TimberImage(post.hero_banner)|resize(700,235)}});
+        }
+      }
+      @media(min-width:480px) and(-webkit-min-device-pixel-ratio: 2),
+      (min-width:480px) and(min-resolution: 192dpi) {
+        .c-hero {
+          background-image: url({{TimberImage(post.hero_banner)|resize(1400,470)}});
+        }
+      }
+      @media(min-width:700px) {
+        .c-hero {
+          background-image: url({{TimberImage(post.hero_banner)}});
+          {# padding-top: 7rem; #}
+        }
+      }
 		{% else %}
 			.c-hero {
 				background-image: url({{TimberImage(post.hero_banner)}});
@@ -75,15 +75,15 @@
 		</header>
 	</div>
 
-	<article class="o-container js-sticky-container">
-		<div class="o-article-sidebar">
+	<article class="o-container js-sticky-container desktop:flex">
+		<div class="o-article-sidebar desktop:w-sidebar">
 			{# Anchor Links #}
 			<div class="o-content-container--compact u-shift-up">
 				<ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
 					{% for top in post.get_field('landing_page_section') %}
 						{% if loop.index != 1 %}
 							<li class="c-nav-list__item">
-								<a href="#{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" data-section="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" class="js-section c-nav-list__link bg-{{colors_secondary}} hover:bg-{{colors_tertiary}} hover:border-{{colors_tertiary}} text-color-white">{{top.landing_page_section_content_heading}}<svg aria-hidden="true" class="icon--caret">
+								<a href="#{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" data-section="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" class="js-section c-nav-list__link bg-{{colors_secondary}} hover:bg-{{colors_tertiary}} hover:border-{{colors_tertiary}} active:border-{{colors_secondary}} text-color-white">{{top.landing_page_section_content_heading}}<svg aria-hidden="true" class="icon--caret">
 										<use xlink:href="#icon-caret-right"></use>
 									</svg>
 								</a>
@@ -92,11 +92,9 @@
 					{% endfor %}
 				</ol>
 			</div>
-			<!-- /.o-content-container-compact -->
 		</div>
-		<!-- /.o-article-sidebar -->
 
-		<div class="o-article o-article-ms o-article-ms__topics js-sticky-article">
+		<div class="o-article js-sticky-article desktop:w-article">
 			{# Section One #}
 			{% for top in post.get_field('landing_page_section') %}
 				<section data-id="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" class="o-content-container--compact u-top-spacing u-bottom-spacing-small s-wysiwyg bullet">

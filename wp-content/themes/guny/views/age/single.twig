@@ -46,39 +46,41 @@
     </header>
   </div> <!-- /.js-parallax -->
   <article class="o-container js-sticky-container desktop:flex">
-      <div class="o-article-sidebar desktop:w-sidebar">
-        {# Anchor Links #}
-        <div class="o-content-container--compact u-shift-up">
-          <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
-            {# brain building #}
-            {% if brain_building_tip %}
+    <div class="o-article-sidebar desktop:w-sidebar">
+      {# Anchor Links #}
+      <div class="o-content-container--compact u-shift-up">
+        <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
+          {# brain building #}
+          {% if brain_building_tip %}
+          <li class="c-nav-list__item">
+            <a href="#section-brain-building" data-section="section-brain-building" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Brain Building', 'GUNY-Single-Age') }}"  class="scroll js-section c-nav-list__link bg-{{post.age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--secondary">{{ __('Brain Building', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+          </li>
+          {% else %}
+          <li class="c-nav-list__item">
+            <a href="#section-quick-tip" data-section="section-quick-tip" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Quick Tip', 'GUNY-Single-Age') }}"  class="scroll js-section c-nav-list__link bg-{{post.age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--secondary">{{ __('Quick Tip', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+          </li>
+          {% endif %}
+          {# milestones #}
+          <li class="c-nav-list__item">
+            <a href="#section-milestones" data-section="section-milestones" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Milestones', 'GUNY-Single-Age') }}"  class="scroll js-section c-nav-list__link bg-{{post.age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--secondary">{{ __('Milestones', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+          </li>
+          {# programs #}
+          {% if post.featured_programs %}
             <li class="c-nav-list__item">
-              <a href="#section-brain-building" data-section="section-brain-building" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Brain Building', 'GUNY-Single-Age') }}"  class="scroll js-section c-nav-list__link bg-{{post.age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--secondary">{{ __('Brain Building', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+              <a href="#section-programs" data-section="section-programs" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Programs', 'GUNY-Single-Age') }}" class="scroll js-section c-nav-list__link bg-{{post.age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--secondary">{{ __('Programs', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
             </li>
-            {% else %}
+          {% endif %}
+          {# events #}
+          {% if upcoming_events %}
             <li class="c-nav-list__item">
-              <a href="#section-quick-tip" data-section="section-quick-tip" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Quick Tip', 'GUNY-Single-Age') }}"  class="scroll js-section c-nav-list__link bg-{{post.age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--secondary">{{ __('Quick Tip', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+              <a href="#section-events" data-section="section-events" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Events', 'GUNY-Single-Age') }}" class="scroll js-section c-nav-list__link bg-{{post.age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--secondary">{{ __('Events', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
             </li>
-            {% endif %}
-            {# milestones #}
-            <li class="c-nav-list__item">
-              <a href="#section-milestones" data-section="section-milestones" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Milestones', 'GUNY-Single-Age') }}"  class="scroll js-section c-nav-list__link bg-{{post.age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--secondary">{{ __('Milestones', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
-            </li>
-            {# programs #}
-            {% if post.featured_programs %}
-              <li class="c-nav-list__item">
-                <a href="#section-programs" data-section="section-programs" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Programs', 'GUNY-Single-Age') }}" class="scroll js-section c-nav-list__link bg-{{post.age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--secondary">{{ __('Programs', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
-              </li>
-            {% endif %}
-            {# events #}
-            {% if upcoming_events %}
-              <li class="c-nav-list__item">
-                <a href="#section-events" data-section="section-events" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Events', 'GUNY-Single-Age') }}" class="scroll js-section c-nav-list__link bg-{{post.age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--secondary">{{ __('Events', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
-              </li>
-            {% endif %}
-          </ol>
-        </div> <!-- /.o-content-container-compact -->
-      </div> <!-- /.o-article-sidebar -->
+          {% endif %}
+        </ol>
+      </div> <!-- /.o-content-container-compact -->
+    </div> <!-- /.o-article-sidebar -->
+
+    {# Sections #}
     <div class="o-article js-sticky-article desktop:w-article">
       {# Introduction #}
       {% if post.intro_content %}

@@ -43,7 +43,6 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
   'use strict';
 
   window.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM fully loaded and parsed');
     new Accordion();
   });
 
@@ -60,12 +59,12 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
   }
 
   /**
-     * Landing Pages with filters
-     */
-
+   * Landing Pages with filters
+   */
   let vueId = $('div').find('[id^=vue]').attr('id');
   if (vueId != undefined) {
     if (vueId.indexOf('events') >= 0) {
+      console.log('events')
       new EventsList().init();
     }
     if (vueId.indexOf('summer') >= 0) {
@@ -93,18 +92,14 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
     if (window.location.pathname === '/') {
       new Animations("rotating-text__entry", 2000, 200);
     }
+
     new ContentShow();
     new FormEffects();
     new LanguageSwitcher();
-    // if (window.location.pathname.indexOf('events') === -1) {
-    //   document.querySelector('.google-translate-logo').style.display = 'none';
-    //   document.querySelector('.google-translate-logo').style.backgroundColor = 'blue';
-    // }
+    
     new Newsletter();
     new Overlay();
 
-    new Scroll();
-    // Single Age Guide Page
     // Internet Explorer 6-11
     const isIE = /*@cc_on!@*/false || !!document.documentMode;
     if (!isIE) {
@@ -115,10 +110,7 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
     new SectionHighlighter()
     new StaticColumn();
 
-    if (window.location.pathname.indexOf('age') >= 0 ||
-      window.location.pathname.indexOf('programs') >= 0 ||
-      window.location.pathname.indexOf('brainbuilding') >= 0 ||
-      window.location.pathname.indexOf('outreach-support') >= 0) {
+    if (document.querySelector('.js-sticky') != undefined) {
       new Sticky();
     }
 

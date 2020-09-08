@@ -58,7 +58,6 @@ class EventsList {
         ])
           .then(axios.spread((events) => {
             this.filterPosts(events.data.events)
-            // this.postsAll = events.data.events
             this.getTaxonomies();
             this.parseQuery();
             this.getPrograms();
@@ -116,6 +115,7 @@ EventsList.getPrograms = function () {
   }
   this.posts = result.slice(0, 4);
 
+
   if (this.posts.length == 0) {
     this.errorMsg = true;
     this.isLoading = false;
@@ -131,7 +131,6 @@ EventsList.getPrograms = function () {
       this.showButton = false;
     }
   }
-
 }
 
 EventsList.generateFilterURL = function (data) {
@@ -242,12 +241,16 @@ EventsList.loadMore = function () {
  * Filters events that are just teen and young adult
  */
 EventsList.filterPosts = function (events) {
+  let result;
   let ages = this.checkedAgeGroup
 
-  let result = events.filter(function (e) {
-    return e.age_group.find(x => ages.includes(x.slug));
-  });
-
+  if (document.documentElement.lang != 'en'){
+    result = events;
+  }else {
+    result = events.filter(function (e) {
+      return e.age_group.find(x => ages.includes(x.slug));
+    });
+  }
   // dedup events that are recurring
   let collapsedResults = result.filter((event, index, self) =>
     index === self.findIndex((t) => (

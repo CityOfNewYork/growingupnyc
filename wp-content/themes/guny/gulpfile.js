@@ -111,7 +111,7 @@ gulp.task('images', function () {
  * Icons - copy icons into main directory
  */
 gulp.task('icons', function () {
-  return gulp.src(patternsDist + 'svg/icons.svg')
+  return gulp.src(patternsDist + 'icons.svg')
     .pipe(rename('svg-sprite.twig'))
     .pipe(gulp.dest(views + 'partials'));
 });

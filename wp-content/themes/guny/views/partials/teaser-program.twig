@@ -20,7 +20,9 @@
 
 {% block subtitle %}
   <p><strong>{{post.program_name}}{% if post.acronym %} ({{post.acronym}}){% endif %}</strong></p>
-  <p>{{post.government_agency}}</p>
+  {% if agency == true %}
+    <p>{{post.government_agency}}</p>
+  {% endif %}
 {% endblock %}
 
 {% block tags %}

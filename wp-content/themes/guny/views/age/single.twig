@@ -210,7 +210,7 @@
             {% for program in post.get_field('featured_programs') %}
               {% set program = TimberPost(program) %}
               <div class="c-block-list__item">
-                {% include ['partials/teaser-'~program.post_type~'.twig', 'partials/teaser.twig'] with {post: program, is_first: loop.first, age_group: post.age_group} %}
+                {% include ['partials/teaser-'~program.post_type~'.twig', 'partials/teaser.twig'] with {post: program, is_first: loop.first, age_group: post.age_group, agency: true} %}
               </div>
             {% endfor %}
           </div> <!-- /.c-block-list__inner -->

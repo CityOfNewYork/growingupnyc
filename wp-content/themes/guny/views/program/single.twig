@@ -152,7 +152,7 @@
       <div class="c-block-list__inner">
         {% for program in post.related_posts %}
           <div class="c-block-list__item">
-            {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] with {post: program} %}
+            {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] with {post: program, agency: true} %}
           </div> <!-- /.c-block-list__item -->
         {% endfor %}
       </div> <!-- /.c-block-list__inner -->

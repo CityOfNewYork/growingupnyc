@@ -81,7 +81,7 @@
       {% for post in top_programs %}
         {% set post = TimberPost(post) %}
         <div class="c-block-list__item">
-          {% include 'partials/teaser-'~post.post_type~'.twig' %}
+          {% include 'partials/teaser-'~post.post_type~'.twig' with {agency: false} %}
         </div>
       {% endfor %}
     </div>

@@ -14,7 +14,6 @@
   {% set colors_secondary = 'color-blue' %}
   {% set colors_tertiary = 'color-blue-dark' %}
 {% endif %}
-
 {% block head_extras %}
 	<style>
 		{% if post.hero_banner %}
@@ -75,7 +74,7 @@
 		</header>
 	</div>
 
-	<article class="o-container js-sticky-container desktop:flex">
+  <article class="o-container js-sticky-container desktop:flex">
 		<div class="o-article-sidebar desktop:w-sidebar">
 			{# Anchor Links #}
 			<div class="o-content-container--compact u-shift-up">
@@ -83,7 +82,7 @@
 					{% for top in post.get_field('landing_page_section') %}
 						{% if loop.index != 1 %}
 							<li class="c-nav-list__item">
-								<a href="#{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" data-section="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" class="js-section c-nav-list__link bg-{{colors_secondary}} hover:bg-{{colors_tertiary}} hover:border-{{colors_tertiary}} active:border-{{colors_secondary}} text-color-white">{{top.landing_page_section_content_heading}}<svg aria-hidden="true" class="icon--caret">
+								<a href="#{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" data-section="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" class="scroll js-section {% if post.get_field('lp_theme') != 'default'%}c-nav-list__link--{{post.get_field('lp_theme')}}{% else %}c-nav-list__link{% endif %} text-color-white">{{top.landing_page_section_content_heading}}<svg aria-hidden="true" class="icon--caret">
 										<use xlink:href="#icon-caret-right"></use>
 									</svg>
 								</a>
@@ -156,7 +155,7 @@
           </section>
         {% endif %}
 				<hr>
-        
+
         {# Upcoming Events #}
         {% if top.landing_page_add_filter == 'Yes' %}
 

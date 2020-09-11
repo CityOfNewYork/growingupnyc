@@ -22,6 +22,7 @@
     "@babel/core": "^7.8.7",
     "@babel/polyfill": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
+    "@fullhuman/postcss-purgecss": "^2.3.0",
     "autoprefixer": "^9.7.4",
     "babel-eslint": "^10.1.0",
     "babel-loader": "^8.0.6",
@@ -59,7 +60,7 @@
     "webpack-stream": "^5.2.1"
   },
   "dependencies": {
-    "@nycopportunity/growingup-patterns": "^1.0.0-5",
+    "@nycopportunity/growingup-patterns": "git+ssh://git@github.com/NYCOpportunity/growingupnyc-patterns.git#staging",
     "animate.scss": "0.0.6",
     "axios": "^0.19.2",
     "bourbon": "^4.2.7",

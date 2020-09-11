@@ -1,12 +1,10 @@
 // Fonts
-@import url("https://use.typekit.net/wty8eeo.css");
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=El+Messiri&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Markazi+Text&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+$cdn: '../../assets/';
+$path-to-images: 'img/';
+$path-to-icons: 'svg/';
+
+@import "@nycopportunity/growingup-patterns/src/elements/fonts/fonts";
 
 // Settings (Global variables)
 // =====================
@@ -26,67 +24,28 @@
 @import "tools/splatter";
 @import "tools/media";
 
-// // Objects (Design patterns)
-// // =====================
-// @import "objects/accordion";
-// @import "objects/layout";
+// Objects (Design patterns)
+// =====================
 @import "objects/columns";
-// @import "objects/offcanvas";
-// @import "objects/content-container";
-// @import "objects/overlay";
-// @import "objects/feature-photo";
-// @import "objects/parallax";
-// @import "objects/flex-embed";
-// @import "objects/static-column";
-// @import "objects/inline";
-// @import "objects/sticky-nav";
 
-// // Components (Styled pieces of UI)
-// // =====================
+// Components (Styled pieces of UI)
+// =====================
 @import "components/age-guide-card";
-// @import "components/gallery";
-// @import "components/alert";
-// @import "components/hero";
-// @import "components/arrow-pager";
 @import "components/list-box";
-// @import "components/banner";
-// @import "components/nav-list";
-// @import "components/block-list";
-// @import "components/share";
-// @import "components/card";
-// @import "components/side-hero";
-// @import "components/content-tout";
-// @import "components/signup-form";
-// @import "components/details-list";
 @import "components/tip-card";
 @import "components/disclaimer";
 @import "components/tip";
-// @import "components/footer";
 
-// // Elements (Styles for common HTML elements)
+// Elements (Styles for common HTML elements)
 @import "elements/logo-banner";
-// @import "elements/tables";
 @import "elements/splatter";
 
-// // Scopes (Styles scoped to a specific context)
-// @import "scopes/404";
-// @import "scopes/wysiwyg";
-
-// // Vendor (Styles for third-party plugins)
-// @import "vendor/facetwp";
-
-// // Utilities
-// @import "utilities/animations";
-// @import "utilities/milestone-colors";
-// @import "utilities/backgrounds";
-// @import "utilities/spacing";
-// @import "utilities/colors";
+// Utilities
 @import "utilities/utility";
-// @import "utilities/hacks";
-// @import "utilities/visibility";
 
-
-// elements
+/**
+ * Elements
+ */
 @import "@nycopportunity/growingup-patterns/src/elements/button/button";
 @import "@nycopportunity/growingup-patterns/src/elements/input/input";
 @import "@nycopportunity/growingup-patterns/src/elements/checkbox/checkbox";
@@ -95,7 +54,9 @@
 @import "@nycopportunity/growingup-patterns/src/elements/sticker/sticker";
 
 
-// Components
+/**
+ * Components
+ */
 @import "@nycopportunity/growingup-patterns/src/components/side-hero/side-hero";
 @import "@nycopportunity/growingup-patterns/src/components/list-box/list-box";
 @import "@nycopportunity/growingup-patterns/src/components/block-list/block-list";
@@ -111,7 +72,9 @@
 @import "@nycopportunity/growingup-patterns/src/components/language-switcher/language-switcher";
 @import "@nycopportunity/growingup-patterns/src/components/form/form";
 
-// Objects
+/**
+ * Objects
+ */
 @import "@nycopportunity/growingup-patterns/src/objects/footer/footer";
 @import "@nycopportunity/growingup-patterns/src/objects/alert-banner/alert-banner";
 @import "@nycopportunity/growingup-patterns/src/objects/static-column/static-column";
@@ -124,7 +87,9 @@
 @import "@nycopportunity/growingup-patterns/src/objects/content/content";
 @import "@nycopportunity/growingup-patterns/src/objects/inline-list/inline-list";
 
-// Utilities
+/**
+ * Utilities
+ */
 @import "@nycopportunity/growingup-patterns/src/utilities/accessibility/accessibility";
 @import "@nycopportunity/growingup-patterns/src/utilities/animations/animations";
 @import "@nycopportunity/growingup-patterns/src/utilities/typography/typography";
@@ -135,7 +100,6 @@
 @import '@nycopportunity/growingup-patterns/dist/styles/_tailwind.scss';
 @import "@nycopportunity/growingup-patterns/src/utilities/sticky/sticky";
 @import "@nycopportunity/growingup-patterns/src/utilities/spacing/spacing";
-
 
 /*
  * Miscellaneous

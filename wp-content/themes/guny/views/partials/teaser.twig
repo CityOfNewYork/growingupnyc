@@ -10,6 +10,12 @@
   </a>
   {% endblock %}
 
+  {% block subtitle_block %}
+  <div class="c-card__subtitle">
+    {% block subtitle %}{% endblock %}
+  </div>
+  {% endblock %}
+
   <h3 class="c-card__title">
     {% block title %}
     {% if post.get_field('plain_language_program_name') != '' %}
@@ -41,23 +47,7 @@
   {% endif %}
   {% endblock %}
 
-  {% block subtitle_block %}
-  <div class="c-card__subtitle">
-    {% block subtitle %}{% endblock %}
-  </div>
-  {% endblock %}
 
-  {% block tags_block %}
-  {% if post.terms %}
-    <div class="c-card__tags order-last">
-    {% block tags %}
-      {% for term in post.terms('age_group') %}
-        <a href="{{term.link}}" class="button--pill button--pill--alt">{{ term.name }}</a>
-      {% endfor %}
-    {% endblock %}
-    </div>
-  {% endif %}
-  {% endblock %}
 
   <div class="c-card__body">
     {% block body %}
@@ -68,4 +58,17 @@
   {% block link %}{% endblock %}
 
   {% block cta %}{% endblock %}
+
+  {% block tags_block %}
+  {% if post.terms %}
+    <div class="c-card__tags">
+    {% block tags %}
+      {% for term in post.terms('age_group') %}
+        <a href="{{term.link}}" class="button--pill button--pill--alt">{{ term.name }}</a>
+      {% endfor %}
+    {% endblock %}
+    </div>
+  {% endif %}
+  {% endblock %}
+
 </div>

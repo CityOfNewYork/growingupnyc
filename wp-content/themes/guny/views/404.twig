@@ -9,9 +9,9 @@
 <div class="s-404">
   {# Side Hero #}
   <section class="o-static-column o-static-column--left c-side-hero js-static">
-    <div class="c-side-hero__content {% if top_widget %} u-top-spacing{% else %} u-top-spacing-large{% endif %}">
+    <div class="c-side-hero__content u-top-spacing-large">
       <h1 class="c-side-hero__title u-sm-gutter {% if is_generation %} u-top-spacing-small{% endif %}">
-        <span class="c-side-hero__title__large {% if not is_generation %} text-bright-blue{% endif %}">{{ function('NotFound\\get_hero_header') }}</span>
+        <span class="c-side-hero__title__large {% if not is_generation %} text-color-blue-light{% endif %}">{{ function('NotFound\\get_hero_header') }}</span>
         <p class="c-side-hero__tagline">{{ function('NotFound\\get_hero_tagline') }}</p>
       </h1>
       {% if function('NotFound\\get_hero_button_url') %}
@@ -23,10 +23,16 @@
   {# Side Menu #}
   <section class="o-scroll-column o-scroll-column--right">
     <div class="c-list-box c-list-box--primary">
-      <div class="c-list-box__item bg-strong-blue {% if function('NotFound\\get_menu_categories_count') <= 2 %} u-top-spacing-small u-bottom-spacing-small{% endif %}">
-        <h2 class="c-list-box__heading bg-strong-blue">{{ function('NotFound\\get_menu_header') }}</h2>
-        <ul class="c-list-box__content bg-strong-blue">
-          {{ function('NotFound\\get_menu_categories') }}
+      <div class="c-list-box__item bg-color-blue {% if function('NotFound\\get_menu_categories_count') <= 2 %} u-top-spacing-small u-bottom-spacing-small{% endif %}">
+        <h2 class="c-list-box__heading bg-color-blue">{{ function('NotFound\\get_menu_header') }}</h2>
+        <ul class="c-list-box__content bg-color-blue text-color-blue">
+          {% set cats = function('NotFound\\get_menu_categories') %}
+          {% for cat in cats %}
+            <li class="c-list-box__subitem">
+              <a href="{{cat.link}}" class="button--full-width button--primary button--primary--blue button--primary__curved text-color-blue">{{cat.text}}</a>
+            </li>
+
+          {% endfor %}
         </ul>
       </div>
     </div>

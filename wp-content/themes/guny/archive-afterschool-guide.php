@@ -7,7 +7,7 @@
 $context = Timber::get_context();
 $context['posts'] = Timber::get_posts();
 
-$path = '/afterschool';
+$path = '/after-school-programs';
 
 $context['page_title'] = Templating\get_title($path);
 $context['page_tagline'] = Templating\get_tagline($path);
@@ -26,4 +26,6 @@ $context['meta_desc'] = get_field('meta_description', Templating\get_controller_
 $context['meta_keywords'] = get_field('meta_keywords', Templating\get_controller_id($path));
 $context['meta_noindex'] = get_field('meta_noindex', Templating\get_controller_id($path));
 
-Timber::render(array('list-afterschool-guide.twig'), $context);
+$template = 'afterschool-guide/archive.twig';
+
+Timber::render($template, $context);

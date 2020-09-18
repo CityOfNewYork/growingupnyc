@@ -1,0 +1,139 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+	<div class="js-parallax">
+		<header class="c-hero c-hero--light">
+			<div class="o-container">
+        <h1 class="c-hero__title">
+          <span class="c-hero__sticker sticker bg-color-primary">
+            <svg aria-hidden="true" class="icon--medium">
+              <use xlink:href="#icon-{{post.terms('tip_category')[0].slug|replace({(['-',language_code]|join):''})}}"></use>
+            </svg>
+          </span>
+        {{ brain_building_tip_name}}
+        </h1>
+
+        <p class="c-hero__tagline">
+        {% for term in post.terms('age_group') %}
+          <a href="{{ages_link}}?ages={{term.slug}}" class="button--pill bg-{{term.slug|replace({(['-',language_code]|join):''})}}--primary">{{term.name}}</a>
+        {% endfor %}
+        {% for term in post.terms('tip_category') %}
+          <a href="{{tips_link}}?tip_category={{term.slug}}" class="button--pill">{{term.name}}</a>
+        {% endfor %}
+        </p>
+
+			</div>
+		</header>
+	</div>
+
+	<article class="o-container u-bottom-spacing-small js-sticky-container desktop:flex">
+    <div class="o-article-sidebar desktop:w-sidebar">
+      {# Anchor Links #}
+      <div class="o-content-container--compact">
+        <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
+
+          <li class="c-nav-list__item">
+            <a href="#section-tip" data-section="section-tip" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Tip', 'GUNY-Tips') }}" class="scroll js-section c-nav-list__link hover:bg-color-blue-light hover:border-color-blue-light text-color-white">{{ __('Tip', 'GUNY-Tips') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg>
+            </a>
+          </li>
+          <li class="c-nav-list__item">
+            <a href="#section-age-guides" data-section="section-age-guides" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Age Guides', 'GUNY-Tips') }}"  class="scroll js-section c-nav-list__link hover:bg-color-blue-light hover:border-color-blue-light text-color-white">{{ __('Related Age Guides', 'GUNY-Tips') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+          </li>
+          <li class="c-nav-list__item">
+            <a href="#section-relevant-tips" data-section="section-relevant-tips" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Relevant Tips', 'GUNY-Tips') }}"  class="scroll js-section c-nav-list__link hover:bg-color-blue-light hover:border-color-blue-light text-color-white">{{ __('More Tips Like This', 'GUNY-Tips') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="o-article js-sticky-article desktop:w-article">
+      {# TIP #}
+      {% if brain_building_tip %}
+        <section class="o-content-container--compact pt-20 desktop:pt-0" data-id="section-tip">
+          <div class="o-content-container--text u-sm-gutter">
+            {{brain_building_tip}}
+          </div>
+        </section>
+      {% endif %}
+
+      {# Brainy Background #}
+      {% if brainy_background %}
+        <section class="o-content-container--compact u-top-spacing" data-id="section-tip">
+          <div class="o-content-container--text u-sm-gutter">
+            <h3>{{ __('See what your child is learning', 'GUNY-Tips') }}</h3>
+            <p>{{brainy_background}}</p>
+          </div>
+        </section>
+      {% endif %}
+
+      {# Share #}
+      <section class="o-content-container--compact u-top-spacing u-bottom-spacing" data-id="section-tip">
+        {% if options.gunyc_enable_sms_brain_building == 'Yes' and options.gunyc_disclaimer_text != '' %}
+          <h3>{{ __('Share this tip', 'GUNY') }}</h3>
+          {% include 'components/form-wrapper.twig' with {form_only:true}%}
+        {% endif %}
+        {# Powered by Vroom #}
+        <div class="logo-banner--small">
+          <svg class="icon--vroom" role="img">
+            <title>{{__('Vroom', 'GUNYC')}}</title>
+            <use xlink:href="#icon-vroom-logo-orange{% if language_code != 'en' %}-{{language_code}}{% endif %}"></use>
+          </svg>
+          <a href="{% if language_code != 'en' %}/{{language_code}}{% endif %}/about-brain-building" class="logo-banner__link">{{ __('Learn more about Vroom', 'GUNY-Tips') }}</a>
+        </div>
+      </section>
+      <hr>
+      {# Relevant Age Guides #}
+      {% if post.relevant_age_guides %}
+        <section class="o-content-container--compact u-top-spacing" data-id="section-age-guides">
+          <div class="o-content-container--header o-content-container--header--age">
+            <h2>{{ __('Related Age Guides', 'GUNY-Tips') }}</h2>
+          </div>
+
+          <div class="c-block-list">
+            <div class="c-block-list__inner--m-0" js-target="content-show-all-age-guides">
+              {% for age_guide in post.relevant_age_guides %}
+                {% set age_guide = TimberPost(age_guide) %}
+                <div class="c-block-list__item">
+                  {% include ['components/card-age-guide.twig'] with {post: age_guide} %}
+                </div>
+              {% endfor %}
+            </div>
+
+            {% if post.relevant_age_guides| length > 3 %}
+            <div class="u-top-spacing-small text-center">
+              <button aria-hidden="true" tabindex="-1" class="button--outline button--outline--gray" js-trigger="content-show-all-age-guides">{{ __('See more age guides', 'GUNY-Tips') }}</button>
+            </div>
+            {% endif %}
+          </div>
+        </section>
+      {% endif %}
+
+
+      {# Relevant Tips #}
+      {% if relevant_tips %}
+        <section class="o-content-container--p-0 u-top-spacing" data-id="section-relevant-tips">
+          <div class="o-content-container--header o-content-container--header--tip">
+            <h2>{{ __('More Tips Like This', 'GUNY-Tips') }}</h2>
+          </div>
+
+          <div class="c-block-list c-block-list--shade o-content-container--p-0 u-bottom-spacing-small" data-id="section-relevant-tips">
+            <div class="c-block-list">
+              {% for tip in relevant_tips %}
+              {% set tip = TimberPost(tip.ID) %}
+
+              <div class="o-col-2 c-block-list__item-px-0">
+                {% include ['components/card-brain-building-tip.twig'] with {post: tip} %}
+              </div>
+              {% endfor %}
+            </div>
+            <div class="text-center">
+              <a href="{{tips_link}}" class="button--outline button--outline--gray" title="{{ __('See all tips', 'GUNY-Tips') }}">{{ __('See all tips', 'GUNY-Tips') }}</a>
+            </div>
+          </div>
+        </section>
+      {% endif %}
+    </div> <!-- /.o-article -->
+	</article>
+
+{% endblock %}
+

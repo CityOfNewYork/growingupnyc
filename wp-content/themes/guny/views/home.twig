@@ -1,41 +1,53 @@
 {% extends "base.twig" %}
 
 {% block head_extras %}
-<style type='text/css' id='c-side-hero__image'>
-  .c-side-hero__image {
-    background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(480, 0)}});
-    {{ function('Templating\\get_focal_point', post.get_field('hero_mobile_image')['ID']) }}
-  }
-  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .c-side-hero__image { background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(960,0)}}); }
-  }
-  @media (min-width: 480px) {
-    .c-side-hero__image { background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(700,0)}}); }
-  }
-  @media (min-width: 480px) and (-webkit-min-device-pixel-ratio: 2), (min-width: 480px) and (min-resolution: 192dpi) {
-    .c-side-hero__image { background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(1400,0)}}); }
-  }
-  @media (min-width: 1024px) {
-    .c-side-hero__image { background-image: url({{ featured_image }}); }
-  }
-</style>
+	<style type='text/css' id='c-side-hero__image'>
+		.c-side-hero__image {
+			background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(480, 0)}});
+			{{function('Templating\\get_focal_point', post.get_field('hero_mobile_image')['ID'])}}
+		}
+		@media(-webkit-min-device-pixel-ratio: 2),
+		(min-resolution: 192dpi) {
+			.c-side-hero__image {
+				background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(960,0)}});
+			}
+		}
+		@media(min-width: 480px) {
+			.c-side-hero__image {
+				background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(700,0)}});
+			}
+		}
+		@media(min-width: 480px) and(-webkit-min-device-pixel-ratio: 2),
+		(min-width: 480px) and(min-resolution: 192dpi) {
+			.c-side-hero__image {
+				background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(1400,0)}});
+			}
+		}
+		@media(min-width: 1024px) {
+			.c-side-hero__image {
+				background-image: url({{ featured_image }});
+			}
+		}
+	</style>
 {% endblock %}
 
 {% block content %}
 
 {# Side Hero #}
+{# <section class="o-static-column o-static-column--left c-side-hero js-static desktop:h-screen"> #}
 <section class="o-static-column o-static-column--left c-side-hero js-static">
+
   <div class="c-side-hero__image"></div>
   <div class="c-side-hero__content">
     <h1 class="c-side-hero__title">
       {{post.get_field('hero_title_top')}}
       <div class="c-side-hero__title__large rotating-text">
         {% for text in post.get_field('hero_rotating_text_repeater') %}
-          <span class="rotating-text__entry">
+          <span data-js="rotate-text" class="rotating-text__entry">
             {{text.hero_rotating_text}}
           </span>
         {% endfor %}
-        <span id="rotate"></span>
+        <span data-js="rotate-controller" id="rotate" class="animated"></span>
       </div> <!-- /.c-side-hero__title__large -->
     </h1>
     <a href="{{post.get_field('hero_button_url')}}" class="button--outline button--outline--white">{{post.get_field('hero_button_text')}}</a>
@@ -43,46 +55,42 @@
 </section> <!-- /.o-static-column.o-static-column--left -->
 
 <section class="o-scroll-column o-scroll-column--right">
-  {# Age/Milestone Picker #}
+  {# Age/Milestone Picker  #}
   <ol class="js-accordion c-list-box c-list-box--primary" data-multiselectable="true">
     {% for age_group in age_menu %}
       <li class="c-list-box__item">
-        <h3 class="js-accordion__header c-list-box__heading {{age_group.slug|sanitize|replace({'-es':''})}}-background" id="homepage-ages-heading-{{loop.index}}">
+        <h3 class="js-accordion__header c-list-box__heading bg-{{age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--primary" id="homepage-ages-heading-{{loop.index}}">
           {{age_group.name}}
           <span class="c-list-box__subheading">{{age_group.description}}</span>
         </h3>
-        <ol class="js-accordion__content c-list-box__content {{age_group.slug|sanitize|replace({'-es':''})}}-background" id="homepage-ages-panel-{{loop.index}}">
+        <ol class="js-accordion__content c-list-box__content bg-{{age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--primary" id="homepage-ages-panel-{{loop.index}}">
           {% for post in age_group.posts('numberposts=-1&post_type=age&meta_key=numeric_age&orderby=meta_value_num&order=ASC') %}
-            <li class="c-list-box__subitem"><a href="{{post.link}}" class="button--full-width button--primary {{age_group.slug|sanitize|replace({(['-',language]|join):''})}}-text">{{post.title}}</a></li>
+            <li class="c-list-box__subitem"><a href="{{post.link}}" class="button--full-width button--primary text-{{age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--primary">{{post.title}}</a></li>
           {% endfor %}
           {% if age_group.slug in ["baby", "toddler", "pre-schooler", ["baby-", language_code]|join(''), ["toddler-",language_code]|join(''), ["pre-schooler-",language_code]|join('')] %}
-            <li class="c-list-box__subitem"><a href="{% if language_code != 'en' %}/{{language_code}}{% endif %}/brainbuilding?ages={{age_group.slug}}" class="button--full-width button--primary {{age_group.slug|sanitize|replace({(['-',language]|join):''})}}-text">{{ __('Brain Building', 'GUNY-Homepage') }}</a></li>
+            <li class="c-list-box__subitem"><a href="{% if language_code != 'en' %}/{{language_code}}{% endif %}/brainbuilding?ages={{age_group.slug}}" class="button--full-width button--primary text-{{age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--primary">{{ __('Brain Building', 'GUNY-Homepage') }}</a></li>
           {% endif %}
         </ol>
       </li>
     {% endfor %}
   </ol>
 
-  {% if is_archive %}
-    {% set event_link %}{{current_url}}{% endset %}
-  {% elseif language == 'en' %}
-    {% set event_link = '/events' %}
-  {% else %}
-    {% set event_link = ['/',language,'/events']|join %}
-  {% endif %}
-
   <div class="c-block-list c-block-list--shade o-content-container">
-    <h2>{{ __('Virtual Events', 'GUNY-Homepage') }}</h2>
+    <h2>{{ __('Featured Programs', 'GUNY-Homepage') }}</h2>
     <div class="c-block-list__inner">
-      {% for post in top_events %}
+      {% for post in top_programs %}
+        {% set post = TimberPost(post) %}
         <div class="c-block-list__item">
-          {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
-        </div> <!-- /.c-block-list__item -->
+          {% include 'partials/teaser-'~post.post_type~'.twig' with {agency: false} %}
+        </div>
       {% endfor %}
     </div>
     <div class="text-center">
-      <a href="{{event_link}}" class="button--outline button--outline--gray">{{ __('See all events', 'GUNY-Homepage') }}</a>
+      <a href="{{programs_link}}" class="button--outline button--outline--gray">{{ __('See all programs', 'GUNY-Homepage') }}</a>
     </div>
-  </div> <!-- /.c-content-container.c-content-container--shade -->
-</section> <!-- /.o-scroll-column.o-scroll-column--right -->
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts_extra %}
 {% endblock %}

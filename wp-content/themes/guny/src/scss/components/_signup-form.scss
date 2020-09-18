@@ -121,21 +121,21 @@
   width: 100%;
 }
 
-.no-csstransforms3d .signup-form__label {
+.signup-form__label {
   bottom: rem-calc(10);
 }
 
-.no-csstransforms3d .is-filled .signup-form__label {
+.is-filled .signup-form__label {
   bottom: 100%;
 }
 
-.csstransforms3d .signup-form__label {
+.signup-form__label {
   bottom: 100%;
   transform: translate3d(0, #{rem-calc(37)}, 0);
   transition: transform 250ms ease-in-out;
 }
 
-.csstransforms3d .is-filled .signup-form__label {
+.is-filled .signup-form__label {
   transform: translate3d(0, 0, 0);
 }
 
@@ -181,7 +181,7 @@
   }
 }
 
-.no-csstransforms3d .is-filled .signup-form__label-content {
+.is-filled .signup-form__label-content {
   color: $color-text-invert;
   font-family: $font-family-display;
   @include font-size-x-small;
@@ -189,7 +189,7 @@
   text-transform: uppercase;
 }
 
-.csstransforms3d .is-filled .signup-form__label-content {
+.is-filled .signup-form__label-content {
   color: transparent;
   overflow: visible;
   transform: translate3d(0, 100%, 0);

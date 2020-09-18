@@ -1,7 +1,8 @@
-<div class="age-guide-card border-color-{{post.terms('age_group')[0].slug|lower|replace({'-es':''}) }}">
+{% set age = post.terms('age_group')[0].slug|replace({(['-',language_code]|join):''}) %}
 
+<div class="age-guide-card border-{{age}}--primary">
   {% block title %}
-    <h3 class="age-guide-card__title bg-color-{{post.terms('age_group')[0].slug|lower|replace({'-es':''}) }}">
+    <h3 class="age-guide-card__title bg-{{age}}--primary hover:bg-{{age}}--secondary">
       <a href="{{ post.link }}" title="{{ post.title }}" class="age-guide-card__title-link">
         {{ post.title }}
       </a>

@@ -1,5 +1,4 @@
 <?php
-
 /*
 Template Name: Generic Page
 */
@@ -18,8 +17,5 @@ $context['sections'] = Templating\get_sections();
 
 // WPML language switcher
 $is_translated = apply_filters( 'wpml_element_has_translations', NULL, $post->id, 'page' );
-if ($is_translated) {
-  $context['top_widget'] = Timber::get_widgets('top_widget');
-}
 
 Timber::render($templates, $context);

@@ -74,11 +74,9 @@
             color: $purple-60;
           }
 
-          .no-touchevents & {
-            &:hover {
-              background: $white;
-              color: $purple-60;
-            }
+          &:hover {
+            background: $white;
+            color: $purple-60;
           }
         }
       }
@@ -100,11 +98,9 @@
                 background: $white;
                 color: $purple-50;
               }
-              .no-touchevents & {
-                &:hover {
-                  background: $white;
-                  color: $purple-50;
-                }
+              &:hover {
+                background: $white;
+                color: $purple-50;
               }
             }
           }
@@ -125,11 +121,9 @@
                 background: $white;
                 color: $purple-40;
               }
-              .no-touchevents & {
-                &:hover {
-                  background: $white;
-                  color: $purple-40;
-                }
+              &:hover {
+                background: $white;
+                color: $purple-40;
               }
             }
           }
@@ -150,11 +144,9 @@
                 background: $white;
                 color: $purple-30;
               }
-              .no-touchevents & {
-                &:hover {
-                  background: $white;
-                  color: $purple-30;
-                }
+              &:hover {
+                background: $white;
+                color: $purple-30;
               }
             }
           }
@@ -175,11 +167,9 @@
                 background: $white;
                 color: $purple;
               }
-              .no-touchevents & {
-                &:hover {
-                  background: $white;
-                  color: $purple;
-                }
+              &:hover {
+                background: $white;
+                color: $purple;
               }
             }
           }
@@ -200,11 +190,9 @@
                 background: $white;
                 color: $purple-20;
               }
-              .no-touchevents & {
-                &:hover {
-                  background: $white;
-                  color: $purple-20;
-                }
+              &:hover {
+                background: $white;
+                color: $purple-20;
               }
             }
           }
@@ -225,11 +213,9 @@
                 background: $white;
                 color: $purple-10;
               }
-              .no-touchevents & {
-                &:hover {
-                  background: $white;
-                  color: $purple-10;
-                }
+              &:hover {
+                background: $white;
+                color: $purple-10;
               }
             }
           }
@@ -288,10 +274,8 @@
       &:focus {
         background: $light-purple;
       }
-      .no-touchevents & {
-        &:hover {
-          background: $light-purple;
-        }
+      &:hover {
+        background: $light-purple;
       }
     }
     background: $dark-purple;
@@ -300,10 +284,8 @@
       background: $purple;
     }
 
-    .no-touchevents & {
-      &:hover {
-        background: $purple;
-      }
+    &:hover {
+      background: $purple;
     }
   }
 
@@ -408,11 +390,9 @@
       border-color: $purple;
     }
 
-    .no-touchevents & {
-      &:hover {
-        background-color: $purple;
-        border-color: $purple;
-      }
+    &:hover {
+      background-color: $purple;
+      border-color: $purple;
     }
 
     &.is-active {
@@ -439,7 +419,7 @@
 .c-tip--sms {
   &,
   .c-tip__sticker {
-    background: $dark-purple;
+    background: $purple;
   }
 }
 
@@ -467,10 +447,8 @@
       color: $purple;
     }
 
-    .no-touchevents & {
-      &:hover {
-        color: $white;
-      }
+    &:hover {
+      color: $white;
     }
   }
 }
@@ -490,11 +468,9 @@
     border-color: $light-purple;
   }
 
-  .no-touchevents & {
-    &:hover {
-      background: $light-purple;
-      border-color: $light-purple;
-    }
+  &:hover {
+    background: $light-purple;
+    border-color: $light-purple;
   }
 
   &[disabled],
@@ -573,13 +549,13 @@
   margin-bottom: rem-calc(15);
 }
 
-.csstransforms3d .sms-form__label {
+.sms-form__label {
   bottom: 100%;
   transform: translate3d(0, #{rem-calc(35)}, 0);
   transition: transform 250ms ease-in-out;
 }
 
-.csstransforms3d .is-filled .sms-form__label {
+.is-filled .sms-form__label {
   transform: translate3d(0, 0, 0);
 }
 

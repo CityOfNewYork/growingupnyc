@@ -16,45 +16,6 @@ error_reporting(0);
 $context['language'] = ICL_LANGUAGE_CODE;
 error_reporting(WP_DEBUG);
 
-// Get the relevant events by age group
-if ( $post->post_type == 'age' ) {
-  $age_groups = $post->terms('age_group');
-
-  if( $age_groups ) {
-    $post->age_group = $age_groups[0];
-    $age_group_id=$post->age_group->id;
-    $context['age_group_id'] = $age_group_id;
-  }
-  $upcoming_events = GunySite::get_featured_events( 3, array(
-    array(
-      'taxonomy' => 'age_group',
-      'field' => $age_group_id,
-      'terms' => $age_group_id
-    )
-  ), true );
-  $context['upcoming_events'] = $upcoming_events;
-} 
-
-// Get the relevant programs based on category
-if ( $post->post_type == 'program' ) {
-  $programs_cat = $post->terms('programs_cat');
-  if ( $programs_cat ) {
-    $post->category = $programs_cat[0];
-    $post->related_posts = Timber::get_posts( array(
-      'post_type' => 'program',
-      'posts_per_page' => 3,
-      'post__not_in' => array($post->ID),
-      'tax_query' => array(
-        array(
-          'taxonomy' => 'programs_cat',
-          'field' => 'term_id',
-          'terms' => $post->category->ID
-        )
-      )
-    ) );
-  }
-}
-
 // Brain Building Tip - Get One
 $filter_args=array(
   'posts_per_page' => 1,
@@ -72,21 +33,12 @@ $context['brain_building_tip'] = Timber::get_post($query->posts[0]->ID);
 
 // Generation NYC homepage declaration
 if($post->post_type == 'page' && strpos($post->post_name, 'generationnyc') !== false){
-  $templates = array( 'micro-site-homepage.twig' );
+  $templates = array( 'microsite-homepage.twig' );
 }
 else{
   $templates = array( 'single-' . $post->ID . '.twig', 'single-' . $post->post_type . '.twig', 'single.twig' );
 }
 $context['post'] = $post;
-
-/**
- * Section Headers and Jump Nav - English only
- */
-$en_parent_id = icl_object_id($post->ID, 'page', false,'en');
-$context['eligibility'] = get_field('jump_nav_heading_-_eligibility', $en_parent_id);
-$context['application'] = get_field('jump_nav_heading_-_application', $en_parent_id);
-$context['whats_needed'] = get_field('whats_needed_heading', $en_parent_id);
-$context['help'] = get_field('jump_nav_heading_-_help', $en_parent_id);
 
 // SHARE - SMS
 $context['shareAction'] = admin_url( 'admin-ajax.php' );
@@ -96,9 +48,6 @@ if($context['is_generation']) {
 } else {
   $context['shareTemplate'] = "growingupnyc-".$post->post_type;
 }
-
-// top menu widget
-$context['top_widget'] = Timber::get_widgets('top_widget');
 
 // meta tags
 $context['meta_desc'] = get_field('meta_description', $post->id);

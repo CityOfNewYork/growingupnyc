@@ -64,31 +64,15 @@ const MENU_CATEGORIES = 'field_5bec81f6fae9e';
  * @return integer The ID of the post
  */
 function get_controller_id() {
-  $path = get_path();
-  $id = get_page_by_path($path)->ID;
-
-  if ($id != NULL){
-    return $id;
-  } else {
-    $id = get_page_by_path(PATH)->ID;
-    return icl_object_id($id, 'page', false, ICL_LANGUAGE_CODE);
-  }
-}
-
-/**
- * Get the site domain to ensure we display the correct template
- * @return string The full url for 404 (not found)
- */
-function get_path() {
   $arr_path = explode('/', strtok($_SERVER["REQUEST_URI"],'?'));
 
   if (array_search('generationnyc', $arr_path)){
     $path = '/generationnyc'.PATH;
+    return get_page_by_path($id, 'page', false, ICL_LANGUAGE_CODE)->ID;
   } else {
     $path = PATH;
+    return get_page_by_path(($path)->ID, 'page', true, ICL_LANGUAGE_CODE)->ID;
   }
-
-  return $path;
 }
 
 /**
@@ -141,8 +125,9 @@ function get_menu_header() {
  * @return string HTML markup
  */
 function get_menu_categories() {
-  $return ='';
   $content = get_field(MENU_CATEGORIES, get_controller_id());
+
+  $menu_cats = array();
 
   if ($content) {
     foreach ($content as $key => $value) {
@@ -152,11 +137,14 @@ function get_menu_categories() {
       $link = explode(', ', $value['button_link']);
       $link = implode('", "', $link);
 
-      $return .= '<li class="c-list-box__subitem"><a href="'.$link.'" class="button--full-width button--primary button--primary--blue button--primary__curved">'.$text.'</a></li>';
+      $test['text'] = $text;
+      $test['link'] = $link;
+
+      array_push($menu_cats, $test);
     }
   }
-
-  return $return;
+  
+  return $menu_cats;
 }
 
 /**

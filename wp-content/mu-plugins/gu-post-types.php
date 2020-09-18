@@ -167,7 +167,7 @@ class GUPostTypes {
         'supports' => array('title', 'excerpt', 'editor'),
         'has_archive' => true,
         'rewrite' => array(
-          'slug' => 'afterschool',
+          'slug' => 'after-school-programs',
           'with_front' => false
         )
       )

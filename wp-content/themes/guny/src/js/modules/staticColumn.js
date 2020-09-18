@@ -8,7 +8,7 @@
 
 import forEach from 'lodash/forEach';
 
-export default function() {
+export default function () {
   const stickyContent = document.querySelectorAll('.js-static');
   const notStickyClass = 'is-not-sticky';
   const bottomClass = 'is-bottom';
@@ -37,7 +37,7 @@ export default function() {
   }
 
   if (stickyContent) {
-    forEach(stickyContent, function(stickyContentElem) {
+    forEach(stickyContent, function (stickyContentElem) {
       calcWindowPos(stickyContentElem);
 
       /**
@@ -45,7 +45,7 @@ export default function() {
       * @function
       * @param {object} event - The event object
       */
-      window.addEventListener('scroll', function() {
+      window.addEventListener('scroll', function () {
         calcWindowPos(stickyContentElem);
       }, false);
 
@@ -54,7 +54,7 @@ export default function() {
       * @function
       * @param {object} event - The event object
       */
-      window.addEventListener('resize', function() {
+      window.addEventListener('resize', function () {
         calcWindowPos(stickyContentElem);
       }, false);
     });

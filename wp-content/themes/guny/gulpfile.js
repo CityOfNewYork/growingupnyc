@@ -1,4 +1,3 @@
-
 /**
  * Dependencies
  */
@@ -19,6 +18,8 @@ var browserSync = require('browser-sync').create(),
   sourcemaps = require('gulp-sourcemaps'),
   svgSprite = require('gulp-svg-sprite'),
   uglify = require('gulp-uglify'),
+  tailwind = require('tailwindcss'),
+  purgecss = require('@fullhuman/postcss-purgecss'),
   webpack = require('webpack-stream'),
   postcss = require('gulp-postcss'),
   autoprefixer = require('autoprefixer'),
@@ -30,6 +31,8 @@ var browserSync = require('browser-sync').create(),
  */
 var dist = 'assets/',
   source = 'src/',
+  patterns = 'node_modules/@nycopportunity/growingup-patterns/src/',
+  patternsDist = 'node_modules/@nycopportunity/growingup-patterns/dist/',
   views = 'views/';
 
 /**
@@ -62,27 +65,36 @@ gulp.task('styles:clean', (callback) => {
 gulp.task('styles:sass', gulp.series('styles:lint', function () {
   return gulp.src([
     source + 'scss/style-*.scss',
-  ])
+    ])
     .pipe(cssGlobbing({
       extensions: ['.scss']
     }))
     .pipe(sourcemaps.init())
-    .pipe(sass({
-      includePaths:
-        [
-          'node_modules',
-          'node_modules/growingupnyc-patterns/src',
-          require('bourbon-neat').includePaths,
-          require('bourbon').includePaths
-        ]
+    .pipe(sass({ includePaths:
+      [
+        'node_modules',
+        'node_modules/@nycopportunity/growingup-patterns/src',
+        require('bourbon-neat').includePaths,
+        require('bourbon').includePaths
+      ]
     }))
     .pipe(postcss([
-      autoprefixer([
-        'last 2 versions',
-        'ie 9-11',
-        'iOS 8'
-      ]),
-      cssnano()
+      tailwind(),
+      autoprefixer(),
+      cssnano(),
+      purgecss({
+        content: [
+          './src/scss/utilities/**/*.scss', 
+          './src/scss/style-gunyc-og.scss', 
+          './src/scss/style-microsite.scss', 
+          './views/**/*.twig', 
+          patterns + '**/*.scss',
+          patternsDist + 'scripts/**/*',
+          patternsDist + '**/*.html',
+        ],
+        whitelistPatterns: [/^hover/],
+        defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
+      })
     ]))
     .pipe(hashFilename())
     .pipe(sourcemaps.write())
@@ -97,7 +109,7 @@ gulp.task('styles', gulp.series('styles:clean', 'styles:sass'))
  * Images
  */
 gulp.task('images', function () {
-  return gulp.src(source + 'img/**/*')
+  return gulp.src([source + 'img/**/*', patterns + 'images/**/*'])
     .pipe(cache(imagemin({
       optimizationLevel: 5,
       progressive: true,
@@ -108,30 +120,26 @@ gulp.task('images', function () {
 });
 
 /**
- * Icons
+ * Icons - compile into sprite
  */
-gulp.task('icons', function () {
-  return gulp.src(source + 'icons/*.svg')
-    .pipe(rename({ prefix: 'icon-' }))
-    .pipe(svgSprite({
-      mode: {
-        symbol: {
-          dest: '.',
-          sprite: 'svg-sprite.twig',
-          bust: false,
-          inline: true
-        }
-      }
-    }))
+gulp.task('icons:sprite', function () {
+  return gulp.src(patternsDist + 'svg/icons.svg')
+    .pipe(rename('svg-sprite.twig'))
     .pipe(gulp.dest(views + 'partials'));
 });
+
+gulp.task('icons:copy', function () {
+  return gulp.src(patternsDist + 'svg/*')
+    .pipe(gulp.dest(dist + 'svg'));
+});
+
+gulp.task('icons', gulp.series('icons:sprite', 'icons:copy'))
 
 /**
  * Scripts
  */
 gulp.task('scripts:clean', function (callback) {
   del([
-    dist + 'js/bundle.js',
     dist + 'js/source.dev.js',
     dist + 'js/source.js',
     dist + 'js/source-*.js',
@@ -140,6 +148,7 @@ gulp.task('scripts:clean', function (callback) {
   callback();
 });
 
+// lints
 gulp.task('scripts:lint', function () {
   return gulp.src([source + 'js/**/*.js', '!' + source + 'js/vendor/*.js'])
     .pipe(eslint({ fix: true }))
@@ -162,9 +171,7 @@ gulp.task('scripts', gulp.series('scripts:clean', 'scripts:webpack', function ()
   ])
     .pipe(concat('source.js'))
     .pipe(hashFilename())
-    .pipe(gulp.dest(dist + 'js'))
-    .pipe(uglify())
-    .pipe(rename({ suffix: '.min' }))
+    // .pipe(uglify())
     .pipe(size({ showFiles: true }))
     .pipe(gulp.dest(dist + 'js'))
     .pipe(browserSync.stream({ match: '**/*.js' }))
@@ -200,8 +207,7 @@ gulp.task('default', function () {
     .on('change', browserSync.reload);
 });
 
-
-gulp.task('build', 
+gulp.task('build',
   gulp.series(
     'styles',
     'scripts',

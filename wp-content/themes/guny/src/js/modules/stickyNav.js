@@ -105,7 +105,7 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
           top: 'auto',
           bottom: $elemContainer.css('padding-bottom')
         });
-      }else {
+      } else {
         $elem.css({
           left: $elemContainer.css('padding-left'),
           width: elemWidth + 'px',
@@ -163,11 +163,11 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
   function stickyModeOn() {
     stickyMode = true;
 
-    $(window).on('scroll.fixedSidebar', throttle(function() {
+    $(window).on('scroll.fixedSidebar', throttle(function () {
       toggleSticky();
     }, 100)).trigger('scroll.fixedSidebar');
 
-    $('#main').on('containerSizeChange.fixedSidebar', function(event) {
+    $('#main').on('containerSizeChange.fixedSidebar', function (event) {
       switchPoint -= event.originalEvent.detail;
     });
   }
@@ -212,23 +212,23 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
   * @param {object} options - Options. Will override module defaults when present
   */
   function initialize() {
-    $(window).on('resize.fixedSidebar', debounce(function() {
+    $(window).on('resize.fixedSidebar', debounce(function () {
       onResize();
     }, 100));
 
-    imagesReady(document.body).then(function() {
+    imagesReady(document.body).then(function () {
       onResize();
     });
   }
 
   initialize();
 
-  $.fn.isOnScreen = function(){
+  $.fn.isOnScreen = function () {
     var win = $(window);
 
     var viewport = {
-        top : win.scrollTop(),
-        left : win.scrollLeft()
+      top: win.scrollTop(),
+      left: win.scrollLeft()
     };
     viewport.right = viewport.left + win.width();
     viewport.bottom = viewport.top + win.height();
@@ -241,10 +241,10 @@ function stickyNav($elem, $elemContainer, $elemArticle) {
   };
 }
 
-export default function() {
+export default function () {
   const $stickyNavs = $('.js-sticky');
   if ($stickyNavs.length) {
-    $stickyNavs.each(function() {
+    $stickyNavs.each(function () {
       let $outerContainer = $(this).closest('.js-sticky-container');
       let $article = $outerContainer.find('.js-sticky-article');
       stickyNav($(this), $outerContainer, $article);

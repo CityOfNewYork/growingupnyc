@@ -1,0 +1,75 @@
+{% extends "microsite-base.twig" %}
+
+
+{% block head_extras %}
+	<style>
+		.c-side-hero__image {
+			background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(480, 0)}});
+			{{function('Templating\\get_focal_point', post.get_field('hero_mobile_image')['ID'])}}
+		}
+		@media(-webkit-min-device-pixel-ratio: 2),
+		(min-resolution: 192dpi) {
+			.c-side-hero__image {
+				background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(960,0)}});
+			}
+		}
+		@media(min-width:480px) {
+			.c-side-hero__image {
+				background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(700,0)}});
+			}
+		}
+		@media(min-width:480px) and(-webkit-min-device-pixel-ratio: 2),
+		(min-width:480px) and(min-resolution: 192dpi) {
+			.c-side-hero__image {
+				background-image: url({{TimberImage(post.get_field('hero_mobile_image')).src|resize(1400,0)}});
+			}
+		}
+		@media(min-width:1024px) {
+			.c-side-hero__image {
+				background-image: url({{post.thumbnail.src}})
+			}
+		}
+	</style>
+{% endblock %}
+
+{% block content %}
+
+	{# Side Hero #}
+	<section class="o-static-column o-static-column--left c-side-hero c-side-hero-ms js-static">
+		<div class="c-side-hero__image"></div>
+		<div class="c-side-hero__content c-side-hero-ms__content">
+			<h1 class="c-side-hero__title c-side-hero-ms__title">
+				{{post.get_field('hero_title_top')}}
+				<div class="c-side-hero__title__large rotating-text">
+					{% for text in post.get_field('hero_rotating_text_repeater') %}
+						<span class="rotating-text__entry">
+							{{text.hero_rotating_text}}
+						</span>
+					{% endfor %}
+					<span id="rotate"></span>
+				</div>
+				<!-- /.c-side-hero__title__large -->
+			</h1>
+			<a href="{{post.get_field('hero_button_url')}}" class="button--outline button--outline--white">{{post.get_field('hero_button_text')}}</a>
+		</div>
+		<!--/.c-side-hero__content -->
+	</section>
+	<!-- /.o-static-column.o-static-column--left -->
+
+	<section
+		class="o-scroll-column o-scroll-column--right">
+		{# Homepage Categories #}
+		{% for top in post.get_field('homepage_categories') %}
+			<div
+				class="c-list-box c-list-box-ms">
+				{# <div class="c-list-box__item c-list-box-ms__item {{top.button_text|lower}}__item"> #}
+				<div class="c-list-box__item c-list-box-ms__item {% if (top.button_text == 'Topics') or (top.button_text == 'Inspirations') %}{{top.button_text|lower}}{% else %}trips{% endif %}__item">
+					<span class="c-list-box__text c-list-box-ms__text">{{top.excerpt}}</span>
+					<a class="button--full-width button--primary button--primary__curved" href="{{top.button_link}}">{{top.button_text}}</a>
+				</div>
+			</div>
+		{% endfor %}
+	</section>
+	<!-- /.o-scroll-column.o-scroll-column--right -->
+{% endblock %}
+

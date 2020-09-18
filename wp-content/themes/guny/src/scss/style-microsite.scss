@@ -454,15 +454,13 @@ button {
     color: $gray-2;
   }
 
-  .no-touchevents & {
-    &:hover {
-      color: $gray-2;
-    }
+  &:hover {
+    color: $gray-2;
   }
 }
 
 // Alert Banner
-.js .c-alert.is-open {
+.c-alert.is-open {
   padding: 0;
 
   .c-alert__banner {
@@ -487,10 +485,8 @@ button {
     color: $black;
   }
 
-  .no-touchevents & {
-    &:hover {
-      color: $black;
-    }
+  &:hover {
+    color: $black;
   }
 }
 
@@ -501,10 +497,8 @@ button {
     color: $black;
   }
 
-  .no-touchevents & {
-    &:hover {
-      color: $black;
-    }
+  &:hover {
+    color: $black;
   }
 }
 
@@ -625,3 +619,105 @@ input[type="search"].form-field {
 
 // Disclaimer page styles
 @import "microsite/disclaimer";
+
+
+
+.c-nav-list__link--trips {
+  background: $green;
+  border-color: $green;
+
+  &:focus,
+  &.is-active {
+    background: $dark-green;
+    border-color: $dark-green;
+  }
+
+  &:hover {
+    background: $dark-green;
+    border-color: $dark-green;
+  }
+}
+
+.c-nav-list__link--topics {
+  background-color: $dark-purple;
+  border-color: $dark-purple;
+
+  &:focus {
+    background-color: $purple;
+    border-color: $purple;
+  }
+
+  &:hover {
+    background-color: $purple;
+    border-color: $purple;
+  }
+
+  &.is-active {
+    background-color: $purple;
+    border-color: $purple;
+  }
+}
+
+.c-nav-list__link--inspirations {
+  background: $dark-blue;
+  border-color: $dark-blue;
+
+  &:focus,
+  &.is-active {
+    background: $very-dark-blue-1;
+    border-color: $very-dark-blue-1;
+  }
+
+  &:hover {
+    background: $very-dark-blue-1;
+    border-color: $very-dark-blue-1;
+  }
+}
+
+.button--primary__topics {
+  background: $dark-purple;
+  border-color: $dark-purple;
+  color: $white;
+
+  &:focus {
+    background: $light-purple;
+    border-color: $light-purple;
+  }
+
+  &:hover {
+    background: $light-purple;
+    border-color: $light-purple;
+  }
+}
+
+.button--primary__trips {
+  background: $dark-green;
+  border-color: $dark-green;
+  color: $white;
+
+  &:focus {
+    background: $very-dark-green;
+    border-color: $very-dark-green;
+  }
+
+  &:hover {
+    background: $very-dark-green;
+    border-color: $very-dark-green;
+  }
+}
+
+.button--primary__inspirations {
+  background: $strong-blue;
+  border-color: $strong-blue;
+  color: $white;
+
+  &:focus {
+    background: $very-dark-blue;
+    border-color: $very-dark-blue;
+  }
+
+  &:hover {
+    background: $very-dark-blue;
+    border-color: $very-dark-blue;
+  }
+}

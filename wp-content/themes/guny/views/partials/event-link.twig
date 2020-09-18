@@ -1,5 +1,5 @@
-{% set event_cats = post.terms('tribe_events_cat')|keys %}
-
+{# {% set event_cats = post.terms('tribe_events_cat')|keys %}
+dump(post.terms)
 {% if 'virtual' in event_cats %}
 
 <svg role="img" class="icon--xxsmall" aria-hidden="true"><use xlink:href="#icon-map-marker"></use></svg><a href="{{post.event_website}}" target="_blank">{{post.venue}},
@@ -13,4 +13,11 @@
     {{borough.name}}
   {% endfor %}
 </a>
-{% endif %}
+{% endif %} #}
+
+
+<svg role="img" class="icon--xxsmall" aria-hidden="true"><use xlink:href="#icon-map-marker"></use></svg><a href="{% if post.google_directions_link %}{{post.google_directions_link}}{% else %}{{post.event_website}}{% endif %}" target="_blank">{{post.venue}},
+  {% for borough in post.terms('borough') %}
+    {{borough.name}}
+  {% endfor %}
+</a>

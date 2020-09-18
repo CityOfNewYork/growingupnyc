@@ -1,0 +1,195 @@
+{% extends 'list.twig' %}
+
+{% block head_extras %}
+	<style type='text/css' id='c-hero'>
+		.c-hero {
+			background-image: linear-gradient(rgba(0, 85, 184, .5), rgba(0, 85, 184, .5)),
+        url({{TimberImage(banner_mobile)}});
+		}
+		@media(-webkit-min-device-pixel-ratio: 2),
+		(min-resolution: 192dpi) {
+			.c-hero {
+				background-image: linear-gradient(rgba(0, 85, 184, .5), rgba(0, 85, 184, .5)),
+          url({{TimberImage(banner_mobile)}});
+			}
+		}
+		@media(min-width:480px) {
+			.c-hero {
+				background-image: linear-gradient(rgba(0, 85, 184, .5), rgba(0, 85, 184, .5)),
+          url({{TimberImage(banner_mobile)}});
+			}
+		}
+		@media(min-width:480px) and(-webkit-min-device-pixel-ratio: 2),
+		(min-width:480px) and(min-resolution: 192dpi) {
+			.c-hero {
+				background-image: linear-gradient(rgba(0, 85, 184, .5), rgba(0, 85, 184, .5)),
+          url({{TimberImage(banner_mobile)}});
+			}
+		}
+		@media(min-width:700px) {
+			.c-hero {
+				background-image: linear-gradient(rgba(0, 85, 184, .5), rgba(0, 85, 184, .5)),
+          url({{TimberImage(banner).src}});
+				{{function('Templating\\get_focal_point', banner.id)}}
+			}
+		}
+    @media (min-width: 1024px) {
+      .c-hero {
+        background-image: linear-gradient(rgba(0, 85, 184, .5), rgba(0, 85, 184, .5)),
+          url({{TimberImage(banner).src}});
+      }
+    }
+		[v-cloak] {
+			display: none;
+    }
+	</style>
+{% endblock %}
+
+{% block hero %}
+
+	<div class="js-parallax">
+		<header class="c-hero c-hero-cover c-hero--medium js-parallax-content">
+			<div class="o-container js-parallax-text">
+				<h1 class="c-hero__title">
+					{{ page_title }}
+				</h1>
+				<div class="c-hero__tagline">{{ page_tagline }}</div>
+			</div>
+
+			{% include 'components/paint-splatter-tip.twig' %}
+
+		</header>
+	</div>
+
+{% endblock %}
+
+{% block list_sidebar %}
+	{% set colors_head = 'bg-color-primary' %}
+	{% set colors_content = 'bg-color-brain-building-tip' %}
+
+	<div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false" v-cloak>
+
+		{# categories #}
+		<div class="c-list-box__item">
+			<h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="type-filter-heading">{{ __(tip_category_group_heading, 'guny') }}</h3>
+			<ul class="js-accordion__content c-list-box__content {{colors_content}}" id="type-filter-panel">
+				<li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}" v-if="tipTypes!=null">
+					<label class="checkbox">
+						<input type="checkbox" v-model="checkedAllTipTypes" @change="selectAllTipTypes" class="checkbox__field">
+						<svg class="checkbox__indicator">
+							<use xlink:href="#icon-check"></use>
+						</svg>
+						{{ __('Select All', 'guny') }}
+					</label>
+				</li>
+				<li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}" v-for="category in tipTypes">
+					<label class="checkbox" :for="category.slug">
+						<input type="checkbox" :id="category.slug" :value="category.slug" v-model="checkedTipType" class="checkbox__field">
+						<svg class="checkbox__indicator">
+							<use xlink:href="#icon-check"></use>
+						</svg>
+						v{ category.name }
+					</label>
+				</li>
+			</ul>
+		</div>
+
+		{# age groups #}
+		<div class="c-list-box__item">
+			<h3 class="js-accordion__header c-list-box__heading {{colors_head}}" id="age-filter-heading">{{ __(age_group_heading, 'guny') }}</h3>
+			<ul class="js-accordion__content c-list-box__content {{colors_content}}" id="age-filter-panel">
+
+				<li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}" v-if="ageGroups!=null">
+					<label class="checkbox">
+						<input type="checkbox" v-model="checkedAllAges" class="checkbox__field" @change="selectAllAges">
+						<svg class="checkbox__indicator">
+							<use xlink:href="#icon-check"></use>
+						</svg>
+						{{ __('Select All', 'guny') }}
+					</label>
+				</li>
+
+				<li class="c-list-box__subitem {{colors_content}} hover:{{colors_head}}" v-for="age in ageGroups">
+					<label class="checkbox" :for="age.slug">
+						<input type="checkbox" :id="age.slug" :value="age.slug" v-model="checkedAgeGroup" class="checkbox__field">
+						<svg class="checkbox__indicator">
+							<use xlink:href="#icon-check"></use>
+						</svg>
+						v{ age.name }
+					</label>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block post_list %}
+	<section class="c-block-list" v-cloak>
+		<div class="c-block-list--blue o-content-container u-sm-gutter loader"></div>
+		<div class="c-block-list--blue o-content-container u-sm-gutter loader-mobile text-center" v-if="!errorMsg">
+			<button>
+				<a href="#programs-loaded" class="button--outline button--outline--white aligncenter">{{ __('See', 'guny') }}
+					v{ totalResults }
+					{{ __('tips', 'guny') }}</a>
+			</button>
+		</div>
+
+		<div id="programs-loaded" class="c-block-list--shade o-content-container--p-0  u-sm-gutter u-bottom-spacing" v-if="!isLoading">
+		
+    	{# Powered by Vroom #}
+			<div class="logo-banner bg-color-brain-building-tip text-left">
+        <svg class="icon--vroom" role="img">
+          <title>{{__('Vroom', 'GUNYC')}}</title>
+          <use xlink:href="#icon-vroom-logo-white{% if language_code != 'en' %}-{{language_code}}{% endif %}"></use>
+        </svg>
+			</div>
+
+			<div class="o-col-2 c-block-list__item-px-0" v-for="post in programs">
+				{# CARD #}
+				<div class="c-tip-card">
+					<div class="c-tip-card__header">
+						<a :href="post.link">
+							<span class="sticker sticker--small c-tip-card__sticker" aria-hidden="true">
+								<svg class="icon--medium">
+									<title>v{ post.tip_category[0].name }</title>
+									<use :xlink:href="'#icon-' + post.tip_category[0].slug.replace('-'+'{{language_code}}','')"></use>
+								</svg>
+							</span>
+						</a>
+
+						<a :href="post.link" class="c-tip-card__title" :title="post.acf.program_name">
+							v{ post.acf.brain_building_tip_name }
+						</a>
+					</div>
+
+					<div class="c-tip-card__content">
+						<span v-html="post.acf.brain_building_tip.replace(/<\/?[^>]+>/ig, '').slice(0,60) + '...' "></span>
+						<a :href="post.link" class="c-tip-card__link" :title="`{{ __('Try this tip: ', 'GUNY-Tips') }}` + post.acf.brain_building_tip_name">{{ __('Try this tip', 'GUNY-Tips') }}<svg aria-hidden="true" class="icon--caret--xsmall">
+								<use xlink:href="#icon-caret-line-right"></use>
+							</svg>
+						</a>
+					</div>
+
+					<div class="c-card__tags" v-if="post.tip_category">
+						<span v-for="term in post.age_group">
+							<a :href="'?ages=' + term.slug" :class="'button--pill bg-' + term.slug.replace('-'+'{{language_code}}','') + '--primary hover:bg-' + term.slug.replace('-'+'{{language_code}}','') + '--secondary' ">v{ term.name }</a>
+						</span>
+						<span v-for="term in post.tip_category">
+							<a :href="'?tip_category=' + term.slug" class="button--pill">v{ term.name }</a>
+						</span>
+					</div>
+				</div>
+			</div>
+			<p class="type--no-results--padding" v-if="errorMsg">{{ __('Sorry, we don’t have any tips that match those filters. For more results, try different filters or <a href="/brainbuilding">reset your filters</a>.', 'guny') }}</p>
+
+			{# pagination #}
+			<div class="o-content-container--compact pagination text-center" v-if="!isLoading" v-cloak>
+				<div class="paginate" v-if="(programs.length < 42) && (checkedTipType == 0) && (checkedAgeGroup == 0)">
+					<router-link class="button--outline button--outline--gray paginate" :to="{ query: { }}" @click.native="loadMore();">{{ __('More tips', 'guny') }}</router-link>
+				</div>
+			</div>
+		</div>
+	</section>
+
+{% endblock %}

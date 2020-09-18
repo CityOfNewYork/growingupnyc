@@ -1,0 +1,38 @@
+<form method="post" action="{{ shareAction }}" class="js-share-form js-needs-disclaimer is-active" novalidate>
+
+	<input
+	type="hidden" name="action" value="sms_gunyc_send">
+	{# <input type="hidden" name="sharetext" value="{{post.get_field('sms_intro_text')}}"> #}
+	<input type="hidden" name="postid" value="{{post.id}}">
+	<input type="hidden" name="template" value="{{shareTemplate}}">
+	<input type="hidden" name="lang" value="{{language_code}}">
+	<input type="hidden" name="url" value="{{post.link}}">
+	<input type="hidden" name="hash" value="{{ shareHash }}">
+
+	<div class="form-container">
+		<div class="signup-form__input signup-form__input--full sms-form__input--long">
+			<label for="phone" class="signup-form__label sms-form__label">
+				<span class="signup-form__label-content{% if form_only %}--strong-blue{% endif %}{% if color != '' %} text-{{color}}{% endif %}
+					sms-form__label-content" data-content="Phone Number">{{__('Phone Number', 'gunyc-share')}}</span>
+			</label>
+
+			<input type="tel" id="phone" name="to" class="signup-form__field form-field input__field bg-very-light-gray js-show-disclaimer" placeholder="" data-scroll-offset="20" required>
+
+			{% include 'partials/share-form-spinner.twig' %}
+		</div>
+
+		<button id="smsbutton" type="submit" class="button--simple bg-{{button_color}} hover:bg-{{button_hover}} sms-form__submit">
+
+			<span class="send">{{__('Send', 'gunyc-share')}}</span>
+			<span class="send__success">{{__('Send another', 'gunyc-share')}}</span>
+		</button>
+
+	</div>
+
+	<div class="c-validation" id="sms-form-msg"></div>
+	<div class="send_placeholder">{{ __('Message sent!', 'gunyc-share') }}</div>
+	<div class="g-recaptcha" id="screener-recaptcha"></div>
+
+	{% include 'partials/share-form-disclaimer.twig' with {'text': disclaimer_text} %}
+
+</form>

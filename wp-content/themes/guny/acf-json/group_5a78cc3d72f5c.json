@@ -137,13 +137,6 @@
                 "operator": "==",
                 "value": "template-generic-microsite-page.php"
             }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "summer-guide"
-            }
         ]
     ],
     "menu_order": 0,

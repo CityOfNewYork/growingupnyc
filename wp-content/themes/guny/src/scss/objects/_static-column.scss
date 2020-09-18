@@ -22,7 +22,7 @@
 }
 
 @include media($bp-large) {
-  .js .o-static-column {
+  .o-static-column {
     position: fixed;
 
     // Uses "not sticky" class to prevent jumping when going from absolute bottom to fixed top

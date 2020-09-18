@@ -37,10 +37,11 @@ $posts = array(
     'date' => 'DESC'
 ));
 $context['posts'] = Timber::get_posts( $posts );
-$templates = array( 'list-inspiration-landing.twig', 'microsite-list.twig' );
 
 // meta tags
 $context['meta_desc'] = get_field('inspiration_landing_meta_desc', 'option');
 $context['meta_keywords'] = get_field('inspiration_landing_meta_keywords', 'option');
 
-Timber::render( $templates, $context );
+$template = 'inspiration/landing.twig';
+
+Timber::render( $template, $context );

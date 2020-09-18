@@ -1,5 +1,25 @@
 {% extends 'base.twig' %}
 
+{% if lp_theme == 'afterschool' %}
+	{% set colors_primary = 'color-blue' %}
+	{% set colors_secondary = 'color-blue-dark' %}
+	{% set colors_tertiary = 'color-blue-mid' %}
+	{% set splatter_color = 'splatter-afterschool' %}
+	{% set button_pill = 'button--pill-afterschool' %}
+	{% set button_pill_alt = 'button--pill-afterschool--alt' %}
+{% elseif lp_theme == 'summer' %}
+	{% set colors_primary = 'color-orange' %}
+	{% set colors_secondary = 'color-orange-dark' %}
+	{% set colors_tertiary = 'color-orange-light' %}
+  {% set splatter_color = 'splatter-summer' %}
+	{% set button_pill = 'button--pill-summer' %}
+	{% set button_pill_alt = 'button--pill-summer--alt' %}
+{% else %}
+  {% set colors_primary = 'color-blue-light' %}
+  {% set colors_secondary = 'color-blue' %}
+  {% set colors_tertiary = 'color-blue-dark' %}
+{% endif %}
+
 {% block head_extras %}
 	<style>
 		.alert {
@@ -13,24 +33,23 @@
 {% block content %}
 
   <div class="js-parallax">
-    <header class="c-hero c-hero--large c-hero--long-text bg-color-blue bg-splatter-strong-blue js-parallax-content">
+    <header class="c-hero c-hero--large c-hero--long-text bg-{{colors_primary}} {{splatter_color}} js-parallax-content">
       <div class="o-container js-parallax-text">
 
         <h1 class="c-hero__title--long">
-          <span class="c-hero__sticker sticker bg-strong-blue">
+          <span class="c-hero__sticker sticker bg-{{colors_secondary}}">
             <svg aria-hidden="true" class="icon--medium"><use xlink:href="#icon-afterschool-guides"></use></svg>
           </span>
 
           {{ post.s_program_title_translated }}
-
         </h1>
 
         <p class="c-hero__tags">
           {% for term in post.terms('afterschool_programs_cat') %}
-            <a href="{{afterschool_link}}?afterschool_category={{term.slug}}" class="button--pill bg-strong-blue hover:bg-very-dark-blue">{{term.name}}</a>
+            <a href="{{afterschool_link}}?afterschool_category={{term.slug}}" class="button--pill {{button_pill}}">{{term.name}}</a>
           {% endfor %}
           {% for term in post.terms('age_group') %}
-            <a href="{{afterschool_link}}?ages={{term.slug}}" class="button--pill bg-very-dark-blue button--pill--alt hover:bg-strong-blue">{{term.name}}</a>
+            <a href="{{afterschool_link}}?ages={{term.slug}}" class="button--pill button--pill--alt {{button_pill_alt}}">{{term.name}}</a>
           {% endfor %}
         </p>
 
@@ -38,9 +57,9 @@
     </header>
   </div>
 
-  <article class="o-container u-bottom-spacing-small js-sticky-container o-pa-top">
+  <article class="o-container u-bottom-spacing-small js-sticky-container o-pa-top desktop:flex">
 
-		<aside class="o-article-sidebar o-content-container--compact u-lg-gutter">
+		<aside class="o-article-sidebar o-content-container--compact u-lg-gutter desktop:w-sidebar mt-8">
       <dl class="c-details-list">
 
         {% if post.s_eligibility %}
@@ -84,7 +103,7 @@
       </dl>
 		</aside>
 
-    <div class="o-article js-sticky-article">
+    <div class="o-article js-sticky-article desktop:w-article">
       <div class="o-content-container--compact">
 
         {% if post.s_description %}

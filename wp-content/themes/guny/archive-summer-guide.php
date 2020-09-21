@@ -6,7 +6,11 @@
 
 $context = Timber::get_context();
 
+
 $path = '/summer-programs';
+
+$post = Timber::get_post(Templating\get_controller_id($path));
+$context['post'] = $post;
 
 $context['page_title'] = Templating\get_title($path);
 $context['page_tagline'] = Templating\get_tagline($path);

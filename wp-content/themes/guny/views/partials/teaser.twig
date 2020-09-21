@@ -10,6 +10,12 @@
   </a>
   {% endblock %}
 
+  {% block subtitle_block %}
+  <div class="c-card__subtitle">
+    {% block subtitle %}{% endblock %}
+  </div>
+  {% endblock %}
+
   <h3 class="c-card__title">
     {% block title %}
     {% if post.get_field('plain_language_program_name') != '' %}
@@ -41,11 +47,17 @@
   {% endif %}
   {% endblock %}
 
-  {% block subtitle_block %}
-  <div class="c-card__subtitle">
-    {% block subtitle %}{% endblock %}
+
+
+  <div class="c-card__body">
+    {% block body %}
+    {{  post.post_excerpt ? post.post_excerpt : post.post_content|excerpt(15)  }}
+    {% endblock %}
   </div>
-  {% endblock %}
+
+  {% block link %}{% endblock %}
+
+  {% block cta %}{% endblock %}
 
   {% block tags_block %}
   {% if post.terms %}
@@ -59,13 +71,4 @@
   {% endif %}
   {% endblock %}
 
-  <div class="c-card__body">
-    {% block body %}
-    {{  post.post_excerpt ? post.post_excerpt : post.post_content|excerpt(15)  }}
-    {% endblock %}
-  </div>
-
-  {% block link %}{% endblock %}
-
-  {% block cta %}{% endblock %}
 </div>

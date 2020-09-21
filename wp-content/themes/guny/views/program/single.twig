@@ -44,7 +44,7 @@
       <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
         {% if post.eligibility %}
           <li class="c-nav-list__item">
-            <a href="#section-eligibility" data-section="section-eligibility" class="js-section c-nav-list__link">
+            <a href="#section-eligibility" data-section="section-eligibility" class="scroll js-section c-nav-list__link">
             {% if post.get_field('jump_nav_heading_-_eligibility') %}
               {{ __(post.get_field('jump_nav_heading_-_eligibility'), 'GUNY-Single-Program') }}
             {% else %}
@@ -54,7 +54,7 @@
         {% endif %}
         {% if post.whats_needed or post.how_to_apply %}
           <li class="c-nav-list__item">
-            <a href="#section-application" data-section="section-application" class="js-section c-nav-list__link">
+            <a href="#section-application" data-section="section-application" class="scroll js-section c-nav-list__link">
             {% if post.get_field('jump_nav_heading_-_application') %}
               {{ __(post.get_field('jump_nav_heading_-_application'), 'GUNY-Single-Program') }}
             {% else %}
@@ -64,7 +64,7 @@
         {% endif %}
         {% if post.get_help %}
         <li class="c-nav-list__item">
-          <a href="#section-help" data-section="section-help" class="js-section c-nav-list__link">
+          <a href="#section-help" data-section="section-help" class="scroll js-section c-nav-list__link">
             {% if post.get_field('jump_nav_heading_-_help') %}
               {{ __(post.get_field('jump_nav_heading_-_help'), 'GUNY-Single-Program') }}
             {% else %}

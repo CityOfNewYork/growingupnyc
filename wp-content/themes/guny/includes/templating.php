@@ -51,7 +51,6 @@ function get_archive_link($post_type) {
   return get_post_type_archive_link($post_type);
 }
 
-
 /**
  * Gets the sections by ACF field id and formats them with slugs based on the
  * section title.

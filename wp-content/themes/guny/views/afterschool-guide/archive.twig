@@ -223,7 +223,7 @@
 						<div class="c-card__sticker sticker bg-{{colors_primary}}" aria-hidden="true">
 							<svg aria-hidden="true" class="icon--large">
 								<title>v{post.afterschool_programs_cat[0].name}</title>
-								<use xlink:href="#icon-afterschool-guides"></use>
+								<use xlink:href="#icon-summer-guides"></use>
 							</svg>
 						</div>
 					</a>
@@ -263,7 +263,7 @@
 							<a :href="'?ages=' + term.slug" class="button--pill bg-very-dark-blue {{button_pill_alt}}">v{ term.name }</a>
 						</span>
 					</div>
-					<hr class="c-card__cta-divider" v-if="post.acf.s_cta_url!=''">
+					<hr class="divider my-4" v-if="post.acf.s_cta_url!=''">
 					<a class="c-card__cta" :href="post.acf.s_cta_url" target="_blank" rel="nofollow" v-if="post.acf.s_cta_new_window">v{ post.acf.s_cta_title }</a>
 					<a class="c-card__cta" :href="post.acf.s_cta_url" v-if="!post.acf.s_cta_new_window">v{ post.acf.s_cta_title }</a>
 				</div>

@@ -256,12 +256,12 @@
               <a :href="'?ages=' + term.slug" class="button--pill {{button_pill_alt}}">v{ term.name }</a>
             </span>
           </div>
-  
-          <hr class="divider" v-if="post.acf.s_cta_url!=''">
+
+          <hr class="divider my-4" v-if="post.acf.s_cta_url!=''">
           <a class="c-card__cta" :href="post.acf.s_cta_url" target="_blank" rel="nofollow" v-if="post.acf.s_cta_new_window">v{ post.acf.s_cta_title }</a>
           <a class="c-card__cta" :href="post.acf.s_cta_url" v-if="!post.acf.s_cta_new_window">v{ post.acf.s_cta_title }</a>
 
-          
+
         </div>
       </div>
       <p class="type--no-results" v-if="errorMsg">{{ __('Sorry, we don’t have any programs that match those filters. For more results, try different filters or <a href="/summer-programs">reset your filters</a>.', 'guny') }}</p>

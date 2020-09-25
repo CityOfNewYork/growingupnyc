@@ -9,6 +9,9 @@ $context['posts'] = Timber::get_posts();
 
 $path = '/after-school-programs';
 
+$post = Timber::get_post(Templating\get_controller_id($path));
+$context['post'] = $post;
+
 $context['page_title'] = Templating\get_title($path);
 $context['page_tagline'] = Templating\get_tagline($path);
 $context['banner'] = Templating\get_hero_banner_img($path);

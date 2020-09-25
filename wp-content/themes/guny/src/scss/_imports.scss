@@ -50,6 +50,7 @@ $path-to-icons: 'svg/';
  * Elements
  */
 @import "@nycopportunity/growingup-patterns/src/elements/button/button";
+@import "@nycopportunity/growingup-patterns/src/elements/divider/divider";
 @import "@nycopportunity/growingup-patterns/src/elements/input/input";
 @import "@nycopportunity/growingup-patterns/src/elements/checkbox/checkbox";
 @import "@nycopportunity/growingup-patterns/src/elements/icons/icons";
@@ -99,10 +100,12 @@ $path-to-icons: 'svg/';
 @import "@nycopportunity/growingup-patterns/src/utilities/offcanvas/offcanvas";
 @import "@nycopportunity/growingup-patterns/src/utilities/color/color";
 @import "@nycopportunity/growingup-patterns/src/utilities/color/color-milestones";
+@import "@nycopportunity/growingup-patterns/src/utilities/color/color-post-types";
 @import "@nycopportunity/growingup-patterns/src/utilities/form-effects/form-effects";
-@import '@nycopportunity/growingup-patterns/dist/styles/_tailwind.scss';
+@import "@nycopportunity/growingup-patterns/dist/styles/_tailwind.scss";
 @import "@nycopportunity/growingup-patterns/src/utilities/sticky/sticky";
 @import "@nycopportunity/growingup-patterns/src/utilities/spacing/spacing";
+@import "@nycopportunity/growingup-patterns/src/utilities/background-image/background-image";
 
 /*
  * Miscellaneous

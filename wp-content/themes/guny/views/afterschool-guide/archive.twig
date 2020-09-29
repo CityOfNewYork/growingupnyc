@@ -51,20 +51,6 @@
 				{{function('Templating\\get_focal_point', banner.id)}}
 			}
 		}
-		.alert {
-			background: rgba(255, 220, 84, 0.75);
-			padding: 1.75rem 1rem;
-		}
-		@media(min-width:700px) {
-			.alert {
-				padding: 1.75rem 2.5rem;
-			}
-		}
-		@media(min-width:1200px) {
-			.alert {
-				padding: 1.75rem 5rem;
-			}
-		}
 		[v-cloak] {
 			display: none;
 		}
@@ -105,7 +91,7 @@
 
 		</header>
 		{% if programs_alert != '' %}
-			<div class="alert">
+			<div class="alert-in-body">
 				<div class="o-container">
 					{{programs_alert}}
 				</div>

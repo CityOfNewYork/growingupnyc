@@ -13,7 +13,7 @@ class WPML_TM_Admin_Menus_Hooks implements IWPML_Action {
 		) {
 			$query         = $_GET;
 			$query['page'] = WPML_TM_FOLDER . WPML_Translation_Management::PAGE_SLUG_SETTINGS;
-			wp_safe_redirect( add_query_arg( $query ) );
+			wp_safe_redirect( add_query_arg( $query ), 302, 'WPML' );
 		}
 	}
 }

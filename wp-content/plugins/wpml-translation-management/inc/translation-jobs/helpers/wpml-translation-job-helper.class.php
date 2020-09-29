@@ -31,7 +31,7 @@ class WPML_Translation_Job_Helper {
 	/**
 	 * @return TranslationManagement
 	 */
-	private function get_core_translation_management() {
+	public static function get_core_translation_management() {
 		/** TranslationManagement $iclTranslationManagement */
 		global $iclTranslationManagement;
 

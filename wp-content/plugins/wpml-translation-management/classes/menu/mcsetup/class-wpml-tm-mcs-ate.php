@@ -1,5 +1,7 @@
 <?php
 
+use WPML\TM\ATE\ClonedSites\Lock;
+
 /**
  * @author OnTheGo Systems
  */
@@ -42,20 +44,20 @@ class WPML_TM_MCS_ATE extends WPML_Twig_Template_Loader {
 		$this->authentication = $authentication;
 		$this->endpoints      = $endpoints;
 		$this->strings        = $strings;
-
 		$this->authentication_data = get_option( WPML_TM_ATE_Authentication::AMS_DATA_KEY, array() );
 
 
 		$wpml_support      = esc_html__( 'WPML support', 'wpml-translation-management' );
 		$wpml_support_link = '<a target="_blank" rel="noopener" href="https://wpml.org/forums/forum/english-support/">' . $wpml_support . '</a>';
 
-		$this->model = array(
-			'status_button_text'      => $this->get_status_button_text(),
-			'synchronize_button_text' => $this->strings->get_synchronize_button_text(),
-			'strings'                 => array(
-				'error_help' => sprintf( esc_html__( 'Please try again in a few minutes. If the problem persists, please contact %s.', 'wpml-translation-management' ), $wpml_support_link )
-			),
-		);
+		$this->model = [
+			'status_button_text'          => $this->get_status_button_text(),
+			'synchronize_button_text'     => $this->strings->get_synchronize_button_text(),
+			'is_ate_communication_locked' => Lock::isLocked(),
+			'strings'                     => [
+				'error_help' => sprintf( esc_html__( 'Please try again in a few minutes. If the problem persists, please contact %s.', 'wpml-translation-management' ), $wpml_support_link ),
+			],
+		];
 	}
 
 	/**

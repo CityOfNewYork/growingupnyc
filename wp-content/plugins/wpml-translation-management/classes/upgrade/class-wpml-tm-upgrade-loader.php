@@ -1,5 +1,8 @@
 <?php
 
+use WPML\TM\Menu\TranslationServices\Troubleshooting\RefreshServicesFactory;
+use WPML\API\Version;
+
 class WPML_TM_Upgrade_Loader implements IWPML_Action {
 
 	/** @var SitePress */
@@ -73,6 +76,11 @@ class WPML_TM_Upgrade_Loader implements IWPML_Action {
 			$this->factory->create_command_definition(
 				WPML\TM\Upgrade\Commands\CreateAteDownloadQueueTable::class,
 				[ $this->upgrade_schema ], [ 'admin' ]
+			),
+
+			$this->factory->create_command_definition(
+				WPML\TM\Upgrade\Commands\RefreshTranslationServices::class,
+				[ \WPML\Container\make( RefreshServicesFactory::class ), Version::isHigherThanInstallation() ], [ 'admin' ]
 			),
 		);
 

@@ -54,6 +54,10 @@ class Loader {
 			}
 		}
 
+		if ( $expires === 0 ) {
+			$expires = false;
+		}
+
 		$key = null;
 		$output = false;
 		if ( false !== $expires ) {
@@ -170,6 +174,10 @@ class Loader {
 		$twig = new \Twig\Environment($loader, $params);
 		if ( WP_DEBUG ) {
 			$twig->addExtension(new \Twig\Extension\DebugExtension());
+		} else {
+			$twig->addFunction(new Twig_Function('dump', function() {
+				return null;
+			}));
 		}
 		$twig->addExtension($this->_get_cache_extension());
 
@@ -178,6 +186,14 @@ class Loader {
 		$twig = apply_filters('timber/twig/functions', $twig);
 		$twig = apply_filters('timber/twig/escapers', $twig);
 		$twig = apply_filters('timber/loader/twig', $twig);
+
+		$twig = apply_filters('timber/twig', $twig);
+
+		/**
+		 * get_twig is deprecated, use timber/twig
+		 */
+		$twig = apply_filters('get_twig', $twig);
+
 		return $twig;
 	}
 
@@ -198,7 +214,10 @@ class Loader {
 
 	protected static function clear_cache_timber_database() {
 		global $wpdb;
-		$query = $wpdb->prepare("DELETE FROM $wpdb->options WHERE option_name LIKE '%s'", '_transient_timberloader_%');
+		$query = $wpdb->prepare(
+			"DELETE FROM $wpdb->options WHERE option_name LIKE '%s'",
+			'_transient%timberloader_%'
+		);
 		return $wpdb->query($query);
 	}
 

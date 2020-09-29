@@ -1,4 +1,7 @@
 <?php
+
+use WPML\TM\ATE\ClonedSites\Lock as AteApiLock;
+
 /**
  * Class WPML_Translation_Management
  */
@@ -392,7 +395,10 @@ class WPML_Translation_Management {
 	 * @used-by \WPML_Translation_Management::menu
 	 */
 	function translation_queue_page() {
-		if ( true !== apply_filters( 'wpml_tm_lock_ui', false ) && $this->is_the_main_request() ) {
+		if ( true !== apply_filters( 'wpml_tm_lock_ui', false )
+		     && $this->is_the_main_request()
+		     && ! AteApiLock::isLocked()
+		) {
 			$this->tm_queue->display();
 		}
 	}

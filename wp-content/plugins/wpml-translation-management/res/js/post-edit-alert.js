@@ -37,7 +37,7 @@
 
 			var show_again_checkbox = $( '.do-not-show-again' );
 
-			if ( show_again_checkbox.attr('checked') ) {
+			if ( show_again_checkbox.prop('checked') ) {
 
 				var action = show_again_checkbox.attr( 'data-action' );
 

@@ -62,9 +62,6 @@ WPML_TM.translationRolesSelect2 = function ( elementSelector, nonce, role, onCha
 		},
 		formatResult: formatResult,
 		formatSelection: formatResult,
-		escapeMarkup: function ( m ) {
-			return m;
-		},
 		id: function ( user ) {
 			return user.ID;
 		}

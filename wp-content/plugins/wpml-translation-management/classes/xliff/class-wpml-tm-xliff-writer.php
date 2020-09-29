@@ -3,6 +3,8 @@
  * @package wpml-core
  */
 
+use WPML\FP\Obj;
+
 class WPML_TM_Xliff_Writer {
 	const TAB                        = "\t";
 
@@ -260,13 +262,26 @@ class WPML_TM_Xliff_Writer {
 							$field_data,
 							$field_data_translated,
 							$element->translated_from_memory,
-							$element->field_wrap_tag
+							$element->field_wrap_tag,
+							$this->get_field_title( $element, $job )
 						);
 					}
 				}
 			}
 		}
 		return $translation_units;
+	}
+
+	/**
+	 * @param \stdClass $field
+	 * @param \stdClass $job
+	 *
+	 * @return string
+	 */
+	private function get_field_title( $field, $job ) {
+		$result = apply_filters( 'wpml_tm_adjust_translation_fields', [ (array) $field ], $job, null );
+
+		return Obj::pathOr( '', [ 0, 'title' ], $result );
 	}
 
 	/**
@@ -314,6 +329,7 @@ class WPML_TM_Xliff_Writer {
 	 * @param string  $field_data_translated     Field translated content.
 	 * @param boolean $is_translated_from_memory Boolean flag - is translated from memory.
 	 * @param string  $field_wrap_tag            Field wrap tag (h1...h6, etc.)
+	 * @param string  $title
 	 *
 	 * @return array
 	 */
@@ -323,7 +339,8 @@ class WPML_TM_Xliff_Writer {
 		$field_data,
 		$field_data_translated,
 		$is_translated_from_memory = false,
-		$field_wrap_tag = ''
+		$field_wrap_tag = '',
+		$title = ''
 	) {
 		global $sitepress;
 
@@ -339,6 +356,9 @@ class WPML_TM_Xliff_Writer {
 			$field_data_translated = $this->replace_new_line_with_tag( $field_data_translated );
 		}
 
+		if ( $title ) {
+			$translation_unit['attributes']['extradata'] = $title;
+		}
 		$translation_unit['attributes']['resname']  = $field_name;
 		$translation_unit['attributes']['restype']  = 'string';
 		$translation_unit['attributes']['datatype'] = 'html';

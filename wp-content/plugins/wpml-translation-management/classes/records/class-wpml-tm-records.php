@@ -17,10 +17,13 @@ class WPML_TM_Records {
 
 	/** @var WPML_Term_Translation $wpml_term_translations */
 	private $wpml_term_translations;
-	private $job_id;
 
-	public function __construct( $wpdb, $wpml_post_translations, $wpml_term_translations ) {
-		$this->wpdb                   = &$wpdb;
+	public function __construct(
+		wpdb $wpdb,
+		WPML_Post_Translation $wpml_post_translations,
+		WPML_Term_Translation $wpml_term_translations
+	) {
+		$this->wpdb                   = $wpdb;
 		$this->wpml_post_translations = $wpml_post_translations;
 		$this->wpml_term_translations = $wpml_term_translations;
 	}

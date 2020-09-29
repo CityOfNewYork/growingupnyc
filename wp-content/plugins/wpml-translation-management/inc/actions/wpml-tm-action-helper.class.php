@@ -48,6 +48,17 @@ class WPML_TM_Action_Helper {
 			$content = $post->post_content;
 			$content = apply_filters( 'wpml_pb_shortcode_content_for_translation', $content, $post->ID );
 
+			/**
+			 * Filters the post content used to build the post md5.
+			 *
+			 * @since 2.10.0
+			 * @internal
+			 *
+			 * @param string  $content
+			 * @param WP_Post $post
+			 */
+			$content = apply_filters( 'wpml_tm_post_md5_content', $content, $post );
+
 			$post_key = $post->post_title . ';' . $content . ';' . $post->post_excerpt . ';' . implode( ',', $post_tags ) . ';' . implode( ',', $post_categories ) . ';' . implode( ',', $custom_fields_values );
 
 			if ( ! empty( $post_taxonomies ) ) {
@@ -124,9 +135,9 @@ class WPML_TM_Action_Helper {
 			if ( in_array( (int) $op, array( WPML_TRANSLATE_CUSTOM_FIELD, WPML_COPY_ONCE_CUSTOM_FIELD ), true ) ) {
 				$value = get_post_meta( $post->ID, $cf, true );
 				if ( is_scalar( $value ) ) {
-					$custom_fields_values[] = $value;
+					$custom_fields_values[ $cf ] = $value;
 				} else {
-					$custom_fields_values[] = wp_json_encode( $value );
+					$custom_fields_values[ $cf ] = wp_json_encode( $value );
 				}
 			}
 		}

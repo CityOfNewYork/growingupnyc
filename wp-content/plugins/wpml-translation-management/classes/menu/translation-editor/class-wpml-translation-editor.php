@@ -1,5 +1,8 @@
 <?php
-require_once( ABSPATH . WPINC . '/class-wp-editor.php' );
+
+if ( ! class_exists( '_WP_Editors', false ) ) {
+	require ABSPATH . WPINC . '/class-wp-editor.php';
+}
 
 class WPML_Translation_Editor extends WPML_WPDB_And_SP_User {
 
@@ -21,8 +24,13 @@ class WPML_Translation_Editor extends WPML_WPDB_And_SP_User {
 		parent::__construct( $wpdb, $sitepress );
 		$this->job = $job;
 
-		add_filter( 'tiny_mce_before_init', array( $this, 'filter_original_editor_buttons' ), 10, 2 );
+		$this->add_hooks();
 		$this->enqueue_js();
+	}
+
+	public function add_hooks() {
+		add_filter( 'tiny_mce_before_init', [ $this, 'filter_original_editor_buttons' ], 10, 2);
+		add_filter( 'tiny_mce_before_init', [ $this, 'filter_editor_auto_tags' ] );
 	}
 
 	/**
@@ -30,13 +38,19 @@ class WPML_Translation_Editor extends WPML_WPDB_And_SP_User {
 	 */
 	public function enqueue_js() {
 		wp_enqueue_script( 'wpml-tm-editor-scripts' );
-		wp_localize_script( 'wpml-tm-editor-scripts', 'tmEditorStrings', $this->get_translation_editor_strings() );
+		wp_localize_script(
+			'wpml-tm-editor-scripts',
+			'tmEditorStrings',
+			$this->get_translation_editor_strings()
+		);
 	}
 
 	/**
 	 * @return string[]
 	 */
 	private function get_translation_editor_strings() {
+
+		$translation_memory_endpoint = apply_filters( 'wpml_st_translation_memory_endpoint', '' );
 
 		return array(
 			'dontShowAgain'        => __( "Don't show this again.",
@@ -65,7 +79,8 @@ class WPML_Translation_Editor extends WPML_WPDB_And_SP_User {
 			'translation_complete' => __( 'Translation is complete',
 				'wpml-translation-management' ),
 			'contentNonce'         => wp_create_nonce( 'wpml_save_job_nonce' ),
-			'translationMemoryNonce'=> apply_filters( 'wpml_st_translation_memory_nonce', '' ),
+			'translationMemoryNonce'    => \WPML\LIB\WP\Nonce::create( $translation_memory_endpoint ),
+			'translationMemoryEndpoint' => $translation_memory_endpoint,
 			'source_lang'          => __( 'Original',
 				'wpml-translation-management' ),
 			'target_lang'          => __( 'Translation to',
@@ -91,6 +106,14 @@ class WPML_Translation_Editor extends WPML_WPDB_And_SP_User {
 			$config['toolbar2'] = " ";
 			$config['readonly'] = "1";
 		}
+
+		return $config;
+	}
+
+	public function filter_editor_auto_tags( $config ) {
+		$config['wpautop']      = false;
+		$config['indent']       = true;
+		$config['tadv_noautop'] = true;
 
 		return $config;
 	}

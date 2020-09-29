@@ -1,6 +1,7 @@
 <?php
 
 use function WPML\Container\make;
+use WPML\TM\Menu\TranslationQueue\CloneJobs;
 
 class WPML_Translations_Queue {
 
@@ -14,23 +15,30 @@ class WPML_Translations_Queue {
 	private $table_sort;
 
 	private $must_render_the_editor = false;
+
 	/** @var WPML_Translation_Editor_UI */
 	private $translation_editor;
 
 	/**
-	 * WPML_Translations_Queue constructor.
-	 *
+	 * @var CloneJobs
+	 */
+	private $clone_jobs;
+
+	/**
 	 * @param SitePress                      $sitepress
 	 * @param WPML_UI_Screen_Options_Factory $screen_options_factory
+	 * @param CloneJobs $clone_jobs
 	 */
 	public function __construct(
 		$sitepress,
-		$screen_options_factory
+		$screen_options_factory,
+        CloneJobs $clone_jobs
 	) {
 		$this->sitepress      = $sitepress;
 		$this->screen_options = $screen_options_factory->create_pagination( 'tm_translations_queue_per_page',
 			ICL_TM_DOCS_PER_PAGE );
 		$this->table_sort     = $screen_options_factory->create_admin_table_sort();
+		$this->clone_jobs = $clone_jobs;
 	}
 
 	public function init_hooks() {
@@ -45,7 +53,13 @@ class WPML_Translations_Queue {
 				if ( $job_object->get_translator_id() <= 0 ) {
 					$job_object->assign_to( $this->sitepress->get_wp_api()->get_current_user_id() );
 				}
+
+				if ( (int) $job_object->get_status_value() !== ICL_TM_COMPLETE ) {
+					$this->mark_job_as_in_progress( $job_object );
+				}
+
 				if ( $job_object->user_can_translate( wp_get_current_user() ) ) {
+                    $this->clone_jobs->cloneCompletedJob($job_id, $job_object);
 					$this->attempt_opening_ATE( $job_id );
 
 					wpml_tm_load_old_jobs_editor()->set( $job_id, WPML_TM_Editors::WPML );
@@ -652,8 +666,9 @@ class WPML_Translations_Queue {
 			make( \WPML\TM\ATE\Sync\Trigger::class )->setSyncRequiredForCurrentUser();
 			wpml_tm_load_old_jobs_editor()->set( $job_id, WPML_TM_Editors::ATE );
 
-			wp_safe_redirect( $editor_url );
-			die();
+			if( wp_safe_redirect( $editor_url, 302, 'WPML' ) ) {
+				exit;
+			}
 		}
 	}
 
@@ -678,13 +693,24 @@ class WPML_Translations_Queue {
 			}
 
 			if ( array_key_exists( 'query', $return_url_parts ) ) {
-				$admin_url_parts['query'] = $return_url_parts['query'];
+				$admin_url_parts['query'] = $this->filterQueryParameters( $return_url_parts['query'] );
 			}
 
 			$return_url = http_build_url( $admin_url_parts );
 		}
 
 		return $return_url;
+	}
+
+	private function filterQueryParameters( $query ) {
+		$parameters = [];
+		parse_str( $query, $parameters );
+
+		unset( $parameters['ate_original_id'] );
+		unset( $parameters['back'] );
+		unset( $parameters['complete'] );
+
+		return http_build_query( $parameters );
 	}
 
 	/**
@@ -708,5 +734,15 @@ class WPML_Translations_Queue {
 		}
 
 		return $filters;
+	}
+
+	/**
+	 * @param  \WPML_Translation_Job  $job_object
+	 */
+	private function mark_job_as_in_progress( \WPML_Translation_Job $job_object ) {
+		wpml_load_core_tm()->update_translation_status( [
+			'translation_id' => $job_object->get_translation_id(),
+			'status'         => ICL_TM_IN_PROGRESS,
+		] );
 	}
 }

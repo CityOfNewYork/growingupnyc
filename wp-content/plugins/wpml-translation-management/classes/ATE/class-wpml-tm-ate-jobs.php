@@ -1,6 +1,12 @@
 <?php
 
 use WPML\TM\ATE\JobRecords;
+use function WPML\FP\pipe;
+use function WPML\FP\partialRight;
+use WPML\FP\Obj;
+use WPML\FP\Logic;
+use WPML\FP\Fns;
+use function \WPML\FP\invoke;
 
 /**
  * @author OnTheGo Systems
@@ -143,22 +149,27 @@ class WPML_TM_ATE_Jobs {
 		$filteredJobData = apply_filters(
 			'wpml_tm_ate_job_data_from_xliff',
 			$jobData,
-			$this->getJobTargetLanguageCallback()
+			$this->getJobTargetLanguage()
 		);
 
-		if ( array_key_exists( 'id', $filteredJobData ) && array_key_exists( 'fields', $filteredJobData ) ) {
+		if ( array_key_exists( 'job_id', $filteredJobData ) && array_key_exists( 'fields', $filteredJobData ) ) {
 			$jobData = $filteredJobData;
 		}
 
 		return $jobData;
 	}
 
-	private function getJobTargetLanguageCallback() {
-		return function ( $jobId ) {
-			$job = wpml_tm_get_jobs_repository()->get_job( $jobId, \WPML_TM_Job_Entity::POST_TYPE );
+	/**
+	 * getJobTargetLanguage :: void → ( object → string|null )
+	 * @return callback
+	 */
+	private function getJobTargetLanguage() {
+		// $getJobEntityById :: int -> \WPML_TM_Job_Entity|false
+		$getJobEntityById = partialRight( [ wpml_tm_get_jobs_repository(), 'get_job' ], \WPML_TM_Job_Entity::POST_TYPE );
+		// $getTargetLangIfEntityExists :: \WPML_TM_Job_Entity|false -> string|null
+		$getTargetLangIfEntityExists = Logic::ifElse( Fns::identity(), invoke( 'get_target_language' ), Fns::always( null ) );
 
-			return $job ? $job->get_target_language() : null;
-		};
+		return pipe( Obj::prop( 'rid' ), $getJobEntityById, $getTargetLangIfEntityExists );
 	}
 
 	/**

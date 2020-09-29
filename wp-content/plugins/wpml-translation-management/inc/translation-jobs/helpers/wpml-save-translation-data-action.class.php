@@ -73,6 +73,8 @@ class WPML_Save_Translation_Data_Action extends WPML_Translation_Job_Helper_With
 					'status'         => ICL_TM_IN_PROGRESS
 				) );
 				$icl_translate_job->update( array( 'translated' => 0 ) );
+
+				self::notify_job_in_progress( $element_type_prefix, $job );
 			}
 
 			$element_id = $translation_status->element_id();
@@ -88,7 +90,7 @@ class WPML_Save_Translation_Data_Action extends WPML_Translation_Job_Helper_With
 				$job = $this->get_translation_job( $data['job_id'], true );
 
 				if ( $is_external ) {
-					$this->save_external( $element_type_prefix, $job );
+					self::save_external( $element_type_prefix, $job, [ $this, 'decode_field_data' ] );
 				} else {
 					if ( $element_id ) {
 						$postarr['ID'] = $_POST['post_ID'] = $element_id;
@@ -326,18 +328,13 @@ class WPML_Save_Translation_Data_Action extends WPML_Translation_Job_Helper_With
 	private function save_translation_field( $tid, $field ) {
 		global $wpdb;
 
-		$update = array();
+		$update = [];
 		if ( isset( $field[ 'data' ] ) ) {
 			$update[ 'field_data_translated' ] = $this->encode_field_data( $field[ 'data' ], $field[ 'format' ] );
 		}
-		if ( isset( $field[ 'finished' ] ) && $field[ 'finished' ] ) {
-			$update[ 'field_finished' ] = 1;
-		} else {
-			$update[ 'field_finished' ] = 0;
-		}
-		if ( !empty( $update ) ) {
-			$wpdb->update( $wpdb->prefix . 'icl_translate', $update, array( 'tid' => $tid ) );
-		}
+		$update[ 'field_finished' ] = isset( $field[ 'finished' ] ) && $field[ 'finished' ] ? 1 : 0;
+
+		$wpdb->update( $wpdb->prefix . 'icl_translate', $update, array( 'tid' => $tid ) );
 	}
 
 	private function handle_failed_validation( $validation_results, $data_to_validate ) {
@@ -405,29 +402,26 @@ class WPML_Save_Translation_Data_Action extends WPML_Translation_Job_Helper_With
 	}
 
 	/**
+	 * @param string   $element_type_prefix
+	 * @param object   $job
+	 * @param callable $decoder
+	 */
+	private static function save_external( $element_type_prefix, $job, $decoder ) {
+		do_action( 'wpml_save_external', $element_type_prefix, $job, $decoder );
+	}
+
+	/**
 	 * @param string $element_type_prefix
 	 * @param object $job
-	 * todo: Move to ST via an action to make this testable
 	 */
-	private function save_external( $element_type_prefix, $job ) {
-
-		// Translations are saved in the string table for 'external' types
-
-		$element_type_prefix = apply_filters( 'wpml_get_package_type_prefix', $element_type_prefix, $job->original_doc_id );
-
-		foreach ( $job->elements as $field ) {
-			if ( $field->field_translate ) {
-				if ( function_exists( 'icl_st_is_registered_string' ) ) {
-					$string_id = icl_st_is_registered_string( $element_type_prefix, $field->field_type );
-					if ( ! $string_id ) {
-						icl_register_string( $element_type_prefix, $field->field_type, $this->decode_field_data( $field->field_data, $field->field_format ) );
-						$string_id = icl_st_is_registered_string( $element_type_prefix, $field->field_type );
-					}
-					if ( $string_id ) {
-						icl_add_string_translation( $string_id, $job->language_code, $this->decode_field_data( $field->field_data_translated, $field->field_format ), ICL_TM_COMPLETE );
-					}
-				}
-			}
-		}
+	private static function notify_job_in_progress( $element_type_prefix, $job ) {
+		/**
+		 * The action triggered when a job is marked as in progress
+		 *
+		 * @param string $element_type_prefix
+		 * @param object $job
+		 * @since 2.10.0
+		 */
+		do_action( 'wpml_tm_job_in_progress', $element_type_prefix, $job );
 	}
 }

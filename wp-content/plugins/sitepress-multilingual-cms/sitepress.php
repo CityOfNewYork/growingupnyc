@@ -2,10 +2,10 @@
 /**
  * Plugin Name: WPML Multilingual CMS
  * Plugin URI: https://wpml.org/
- * Description: WPML Multilingual CMS | <a href="https://wpml.org">Documentation</a> | <a href="https://wpml.org/version/wpml-4-3-15/">WPML 4.3.15 release notes</a>
+ * Description: WPML Multilingual CMS | <a href="https://wpml.org">Documentation</a> | <a href="https://wpml.org/version/wpml-4-4-3/">WPML 4.4.3 release notes</a>
  * Author: OnTheGoSystems
  * Author URI: http://www.onthegosystems.com/
- * Version: 4.3.15
+ * Version: 4.4.3
  * Plugin Slug: sitepress-multilingual-cms
  *
  * @package WPML\Core
@@ -27,7 +27,7 @@ if ( ! \WPML\Requirements\WordPress::checkMinimumRequiredVersion() ) {
 	return;
 }
 
-define( 'ICL_SITEPRESS_VERSION', '4.3.15' );
+define( 'ICL_SITEPRESS_VERSION', '4.4.3' );
 
 // Do not uncomment the following line!
 // If you need to use this constant, use it in the wp-config.php file
@@ -185,7 +185,7 @@ if ( $sitepress->is_setup_complete() ) {
 		'WPML_Themes_Plugin_Localization_UI_Hooks_Factory',
 		'WPML_Theme_Plugin_Localization_Options_Ajax_Factory',
 		'WPML_Archives_Query_Factory',
-		'WPML_Fix_Links_In_Display_As_Translated_Content_Factory',
+		'WPML_Fix_Links_In_Display_As_Translated_Content',
 		'WPML_Display_As_Translated_Tax_Query_Factory',
 		'WPML_Tax_Permalink_Filters_Factory',
 		'WPML_Display_As_Translated_Snippet_Filters_Factory',
@@ -213,6 +213,11 @@ if ( $sitepress->is_setup_complete() ) {
 		'\WPML\WP\OptionManager',
 		'\WPML\Notices\DismissNotices',
 		'\WPML\Ajax\Locale',
+		'\WPML\Ajax\Factory',
+		\WPML\PostTranslation\SpecialPage\Hooks::class,
+		\WPML\LanguageSwitcher\AjaxNavigation\Hooks::class,
+		\WPML\BrowserLanguageRedirect\Dialog::class,
+		\WPML\UrlHandling\WPLoginUrlConverterFactory::class
 	];
 	$action_filter_loader->load( $actions );
 

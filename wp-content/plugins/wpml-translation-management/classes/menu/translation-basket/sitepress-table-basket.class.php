@@ -397,10 +397,24 @@ class SitePress_Table_Basket extends SitePress_Table {
 			$display_message = sprintf( $service_message, '<a class="wpml-external-link" href="' . $ate_doc_link . '" target="blank">' . $ate_name . '</a>' );
 		}
 
+		if ( $service ) {
+			$words_count_url = 'https://wpml.org/documentation/translating-your-contents/getting-a-word-count-of-your-wordpress-site/#differences-in-word-count-between-wpml-and-translation-service-providers';
+			$words_count_text = '<a class="wpml-external-link" href="' . $words_count_url . '" target="_blank">';
+
+			// translators: "%s" is replaced by the name of a translation service.
+			$words_count_text .= sprintf ( __( '%s may produce a different word count', 'wpml-translation-management' ), $service->name );
+			$words_count_text .= '</a>';
+
+			// translators: "%s" is replaced by the the previous string.
+			$words_count_message = sprintf( __( 'The number of words WPML will send to translation (%s):', 'wpml-translation-management' ), $words_count_text );
+		} else {
+			$words_count_message = __( 'The number of words WPML will send to translation:', 'wpml-translation-management' );
+		}
+
 		?>
         <div class="words-count-summary">
             <p class="words-count-summary-info">
-                <strong><?php _e( 'The number of words WPML will send to translation:', 'wpml-translation-management' ); ?></strong>
+                <strong><?php echo $words_count_message; ?></strong>
 	            <span class="words-count-total"><?php echo $grand_total_words_count; ?></span>
             </p>
             <?php if( $display_message ){ ?>

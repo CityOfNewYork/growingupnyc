@@ -1,5 +1,15 @@
 <?php
 
+use \WPML\FP\Fns;
+use \WPML\TM\Jobs\FieldId;
+use \WPML\FP\Logic;
+use \WPML\FP\Lst;
+use \WPML\FP\Either;
+use \WPML\LIB\WP\Post;
+use function \WPML\FP\curryN;
+use function \WPML\FP\pipe;
+use function \WPML\FP\invoke;
+
 /**
  * Class WPML_Element_Translation_Package
  *
@@ -32,7 +42,6 @@ class WPML_Element_Translation_Package extends WPML_Translation_Job_Helper {
 	 * @return array
 	 */
 	public function create_translation_package( $post ) {
-		global $sitepress;
 
 		$package = array();
 		$post    = is_numeric( $post ) ? get_post( $post ) : $post;
@@ -81,14 +90,7 @@ class WPML_Element_Translation_Package extends WPML_Translation_Job_Helper {
 				);
 			}
 
-			foreach ( (array) $sitepress->get_translatable_taxonomies( false, $post->post_type ) as $taxonomy ) {
-				$terms = get_the_terms( $post->ID, $taxonomy );
-				if ( is_array( $terms ) ) {
-					foreach ( $terms as $term ) {
-						$post_contents[ 't_' . $term->term_taxonomy_id ] = $term->name;
-					}
-				}
-			}
+			$post_contents = array_merge( $post_contents, $this->get_taxonomy_fields( $post ) );
 			$type = 'post';
 		}
 		$package['contents']['original_id'] = array(
@@ -431,4 +433,60 @@ class WPML_Element_Translation_Package extends WPML_Translation_Job_Helper {
 		return $value;
 	}
 
+	private function get_taxonomy_fields( $post ) {
+		global $sitepress;
+
+		$termMetaKeysToTranslate = self::getTermMetaKeysToTranslate();
+
+		// $getTermFields :: WP_Term → [[fieldId, fieldVal]]
+		$getTermFields = function ( $term ) {
+			return [
+				[ FieldId::forTerm( $term->term_taxonomy_id ), $term->name ],
+				[ FieldId::forTermDescription( $term->term_taxonomy_id ), $term->description ],
+			];
+		};
+
+		// $getTermMetaFields :: [metakeys] → WP_Term → [[fieldId, fieldVal]]
+		$getTermMetaFields = curryN( 2, function ( $termMetaKeysToTranslate, $term ) {
+
+			// $getMeta :: int → string → object
+			$getMeta = curryN( 2, function ( $termId, $key ) {
+				return (object) [ 'id' => $termId, 'key' => $key, 'meta' => get_term_meta( $termId, $key ) ];
+			} );
+
+			// $hasMeta :: object → bool
+			$hasMeta = function ( $termData ) { return isset( $termData->meta[0] ); };
+
+			// $makeField :: object → [fieldId, $fieldVal]
+			$makeField = function ( $termData ) {
+				return [ FieldId::forTermMeta( $termData->id, $termData->key ), $termData->meta[0] ];
+			};
+
+			// $get :: [metakeys] → [[fieldId, $fieldVal]]
+			$get = pipe(
+				Fns::map( $getMeta( $term->term_taxonomy_id ) ),
+				Fns::filter( $hasMeta ),
+				Fns::map( $makeField )
+			);
+
+			return $get( $termMetaKeysToTranslate );
+		} );
+
+		// $getAll :: [WP_Term] → [[fieldId, fieldVal]]
+		$getAll = Fns::converge( Lst::concat(), [ $getTermFields, $getTermMetaFields( $termMetaKeysToTranslate ) ] );
+
+		return wpml_collect( $sitepress->get_translatable_taxonomies( false, $post->post_type ) ) // [taxonomies]
+			->map( Post::getTerms( $post->ID ) ) // [Either false|WP_Error [WP_Term]]
+			->filter( Fns::isRight() ) // [Right[WP_Term]]
+			->map( invoke( 'get' ) ) // [[WP_Term]]
+			->flatten() // [WP_Term]
+			->map( $getAll ) // [[fieldId, fieldVal]]
+			->mapWithKeys( Lst::fromPairs() ) // [fieldId => fieldVal]
+			->toArray();
+	}
+
+	public static function getTermMetaKeysToTranslate() {
+		$fieldTranslation = new WPML_Custom_Field_Setting_Factory( self::get_core_translation_management() );
+		return $fieldTranslation->get_term_meta_keys();
+	}
 }

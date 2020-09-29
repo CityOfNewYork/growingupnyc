@@ -2,7 +2,7 @@ jQuery(document).ready(function () {
 	var buttonId = '#wpml_tm_ate_source_id_migration_btn';
 
 	jQuery(buttonId).click(function () {
-		jQuery(this).attr('disabled', 'disabled');
+		jQuery(this).prop('disabled', true);
 		jQuery(this).after('<span class="wpml-fix-tp-id-spinner">' + icl_ajxloaderimg + '</span>');
 
 		jQuery.ajax({
@@ -13,7 +13,7 @@ jQuery(document).ready(function () {
 				nonce: jQuery(this).data('nonce'),
 			},
 			success: function () {
-				jQuery(buttonId).removeAttr('disabled');
+				jQuery(buttonId).prop('disabled', false);
 				jQuery('.wpml-fix-tp-id-spinner').remove();
 			}
 		});

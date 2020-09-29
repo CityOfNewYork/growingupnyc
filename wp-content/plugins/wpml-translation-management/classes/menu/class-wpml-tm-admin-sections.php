@@ -1,5 +1,7 @@
 <?php
 
+use \WPML\TM\Menu\TranslationServices\SectionFactory;
+
 /**
  * It handles the admin sections shown in the TM page.
  *
@@ -86,7 +88,7 @@ class WPML_TM_Admin_Sections {
 	private function get_admin_section_factories() {
 		$admin_sections_factories = array(
 			WPML_TM_Translation_Roles_Section_Factory::class,
-			WPML_TM_Translation_Services_Admin_Section_Factory::class,
+			SectionFactory::class,
 			WPML_TM_AMS_ATE_Console_Section_Factory::class,
 		);
 

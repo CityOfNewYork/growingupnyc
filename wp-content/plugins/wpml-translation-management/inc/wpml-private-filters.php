@@ -17,21 +17,6 @@ function wpml_filter_rid_to_untranslated_job_id( $default, $rid ) {
 
 add_filter( 'wpml_rid_to_untranslated_job_id', 'wpml_filter_rid_to_untranslated_job_id', 10, 2 );
 
-/**
- * Creates a translation package for the given input element
- *
- * @param mixed       $default
- * @param WP_Post|int $post
- *
- * @return array
- */
-function wpml_filter_post_to_translation_package( $default, $post ) {
-	$package_helper = new WPML_Element_Translation_Package();
-
-	return $post ? $package_helper->create_translation_package( $post ) : $default;
-}
-
-add_filter( 'wpml_post_to_translation_package', 'wpml_filter_post_to_translation_package', 10, 2 );
 
 /**
  * @param int|object $element

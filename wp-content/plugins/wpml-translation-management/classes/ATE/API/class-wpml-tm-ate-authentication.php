@@ -12,20 +12,24 @@ class WPML_TM_ATE_Authentication {
 	/** @var string|null $site_id */
 	private $site_id = null;
 
-	public function get_signed_url( $verb, $url, $params = null ) {
+	public function get_signed_url_with_parameters( $verb, $url, $params = null ) {
 		if ( $this->has_keys() ) {
 			$url       = $this->add_required_arguments_to_url( $verb, $url, $params );
-			$url_parts = wp_parse_url( $url );
-
-			$query              = $this->get_url_query( $url );
-			$query['signature'] = $this->get_signature( $verb, $url, $params );
-
-			$url_parts['query'] = $this->build_query( $query );
-
-			return http_build_url( $url_parts );
+			return $this->signUrl($verb, $url, $params);
 		}
 
 		return new WP_Error( 'auth_error', 'Unable to authenticate' );
+	}
+
+	public function signUrl($verb, $url, $params = null) {
+		$url_parts = wp_parse_url( $url );
+
+		$query              = $this->get_url_query( $url );
+		$query['signature'] = $this->get_signature( $verb, $url, $params );
+
+		$url_parts['query'] = $this->build_query( $query );
+
+		return http_build_url( $url_parts );
 	}
 
 	private function get_signature( $verb, $url, array $params = null ) {
@@ -82,7 +86,7 @@ class WPML_TM_ATE_Authentication {
 	 * @return array
 	 */
 	private function get_ams_data() {
-		return get_option( self::AMS_DATA_KEY, array() );
+		return get_option( self::AMS_DATA_KEY, [] );
 	}
 
 	/**

@@ -6,7 +6,12 @@ class WPML_External_Translation_Job extends WPML_Element_Translation_Job {
 
 	function get_original_document() {
 
-		return  apply_filters( 'wpml_get_translatable_item', null, $this->get_original_element_id() );
+		return  apply_filters(
+			'wpml_get_translatable_item',
+			null,
+			$this->get_original_element_id(),
+			isset( $this->basic_data->original_post_type ) ? $this->basic_data->original_post_type : null
+		);
 	}
 
 	/**

@@ -13,7 +13,7 @@ class WPML_TM_Wizard_Who_Will_Translate_Step extends WPML_Twig_Template_Loader {
 	/** @var WPML_TM_Wizard_Translators_Step $translator_settings */
 	private $translator_settings;
 
-	/** @var WPML_TM_Translation_Services_Admin_Section_Factory $translation_services_factory */
+	/** @var \WPML\TM\Menu\TranslationServices\SectionFactory $translation_services_factory */
 	private $translation_services_factory;
 
 	/** @var array $who_will_translate_mode */
@@ -23,7 +23,7 @@ class WPML_TM_Wizard_Who_Will_Translate_Step extends WPML_Twig_Template_Loader {
 		WP_User $user,
 		WPML_Translation_Manager_Settings $translation_manager_settings,
 		WPML_Translator_Settings $translator_settings,
-		WPML_TM_Translation_Services_Admin_Section_Factory $translation_services_factory,
+		\WPML\TM\Menu\TranslationServices\SectionFactory $translation_services_factory,
 		$who_will_translate_mode
 	) {
 		parent::__construct( array(

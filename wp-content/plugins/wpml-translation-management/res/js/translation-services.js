@@ -186,7 +186,7 @@ var WPMLTranslationServicesDialog = function () {
 
 	self.enableButton = function (button) {
 		if (button) {
-			button.removeAttr( 'disabled' );
+			button.prop( 'disabled', false );
 			button.next().fadeOut();
 		}
 	}

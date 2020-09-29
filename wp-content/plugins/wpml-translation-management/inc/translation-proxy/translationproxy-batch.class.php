@@ -1,13 +1,22 @@
 <?php
 
+use \WPML\Collect\Support\Traits\Macroable;
+use function \WPML\FP\curryN;
+use \WPML\LIB\WP\Cache;
+use \WPML\FP\Logic;
+
+/**
+ * Class TranslationProxy_Batch
+ * @method static callable|int getBatchId( ...$name ) :: string → int
+ */
 class TranslationProxy_Batch {
+
+	use Macroable;
 
 	public static function update_translation_batch(
 		$batch_name = false,
 		$tp_id = false
 	) {
-		global $wpdb;
-
 		$batch_name = $batch_name
 			? $batch_name
 			: ( ( (bool) $tp_id === false || $tp_id === 'local' )
@@ -16,40 +25,14 @@ class TranslationProxy_Batch {
 			return null;
 		}
 
-		$cache_key   = md5( $batch_name );
-		$cache_group = 'update_translation_batch';
-		$cache_found = false;
+		$getBatchId = function( $batch_name, $tp_id ) {
+			$batch_id = self::getBatchId( $batch_name );
 
-		$batch_id = wp_cache_get( $cache_key, $cache_group, false,
-			$cache_found );
+			return $batch_id ? $batch_id : self::createBatchRecord( $batch_name, $tp_id );
+		};
 
-		if ( $cache_found && $batch_id ) {
-			return $batch_id;
-		}
-
-		$batch_id_sql      = "SELECT id FROM {$wpdb->prefix}icl_translation_batches WHERE batch_name=%s";
-		$batch_id_prepared = $wpdb->prepare( $batch_id_sql,
-			array( $batch_name ) );
-		$batch_id          = $wpdb->get_var( $batch_id_prepared );
-
-		if ( ! $batch_id ) {
-			$data = array(
-				'batch_name'  => $batch_name,
-				'last_update' => date( 'Y-m-d H:i:s' )
-			);
-			if ( $tp_id ) {
-				if ( $tp_id === 'local' ) {
-					$tp_id = 0;
-				}
-				$data['tp_id'] = $tp_id;
-			}
-			$wpdb->insert( $wpdb->prefix . 'icl_translation_batches', $data );
-			$batch_id = $wpdb->insert_id;
-
-			wp_cache_set( $cache_key, $batch_id, $cache_group );
-		}
-
-		return $batch_id;
+		$cache = Cache::memorizeWithCheck( 'update_translation_batch', Logic::isNotNull(), $getBatchId );
+		return $cache( $batch_name, $tp_id );
 	}
 
 	/**
@@ -95,4 +78,39 @@ class TranslationProxy_Batch {
 				$data_where );
 		}
 	}
+
+	/**
+	 * @param $batch_name
+	 * @param $tp_id
+	 *
+	 * @return mixed
+	 */
+	private static function createBatchRecord( $batch_name, $tp_id ) {
+		global $wpdb;
+
+		$data = [
+			'batch_name'  => $batch_name,
+			'last_update' => date( 'Y-m-d H:i:s' )
+		];
+		if ( $tp_id ) {
+			$data['tp_id'] = $tp_id === 'local' ? 0 : $tp_id;
+		}
+		$wpdb->insert( $wpdb->prefix . 'icl_translation_batches', $data );
+
+		return $wpdb->insert_id;
+	}
 }
+
+/**
+ * @param $batch_name
+ *
+ * @return mixed
+ */
+TranslationProxy_Batch::macro( 'getBatchId', curryN( 1, function( $batch_name ) {
+	global $wpdb;
+
+	$batch_id_sql      = "SELECT id FROM {$wpdb->prefix}icl_translation_batches WHERE batch_name=%s";
+	$batch_id_prepared = $wpdb->prepare( $batch_id_sql, $batch_name );
+	return $wpdb->get_var( $batch_id_prepared );
+} ) );
+

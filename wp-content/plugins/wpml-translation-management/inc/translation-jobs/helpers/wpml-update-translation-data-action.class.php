@@ -57,7 +57,9 @@ abstract class WPML_TM_Update_Translation_Data_Action extends WPML_Translation_J
 		$job_id = $wpdb->insert_id;
 
 		$this->package_helper->save_package_to_job( $translation_package, $job_id, $prev_translation );
-		$this->fire_notification_actions( $job_id, $translation_status, $translator_id );
+		if ((int)$translation_status->status !== ICL_TM_DUPLICATE ) {
+			$this->fire_notification_actions( $job_id, $translation_status, $translator_id );
+		}
 
 		return $job_id;
 	}

@@ -28,6 +28,8 @@ class WPML_TM_Menus_Settings extends WPML_TM_Menus {
 			$this->mcsetup_sections['ml-content-setup-sec-2'] = esc_html__( 'Posts and pages synchronization', 'wpml-translation-management' );
 			$this->mcsetup_sections['ml-content-setup-sec-3'] = esc_html__( 'Translated documents options', 'wpml-translation-management' );
 
+			$this->mcsetup_sections['ml-content-setup-sec-wp-login'] = esc_html__( 'Login and registration pages', 'wpml-translation-management' );
+
 			if ( defined( 'WPML_ST_VERSION' ) ) {
 				$this->mcsetup_sections['ml-content-setup-sec-4'] = esc_html__( 'Custom posts slug translation options', 'wpml-translation-management' );
 			}
@@ -402,6 +404,12 @@ class WPML_TM_Menus_Settings extends WPML_TM_Menus {
 				<!-- .wpml-section-content -->
 			</div><!-- #ml-content-setup-sec-3 -->
 		<?php endif; ?>
+
+		<?php
+		if ( $this->should_show_mcsetup_section( 'ml-content-setup-sec-wp-login' ) ) {
+			include ICL_PLUGIN_PATH . '/menu/_login_translation_options.php';
+		}
+		?><!-- #ml-content-setup-sec-wp-login -->
 
 		<?php if ( $this->should_show_mcsetup_section( 'ml-content-setup-sec-4' ) ) : ?>
 			<?php include WPML_ST_PATH . '/menu/_slug-translation-options.php'; ?><!-- #ml-content-setup-sec-4 -->

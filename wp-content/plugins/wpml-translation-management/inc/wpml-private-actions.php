@@ -1,4 +1,8 @@
 <?php
+
+use function \WPML\Container\make;
+use \WPML\FP\Obj;
+
 require_once WPML_TM_PATH . '/inc/translation-jobs/helpers/wpml-translation-job-helper.class.php';
 require_once WPML_TM_PATH . '/inc/translation-jobs/helpers/wpml-translation-job-helper-with-api.class.php';
 require_once WPML_TM_PATH . '/inc/translation-jobs/wpml-translation-jobs-collection.class.php';
@@ -98,15 +102,11 @@ add_action( 'wpml_tm_assign_translation_job', 'wpml_tm_assign_translation_job', 
  * triggered by String Translation.
  */
 function wpml_tm_add_strings_to_basket() {
-	if ( isset( $_POST['icl_st_action'] )
-	     && $_POST['icl_st_action'] === 'send_strings'
-	     && wpml_is_action_authenticated( 'icl-string-translation' )
+	if (
+		Obj::prop( 'icl_st_action', $_POST ) === 'send_strings'
+		&& wpml_is_action_authenticated( 'icl-string-translation' )
 	) {
-		global $wpdb;
-
-		$basket_instance    = new WPML_Translation_Basket( $wpdb );
-		$st_request_handler = new WPML_TM_String_Basket_Request( $basket_instance );
-		$st_request_handler->send_to_basket( $_POST );
+		WPML_TM_String_Basket_Request::send_to_basket( $_POST, [ TranslationProxy_Basket::class, 'add_strings_to_basket' ] );
 	}
 }
 

@@ -1,7 +1,7 @@
 import owlSettings from './modules/owlSettings.js';
 import alert from './modules/alert.js';
 import formEffects from './modules/formEffects.js';
-import stickyNav from './modules/stickyNav.js'; 
+import stickyNav from './modules/stickyNav.js';
 import sectionHighlighter from './modules/sectionHighlighter.js';
 import staticColumn from './modules/staticColumn.js';
 import rotatingTextAnimation from './modules/rotatingTextAnimation.js';
@@ -25,6 +25,7 @@ import toggleOpen from './modules/toggleOpen.js';
  */
 import LanguageSwitcher from 'components/language-switcher/LanguageSwitcher.common';
 import Scroll from 'components/side-navigation/Scroll.common';
+import BackToTop from 'components/back-to-top/BackToTop.common';
 
 /**
  * Objects
@@ -108,7 +109,7 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
     new ContentShow();
     new FormEffects();
     new LanguageSwitcher();
-    
+    new BackToTop();
     new Newsletter();
     new Overlay();
 

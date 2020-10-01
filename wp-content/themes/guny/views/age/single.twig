@@ -33,6 +33,8 @@
         </h1>
         <p class="c-hero__tagline">{{post.hero_subheadline}}</p>
       </div>
+      {# {{ source('my-svg.svg') }}
+      {% include "@type_of_component/component-name/your-svg-filename.svg" %} #}
       <svg class="c-hero__frill svg-{{post.age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 404 359" >
         <title>Paint Splatter</title>
         <defs>

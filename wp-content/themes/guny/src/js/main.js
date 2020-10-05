@@ -71,7 +71,6 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
   let vueId = $('div').find('[id^=vue]').attr('id');
   if (vueId != undefined) {
     if (vueId.indexOf('events') >= 0) {
-      console.log('events')
       new EventsList().init();
     }
     if (vueId.indexOf('summer') >= 0) {

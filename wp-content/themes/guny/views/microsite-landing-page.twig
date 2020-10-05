@@ -123,26 +123,15 @@
 
         {# call out box #}
         {% if top.landing_page_section_add_call_out == "Yes" %}
-          {% if top.landing_page_section_content_heading != 'Virtual Activities' %}
-            <section class="o-content-container--compact s-wysiwyg">
-              <div class="c-do-list">
-                {{top.landing_page_section_call_out_box}}
-                {% if top.landing_page_section_call_out_box_url != "" %}
-                  <a class="button--primary button--primary__curved button--primary__{{post.get_field('lp_theme')}} button--topics__cta" href="{{top.landing_page_section_call_out_box_url}}" target="_blank">{{top.landing_page_section_call_out_box_button_text}}</a>
-                {% endif %}
-              </div>
-            </section>
-          {% else %}
-            <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" data-id="section-events">
-              <div class="c-tip-card">
-                <p class="c-card__label">{{top.landing_page_section_call_out_box_title}}</p>
-                {{top.landing_page_section_call_out_box}}
-                {% if top.landing_page_section_call_out_box_url != "" %}
-                  <a class="button--primary button--primary__curved button--primary__{{post.get_field('lp_theme')}} button--topics__cta" href="{{top.landing_page_section_call_out_box_url}}" target="_blank">{{top.landing_page_section_call_out_box_button_text}}</a>
-                {% endif %}
-              </div>
-            </section>
-          {% endif %}
+          <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" data-id="section-events">
+            <div class="c-tip-card">
+              <p class="c-card__label">{{top.landing_page_section_call_out_box_title}}</p>
+              {{top.landing_page_section_call_out_box}}
+              {% if top.landing_page_section_call_out_box_url != "" %}
+                <a class="button--primary button--primary__curved button--primary__{{post.get_field('lp_theme')}} button--topics__cta" href="{{top.landing_page_section_call_out_box_url}}" target="_blank">{{top.landing_page_section_call_out_box_button_text}}</a>
+              {% endif %}
+            </div>
+          </section>
         {% endif %}
 
         {# Accordion #}
@@ -175,7 +164,7 @@
         {% endif %}
         
 				{# Events Section #}
-				{% if top.landing_page_section_content_heading == 'Virtual Activities' %}
+				{% if top.landing_page_add_filter == 'Yes' %}
 					<div id="vue-{{top.landing_page_filtered_posts}}" data-age='{{function("getSlugs", top.landing_page_age_group_filters)|json_encode}}' data-events="{{top.landing_page_event_cat_filters|json_encode}}">
 
 						<div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false" v-cloak>

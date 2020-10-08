@@ -1,5 +1,8 @@
 <?php
 
+use function WPML\Container\make;
+use WPML\TM\Menu\TranslationQueue\CloneJobs;
+
 /**
  * @author OnTheGo Systems
  */
@@ -22,7 +25,8 @@ class WPML_Translations_Queue_Factory {
 
 		return new WPML_Translations_Queue(
 			$sitepress,
-			$screen_options_factory
+			$screen_options_factory,
+			make( CloneJobs::class )
 		);
 	}
 }

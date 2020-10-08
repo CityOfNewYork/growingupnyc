@@ -41,7 +41,7 @@ var ResetProTransConfig = function () {
 
 			if (result) {
 				spinner = jQuery('#' + wpml_reset_pro_trans_config_strings.placeHolder).find('.spinner');
-				button.attr('disabled', 'disabled');
+				button.prop('disabled', true);
 
 				spinner.addClass('is-active');
 
@@ -66,7 +66,7 @@ var ResetProTransConfig = function () {
 						alert(parsedResponse);
 					},
 					complete: function () {
-						button.removeAttr('disabled');
+						button.prop('disabled', false);
 						button.next().fadeOut();
 						spinner.removeClass('is-active');
 					}

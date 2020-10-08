@@ -488,7 +488,7 @@ abstract class Field implements FieldInterface {
                 }
             }
         }
-        return $value;
+        return is_array($value) ? array_map('trim', $value) : trim($value);
     }
 
     /**

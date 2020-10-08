@@ -129,6 +129,7 @@ class WPML_TM_Scripts_Factory {
 				'completed' => $iclTranslationManagement->status2icon_class( ICL_TM_COMPLETE, false ),
 				'canceled'  => $iclTranslationManagement->status2icon_class( ICL_TM_NOT_TRANSLATED, false ),
 				'progress' => $iclTranslationManagement->status2icon_class( ICL_TM_IN_PROGRESS, false ),
+				'needsUpdate' => $iclTranslationManagement->status2icon_class( ICL_TM_NEEDS_UPDATE, false ),
 			),
 		) );
 		wp_enqueue_script( 'wpml-tm-dashboard' );
@@ -182,7 +183,8 @@ class WPML_TM_Scripts_Factory {
 		if ( ! $this->ate ) {
 			$this->ate = new WPML_TM_MCS_ATE( $this->get_authentication(),
 				$this->get_endpoints(),
-				$this->create_ate_strings() );
+				$this->create_ate_strings()
+			);
 		}
 
 		return $this->ate;
@@ -198,7 +200,7 @@ class WPML_TM_Scripts_Factory {
 
 	private function get_endpoints() {
 		if ( ! $this->endpoints ) {
-			$this->endpoints = WPML\Container\make( 'WPML_TM_ATE_AMS_Endpoints' );;
+			$this->endpoints = WPML\Container\make( 'WPML_TM_ATE_AMS_Endpoints' );
 		}
 
 		return $this->endpoints;
@@ -247,35 +249,10 @@ class WPML_TM_Scripts_Factory {
 	 * @return string
 	 */
 	private function fetch_and_update_ate_activation_status() {
-		$this->create_ams_api()
-		     ->get_status();
-		$status = $this->create_ate_strings()
-		               ->get_status();
+		$ams_api = WPML\Container\make( WPML_TM_AMS_API::class );
+		$ams_api->get_status();
 
-		return $status;
-	}
-
-	/**
-	 * @return WPML_TM_AMS_API
-	 */
-	private function create_ams_api() {
-		if ( ! $this->ams_api ) {
-			$this->ams_api = new WPML_TM_AMS_API( $this->get_http(),
-				$this->get_authentication(),
-				$this->get_endpoints() );
-		}
-
-		return $this->ams_api;
-	}
-
-	/**
-	 * @return WP_Http
-	 */
-	private function get_http() {
-		if ( ! $this->http ) {
-			$this->http = new WP_Http();
-		}
-
-		return $this->http;
+		return $this->create_ate_strings()
+		            ->get_status();
 	}
 }

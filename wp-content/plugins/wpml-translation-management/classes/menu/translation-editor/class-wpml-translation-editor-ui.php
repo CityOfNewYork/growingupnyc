@@ -1,5 +1,7 @@
 <?php
 
+use \WPML\TM\Jobs\FieldId;
+
 class WPML_Translation_Editor_UI {
 	const MAX_ALLOWED_SINGLE_LINE_LENGTH = 50;
 
@@ -65,6 +67,7 @@ class WPML_Translation_Editor_UI {
 			$this->init_editor_object();
 
 			$this->output_model();
+			$this->output_ate_notice();
 			$this->output_gutenberg_notice();
 			$this->output_wysiwyg_editors();
 			$this->output_copy_all_dialog();
@@ -163,6 +166,21 @@ class WPML_Translation_Editor_UI {
 				var WpmlTmEditorModel = <?php echo wp_json_encode( $model ); ?>;
 			</script>
 		<?php
+	}
+
+	private function output_ate_notice() {
+
+		$html_fields = array_filter( $this->fields, function ( $field ) {
+			return $field['field_style'] === '1' && strpos( $field['field_data'], '<' ) !== false;
+		} );
+
+		if ( count( $html_fields ) > 0 ) {
+			$link        = 'https://wpml.org/documentation/translating-your-contents/advanced-translation-editor/#html-markers';
+			$notice_text = esc_html__( 'We see you\'re translating content that contains HTML. Switch to the Advanced Translation Editor to translate content without the risk of breaking your HTML code.', 'wpml-translation-management' );
+			echo '<div class="notice notice-info">
+					<p>' . $notice_text . ' <a href="' . $link . '" class="wpml-external-link" target="_blank" rel="noopener">' . esc_html__( 'Read more...', 'wpml-translation-management' ) . '</a></p>
+				</div>';
+		}
 	}
 
 	private function output_gutenberg_notice() {
@@ -278,73 +296,7 @@ class WPML_Translation_Editor_UI {
 	}
 
 	private function add_titles_and_adjust_styles( array $fields ) {
-		foreach ( $fields as &$field ) {
-			$field['title'] = $field['field_type'];
-			if ( $this->is_external_element() ) {
-				// Get human readable string Title and editor style from the WPML string package.
-				$field['title']       = apply_filters( 'wpml_tm_editor_string_name', $field['field_type'], $this->original_post );
-				$field['field_style'] = (string) apply_filters( 'wpml_tm_editor_string_style', $field['field_style'], $field['field_type'], $this->original_post );
-			} else if ( $this->is_a_custom_field( $field ) ) {
-				$custom_field_data    = $this->custom_field_data( (object) $field );
-				$field                = (array) $custom_field_data[2];
-				$field['title']       = $custom_field_data[0];
-				$field['field_style'] = $this->get_adjusted_field_style( $field, $custom_field_data );
-				$field['field_style'] = (string) apply_filters( 'wpml_tm_editor_string_style', $field['field_style'], $field['field_type'], $this->original_post );
-			} else if ( $this->is_a_term( $field ) ) {
-				$field['title'] = '';
-			} else {
-				switch ( $field['field_type'] ) {
-					case 'title':
-						$field['title'] = __( 'Title', 'wpml-translation-management' );
-						break;
-
-					case 'body':
-						$field['title'] = __( 'Body', 'wpml-translation-management' );
-						break;
-
-					case 'excerpt':
-						$field['title']       = __( 'Excerpt', 'wpml-translation-management' );
-						$field['field_style'] = '1';
-						break;
-				}
-			}
-
-			$this->adjust_field_style_for_unsafe_content( $field );
-		}
-
-		return apply_filters( 'wpml_tm_adjust_translation_fields', $fields, $this->job );
-	}
-
-	private function get_adjusted_field_style( array &$field, array $custom_field_data ) {
-		$field_style = $custom_field_data[1];
-		/**
-		 * wpml_tm_editor_max_allowed_single_line_length filter
-		 *
-		 * Filters the value of `\WPML_Translation_Editor_UI::MAX_ALLOWED_SINGLE_LINE_LENGTH`
-		 *
-		 * @param       int                MAX_ALLOWED_SINGLE_LINE_LENGTH The length of the string, after which it must use a multiline input
-		 * @param array $field             The generic field data
-		 * @param array $custom_field_data The custom field specific data
-		 *
-		 * @since 2.3.1
-		 */
-		if ( 0 === (int) $field_style && strlen( $field['field_data'] ) > (int) apply_filters( 'wpml_tm_editor_max_allowed_single_line_length', self::MAX_ALLOWED_SINGLE_LINE_LENGTH, $field, $custom_field_data ) ) {
-			return '1';
-		}
-
-		return (string) $field_style;
-	}
-
-	/**
-	 * @param array $field
-	 */
-	private function adjust_field_style_for_unsafe_content( array &$field ) {
-		$black_list         = array( 'script', 'style', 'iframe' );
-		$black_list_pattern = '#</?(' . implode( '|', $black_list ) . ')[^>]*>#i';
-
-		if ( '2' === $field['field_style'] && preg_replace( $black_list_pattern, '', $field['field_data'] ) !== $field['field_data'] ) {
-			$field['field_style'] = '1';
-		}
+		return apply_filters( 'wpml_tm_adjust_translation_fields', $fields, $this->job, $this->original_post );
 	}
 
 	private function add_rtl_attributes( array $fields ) {
@@ -376,58 +328,5 @@ class WPML_Translation_Editor_UI {
 		}
 
 		return $model;
-	}
-
-	private function is_external_element() {
-
-		return $this->tm_instance->is_external_type( $this->job->element_type_prefix );
-	}
-
-	private function is_a_custom_field( array &$field ) {
-		return ( 0 === strpos( $field['field_type'], 'field-' ) );
-	}
-
-	/**
-	 * Applies filters to a custom field job element.
-	 * Custom fields that were named with numeric suffixes are stripped of these suffixes.
-	 *
-	 * @param stdClass $element
-	 *
-	 * @return array
-	 */
-	private function custom_field_data( $element ) {
-		$unfiltered_type    = WPML_TM_Field_Type_Sanitizer::sanitize( $element->field_type );
-		$element_field_type = $unfiltered_type;
-		/**
-		 * @deprecated Use `wpml_editor_custom_field_name` filter instead
-		 * @since      3.2
-		 */
-		$element_field_type = apply_filters( 'icl_editor_cf_name', $element_field_type );
-		$element_field_type = apply_filters( 'wpml_editor_custom_field_name', $element_field_type );
-
-		$element_field_style = 0;
-
-		if ( false !== strpos( $element->field_data, "\n" ) ) {
-			$element_field_style = 1;
-		}
-
-		/**
-		 * @deprecated Use `wpml_editor_custom_field_style` filter instead
-		 * @since      3.2
-		 */
-		$element_field_style = apply_filters( 'icl_editor_cf_style', $element_field_style, $unfiltered_type );
-		$element_field_style = apply_filters( 'wpml_editor_custom_field_style', $element_field_style, $unfiltered_type );
-
-		$element = apply_filters( 'wpml_editor_cf_to_display', $element, $this->job_instance );
-
-		$settings            = new WPML_Custom_Field_Editor_Settings( $unfiltered_type, $this->tm_instance );
-		$element_field_type  = $settings->filter_name( $element_field_type );
-		$element_field_style = $settings->filter_style( $element_field_style );
-
-		return array( $element_field_type, $element_field_style, $element );
-	}
-
-	private function is_a_term( array &$field ) {
-		return 0 === strpos( $field['field_type'], 't_' );
 	}
 }

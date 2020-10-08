@@ -50,14 +50,16 @@ class WPML_TM_REST_ATE_Jobs extends WPML_TM_ATE_Required_Rest_Base {
 	/**
 	 * @param WP_REST_Request $request
 	 *
-	 * @return array
+	 * @return bool
 	 * @throws \InvalidArgumentException
 	 */
 	public function store_ate_job( WP_REST_Request $request ) {
 		$wpml_job_id  = $request->get_param( 'wpml_job_id' );
 		$ate_job_data = $request->get_param( 'ate_job_data' );
 
-		return $this->ate_jobs->store( $wpml_job_id, $ate_job_data );
+		$this->ate_jobs->store( $wpml_job_id, $ate_job_data );
+
+		return true;
 	}
 
 	function get_allowed_capabilities( WP_REST_Request $request ) {

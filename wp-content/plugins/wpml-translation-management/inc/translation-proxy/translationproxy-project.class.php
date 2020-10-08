@@ -199,19 +199,6 @@ class TranslationProxy_Project {
 		$source_language = false,
 		$target_languages = false
 	) {
-		$cache_key = md5( wp_json_encode( array(
-			$source_language,
-			$target_languages
-		) ) );
-		$cache_group = 'get_batch_job';
-		$cache_found = false;
-
-		$batch_data = wp_cache_get( $cache_key, $cache_group, false, $cache_found );
-
-		if ( $cache_found ) {
-			return $batch_data;
-		}
-
 		$batch_data = TranslationProxy_Basket::get_batch_data();
 
 		if ( ! $batch_data ) {
@@ -232,8 +219,6 @@ class TranslationProxy_Project {
 				TranslationProxy_Basket::set_batch_data( $batch_data );
 			}
 		}
-
-		wp_cache_set( $cache_key, $batch_data, $cache_group );
 
 		return $batch_data;
 	}

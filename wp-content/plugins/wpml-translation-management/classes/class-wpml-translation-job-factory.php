@@ -1,5 +1,7 @@
 <?php
 
+use \WPML\FP\Obj;
+
 /**
  * Class WPML_Translation_Job_Factory
  *
@@ -290,7 +292,7 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 </span>
 &raquo; 
 <span class="wpml-lang-with-flag">
-	<span class="wpml-title-flag js-otgs-popover-tooltip" title="' . $target_name . '">$target_flag_image</span><span class="wpml-lang-name">$target_name</span>
+	<span class="wpml-title-flag js-otgs-popover-tooltip" title="$target_name">$target_flag_image</span><span class="wpml-lang-name">$target_name</span>
 </span>
 LANG_WITH_FLAG;
 	}
@@ -375,10 +377,15 @@ LANG_WITH_FLAG;
 				case 'package':
 					$type = substr( $type, 8 );
 					break;
+
+				case 'st-batch':
+					$type = 'strings';
+					$name = __( 'Strings', 'wpml-translation-management' );
+					break;
 			}
 
-			$output[ $job_type->element_type_prefix . '_' . $type ] = array_key_exists( $type, $post_types )
-				? $post_types[ $type ]->labels->singular_name : $name;
+			$output[ $job_type->element_type_prefix . '_' . $type ] =
+				Obj::pathOr( $name, [ $type, 'labels', 'singular_name' ], $post_types );
 		}
 
 		return $output;
@@ -393,6 +400,17 @@ LANG_WITH_FLAG;
 		$wpdb->update(
 			$wpdb->prefix . 'icl_translate_job',
 			$data,
+			array( 'job_id' => $job_id )
+		);
+	}
+
+	/**
+	 * @param int $job_id
+	 */
+	public function delete_job_data( $job_id ) {
+		global $wpdb;
+		$wpdb->delete(
+			$wpdb->prefix . 'icl_translate_job',
 			array( 'job_id' => $job_id )
 		);
 	}

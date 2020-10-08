@@ -15,6 +15,9 @@ class WPML_TP_Service extends WPML_TP_REST_Object implements Serializable {
 	 */
 	public $logo_url;
 
+	/** @var string */
+	public $logo_preview_url;
+
 	/**
 	 * @var string
 	 */
@@ -124,6 +127,9 @@ class WPML_TP_Service extends WPML_TP_REST_Object implements Serializable {
 	/** bool */
 	public $redirect_to_ts;
 
+	/** @var \stdClass[] */
+	public $countries = [];
+
 	public function __construct( stdClass $object = null ) {
 		parent::__construct( $object );
 		$this->set_custom_fields_data();
@@ -142,6 +148,10 @@ class WPML_TP_Service extends WPML_TP_REST_Object implements Serializable {
 	 */
 	public function get_logo_url() {
 		return $this->logo_url;
+	}
+
+	public function get_logo_preview_url() {
+		return $this->logo_preview_url;
 	}
 
 	/**
@@ -261,6 +271,13 @@ class WPML_TP_Service extends WPML_TP_REST_Object implements Serializable {
 	 */
 	public function set_logo_url( $logo_url ) {
 		$this->logo_url = $logo_url;
+	}
+
+	/**
+	 * @param  string  $logo_preview_url
+	 */
+	public function set_logo_preview_url( $logo_preview_url ) {
+		$this->logo_preview_url = $logo_preview_url;
 	}
 
 	/**
@@ -631,6 +648,19 @@ class WPML_TP_Service extends WPML_TP_REST_Object implements Serializable {
 		$this->redirect_to_ts = $redirect_to_ts;
 	}
 
+	/**
+	 * @return stdClass[]
+	 */
+	public function get_countries() {
+		return $this->countries;
+	}
+
+	/**
+	 * @param  stdClass[]  $countries
+	 */
+	public function set_countries( array $countries ) {
+		$this->countries = $countries;
+	}
 
 
 	public function serialize() {
@@ -651,9 +681,10 @@ class WPML_TP_Service extends WPML_TP_REST_Object implements Serializable {
 	 * @return array
 	 */
 	protected function get_properties() {
-		return array(
+		return [
 			'id'                             => 'id',
 			'logo_url'                       => 'logo_url',
+			'logo_preview_url'               => 'logo_preview_url',
 			'url'                            => 'url',
 			'name'                           => 'name',
 			'description'                    => 'description',
@@ -688,6 +719,7 @@ class WPML_TP_Service extends WPML_TP_REST_Object implements Serializable {
 			'how_to_get_credentials_url'     => 'how_to_get_credentials_url',
 			'client_create_account_page_url' => 'client_create_account_page_url',
 			'redirect_to_ts?'                => 'redirect_to_ts',
-		);
+			'countries'                      => 'countries',
+		];
 	}
 }

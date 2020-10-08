@@ -43,8 +43,7 @@ abstract class PMAI_Controller_Admin extends PMAI_Controller {
 	/**
 	 * @see Controller::render()
 	 */
-	protected function render($viewPath = NULL)
-	{
+	protected function render($viewPath = NULL) {
 		// assume template file name depending on calling function
 		if (is_null($viewPath)) {
 			$trace = debug_backtrace();

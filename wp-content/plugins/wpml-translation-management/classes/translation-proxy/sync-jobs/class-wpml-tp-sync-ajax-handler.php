@@ -68,6 +68,7 @@ class WPML_TP_Sync_Ajax_Handler {
 			'type'                    => $job->get_type(),
 			'status'                  => $job->get_status(),
 			'hasCompletedTranslation' => $job->has_completed_translation(),
+			'needsUpdate'             => $job->does_need_update(),
 		);
 	}
 }

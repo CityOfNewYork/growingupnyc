@@ -383,30 +383,6 @@ class TranslationProxy {
 		return 40;
 	}
 
-	public static function get_batch_id_from_name( $batch_name ) {
-		$cache_key   = $batch_name;
-		$cache_group = 'get_batch_id_from_name';
-		$cache_found = false;
-
-		$batch_id = wp_cache_get( $cache_key, $cache_group, false, $cache_found );
-
-		if ( $cache_found ) {
-			return $batch_id;
-		}
-
-		global $wpdb;
-		$batch_id_sql      = "SELECT id FROM {$wpdb->prefix}icl_translation_batches WHERE batch_name=%s";
-		$batch_id_prepared = $wpdb->prepare( $batch_id_sql, array( $batch_name ) );
-		$batch_id          = $wpdb->get_var( $batch_id_prepared );
-
-		if ( $batch_id ) {
-			//Cache only if there is a result
-			wp_cache_set( $cache_key, $batch_id, $cache_group );
-		}
-
-		return $batch_id;
-	}
-
 	/**
 	 * @param bool|TranslationProxy_Service|WP_Error $service
 	 *

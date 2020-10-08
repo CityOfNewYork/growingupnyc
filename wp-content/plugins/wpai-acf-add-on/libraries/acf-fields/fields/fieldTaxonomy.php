@@ -74,28 +74,34 @@ class FieldTaxonomy extends Field {
                         if ('' != $tx_raw) {
                             foreach ($delimetedTaxonomies as $j => $cc) {
                                 if ('' != $cc) {
-                                    $cat = get_term_by('name', trim($cc), $tx_name) or $cat = get_term_by('slug', trim($cc), $tx_name) or ctype_digit($cc) and $cat = get_term_by('id', $cc, $tx_name);
-                                    if (!empty($taxonomy->parent_id)) {
-                                        foreach ($taxonomies_hierarchy as $key => $value) {
-                                            if ($value->item_id == $taxonomy->parent_id and !empty($value->txn_names[$i])) {
-                                                foreach ($value->txn_names[$i] as $parent) {
-                                                    $values[$tx_name][$i][] = array(
-                                                        'name' => trim($cc),
-                                                        'parent' => $parent,
-                                                        'assign' => 1
-                                                        //$taxonomy->assign
-                                                    );
+                                    $terms = explode($xpath['delim'], $cc);
+                                    if (!empty($terms)) {
+                                        $terms = array_map('trim', $terms);
+                                        foreach ($terms as $term) {
+                                            $cat = get_term_by('name', trim($term), $tx_name) or $cat = get_term_by('slug', trim($term), $tx_name) or ctype_digit($term) and $cat = get_term_by('id', $term, $tx_name);
+                                            if (!empty($taxonomy->parent_id)) {
+                                                foreach ($taxonomies_hierarchy as $key => $value) {
+                                                    if ($value->item_id == $taxonomy->parent_id and !empty($value->txn_names[$i])) {
+                                                        foreach ($value->txn_names[$i] as $parent) {
+                                                            $values[$tx_name][$i][] = array(
+                                                                'name' => trim($term),
+                                                                'parent' => $parent,
+                                                                'assign' => 1
+                                                                //$taxonomy->assign
+                                                            );
+                                                        }
+                                                    }
                                                 }
                                             }
+                                            else {
+                                                $values[$tx_name][$i][] = array(
+                                                    'name' => trim($term),
+                                                    'parent' => FALSE,
+                                                    'assign' => 1
+                                                    //$taxonomy->assign
+                                                );
+                                            }
                                         }
-                                    }
-                                    else {
-                                        $values[$tx_name][$i][] = array(
-                                            'name' => trim($cc),
-                                            'parent' => FALSE,
-                                            'assign' => 1
-                                            //$taxonomy->assign
-                                        );
                                     }
                                 }
                             }

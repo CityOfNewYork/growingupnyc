@@ -53,7 +53,7 @@ class WPML_TP_String_Job extends WPML_WPDB_User {
 					$word_count
 				);
 			} catch ( Exception $e ) {
-				$tp_job_id = null;
+				return [ 'errors' => [ $e->getMessage() ] ];
 			}
 
 			if ( $tp_job_id ) {

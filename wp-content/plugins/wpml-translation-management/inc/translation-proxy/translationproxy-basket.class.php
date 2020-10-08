@@ -10,7 +10,6 @@ if ( ! class_exists( 'TranslationProxy_Basket' ) ) {
 	 * translations basket (cart)
 	 */
 	class TranslationProxy_Basket {
-		private static $item_types;
 		private static $messages;
 		private static $dashboard_select;
 
@@ -91,7 +90,7 @@ if ( ! class_exists( 'TranslationProxy_Basket' ) ) {
 			$cache_found = false;
 
 			if ( ! $skip_cache) {
-				$basket_items_number = wp_cache_get( $cache_key, $cache_group, false, $cache_found );
+				$basket_items_number = (int) wp_cache_get( $cache_key, $cache_group, false, $cache_found );
 			} else {
 				$basket_items_number = 0;
 			}
@@ -607,7 +606,7 @@ if ( ! class_exists( 'TranslationProxy_Basket' ) ) {
 		public static function get_options() {
 			return isset( self::$basket['options'] ) ? self::$basket['options'] : array();
 		}
-		
+
 		public static function get_basket_extra_fields() {
 			if (isset($_REQUEST['extra_fields'])) {
 				$extra_fields_string = urldecode($_REQUEST['extra_fields']);
@@ -622,11 +621,11 @@ if ( ! class_exists( 'TranslationProxy_Basket' ) ) {
 					}
 				}
 			}
-			
+
 			if (isset($result) && count($result) > 0) {
 				return $result;
 			}
-				
+
 			return false;
 		}
 
@@ -667,12 +666,13 @@ if ( ! class_exists( 'TranslationProxy_Basket' ) ) {
 		}
 
 		public static function get_basket_items_types() {
-			self::$item_types = array(
-				'post' => 'core',
-				'string' => 'core',
-				'package' => 'custom',
+			return apply_filters( 'wpml_tm_basket_items_types',
+				[
+					'string' => 'core',
+					'post' => 'core',
+					'package' => 'custom',
+				]
 			);
-			return apply_filters('wpml_tm_basket_items_types', self::$item_types);
 		}
 
 		/**
@@ -724,7 +724,7 @@ if ( ! class_exists( 'TranslationProxy_Basket' ) ) {
 			if(!isset(self::$basket[ 'target_languages' ])) {
 				self::$basket[ 'target_languages' ] = array();
 			}
-			
+
 			$basket_items_types = self::get_basket_items_types();
 			foreach ( $basket_items_types as $item_type_name => $item_type ) {
 				if ( isset( self::$basket[ $item_type_name ] ) ) {
@@ -817,7 +817,7 @@ if ( ! class_exists( 'TranslationProxy_Basket' ) ) {
 
 			return self::extra_fields_build_inputs( $extra_fields );
 		}
-		
+
 		public static function get_basket_extra_fields_array($force_refresh = false) {
 			if ($force_refresh) {
 				$networking   = wpml_tm_load_tp_networking();

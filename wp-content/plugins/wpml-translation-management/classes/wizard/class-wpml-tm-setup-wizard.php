@@ -55,6 +55,14 @@ class WPML_TM_Setup_Wizard extends WPML_Wizard {
 					)
 			)
 		);
+		wp_localize_script(
+			'wpml-tm-wizard',
+			'WPML_Translation_Services',
+			[
+				'logoPlaceholder' => WPML_TM_URL . '/res/img/lsp-logo-placeholder.png',
+			]
+		);
+
 
 		$this->scripts_factory->localize_script( 'wpml-tm-wizard' );
 		$this->scripts_factory->register_otgs_notices();

@@ -1,5 +1,7 @@
 <?php
 
+use \WPML\TM\Jobs\FieldId;
+
 require_once WPML_TM_PATH . '/inc/translation-jobs/jobs/wpml-translation-job.class.php';
 
 class WPML_Post_Translation_Job extends WPML_Element_Translation_Job {
@@ -107,13 +109,19 @@ class WPML_Post_Translation_Job extends WPML_Element_Translation_Job {
 		}
 		$terms = $this->get_terms_in_job_rows();
 		foreach ( $terms as $term ) {
-			$new_term_action = new WPML_Update_Term_Action($wpdb, $sitepress, array(
-				'term'      => base64_decode( $term->field_data_translated ),
-				'lang_code' => $lang_code,
-				'trid'      => $term->trid,
-				'taxonomy'  => $term->taxonomy
-			) );
-			$new_term_action->execute();
+			$new_term_action = new WPML_Update_Term_Action( $wpdb, $sitepress, [
+				'term'        => base64_decode( $term->field_data_translated ),
+				'description' => $this->getTermDescription( $term->term_taxonomy_id ),
+				'lang_code'   => $lang_code,
+				'trid'        => $term->trid,
+				'taxonomy'    => $term->taxonomy
+			] );
+			$new_term = $new_term_action->execute();
+
+			$termMeta = $this->getTermMeta( $term->term_taxonomy_id );
+			foreach ( $termMeta as $meta ) {
+				update_term_meta( $new_term['term_taxonomy_id'], FieldId::getTermMetaKey( $meta->field_type ), base64_decode( $meta->field_data_translated ) );
+			}
 		}
 
 		$term_helper = wpml_get_term_translation_util();
@@ -126,7 +134,7 @@ class WPML_Post_Translation_Job extends WPML_Element_Translation_Job {
 		$delete = isset( $delete ) ? $delete : $sitepress->get_setting( 'tm_block_retranslating_terms' );
 		$this->set_translated_term_values( $delete );
 	}
-	
+
 	/**
 	 * @return string
 	 */
@@ -177,6 +185,7 @@ class WPML_Post_Translation_Job extends WPML_Element_Translation_Job {
 
 		$query_for_terms_in_job = $wpdb->prepare("	SELECT
 													  tt.taxonomy,
+													  tt.term_taxonomy_id,
 													  iclt.trid,
 													  j.field_data_translated
 													FROM {$wpdb->term_taxonomy} tt
@@ -251,5 +260,32 @@ class WPML_Post_Translation_Job extends WPML_Element_Translation_Job {
 					array( 'field_type' => 't_' . $term->ttid, 'job_id' => $job_id ) );
 			}
 		}
+	}
+
+	private function getTermMeta( $term_taxonomy_id ) {
+		global $wpdb;
+
+		$query = $wpdb->prepare("SELECT field_data_translated, field_type
+									FROM {$wpdb->prefix}icl_translate
+									WHERE job_id = %d AND field_type LIKE 'tfield-%-%d'",
+			$this->get_id(),
+			$term_taxonomy_id
+		);
+
+		return $wpdb->get_results( $query );
+	}
+
+	private function getTermDescription( $term_taxonomy_id ) {
+		global $wpdb;
+
+		$query = $wpdb->prepare("SELECT field_data_translated
+									FROM {$wpdb->prefix}icl_translate
+									WHERE job_id = %d AND field_type = 'tdesc_%d'",
+			$this->get_id(),
+			$term_taxonomy_id
+		);
+
+		$description = $wpdb->get_var( $query );
+		return $description ? base64_decode( $description ) : '';
 	}
 }

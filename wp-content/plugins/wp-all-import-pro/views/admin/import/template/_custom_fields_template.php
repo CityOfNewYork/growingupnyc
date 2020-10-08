@@ -6,6 +6,16 @@ switch ($post_type){
 		$custom_type->labels->name = __('Taxonomy Terms', 'wp_all_import_plugin');
 		$custom_type->labels->singular_name = __('Taxonomy Term', 'wp_all_import_plugin');
 		break;
+    case 'comments':
+        $custom_type = new stdClass();
+        $custom_type->labels = new stdClass();
+        $custom_type->labels->name = __('Comments', 'wp_all_import_plugin');
+        $custom_type->labels->singular_name = __('Comment', 'wp_all_import_plugin');
+    case 'reviews':
+        $custom_type = new stdClass();
+        $custom_type->labels = new stdClass();
+        $custom_type->labels->name = __('WooCommerce Reviews', 'wp_all_import_plugin');
+        $custom_type->labels->singular_name = __('Review', 'wp_all_import_plugin');
     case 'import_users':
         $custom_type = new stdClass();
         $custom_type->labels = new stdClass();

@@ -83,7 +83,7 @@ class WPML_TM_MCS_ATE_Strings {
 
 			$user_email = $user->user_email;
 
-			return $this->authentication->get_signed_url(
+			return $this->authentication->get_signed_url_with_parameters(
 				'GET',
 				$url,
 				array(

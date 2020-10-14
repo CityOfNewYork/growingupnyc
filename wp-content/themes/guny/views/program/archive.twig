@@ -142,13 +142,13 @@
   </section>
 
   {# pagination #}
-  <div class="o-content-container--compact pagination" v-if="!isLoading" v-cloak>
-    <div id="paginate" class="previous" v-if="programPage <= maxPages" >
-      <router-link class="button--outline button--outline--gray alignleft" v-if="programPage > 1" :to="{ query: { page: programPage-1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Previous', 'guny') }}</router-link>
+  <div class="o-content-container--compact pagination flex flex-col tablet:flex-row justify-center " v-if="!isLoading" v-cloak>
+    <div id="paginate" class="previous tablet:mr-4 flex justify-center mb-2 tablet:mb-0" v-if="programPage <= maxPages" >
+      <router-link class="button--outline button--outline--gray" v-if="programPage > 1" :to="{ query: { page: programPage-1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Previous', 'guny') }}</router-link>
     </div>
 
-    <div class="paginate" v-if="programPage < maxPages">
-      <router-link class="button--outline button--outline--gray alignright paginate" :to="{ query: { page: (programPage*1)+1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Next', 'guny') }}</router-link>
+    <div class="paginate flex justify-center" v-if="programPage < maxPages">
+      <router-link class="button--outline button--outline--gray paginate" :to="{ query: { page: (programPage*1)+1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Next', 'guny') }}</router-link>
     </div>
   </div>
 {% endblock %}

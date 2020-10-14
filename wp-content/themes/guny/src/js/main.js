@@ -25,7 +25,7 @@ import toggleOpen from './modules/toggleOpen.js';
  */
 import LanguageSwitcher from 'components/language-switcher/LanguageSwitcher.common';
 import Scroll from 'components/side-navigation/Scroll.common';
-// import BackToTop from 'components/back-to-top/BackToTop.common';
+import BackToTop from 'components/back-to-top/BackToTop.common';
 
 /**
  * Objects
@@ -108,7 +108,7 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
     new ContentShow();
     new FormEffects();
     new LanguageSwitcher();
-    // new BackToTop();
+    new BackToTop();
     new Newsletter();
     new Overlay();
 

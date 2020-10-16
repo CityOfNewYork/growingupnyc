@@ -82,19 +82,19 @@ gulp.task('styles:sass', gulp.series('styles:lint', function () {
       tailwind(),
       autoprefixer(),
       cssnano(),
-      purgecss({
-        content: [
-          './src/scss/utilities/**/*.scss', 
-          './src/scss/style-gunyc-og.scss', 
-          './src/scss/style-microsite.scss', 
-          './views/**/*.twig', 
-          patterns + '**/*.scss',
-          patternsDist + 'scripts/**/*',
-          patternsDist + '**/*.html',
-        ],
-        whitelistPatterns: [/^hover/],
-        defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
-      })
+      // purgecss({
+      //   content: [
+      //     './src/scss/utilities/**/*.scss',
+      //     './src/scss/style-gunyc-og.scss',
+      //     './src/scss/style-microsite.scss',
+      //     './views/**/*.twig',
+      //     patterns + '**/*.scss',
+      //     patternsDist + 'scripts/**/*',
+      //     patternsDist + '**/*.html',
+      //   ],
+      //   whitelistPatterns: [/^hover/],
+      //   defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
+      // })
     ]))
     .pipe(hashFilename())
     .pipe(sourcemaps.write())

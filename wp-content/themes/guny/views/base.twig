@@ -51,9 +51,9 @@
         {% endblock %}
 
         {# Back to top button #}
-        <div class="btt-padding" data-js="btt-container">
+        {% if current_url|replace({(language_code):''}) != '/'%}
           {% include 'components/back-to-top.twig' %}
-        </div>
+        {% endif %}
 
       </main> <!-- /#main -->
 

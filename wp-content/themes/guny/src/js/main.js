@@ -110,12 +110,8 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
     new FormEffects();
     new LanguageSwitcher();
 
-    if (window.location.pathname != "/") {
-      new BackToTop();
-    } else {
-      document.querySelector('[data-js="btt-container"]').remove();
-    }
-
+    new BackToTop();
+    
     new Newsletter();
     new Overlay();
 

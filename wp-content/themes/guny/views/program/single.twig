@@ -3,11 +3,6 @@
 {% block head_extras %}
 <style>
   .c-hero { background-color: #469BFF; background-image: url(https://cdn.jsdelivr.net/gh/CityOfNewYork/growingupnyc-patterns-development@master/dist/images/hero-programs.svg); }
-  .alert {
-    background: rgba(255, 220, 84, 0.75);
-    padding: 1.75rem 0rem;
-    margin-top: 25px;
-  }
 </style>
 {% endblock %}
 
@@ -78,7 +73,7 @@
   </div> <!-- /.o-article-sidebar -->
   <div class="o-article js-sticky-article desktop:w-article">
     {% if post.banner_alert_show == 'Yes' %}
-      <div class="alert">
+      <div class="alert mt-10">
         <div class="o-container">
           {{program_page_alert}}
         </div>

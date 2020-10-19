@@ -108,7 +108,9 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
     new ContentShow();
     new FormEffects();
     new LanguageSwitcher();
+
     new BackToTop();
+    
     new Newsletter();
     new Overlay();
 

@@ -51,11 +51,9 @@
         {% endblock %}
 
         {# Back to top button #}
-        <div>
-          <button class="back-to-top bg-color-blue-light hover:bg-color-blue" id="myBtn" data-js="back-to-top" title="Go to top">
-            {{ __('Back to Top','guny')}}
-          </buton>
-        </div>
+        {% if current_url|replace({(language_code):''}) != '/'%}
+          {% include 'components/back-to-top.twig' %}
+        {% endif %}
 
       </main> <!-- /#main -->
 

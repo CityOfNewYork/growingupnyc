@@ -16,11 +16,6 @@ add_filter( 'tiny_mce_before_init', function($init){
 add_filter( 'mce_buttons', function($buttons) {
   $remove = array(
     'blockquote',
-    'alignleft',
-    'alignright',
-    'aligncenter',
-    'strikethrough',
-    'hr',
     'wp_more'
   );
   return array_diff( $buttons, $remove );
@@ -31,15 +26,9 @@ add_filter( 'mce_buttons', function($buttons) {
 */
 add_filter( 'mce_buttons_2', function($buttons) {
   $remove = array(
-    'underline',
     'alignjustify',
     'forecolor',
-    'pastetext',
     'charmap',
-    'outdent',
-    'indent',
-    'undo',
-    'redo',
     'wp_help'
   );
   return array_diff( $buttons, $remove );
@@ -52,7 +41,8 @@ add_filter( 'mce_buttons_3', function($buttons) {
   $buttons = array(
     'cut',
     'copy',
-    'paste'
+    'paste',
+    'table'
   );
   return $buttons;
 });

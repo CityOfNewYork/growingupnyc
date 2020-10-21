@@ -21,7 +21,7 @@ abstract class EnvironmentOptions {
      *                             environment
      * @return CreateEnvironmentOptions Options builder
      */
-    public static function create($domainSuffix = Values::NONE) {
+    public static function create(string $domainSuffix = Values::NONE): CreateEnvironmentOptions {
         return new CreateEnvironmentOptions($domainSuffix);
     }
 }
@@ -31,18 +31,18 @@ class CreateEnvironmentOptions extends Options {
      * @param string $domainSuffix A URL-friendly name that represents the
      *                             environment
      */
-    public function __construct($domainSuffix = Values::NONE) {
+    public function __construct(string $domainSuffix = Values::NONE) {
         $this->options['domainSuffix'] = $domainSuffix;
     }
 
     /**
-     * A URL-friendly name that represents the environment and forms part of the domain name. Must have fewer than 32 characters.
+     * A URL-friendly name that represents the environment and forms part of the domain name. It can be a maximum of 16 characters.
      *
      * @param string $domainSuffix A URL-friendly name that represents the
      *                             environment
      * @return $this Fluent Builder
      */
-    public function setDomainSuffix($domainSuffix) {
+    public function setDomainSuffix(string $domainSuffix): self {
         $this->options['domainSuffix'] = $domainSuffix;
         return $this;
     }
@@ -52,13 +52,8 @@ class CreateEnvironmentOptions extends Options {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
-        $options = array();
-        foreach ($this->options as $key => $value) {
-            if ($value != Values::NONE) {
-                $options[] = "$key=$value";
-            }
-        }
-        return '[Twilio.Serverless.V1.CreateEnvironmentOptions ' . \implode(' ', $options) . ']';
+    public function __toString(): string {
+        $options = \http_build_query(Values::of($this->options), '', ' ');
+        return '[Twilio.Serverless.V1.CreateEnvironmentOptions ' . $options . ']';
     }
 }

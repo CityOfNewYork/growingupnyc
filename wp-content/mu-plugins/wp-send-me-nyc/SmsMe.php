@@ -6,7 +6,7 @@ use Twilio\Rest\Client;
 use Twilio\Exceptions\RestException as TwilioErr;
 
 class SmsMe extends ContactMe {
-  protected $action = 'SMS_GEN';
+  protected $action = 'SMS';
 
   protected $service = 'Twilio';
 
@@ -31,12 +31,11 @@ class SmsMe extends ContactMe {
    */
   public function registerPostType() {
     register_post_type(self::POST_TYPE, array(
-      'label' => __('SMNYC SMS - Generation NYC', 'text_domain'),
+      'label' => __('SMNYC SMS', 'text_domain'),
       'description' => __('SMS content for Send Me NYC', 'text_domain'),
       'labels' => array(
-        'name' => _x('SMNYC SMS - Gen NYC', 'Post Type General Name', 'text_domain'),
-        'singular_name' => _x('SMNYC SMS - Gen NYC', 'Post Type Singular Name', 'text_domain'),
-        'all_items' => 'All SMS Templates',
+        'name' => _x('SMNYC SMS', 'Post Type General Name', 'text_domain'),
+        'singular_name' => _x('SMNYC SMS', 'Post Type Singular Name', 'text_domain'),
       ),
       'hierarchical' => false,
       'public' => true,
@@ -57,7 +56,7 @@ class SmsMe extends ContactMe {
    *
    * @return  String                  The text message being shared.
    */
-  protected function content($url_shortened, $url, $share_text, $template, $lang) {
+  protected function content($url_shortened, $url, $template, $lang) {
     // Get post and filter ID through WPML
     $post = get_page_by_path($template, OBJECT, self::POST_TYPE);
 
@@ -70,7 +69,6 @@ class SmsMe extends ContactMe {
 
     // Get content and replace template tag with bitly url
     $text = trim(strip_tags(get_post($id)->post_content));
-    $text = str_replace('{{ SHARE_TEXT }}', $share_text, $text);
     $text = str_replace('{{ BITLY_URL }}', $url_shortened, $text);
     $text = str_replace('{{ URL }}', $url, $text);
 

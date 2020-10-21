@@ -20,7 +20,7 @@ abstract class FlowValidateOptions {
      * @param string $commitMessage The commit_message
      * @return UpdateFlowValidateOptions Options builder
      */
-    public static function update($commitMessage = Values::NONE) {
+    public static function update(string $commitMessage = Values::NONE): UpdateFlowValidateOptions {
         return new UpdateFlowValidateOptions($commitMessage);
     }
 }
@@ -29,7 +29,7 @@ class UpdateFlowValidateOptions extends Options {
     /**
      * @param string $commitMessage The commit_message
      */
-    public function __construct($commitMessage = Values::NONE) {
+    public function __construct(string $commitMessage = Values::NONE) {
         $this->options['commitMessage'] = $commitMessage;
     }
 
@@ -39,7 +39,7 @@ class UpdateFlowValidateOptions extends Options {
      * @param string $commitMessage The commit_message
      * @return $this Fluent Builder
      */
-    public function setCommitMessage($commitMessage) {
+    public function setCommitMessage(string $commitMessage): self {
         $this->options['commitMessage'] = $commitMessage;
         return $this;
     }
@@ -49,13 +49,8 @@ class UpdateFlowValidateOptions extends Options {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
-        $options = array();
-        foreach ($this->options as $key => $value) {
-            if ($value != Values::NONE) {
-                $options[] = "$key=$value";
-            }
-        }
-        return '[Twilio.Studio.V2.UpdateFlowValidateOptions ' . \implode(' ', $options) . ']';
+    public function __toString(): string {
+        $options = \http_build_query(Values::of($this->options), '', ' ');
+        return '[Twilio.Studio.V2.UpdateFlowValidateOptions ' . $options . ']';
     }
 }

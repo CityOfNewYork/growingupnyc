@@ -22,10 +22,13 @@ abstract class ParticipantOptions {
      * @param string $proxyIdentifier The proxy phone number to use for the
      *                                Participant
      * @param string $proxyIdentifierSid The Proxy Identifier Sid
+     * @param bool $failOnParticipantConflict An experimental parameter to override
+     *                                        the ProxyAllowParticipantConflict
+     *                                        account flag on a per-request basis.
      * @return CreateParticipantOptions Options builder
      */
-    public static function create($friendlyName = Values::NONE, $proxyIdentifier = Values::NONE, $proxyIdentifierSid = Values::NONE) {
-        return new CreateParticipantOptions($friendlyName, $proxyIdentifier, $proxyIdentifierSid);
+    public static function create(string $friendlyName = Values::NONE, string $proxyIdentifier = Values::NONE, string $proxyIdentifierSid = Values::NONE, bool $failOnParticipantConflict = Values::NONE): CreateParticipantOptions {
+        return new CreateParticipantOptions($friendlyName, $proxyIdentifier, $proxyIdentifierSid, $failOnParticipantConflict);
     }
 }
 
@@ -36,11 +39,15 @@ class CreateParticipantOptions extends Options {
      * @param string $proxyIdentifier The proxy phone number to use for the
      *                                Participant
      * @param string $proxyIdentifierSid The Proxy Identifier Sid
+     * @param bool $failOnParticipantConflict An experimental parameter to override
+     *                                        the ProxyAllowParticipantConflict
+     *                                        account flag on a per-request basis.
      */
-    public function __construct($friendlyName = Values::NONE, $proxyIdentifier = Values::NONE, $proxyIdentifierSid = Values::NONE) {
+    public function __construct(string $friendlyName = Values::NONE, string $proxyIdentifier = Values::NONE, string $proxyIdentifierSid = Values::NONE, bool $failOnParticipantConflict = Values::NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['proxyIdentifier'] = $proxyIdentifier;
         $this->options['proxyIdentifierSid'] = $proxyIdentifierSid;
+        $this->options['failOnParticipantConflict'] = $failOnParticipantConflict;
     }
 
     /**
@@ -50,7 +57,7 @@ class CreateParticipantOptions extends Options {
      *                             participant
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName) {
+    public function setFriendlyName(string $friendlyName): self {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -62,7 +69,7 @@ class CreateParticipantOptions extends Options {
      *                                Participant
      * @return $this Fluent Builder
      */
-    public function setProxyIdentifier($proxyIdentifier) {
+    public function setProxyIdentifier(string $proxyIdentifier): self {
         $this->options['proxyIdentifier'] = $proxyIdentifier;
         return $this;
     }
@@ -73,8 +80,21 @@ class CreateParticipantOptions extends Options {
      * @param string $proxyIdentifierSid The Proxy Identifier Sid
      * @return $this Fluent Builder
      */
-    public function setProxyIdentifierSid($proxyIdentifierSid) {
+    public function setProxyIdentifierSid(string $proxyIdentifierSid): self {
         $this->options['proxyIdentifierSid'] = $proxyIdentifierSid;
+        return $this;
+    }
+
+    /**
+     * [Experimental] For accounts with the ProxyAllowParticipantConflict account flag, setting to true enables per-request opt-in to allowing Proxy to reject a Participant create request that could cause the same Identifier/ProxyIdentifier pair to be active in multiple Sessions. Depending on the context, this could be a 409 error (Twilio error code 80623) or a 400 error (Twilio error code 80604). If not provided, requests will be allowed to succeed and a Debugger notification (80802) will be emitted. Having multiple, active Participants with the same Identifier/ProxyIdentifier pair causes calls and messages from affected Participants to be routed incorrectly. Please note, the default behavior for accounts without the ProxyAllowParticipantConflict flag is to reject the request as described.  This will eventually be the default for all accounts.
+     *
+     * @param bool $failOnParticipantConflict An experimental parameter to override
+     *                                        the ProxyAllowParticipantConflict
+     *                                        account flag on a per-request basis.
+     * @return $this Fluent Builder
+     */
+    public function setFailOnParticipantConflict(bool $failOnParticipantConflict): self {
+        $this->options['failOnParticipantConflict'] = $failOnParticipantConflict;
         return $this;
     }
 
@@ -83,13 +103,8 @@ class CreateParticipantOptions extends Options {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
-        $options = array();
-        foreach ($this->options as $key => $value) {
-            if ($value != Values::NONE) {
-                $options[] = "$key=$value";
-            }
-        }
-        return '[Twilio.Proxy.V1.CreateParticipantOptions ' . \implode(' ', $options) . ']';
+    public function __toString(): string {
+        $options = \http_build_query(Values::of($this->options), '', ' ');
+        return '[Twilio.Proxy.V1.CreateParticipantOptions ' . $options . ']';
     }
 }

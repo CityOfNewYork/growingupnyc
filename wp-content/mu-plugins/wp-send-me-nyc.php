@@ -8,6 +8,8 @@
 */
 
 require plugin_dir_path(__FILE__) . '/wp-send-me-nyc/SendMeNYC.php';
+require plugin_dir_path(__FILE__) . '/guny-smnyc/SmsMeGen.php';
+require plugin_dir_path(__FILE__) . '/guny-smnyc/SmsMeGunyc.php';
 
 /**
  * Initialize plugin

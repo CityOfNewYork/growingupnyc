@@ -113,6 +113,7 @@ if ( !class_exists( 'MeowCommon_Licenser' ) ) {
 			update_option( $prefix . '_license', array(
 				'key' => $subscr_id,
 				'issue' => $status,
+				'logs' => $logs,
 				'expires' => $expires,
 				'license' => $license ) );
 			return $this->is_registered( true );

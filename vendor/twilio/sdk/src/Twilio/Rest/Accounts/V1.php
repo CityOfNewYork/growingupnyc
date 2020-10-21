@@ -11,34 +11,51 @@ namespace Twilio\Rest\Accounts;
 
 use Twilio\Domain;
 use Twilio\Exceptions\TwilioException;
+use Twilio\InstanceContext;
+use Twilio\Rest\Accounts\V1\AuthTokenPromotionList;
 use Twilio\Rest\Accounts\V1\CredentialList;
+use Twilio\Rest\Accounts\V1\SecondaryAuthTokenList;
 use Twilio\Version;
 
 /**
- * @property \Twilio\Rest\Accounts\V1\CredentialList $credentials
+ * @property AuthTokenPromotionList $authTokenPromotion
+ * @property CredentialList $credentials
+ * @property SecondaryAuthTokenList $secondaryAuthToken
  */
 class V1 extends Version {
-    protected $_credentials = null;
+    protected $_authTokenPromotion;
+    protected $_credentials;
+    protected $_secondaryAuthToken;
 
     /**
      * Construct the V1 version of Accounts
      *
-     * @param \Twilio\Domain $domain Domain that contains the version
-     * @return \Twilio\Rest\Accounts\V1 V1 version of Accounts
+     * @param Domain $domain Domain that contains the version
      */
     public function __construct(Domain $domain) {
         parent::__construct($domain);
         $this->version = 'v1';
     }
 
-    /**
-     * @return \Twilio\Rest\Accounts\V1\CredentialList
-     */
-    protected function getCredentials() {
+    protected function getAuthTokenPromotion(): AuthTokenPromotionList {
+        if (!$this->_authTokenPromotion) {
+            $this->_authTokenPromotion = new AuthTokenPromotionList($this);
+        }
+        return $this->_authTokenPromotion;
+    }
+
+    protected function getCredentials(): CredentialList {
         if (!$this->_credentials) {
             $this->_credentials = new CredentialList($this);
         }
         return $this->_credentials;
+    }
+
+    protected function getSecondaryAuthToken(): SecondaryAuthTokenList {
+        if (!$this->_secondaryAuthToken) {
+            $this->_secondaryAuthToken = new SecondaryAuthTokenList($this);
+        }
+        return $this->_secondaryAuthToken;
     }
 
     /**
@@ -48,7 +65,7 @@ class V1 extends Version {
      * @return \Twilio\ListResource The requested resource
      * @throws TwilioException For unknown resource
      */
-    public function __get($name) {
+    public function __get(string $name) {
         $method = 'get' . \ucfirst($name);
         if (\method_exists($this, $method)) {
             return $this->$method();
@@ -62,10 +79,10 @@ class V1 extends Version {
      *
      * @param string $name Resource to return
      * @param array $arguments Context parameters
-     * @return \Twilio\InstanceContext The requested resource context
+     * @return InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments) {
+    public function __call(string $name, array $arguments): InstanceContext {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -79,7 +96,7 @@ class V1 extends Version {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString(): string {
         return '[Twilio.Accounts.V1]';
     }
 }

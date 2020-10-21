@@ -27,33 +27,33 @@ class PaymentList extends ListResource {
      * @param string $accountSid The SID of the Account that created the Payments
      *                           resource.
      * @param string $callSid The SID of the Call the resource is associated with.
-     * @return \Twilio\Rest\Api\V2010\Account\Call\PaymentList
      */
-    public function __construct(Version $version, $accountSid, $callSid) {
+    public function __construct(Version $version, string $accountSid, string $callSid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'callSid' => $callSid, );
+        $this->solution = ['accountSid' => $accountSid, 'callSid' => $callSid, ];
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Calls/' . \rawurlencode($callSid) . '/Payments.json';
     }
 
     /**
-     * Create a new PaymentInstance
+     * Create the PaymentInstance
      *
-     * @param string $idempotencyKey A unique token for each payment session that
-     *                               should be provided to maintain idempotency of
-     *                               the session.
-     * @param string $statusCallback The URL we should call to send status of
-     *                               payment session.
+     * @param string $idempotencyKey A unique token that will be used to ensure
+     *                               that multiple API calls with the same
+     *                               information do not result in multiple
+     *                               transactions.
+     * @param string $statusCallback Provide an absolute or relative URL to receive
+     *                               status updates regarding your Pay session..
      * @param array|Options $options Optional Arguments
-     * @return PaymentInstance Newly created PaymentInstance
+     * @return PaymentInstance Created PaymentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function create($idempotencyKey, $statusCallback, $options = array()) {
+    public function create(string $idempotencyKey, string $statusCallback, array $options = []): PaymentInstance {
         $options = new Values($options);
 
-        $data = Values::of(array(
+        $data = Values::of([
             'IdempotencyKey' => $idempotencyKey,
             'StatusCallback' => $statusCallback,
             'BankAccountType' => $options['bankAccountType'],
@@ -70,14 +70,9 @@ class PaymentList extends ListResource {
             'Timeout' => $options['timeout'],
             'TokenType' => $options['tokenType'],
             'ValidCardTypes' => $options['validCardTypes'],
-        ));
+        ]);
 
-        $payload = $this->version->create(
-            'POST',
-            $this->uri,
-            array(),
-            $data
-        );
+        $payload = $this->version->create('POST', $this->uri, [], $data);
 
         return new PaymentInstance(
             $this->version,
@@ -91,9 +86,8 @@ class PaymentList extends ListResource {
      * Constructs a PaymentContext
      *
      * @param string $sid The SID of Payments session
-     * @return \Twilio\Rest\Api\V2010\Account\Call\PaymentContext
      */
-    public function getContext($sid) {
+    public function getContext(string $sid): PaymentContext {
         return new PaymentContext(
             $this->version,
             $this->solution['accountSid'],
@@ -107,7 +101,7 @@ class PaymentList extends ListResource {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
+    public function __toString(): string {
         return '[Twilio.Api.V2010.PaymentList]';
     }
 }

@@ -18,10 +18,10 @@ use Twilio\Values;
 abstract class VariableOptions {
     /**
      * @param string $key A string by which the Variable resource can be referenced
-     * @param string $value A string that contains the actual value of the variable
+     * @param string $value A string that contains the actual value of the Variable
      * @return UpdateVariableOptions Options builder
      */
-    public static function update($key = Values::NONE, $value = Values::NONE) {
+    public static function update(string $key = Values::NONE, string $value = Values::NONE): UpdateVariableOptions {
         return new UpdateVariableOptions($key, $value);
     }
 }
@@ -29,31 +29,31 @@ abstract class VariableOptions {
 class UpdateVariableOptions extends Options {
     /**
      * @param string $key A string by which the Variable resource can be referenced
-     * @param string $value A string that contains the actual value of the variable
+     * @param string $value A string that contains the actual value of the Variable
      */
-    public function __construct($key = Values::NONE, $value = Values::NONE) {
+    public function __construct(string $key = Values::NONE, string $value = Values::NONE) {
         $this->options['key'] = $key;
         $this->options['value'] = $value;
     }
 
     /**
-     * A string by which the Variable resource can be referenced. Must be less than 128 characters long.
+     * A string by which the Variable resource can be referenced. It can be a maximum of 128 characters.
      *
      * @param string $key A string by which the Variable resource can be referenced
      * @return $this Fluent Builder
      */
-    public function setKey($key) {
+    public function setKey(string $key): self {
         $this->options['key'] = $key;
         return $this;
     }
 
     /**
-     * A string that contains the actual value of the variable. Must have less than 450 bytes.
+     * A string that contains the actual value of the Variable. It can be a maximum of 450 bytes in size.
      *
-     * @param string $value A string that contains the actual value of the variable
+     * @param string $value A string that contains the actual value of the Variable
      * @return $this Fluent Builder
      */
-    public function setValue($value) {
+    public function setValue(string $value): self {
         $this->options['value'] = $value;
         return $this;
     }
@@ -63,13 +63,8 @@ class UpdateVariableOptions extends Options {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
-        $options = array();
-        foreach ($this->options as $key => $value) {
-            if ($value != Values::NONE) {
-                $options[] = "$key=$value";
-            }
-        }
-        return '[Twilio.Serverless.V1.UpdateVariableOptions ' . \implode(' ', $options) . ']';
+    public function __toString(): string {
+        $options = \http_build_query(Values::of($this->options), '', ' ');
+        return '[Twilio.Serverless.V1.UpdateVariableOptions ' . $options . ']';
     }
 }

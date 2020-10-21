@@ -30,42 +30,40 @@ class PaymentInstance extends InstanceResource {
     /**
      * Initialize the PaymentInstance
      *
-     * @param \Twilio\Version $version Version that contains the resource
+     * @param Version $version Version that contains the resource
      * @param mixed[] $payload The response payload
      * @param string $accountSid The SID of the Account that created the Payments
      *                           resource.
      * @param string $callSid The SID of the Call the resource is associated with.
      * @param string $sid The SID of Payments session
-     * @return \Twilio\Rest\Api\V2010\Account\Call\PaymentInstance
      */
-    public function __construct(Version $version, array $payload, $accountSid, $callSid, $sid = null) {
+    public function __construct(Version $version, array $payload, string $accountSid, string $callSid, string $sid = null) {
         parent::__construct($version);
 
         // Marshaled Properties
-        $this->properties = array(
+        $this->properties = [
             'accountSid' => Values::array_get($payload, 'account_sid'),
             'callSid' => Values::array_get($payload, 'call_sid'),
             'sid' => Values::array_get($payload, 'sid'),
             'dateCreated' => Deserialize::dateTime(Values::array_get($payload, 'date_created')),
             'dateUpdated' => Deserialize::dateTime(Values::array_get($payload, 'date_updated')),
             'uri' => Values::array_get($payload, 'uri'),
-        );
+        ];
 
-        $this->solution = array(
+        $this->solution = [
             'accountSid' => $accountSid,
             'callSid' => $callSid,
             'sid' => $sid ?: $this->properties['sid'],
-        );
+        ];
     }
 
     /**
      * Generate an instance context for the instance, the context is capable of
      * performing various actions.  All instance actions are proxied to the context
      *
-     * @return \Twilio\Rest\Api\V2010\Account\Call\PaymentContext Context for this
-     *                                                            PaymentInstance
+     * @return PaymentContext Context for this PaymentInstance
      */
-    protected function proxy() {
+    protected function proxy(): PaymentContext {
         if (!$this->context) {
             $this->context = new PaymentContext(
                 $this->version,
@@ -81,16 +79,17 @@ class PaymentInstance extends InstanceResource {
     /**
      * Update the PaymentInstance
      *
-     * @param string $idempotencyKey A unique token for each payment session that
-     *                               should be provided to maintain idempotency of
-     *                               the session.
-     * @param string $statusCallback The URL we should call to send status of
-     *                               payment session.
+     * @param string $idempotencyKey A unique token that will be used to ensure
+     *                               that multiple API calls with the same
+     *                               information do not result in multiple
+     *                               transactions.
+     * @param string $statusCallback Provide an absolute or relative URL to receive
+     *                               status updates regarding your Pay session.
      * @param array|Options $options Optional Arguments
      * @return PaymentInstance Updated PaymentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($idempotencyKey, $statusCallback, $options = array()) {
+    public function update(string $idempotencyKey, string $statusCallback, array $options = []): PaymentInstance {
         return $this->proxy()->update($idempotencyKey, $statusCallback, $options);
     }
 
@@ -101,7 +100,7 @@ class PaymentInstance extends InstanceResource {
      * @return mixed The requested property
      * @throws TwilioException For unknown properties
      */
-    public function __get($name) {
+    public function __get(string $name) {
         if (\array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         }
@@ -119,8 +118,8 @@ class PaymentInstance extends InstanceResource {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
-        $context = array();
+    public function __toString(): string {
+        $context = [];
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";
         }

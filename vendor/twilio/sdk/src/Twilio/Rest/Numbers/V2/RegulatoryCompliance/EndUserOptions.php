@@ -18,7 +18,7 @@ abstract class EndUserOptions {
      *                          resource
      * @return CreateEndUserOptions Options builder
      */
-    public static function create($attributes = Values::NONE) {
+    public static function create(array $attributes = Values::ARRAY_NONE): CreateEndUserOptions {
         return new CreateEndUserOptions($attributes);
     }
 
@@ -29,7 +29,7 @@ abstract class EndUserOptions {
      *                          resource
      * @return UpdateEndUserOptions Options builder
      */
-    public static function update($friendlyName = Values::NONE, $attributes = Values::NONE) {
+    public static function update(string $friendlyName = Values::NONE, array $attributes = Values::ARRAY_NONE): UpdateEndUserOptions {
         return new UpdateEndUserOptions($friendlyName, $attributes);
     }
 }
@@ -39,7 +39,7 @@ class CreateEndUserOptions extends Options {
      * @param array $attributes The set of parameters that compose the End User
      *                          resource
      */
-    public function __construct($attributes = Values::NONE) {
+    public function __construct(array $attributes = Values::ARRAY_NONE) {
         $this->options['attributes'] = $attributes;
     }
 
@@ -50,7 +50,7 @@ class CreateEndUserOptions extends Options {
      *                          resource
      * @return $this Fluent Builder
      */
-    public function setAttributes($attributes) {
+    public function setAttributes(array $attributes): self {
         $this->options['attributes'] = $attributes;
         return $this;
     }
@@ -60,14 +60,9 @@ class CreateEndUserOptions extends Options {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
-        $options = array();
-        foreach ($this->options as $key => $value) {
-            if ($value != Values::NONE) {
-                $options[] = "$key=$value";
-            }
-        }
-        return '[Twilio.Numbers.V2.CreateEndUserOptions ' . \implode(' ', $options) . ']';
+    public function __toString(): string {
+        $options = \http_build_query(Values::of($this->options), '', ' ');
+        return '[Twilio.Numbers.V2.CreateEndUserOptions ' . $options . ']';
     }
 }
 
@@ -78,7 +73,7 @@ class UpdateEndUserOptions extends Options {
      * @param array $attributes The set of parameters that compose the End User
      *                          resource
      */
-    public function __construct($friendlyName = Values::NONE, $attributes = Values::NONE) {
+    public function __construct(string $friendlyName = Values::NONE, array $attributes = Values::ARRAY_NONE) {
         $this->options['friendlyName'] = $friendlyName;
         $this->options['attributes'] = $attributes;
     }
@@ -90,7 +85,7 @@ class UpdateEndUserOptions extends Options {
      *                             resource
      * @return $this Fluent Builder
      */
-    public function setFriendlyName($friendlyName) {
+    public function setFriendlyName(string $friendlyName): self {
         $this->options['friendlyName'] = $friendlyName;
         return $this;
     }
@@ -102,7 +97,7 @@ class UpdateEndUserOptions extends Options {
      *                          resource
      * @return $this Fluent Builder
      */
-    public function setAttributes($attributes) {
+    public function setAttributes(array $attributes): self {
         $this->options['attributes'] = $attributes;
         return $this;
     }
@@ -112,13 +107,8 @@ class UpdateEndUserOptions extends Options {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
-        $options = array();
-        foreach ($this->options as $key => $value) {
-            if ($value != Values::NONE) {
-                $options[] = "$key=$value";
-            }
-        }
-        return '[Twilio.Numbers.V2.UpdateEndUserOptions ' . \implode(' ', $options) . ']';
+    public function __toString(): string {
+        $options = \http_build_query(Values::of($this->options), '', ' ');
+        return '[Twilio.Numbers.V2.UpdateEndUserOptions ' . $options . ']';
     }
 }

@@ -50,11 +50,6 @@
           </section>
         {% endblock %}
 
-        {# Back to top button #}
-        {% if current_url|replace({(language_code):''}) != '/' and current_url|replace({(language_code):''}) != '//'%}
-          {% include 'components/back-to-top.twig' %}
-        {% endif %}
-
       </main> <!-- /#main -->
 
       {# Footer #}

@@ -138,5 +138,9 @@
       <router-link class="button--outline button--outline--gray paginate" :to="{ query: { page: (programPage*1)+1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Next', 'guny') }}</router-link>
     </div>
   </div>
+
+  {# Back to top #}
+  {% include 'components/back-to-top.twig' %}
+
 {% endblock %}
 

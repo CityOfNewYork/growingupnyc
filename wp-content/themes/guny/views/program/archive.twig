@@ -4,20 +4,6 @@
 <style>
   .c-hero { background-color: #2793E0; background-image: url(https://cdn.jsdelivr.net/gh/CityOfNewYork/growingupnyc-patterns-development@master/dist/images/hero-program-landing.svg); }
   .facetwp-seo { display: none; }
-  .alert {
-      background: rgba(255, 220, 84, 0.75);
-      padding: 1.75rem 1rem 1.75rem;
-    }
-    @media(min-width:700px) {
-      .alert {
-        padding: 1.75rem 2.5rem 1.75rem;
-      }
-    }
-    @media(min-width:1200px) {
-      .alert {
-        padding: 1.75rem 5rem 1.75rem;
-      }
-    }
   [v-cloak] { display: none; }
 </style>
 
@@ -142,14 +128,19 @@
   </section>
 
   {# pagination #}
-  <div class="o-content-container--compact pagination" v-if="!isLoading" v-cloak>
-    <div id="paginate" class="previous" v-if="programPage <= maxPages" >
-      <router-link class="button--outline button--outline--gray alignleft" v-if="programPage > 1" :to="{ query: { page: programPage-1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Previous', 'guny') }}</router-link>
+  <div class="o-content-container--compact pagination mobile:flex justify-between" v-if="!isLoading" v-cloak>
+    <div id="paginate" class="previous tablet:mr-3 mb-3 tablet:mb-0 text-center
+    " v-if="programPage <= maxPages" >
+      <router-link class="button--outline button--outline--gray" v-if="programPage > 1" :to="{ query: { page: programPage-1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Previous', 'guny') }}</router-link>
     </div>
 
-    <div class="paginate" v-if="programPage < maxPages">
-      <router-link class="button--outline button--outline--gray alignright paginate" :to="{ query: { page: (programPage*1)+1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Next', 'guny') }}</router-link>
+    <div class="paginate text-center" v-if="programPage < maxPages">
+      <router-link class="button--outline button--outline--gray paginate" :to="{ query: { page: (programPage*1)+1 }}" @click.native="scrollToTop(); parseQuery();">{{ __('Next', 'guny') }}</router-link>
     </div>
   </div>
+
+  {# Back to top #}
+  {% include 'components/back-to-top.twig' %}
+
 {% endblock %}
 

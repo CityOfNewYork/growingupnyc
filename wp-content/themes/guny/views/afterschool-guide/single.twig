@@ -20,16 +20,6 @@
   {% set colors_tertiary = 'color-blue-dark' %}
 {% endif %}
 
-{% block head_extras %}
-	<style>
-		.alert {
-			background: rgba(255, 220, 84, 0.75);
-			padding: 1.75rem 0;
-			margin-top: 25px;
-		}
-	</style>
-{% endblock %}
-
 {% block content %}
 
   <div class="js-parallax">
@@ -157,5 +147,8 @@
     </div>
 
   </article>
+
+  {# Back to top #}
+  {% include 'components/back-to-top.twig' %}
 
 {% endblock %}

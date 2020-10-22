@@ -1,7 +1,7 @@
 {
   "name": "growingupnyc",
   "description": "Resources for families to learn about City programs, services, and activities provided by the government and community partners.",
-  "version": "3.0.9",
+  "version": "4.1.1",
   "homepage": "https://growingupnyc.cityofnewyork.us",
   "authors": [
     {
@@ -39,6 +39,7 @@
     "wpackagist-plugin/taxonomy-terms-order": "^1.5.7.2",
     "wpackagist-plugin/the-events-calendar": "4.8.2",
     "wpackagist-plugin/timber-library": "^1.15.2",
+    "wpackagist-plugin/tinymce-advanced": "^5.5",
     "wpackagist-plugin/wordpress-importer": "^0.7",
     "wpackagist-plugin/wp-all-export": "^1.2.5",
     "wpackagist-plugin/wp-smartcrop": "^2.0.5",

@@ -96,7 +96,7 @@
 		<div class="o-article js-sticky-article desktop:w-article">
 			{# Section One #}
 			{% for top in post.get_field('landing_page_section') %}
-				<section data-id="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" class="o-content-container--compact u-top-spacing u-bottom-spacing-small s-wysiwyg bullet">
+				<section id="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" class="o-content-container--compact u-top-spacing u-bottom-spacing-small s-wysiwyg bullet">
 					{% if loop.index != 1 %}
 						<h2>{{top.landing_page_section_content_heading}}</h2>
 					{% endif %}
@@ -311,5 +311,8 @@
 
 		</div>
 	</article>
+
+  {# Back to top #}
+  {% include 'components/back-to-top.twig' %}
 {% endblock %}
 

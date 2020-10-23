@@ -56,7 +56,10 @@
 				<div class="c-hero__tagline">{{ page_tagline }}</div>
 			</div>
 
-			{% include 'components/paint-splatter-tip.twig' %}
+			{# {% include 'components/paint-splatter-tip.twig' %} #}
+			{% include 'assets/svg/splatter-1.svg' %}
+			{% include 'assets/svg/splatter-2.svg' %}
+			{% include 'assets/svg/splatter-3.svg' %}
 
 		</header>
 	</div>
@@ -136,7 +139,7 @@
 		</div>
 
 		<div id="programs-loaded" class="c-block-list--shade o-content-container--p-0  u-sm-gutter u-bottom-spacing" v-if="!isLoading">
-		
+
     	{# Powered by Vroom #}
 			<div class="logo-banner bg-color-brain-building-tip text-left">
         <svg class="icon--vroom" role="img">

@@ -16,7 +16,7 @@ require plugin_dir_path(__FILE__) . '/guny-smnyc/SmsMeGunyc.php';
  */
 
 $contact = new SMNYC\ContactMe();
-$sms = new SMNYC\SmsMe();
+$sms = new SMNYC\SmsMeGen();
 $sms_gunyc = new SMNYC\SmsMeGunyc();
 $email = new SMNYC\EmailMe();
 

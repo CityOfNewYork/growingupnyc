@@ -33,45 +33,36 @@
     </div>
   </header>
 </div> <!-- /.js-parallax -->
+
 <article class="o-container u-bottom-spacing-small js-sticky-container desktop:flex">
+  {# Side Navigation #}
   <div class="o-article-sidebar desktop:w-sidebar">
     <div class="o-content-container--compact u-shift-up">
       <ol class="c-nav-list js-sticky js-section-set o-sticky-nav">
         {% if post.eligibility %}
           <li class="c-nav-list__item">
-            <a href="#section-eligibility" data-section="section-eligibility" class="scroll js-section c-nav-list__link">
-            {% if post.get_field('jump_nav_heading_-_eligibility') %}
-              {{ __(post.get_field('jump_nav_heading_-_eligibility'), 'GUNY-Single-Program') }}
-            {% else %}
-              {{ __("Am I eligibile?", 'GUNY-Single-Program') }}
-            {% endif %}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+            <a href="#section-eligibility" data-section="section-eligibility" class="scroll js-section c-nav-list__link">{{ __("Eligibility", 'GUNY-Single-Program') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
           </li>
         {% endif %}
         {% if post.whats_needed or post.how_to_apply %}
           <li class="c-nav-list__item">
-            <a href="#section-application" data-section="section-application" class="scroll js-section c-nav-list__link">
-            {% if post.get_field('jump_nav_heading_-_application') %}
-              {{ __(post.get_field('jump_nav_heading_-_application'), 'GUNY-Single-Program') }}
-            {% else %}
-              {{ __("I'm ready to apply", 'GUNY-Single-Program') }}
-            {% endif %}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+            <a href="#section-application" data-section="section-application" class="scroll js-section c-nav-list__link">{{ __("Application", 'GUNY-Single-Program') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
           </li>
         {% endif %}
         {% if post.get_help %}
         <li class="c-nav-list__item">
-          <a href="#section-help" data-section="section-help" class="scroll js-section c-nav-list__link">
-            {% if post.get_field('jump_nav_heading_-_help') %}
-              {{ __(post.get_field('jump_nav_heading_-_help'), 'GUNY-Single-Program') }}
-            {% else %}
-              {{ __("How can I get help?", 'GUNY-Single-Program') }}
-            {% endif %}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
+          <a href="#section-help" data-section="section-help" class="scroll js-section c-nav-list__link">{{ __("Help", 'GUNY-Single-Program') }}<svg aria-hidden="true" class="icon--caret"><use xlink:href="#icon-caret-right"></use></svg></a>
         </li>
         {% endif %}
       </ol>
     </div> <!-- /.o-content-container-compact -->
-
   </div> <!-- /.o-article-sidebar -->
+  {# Side Navigation end #}
+
+
   <div class="o-article js-sticky-article desktop:w-article">
+
+    {# Alert Banner #}
     {% if post.banner_alert_show == 'Yes' %}
       <div class="alert mt-10">
         <div class="o-container">
@@ -79,53 +70,57 @@
         </div>
       </div>
     {% endif %}
+    {# Alert Banner end #}
 
+    {# Section Content #}
     <div class="o-content-container--compact">
       {% if post.summary %}
         <section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" data-id="section-summary">
           {{post.get_field('summary')}}
-        </section> <!-- /.o-content-container-text -->
+        </section>
       {% endif %}
       {% if post.heads_up %}
         <section class="o-content-container--text s-wysiwyg u-bottom-spacing-small" data-id="section-headsup">
           {{post.get_field('heads_up')}}
-        </section> <!-- /.o-content-container-text -->
+        </section>
         <hr>
       {% endif %}
       {% if post.eligibility %}
         <section class="o-content-container--text s-wysiwyg u-top-spacing-small u-bottom-spacing-small" data-id="section-eligibility">
-          <h2>{% if post.get_field('jump_nav_heading_-_eligibility') %}{{ __(post.get_field('jump_nav_heading_-_eligibility'), 'GUNY-Single-Program') }}{% else %}{{ __("Am I eligibile?", 'GUNY-Single-Program') }}{% endif %}</h2>
+          <h2>{{ __("Who is eligible", 'GUNY-Single-Program') }}</h2>
           {{post.get_field('eligibility')}}
-        </section> <!-- /.o-content-container-text -->
+        </section>
         <hr>
       {% endif %}
       {% if post.whats_needed or post.how_to_apply %}
         <section data-id="section-application" class="u-top-spacing-small u-bottom-spacing-small">
           {% if post.whats_needed %}
           <div class="o-content-container--text s-wysiwyg{% if post.how_to_apply %} u-bottom-spacing-small{% endif %}">
-            <h2>{% if post.get_field('whats_needed_heading') %}{{ __(post.get_field('whats_needed_heading'), 'GUNY-Single-Program') }}{% else %}{{ __("What will I need to apply?", 'GUNY-Single-Program') }}{% endif %}</h2>
+            <h2>{{ __("What you need to apply", 'GUNY-Single-Program') }}</h2>
             {{post.get_field('whats_needed')}}
           </div>
           <hr>
           {% endif %}
           {% if post.how_to_apply %}
           <div class="o-content-container--text s-wysiwyg{% if post.whats_needed %} u-top-spacing-small{% endif %}">
-            <h2>{% if post.get_field('jump_nav_heading_-_application') %}{{ __(post.get_field('jump_nav_heading_-_application'), 'GUNY-Single-Program') }}{% else %}{{ __("I'm ready to apply", 'GUNY-Single-Program') }}{% endif %}</h2>
+            <h2>{{ __("I'm ready to apply", 'GUNY-Single-Program') }}</h2>
             {{post.get_field('how_to_apply')}}
           </div>
           {% endif %}
-        </section> <!-- /.o-content-container-text -->
+        </section>
         <hr>
       {% endif %}
       {% if post.get_help %}
         <section id="section-help" class="u-top-spacing-small u-bottom-spacing-small o-content-container--text s-wysiwyg">
-          <h2>{% if post.get_field('jump_nav_heading_-_help') %}{{ __(post.get_field('jump_nav_heading_-_help'), 'GUNY-Single-Program') }}{% else %}{{ __("How can I get help?", 'GUNY-Single-Program') }}{% endif %}</h2>
+          <h2>{{ __("How to get help", 'GUNY-Single-Program') }}</h2>
           {{post.get_field('get_help')}}
-        </section> <!-- /.o-content-container-text -->
+        </section>
       {% endif %}
     </div>
+    {# Section Content end #}
 
-    {# Tip #}
+
+    {# Brain Building Tip #}
     {% if post.get_field('brain_building_tip_enable') == 'Yes' and brain_building_tip %}
       <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter" data-id="section-brain-building">
         <h2>{{ __('Brain Building', 'GUNY-Single-Age') }}</h2>
@@ -139,6 +134,7 @@
         </div>
       </section>
     {% endif %}
+    {# Brain Building Tip end #}
 
     {# Other programs #}
     {% if post.get_field('show_other_programs') == 'Yes' and post.related_posts %}
@@ -148,19 +144,22 @@
         {% for program in post.related_posts %}
           <div class="c-block-list__item">
             {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] with {post: program, agency: true} %}
-          </div> <!-- /.c-block-list__item -->
+          </div>
         {% endfor %}
-      </div> <!-- /.c-block-list__inner -->
+      </div>
       <div class="text-center">
         <a href="{{programs_link}}" class="button--outline button--outline--gray">{{ __('See all programs', 'GUNY-Single-Program') }}</a>
       </div>
     </div>
     {% endif %}
 
+    {# SMS Share #}
     {% if options.gunyc_enable_sms_programs == 'Yes' %}
       {% include 'components/form-share.twig' %}
     {% endif %}
+    {# SMS Share end #}
 
+    {# Last Modified #}
     <div id='last-modified-date' class="o-content-container--compact">
       <div class="u-top-spacing-small">
         <div class="o-content-container--text s-wysiwyg text-gray">
@@ -168,8 +167,8 @@
         </div>
       </div>
     </div>
-
-  </div> <!-- /.o-article -->
+    {# Last Modified end #}
+  </div>
 </article> <!-- /.o-container -->
 
   {# Back to top #}

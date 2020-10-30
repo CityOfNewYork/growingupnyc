@@ -240,6 +240,10 @@ $context['meta_keywords'] = get_field('event_landing_meta_keywords', 'option');
 
 $context['machine_translate'] = true;
 
+$path = '/events';
+$context['page_title'] = Templating\get_title($path);
+$context['page_tagline'] = Templating\get_tagline($path);
+
 $template = 'tribe_events/archive.twig';
 
 

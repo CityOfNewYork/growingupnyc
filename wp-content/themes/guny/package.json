@@ -60,7 +60,7 @@
     "webpack-stream": "^5.2.1"
   },
   "dependencies": {
-    "@nycopportunity/growingup-patterns": "git+ssh://git@github.com/NYCOpportunity/growingupnyc-patterns.git#update/rtl-styles",
+    "@nycopportunity/growingup-patterns": "v1.0.0-13",
     "animate.scss": "0.0.6",
     "axios": "^0.19.2",
     "bourbon": "^4.2.7",

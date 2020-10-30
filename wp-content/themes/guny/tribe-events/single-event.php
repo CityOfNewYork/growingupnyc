@@ -28,6 +28,8 @@ if (is_int($virtual)) {
 
 $context['machine_translate'] = true;
 
+$context['schema'] = $post->get_schema();
+
 // top menu widget
 $template = 'tribe_events/single.twig';
 

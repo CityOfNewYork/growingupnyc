@@ -104,8 +104,6 @@ class GunyEvent extends TimberPost {
     }
   }
 
-
-
   public function end_date_full() {
     if (function_exists('tribe_get_end_date')) {
       return date_i18n( __('l, F j', 'guny-date-formats'), $this->end_datetime());
@@ -232,6 +230,54 @@ class GunyEvent extends TimberPost {
       return tribe_get_organizer_website_url( $this->ID );
     }
   }
+
+  /**
+   * Generate the events schema for the event
+   */
+  public function get_schema() {
+
+    $start_date = new DateTime($this->_EventStartDate);
+    $end_date = new DateTime($this->_EventEndDate);
+
+    // echo $start_time->format(DateTime::ATOM);
+    $schema = array(
+      "@context"=> "https://schema.org",
+      "@type"=> "Event",
+      "name"=> $this->post_title,
+      "description"=> $this->summary,
+      "startDate"=> $start_date->format(DateTime::ATOM),
+      "endDate"=> $end_date->format(DateTime::ATOM),
+      "eventStatus"=> "https://schema.org/EventScheduled",
+      "location" => $this->get_schema_loc()
+    );
+    return json_encode($schema, JSON_UNESCAPED_UNICODE);
+  }
+
+  /**
+   * Generates the location portion of the events schema based on in-person or virtual
+   */
+  public function get_schema_loc(){
+
+    if ($this->venue() == 'Virtual Event'){
+      return array(
+        "@type"=> "VirtualLocation",
+        "url"=> $this->_EventURL
+      );
+    } else {
+      return array(
+        "@type"=> "Place",
+        "name"=> $this->venue(),
+        "address"=> array(
+          "@type"=> "PostalAddress",
+          "streetAddress"=> $this->venue_address()['address'],
+          "addressLocality"=> $this->venue_address()['city'],
+          "postalCode"=> $this->venue_address()['zip'],
+          "addressRegion"=> $this->venue_address()['full_region'],
+          "addressCountry"=> $this->venue_address()['country']
+        )
+      );
+    }
+  }
 }
 
 // Remove the events calendar pro related json-ld generation
@@ -323,3 +369,4 @@ function tribe_events_map_apis() {
     wp_dequeue_script( 'tribe-events-pro-geoloc' );
   }
 add_action( 'wp_enqueue_scripts', 'tribe_events_map_apis' );
+

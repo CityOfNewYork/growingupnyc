@@ -1,9 +1,7 @@
 {% extends "base.twig" %}
 
 {% block head_extras %}
-  {% include 'tribe_events/events_schema.twig' with {post: post} %}
-
-  
+  <script type="application/ld+json">{{schema}}</script>
 {% endblock %}
 
 {% block content %}

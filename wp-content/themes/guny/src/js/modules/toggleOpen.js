@@ -15,6 +15,7 @@ export default function(openClass) {
 
   const linkActiveClass = 'is-active';
   const toggleElems = document.querySelectorAll('[data-toggle]');
+  const closeSearchIcon = document.querySelector('.search-toggle-icon')
 
   if (!toggleElems) return;
 
@@ -35,9 +36,17 @@ export default function(openClass) {
     toggleElem.addEventListener('click', function(event) {
       let toggleEvent;
       let toggleClass = (toggleElem.dataset.toggleClass) ?
-        toggleElem.dataset.toggleClass : openClass;
+      toggleElem.dataset.toggleClass : openClass;
 
       event.preventDefault();
+
+      /*
+       keybord only trigered button to close the search panel for accessibility
+       reasons is toggeling  the active class of the main search panel toggle button
+      */
+      if (toggleElem.classList.contains('keybord_search_close')) {
+        closeSearchIcon.classList.toggle(linkActiveClass)
+      }
 
       // Toggle the element's active class
       toggleElem.classList.toggle(linkActiveClass);

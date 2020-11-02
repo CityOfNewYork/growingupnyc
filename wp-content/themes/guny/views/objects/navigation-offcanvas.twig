@@ -18,16 +18,16 @@
 
 				{% if function('Search\\visible') %}
 					<li class="o-inline__item">
-						<a class="o-navigation__nav-link" href="#search" data-toggle="overlay-search" data-toggle-class="fadeInDown">
-							<svg class="o-navigation__icon o-navigation__icon__search" role="img">
+						<button class="o-navigation__nav-link search-toggle-icon" href="#search" data-toggle="overlay-search" data-toggle-class="fadeInDown">
+							<svg class="o-navigation__icon o-navigation__icon__search" role="img" aria-hidden="true">
 								<title>Search</title>
 								<use xlink:href="#icon-search"></use>
 							</svg>
-							<svg class="o-navigation__icon o-navigation__icon__close" role="img">
+							<svg class="o-navigation__icon o-navigation__icon__close" role="img" aria-hidden="true">
 								<title>Search</title>
 								<use xlink:href="#icon-close"></use>
 							</svg>
-						</a>
+						</button>
 					</li>
 				{% endif %}
 			</ul>

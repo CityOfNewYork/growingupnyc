@@ -99,6 +99,30 @@
             "mime_types": ""
         },
         {
+            "key": "field_5f9c79c4cb2da",
+            "label": "Is Archive?",
+            "name": "is_archive",
+            "type": "radio",
+            "instructions": "Is this page primarily used to list out all of the posts for a specific post type with filters to help users narrow down their interests?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Yes": "Yes",
+                "No": "No"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "No",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
             "key": "field_5e7a7dce2333c",
             "label": "Landing Page Section",
             "name": "landing_page_section",
@@ -108,9 +132,9 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ea0487b6437f",
+                        "field": "field_5f9c79c4cb2da",
                         "operator": "==",
-                        "value": "Yes"
+                        "value": "No"
                     }
                 ]
             ],
@@ -660,6 +684,112 @@
                                     ]
                                 }
                             ]
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                }
+            },
+            "button_label": "Add Row",
+            "min": "",
+            "max": ""
+        },
+        {
+            "key": "field_5f9c7ab0cb2db",
+            "label": "Post Type",
+            "name": "post_type",
+            "type": "select",
+            "instructions": "Select the post type that will be filtered on this page.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f9c79c4cb2da",
+                        "operator": "==",
+                        "value": "Yes"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "program": "Programs",
+                "events": "Events",
+                "summer-guide": "Summer",
+                "afterschool-guide": "Afterschool",
+                "brain-building-tip": "Brain Building"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f9c7d91cb2de",
+            "label": "Filters",
+            "name": "filters",
+            "type": "flexible_content",
+            "instructions": "Pick the filters you would like to make available to the user for this post type.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f9c79c4cb2da",
+                        "operator": "==",
+                        "value": "Yes"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layouts": {
+                "layout_5f9c7d9f2e907": {
+                    "key": "layout_5f9c7d9f2e907",
+                    "name": "filters_taxonomies",
+                    "label": "Taxonomies",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5f9c7db7cb2df",
+                            "label": "Filter Name - Programs",
+                            "name": "filter_name_program",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_5f9c7ab0cb2db",
+                                        "operator": "==",
+                                        "value": "program"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "age_group": "Age Group",
+                                "programs_cat": "Program Category"
+                            },
+                            "default_value": false,
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "return_format": "value",
+                            "ajax": 0,
+                            "placeholder": ""
                         }
                     ],
                     "min": "",

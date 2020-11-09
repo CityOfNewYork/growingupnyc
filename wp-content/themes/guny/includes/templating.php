@@ -28,7 +28,14 @@ const FIELD_BANNER_IMAGE_MOBILE = 'field_5e3ae9fb8700e';
 // The share template
 const SHARE_TEMPLATE = 'field_5e9f4df2bbab7';
 
+// Sections
 const SECTION_ID = 'field_5a78cc2bc5e51';
+
+// Post Type selected
+const POST_TYPE = 'field_5f9c7ab0cb2db';
+const FILTERS = 'field_5f9c7d91cb2de';
+const FILTERS_LABEL = 'field_5f1f45154ceb5';
+
 
 /**
  * Functions
@@ -118,4 +125,42 @@ function get_alert_content($path) {
  */
 function get_share_template($id) {
   return get_field(SHARE_TEMPLATE, $id)->post_name;
+}
+
+/**
+ * Gets the post type based on the path
+ * @return string the post type
+ */
+function get_post_type($path) {
+  $post_type = get_field(POST_TYPE);
+  
+  return $post_type;
+
+}
+
+/**
+ * Gets the filters in the order that the user would like to present them
+ * @return string taxonomies comma delimited
+ */
+function get_filters($path, $post_type) {
+  $arr = get_field(FILTERS, get_controller_id($path));
+  $filters = array_column($arr, 'filter_name_'.$post_type);
+  
+  foreach ($filters as $index=>$filter) {
+    $filters[$index] = $filter.':'.get_taxonomy($filter)->label;
+  }
+  $filters = implode(",", $filters);
+
+  return $filters;
+
+}
+
+/**
+ * Gets the label for filters
+ * @return string taxonomies comma delimited
+ */
+function get_filter_label($path) {
+  $label = get_field(FILTERS_LABEL, get_controller_id($path));
+
+  return $label;
 }

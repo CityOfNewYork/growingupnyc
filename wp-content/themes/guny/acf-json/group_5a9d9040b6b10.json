@@ -790,13 +790,150 @@
                             "return_format": "value",
                             "ajax": 0,
                             "placeholder": ""
+                        },
+                        {
+                            "key": "field_5fa95278ae242",
+                            "label": "Filter Name - Events",
+                            "name": "filter_name_events",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_5f9c7ab0cb2db",
+                                        "operator": "==",
+                                        "value": "events"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "age_group": "Age Group",
+                                "tribe_events_cat": "Program Category",
+                                "borough": "Borough"
+                            },
+                            "default_value": false,
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "return_format": "value",
+                            "ajax": 0,
+                            "placeholder": ""
+                        },
+                        {
+                            "key": "field_5fa95445ae244",
+                            "label": "Filter Name - Summer",
+                            "name": "filter_name_summer",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_5f9c7ab0cb2db",
+                                        "operator": "==",
+                                        "value": "summer-guide"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "age_group": "Age Group",
+                                "borough": "Borough",
+                                "activity_type": "Activity Type",
+                                "summer_programs_cat": "Summer Program Category"
+                            },
+                            "default_value": false,
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "return_format": "value",
+                            "ajax": 0,
+                            "placeholder": ""
+                        },
+                        {
+                            "key": "field_5fa95916ae245",
+                            "label": "Filter Name - Afterschool",
+                            "name": "filter_name_afterschool",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_5f9c7ab0cb2db",
+                                        "operator": "==",
+                                        "value": "afterschool-guide"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "age_group": "Age Group",
+                                "borough": "Borough",
+                                "activity_type": "Activity Type",
+                                "afterschool_programs_cat": "Afterschool Program Category"
+                            },
+                            "default_value": false,
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "return_format": "value",
+                            "ajax": 0,
+                            "placeholder": ""
+                        },
+                        {
+                            "key": "field_5fa9592fae246",
+                            "label": "Filter Name - Brain Building",
+                            "name": "filter_name_brain-building-tip",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_5f9c7ab0cb2db",
+                                        "operator": "==",
+                                        "value": "brain-building-tip"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "age_group": "Age Group",
+                                "tip_category": "Tip Category"
+                            },
+                            "default_value": false,
+                            "allow_null": 0,
+                            "multiple": 0,
+                            "ui": 0,
+                            "return_format": "value",
+                            "ajax": 0,
+                            "placeholder": ""
                         }
                     ],
                     "min": "",
                     "max": ""
                 }
             },
-            "button_label": "Add Row",
+            "button_label": "Add Filter",
             "min": "",
             "max": ""
         }

@@ -2,7 +2,8 @@
 
 {% block content %}
 
-  <div {% if post_type != '' %} id="vue-{{post_type}}" {% endif %}>
+  <div id="vue-{{post_type}}" data-filters="{{filters}}">
+
     {% block hero %}
     {% endblock %}
 

@@ -27,10 +27,10 @@
 
 {% block tags %}
   {% for term in post.terms('programs_cat') %}
-    <a href="{{programs_link}}?category={{term.slug}}" class="button--pill">{{term.name}}</a>
+    <a href="{{programs_link}}?category={{term.slug}}" class="button--pill button--pill--alt">{{term.name}}</a>
   {% endfor %}
   {% for term in post.terms('age_group') %}
-    <a href="{{programs_link}}?ages={{term.slug}}" class="button--pill button--pill--alt">{{term.name}}</a>
+    <a href="{{programs_link}}?ages={{term.slug}}" class="button--pill bg-{{ term.name | lower}}--primary">{{term.name}}</a>
   {% endfor %}
 {% endblock %}
 

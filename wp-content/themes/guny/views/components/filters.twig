@@ -1,0 +1,18 @@
+
+
+<div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false" v-cloak>
+	<div class="c-list-box__item" v-for="(filter, index) in filters">
+		<h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">v{ labels[index] }</h3>
+		<ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
+			<li class="c-list-box__subitem" v-for="term in filter">
+				<label class="checkbox" :for="term.slug">
+					<input type="checkbox" :id="term.slug" :value="term.slug" v-model="checkedFilters" class="checkbox__field">
+					<svg class="checkbox__indicator">
+						<use xlink:href="#icon-check"></use>
+					</svg>
+					v{ term.name }
+				</label>
+			</li>
+		</ul>
+	</div>
+</div>

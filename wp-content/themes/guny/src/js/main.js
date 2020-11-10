@@ -10,7 +10,7 @@ import ContentShow from './modules/contentShow.js';
 import iOS7Hack from './modules/iOS7Hack.js';
 import ShareForm from './modules/share-form.js';
 import captchaResize from './modules/captchaResize.js';
-import EventsList from './modules/events.js';
+import Events from './modules/events.js';
 import Programs from './modules/programs.js';
 import Afterschool from './modules/afterschool.js';
 import Summer from './modules/summer.js';
@@ -71,7 +71,7 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
   let vueId = $('div').find('[id^=vue]').attr('id');
   if (vueId != undefined) {
     if (vueId.indexOf('events') >= 0) {
-      new EventsList().init();
+      new Events();
     }
     if (vueId.indexOf('summer') >= 0) {
       new Summer().init();

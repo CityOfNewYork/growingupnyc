@@ -32,41 +32,7 @@
 {% endblock %}
 
 {% block list_sidebar %}
-  {# Event List Filters #}
-  <div class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
-
-    <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="type-filter-heading">{{current_event_filter}}</h3>
-      <ul class="js-accordion__content c-list-box__content" id="type-filter-panel">
-        <li><a href="{{all_events.link}}" class="c-list-box__subitem">{{all_events.name}}</a></li>
-        {% for event_type in event_filter %}
-        {# <li class="{{event_type.slug}}"><a href="{{event_type.link}}" class="c-list-box__subitem">{{event_type.name}}</a></li> #}
-        <li><a href="{{event_type.link}}" class="c-list-box__subitem">{{event_type.name}}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
-
-    <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="age-filter-heading">{{current_age_filter}}</h3>
-      <ul class="js-accordion__content c-list-box__content" id="age-filter-panel">
-        <li><a href="{{all_ages.link}}" class="c-list-box__subitem">{{all_ages.name}}</a></li>
-        {% for age in age_filter %}
-        <li><a href="{{age.link}}" class="c-list-box__subitem">{{age.name}}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
-
-    <div class="c-list-box__item">
-      <h3 class="js-accordion__header c-list-box__heading" id="borough-filter-heading">{{current_borough_filter}}</h3>
-      <ul class="js-accordion__content c-list-box__content" id="borough-filter-panel">
-        <li><a href="{{all_boroughs.link}}" class="c-list-box__subitem">{{all_boroughs.name}}</a></li>
-        {% for borough in borough_filter %}
-        <li><a href="{{borough.link}}" class="c-list-box__subitem">{{borough.name}}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
-
-  </div>
+  {% include ['components/filters.twig'] %}
 {% endblock %}
 
 {% block before_list %}
@@ -75,7 +41,7 @@
 
 {% block post_list %}
   {# Pager #}
-  <h2 class="c-arrow-pager">
+  {# <h2 class="c-arrow-pager">
 
     {% if prev_month_url %}
     <a class="c-arrow-pager__arrow c-arrow-pager__arrow--left" href="{{prev_month_url}}" rel="prev">
@@ -91,28 +57,74 @@
     </a>
     {% endif %}
 
-  </h2>
+  </h2> #}
 
   {# Event List #}
-  {% for event in event_list %}
-
   <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
     <h3 {% if language_code == 'es' %}style="text-transform: lowercase"{% endif %}>{{ event.date_header }}</h3>
-    {% for post in event.posts %}
-    <div class="c-block-list__item">
-      {% include ['partials/teaser-'~post.post_type~'.twig', 'partials/teaser.twig'] %}
+    {# {% for post in event.posts %} #}
+    <div class="c-block-list__item" v-for="post in posts">
+      
+      <div class="c-card c-card--subtitle-first flex">
+
+        <a :href="post.url">
+          <div class="c-card__sticker sticker " aria-hidden="true">
+            <span>
+              <span class="event-day">v{ post.date_formatted.start_day }
+              </span>
+              <span class="event-month-date">v{ post.date_formatted.start_date }</span>
+            </span>
+          </div>
+        </a>
+
+        <div class="c-card__subtitle">
+          <svg role="img" class="icon--xxsmall" aria-hidden="true">
+            <title>Time:</title>
+            <use xlink:href="#icon-clock-o"></use>
+          </svg>
+          <span class="whitespace-no-wrap">v{ post.date_formatted.time }</span>
+        </div>
+
+        <h3 class="c-card__title">
+          <a :href="post.url" title="Virtual Babies and Books" rel="bookmark">
+            v{ post.title }
+          </a>
+        </h3>
+
+
+        <div class="c-card__body">
+          v{ post.about_this_event }
+        </div>
+
+        <div class="c-card__tags" v-if="post.categories">
+          <span v-for="term in post.categories">
+            <div class="button--pill" v-if="term.slug != 'summer'">
+              <span v-html="term.name"></span>
+            </div>
+          </span>
+          <span v-for="term in post.age_group">
+            <div class="button--pill button--pill--alt">
+              <span v-html="term.name"></span>
+            </div>
+          </span>
+        </div>
+        
+        <p class="c-card__link">
+          <svg role="img" class="icon--xxsmall" aria-hidden="true">
+            <use xlink:href="#icon-map-marker"></use>
+          </svg>
+          <a :href="post.google_map_link" target="_blank">v{ post.venue.venue }, v{ post.venue.city }
+          </a>
+        </p>
+      </div>
     </div>
-    {% endfor %}
-  </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-sm-gutter -->
+  </section>
 
-  {% else %}
-
-  <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-sm-gutter">
+  {# <section class="c-block-list c-block-list--shade o-content-container o-content-container--narrow u-sm-gutter">
     <p class="type--no-results">
       {{ __('No events found for those filter options. Check for similar events in', 'guny-events') }} <a href="{{next_month_url}}" rel="next">{{next_month_text}}</a> {{ __('or', 'guny-events') }} <a href="{{reset_filters_url}}">{{ __('reset your filters', 'guny-events') }}</a>.</p>
-  </section> <!-- /.c-block-list.c-block-list--shade.o-content-container.o-content-container--narrow.u-sm-gutter -->
+  </section>  #}
 
-  {% endfor %}
 {% endblock %}
 
 {% block after_list %}

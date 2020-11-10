@@ -226,10 +226,10 @@
               <a :href="'?activity_types=' + term.slug" class="button--pill {{button_pill}}">v{ term.name }</a>
             </span>
             <span v-for="term in post.summer_programs_cat">
-              <a :href="'?interests=' + term.slug" class="button--pill {{button_pill}}">v{ term.name }</a>
+              <a :href="'?interests=' + term.slug" class="button--pill {{button_pill_alt}}">v{ term.name }</a>
             </span>
             <span v-for="term in post.age_group">
-              <a :href="'?ages=' + term.slug" class="button--pill {{button_pill_alt}}">v{ term.name }</a>
+              <a :href="'?ages=' + term.slug" :class="'button--pill bg-'+term.slug+'--primary'">v{ term.name }</a>
             </span>
           </div>
 

@@ -16,10 +16,10 @@
 
 {% block tags %}
   {% for term in post.terms('afterschool_programs_cat') %}
-    <a href="/afterschool/?afterschool_category={{term.slug}}" class="button--pill bg-strong-blue">{{term.name}}</a>
+    <a href="/afterschool/?afterschool_category={{term.slug}}" class="button--pill button--pill--alt">{{term.name}}</a>
   {% endfor %}
   {% for term in post.terms('age_group') %}
-    <a href="/afterschool/?ages={{term.slug}}" class="button--pill bg-very-dark-blue button--pill--alt">{{term.name}}</a>
+    <a href="/afterschool/?ages={{term.slug}}" class="button--pill bg-{{ term.name | lower}}--primary">{{term.name}}</a>
   {% endfor %}
 {% endblock %}
 

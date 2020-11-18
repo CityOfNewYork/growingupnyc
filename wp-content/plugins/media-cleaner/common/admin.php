@@ -5,7 +5,7 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 	class MeowCommon_Admin {
 
 		public static $loaded = false;
-		public static $admin_version = "3.1";
+		public static $admin_version = "3.2";
 
 		public $prefix; 		// prefix used for actions, filters (mfrh)
 		public $mainfile; 	// plugin main file (media-file-renamer.php)
@@ -16,9 +16,13 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 
 		public function __construct( $prefix, $mainfile, $domain, $isPro = false, $disableReview = false ) {
 
-			// Core Admin (used by all Meow Apps plugins)
 			if ( !MeowCommon_Admin::$loaded ) {
 				if ( is_admin() ) {
+
+					// Check potential issues with this WordPress install, other plugins, etc.
+					new MeowCommon_Classes_Issues( $prefix, $mainfile, $domain );
+
+					// Create the Meow Apps Menu
 					add_action( 'admin_menu', array( $this, 'admin_menu_start' ) );
 					if ( isset( $_GET['page'] ) && $_GET['page'] === 'meowapps-main-menu' ) {
 						add_filter( 'admin_footer_text',  array( $this, 'admin_footer_text' ), 100000, 1 );
@@ -52,6 +56,10 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 			$pathName = basename( $path['dirname'] );
 			$thisPath = pathinfo( $this->mainfile );
 			$thisPathName = basename( $thisPath['dirname'] );
+			$isActive = is_plugin_active( $file );
+			if ( !$isActive ) {
+				return $links;
+			}
 			$isIssue = $this->isPro && !$this->is_registered();
 			if ( strpos( $pathName, $thisPathName ) !== false ) {
 				$new_links = array(
@@ -60,7 +68,7 @@ if ( !class_exists( 'MeowCommon_Admin' ) ) {
 					'license' => 
 						$this->is_registered() ? 
 							('<span style="color: #a75bd6;">' . __( 'Pro Version', $this->domain ) . '</span>') : 
-								( $isIssue ? (sprintf( '<span style="color: #ff3434;">' . __( 'License Issue', $this->domain ), $this->prefix ) . '</span>') : (sprintf( '<span style="color: #ff3434;">' . __( 'License Issue', $this->domain ), $this->prefix ) . '</span>') ),
+								( $isIssue ? (sprintf( '<span style="color: #ff3434;">' . __( 'License Issue', $this->domain ), $this->prefix ) . '</span>') : (sprintf( '<span>' . __( '<a target="_blank" href="https://store.meowapps.com">Get the <u>Pro Version</u></a>', $this->domain ), $this->prefix ) . '</span>') ),
 				);
 				$links = array_merge( $new_links, $links );
 			}

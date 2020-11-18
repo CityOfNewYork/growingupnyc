@@ -11,8 +11,11 @@ namespace Twilio\Rest\Studio\V2;
 
 use Twilio\Exceptions\TwilioException;
 use Twilio\InstanceContext;
+use Twilio\ListResource;
 use Twilio\Options;
+use Twilio\Rest\Studio\V2\Flow\ExecutionList;
 use Twilio\Rest\Studio\V2\Flow\FlowRevisionList;
+use Twilio\Rest\Studio\V2\Flow\FlowTestUserList;
 use Twilio\Serialize;
 use Twilio\Values;
 use Twilio\Version;
@@ -20,24 +23,29 @@ use Twilio\Version;
 /**
  * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  *
- * @property \Twilio\Rest\Studio\V2\Flow\FlowRevisionList $revisions
+ * @property FlowRevisionList $revisions
+ * @property FlowTestUserList $testUsers
+ * @property ExecutionList $executions
  * @method \Twilio\Rest\Studio\V2\Flow\FlowRevisionContext revisions(string $revision)
+ * @method \Twilio\Rest\Studio\V2\Flow\FlowTestUserContext testUsers()
+ * @method \Twilio\Rest\Studio\V2\Flow\ExecutionContext executions(string $sid)
  */
 class FlowContext extends InstanceContext {
-    protected $_revisions = null;
+    protected $_revisions;
+    protected $_testUsers;
+    protected $_executions;
 
     /**
      * Initialize the FlowContext
      *
-     * @param \Twilio\Version $version Version that contains the resource
+     * @param Version $version Version that contains the resource
      * @param string $sid The SID that identifies the resource to fetch
-     * @return \Twilio\Rest\Studio\V2\FlowContext
      */
     public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid, );
+        $this->solution = ['sid' => $sid, ];
 
         $this->uri = '/Flows/' . \rawurlencode($sid) . '';
     }
@@ -50,60 +58,47 @@ class FlowContext extends InstanceContext {
      * @return FlowInstance Updated FlowInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($status, $options = array()) {
+    public function update(string $status, array $options = []): FlowInstance {
         $options = new Values($options);
 
-        $data = Values::of(array(
+        $data = Values::of([
             'Status' => $status,
             'FriendlyName' => $options['friendlyName'],
             'Definition' => Serialize::jsonObject($options['definition']),
             'CommitMessage' => $options['commitMessage'],
-        ));
+        ]);
 
-        $payload = $this->version->update(
-            'POST',
-            $this->uri,
-            array(),
-            $data
-        );
+        $payload = $this->version->update('POST', $this->uri, [], $data);
 
         return new FlowInstance($this->version, $payload, $this->solution['sid']);
     }
 
     /**
-     * Fetch a FlowInstance
+     * Fetch the FlowInstance
      *
      * @return FlowInstance Fetched FlowInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
-        $params = Values::of(array());
-
-        $payload = $this->version->fetch(
-            'GET',
-            $this->uri,
-            $params
-        );
+    public function fetch(): FlowInstance {
+        $payload = $this->version->fetch('GET', $this->uri);
 
         return new FlowInstance($this->version, $payload, $this->solution['sid']);
     }
 
     /**
-     * Deletes the FlowInstance
+     * Delete the FlowInstance
      *
-     * @return boolean True if delete succeeds, false otherwise
+     * @return bool True if delete succeeds, false otherwise
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function delete() {
-        return $this->version->delete('delete', $this->uri);
+    public function delete(): bool {
+        return $this->version->delete('DELETE', $this->uri);
     }
 
     /**
      * Access the revisions
-     *
-     * @return \Twilio\Rest\Studio\V2\Flow\FlowRevisionList
      */
-    protected function getRevisions() {
+    protected function getRevisions(): FlowRevisionList {
         if (!$this->_revisions) {
             $this->_revisions = new FlowRevisionList($this->version, $this->solution['sid']);
         }
@@ -112,13 +107,35 @@ class FlowContext extends InstanceContext {
     }
 
     /**
+     * Access the testUsers
+     */
+    protected function getTestUsers(): FlowTestUserList {
+        if (!$this->_testUsers) {
+            $this->_testUsers = new FlowTestUserList($this->version, $this->solution['sid']);
+        }
+
+        return $this->_testUsers;
+    }
+
+    /**
+     * Access the executions
+     */
+    protected function getExecutions(): ExecutionList {
+        if (!$this->_executions) {
+            $this->_executions = new ExecutionList($this->version, $this->solution['sid']);
+        }
+
+        return $this->_executions;
+    }
+
+    /**
      * Magic getter to lazy load subresources
      *
      * @param string $name Subresource to return
-     * @return \Twilio\ListResource The requested subresource
+     * @return ListResource The requested subresource
      * @throws TwilioException For unknown subresources
      */
-    public function __get($name) {
+    public function __get(string $name): ListResource {
         if (\property_exists($this, '_' . $name)) {
             $method = 'get' . \ucfirst($name);
             return $this->$method();
@@ -132,10 +149,10 @@ class FlowContext extends InstanceContext {
      *
      * @param string $name Resource to return
      * @param array $arguments Context parameters
-     * @return \Twilio\InstanceContext The requested resource context
+     * @return InstanceContext The requested resource context
      * @throws TwilioException For unknown resource
      */
-    public function __call($name, $arguments) {
+    public function __call(string $name, array $arguments): InstanceContext {
         $property = $this->$name;
         if (\method_exists($property, 'getContext')) {
             return \call_user_func_array(array($property, 'getContext'), $arguments);
@@ -149,8 +166,8 @@ class FlowContext extends InstanceContext {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
-        $context = array();
+    public function __toString(): string {
+        $context = [];
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";
         }

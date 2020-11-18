@@ -21,35 +21,28 @@ class FlowRevisionContext extends InstanceContext {
     /**
      * Initialize the FlowRevisionContext
      *
-     * @param \Twilio\Version $version Version that contains the resource
+     * @param Version $version Version that contains the resource
      * @param string $sid The SID that identifies the resource to fetch
      * @param string $revision Specific Revision number or can be `LatestPublished`
      *                         and `LatestRevision`
-     * @return \Twilio\Rest\Studio\V2\Flow\FlowRevisionContext
      */
     public function __construct(Version $version, $sid, $revision) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid, 'revision' => $revision, );
+        $this->solution = ['sid' => $sid, 'revision' => $revision, ];
 
         $this->uri = '/Flows/' . \rawurlencode($sid) . '/Revisions/' . \rawurlencode($revision) . '';
     }
 
     /**
-     * Fetch a FlowRevisionInstance
+     * Fetch the FlowRevisionInstance
      *
      * @return FlowRevisionInstance Fetched FlowRevisionInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
-        $params = Values::of(array());
-
-        $payload = $this->version->fetch(
-            'GET',
-            $this->uri,
-            $params
-        );
+    public function fetch(): FlowRevisionInstance {
+        $payload = $this->version->fetch('GET', $this->uri);
 
         return new FlowRevisionInstance(
             $this->version,
@@ -64,8 +57,8 @@ class FlowRevisionContext extends InstanceContext {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
-        $context = array();
+    public function __toString(): string {
+        $context = [];
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";
         }

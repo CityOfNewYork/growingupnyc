@@ -18,34 +18,27 @@ class SupportingDocumentTypeContext extends InstanceContext {
     /**
      * Initialize the SupportingDocumentTypeContext
      *
-     * @param \Twilio\Version $version Version that contains the resource
+     * @param Version $version Version that contains the resource
      * @param string $sid The unique string that identifies the Supporting Document
      *                    Type resource
-     * @return \Twilio\Rest\Numbers\V2\RegulatoryCompliance\SupportingDocumentTypeContext
      */
     public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid, );
+        $this->solution = ['sid' => $sid, ];
 
         $this->uri = '/RegulatoryCompliance/SupportingDocumentTypes/' . \rawurlencode($sid) . '';
     }
 
     /**
-     * Fetch a SupportingDocumentTypeInstance
+     * Fetch the SupportingDocumentTypeInstance
      *
      * @return SupportingDocumentTypeInstance Fetched SupportingDocumentTypeInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
-        $params = Values::of(array());
-
-        $payload = $this->version->fetch(
-            'GET',
-            $this->uri,
-            $params
-        );
+    public function fetch(): SupportingDocumentTypeInstance {
+        $payload = $this->version->fetch('GET', $this->uri);
 
         return new SupportingDocumentTypeInstance($this->version, $payload, $this->solution['sid']);
     }
@@ -55,8 +48,8 @@ class SupportingDocumentTypeContext extends InstanceContext {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
-        $context = array();
+    public function __toString(): string {
+        $context = [];
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";
         }

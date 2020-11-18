@@ -1,6 +1,6 @@
 {
   "name": "guny",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "Growing Up NYC",
   "repository": {
     "type": "git",
@@ -12,8 +12,7 @@
     "production": "cross-env NODE_ENV='production' gulp",
     "start": "npm run development",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "gulp": "gulp",
-    "cleanup": "gulp strip-debug"
+    "gulp": "gulp"
   },
   "author": "Blue State Digital | Maintained by NYC Opportunity",
   "license": "ISC",
@@ -60,7 +59,7 @@
     "webpack-stream": "^5.2.1"
   },
   "dependencies": {
-    "@nycopportunity/growingup-patterns": "1.0.0-12",
+    "@nycopportunity/growingup-patterns": "1.0.0-14",
     "animate.scss": "0.0.6",
     "axios": "^0.19.2",
     "bourbon": "^4.2.7",

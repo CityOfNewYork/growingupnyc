@@ -539,9 +539,11 @@ class Meow_WPMC_Core {
 			}
 			if ( !file_exists( $originalPath ) ) {
 				$this->log( "🚫 The file $originalPath actually does not exist." );
+				error_log( "Media Cleaner: The file $originalPath actually does not exist." );
 				return true;
 			}
 			if ( !@rename( $originalPath, $trashPath ) ) {
+				error_log( "Media Cleaner: Unknown error occured while trying to delete a file ($originalPath)." );
 				return false;
 			}
 		}

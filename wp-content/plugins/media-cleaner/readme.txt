@@ -5,7 +5,7 @@ Donate link: https://commerce.coinbase.com/checkout/d047546a-77a8-41c8-9ea9-4a95
 Requires at least: 4.8
 Tested up to: 5.5
 Requires PHP: 5.6
-Stable tag: 6.0.5
+Stable tag: 6.0.8
 
 Clean your WordPress Website from unused or broken media entries and files.
 
@@ -75,13 +75,23 @@ Better to be safe than sorry. This plugin deletes files! Therefore, backup is no
 
 == Changelog ==
 
-= 6.0.5 =
+= 6.0.8 =
+* Fix: Compatibility with Litespeed.
+* Update: Support for WP 4.8.
+
+= 6.0.7 =
+* Update: Avoid too many refreshes of the statistics and the options in the Dashboard.
+* Update: Better logs for the licenser.
+* Add: Support for Brizy 2.0.
+
+= 6.0.6 =
 * Update: Support for nonces.
 * Fix: Support for WooCommerce Downloads.
 * Fix: Some settings could not be changed when Filesystem was selected in Dashboard.
 * Add: Support for Justified Image Grid.
 * Add: Support for Custom Logo in themes.
 * Add: Support for Background Images in Avada (Fusion Builder).
+* Update: Added the sourcemaps for debugging purposes.
 
 = 6.0.4 =
 * Fix: Works even if the Permalinks are disabled.

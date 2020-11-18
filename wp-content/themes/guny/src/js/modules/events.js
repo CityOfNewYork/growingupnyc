@@ -10,7 +10,7 @@ import axios from 'axios';
 import router from './router'
 
 class EventsList {
-
+  
   constructor() {
     const baseURL = window.location.origin;
     const el = '#' + $('div').find('[id^=vue]').attr('id');
@@ -34,7 +34,7 @@ class EventsList {
         checkedAllAges: false,
         eventTypesURL: baseURL + '/wp-json/tribe/events/v1/' + 'categories',
         eventTypes: null,
-        checkedEventType: ['virtual'],
+        checkedEventType: [],
         checkedAllEventTypes: false,
         boroughURL: baseURL + 'borough',
         boroughNames: null,
@@ -93,20 +93,19 @@ EventsList.getPrograms = function () {
   let result;
 
   // update router based on selection
-  if (this.checkedEventType.length == 1) {
+  if (this.checkedEventType.length == 0) {
     this.$router.push({ query: {} }).catch(err => { });
   } else {
     this.$router.push({
       query:
       {
-        event_category: this.checkedEventType.length < this.eventTypes.length ? _.without(this.checkedEventType, 'virtual') : 'all',
+        event_category: this.checkedEventType.length < this.eventTypes.length ? this.checkedEventType : 'all',
       }
     }).catch(err => { });
   }
 
   // filter
-  if (this.checkedEventType.length > 1) {
-    types = types.filter(e => e !== 'virtual')
+  if (this.checkedEventType.length > 0) {
     result = this.postsAll.filter(function (e) {
       return e.categories.find(x => types.includes(x.slug));
     });
@@ -162,6 +161,7 @@ EventsList.generateFilterURL = function (data) {
 
 
 EventsList.getTaxonomies = function () {
+
   // age groups
   let ageGroups = _.uniq([].concat.apply([], this.postsAll.map(a => a.age_group)), function (x) {
     return x.name;
@@ -181,10 +181,7 @@ EventsList.getTaxonomies = function () {
 EventsList.parseQuery = function () {
   let query = this.$route.query;
 
-  if (query.event_category == 'virtual') {
-    this.$router.push({ query: {} }).catch(err => { });
-  }
-  else if (query.event_category == 'all') {
+  if (query.event_category == 'all') {
     this.checkedAllEventTypes = true;
     this.checkedEventType = this.eventTypes.map(a => a.slug);
   }
@@ -208,7 +205,7 @@ EventsList.selectAllEventTypes = function () {
   if (this.checkedAllEventTypes) {
     this.checkedEventType = this.eventTypes.map(a => a.slug);
   } else {
-    this.checkedEventType = ['virtual'];
+    this.checkedEventType = [];
   }
 }
 
@@ -216,7 +213,6 @@ EventsList.loadMore = function () {
   let types = this.checkedAllEventTypes ? this.eventTypes.map(a => a.slug) : this.checkedEventType;
 
   if (this.checkedEventType.length > 1) {
-    types = types.filter(e => e !== 'virtual')
     let result = this.postsAll.filter(function (e) {
       return e.categories.find(x => types.includes(x.slug));
     });
@@ -234,7 +230,6 @@ EventsList.loadMore = function () {
       this.showButton = true;
     }
   }
-
 }
 
 /**

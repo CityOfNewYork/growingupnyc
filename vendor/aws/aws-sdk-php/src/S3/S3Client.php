@@ -10,6 +10,7 @@ use Aws\ClientResolver;
 use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\HandlerList;
+use Aws\InputValidationMiddleware;
 use Aws\Middleware;
 use Aws\Retry\QuotaManager;
 use Aws\RetryMiddleware;
@@ -52,6 +53,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise deleteBucketLifecycleAsync(array $args = [])
  * @method \Aws\Result deleteBucketMetricsConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBucketMetricsConfigurationAsync(array $args = [])
+ * @method \Aws\Result deleteBucketOwnershipControls(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise deleteBucketOwnershipControlsAsync(array $args = [])
  * @method \Aws\Result deleteBucketPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise deleteBucketPolicyAsync(array $args = [])
  * @method \Aws\Result deleteBucketReplication(array $args = [])
@@ -94,6 +97,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise getBucketNotificationAsync(array $args = [])
  * @method \Aws\Result getBucketNotificationConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBucketNotificationConfigurationAsync(array $args = [])
+ * @method \Aws\Result getBucketOwnershipControls(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise getBucketOwnershipControlsAsync(array $args = [])
  * @method \Aws\Result getBucketPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise getBucketPolicyAsync(array $args = [])
  * @method \Aws\Result getBucketPolicyStatus(array $args = [])
@@ -170,6 +175,8 @@ use Psr\Http\Message\RequestInterface;
  * @method \GuzzleHttp\Promise\Promise putBucketNotificationAsync(array $args = [])
  * @method \Aws\Result putBucketNotificationConfiguration(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putBucketNotificationConfigurationAsync(array $args = [])
+ * @method \Aws\Result putBucketOwnershipControls(array $args = [])
+ * @method \GuzzleHttp\Promise\Promise putBucketOwnershipControlsAsync(array $args = [])
  * @method \Aws\Result putBucketPolicy(array $args = [])
  * @method \GuzzleHttp\Promise\Promise putBucketPolicyAsync(array $args = [])
  * @method \Aws\Result putBucketReplication(array $args = [])
@@ -208,6 +215,9 @@ use Psr\Http\Message\RequestInterface;
 class S3Client extends AwsClient implements S3ClientInterface
 {
     use S3ClientTrait;
+
+    /** @var array */
+    private static $mandatoryAttributes = ['Bucket', 'Key'];
 
     public static function getArguments()
     {
@@ -319,15 +329,16 @@ class S3Client extends AwsClient implements S3ClientInterface
      */
     public function __construct(array $args)
     {
-        if (!isset($args['s3_us_east_1_regional_endpoint'])) {
-            $args['s3_us_east_1_regional_endpoint'] = ConfigurationProvider::defaultProvider();
-        } elseif ($args['s3_us_east_1_regional_endpoint'] instanceof CacheInterface) {
+        if (
+            !isset($args['s3_us_east_1_regional_endpoint'])
+            || $args['s3_us_east_1_regional_endpoint'] instanceof CacheInterface
+        ) {
             $args['s3_us_east_1_regional_endpoint'] = ConfigurationProvider::defaultProvider($args);
         }
         parent::__construct($args);
         $stack = $this->getHandlerList();
         $stack->appendInit(SSECMiddleware::wrap($this->getEndpoint()->getScheme()), 's3.ssec');
-        $stack->appendBuild(ApplyChecksumMiddleware::wrap(), 's3.checksum');
+        $stack->appendBuild(ApplyChecksumMiddleware::wrap($this->getApi()), 's3.checksum');
         $stack->appendBuild(
             Middleware::contentType(['PutObject', 'UploadPart']),
             's3.content_type'
@@ -340,6 +351,7 @@ class S3Client extends AwsClient implements S3ClientInterface
             $stack->appendBuild(
                 S3EndpointMiddleware::wrap(
                     $this->getRegion(),
+                    $this->getConfig('endpoint_provider'),
                     [
                         'dual_stack' => $this->getConfig('use_dual_stack_endpoint'),
                         'accelerate' => $this->getConfig('use_accelerate_endpoint'),
@@ -365,6 +377,11 @@ class S3Client extends AwsClient implements S3ClientInterface
                 ]
             ),
             's3.bucket_endpoint_arn'
+        );
+
+        $stack->appendValidate(
+            InputValidationMiddleware::wrap($this->getApi(), self::$mandatoryAttributes),
+            'input_validation_middleware'
         );
         $stack->appendSign(PutObjectUrlMiddleware::wrap(), 's3.put_object_url');
         $stack->appendSign(PermanentRedirectMiddleware::wrap(), 's3.permanent_redirect');
@@ -709,6 +726,18 @@ class S3Client extends AwsClient implements S3ClientInterface
     {
         $b64 = '<div class="alert alert-info">This value will be base64 encoded on your behalf.</div>';
         $opt = '<div class="alert alert-info">This value will be computed for you it is not supplied.</div>';
+
+        // Add a note on the CopyObject docs
+         $s3ExceptionRetryMessage = "<p>Additional info on response behavior: if there is"
+            . " an internal error in S3 after the request was successfully recieved,"
+            . " a 200 response will be returned with an <code>S3Exception</code> embedded"
+            . " in it; this will still be caught and retried by"
+            . " <code>RetryMiddleware.</code></p>";
+
+        $docs['operations']['CopyObject'] .=  $s3ExceptionRetryMessage;
+        $docs['operations']['CompleteMultipartUpload'] .=  $s3ExceptionRetryMessage;
+        $docs['operations']['UploadPartCopy'] .=  $s3ExceptionRetryMessage;
+        $docs['operations']['UploadPart'] .=  $s3ExceptionRetryMessage;
 
         // Add the SourceFile parameter.
         $docs['shapes']['SourceFile']['base'] = 'The path to a file on disk to use instead of the Body parameter.';

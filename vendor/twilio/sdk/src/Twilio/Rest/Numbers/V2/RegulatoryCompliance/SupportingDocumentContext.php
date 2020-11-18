@@ -20,33 +20,26 @@ class SupportingDocumentContext extends InstanceContext {
     /**
      * Initialize the SupportingDocumentContext
      *
-     * @param \Twilio\Version $version Version that contains the resource
+     * @param Version $version Version that contains the resource
      * @param string $sid The unique string that identifies the resource
-     * @return \Twilio\Rest\Numbers\V2\RegulatoryCompliance\SupportingDocumentContext
      */
     public function __construct(Version $version, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('sid' => $sid, );
+        $this->solution = ['sid' => $sid, ];
 
         $this->uri = '/RegulatoryCompliance/SupportingDocuments/' . \rawurlencode($sid) . '';
     }
 
     /**
-     * Fetch a SupportingDocumentInstance
+     * Fetch the SupportingDocumentInstance
      *
      * @return SupportingDocumentInstance Fetched SupportingDocumentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function fetch() {
-        $params = Values::of(array());
-
-        $payload = $this->version->fetch(
-            'GET',
-            $this->uri,
-            $params
-        );
+    public function fetch(): SupportingDocumentInstance {
+        $payload = $this->version->fetch('GET', $this->uri);
 
         return new SupportingDocumentInstance($this->version, $payload, $this->solution['sid']);
     }
@@ -58,22 +51,27 @@ class SupportingDocumentContext extends InstanceContext {
      * @return SupportingDocumentInstance Updated SupportingDocumentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($options = array()) {
+    public function update(array $options = []): SupportingDocumentInstance {
         $options = new Values($options);
 
-        $data = Values::of(array(
+        $data = Values::of([
             'FriendlyName' => $options['friendlyName'],
             'Attributes' => Serialize::jsonObject($options['attributes']),
-        ));
+        ]);
 
-        $payload = $this->version->update(
-            'POST',
-            $this->uri,
-            array(),
-            $data
-        );
+        $payload = $this->version->update('POST', $this->uri, [], $data);
 
         return new SupportingDocumentInstance($this->version, $payload, $this->solution['sid']);
+    }
+
+    /**
+     * Delete the SupportingDocumentInstance
+     *
+     * @return bool True if delete succeeds, false otherwise
+     * @throws TwilioException When an HTTP error occurs.
+     */
+    public function delete(): bool {
+        return $this->version->delete('DELETE', $this->uri);
     }
 
     /**
@@ -81,8 +79,8 @@ class SupportingDocumentContext extends InstanceContext {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
-        $context = array();
+    public function __toString(): string {
+        $context = [];
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";
         }

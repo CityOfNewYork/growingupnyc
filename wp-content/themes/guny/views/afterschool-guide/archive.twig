@@ -232,10 +232,10 @@
 
 					<div class="c-card__tags" v-if="post.afterschool_programs_cat">
 						<span v-for="term in post.afterschool_programs_cat">
-							<a :href="'?afterschool_category=' + term.slug" class="button--pill {{button_pill}}">v{ term.name }</a>
+							<a :href="'?afterschool_category=' + term.slug" class="button--pill {{button_pill_alt}}">v{ term.name }</a>
 						</span>
 						<span v-for="term in post.age_group">
-							<a :href="'?ages=' + term.slug" class="button--pill bg-very-dark-blue {{button_pill_alt}}">v{ term.name }</a>
+							<a :href="'?ages=' + term.slug" :class="'button--pill bg-'+term.slug+'--primary'">v{ term.name }</a>
 						</span>
 					</div>
 					<hr class="divider my-4" v-if="post.acf.s_cta_url!=''">

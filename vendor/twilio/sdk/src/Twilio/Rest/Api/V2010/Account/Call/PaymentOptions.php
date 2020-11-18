@@ -17,74 +17,92 @@ use Twilio\Values;
  */
 abstract class PaymentOptions {
     /**
-     * @param string $bankAccountType If Payment source is ACH, type of bank
-     *                                account.
-     * @param string $chargeAmount If this field is present and greater than `0.0`
-     *                             payment source will be charged.
-     * @param string $currency Currency `charge_amount` is in.
-     * @param string $description Decription of the charge.
-     * @param string $input Kind of medium customer would enter payment source
-     *                      information in.
-     * @param int $minPostalCodeLength If postal code is expected, minimum length
-     *                                 of the postal code.
-     * @param array $parameter Additonal data to be sent over to payment provider.
-     * @param string $paymentConnector Payment connector that you would like Twilio
-     *                                 to use for processing payments.
-     * @param string $paymentMethod Payment source type.
-     * @param bool $postalCode Whether to expect postal code during payment source
-     *                         data gathering.
-     * @param bool $securityCode Whether to expect security code during payment
-     *                           source data gathering.
-     * @param int $timeout The number of seconds that we should allow customer to
-     *                     enter payment information
-     * @param string $tokenType If tokenization of payment source is desired, this
-     *                          represents type of token.
-     * @param string $validCardTypes List of card types accepted with each card
-     *                               types separated by space.
+     * @param string $bankAccountType Type of bank account if payment source is ACH.
+     * @param string $chargeAmount A positive decimal value less than 1,000,000 to
+     *                             charge against the credit card or bank account.
+     * @param string $currency The currency of the `charge_amount`.
+     * @param string $description The description can be used to provide more
+     *                            details regarding the transaction.
+     * @param string $input A list of inputs that should be accepted. Currently
+     *                      only `dtmf` is supported.
+     * @param int $minPostalCodeLength A positive integer that is used to validate
+     *                                 the length of the `PostalCode` inputted by
+     *                                 the user.
+     * @param array $parameter A single level JSON string that is required when
+     *                         accepting certain information specific only to ACH
+     *                         payments.
+     * @param string $paymentConnector This is the unique name corresponding to the
+     *                                 Payment Gateway Connector installed in the
+     *                                 Twilio Add-ons.
+     * @param string $paymentMethod Type of payment being captured.
+     * @param bool $postalCode Indicates whether the credit card PostalCode (zip
+     *                         code) is a required piece of payment information
+     *                         that must be provided by the caller.
+     * @param bool $securityCode Indicates whether the credit card security code is
+     *                           a required piece of payment information that must
+     *                           be provided by the caller.
+     * @param int $timeout The number of seconds that <Pay> should wait for the
+     *                     caller to press a digit between each subsequent digit,
+     *                     after the first one, before moving on to validate the
+     *                     digits captured.
+     * @param string $tokenType Indicates whether the payment method should be
+     *                          tokenized as a `one-time` or `reusable` token.
+     * @param string $validCardTypes Credit card types separated by space that Pay
+     *                               should accept.
      * @return CreatePaymentOptions Options builder
      */
-    public static function create($bankAccountType = Values::NONE, $chargeAmount = Values::NONE, $currency = Values::NONE, $description = Values::NONE, $input = Values::NONE, $minPostalCodeLength = Values::NONE, $parameter = Values::NONE, $paymentConnector = Values::NONE, $paymentMethod = Values::NONE, $postalCode = Values::NONE, $securityCode = Values::NONE, $timeout = Values::NONE, $tokenType = Values::NONE, $validCardTypes = Values::NONE) {
+    public static function create(string $bankAccountType = Values::NONE, string $chargeAmount = Values::NONE, string $currency = Values::NONE, string $description = Values::NONE, string $input = Values::NONE, int $minPostalCodeLength = Values::NONE, array $parameter = Values::ARRAY_NONE, string $paymentConnector = Values::NONE, string $paymentMethod = Values::NONE, bool $postalCode = Values::NONE, bool $securityCode = Values::NONE, int $timeout = Values::NONE, string $tokenType = Values::NONE, string $validCardTypes = Values::NONE): CreatePaymentOptions {
         return new CreatePaymentOptions($bankAccountType, $chargeAmount, $currency, $description, $input, $minPostalCodeLength, $parameter, $paymentConnector, $paymentMethod, $postalCode, $securityCode, $timeout, $tokenType, $validCardTypes);
     }
 
     /**
-     * @param string $capture Specific payment source information to expect.
-     * @param string $status Instruction to complete or cancel the transaction.
+     * @param string $capture The piece of payment information that you wish the
+     *                        caller to enter.
+     * @param string $status Indicates whether the current payment session should
+     *                       be cancelled or completed.
      * @return UpdatePaymentOptions Options builder
      */
-    public static function update($capture = Values::NONE, $status = Values::NONE) {
+    public static function update(string $capture = Values::NONE, string $status = Values::NONE): UpdatePaymentOptions {
         return new UpdatePaymentOptions($capture, $status);
     }
 }
 
 class CreatePaymentOptions extends Options {
     /**
-     * @param string $bankAccountType If Payment source is ACH, type of bank
-     *                                account.
-     * @param string $chargeAmount If this field is present and greater than `0.0`
-     *                             payment source will be charged.
-     * @param string $currency Currency `charge_amount` is in.
-     * @param string $description Decription of the charge.
-     * @param string $input Kind of medium customer would enter payment source
-     *                      information in.
-     * @param int $minPostalCodeLength If postal code is expected, minimum length
-     *                                 of the postal code.
-     * @param array $parameter Additonal data to be sent over to payment provider.
-     * @param string $paymentConnector Payment connector that you would like Twilio
-     *                                 to use for processing payments.
-     * @param string $paymentMethod Payment source type.
-     * @param bool $postalCode Whether to expect postal code during payment source
-     *                         data gathering.
-     * @param bool $securityCode Whether to expect security code during payment
-     *                           source data gathering.
-     * @param int $timeout The number of seconds that we should allow customer to
-     *                     enter payment information
-     * @param string $tokenType If tokenization of payment source is desired, this
-     *                          represents type of token.
-     * @param string $validCardTypes List of card types accepted with each card
-     *                               types separated by space.
+     * @param string $bankAccountType Type of bank account if payment source is ACH.
+     * @param string $chargeAmount A positive decimal value less than 1,000,000 to
+     *                             charge against the credit card or bank account.
+     * @param string $currency The currency of the `charge_amount`.
+     * @param string $description The description can be used to provide more
+     *                            details regarding the transaction.
+     * @param string $input A list of inputs that should be accepted. Currently
+     *                      only `dtmf` is supported.
+     * @param int $minPostalCodeLength A positive integer that is used to validate
+     *                                 the length of the `PostalCode` inputted by
+     *                                 the user.
+     * @param array $parameter A single level JSON string that is required when
+     *                         accepting certain information specific only to ACH
+     *                         payments.
+     * @param string $paymentConnector This is the unique name corresponding to the
+     *                                 Payment Gateway Connector installed in the
+     *                                 Twilio Add-ons.
+     * @param string $paymentMethod Type of payment being captured.
+     * @param bool $postalCode Indicates whether the credit card PostalCode (zip
+     *                         code) is a required piece of payment information
+     *                         that must be provided by the caller.
+     * @param bool $securityCode Indicates whether the credit card security code is
+     *                           a required piece of payment information that must
+     *                           be provided by the caller.
+     * @param int $timeout The number of seconds that <Pay> should wait for the
+     *                     caller to press a digit between each subsequent digit,
+     *                     after the first one, before moving on to validate the
+     *                     digits captured.
+     * @param string $tokenType Indicates whether the payment method should be
+     *                          tokenized as a `one-time` or `reusable` token.
+     * @param string $validCardTypes Credit card types separated by space that Pay
+     *                               should accept.
      */
-    public function __construct($bankAccountType = Values::NONE, $chargeAmount = Values::NONE, $currency = Values::NONE, $description = Values::NONE, $input = Values::NONE, $minPostalCodeLength = Values::NONE, $parameter = Values::NONE, $paymentConnector = Values::NONE, $paymentMethod = Values::NONE, $postalCode = Values::NONE, $securityCode = Values::NONE, $timeout = Values::NONE, $tokenType = Values::NONE, $validCardTypes = Values::NONE) {
+    public function __construct(string $bankAccountType = Values::NONE, string $chargeAmount = Values::NONE, string $currency = Values::NONE, string $description = Values::NONE, string $input = Values::NONE, int $minPostalCodeLength = Values::NONE, array $parameter = Values::ARRAY_NONE, string $paymentConnector = Values::NONE, string $paymentMethod = Values::NONE, bool $postalCode = Values::NONE, bool $securityCode = Values::NONE, int $timeout = Values::NONE, string $tokenType = Values::NONE, string $validCardTypes = Values::NONE) {
         $this->options['bankAccountType'] = $bankAccountType;
         $this->options['chargeAmount'] = $chargeAmount;
         $this->options['currency'] = $currency;
@@ -102,165 +120,173 @@ class CreatePaymentOptions extends Options {
     }
 
     /**
-     * If Payment source is ACH, type of bank account. Can be: `consumer-checking`, `consumer-savings`, `commercial-checking`. The default value is `consumer-checking`.
+     * Type of bank account if payment source is ACH. One of `consumer-checking`, `consumer-savings`, or `commercial-checking`. The default value is `consumer-checking`.
      *
-     * @param string $bankAccountType If Payment source is ACH, type of bank
-     *                                account.
+     * @param string $bankAccountType Type of bank account if payment source is ACH.
      * @return $this Fluent Builder
      */
-    public function setBankAccountType($bankAccountType) {
+    public function setBankAccountType(string $bankAccountType): self {
         $this->options['bankAccountType'] = $bankAccountType;
         return $this;
     }
 
     /**
-     * If this field is present and greater than `0.0` payment source will be charged. Otherwise payment source will be tokenized.
+     * A positive decimal value less than 1,000,000 to charge against the credit card or bank account. Default currency can be overwritten with `currency` field. Leave blank or set to 0 to tokenize.
      *
-     * @param string $chargeAmount If this field is present and greater than `0.0`
-     *                             payment source will be charged.
+     * @param string $chargeAmount A positive decimal value less than 1,000,000 to
+     *                             charge against the credit card or bank account.
      * @return $this Fluent Builder
      */
-    public function setChargeAmount($chargeAmount) {
+    public function setChargeAmount(string $chargeAmount): self {
         $this->options['chargeAmount'] = $chargeAmount;
         return $this;
     }
 
     /**
-     * Currency `charge_amount` is in. It's format should be as specified in [ISO 4127](http://www.iso.org/iso/home/standards/currency_codes.htm) format. The default value is `USD`.
+     * The currency of the `charge_amount`, formatted as [ISO 4127](http://www.iso.org/iso/home/standards/currency_codes.htm) format. The default value is `USD` and all values allowed from the <Pay> Connector are accepted.
      *
-     * @param string $currency Currency `charge_amount` is in.
+     * @param string $currency The currency of the `charge_amount`.
      * @return $this Fluent Builder
      */
-    public function setCurrency($currency) {
+    public function setCurrency(string $currency): self {
         $this->options['currency'] = $currency;
         return $this;
     }
 
     /**
-     * Decription of the charge.
+     * The description can be used to provide more details regarding the transaction. This information is submitted along with the payment details to the Payment Connector which are then posted on the transactions.
      *
-     * @param string $description Decription of the charge.
+     * @param string $description The description can be used to provide more
+     *                            details regarding the transaction.
      * @return $this Fluent Builder
      */
-    public function setDescription($description) {
+    public function setDescription(string $description): self {
         $this->options['description'] = $description;
         return $this;
     }
 
     /**
-     * Kind of medium customer would enter payment source information in. Currently only 'DTMF' is supported, which means customer would use keypad of their phone to enter card number etc.
+     * A list of inputs that should be accepted. Currently only `dtmf` is supported. All digits captured during a pay session are redacted from the logs.
      *
-     * @param string $input Kind of medium customer would enter payment source
-     *                      information in.
+     * @param string $input A list of inputs that should be accepted. Currently
+     *                      only `dtmf` is supported.
      * @return $this Fluent Builder
      */
-    public function setInput($input) {
+    public function setInput(string $input): self {
         $this->options['input'] = $input;
         return $this;
     }
 
     /**
-     * If postal code is expected, minimum length of the postal code. When user enters postal code, this value will be used to validate.
+     * A positive integer that is used to validate the length of the `PostalCode` inputted by the user. User must enter this many digits.
      *
-     * @param int $minPostalCodeLength If postal code is expected, minimum length
-     *                                 of the postal code.
+     * @param int $minPostalCodeLength A positive integer that is used to validate
+     *                                 the length of the `PostalCode` inputted by
+     *                                 the user.
      * @return $this Fluent Builder
      */
-    public function setMinPostalCodeLength($minPostalCodeLength) {
+    public function setMinPostalCodeLength(int $minPostalCodeLength): self {
         $this->options['minPostalCodeLength'] = $minPostalCodeLength;
         return $this;
     }
 
     /**
-     * Additonal data to be sent over to payment provider. It has to be a JSON string with only one level object. This parameter can be used to send information such as customer name, phone number etc. Refer to specific payment provider's documentation in Twilio console for supported names/values/format.
+     * A single level JSON string that is required when accepting certain information specific only to ACH payments. The information that has to be included here depends on the <Pay> Connector. [Read more](https://www.twilio.com/console/voice/pay-connectors).
      *
-     * @param array $parameter Additonal data to be sent over to payment provider.
+     * @param array $parameter A single level JSON string that is required when
+     *                         accepting certain information specific only to ACH
+     *                         payments.
      * @return $this Fluent Builder
      */
-    public function setParameter($parameter) {
+    public function setParameter(array $parameter): self {
         $this->options['parameter'] = $parameter;
         return $this;
     }
 
     /**
-     * Payment connector that you would like Twilio to use for processing payments. The default value is `Default`, which means you need to have at least one payment connector configured in Twilio with name 'Default'. If not you must provide connector configuration name here.
+     * This is the unique name corresponding to the Payment Gateway Connector installed in the Twilio Add-ons. Learn more about [<Pay> Connectors](https://www.twilio.com/console/voice/pay-connectors). The default value is `Default`.
      *
-     * @param string $paymentConnector Payment connector that you would like Twilio
-     *                                 to use for processing payments.
+     * @param string $paymentConnector This is the unique name corresponding to the
+     *                                 Payment Gateway Connector installed in the
+     *                                 Twilio Add-ons.
      * @return $this Fluent Builder
      */
-    public function setPaymentConnector($paymentConnector) {
+    public function setPaymentConnector(string $paymentConnector): self {
         $this->options['paymentConnector'] = $paymentConnector;
         return $this;
     }
 
     /**
-     * Payment source type. Can be: `credit-card`, `ach-debit`. The default value is `credit-card`.
+     * Type of payment being captured. One of `credit-card` or `ach-debit`. The default value is `credit-card`.
      *
-     * @param string $paymentMethod Payment source type.
+     * @param string $paymentMethod Type of payment being captured.
      * @return $this Fluent Builder
      */
-    public function setPaymentMethod($paymentMethod) {
+    public function setPaymentMethod(string $paymentMethod): self {
         $this->options['paymentMethod'] = $paymentMethod;
         return $this;
     }
 
     /**
-     * Whether to expect postal code during payment source data gathering. Can be: `true`, `false`. The default value is `true`.
+     * Indicates whether the credit card postal code (zip code) is a required piece of payment information that must be provided by the caller. The default is `true`.
      *
-     * @param bool $postalCode Whether to expect postal code during payment source
-     *                         data gathering.
+     * @param bool $postalCode Indicates whether the credit card PostalCode (zip
+     *                         code) is a required piece of payment information
+     *                         that must be provided by the caller.
      * @return $this Fluent Builder
      */
-    public function setPostalCode($postalCode) {
+    public function setPostalCode(bool $postalCode): self {
         $this->options['postalCode'] = $postalCode;
         return $this;
     }
 
     /**
-     * Whether to expect security code during payment source data gathering. Can be: `true`, `false`. The default value is `true`.
+     * Indicates whether the credit card security code is a required piece of payment information that must be provided by the caller. The default is `true`.
      *
-     * @param bool $securityCode Whether to expect security code during payment
-     *                           source data gathering.
+     * @param bool $securityCode Indicates whether the credit card security code is
+     *                           a required piece of payment information that must
+     *                           be provided by the caller.
      * @return $this Fluent Builder
      */
-    public function setSecurityCode($securityCode) {
+    public function setSecurityCode(bool $securityCode): self {
         $this->options['securityCode'] = $securityCode;
         return $this;
     }
 
     /**
-     * The number of seconds that we should allow customer to enter payment information. Can be an integer between `5` and `600`, inclusive. The default value is `5`.
+     * The number of seconds that <Pay> should wait for the caller to press a digit between each subsequent digit, after the first one, before moving on to validate the digits captured. The default is `5`, maximum is `600`.
      *
-     * @param int $timeout The number of seconds that we should allow customer to
-     *                     enter payment information
+     * @param int $timeout The number of seconds that <Pay> should wait for the
+     *                     caller to press a digit between each subsequent digit,
+     *                     after the first one, before moving on to validate the
+     *                     digits captured.
      * @return $this Fluent Builder
      */
-    public function setTimeout($timeout) {
+    public function setTimeout(int $timeout): self {
         $this->options['timeout'] = $timeout;
         return $this;
     }
 
     /**
-     * If tokenization of payment source is desired, this represents type of token. Can be: `one-time`, `reusable`. The default value is `reusable`.
+     * Indicates whether the payment method should be tokenized as a `one-time` or `reusable` token. The default value is `reusable`. Do not enter a charge amount when tokenizing. If a charge amount is entered, the payment method will be charged and not tokenized.
      *
-     * @param string $tokenType If tokenization of payment source is desired, this
-     *                          represents type of token.
+     * @param string $tokenType Indicates whether the payment method should be
+     *                          tokenized as a `one-time` or `reusable` token.
      * @return $this Fluent Builder
      */
-    public function setTokenType($tokenType) {
+    public function setTokenType(string $tokenType): self {
         $this->options['tokenType'] = $tokenType;
         return $this;
     }
 
     /**
-     * List of card types accepted with each card types separated by space. Can be: `visa`,`nmastercard`,`amex`,`maestro`,`discover`,`optima`,`jcb`,`diners-club`,`enroute`. The default value is `visa mastercard amex`.
+     * Credit card types separated by space that Pay should accept. The default value is `visa mastercard amex`
      *
-     * @param string $validCardTypes List of card types accepted with each card
-     *                               types separated by space.
+     * @param string $validCardTypes Credit card types separated by space that Pay
+     *                               should accept.
      * @return $this Fluent Builder
      */
-    public function setValidCardTypes($validCardTypes) {
+    public function setValidCardTypes(string $validCardTypes): self {
         $this->options['validCardTypes'] = $validCardTypes;
         return $this;
     }
@@ -270,45 +296,44 @@ class CreatePaymentOptions extends Options {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
-        $options = array();
-        foreach ($this->options as $key => $value) {
-            if ($value != Values::NONE) {
-                $options[] = "$key=$value";
-            }
-        }
-        return '[Twilio.Api.V2010.CreatePaymentOptions ' . \implode(' ', $options) . ']';
+    public function __toString(): string {
+        $options = \http_build_query(Values::of($this->options), '', ' ');
+        return '[Twilio.Api.V2010.CreatePaymentOptions ' . $options . ']';
     }
 }
 
 class UpdatePaymentOptions extends Options {
     /**
-     * @param string $capture Specific payment source information to expect.
-     * @param string $status Instruction to complete or cancel the transaction.
+     * @param string $capture The piece of payment information that you wish the
+     *                        caller to enter.
+     * @param string $status Indicates whether the current payment session should
+     *                       be cancelled or completed.
      */
-    public function __construct($capture = Values::NONE, $status = Values::NONE) {
+    public function __construct(string $capture = Values::NONE, string $status = Values::NONE) {
         $this->options['capture'] = $capture;
         $this->options['status'] = $status;
     }
 
     /**
-     * Specific payment source information to expect. Can be: `payment-card-number`,`expiration-date`,`security-code`,`postal-code`,`bank-routing-number`,`bank-account-number`.
+     * The piece of payment information that you wish the caller to enter. Must be one of `payment-card-number`, `expiration-date`, `security-code`, `postal-code`, `bank-routing-number`, or `bank-account-number`.
      *
-     * @param string $capture Specific payment source information to expect.
+     * @param string $capture The piece of payment information that you wish the
+     *                        caller to enter.
      * @return $this Fluent Builder
      */
-    public function setCapture($capture) {
+    public function setCapture(string $capture): self {
         $this->options['capture'] = $capture;
         return $this;
     }
 
     /**
-     * Instruction to complete or cancel the transaction. Can be: `complete`, `cancel.`
+     * Indicates whether the current payment session should be cancelled or completed. When `cancel` the payment session is cancelled. When `complete`, Twilio sends the payment information to the selected <Pay> connector for processing.
      *
-     * @param string $status Instruction to complete or cancel the transaction.
+     * @param string $status Indicates whether the current payment session should
+     *                       be cancelled or completed.
      * @return $this Fluent Builder
      */
-    public function setStatus($status) {
+    public function setStatus(string $status): self {
         $this->options['status'] = $status;
         return $this;
     }
@@ -318,13 +343,8 @@ class UpdatePaymentOptions extends Options {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
-        $options = array();
-        foreach ($this->options as $key => $value) {
-            if ($value != Values::NONE) {
-                $options[] = "$key=$value";
-            }
-        }
-        return '[Twilio.Api.V2010.UpdatePaymentOptions ' . \implode(' ', $options) . ']';
+    public function __toString(): string {
+        $options = \http_build_query(Values::of($this->options), '', ' ');
+        return '[Twilio.Api.V2010.UpdatePaymentOptions ' . $options . ']';
     }
 }

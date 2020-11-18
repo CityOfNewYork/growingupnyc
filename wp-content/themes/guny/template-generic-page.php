@@ -18,4 +18,8 @@ $context['sections'] = Templating\get_sections();
 // WPML language switcher
 $is_translated = apply_filters( 'wpml_element_has_translations', NULL, $post->id, 'page' );
 
+if ($post->mt_google_translate == 'Yes'){
+  $context['machine_translate'] = true;
+}
+
 Timber::render($templates, $context);

@@ -8,13 +8,15 @@
 */
 
 require plugin_dir_path(__FILE__) . '/wp-send-me-nyc/SendMeNYC.php';
+require plugin_dir_path(__FILE__) . '/guny-smnyc/SmsMeGen.php';
+require plugin_dir_path(__FILE__) . '/guny-smnyc/SmsMeGunyc.php';
 
 /**
  * Initialize plugin
  */
 
 $contact = new SMNYC\ContactMe();
-$sms = new SMNYC\SmsMe();
+$sms = new SMNYC\SmsMeGen();
 $sms_gunyc = new SMNYC\SmsMeGunyc();
 $email = new SMNYC\EmailMe();
 

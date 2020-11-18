@@ -94,8 +94,7 @@
 		</div>
 		<!-- /.o-article-sidebar -->
 
-		<div
-			class="o-article o-article-ms o-article-ms__topics js-sticky-article">
+		<div class="o-article o-article-ms o-article-ms__topics js-sticky-article">
 			{# Section One #}
 
 			{% for top in post.get_field('landing_page_section') %}
@@ -176,16 +175,16 @@
 									<li class="c-list-box__subitem bg-{{colors_primary}} hover:bg-{{colors_secondary}}" v-if="eventTypes!=null">
 										<label class="checkbox">
 											<input type="checkbox" v-model="checkedAllEventTypes" @change="selectAllEventTypes" class="checkbox__field">
-											<svg class="checkbox__indicator text-{{colors_secondary}}">
+											<svg class="checkbox__indicator">
 												<use xlink:href="#icon-check"></use>
 											</svg>
 											{{ __('Select All', 'guny') }}
 										</label>
 									</li>
-									<li class="c-list-box__subitem bg-{{colors_primary}} hover:bg-{{colors_secondary}}" v-for="category in eventTypes" v-if="category.slug !='virtual'">
+									<li class="c-list-box__subitem bg-{{colors_primary}} hover:bg-{{colors_secondary}}" v-for="category in eventTypes">
 										<label class="checkbox" :for="category.slug">
 											<input type="checkbox" :id="category.slug" :value="category.slug" v-model="checkedEventType" class="checkbox__field">
-											<svg class="checkbox__indicator text-{{colors_secondary}}">
+											<svg class="checkbox__indicator">
 												<use xlink:href="#icon-check"></use>
 											</svg>
 											<span v-html="category.name"></span>

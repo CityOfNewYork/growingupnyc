@@ -6,7 +6,7 @@ use Twilio\Rest\Client;
 use Twilio\Exceptions\RestException as TwilioErr;
 
 class SmsMe extends ContactMe {
-  protected $action = 'SMS_GEN';
+  protected $action = 'SMS';
 
   protected $service = 'Twilio';
 
@@ -31,12 +31,11 @@ class SmsMe extends ContactMe {
    */
   public function registerPostType() {
     register_post_type(self::POST_TYPE, array(
-      'label' => __('SMNYC SMS - Generation NYC', 'text_domain'),
+      'label' => __('SMNYC SMS', 'text_domain'),
       'description' => __('SMS content for Send Me NYC', 'text_domain'),
       'labels' => array(
-        'name' => _x('SMNYC SMS - Gen NYC', 'Post Type General Name', 'text_domain'),
-        'singular_name' => _x('SMNYC SMS - Gen NYC', 'Post Type Singular Name', 'text_domain'),
-        'all_items' => 'All SMS Templates',
+        'name' => _x('SMNYC SMS', 'Post Type General Name', 'text_domain'),
+        'singular_name' => _x('SMNYC SMS', 'Post Type Singular Name', 'text_domain'),
       ),
       'hierarchical' => false,
       'public' => true,

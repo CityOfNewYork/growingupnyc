@@ -22,18 +22,17 @@ class PaymentContext extends InstanceContext {
     /**
      * Initialize the PaymentContext
      *
-     * @param \Twilio\Version $version Version that contains the resource
+     * @param Version $version Version that contains the resource
      * @param string $accountSid The SID of the Account that will update the
      *                           resource
      * @param string $callSid The SID of the call that will create the resource.
      * @param string $sid The SID of Payments session
-     * @return \Twilio\Rest\Api\V2010\Account\Call\PaymentContext
      */
     public function __construct(Version $version, $accountSid, $callSid, $sid) {
         parent::__construct($version);
 
         // Path Solution
-        $this->solution = array('accountSid' => $accountSid, 'callSid' => $callSid, 'sid' => $sid, );
+        $this->solution = ['accountSid' => $accountSid, 'callSid' => $callSid, 'sid' => $sid, ];
 
         $this->uri = '/Accounts/' . \rawurlencode($accountSid) . '/Calls/' . \rawurlencode($callSid) . '/Payments/' . \rawurlencode($sid) . '.json';
     }
@@ -41,31 +40,27 @@ class PaymentContext extends InstanceContext {
     /**
      * Update the PaymentInstance
      *
-     * @param string $idempotencyKey A unique token for each payment session that
-     *                               should be provided to maintain idempotency of
-     *                               the session.
-     * @param string $statusCallback The URL we should call to send status of
-     *                               payment session.
+     * @param string $idempotencyKey A unique token that will be used to ensure
+     *                               that multiple API calls with the same
+     *                               information do not result in multiple
+     *                               transactions.
+     * @param string $statusCallback Provide an absolute or relative URL to receive
+     *                               status updates regarding your Pay session.
      * @param array|Options $options Optional Arguments
      * @return PaymentInstance Updated PaymentInstance
      * @throws TwilioException When an HTTP error occurs.
      */
-    public function update($idempotencyKey, $statusCallback, $options = array()) {
+    public function update(string $idempotencyKey, string $statusCallback, array $options = []): PaymentInstance {
         $options = new Values($options);
 
-        $data = Values::of(array(
+        $data = Values::of([
             'IdempotencyKey' => $idempotencyKey,
             'StatusCallback' => $statusCallback,
             'Capture' => $options['capture'],
             'Status' => $options['status'],
-        ));
+        ]);
 
-        $payload = $this->version->update(
-            'POST',
-            $this->uri,
-            array(),
-            $data
-        );
+        $payload = $this->version->update('POST', $this->uri, [], $data);
 
         return new PaymentInstance(
             $this->version,
@@ -81,8 +76,8 @@ class PaymentContext extends InstanceContext {
      *
      * @return string Machine friendly representation
      */
-    public function __toString() {
-        $context = array();
+    public function __toString(): string {
+        $context = [];
         foreach ($this->solution as $key => $value) {
             $context[] = "$key=$value";
         }

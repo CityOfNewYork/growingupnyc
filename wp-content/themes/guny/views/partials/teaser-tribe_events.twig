@@ -20,14 +20,14 @@
 
   {% for term in post.terms('tribe_events_cat') %}
   <a href="{{ event_link }}?cat_id={{ function('Wpml\\get_translated_term_id', term.ID, 'tribe_events_cat') }}"
-     class="button--pill {% if function('Wpml\\get_translated_term_slug', term.ID, 'tribe_events_cat') == 'espanol' %}button--pill--es{% endif %}">
+     class="button--pill button--pill--alt {% if function('Wpml\\get_translated_term_slug', term.ID, 'tribe_events_cat') == 'espanol' %}button--pill--es{% endif %}">
      {{ term.name }}
   </a>
   {% endfor %}
 
   {% for term in post.terms('age_group') %}
   <a href="{{ event_link }}?age_id={{ function('Wpml\\get_translated_term_id', term.ID, 'tribe_events_cat') }}"
-     class="button--pill button--pill--alt">
+     class="button--pill bg-{{ term.slug|replace({(['-',language_code]|join):''}) }}--primary">
       {{ term.name }}
   </a>
   {% endfor %}

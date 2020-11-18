@@ -8,7 +8,6 @@ if (!defined('WPINC')) {
 
 require_once plugin_dir_path(__FILE__) . 'ContactMe.php';
 require_once plugin_dir_path(__FILE__) . 'SmsMe.php';
-require_once plugin_dir_path(__FILE__) . 'SmsMeGunyc.php';
 require_once plugin_dir_path(__FILE__) . 'EmailMe.php';
 require_once plugin_dir_path(__FILE__) . 'Functions.php';
 

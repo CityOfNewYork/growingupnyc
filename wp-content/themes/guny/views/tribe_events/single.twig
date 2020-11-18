@@ -1,57 +1,9 @@
 {% extends "base.twig" %}
 
 {% block head_extras %}
+  {% include 'tribe_events/events_schema.twig' with {post: post} %}
 
-  {# Events Schema #}
-  {% if virtual_event %}
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Event",
-        "name": "{{post.title}}",
-        "description": "{{post.get_field('summary')|striptags}}",
-        "startDate": "{{post.start_datetime_formatted}}",
-        "endDate": "{{post.end_datetime_formatted}}",
-        "eventStatus": "http://schema.org/EventScheduled",
-        "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
-        "location": {
-          "@type": "VirtualLocation",
-          "url": "{{site.url}}{{current_url}}"
-          }
-        },
-        "image": [
-          "{{post.image.src}}"
-        ]
-      }
-    </script>
-  {% else %}
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Event",
-        "name": "{{post.title}}",
-        "description": "{{post.get_field('summary')|striptags}}",
-        "startDate": "{{post.start_datetime_formatted}}",
-        "endDate": "{{post.end_datetime_formatted}}",
-        "eventStatus": "http://schema.org/EventCancelled",
-        "location": {
-          "@type": "Place",
-          "name": "{{post.venue}}",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "{{post.venue_address.address}}",
-            "addressLocality": "{{post.venue_address.city}}",
-            "postalCode": "{{post.venue_address.zip}}",
-            "addressRegion": "{{post.venue_address.region}}",
-            "addressCountry": "US"
-          }
-        },
-        "image": [
-          "{{post.image.src}}"
-        ]
-      }
-    </script>
-  {% endif %}
+  
 {% endblock %}
 
 {% block content %}
@@ -84,7 +36,7 @@
 
         {% for term in post.terms('age_group') %}
         <a href="{{ event_link }}/?age_id={{ function('Wpml\\get_translated_term_id', term.ID, 'tribe_events_cat') }}"
-           class="button--pill button--pill--alt">
+           class="button--pill bg-{{ term.slug|replace({(['-',language_code]|join):''})}}--primary">
            {{ term.name }}
         </a>
         {% endfor %}

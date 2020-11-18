@@ -4,7 +4,7 @@
       <span class="text-left">{{__('Pick a language', 'guny')}}</span>
       <button class="button--text close-language-switcher" data-js="close-language-menu">
         <svg class="icon--small" role="img">
-          <title>Close Button</title>
+          <title>{{ __('Close Button', 'guny') }}</title>
           <use xlink:href="#icon-close"></use>
         </svg>
       </button>
@@ -13,19 +13,18 @@
   </div>
   <a class="c-language-switcher__translate" data-js='translate'>
     <svg class="" role="img">
-      <title>Languages List Button</title>
+      <title>{{__('Languages List Button', 'guny')}}</title>
       <use xlink:href="#icon-translate"></use>
     </svg>
     <span>{{__('Translate', 'guny')}}</span>
   </a>
 </div>
 {% if machine_translate %}
-
-<span class="c-language-switcher-logo">
-  <svg class="icon--google" role="img">
-    <title>Powered by Google Translate</title>
-    <use xlink:href="#icon-google-translate"></use>
-  </svg>
-</span>
+  <span class="c-language-switcher-logo">
+    <svg class="icon--google" role="img">
+      <title>{{__('Powered by Google Translate', 'guny')}}</title>
+      <use xlink:href="#icon-google-translate"></use>
+    </svg>
+  </span>
 {% endif %}
 

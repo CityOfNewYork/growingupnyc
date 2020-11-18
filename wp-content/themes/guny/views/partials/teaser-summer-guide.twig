@@ -15,10 +15,10 @@
 
 {% block tags %}
   {% for term in post.terms('summer_programs_cat') %}
-    <a href="/summer-programs/?summer_category={{term.slug}}" class="button--pill bg-vivid-orange">{{term.name}}</a>
+    <a href="/summer-programs/?summer_category={{term.slug}}" class="button--pill button--pill--alt bg-vivid-orange">{{term.name}}</a>
   {% endfor %}
   {% for term in post.terms('age_group') %}
-    <a href="/summer-programs/?ages={{term.slug}}" class="button--pill bg-bright-red button--pill--alt">{{term.name}}</a>
+    <a href="/summer-programs/?ages={{term.slug}}" class="button--pill bg-bright-red bg-{{ term.slug}}--primary">{{term.name}}</a>
   {% endfor %}
 {% endblock %}
 

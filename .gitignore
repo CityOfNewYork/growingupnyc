@@ -3,6 +3,8 @@
 /vendor/*
 !/vendor/autoload.php
 
+!/vendor/altorouter
+!/vendor/asm89
 !/vendor/aws
 !/vendor/composer
 !/vendor/doctrine
@@ -16,6 +18,9 @@
 !/vendor/soundasleep
 !/vendor/symfony
 !/vendor/twilio
+!/vendor/timber
+!/vendor/twig
+!/vendor/upstatement
 
 # Configuration #
 #################

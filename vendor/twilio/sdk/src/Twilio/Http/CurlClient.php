@@ -7,21 +7,22 @@ namespace Twilio\Http;
 use Twilio\Exceptions\EnvironmentException;
 
 class CurlClient implements Client {
-    const DEFAULT_TIMEOUT = 60;
-    protected $curlOptions = array();
+    public const DEFAULT_TIMEOUT = 60;
+    protected $curlOptions = [];
     protected $debugHttp = false;
 
-    public $lastRequest = null;
-    public $lastResponse = null;
+    public $lastRequest;
+    public $lastResponse;
 
-    public function __construct(array $options = array()) {
+    public function __construct(array $options = []) {
         $this->curlOptions = $options;
         $this->debugHttp = \getenv('DEBUG_HTTP_TRAFFIC') === 'true';
     }
 
-    public function request($method, $url, $params = array(), $data = array(),
-                            $headers = array(), $user = null, $password = null,
-                            $timeout = null) {
+    public function request(string $method, string $url,
+                            array $params = [], array $data = [], array $headers = [],
+                            string $user = null, string $password = null,
+                            int $timeout = null): Response {
         $options = $this->options($method, $url, $params, $data, $headers,
                                   $user, $password, $timeout);
 
@@ -54,7 +55,7 @@ class CurlClient implements Client {
             if ($this->debugHttp) {
                 $u = \parse_url($url);
                 $hdrLine = $method . ' ' . $u['path'];
-                if (isset($u['query']) && \strlen($u['query']) > 0 ) {
+                if (isset($u['query']) && \strlen($u['query']) > 0) {
                     $hdrLine = $hdrLine . '?' . $u['query'];
                 }
                 \error_log($hdrLine);
@@ -67,7 +68,7 @@ class CurlClient implements Client {
             }
             $statusCode = \curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-            $responseHeaders = array();
+            $responseHeaders = [];
             $headerLines = \explode("\r\n", $head);
             \array_shift($headerLines);
             foreach ($headerLines as $line) {
@@ -77,8 +78,8 @@ class CurlClient implements Client {
 
             \curl_close($curl);
 
-            if (isset($buffer) && \is_resource($buffer)) {
-                \fclose($buffer);
+            if (isset($options[CURLOPT_INFILE]) && \is_resource($options[CURLOPT_INFILE])) {
+                \fclose($options[CURLOPT_INFILE]);
             }
 
             if ($this->debugHttp) {
@@ -97,29 +98,27 @@ class CurlClient implements Client {
                 \curl_close($curl);
             }
 
-            if (isset($buffer) && \is_resource($buffer)) {
-                \fclose($buffer);
+            if (isset($options[CURLOPT_INFILE]) && \is_resource($options[CURLOPT_INFILE])) {
+                \fclose($options[CURLOPT_INFILE]);
             }
 
             throw $e;
         }
     }
 
-    public function options($method, $url, $params = array(), $data = array(),
-                            $headers = array(), $user = null, $password = null,
-                            $timeout = null) {
-
-        $timeout = \is_null($timeout)
-            ? self::DEFAULT_TIMEOUT
-            : $timeout;
-        $options = $this->curlOptions + array(
+    public function options(string $method, string $url,
+                            array $params = [], array $data = [], array $headers = [],
+                            string $user = null, string $password = null,
+                            int $timeout = null): array {
+        $timeout = $timeout ?? self::DEFAULT_TIMEOUT;
+        $options = $this->curlOptions + [
             CURLOPT_URL => $url,
             CURLOPT_HEADER => true,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_INFILESIZE => Null,
-            CURLOPT_HTTPHEADER => array(),
+            CURLOPT_HTTPHEADER => [],
             CURLOPT_TIMEOUT => $timeout,
-        );
+        ];
 
         foreach ($headers as $key => $value) {
             $options[CURLOPT_HTTPHEADER][] = "$key: $value";
@@ -167,14 +166,9 @@ class CurlClient implements Client {
         return $options;
     }
 
-    public function buildQuery($params) {
-        $parts = array();
-
-        if (\is_string($params)) {
-            return $params;
-        }
-
-        $params = $params ?: array();
+    public function buildQuery(?array $params): string {
+        $parts = [];
+        $params = $params ?: [];
 
         foreach ($params as $key => $value) {
             if (\is_array($value)) {

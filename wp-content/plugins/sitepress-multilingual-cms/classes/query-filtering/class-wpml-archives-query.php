@@ -27,7 +27,7 @@ class WPML_Archives_Query implements IWPML_Action {
 
 	/**
 	 * @param string $join
-	 * @param array $args
+	 * @param array  $args
 	 *
 	 * @return string
 	 */

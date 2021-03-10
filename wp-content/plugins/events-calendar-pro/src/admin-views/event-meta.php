@@ -44,7 +44,7 @@ $events_label_singular = tribe_get_event_label_singular();
 								</label></div>
 						<?php endforeach ?>
 					<?php elseif ( 'dropdown' === $customField['type'] ): ?>
-						<select name="<?php echo esc_attr( $customField['name'] ) ?>" class="tribe-dropdown">
+						<select name="<?php echo esc_attr( $customField['name'] ) ?>" class="tribe-dropdown" data-prevent-clear="true" data-dropdown-css-width="0">
 							<option value="" <?php selected( trim( $val ), '' ) ?>><?php esc_html_e( 'None', 'tribe-events-calendar-pro' ); ?></option>
 							<?php $options = explode( "\r\n", $customField['values'] ) ?>
 							<?php foreach ( $options as $option ): ?>

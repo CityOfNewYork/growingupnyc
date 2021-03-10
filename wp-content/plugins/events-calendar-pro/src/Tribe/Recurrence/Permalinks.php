@@ -26,7 +26,13 @@ class Tribe__Events__Pro__Recurrence__Permalinks {
 		} else {
 			$date = $this->get_date_string( $post );
 		}
+
 		$parent = $this->get_primary_event( $post );
+
+		if ( ! $parent instanceof WP_Post ) {
+			return $post_link;
+		}
+
 		$slug   = $parent->post_name;
 
 		$has_structure = false;

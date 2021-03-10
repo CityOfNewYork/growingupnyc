@@ -95,7 +95,7 @@ class WPML_TM_REST_Jobs extends WPML_REST_Base {
 				'methods'  => WP_REST_Server::READABLE,
 				'callback' => array( $this, 'get_jobs' ),
 				'args'     => array(
-					'local_job_ids' => array(
+					'local_job_ids'   => array(
 						'type'              => 'string',
 						'sanitize_callback' => array( 'WPML_REST_Arguments_Sanitation', 'string' ),
 					),
@@ -120,8 +120,8 @@ class WPML_TM_REST_Jobs extends WPML_REST_Base {
 						'type'              => 'string',
 						'sanitize_callback' => array( 'WPML_REST_Arguments_Sanitation', 'string' ),
 					),
-					'needs_update' => array(
-						'type' => 'string',
+					'needs_update'    => array(
+						'type'              => 'string',
 						'validate_callback' => array( 'WPML_TM_Jobs_Needs_Update_Param', 'is_valid' ),
 					),
 					'limit'           => array(
@@ -264,7 +264,10 @@ class WPML_TM_REST_Jobs extends WPML_REST_Base {
 
 			// $jobEntityToArray :: \WPML_TM_Job_Entity -> [id, type]
 			$jobEntityToArray = function ( \WPML_TM_Job_Entity $job ) {
-				return [ 'id' => $job->get_id(), 'type' => $job->get_type() ];
+				return [
+					'id'   => $job->get_id(),
+					'type' => $job->get_type(),
+				];
 			};
 
 			return \wpml_collect( $request->get_json_params() )

@@ -75,7 +75,7 @@
     {# Section Content #}
     <div class="o-content-container--compact">
       {% if post.summary %}
-        <section class="o-content-container--text s-wysiwyg u-top-spacing u-bottom-spacing-small" data-id="section-summary">
+        <section class="o-content-container--text s-wysiwyg u-top-spacing" data-id="section-summary">
           {{post.get_field('summary')}}
         </section>
       {% endif %}
@@ -86,14 +86,14 @@
         <hr>
       {% endif %}
       {% if post.eligibility %}
-        <section class="o-content-container--text s-wysiwyg u-top-spacing-small u-bottom-spacing-small" data-id="section-eligibility">
+        <section class="o-content-container--text s-wysiwyg u-bottom-spacing-small" data-id="section-eligibility">
           <h2>{{ __("Who is eligible", 'GUNY-Single-Program') }}</h2>
           {{post.get_field('eligibility')}}
         </section>
         <hr>
       {% endif %}
       {% if post.whats_needed or post.how_to_apply %}
-        <section data-id="section-application" class="u-top-spacing-small u-bottom-spacing-small">
+        <section data-id="section-application" class="u-bottom-spacing-small">
           {% if post.whats_needed %}
           <div class="o-content-container--text s-wysiwyg{% if post.how_to_apply %} u-bottom-spacing-small{% endif %}">
             <h2>{{ __("What you need to apply", 'GUNY-Single-Program') }}</h2>
@@ -102,7 +102,7 @@
           <hr>
           {% endif %}
           {% if post.how_to_apply %}
-          <div class="o-content-container--text s-wysiwyg{% if post.whats_needed %} u-top-spacing-small{% endif %}">
+          <div class="o-content-container--text s-wysiwyg">
             <h2>{{ __("How to apply", 'GUNY-Single-Program') }}</h2>
             {{post.get_field('how_to_apply')}}
           </div>
@@ -111,7 +111,7 @@
         <hr>
       {% endif %}
       {% if post.get_help %}
-        <section id="section-help" class="u-top-spacing-small u-bottom-spacing-small o-content-container--text s-wysiwyg">
+        <section id="section-help" class="u-bottom-spacing-small o-content-container--text s-wysiwyg">
           <h2>{{ __("How to get help", 'GUNY-Single-Program') }}</h2>
           {{post.get_field('get_help')}}
         </section>

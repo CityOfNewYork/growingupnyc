@@ -114,12 +114,13 @@
 				if ( ts.updating_picker ) {
 					return;
 				}
-				var date = tribeDateFormat( e.date, "tribeQuery" );
-				ts.date  = date;
+				let maskKey = ts.datepicker_format.toString();
+
+				ts.date = tribeUtils.formatDateWithMoment( e.date, "tribeQuery", maskKey );
 				date_mod = true;
 				if ( tt.no_bar() || tt.live_ajax() && tt.pushstate ) {
 					if ( ! tt.reset_on() ) {
-						tribe_events_bar_weekajax_actions( e, date );
+						tribe_events_bar_weekajax_actions( e, ts.date );
 					}
 				}
 
@@ -419,10 +420,14 @@
 				params = params + '&featured=1';
 			}
 
-			history.replaceState( {
-				'tribe_params'     : params,
-				'tribe_url_params' : td.params
-			}, '', location.href );
+			var isShortcode = $( document.getElementById( 'tribe-events' ) ).is( '.tribe-events-shortcode' );
+
+			if ( ! isShortcode || false !== config.update_urls.shortcode.week ) {
+				history.replaceState({
+					'tribe_params': params,
+					'tribe_url_params': td.params
+				}, '', location.href);
+			}
 
 			$( window ).on( 'popstate', function( event ) {
 
@@ -458,11 +463,7 @@
 				// Update the baseurl
 				tf.update_base_url( $this.attr( 'href' ) );
 
-				if ( '0' !== ts.datepicker_format ) {
-					tf.update_picker( tribeDateFormat( ts.date, td.datepicker_formats.main[ts.datepicker_format] ) );
-				} else {
-					tf.update_picker( ts.date );
-				}
+				tf.update_picker( ts.date );
 
 				tf.pre_ajax( function() {
 					tribe_events_week_ajax_post();
@@ -493,9 +494,10 @@
 					td.cur_url = base_url + ts.date + '/';
 
 				} else if ( $tdate.length && '' !== $tdate.val() ) {
+					let maskKey = ts.datepicker_format.toString();
 
 					if ( '0' !== ts.datepicker_format ) {
-						ts.date = tribeDateFormat( $tdate.bootstrapDatepicker( 'getDate' ), "tribeQuery" );
+						ts.date = tribeUtils.formatDateWithMoment( $tdate.bootstrapDatepicker( 'getDate' ), "tribeQuery", maskKey );
 					} else {
 						ts.date = $tdate.val();
 					}
@@ -680,14 +682,17 @@
 							appended = true;
 						}
 
-						if ( ts.do_string ) {
+						var isShortcode = $( document.getElementById( 'tribe-events' ) ).is( '.tribe-events-shortcode' );
+						var shouldUpdateHistory = ! isShortcode || false !== config.update_urls.shortcode.week;
+
+						if ( ts.do_string && shouldUpdateHistory ) {
 							history.pushState( {
 								'tribe_url_params' : ts.url_params,
 								'tribe_params'     : ts.params
 							}, ts.page_title, appended ? td.cur_url : td.cur_url + '?' + ts.url_params );
 						}
 
-						if ( ts.pushstate ) {
+						if ( ts.pushstate && shouldUpdateHistory ) {
 							history.pushState( {
 								'tribe_url_params' : ts.url_params,
 								'tribe_params'     : ts.params

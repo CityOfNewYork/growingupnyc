@@ -22,7 +22,7 @@ class PostTranslations {
 	use Macroable;
 
 	/**
-	 * @ignore
+	 * @return void
 	 */
 	public static function init() {
 
@@ -40,8 +40,7 @@ class PostTranslations {
 	}
 
 	/**
-	 * @ignore
-	 * @param $fn
+	 * @param callable $fn
 	 *
 	 * @return \Closure
 	 */

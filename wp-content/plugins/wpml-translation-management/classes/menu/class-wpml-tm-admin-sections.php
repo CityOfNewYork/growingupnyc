@@ -83,7 +83,7 @@ class WPML_TM_Admin_Sections {
 	/**
 	 * It returns and filters the admin sections in the TM page.
 	 *
-	 * @return IWPML_TM_Admin_Section_Factory[]
+	 * @return array<\WPML\TM\Menu\TranslationServices\SectionFactory|\WPML_TM_AMS_ATE_Console_Section_Factory|\WPML_TM_Translation_Roles_Section_Factory>
 	 */
 	private function get_admin_section_factories() {
 		$admin_sections_factories = array(

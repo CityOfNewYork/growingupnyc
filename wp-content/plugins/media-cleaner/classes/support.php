@@ -78,7 +78,11 @@ class Meow_WPMC_Support {
 
 		if ( class_exists( 'JustifiedImageGrid' ) ) {
 			array_push( $unsupported, 'Justified Image Grid' );
-		}
+    }
+
+    if ( class_exists( 'Advanced_Ads' ) ) {
+			array_push( $unsupported, 'Advanced Ads' );
+    }
 
     return $unsupported;
   }

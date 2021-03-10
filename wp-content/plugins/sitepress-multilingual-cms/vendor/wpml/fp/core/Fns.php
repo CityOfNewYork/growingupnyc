@@ -134,6 +134,9 @@ class Fns {
 
 	const __ = '__CURRIED_PLACEHOLDER__';
 
+	/**
+	 * @return void
+	 */
 	public static function init() {
 		self::macro( 'always', function ( $value ) {
 			return function () use ( $value ) { return $value; };
@@ -400,6 +403,9 @@ class Fns {
 		} ) );
 	}
 
+	/**
+	 * @return \Closure
+	 */
 	public static function noop() {
 		return function () { };
 	}

@@ -6,13 +6,11 @@ class Meow_WPMC_Rest
 	private $namespace = 'media-cleaner/v1';
 
 	public function __construct( $core, $admin ) {
-		if ( !current_user_can( 'administrator' ) ) {
-			return;
-		} 
 		$this->core = $core;
 		$this->admin = $admin;
 		$this->engine = $core->engine;
 		add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
+		add_filter( 'pre_update_option', array( $this, 'pre_update_option' ), 10, 3 );
 	}
 
 	function rest_api_init() {
@@ -111,6 +109,39 @@ class Meow_WPMC_Rest
 			var_dump($e);
 		}
 	}
+
+	/**
+   * Validates certain option values
+   * @param string $option Option name
+   * @param mixed $value Option value
+   * @return mixed|WP_Error Validated value if no problem
+   */
+  function validate_option( $option, $value ) {
+    switch ( $option ) {
+    case 'wpmc_dirs_filter':
+    case 'wpmc_files_filter':
+      if ( $value && @preg_match( $value, '' ) === false ) return new WP_Error( 'invalid_option', __( "Invalid Regular-Expression", 'media-cleaner' ) );
+      break;
+    }
+    return $value;
+  }
+
+	/**
+   * Filters and performs validation for certain options
+   * @param mixed $value Option value
+   * @param string $option Option name
+   * @param mixed $old_value The current value of the option
+   * @return mixed The actual value to be stored
+   */
+  function pre_update_option( $value, $option, $old_value ) {
+    if ( strpos( $option, 'wpmc_' ) !== 0 ) return $value; // Never touch extraneous options
+    $validated = $this->validate_option( $option, $value );
+    if ( $validated instanceof WP_Error ) {
+      // TODO: Show warning for invalid option value
+      return $old_value;
+    }
+    return $validated;
+  }
 
 	function rest_reset_issues() {
 		$this->core->reset_issues();
@@ -480,16 +511,21 @@ class Meow_WPMC_Rest
 			// FILESYSTEM
 			if ( $entry->type == 0 ) {
 				$entry->thumbnail_url = htmlspecialchars( trailingslashit( $base ) . $entry->path, ENT_QUOTES );
+				$entry->image_url = $entry->thumbnail_url;
 			}
 			// MEDIA
 			else {
 				$attachment_src = wp_get_attachment_image_src( $entry->postId, 'thumbnail' );
+				$attachment_src_large = wp_get_attachment_image_src( $entry->postId, 'large' );
 				$thumbnail = empty( $attachment_src ) ? null : $attachment_src[0];
+				$image = empty( $attachment_src_large ) ? null : $attachment_src_large[0];
 				if ( $filterBy == 'trash' && !empty( $thumbnail ) ) {
 					$new_url = $this->core->clean_url( $thumbnail );
 					$thumbnail = htmlspecialchars( trailingslashit( $base ) . $new_url, ENT_QUOTES );
 				}
 				$entry->thumbnail_url = $thumbnail;
+				$entry->image_url = $image;
+				$entry->title = get_the_title( $entry->postId );
 			}
 		}
 

@@ -7,6 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
+use Tribe__Date_Utils as Dates;
+
 if ( ! class_exists( 'Tribe__Events__Pro__Venue_Widget' ) ) {
 	class Tribe__Events__Pro__Venue_Widget extends WP_Widget {
 		public function __construct() {
@@ -60,6 +62,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Venue_Widget' ) ) {
 				'posts_per_page' => $count,
 				'eventDisplay'   => 'list',
 				'tribe_render_context' => 'widget',
+				'start_date'     => Dates::build_date_object( 'now' ),
 			);
 
 			/**

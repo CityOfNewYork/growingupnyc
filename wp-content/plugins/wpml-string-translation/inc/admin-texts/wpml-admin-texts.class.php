@@ -6,7 +6,6 @@ use \WPML\FP\Obj;
 use function WPML\Container\make;
 use function \WPML\FP\partial;
 use function \WPML\FP\invoke;
-use function \WPML\FP\Strings\match;
 use function \WPML\FP\flip;
 
 class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
@@ -48,7 +47,7 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 		return is_object( $value ) ? object_to_array( $value ) : $value;
 	}
 
-	function icl_register_admin_options( $array, $key = "", $option = array() ) {
+	function icl_register_admin_options( $array, $key = '', $option = array() ) {
 		$option = self::object_to_array( $option );
 		foreach ( $array as $k => $v ) {
 			$option = $key === '' ? array( $k => maybe_unserialize( $this->get_option_without_filtering( $k ) ) ) : $option;
@@ -58,9 +57,11 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 				$context = $this->get_context( $key, $k );
 				if ( $v === '' ) {
 					icl_unregister_string( $context, $key . $k );
-				} elseif ( isset( $option[ $k ] ) && ( $key === '' || preg_match_all( self::FIND_KEYS_REGEX,
-							(string) $key,
-							$opt_key_matches ) > 0 )
+				} elseif ( isset( $option[ $k ] ) && ( $key === '' || preg_match_all(
+					self::FIND_KEYS_REGEX,
+					(string) $key,
+					$opt_key_matches
+				) > 0 )
 				) {
 					icl_register_string( $context, $key . $k, $option[ $k ], true );
 					$vals     = array( $k => 1 );
@@ -68,8 +69,10 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 					foreach ( $opt_keys as $opt ) {
 						$vals = array( $opt => $vals );
 					}
-					update_option( '_icl_admin_option_names',
-						array_merge_recursive( (array) get_option( '_icl_admin_option_names' ), $vals ) );
+					update_option(
+						'_icl_admin_option_names',
+						array_merge_recursive( (array) get_option( '_icl_admin_option_names' ), $vals )
+					);
 					$this->option_names = [];
 				}
 			}
@@ -90,15 +93,15 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 
 		$isRegistered = function ( $context, $name ) use ( $stringNamesPerContext ) {
 			return $stringNamesPerContext->has( $context ) &&
-			       $stringNamesPerContext->get( $context )->contains( $name );
+				   $stringNamesPerContext->get( $context )->contains( $name );
 		};
 
 		$getItems = partial( [ $this, 'getItemModel' ], $isRegistered );
 
 		return $options->map( $getItems )
-		               ->filter()
-		               ->values()
-		               ->reduce( [ $this, 'flattenModelItems' ], wpml_collect() );
+					   ->filter()
+					   ->values()
+					   ->reduce( [ $this, 'flattenModelItems' ], wpml_collect() );
 	}
 
 
@@ -123,11 +126,11 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 	}
 
 	/**
-	 * @param  callable  $isRegistered  - string -> string -> bool
-	 * @param  mixed  $value
-	 * @param  string  $name
-	 * @param  string  $key
-	 * @param  array  $stack
+	 * @param  callable $isRegistered  - string -> string -> bool
+	 * @param  mixed    $value
+	 * @param  string   $name
+	 * @param  string   $key
+	 * @param  array    $stack
 	 *
 	 * @return array
 	 */
@@ -145,7 +148,7 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 			$result['items'] = wpml_collect( $value )
 				->reject( $this->isOnStack( $stack ) )
 				->map( $getSubItem );
-		} else if ( is_string( $value ) || is_numeric( $value ) ) {
+		} elseif ( is_string( $value ) || is_numeric( $value ) ) {
 			$context    = $this->get_context( $key, $name );
 			$stringName = $this->getDBStringName( $key, $name );
 
@@ -154,7 +157,7 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 			$result['name']            = $sub_key;
 			$result['registered']      = $isRegistered( $context, $stringName );
 			$result['hasTranslations'] = ! $result['fixed'] && $result['registered']
-			                             && icl_st_string_has_translations( $context, $stringName );
+										 && icl_st_string_has_translations( $context, $stringName );
 		}
 
 		return $result;
@@ -163,9 +166,11 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 
 	private function isOnStack( array $stack ) {
 		return function ( $item ) use ( $stack ) {
-			return \wpml_collect( $stack )->first( function ( $currentItem ) use ( $item ) {
+			return \wpml_collect( $stack )->first(
+				function ( $currentItem ) use ( $item ) {
 					return $currentItem === $item;
-				} ) !== null;
+				}
+			) !== null;
 		};
 	}
 
@@ -209,7 +214,7 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 		}
 	}
 
-	function icl_st_translate_admin_string( $option_value, $key = "", $name = "", $root_level = true ) {
+	function icl_st_translate_admin_string( $option_value, $key = '', $name = '', $root_level = true ) {
 		if ( $root_level && $this->lock ) {
 			return $option_value;
 		}
@@ -255,9 +260,9 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 	private function isAdminText( $key, $name ) {
 
 		return null !== Either::of( $this->getSubKey( $key, $name ) )
-		                      ->map( [ self::class, 'getKeysParts' ] )
-		                      ->tryCatch( invoke( 'reduce' )->with( flip( Obj::prop() ), $this->getOptionNames() ) )
-		                      ->getOrElse( null );
+							  ->map( [ self::class, 'getKeysParts' ] )
+							  ->tryCatch( invoke( 'reduce' )->with( flip( Obj::prop() ), $this->getOptionNames() ) )
+							  ->getOrElse( null );
 	}
 
 	/**
@@ -268,7 +273,8 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 	 * @return Collection
 	 */
 	public static function getKeysParts( $option ) {
-		return match( self::FIND_KEYS_REGEX, $option )->getOrElse( wpml_collect() );
+		$found = preg_match_all( self::FIND_KEYS_REGEX, $option, $matches );
+		return $found !== false ? wpml_collect( $matches[1] ) : wpml_collect();
 	}
 
 	function clear_cache_for_option( $option_name ) {
@@ -333,7 +339,9 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 	 * @return Closure
 	 */
 	public static function get_migrator() {
-		return function () { wpml_st_load_admin_texts()->migrate_original_values(); };
+		return function () {
+			wpml_st_load_admin_texts()->migrate_original_values();
+		};
 	}
 
 	/**
@@ -347,10 +355,12 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 		$subKey = $this->getSubKey( $key, $name );
 
 		foreach ( $option_value as $k => &$value ) {
-			$value = $this->icl_st_translate_admin_string( $value,
+			$value = $this->icl_st_translate_admin_string(
+				$value,
 				$subKey,
 				$k,
-				false );
+				false
+			);
 		}
 
 		return $option_value;
@@ -412,7 +422,7 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 
 	/**
 	 * @return Collection
-	 * @throws \Auryn\InjectionException
+	 * @throws \WPML\Auryn\InjectionException
 	 */
 	private function getStringNamesPerContext() {
 		$strings = make( WPML_ST_DB_Mappers_Strings::class )
@@ -430,6 +440,6 @@ class WPML_Admin_Texts extends WPML_Admin_Text_Functionality {
 	 */
 	private function isMultiValue( $value ) {
 		return is_array( $value ) ||
-		       ( is_object( $value ) && '__PHP_Incomplete_Class' !== get_class( $value ) );
+			   ( is_object( $value ) && '__PHP_Incomplete_Class' !== get_class( $value ) );
 	}
 }

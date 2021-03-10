@@ -38,7 +38,7 @@
 					<div class="wpallimport-collapsed wpallimport-section">
 						<div class="wpallimport-content-section" style="overflow: hidden; padding-bottom: 0;">
 							<div class="wpallimport-collapsed-header" style="margin-bottom: 15px;">
-                                <?php if ( in_array($post_type, ['comments', 'reviews'] ) ){ ?>
+                                <?php if ( in_array($post_type, ['comments', 'woo_reviews'] ) ){ ?>
                                     <h3><?php _e('Comment', 'wp_all_import_plugin'); ?></h3>
                                 <?php } elseif ( $post_type == 'taxonomies' ){ ?>
 									<h3><?php _e('Name & Description', 'wp_all_import_plugin'); ?></h3>
@@ -51,7 +51,7 @@
 							<div class="wpallimport-collapsed-content" style="padding: 0;">				
 								
 								<div style="padding: 15px 25px 65px;">
-                                    <?php if ( !in_array($post_type, ['comments', 'reviews']) ): ?>
+                                    <?php if ( !in_array($post_type, ['comments', 'woo_reviews']) ): ?>
 									<div id="titlediv" style="margin-bottom:20px;">
 										<div id="titlewrap">
 											<input id="wpallimport-title" class="widefat" type="text" name="title" value="<?php echo esc_attr($post['title']) ?>" placeholder="<?php _e('Drag & drop any element on the right to set the title.', 'wp_all_import_plugin'); ?>"/>
@@ -120,7 +120,7 @@
 				<?php									
 
 					if ( in_array('main', $visible_sections) ) {
-                        if ( in_array($post_type, ['comments', 'reviews']) ) {
+                        if ( in_array($post_type, ['comments', 'woo_reviews']) ) {
                             include( 'template/_comments_main_template.php' );
                         }
                         do_action('pmxi_extend_options_main', $post_type, $post);
@@ -139,7 +139,7 @@
 						if ( $post_type == 'taxonomies' ){
 							include( 'template/_term_meta_template.php' );
 						}
-						elseif ( in_array($post_type, ['comments', 'reviews']) ) {
+						elseif ( in_array($post_type, ['comments', 'woo_reviews']) ) {
                             include( 'template/_comments_meta_template.php' );
                         }
 						else{
@@ -157,7 +157,7 @@
 						if ( $post_type == 'taxonomies' ) {
 							include('template/_term_other_template.php');
 						}
-						elseif ( !in_array($post_type, ['comments', 'reviews']) ) {
+						elseif ( !in_array($post_type, ['comments', 'woo_reviews']) ) {
 							include( 'template/_other_template.php' );
 						}
 						do_action('pmxi_extend_options_other', $post_type, $post);

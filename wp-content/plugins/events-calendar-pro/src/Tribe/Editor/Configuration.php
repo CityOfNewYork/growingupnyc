@@ -7,6 +7,7 @@ class Tribe__Events__Pro__Editor__Configuration implements Tribe__Editor__Config
 	 */
 	public function hook() {
 		add_filter( 'tribe_editor_config', array( $this, 'editor_config' ) );
+		add_filter( 'tribe_block_block_data_event-datetime', [ $this, 'block_data_event_datetime' ], 2, 10 );
 	}
 
 	/**
@@ -144,5 +145,38 @@ class Tribe__Events__Pro__Editor__Configuration implements Tribe__Editor__Config
 		}
 
 		return $defaults;
+	}
+
+	/**
+	 * Add Events Pro block data to the datetime block.
+	 *
+	 * @since 5.1.0
+	 *
+	 * @param array                                         $block_data The block data.
+	 * @param Tribe__Events__Editor__Blocks__Event_Datetime $block      The datetime block class instance.
+	 */
+	public function block_data_event_datetime( $block_data, $block ) {
+		$block_data['attributes'] = array_merge(
+			$block_data['attributes'],
+			[
+				'exceptions'  => [
+					'type'   => 'string',
+					'source' => 'meta',
+					'meta'   => '_tribe_blocks_recurrence_exclusions',
+				],
+				'rules'       => [
+					'type'   => 'string',
+					'source' => 'meta',
+					'meta'   => '_tribe_blocks_recurrence_rules',
+				],
+				'description' => [
+					'type'   => 'string',
+					'source' => 'meta',
+					'meta'   => '_tribe_blocks_recurrence_description',
+				],
+			]
+		);
+
+		return $block_data;
 	}
 }

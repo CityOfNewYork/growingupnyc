@@ -41,7 +41,7 @@ function pmxi_wp_ajax_delete_import(){
 					$custom_type = new stdClass();
 					$custom_type->label = __('Users', 'wp_all_import_plugin');
 					break;
-                case 'reviews':
+                case 'woo_reviews':
                 case 'comments':
                     $custom_type = new stdClass();
                     $custom_type->label = __('Comments', 'wp_all_import_plugin');

@@ -117,7 +117,7 @@ class WPML_Compatibility_Plugin_Fusion_Global_Element_Hooks extends BaseHooks im
 
 		$id = apply_filters( 'wpml_object_id', $override->ID, $override->post_type, true );
 
-		return get_post( $id );
+		return $id === $override->ID ? $override : get_post( $id );
 	}
 
 	/**

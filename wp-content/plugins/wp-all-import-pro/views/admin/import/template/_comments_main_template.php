@@ -7,7 +7,7 @@ switch ($post_type){
         $custom_type->labels->singular_name = __('Comment', 'wp_all_import_plugin');
         $custom_type->labels->plural_name = __('Comments', 'wp_all_import_plugin');
         break;
-    case 'reviews':
+    case 'woo_reviews':
         $custom_type = new stdClass();
         $custom_type->labels = new stdClass();
         $custom_type->labels->name = __('WooCommerce Reviews', 'wp_all_import_plugin');
@@ -36,7 +36,7 @@ switch ($post_type){
                                 </div>
                             </td>
                         </tr>
-                        <?php if ($post_type == 'reviews'): ?>
+                        <?php if ($post_type == 'woo_reviews'): ?>
                             <tr>
                                 <td>
                                     <div class="input">
@@ -56,7 +56,7 @@ switch ($post_type){
                             </td>
                         </tr>
                         <?php endif; ?>
-                        <?php if ($post_type == 'reviews'): ?>
+                        <?php if ($post_type == 'woo_reviews'): ?>
                             <tr>
                                 <td>
                                     <div class="input">
@@ -124,7 +124,7 @@ switch ($post_type){
                                                     </div>
                                                 </div>
                                             </div>
-                                            <?php if ($post_type == 'reviews'): ?>
+                                            <?php if ($post_type == 'woo_reviews'): ?>
                                                 <div class="input">
                                                     <h4 style="margin-bottom:5px;"><?php _e('<b>Verified Status</b>', PMXI_Plugin::LANGUAGE_DOMAIN);?></h4>
                                                     <div class="input">

@@ -4,7 +4,7 @@ namespace WPML\TM\Menu\TranslationServices\Troubleshooting;
 
 class RefreshServices {
 
-	const TEMPLATE = 'refresh-services.twig';
+	const TEMPLATE    = 'refresh-services.twig';
 	const AJAX_ACTION = 'wpml_tm_refresh_services';
 
 	/**
@@ -37,27 +37,36 @@ class RefreshServices {
 	 */
 	private function get_model() {
 		return array(
-			'button_text'          => __( 'Refresh Translation Services', 'wpml-translation-management' ),
-			'nonce'                => wp_create_nonce( self::AJAX_ACTION ),
+			'button_text' => __( 'Refresh Translation Services', 'wpml-translation-management' ),
+			'nonce'       => wp_create_nonce( self::AJAX_ACTION ),
 		);
 	}
 
 	public function refresh_services_ajax_handler() {
 		if ( $this->is_valid_request() ) {
 			if ( $this->refresh_services() ) {
-				wp_send_json_success( array(
-					'message' => __( 'Services Refreshed.', 'wpml-translation-management' ),
-				));
+				wp_send_json_success(
+					array(
+						'message' => __( 'Services Refreshed.', 'wpml-translation-management' ),
+					)
+				);
 			} else {
-				wp_send_json_error( array(
-					'message' => __( 'WPML cannot load the list of translation services. This can be a connection problem. Please wait a minute and reload this page.
- If the problem continues, please contact WPML support.', 'wpml-translation-management' ),
-				));
+				wp_send_json_error(
+					array(
+						'message' => __(
+							'WPML cannot load the list of translation services. This can be a connection problem. Please wait a minute and reload this page.
+ If the problem continues, please contact WPML support.',
+							'wpml-translation-management'
+						),
+					)
+				);
 			}
 		} else {
-			wp_send_json_error( array(
-				'message' => __( 'Invalid Request.', 'wpml-translation-management' ),
-			));
+			wp_send_json_error(
+				array(
+					'message' => __( 'Invalid Request.', 'wpml-translation-management' ),
+				)
+			);
 		}
 	}
 

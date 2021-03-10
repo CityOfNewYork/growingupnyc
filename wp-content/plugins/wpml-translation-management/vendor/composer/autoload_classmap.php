@@ -69,6 +69,8 @@ return array(
     'WPML\\TM\\Jobs\\Query\\QueryBuilder' => $baseDir . '/classes/jobs/query/QueryBuilder.php',
     'WPML\\TM\\Jobs\\Query\\StringQuery' => $baseDir . '/classes/jobs/query/StringQuery.php',
     'WPML\\TM\\Jobs\\Query\\StringsBatchQuery' => $baseDir . '/classes/jobs/query/StringsBatchQuery.php',
+    'WPML\\TM\\Jobs\\TermMeta' => $baseDir . '/classes/translation-jobs/TermMeta.php',
+    'WPML\\TM\\Jobs\\Utils' => $baseDir . '/classes/translation-jobs/Utils.php',
     'WPML\\TM\\Jobs\\Utils\\ElementLink' => $baseDir . '/classes/jobs/utils/ElementLink.php',
     'WPML\\TM\\Jobs\\Utils\\ElementLinkFactory' => $baseDir . '/classes/jobs/utils/ElementLinkFactory.php',
     'WPML\\TM\\Menu\\Dashboard\\PostJobsRepository' => $baseDir . '/classes/menu/dashboard/PostJobsRepository.php',

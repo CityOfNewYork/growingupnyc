@@ -46,14 +46,22 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 		$this->sitepress            = $sitepress;
 
 		add_filter( 'xmlrpc_methods', array( $this, 'custom_xmlrpc_methods' ) );
-		add_action( 'post_submitbox_start', array(
-			$this,
-			'post_submitbox_start'
-		) );
-		add_action( 'icl_ajx_custom_call', array(
-			$this,
-			'ajax_calls'
-		), 10, 2 );
+		add_action(
+			'post_submitbox_start',
+			array(
+				$this,
+				'post_submitbox_start',
+			)
+		);
+		add_action(
+			'icl_ajx_custom_call',
+			array(
+				$this,
+				'ajax_calls',
+			),
+			10,
+			2
+		);
 
 		add_action( 'wpml_minor_edit_for_gutenberg', array( $this, 'gutenberg_minor_edit' ), 10, 0 );
 
@@ -146,10 +154,9 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 			if ( $err ) {
 				$this->enqueue_project_errors( $project );
 			}
-
 		}
 
-		return $err ? false : $tp_job_id; //last $ret
+		return $err ? false : $tp_job_id; // last $ret
 	}
 
 	function server_languages_map( $language_name, $server2plugin = false ) {
@@ -159,7 +166,7 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 		$map = array(
 			'Norwegian Bokmål'     => 'Norwegian',
 			'Portuguese, Brazil'   => 'Portuguese',
-			'Portuguese, Portugal' => 'Portugal Portuguese'
+			'Portuguese, Portugal' => 'Portugal Portuguese',
 		);
 
 		$map = $server2plugin ? array_flip( $map ) : $map;
@@ -216,7 +223,7 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 				new WPML_TM_Jobs_Search_Params(
 					array(
 						'scope' => 'remote',
-						'tp_id' => $tp_id
+						'tp_id' => $tp_id,
 					)
 				)
 			);
@@ -241,7 +248,6 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 				return 1;
 
 			}
-
 		} catch ( Exception $e ) {
 			return new IXR_Error( $e->getCode(), $e->getMessage() );
 		}
@@ -306,20 +312,19 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 	 * @param $cms_id
 	 *
 	 * @return bool|string
-	 *
 	 */
 	function download_and_process_translation( $translation_proxy_job_id, $cms_id ) {
 		global $wpdb;
 
 		if ( empty( $cms_id ) ) { // it's a string
-			//TODO: [WPML 3.3] this should be handled as any other element type in 3.3
+			// TODO: [WPML 3.3] this should be handled as any other element type in 3.3
 			$target = $wpdb->get_var( $wpdb->prepare( "SELECT target FROM {$wpdb->prefix}icl_core_status WHERE rid=%d", $translation_proxy_job_id ) );
 
 			return $this->process_translated_string( $translation_proxy_job_id, $target );
 		} else {
 			$translation_id = $this->cms_id_helper->get_translation_id( $cms_id, TranslationProxy::get_current_service() );
 
-			return ! empty ( $translation_id ) && $this->add_translated_document( $translation_id, $translation_proxy_job_id );
+			return ! empty( $translation_id ) && $this->add_translated_document( $translation_id, $translation_proxy_job_id );
 		}
 	}
 
@@ -408,6 +413,7 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 
 		$wpml_element_type = $element_type;
 		$body              = false;
+		$string_type       = null;
 		if ( strpos( $element_type, 'post' ) === 0 ) {
 			$post_prepared     = $wpdb->prepare( "SELECT * FROM {$wpdb->posts} WHERE ID=%d", array( $element_id ) );
 			$post              = $wpdb->get_row( $post_prepared );
@@ -441,7 +447,10 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 			}
 
 			return $translatedLink !== $link[0]
-				? [ 'from' => $link[0], 'to' => $translatedLink ]
+				? [
+					'from' => $link[0],
+					'to'   => $translatedLink,
+				]
 				: null;
 		};
 
@@ -454,7 +463,9 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 
 		$translatedLinks = $getTranslatedLinks( $links );
 
-		$replaceLink = function ( $body, $link ) { return str_replace( $link['from'], $link['to'], $body ); };
+		$replaceLink = function ( $body, $link ) {
+			return str_replace( $link['from'], $link['to'], $body );
+		};
 
 		$new_body = Fns::reduce( $replaceLink, $body, $translatedLinks );
 
@@ -464,10 +475,14 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 			} elseif ( $element_type == 'string' ) {
 				if ( 'LINK' === $string_type ) {
 					$new_body = str_replace( array( '<a href="', '">removeit</a>' ), array( '', '' ), $new_body );
-					$wpdb->update( $wpdb->prefix . 'icl_string_translations', array(
-						'value'  => $new_body,
-						'status' => ICL_TM_COMPLETE
-					), array( 'id' => $element_id ) );
+					$wpdb->update(
+						$wpdb->prefix . 'icl_string_translations',
+						array(
+							'value'  => $new_body,
+							'status' => ICL_TM_COMPLETE,
+						),
+						array( 'id' => $element_id )
+					);
 					do_action( 'icl_st_add_string_translation', $element_id );
 				} else {
 					$wpdb->update( $wpdb->prefix . 'icl_string_translations', array( 'value' => $new_body ), array( 'id' => $element_id ) );
@@ -489,7 +504,7 @@ class WPML_Pro_Translation extends WPML_TM_Job_Factory_User {
 		switch ( $error_number ) {
 			case E_ERROR:
 			case E_USER_ERROR:
-				throw new Exception ( $error_string . ' [code:e' . $error_number . '] in ' . $error_file . ':' . $error_line );
+				throw new Exception( $error_string . ' [code:e' . $error_number . '] in ' . $error_file . ':' . $error_line );
 			case E_WARNING:
 			case E_USER_WARNING:
 				return true;

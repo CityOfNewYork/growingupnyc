@@ -34,7 +34,7 @@ function pmxi_wp_ajax_auto_detect_sf(){
                     WHERE termmeta.meta_key='".$fieldName."'
                 ", ARRAY_A);
                 break;
-            case 'reviews':
+            case 'woo_reviews':
             case 'comments':
                 $values = $wpdb->get_results("
                     SELECT DISTINCT commentmeta.meta_value

@@ -7,7 +7,7 @@ class WPML_TM_REST_Apply_TP_Translation extends WPML_REST_Base {
 	public function __construct( WPML_TP_Apply_Translations $apply_translations ) {
 		parent::__construct( 'wpml/tm/v1' );
 
-		$this->apply_translations     = $apply_translations;
+		$this->apply_translations = $apply_translations;
 	}
 
 	public function add_hooks() {
@@ -15,7 +15,8 @@ class WPML_TM_REST_Apply_TP_Translation extends WPML_REST_Base {
 	}
 
 	public function register_routes() {
-		parent::register_route( '/tp/apply-translations',
+		parent::register_route(
+			'/tp/apply-translations',
 			array(
 				'methods'  => WP_REST_Server::CREATABLE,
 				'callback' => array( $this, 'apply_translations' ),
@@ -50,7 +51,11 @@ class WPML_TM_REST_Apply_TP_Translation extends WPML_REST_Base {
 	}
 
 	public function map_jobs_to_array( WPML_TM_Job_Entity $job ) {
-		return [ 'id' => $job->get_id(), 'type' => $job->get_type(), 'status' => $job->get_status() ];
+		return [
+			'id'     => $job->get_id(),
+			'type'   => $job->get_type(),
+			'status' => $job->get_status(),
+		];
 	}
 
 	/**

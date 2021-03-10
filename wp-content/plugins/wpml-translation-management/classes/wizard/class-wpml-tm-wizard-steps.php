@@ -125,8 +125,8 @@ class WPML_TM_Wizard_Steps implements IWPML_Action {
 
 		if ( 'false' === $who_will_translate_mode['leaveChoice'] ) {
 			$translation_managers = $this->translation_manager_records->get_users_with_capability();
-			foreach( $translation_managers as $translation_manager ) {
-				if ( ! user_can( $translation_manager->ID, 'manage_options') ) {
+			foreach ( $translation_managers as $translation_manager ) {
+				if ( ! user_can( $translation_manager->ID, 'manage_options' ) ) {
 					$this->translation_manager_records->delete( $translation_manager->ID );
 				}
 			}
@@ -142,7 +142,6 @@ class WPML_TM_Wizard_Steps implements IWPML_Action {
 		if ( 'true' === $who_will_translate_mode['onlyI'] ) {
 			$this->set_current_user_to_translate_all_langs();
 		}
-
 
 		delete_option( WPML_TM_Wizard_Options::CURRENT_STEP );
 		delete_option( WPML_TM_Wizard_Options::WHO_WILL_TRANSLATE_MODE );

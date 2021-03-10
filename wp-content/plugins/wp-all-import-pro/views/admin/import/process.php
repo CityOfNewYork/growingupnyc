@@ -63,7 +63,7 @@
                 $custom_type->labels->name = __('Comments', 'wp_all_import_plugin');
                 $custom_type->labels->singular_name = __('Comment', 'wp_all_import_plugin');
                 break;
-            case 'reviews':
+            case 'woo_reviews':
                 $custom_type = new stdClass();
                 $custom_type->labels = new stdClass();
                 $custom_type->labels->name = __('Review', 'wp_all_import_plugin');
@@ -313,7 +313,7 @@
 							}
 							<?php endif; ?>
 
-                            if (data.skipped > 0 && parseInt(data.skipped) === parseInt(data.skipped_by_hash)) {
+                            if (!parseInt(data.created) && !parseInt(data.updated) && !parseInt(data.skipped) && !parseInt(data.deleted)) {
                                 $('.wpallimport-complete-details').hide();
                             }
                             if (parseInt(data.skipped_by_hash) > 0) {

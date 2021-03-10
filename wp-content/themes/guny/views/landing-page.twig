@@ -96,15 +96,16 @@
 		<div class="o-article js-sticky-article desktop:w-article">
 			{# Section One #}
 			{% for top in post.get_field('landing_page_section') %}
-				<section id="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" class="o-content-container--compact u-top-spacing u-bottom-spacing-small s-wysiwyg bullet">
+				<section id="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" class="o-content-container--compact u-top-spacing s-wysiwyg bullet">
 					{% if loop.index != 1 %}
 						<h2>{{top.landing_page_section_content_heading}}</h2>
 					{% endif %}
 					{{top.landing_page_section_content_body}}
 				</section>
+
         {# Tip #}
         {% if top.landing_page_section_add_tip == "Yes" %}
-          <aside class="c-tip bg-{{colors_primary}} u-lg-gutter o-content-container">
+          <aside class="c-tip bg-{{colors_primary}} o-content-container">
             <div class="c-tip__sticker sticker bg-{{colors_primary}}">
               <svg class="icon--large" role="img" aria-hidden="true">
                 <title>{{__('Tip', 'GUNYC')}}</title>
@@ -118,7 +119,7 @@
 
 				{# call out box #}
 				{% if top.landing_page_section_add_call_out == "Yes" %}
-          <section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
+          <section class="c-block-list c-block-list--shade o-content-container mt-4">
             <div class="{% if top.landing_page_section_add_call_out_to_card == 'Yes' %}c-tip-card{% else %}c-do-list{% endif %}">
               <h3 class="c-tip-card__header">{{top.landing_page_section_call_out_box_title}}</h3>
 								<p>{{top.landing_page_section_call_out_box}}</p>

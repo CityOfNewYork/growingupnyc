@@ -6,7 +6,7 @@ switch ($post_type){
         $custom_type->labels->name = __('Comments', 'wp_all_import_plugin');
         $custom_type->labels->singular_name = __('Comment', 'wp_all_import_plugin');
         break;
-    case 'reviews':
+    case 'woo_reviews':
         $custom_type = new stdClass();
         $custom_type->labels = new stdClass();
         $custom_type->labels->name = __('WooCommerce Reviews', 'wp_all_import_plugin');

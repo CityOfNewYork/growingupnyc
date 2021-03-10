@@ -29,27 +29,42 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 		return $this->tm_records;
 	}
 
-	public function init_hooks(){
-		add_filter( 'wpml_translation_jobs', array(
-			$this,
-			'get_translation_jobs_filter'
-		), 10, 2 );
-		add_filter( 'wpml_translation_job_types', array(
-			$this,
-			'get_translation_job_types_filter'
-		), 10, 2 );
-		add_filter( 'wpml_get_translation_job', array(
-			$this,
-			'get_translation_job_filter'
-		), 10, 3 );
+	public function init_hooks() {
+		add_filter(
+			'wpml_translation_jobs',
+			array(
+				$this,
+				'get_translation_jobs_filter',
+			),
+			10,
+			2
+		);
+		add_filter(
+			'wpml_translation_job_types',
+			array(
+				$this,
+				'get_translation_job_types_filter',
+			),
+			10,
+			2
+		);
+		add_filter(
+			'wpml_get_translation_job',
+			array(
+				$this,
+				'get_translation_job_filter',
+			),
+			10,
+			3
+		);
 	}
 
 	/**
 	 * Creates a local translation job for a given post and target language and returns the job_id of the created job.
 	 *
-	 * @param int    $post_id
-	 * @param string $target_language_code
-	 * @param int|null   $translator_id
+	 * @param int      $post_id
+	 * @param string   $target_language_code
+	 * @param int|null $translator_id
 	 *
 	 * @return int|null
 	 */
@@ -67,11 +82,11 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 		$element_type_prefix = 'post';
 
 		if ( $element_type ) {
-			$element_type_prefix = preg_replace( '#^([^_]+)(.*)$#', "$1", $element_type );
+			$element_type_prefix = preg_replace( '#^([^_]+)(.*)$#', '$1', $element_type );
 		}
 
 		$translation_record = $this->tm_records()
-		                           ->icl_translations_by_element_id_and_type_prefix( $element_id, $element_type_prefix );
+								   ->icl_translations_by_element_id_and_type_prefix( $element_id, $element_type_prefix );
 
 		if ( $translation_record ) {
 			$trid = $translation_record->trid();
@@ -83,7 +98,7 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 						$element_type_prefix,
 						$translation_record->language_code(),
 						array( $target_language_code => 1 )
-					)
+					),
 				),
 				TranslationProxy_Batch::get_generic_batch_name(),
 				array( $target_language_code => $translator_id ? $translator_id : 0 )
@@ -139,7 +154,13 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 		return $row
 			? $this->get_translation_job(
 				$this->job_id_by_trid_and_lang(
-					$row->trid(), $row->language_code() ), false, 0, true )
+					$row->trid(),
+					$row->language_code()
+				),
+				false,
+				0,
+				true
+			)
 			: 0;
 	}
 
@@ -194,7 +215,6 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 					$clause_items[] = "j.job_id $order";
 					break;
 			}
-
 		} else {
 			$clause_items = is_scalar( $order_by ) ? array( $order_by ) : $order_by;
 		}
@@ -219,8 +239,10 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 			$doc     = $iclTranslationManagement->get_post( $post_id, $job->element_type_prefix );
 
 			if ( $doc ) {
-				$element_language_details = $sitepress->get_element_language_details( $post_id,
-					$job->original_post_type );
+				$element_language_details = $sitepress->get_element_language_details(
+					$post_id,
+					$job->original_post_type
+				);
 				$language_from_code       = $element_language_details->language_code;
 				$edit_url                 = get_edit_post_link( $doc->ID );
 
@@ -230,10 +252,12 @@ class WPML_Translation_Job_Factory extends WPML_Abstract_Job_Collection {
 					$edit_url   = apply_filters( 'wpml_document_edit_item_url', $edit_url, $doc->kind_slug, $doc->ID );
 				} else {
 					$post_title = $job->title ? $job->title : $doc->post_title;
-					$edit_url   = apply_filters( 'wpml_document_edit_item_url',
+					$edit_url   = apply_filters(
+						'wpml_document_edit_item_url',
 						$edit_url,
 						$job->original_post_type,
-						$doc->ID );
+						$doc->ID
+					);
 				}
 				$source                                   = $sitepress->get_language_details( $language_from_code );
 				$jobs[ $job_index ]->original_doc_id      = $doc->ID;
@@ -305,17 +329,17 @@ LANG_WITH_FLAG;
 			return array();
 		}
 		list( $prefix_select, $prefix_posts_join ) = $this->left_join_post();
-		$job_id_in    = wpml_prepare_in( $job_ids, '%d' );
-		$limit        = count( $job_ids );
-		$data_query = 'SELECT ' . $this->get_job_select() . ",
+		$job_id_in                                 = wpml_prepare_in( $job_ids, '%d' );
+		$limit                                     = count( $job_ids );
+		$data_query                                = 'SELECT ' . $this->get_job_select() . ",
 								  {$prefix_select}
-						FROM " . $this->get_table_join( count($job_ids) === 1 ) . "
+						FROM " . $this->get_table_join( count( $job_ids ) === 1 ) . "
 			            {$prefix_posts_join}
 						WHERE j.job_id IN ({$job_id_in})
 						  AND iclt.field_type = 'original_id'
 			            LIMIT %d";
-		$data_prepare = $wpdb->prepare( $data_query, $limit );
-		$data         = $wpdb->get_results( $data_prepare );
+		$data_prepare                              = $wpdb->prepare( $data_query, $limit );
+		$data                                      = $wpdb->get_results( $data_prepare );
 
 		if ( false === (bool) $data ) {
 			return array();
@@ -330,9 +354,9 @@ LANG_WITH_FLAG;
 		global $wpdb;
 
 		list( $prefix_select, $prefix_posts_join ) = $this->left_join_post();
-		$cols = "j.job_id, s.batch_id,
+		$cols                                      = "j.job_id, s.batch_id,
 				 {$prefix_select}"
-		        . ( $only_ids === false ? ',' . $this->get_job_select() : '' );
+				. ( $only_ids === false ? ',' . $this->get_job_select() : '' );
 
 		return "SELECT SQL_CALC_FOUND_ROWS
 					{$cols}
@@ -350,7 +374,8 @@ LANG_WITH_FLAG;
 		global $wpdb, $sitepress;
 
 		$where     = $this->build_where_clause( $args );
-		$job_types = $wpdb->get_results( "SELECT DISTINCT
+		$job_types = $wpdb->get_results(
+			"SELECT DISTINCT
 				    SUBSTRING_INDEX(ito.element_type, '_', 1) AS element_type_prefix,
 				    ito.element_type AS original_post_type
                     FROM " . $this->get_table_join() . "
@@ -360,7 +385,8 @@ LANG_WITH_FLAG;
                       ON s.translator_id = u.ID
                     WHERE {$where}
                       AND iclt.field_type = 'original_id'
-                " );
+                "
+		);
 
 		$post_types = $sitepress->get_translatable_documents( true );
 		$post_types = apply_filters( 'wpml_get_translatable_types', $post_types );
@@ -392,7 +418,7 @@ LANG_WITH_FLAG;
 	}
 
 	/**
-	 * @param int $job_id
+	 * @param int   $job_id
 	 * @param array $data
 	 */
 	public function update_job_data( $job_id, array $data ) {

@@ -36,7 +36,7 @@ class WPML_Installation extends WPML_WPDB_And_SP_User {
 	/**
 	 * Sets the locale in the icl_locale_map if it has not yet been set
 	 *
-	 * @param $initial_language_code
+	 * @param string $initial_language_code
 	 */
 	private function maybe_set_locale( $initial_language_code ) {
 		$q          = "SELECT code FROM {$this->wpdb->prefix}icl_locale_map WHERE code=%s";
@@ -174,7 +174,6 @@ class WPML_Installation extends WPML_WPDB_And_SP_User {
 			wp_styles();
 		}
 
-		/** @var WP_Styles text_direction */
 		if ( $this->sitepress->is_rtl( $admin_language ) ) {
 			$GLOBALS['text_direction'] = 'rtl';
 			$GLOBALS['wp_styles']->text_direction = 'rtl';
@@ -244,11 +243,11 @@ class WPML_Installation extends WPML_WPDB_And_SP_User {
 
 	/**
 	 * @param string $display_language
-	 * @param bool $active_only
+	 * @param bool   $active_only
+	 * @param bool   $major_first
+	 * @param string $order_by
 	 *
-	 * @param bool $major_first
-	 *
-	 * @return array
+	 * @return array<string,\stdClass>
 	 */
 	public function refresh_active_lang_cache( $display_language, $active_only = false, $major_first = false,  $order_by = 'english_name' ) {
 		$active_snippet     = $active_only ? " l.active = 1 AND " : "";
@@ -364,7 +363,7 @@ class WPML_Installation extends WPML_WPDB_And_SP_User {
 			)
 		);
 
-		$maxtrid = 1 + $this->wpdb->get_var( "SELECT MAX(trid) FROM {$this->wpdb->prefix}icl_translations" );
+		$maxtrid = 1 + (int) $this->wpdb->get_var( "SELECT MAX(trid) FROM {$this->wpdb->prefix}icl_translations" );
 
 		global $wp_taxonomies;
 		$taxonomies = array_keys( (array) $wp_taxonomies );
@@ -377,7 +376,7 @@ class WPML_Installation extends WPML_WPDB_And_SP_User {
 				";
 			$insert_prepare = $this->wpdb->prepare( $insert_query, array( $element_type, $maxtrid, $lang, $tax ) );
 			$this->wpdb->query( $insert_prepare );
-			$maxtrid = 1 + $this->wpdb->get_var( "SELECT MAX(trid) FROM {$this->wpdb->prefix}icl_translations" );
+			$maxtrid = 1 + (int) $this->wpdb->get_var( "SELECT MAX(trid) FROM {$this->wpdb->prefix}icl_translations" );
 		}
 
 		$this->wpdb->query(

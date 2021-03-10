@@ -239,8 +239,19 @@ class Tribe__Events__Pro__Mini_Calendar {
 
 				$query_args['end_date'] = substr_replace( $this->get_month( Tribe__Date_Utils::DBDATEFORMAT ), Tribe__Date_Utils::get_last_day_of_month( strtotime( $this->get_month() ) ), - 2 );
 				$query_args['end_date'] = tribe_end_of_day( $query_args['end_date'] );
+				$query_args['end_date'] = tribe_end_of_day( esc_attr( tribe_get_request_var( 'eventDate', $query_args['end_date'] ) ) );
 
-				$wp_query = Tribe__Events__Query::getEvents( $query_args, true );
+				/** @var \Tribe__Events__Repositories__Event $events_orm */
+				$events_orm = tribe_events();
+				$events_orm->order_by( 'event_date' );
+				$events_orm->by( 'date_overlaps', tribe_beginning_of_day( $query_args['start_date'] ), tribe_end_of_day( $query_args['end_date'] ) );
+
+				// remove bad args for ORM compat
+				unset( $query_args['start_date'], $query_args['end_date'], $query_args['eventDate'] );
+				$events_orm->by_args( $query_args );
+
+				$wp_query = $events_orm->get_query();
+				$wp_query->get_posts();
 			}
 		}
 	}

@@ -42,12 +42,14 @@ class ServicesRetriever {
 	// buildPartnerServicesSections :: \WPML_TP_Services[] -> string[]
 	private static function buildPartnerServicesSections( $buildSection, $userCountry ) {
 		$headers = [
-			'regular'       => __( 'Partner Translation Services', 'wpml-translation-management' ),
-			'inCountry'     => __(
-				sprintf( 'Partner Translation Services in %s',
+			'regular'        => __( 'Partner Translation Services', 'wpml-translation-management' ),
+			'inCountry'      => __(
+				sprintf(
+					'Partner Translation Services in %s',
 					isset( $userCountry['name'] ) ? $userCountry['name'] : ''
 				),
-				'wpml-translation-management' ),
+				'wpml-translation-management'
+			),
 			'otherCountries' => __(
 				'Other Partner Translation Services from Around the World',
 				'wpml-translation-management'
@@ -61,7 +63,7 @@ class ServicesRetriever {
 		$regularPartnerSection = $partnerSection( Fns::__, $headers['regular'], true );
 
 		// $partnersInCountry  :: $services -> string
-		$partnersInCountry  = $partnerSection( Fns::__, $headers['inCountry'], false );
+		$partnersInCountry = $partnerSection( Fns::__, $headers['inCountry'], false );
 
 		// $partnersOther :: $services -> string
 		$partnersOther = $partnerSection( Fns::__, $headers['otherCountries'], true );
@@ -72,10 +74,13 @@ class ServicesRetriever {
 		$inOtherCountries = Lst::nth( 1 );
 
 		// $splitSections :: [$servicesFromCountry, $otherServices] -> [string, string]
-		$splitSections = Fns::converge( Lst::make(), [
-			pipe( $inUserCountry, $partnersInCountry  ),
-			pipe( $inOtherCountries, $partnersOther ),
-		] );
+		$splitSections = Fns::converge(
+			Lst::make(),
+			[
+				pipe( $inUserCountry, $partnersInCountry ),
+				pipe( $inOtherCountries, $partnersOther ),
+			]
+		);
 
 		// $hasUserCountry :: [$servicesFromCountry, $otherServices] -> bool
 		$hasUserCountry = pipe( $inUserCountry, Logic::isEmpty(), Logic::not() );
@@ -91,19 +96,22 @@ class ServicesRetriever {
 	}
 
 	/**
-	 * @param  callable  $mapService
+	 * @param  callable $mapService
 	 *
 	 * @return callable
 	 */
 	private static function buildSection( $mapService ) {
-		return curryN( 4, function ( $services, $header, $showPopularity, $pagination ) use ( $mapService ) {
-			return [
-				'services'       => Fns::map( Fns::unary($mapService), $services ),
-				'header'         => $header,
-				'showPopularity' => $showPopularity,
-				'pagination'     => $pagination,
-			];
-		} );
+		return curryN(
+			4,
+			function ( $services, $header, $showPopularity, $pagination ) use ( $mapService ) {
+				return [
+					'services'       => Fns::map( Fns::unary( $mapService ), $services ),
+					'header'         => $header,
+					'showPopularity' => $showPopularity,
+					'pagination'     => $pagination,
+				];
+			}
+		);
 	}
 
 	// belongToUserCountry :: \WPML_TP_Service -> bool

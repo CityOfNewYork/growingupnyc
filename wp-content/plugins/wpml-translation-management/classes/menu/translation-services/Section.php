@@ -30,7 +30,7 @@ class Section implements \IWPML_TM_Admin_Section {
 	 * WPML_TM_Translation_Services_Admin_Section constructor.
 	 *
 	 * @param \SitePress $sitepress The SitePress instance.
-	 * @param callable     $template  The template to use.
+	 * @param callable   $template  The template to use.
 	 */
 	public function __construct(
 		\SitePress $sitepress,

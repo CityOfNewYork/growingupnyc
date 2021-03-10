@@ -77,6 +77,12 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 				}
 			}
 
+			/**
+			 * Allows for filtering whether the specified event is recurring or not.
+			 *
+			 * @param boolean $recurring Whether the specified event is recurring or not.
+			 * @param int $post_id The post ID of the specificed event.
+			 */
 			return apply_filters( 'tribe_is_recurring_event', $recurring, $post_id );
 		}
 	}
@@ -106,10 +112,18 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 	 * @return string Summary of recurrence.
 	 */
 	if ( ! function_exists( 'tribe_get_recurrence_text' ) ) {
-		function tribe_get_recurrence_text( $postId = null ) {
-			$postId = Tribe__Events__Main::postIdHelper( $postId );
 
-			return apply_filters( 'tribe_get_recurrence_text', Tribe__Events__Pro__Recurrence__Meta::recurrenceToTextByPost( $postId ) );
+		function tribe_get_recurrence_text( $post_id = null ) {
+
+			$post_id = Tribe__Events__Main::postIdHelper( $post_id );
+
+			/**
+			 * Allow for filtering the textual version of event recurrence.
+			 *
+			 * @param string $recurrence_text The textual version of the specified event's recurrence details.
+			 * @param int $post_id The post ID of the specificed event.
+			 */
+			return apply_filters( 'tribe_get_recurrence_text', Tribe__Events__Pro__Recurrence__Meta::recurrenceToTextByPost( $post_id ), $post_id );
 		}
 	}
 
@@ -118,18 +132,42 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 	 *
 	 * Display link for all occurrences of an event (based on the currently queried event).
 	 *
-	 * @param int $postId (optional)
+	 * @since 3.0.0
+	 * @since 5.0.0 Introduced caching based on Post ID or Parent Post ID.
+	 *
+	 * @param int      $post_id (optional) Which post we are looking for the All link.
+	 * @param booolean $echo    (optional) Should be echoed along side returning the value.
+	 *
+	 * @return string  Link reference to all events in a recurrent event.
 	 */
 	if ( ! function_exists( 'tribe_all_occurences_link' ) ) {
-		function tribe_all_occurences_link( $postId = null, $echo = true ) {
-			$postId = Tribe__Events__Main::postIdHelper( $postId );
-			$tribe_ecp = Tribe__Events__Main::instance();
-			$link = apply_filters( 'tribe_all_occurences_link', $tribe_ecp->getLink( 'all', $postId ) );
-			if ( $echo ) {
-				echo $link;
-			} else {
-				return $link;
+		function tribe_all_occurences_link( $post_id = null, $echo = true ) {
+			$cache_key_links = __FUNCTION__ . ':links';
+			$cache_key_parent_ids = __FUNCTION__ . ':parent_ids';
+			$cache_links = tribe_get_var( $cache_key_links, [] );
+			$cache_parent_ids = tribe_get_var( $cache_key_parent_ids, [] );
+
+			$post_id = Tribe__Events__Main::postIdHelper( $post_id );
+
+			if ( ! isset( $cache_parent_ids[ $post_id ] ) ) {
+				$cache_parent_ids[ $post_id ] = wp_get_post_parent_id( $post_id );
+				tribe_set_var( $cache_key_parent_ids, $cache_parent_ids );
 			}
+
+			// The ID to cache will be diff depending on Parent or child post of recurrent event.
+			$cache_id = $cache_parent_ids[ $post_id ] ? $cache_parent_ids[ $post_id ] : $post_id;
+
+			if ( ! isset( $cache_links[ $cache_id ] ) ) {
+				$tribe_ecp = Tribe__Events__Main::instance();
+				$cache_links[ $cache_id ] = apply_filters( 'tribe_all_occurences_link', $tribe_ecp->getLink( 'all', $post_id ) );
+				tribe_set_var( $cache_key_links, $cache_links );
+			}
+
+			if ( $echo ) {
+				echo $cache_links[ $cache_id ];
+			}
+
+			return $cache_links[ $cache_id ];
 		}
 	}
 
@@ -168,11 +206,30 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 					if ( empty( $parseUrl['scheme'] ) ) {
 						$meta = "http://$meta";
 					}
-					$meta = sprintf( '<a href="%s" target="%s">%s</a>',
+
+					/**
+					 * Filter the target attribute for the event website link
+					 *
+					 * @since 5.1.0
+					 *
+					 * @param string the target attribute string. Defaults to "_self".
+					 */
+					$target = apply_filters( 'tribe_get_event_website_link_target', '_self' );
+
+					/**
+					 * Filter the website link label
+					 *
+					 * @since 3.0
+					 *
+					 * @param string the link label/text.
+					 */
+					$label  = apply_filters( 'tribe_get_event_website_link_label', $url_label );
+
+					$meta   = sprintf( '<a href="%s" target="%s">%s</a>',
 						esc_url( $meta ),
-						apply_filters( 'tribe_get_event_website_link_target', '_self' ),
-						apply_filters( 'tribe_get_event_website_link_label', $url_label )
-						);
+						esc_attr( $target ),
+						esc_html( $label )
+					);
 				}
 
 				// Display $meta if not empty - making a special exception for (string) '0'
@@ -603,65 +660,59 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 	 * @return array the related posts.
 	 */
 	function tribe_get_related_posts( $count = 3, $post = false ) {
-		$post_id    = Tribe__Events__Main::postIdHelper( $post );
-		$tags       = wp_get_post_tags( $post_id, array( 'fields' => 'ids' ) );
-		$categories = wp_get_object_terms( $post_id, Tribe__Events__Main::TAXONOMY, array( 'fields' => 'ids' ) );
-		if ( ! $tags && ! $categories ) {
-			return;
-		}
-		$args = array(
+		$post_id = Tribe__Events__Main::postIdHelper( $post );
+
+		$args = [
 			'posts_per_page' => $count,
-			'post__not_in'   => array( $post_id ),
-			'eventDisplay'   => 'list',
-			'tax_query'      => array( 'relation' => 'OR' ),
-			'meta_key'       => '_EventStartDate',
-			'orderby'        => 'meta_value',
-		);
-		if ( $tags ) {
-			$args['tax_query'][] = array( 'taxonomy' => 'post_tag', 'field' => 'id', 'terms' => $tags );
-		}
-		if ( $categories ) {
-			$args['tax_query'][] = array(
-				'taxonomy' => Tribe__Events__Main::TAXONOMY,
-				'field'    => 'id',
-				'terms'    => $categories,
-			);
+			'start_date' => 'now',
+		];
+		$posts = [];
+
+		$orm_args = tribe_events()->filter_by_related_to( $post_id );
+
+		if ( $orm_args ) {
+			$args = array_merge( $args, $orm_args );
+
+			if ( $args ) {
+				$posts = tribe_get_events( $args );
+			}
 		}
 
-		$args = apply_filters( 'tribe_related_posts_args', $args );
-
-		if ( $args ) {
-			$posts = Tribe__Events__Query::getEvents( $args );
-		} else {
-			$posts = array();
-		}
-
-		return apply_filters( 'tribe_get_related_posts', $posts );
+		/**
+		 * Filter the related posts for the current post.
+		 *
+		 * @param array $posts   The related posts.
+		 * @param int   $post_id Current Post ID.
+		 * @param array $args    Query arguments.
+		 *
+		 * @since 3.2
+		 */
+		return apply_filters( 'tribe_get_related_posts', $posts, $post_id, $args );
 	}
 
 	/**
-	 * show the recurring event info in a tooltip
+	 * Shows the recurring event info in a tooltip, including details of the start/end date/time.
 	 *
-	 * return the details of the start/end date/time
-	 *
-	 * @param int     $post_id
+	 * @param int $post_id
 	 *
 	 * @return string
-	 * @todo remove tribe_events_event_recurring_info_tooltip filter in 3.11
 	 */
 	function tribe_events_recurrence_tooltip( $post_id = null ) {
+
 		if ( empty( $post_id ) ) {
 			$post_id = get_the_ID();
 		}
+
 		$tooltip = '';
+
 		if ( tribe_is_recurring_event( $post_id ) ) {
 			$tooltip .= '<div class="recurringinfo">';
 			$tooltip .= '<div class="event-is-recurring">';
 			$tooltip .= '<span class="tribe-events-divider">|</span>';
-			$tooltip .= sprintf( __( 'Recurring %s', 'tribe-events-calendar-pro' ), tribe_get_event_label_singular() );
+			$tooltip .= sprintf( esc_html__( 'Recurring %s', 'tribe-events-calendar-pro' ), tribe_get_event_label_singular() );
 			$tooltip .= sprintf( ' <a href="%s">%s</a>',
 				esc_url( tribe_all_occurences_link( $post_id, false ) ),
-				__( '(See all)', 'tribe-events-calendar-pro' )
+				esc_html__( '(See all)', 'tribe-events-calendar-pro' )
 			);
 			$tooltip .= '<div id="tribe-events-tooltip-'. $post_id .'" class="tribe-events-tooltip recurring-info-tooltip">';
 			$tooltip .= '<div class="tribe-events-event-body">';
@@ -673,12 +724,13 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			$tooltip .= '</div>';
 		}
 
-		if ( has_filter( 'tribe_events_event_recurring_info_tooltip' ) ) {
-			_deprecated_function( "The 'tribe_get_related_events' filter", '3.9', " the 'tribe_events_recurrence_tooltip' filter" );
-			$tooltip = apply_filters( 'tribe_events_event_recurring_info_tooltip', $tooltip ); // for backwards-compat, will be removed
-		}
-
-		return apply_filters( 'tribe_events_recurrence_tooltip', $tooltip );
+		/**
+		 * Allows filtering the recurrence tooltip HTML for the specified event.
+		 *
+		 * @param string $tooltip The HTML of the recurrence tooltip for the specified event.
+		 * @param int $post_id The post ID of the event.
+		 */
+		return apply_filters( 'tribe_events_recurrence_tooltip', $tooltip, $post_id );
 	}
 
 	/*
@@ -730,6 +782,7 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 				'organizer'      => $post_id,
 				'eventDisplay'   => 'list',
 				'posts_per_page' => apply_filters( 'tribe_events_single_organizer_posts_per_page', 100 ),
+				'starts_after'   => 'now',
 			);
 
 			$html = tribe_include_view_list( $args );

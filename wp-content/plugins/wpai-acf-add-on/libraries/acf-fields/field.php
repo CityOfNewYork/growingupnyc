@@ -144,12 +144,20 @@ abstract class Field implements FieldInterface {
 
             $field_keys = str_replace(array('[',']'), array(''), str_replace('][', ':', $this->getData('field_name')));
 
+			$data['current_field'] = false;
             foreach (explode(":", $field_keys) as $n => $key) {
-
-                $data['current_field'] = empty($post['fields'][$key]) ? $data['current_field'][$key] : $post['fields'][$key];
+	            if (!empty($post['fields'][$key])) {
+		            $data['current_field'] = $post['fields'][$key];
+	            } elseif (isset($data['current_field'][$key])) {
+		            $data['current_field'] = $data['current_field'][$key];
+	            }
 
                 foreach ($options as $option){
-                    $data['current_' . $option] = isset($post[$option][$key]) ? $post[$option][$key] : $data['current_' . $option][$key];
+                    if (!empty($post[$option][$key])) {
+                        $data['current_' . $option] = $post[$option][$key];
+                    } elseif(!empty($data['current_' . $option][$key])) {
+                        $data['current_' . $option] = $data['current_' . $option][$key];
+                    }
                 }
             }
 
@@ -283,7 +291,11 @@ abstract class Field implements FieldInterface {
             case 'v4':
             case 'v5':
                 $fieldDir = PMAI_FIELDS_ROOT_DIR . '/views/'. $this->type;
+	            $fieldDir = apply_filters( 'wp_all_import_acf_field_view_dir', $fieldDir, $this );
+	            $fieldDir = apply_filters( 'wp_all_import_acf_field_view_dir_' . $this->type, $fieldDir, $this );
                 $filePath = $fieldDir . DIRECTORY_SEPARATOR . $this->type . '-' . $this->supportedVersion . '.php';
+	            $filePath = apply_filters( 'wp_all_import_acf_field_view_path', $filePath, $this );
+	            $filePath = apply_filters( 'wp_all_import_acf_field_view_path_' . $this->type, $filePath, $this );
                 if (is_file($filePath)) {
                     // Render field header.
                     $header = $fieldDir . DIRECTORY_SEPARATOR . 'header.php';
@@ -301,6 +313,8 @@ abstract class Field implements FieldInterface {
                 break;
             default:
                 $filePath = __DIR__ . '/views/'. $this->type .'.php';
+	            $filePath = apply_filters( 'wp_all_import_acf_field_view_path', $filePath, $this );
+	            $filePath = apply_filters( 'wp_all_import_acf_field_view_path_' . $this->type, $filePath, $this );
                 if (is_file($filePath)) {
                     include $filePath;
                 }
@@ -314,6 +328,8 @@ abstract class Field implements FieldInterface {
          */
         protected function renderHeader(){
             $filePath = __DIR__ . '/templates/header.php';
+	        $filePath = apply_filters( 'wp_all_import_acf_field_template_header_path', $filePath, $this );
+	        $filePath = apply_filters( 'wp_all_import_acf_field_template_header_path' . $this->type, $filePath, $this );
             if (is_file($filePath)) {
                 extract($this->data);
                 include $filePath;
@@ -325,6 +341,8 @@ abstract class Field implements FieldInterface {
          */
         protected function renderFooter(){
             $filePath = __DIR__ . '/templates/footer.php';
+	        $filePath = apply_filters( 'wp_all_import_acf_field_template_footer_path', $filePath, $this );
+	        $filePath = apply_filters( 'wp_all_import_acf_field_template_footer_path' . $this->type, $filePath, $this );
             if (is_file($filePath)) {
                 include $filePath;
             }
@@ -383,15 +401,18 @@ abstract class Field implements FieldInterface {
         $this->options[$option] = $value;
     }
 
-    /**
-     * @param $xpath
-     * @return array
-     */
-    public function getByXPath($xpath){
+	/**
+	 * @param $xpath
+	 * @param string $suffix
+	 *
+	 * @return array
+	 * @throws \XmlImportException
+	 */
+    public function getByXPath($xpath, $suffix = '') {
         $values = array_fill(0, $this->getOption('count'), "");
         if ($xpath != ""){
             $file = false;
-            $values = \XmlImportParser::factory($this->parsingData['xml'], $this->getOption('base_xpath'), $xpath, $file)->parse();
+            $values = \XmlImportParser::factory($this->parsingData['xml'], $this->getOption('base_xpath') . $suffix, $xpath, $file)->parse();
             @unlink($file);
         }
         return $values;
@@ -433,17 +454,16 @@ abstract class Field implements FieldInterface {
         if (empty($fieldName)) {
             if (function_exists('_acf_get_field_by_id')) {
                 $field = _acf_get_field_by_id($this->data['field']['ID']);
-            }
-            else {
+            } else {
                 $label = sanitize_title( $this->data['field']['label'] );
-                $fieldName = str_replace('-', '_', $label);
+	            $fieldName = str_replace('-', '_', $label);
             }
 
             if (!empty($field)) {
                 $fieldName = $this->data['field']['name'] = $field['name'];
             }
         }
-        return $this->importData['container_name'] . $fieldName;
+        return !isset($this->importData['container_name']) ? $fieldName : $this->importData['container_name'] . $fieldName;
     }
 
     /**

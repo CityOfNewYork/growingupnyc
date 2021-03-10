@@ -21,19 +21,19 @@ class ActivationAjax {
 		add_action( 'wp_ajax_refresh_ts_info', array( $this, 'refresh_ts_info' ) );
 	}
 
-	public function translation_service_toggle( ) {
+	public function translation_service_toggle() {
 		if ( $this->is_valid_request( self::NONCE_ACTION ) ) {
 
-			if ( ! isset( $_POST[ 'service_id' ] ) ) {
+			if ( ! isset( $_POST['service_id'] ) ) {
 				return;
 			}
 
-			$service_id = (int) filter_var( $_POST[ 'service_id' ], FILTER_SANITIZE_NUMBER_INT );
-			$enable = false;
-			$response = false;
+			$service_id = (int) filter_var( $_POST['service_id'], FILTER_SANITIZE_NUMBER_INT );
+			$enable     = false;
+			$response   = false;
 
-			if ( isset( $_POST[ 'enable' ] ) ) {
-				$enable = filter_var( $_POST[ 'enable' ], FILTER_SANITIZE_NUMBER_INT );
+			if ( isset( $_POST['enable'] ) ) {
+				$enable = filter_var( $_POST['enable'], FILTER_SANITIZE_NUMBER_INT );
 			}
 
 			if ( $enable ) {
@@ -115,11 +115,11 @@ class ActivationAjax {
 	 * @return bool
 	 */
 	private function is_valid_request( $action ) {
-		if ( ! isset( $_POST[ 'nonce' ] ) ) {
+		if ( ! isset( $_POST['nonce'] ) ) {
 			return false;
 		}
 
-		return wp_verify_nonce( filter_var( $_POST[ 'nonce' ], FILTER_SANITIZE_FULL_SPECIAL_CHARS ), $action );
+		return wp_verify_nonce( filter_var( $_POST['nonce'], FILTER_SANITIZE_FULL_SPECIAL_CHARS ), $action );
 	}
 
 	private function send_invalid_nonce_error() {

@@ -370,8 +370,8 @@
 
 .otgsi_insert_key .otgsi_site_key_form {
   position: relative;
-  margin: 15px 10px 10px 0;
-  padding: 15px 20px;
+  margin: 5px 0 15px 4px;
+  padding: 24px 24px 30px;
   background-color: #f1f1f1; }
   .otgsi_insert_key .otgsi_site_key_form:before {
     content: '';
@@ -412,5 +412,17 @@
         background: none;
         color: #999;
         text-decoration: underline; }
+  .otgsi_insert_key .otgsi_site_key_form .otgs-installer-register-title {
+    margin-top: 0; }
+  .otgsi_insert_key .otgsi_site_key_form .otgs-installer-register-inputs {
+    margin-top: 24px;
+    margin-bottom: 8px; }
+    .otgsi_insert_key .otgsi_site_key_form .otgs-installer-register-inputs label {
+      font-size: 14px;
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 700; }
+  .otgsi_insert_key .otgsi_site_key_form .otgs-installer-register-link a:hover, .otgsi_insert_key .otgsi_site_key_form .otgs-installer-register-link a:focus {
+    text-decoration: underline; }
 
 /*# sourceMappingURL=admin-notices.css.map */

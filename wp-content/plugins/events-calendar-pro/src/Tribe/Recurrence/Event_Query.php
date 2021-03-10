@@ -46,7 +46,7 @@ class Tribe__Events__Pro__Recurrence__Event_Query {
 	}
 
 	/**
-	 * Attach all the hooks associated with this class
+	 * Attach all the hooks associated with this class.
 	 *
 	 * @since 4.4.26
 	 */
@@ -56,6 +56,20 @@ class Tribe__Events__Pro__Recurrence__Event_Query {
 		}
 
 		$this->setup();
+}
+
+	/**
+	 * Unattach all the hooks associated with this class.
+	 *
+	 * @since 4.7
+	 */
+	public function unhook() {
+		if ( empty( $this->slug ) ) {
+			return;
+		}
+
+		remove_filter( 'posts_where', array( $this, 'include_parent_event' ) );
+		remove_action( 'wp', array( $this, 'verify_all_page' ) );
 	}
 
 	/**
@@ -64,8 +78,7 @@ class Tribe__Events__Pro__Recurrence__Event_Query {
 	 * to obtain the parent post in the same query.
 	 */
 	protected function setup() {
-		unset( $this->query->query_vars['name'] );
-		unset( $this->query->query_vars['tribe_events'] );
+		unset( $this->query->query_vars['name'], $this->query->query_vars['tribe_events'] );
 
 		$this->get_parent_event();
 
@@ -86,8 +99,17 @@ class Tribe__Events__Pro__Recurrence__Event_Query {
 			$this->query->is_post_type_archive = true;
 
 			add_filter( 'posts_where', array( $this, 'include_parent_event' ) );
-			add_filter( 'posts_orderby', array( $this, 'orderby_event_date' ), 100 );
 			add_action( 'wp', array( $this, 'verify_all_page' ) );
+
+			/**
+			 * Hooks into query object after we have done the setup.
+			 *
+			 * @param WP_Query                                    $query       Recurrence query object.
+			 * @param Tribe__Events__Pro__Recurrence__Event_Query $event_query Recurrence event query object.
+			 *
+			 * @since 4.7
+			 */
+			do_action( 'tribe_events_pro_pre_get_posts_recurrence', $this->query, $this );
 		}
 	}
 
@@ -149,58 +171,6 @@ class Tribe__Events__Pro__Recurrence__Event_Query {
 	}
 
 	/**
-	 * Ensure the query orders by event start date rather than post date.
-	 *
-	 * Without this step the results may be in an unexpected order, particularly for more
-	 * complicated recurrence patterns or patterns that have been amended (and the post date
-	 * does not reflect the true date order).
-	 *
-	 * @param string $orderby_sql
-	 *
-	 * @return string
-	 */
-	public function orderby_event_date( $orderby_sql ) {
-		global $wpdb;
-
-		// Run once only!
-		remove_filter( 'posts_orderby', array( $this, 'orderby_event_date' ), 100 );
-
-		// Check if a meta query is set and grab the first query
-		$first_meta_query = Tribe__Utils__Array::get( $this->query->meta_query->queries, array( 0 ), false );
-
-		// If not set or it does not relate to the EventStartDate, bail
-		if (
-			! $first_meta_query
-			|| (
-				'_EventStartDate' !== $first_meta_query['key']
-				&& '_EventStartDateUTC' !== $first_meta_query['key']
-			)
-		) {
-			return $orderby_sql;
-		}
-
-		$original_orderby_sql = $orderby_sql;
-		$expected_orderby = $wpdb->postmeta . '.meta_value ASC';
-
-		// Only modify the orderby fragment if necessary
-		if (
-			! empty( $original_orderby_sql )
-			&& $original_orderby_sql !== $expected_orderby
-		) {
-			$orderby_sql = $expected_orderby . ', ' . $original_orderby_sql;
-		}
-
-		/**
-		 * Provides an opportunity to override the orderby-SQL fragment for the /all/ page.
-		 *
-		 * @param string   $orderby_sql
-		 * @param string   $original_orderby_sql
-		 * @param WP_Query $query
-		 */
-		return apply_filters( 'tribe_events_pro_all_event_query_orderby_sql', $orderby_sql, $original_orderby_sql, $this->query );
-	}
-
-	/**
 	 * Indicates if date filters should be removed for /all/ queries or not.
 	 *
 	 * Removing the date filters will expose past events from the series, while keeping
@@ -218,13 +188,22 @@ class Tribe__Events__Pro__Recurrence__Event_Query {
 	 */
 	protected function should_remove_date_filters() {
 		$remove_date_filters = false;
-
-		$upcoming_instances = tribe_get_events( array(
+		/**
+		 * Filters the query args used for the tribe_get_events() call.
+		 *
+		 * @param array $args List of query args to use in the tribe_get_events() call.
+		 *
+		 * @since 4.7
+		 */
+		$args = apply_filters( 'tribe_events_pro_all_events_query_args', array(
 			'post_parent'    => $this->parent_event->ID,
 			'eventDisplay'   => 'list',
 			'fields'         => 'ids',
 			'posts_per_page' => 1,
+			'starts_after'   => tribe_get_request_var( 'tribe-bar-date', 'now' ),
 		) );
+
+		$upcoming_instances = tribe_get_events( $args );
 
 		if ( ! count( $upcoming_instances ) && $this->query->is_main_query() ) {
 			$remove_date_filters = true;

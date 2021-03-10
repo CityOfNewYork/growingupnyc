@@ -18,12 +18,12 @@ class OptionManager implements \IWPML_Backend_Action {
 	 *
 	 * @param string $group
 	 * @param string $key
-	 * @param mixed $default
+	 * @param mixed  $default
 	 *
 	 * @return mixed
 	 */
 	public function get( $group, $key, $default = false ) {
-		$data =  get_option( $this->get_key( $group ), array() );
+		$data = get_option( $this->get_key( $group ), array() );
 		return isset( $data[ $key ] ) ? $data[ $key ] : $default;
 	}
 
@@ -36,13 +36,13 @@ class OptionManager implements \IWPML_Backend_Action {
 	 *
 	 * @param string $group
 	 * @param string $key
-	 * @param mixed $value
-	 * @param bool $autoload
+	 * @param mixed  $value
+	 * @param bool   $autoload
 	 */
 	public function set( $group, $key, $value, $autoload = true ) {
 		$group_key = $this->get_key( $group );
 
-		$data =  get_option( $group_key, array() );
+		$data         = get_option( $group_key, array() );
 		$data[ $key ] = $value;
 		update_option( $group_key, $data, $autoload );
 
@@ -59,10 +59,10 @@ class OptionManager implements \IWPML_Backend_Action {
 	}
 
 	/**
-	 * @param $group_key
+	 * @param string $group_key
 	 */
 	private function store_group_key( $group_key ) {
-		$group_keys = get_option( $this->group_keys_key, array() );
+		$group_keys   = get_option( $this->group_keys_key, array() );
 		$group_keys[] = $group_key;
 		update_option( $this->group_keys_key, array_unique( $group_keys ) );
 	}

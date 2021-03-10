@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="tribe-events-grid clearfix">
 
-	<h2 class="tribe-events-visuallyhidden"><?php printf( esc_html__( 'Calendar of %s', 'the-events-calendar-pro' ), tribe_get_event_label_plural() ); ?></h2>
+	<h2 class="tribe-events-visuallyhidden"><?php printf( esc_html__( 'Calendar of %s', 'tribe-events-calendar-pro' ), tribe_get_event_label_plural() ); ?></h2>
 
 	<div class="tribe-grid-header clearfix">
 		<div class="column first">

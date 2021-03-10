@@ -20,7 +20,7 @@ class ApiCommunication {
 
 	public function handleClonedSiteError( $response ) {
 		if ( self::SITE_CLONED_ERROR === $response['response']['code'] ) {
-			$parsedResponse =  json_decode( $response['body'], true );
+			$parsedResponse = json_decode( $response['body'], true );
 			if ( isset( $parsedResponse['errors'] ) ) {
 				$this->handleClonedDetection( $parsedResponse['errors'] );
 			}
@@ -43,7 +43,7 @@ class ApiCommunication {
 	}
 
 	private function handleClonedDetection( $error_data ) {
-		$error = array_pop($error_data);
+		$error = array_pop( $error_data );
 		$this->lock->lock( $error );
 	}
 }

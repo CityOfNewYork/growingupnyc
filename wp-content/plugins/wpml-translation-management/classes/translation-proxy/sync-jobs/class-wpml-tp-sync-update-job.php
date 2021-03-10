@@ -22,7 +22,7 @@ class WPML_TP_Sync_Update_Job {
 	 * @param wpdb $wpdb
 	 */
 	public function __construct( wpdb $wpdb, SitePress $sitepress ) {
-		$this->wpdb = $wpdb;
+		$this->wpdb      = $wpdb;
 		$this->sitepress = $sitepress;
 	}
 
@@ -55,7 +55,8 @@ class WPML_TP_Sync_Update_Job {
 					'tp_revision' => $job->get_revision(),
 					'ts_status'   => $this->get_ts_status_in_ts_format( $job ),
 				),
-				array( 'rid' => $job->get_tp_id() ) );
+				array( 'rid' => $job->get_tp_id() )
+			);
 		}
 
 		$data = array(
@@ -86,9 +87,9 @@ class WPML_TP_Sync_Update_Job {
 
 		if ( $job->get_status() === ICL_TM_NOT_TRANSLATED ) {
 			$prev_status = $this->get_job_prev_status( $job_id );
-			if( $prev_status && Relation::propEq( 'needs_update', '1', $prev_status ) ) {
+			if ( $prev_status && Relation::propEq( 'needs_update', '1', $prev_status ) ) {
 				$this->wpdb->update( $this->wpdb->prefix . 'icl_translation_status', $prev_status, [ 'rid' => $job_id ] );
-				$job->set_needs_update(true);
+				$job->set_needs_update( true );
 				return $job;
 			}
 		}
@@ -117,7 +118,7 @@ class WPML_TP_Sync_Update_Job {
 		return $job;
 	}
 
-	private function get_job_prev_status($job_id) {
+	private function get_job_prev_status( $job_id ) {
 		$previous_state = $this->wpdb->get_var(
 			$this->wpdb->prepare(
 				"SELECT _prevstate

@@ -1,3 +1,5 @@
+/*global WPML_core */
+
 var icl_language_pairs_updated = false;
 
 addLoadEvent(function () {
@@ -36,10 +38,13 @@ addLoadEvent(function () {
 
     if (location.href.indexOf("show_config=1") != -1) {
         icl_toggle_account_setup();
-        location.href = location.href.replace("&show_config=1", "");
-        location.href = location.href.replace("?show_config=1&", "&");
-        location.href = location.href.replace("?show_config=1", "");
-        location.href = location.href + '#icl_account_setup';
+
+        var url = WPML_core.sanitize(location.href)
+            .replace("&show_config=1", "")
+            .replace("?show_config=1&", "&")
+            .replace("?show_config=1", "");
+
+        location.href = url + '#icl_account_setup';
     }
 });
 

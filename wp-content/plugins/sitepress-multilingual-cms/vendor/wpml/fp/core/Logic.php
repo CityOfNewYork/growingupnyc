@@ -7,7 +7,7 @@ use WPML\Collect\Support\Traits\Macroable;
 /**
  * @method static callable|bool not( mixed ...$v ) - Curried :: mixed->bool
  * @method static callable|bool isNotNull( mixed ...$v ) - Curried :: mixed->bool
- * @method static callable ifElse( ...$predicate, ...$first, ...$second ) - Curried :: ( a->bool )->callable->callable->callable
+ * @method static callable|mixed ifElse( ...$predicate, ...$first, ...$second, ...$data ) - Curried :: ( a->bool )->callable->callable->callable
  * @method static callable when( ...$predicate, ...$fn ) - Curried :: ( a->bool )->callable->callable
  * @method static callable unless( ...$predicate, ...$fn ) - Curried :: ( a->bool )->callable->callable
  * @method static callable cond( ...$conditions, ...$fn ) - Curried :: [( a->bool ), callable]->callable
@@ -26,6 +26,9 @@ class Logic {
 
 	use Macroable;
 
+	/**
+	 * @return void
+	 */
 	public static function init() {
 		self::macro( 'not', curryN( 1, function ( $v ) { return ! Fns::value( $v ); } ) );
 		self::macro( 'isNotNull', curryN( 1, pipe( 'is_null', self::not() ) ) );

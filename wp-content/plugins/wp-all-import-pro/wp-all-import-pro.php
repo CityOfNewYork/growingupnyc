@@ -3,7 +3,7 @@
 Plugin Name: WP All Import Pro
 Plugin URI: http://www.wpallimport.com/
 Description: The most powerful solution for importing XML and CSV files to WordPress. Import to Posts, Pages, and Custom Post Types. Support for imports that run on a schedule, ability to update existing imports, and much more.
-Version: 4.6.3
+Version: 4.6.5
 Author: Soflyy
 */
 
@@ -13,27 +13,24 @@ if ( ! function_exists( 'is_plugin_active' ) ) {
 
 if ( is_plugin_active('wp-all-import/plugin.php') ){
 
-	function wp_all_import_notice(){
+    include_once __DIR__.'/src/WordPress/AdminNotice.php';
+    include_once __DIR__.'/src/WordPress/AdminErrorNotice.php';
+    $notice = new \Wpai\WordPress\AdminErrorNotice(printf(__('Please de-activate and remove the free version of WP All Import before activating the paid version.', 'wp_all_import_plugin')));
+    $notice->render();
 
-		?>
-		<div class="error"><p>
-			<?php printf(__('Please de-activate and remove the free version of WP All Import before activating the paid version.', 'wp_all_import_plugin'));
-			?>
-		</p></div>
-		<?php
+    deactivate_plugins( str_replace('\\', '/', dirname(__FILE__)) . '/wp-all-import-pro.php' );
 
-		deactivate_plugins( str_replace('\\', '/', dirname(__FILE__)) . '/wp-all-import-pro.php' );
+} else {
 
-	}
+    /**
+     *
+     */
+    define('PMXI_VERSION', '4.6.5');
 
-	add_action('admin_notices', 'wp_all_import_notice');
-
-}
-else {
-
-	define('PMXI_VERSION', '4.6.3');
-
-	define('PMXI_EDITION', 'paid');
+    /**
+     *
+     */
+    define('PMXI_EDITION', 'paid');
 
 	/**
 	 * Plugin root dir with forward slashes as directory separator regardless of actuall DIRECTORY_SEPARATOR value
@@ -427,10 +424,37 @@ else {
         /**
          *  Init langiage text domain.
          */
-        public function init(){
+        public function init() {
 			$this->load_plugin_textdomain();
             self::$is_php_allowed = apply_filters('wp_all_import_is_php_allowed', TRUE);
 		}
+
+        /**
+         * @param $message
+         */
+        public function showNoticeAndDisablePlugin($message){
+            $this->showNotice($message);
+            deactivate_plugins( str_replace('\\', '/', dirname(__FILE__)) . '/wp-all-import-pro.php');
+        }
+
+        /**
+         * @param $message
+         */
+        public function showNotice($message) {
+            $notice = new \Wpai\WordPress\AdminErrorNotice($message);
+            $notice->render();
+        }
+
+        /**
+         * @param $message
+         * @param $noticeId
+         */
+        public function showDismissibleNotice($message, $noticeId) {
+            $notice = new \Wpai\WordPress\AdminDismissibleNotice($message, $noticeId);
+            if(!$notice->isDismissed()) {
+                $notice->render();
+            }
+        }
 
 		/**
 		 * convert imports options
@@ -452,25 +476,21 @@ else {
 			delete_site_transient('update_plugins');
 
 			$imports = new PMXI_Import_List();
-			$post    = new PMXI_Post_Record();
-
 			$templates = new PMXI_Template_List();
-			$template  = new PMXI_Template_Record();
-
 			$is_migrated = get_option('pmxi_is_migrated');
+
+            $commit_migration = true;
 
 			$uploads = wp_upload_dir();
 
 			if ( empty($is_migrated) or version_compare($is_migrated, PMXI_VERSION) < 0 ){ //PMXI_VERSION
 
-				$commit_migration = true;
-
 				if ( empty($is_migrated) ){ // plugin version less than 4.0.0
 
-					if ( is_dir($uploads['basedir'] . '/wpallimport_history') ) {
+					if ( @is_dir($uploads['basedir'] . '/wpallimport_history') ) {
 						wp_all_import_rmdir($uploads['basedir'] . '/wpallimport_history');
 					}
-					if ( is_dir($uploads['basedir'] . '/wpallimport_logs') ) {
+					if ( @is_dir($uploads['basedir'] . '/wpallimport_logs') ) {
 						wp_all_import_rmdir($uploads['basedir'] . '/wpallimport_logs');
 					}
 
@@ -517,28 +537,20 @@ else {
 							$tpl->set(array(
 								'options' => $options
 							))->update();
-
 						}
-
 					}
 
 					$commit_migration = $this->fix_db_schema(); // feature to version 4.0.0
 
-				}
-				else {
+				} else {
 
 					$commit_migration = $this->fix_db_schema();
 
 					foreach ($imports->setColumns($imports->getTable() . '.*')->getBy(array('id !=' => ''))->convertRecords() as $imp){
-
 						$imp->getById($imp->id);
-
 						if ( ! $imp->isEmpty() ){
-
 							$options = $imp->options;
-
 							$this->ver_4x_transition_fix($options, $is_migrated);
-
 							$imp->set(array(
 								'options' => $options
 							))->update();
@@ -546,21 +558,14 @@ else {
 					}
 
 					foreach ($templates->setColumns($templates->getTable() . '.*')->getBy(array('id !=' => ''))->convertRecords() as $tpl){
-
 						$tpl->getById($tpl->id);
-
 						if ( ! $tpl->isEmpty() ) {
-
 							$options = ( empty($tpl->options) ) ? array() : $tpl->options;
-
 							$this->ver_4x_transition_fix($options, $is_migrated);
-
 							$tpl->set(array(
 								'options' => $options
 							))->update();
-
 						}
-
 					}
 				}
 				if ($commit_migration) {
@@ -574,7 +579,9 @@ else {
                     }
                 }
 			}
-			update_option( "wp_all_import_db_version", PMXI_VERSION );
+            if ($commit_migration) {
+                update_option("wp_all_import_db_version", PMXI_VERSION);
+            }
 		}
 
         /**
@@ -675,6 +682,10 @@ else {
             if ( version_compare($version, '4.6.2') < 0  ) {
                 // Disable selective update hashing by default for existing imports.
                 $options['is_selective_hashing'] = 0;
+            }
+            if ( version_compare($version, '4.6.4') < 0  && $options['custom_type'] == 'reviews' && is_plugin_active('woocommerce/woocommerce.php') ) {
+                // Update WooCommerce Reviews custom type.
+                $options['custom_type'] = 'woo_reviews';
             }
 		}
 
@@ -798,7 +809,7 @@ else {
 					do_action('pmxi_action_after');
 					echo '</div>';
 				} else {
-					throw new Exception('There is no previousely buffered content to display.');
+					throw new Exception('There is no previously buffered content to display.');
 				}
 			}
 
@@ -866,8 +877,16 @@ else {
 				// does the class use the namespace prefix?
 				$len = strlen($prefix);
 				if (strncmp($prefix, $className, $len) !== 0) {
-					// no, move to the next registered autoloader
-					return;
+
+				    // Autoload third party libraries also.
+				    $path = self::ROOT_DIR . '/libraries/' . str_replace('\\','/',$className) . '.php';
+
+				    if(is_file($path)){
+				        require_once($path);
+                    }else {
+					    // no, move to the next registered autoloader
+					    return false;
+				    }
 				}
 
 				// get the relative class name
@@ -902,6 +921,7 @@ else {
 				throw new Exception("Specified option is not defined for the plugin");
 			}
 		}
+
 		/**
 		 * Update plugin option value
 		 * @param string $option Parameter name or array of name => value pairs
@@ -1004,6 +1024,7 @@ else {
 							$user_imports = array();
 							$comment_imports = array();
 							$post_imports = array();
+							$taxonomies_imports = array();
 
 							foreach ($imports_list as $import_entry) {
 								$import_id = $import_entry->id;
@@ -1012,9 +1033,11 @@ else {
 								$import_type = $import_options['custom_type'];
 								if ( in_array($import_type, array('import_users', 'shop_customer')) ) {
                                     $user_imports[] = $import_id;
-                                } elseif ( in_array($import_type, array('comments', 'reviews')) ) {
+                                } elseif ( in_array($import_type, array('comments', 'woo_reviews')) ) {
                                     $comment_imports[] = $import_id;
-								} else {
+                                } elseif ( in_array($import_type, array('taxonomies')) ) {
+                                    $taxonomies_imports[] = $import_id;
+                                } else {
 									$post_imports[] = $import_id;
 								}
 							}
@@ -1029,6 +1052,12 @@ else {
                                 $comment_table = $wpdb->base_prefix . 'comments';
                                 $comment_query = 'DELETE FROM ' . $pmxi_post->getTable() . ' WHERE import_id IN (' . implode(',', $comment_imports) . ') AND post_id NOT IN (SELECT comment_ID FROM ' . $comment_table . ')';
                                 $wpdb->query($comment_query);
+                            }
+
+                            if ( ! empty($taxonomies_imports) ) {
+                                $terms_table = $wpdb->base_prefix . 'terms';
+                                $terms_query = 'DELETE FROM ' . $pmxi_post->getTable() . ' WHERE import_id IN (' . implode(',', $taxonomies_imports) . ') AND post_id NOT IN (SELECT term_id FROM ' . $terms_table . ')';
+                                $wpdb->query($terms_query);
                             }
 							
 							if ( ! empty($post_imports) ) {
@@ -1056,7 +1085,8 @@ else {
 				$user_imports = array();
                 $comment_imports = array();
 				$post_imports = array();
-				
+				$taxonomies_imports = array();
+
 				foreach ($imports_list as $import_entry) {
 					$import_id = $import_entry->id;
 					$import = $pmxi_import->getById($import_id);
@@ -1064,8 +1094,10 @@ else {
 					$import_type = $import_options['custom_type'];
 					if ( in_array($import_type, array('import_users', 'shop_customer')) ) {
                         $user_imports[] = $import_id;
-                    } elseif ( in_array($import_type, array('comments', 'reviews')) ) {
+                    } elseif ( in_array($import_type, array('comments', 'woo_reviews')) ) {
                         $comment_imports[] = $import_id;
+                    } elseif ( in_array($import_type, array('taxonomies')) ) {
+                        $taxonomies_imports[] = $import_id;
                     } else {
 						$post_imports[] = $import_id;
 					}
@@ -1081,6 +1113,12 @@ else {
                     $comment_table = $wpdb->base_prefix . 'comments';
                     $comment_query = 'DELETE FROM ' . $pmxi_post->getTable() . ' WHERE import_id IN (' . implode(',', $comment_imports) . ') AND post_id NOT IN (SELECT comment_ID FROM ' . $comment_table . ')';
                     $wpdb->query($comment_query);
+                }
+
+                if ( ! empty($taxonomies_imports) ) {
+                    $terms_table = $wpdb->base_prefix . 'terms';
+                    $terms_query = 'DELETE FROM ' . $pmxi_post->getTable() . ' WHERE import_id IN (' . implode(',', $taxonomies_imports) . ') AND post_id NOT IN (SELECT term_id FROM ' . $terms_table . ')';
+                    $wpdb->query($terms_query);
                 }
 				
 				if ( ! empty($post_imports) ) {
@@ -1111,11 +1149,13 @@ else {
 			$uploads = wp_upload_dir();
 
 			if ( ! is_dir($uploads['basedir'] . DIRECTORY_SEPARATOR . self::LOGS_DIRECTORY) or ! is_writable($uploads['basedir'] . DIRECTORY_SEPARATOR . self::LOGS_DIRECTORY)) {
-				die(sprintf(__('Uploads folder %s must be writable', 'wp_all_import_plugin'), $uploads['basedir'] . DIRECTORY_SEPARATOR . self::LOGS_DIRECTORY));
+                $this->showNoticeAndDisablePlugin(sprintf(__('Uploads folder %s must be writable', 'wp_all_import_plugin'), $uploads['basedir'] . DIRECTORY_SEPARATOR . self::LOGS_DIRECTORY));
+                return false;
 			}
 
 			if ( ! is_dir($uploads['basedir'] . DIRECTORY_SEPARATOR . WP_ALL_IMPORT_UPLOADS_BASE_DIRECTORY) or ! is_writable($uploads['basedir'] . DIRECTORY_SEPARATOR . WP_ALL_IMPORT_UPLOADS_BASE_DIRECTORY)) {
-				die(sprintf(__('Uploads folder %s must be writable', 'wp_all_import_plugin'), $uploads['basedir'] . DIRECTORY_SEPARATOR . WP_ALL_IMPORT_UPLOADS_BASE_DIRECTORY));
+                $this->showNoticeAndDisablePlugin(sprintf(__('Uploads folder %s must be writable', 'wp_all_import_plugin'), $uploads['basedir'] . DIRECTORY_SEPARATOR . WP_ALL_IMPORT_UPLOADS_BASE_DIRECTORY));
+                return false;
 			}
 
 			// create/update required database tables
@@ -1305,15 +1345,16 @@ else {
                 $wpdb->query("DROP INDEX import_id ON {$table};");
             }
 
-			if (!$specified and !empty($grands))
-			{
+			if (!$specified and !empty($grands)) {
 				$wpdb->query("ALTER TABLE {$table} ADD `specified` BOOL NOT NULL DEFAULT 0;");
 			}
 
-			if ( ! empty($wpdb->charset))
-				$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
-			if ( ! empty($wpdb->collate))
-				$charset_collate .= " COLLATE $wpdb->collate";
+			if ( ! empty($wpdb->charset)) {
+                $charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
+            }
+			if ( ! empty($wpdb->collate)) {
+                $charset_collate .= " COLLATE $wpdb->collate";
+            }
 
 			$table_prefix = $this->getTablePrefix();
 
@@ -1341,6 +1382,13 @@ else {
 				'post_type_xpath' => '',
 				'deligate' => '',
 				'wizard_type' => 'new',
+				'ftp_host' => '',
+				'ftp_path' => '',
+				'ftp_root' => '/',
+				'ftp_port' => 21,
+				'ftp_username' => '',
+				'ftp_password' => '',
+				'ftp_private_key' => '',
 				'custom_type' => '',
 				'featured_delim' => ',',
 				'atch_delim' => ',',
@@ -1594,11 +1642,28 @@ else {
 			return (isset($_SERVER["HTTP_ACCEPT"]) && strpos($_SERVER["HTTP_ACCEPT"], 'json')) !== false;
 		}
 
+        /**
+         * Returns ID of current import.
+         *
+         * @return int|bool
+         */
+        public static function getCurrentImportId() {
+            $input = new PMXI_Input();
+            $import_id = $input->get('id');
+            if (empty($import_id)) {
+                $import_id = $input->get('import_id');
+            }
+            return $import_id;
+        }
+
 	}
 
 	PMXI_Plugin::getInstance();
 
-	function wp_all_import_pro_updater(){
+    /**
+     *
+     */
+    function wp_all_import_pro_updater(){
 	    if (class_exists('PMXI_Updater')) {
             // retrieve our license key from the DB
             $wp_all_import_options = get_option('PMXI_Plugin_Options');

@@ -128,8 +128,8 @@ class GunySite extends TimberSite {
       wp_deregister_script('jquery');
       wp_enqueue_script( 'jquery', get_template_directory_uri() . '/src/js/vendor/jquery.js', array(), '2.1.14', false );
       wp_enqueue_script( 'owl-js', get_template_directory_uri() . '/src/js/vendor/owl.carousel.min.js', array(), '2.2.1', true );
-      wp_enqueue_script( 'google-map', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCt1i2Y7wnOQooLwKhxKqbe6IWJl02dtyM', array(), '3', true );
-      wp_enqueue_script( 'google-map-init', get_template_directory_uri() . '/src/js/vendor/google-maps.js', array('google-map', 'jquery'), '0.1', true );
+      // wp_enqueue_script( 'google-map', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCt1i2Y7wnOQooLwKhxKqbe6IWJl02dtyM', array(), '3', true );
+      // wp_enqueue_script( 'google-map-init', get_template_directory_uri() . '/src/js/vendor/google-maps.js', array('google-map', 'jquery'), '0.1', true );
     }
   }
 
@@ -173,7 +173,6 @@ $includes = [
   '/includes/gunyc_meta_boxes.php', // Customize Wordpress meta boxes
   '/includes/gunyc_top_widgets.php', // Add Top Afterschool Widget
   '/includes/gunyc_term_meta.php', // Add custom meta fields to taxonomies
-  '/includes/gunyc_facetwp.php', // Customize Facet WP output
   '/includes/routing.php', // Routing
   '/includes/search.php', // Search functions
   '/includes/gunyc_acf.php', // 404 functions

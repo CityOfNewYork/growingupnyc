@@ -5,9 +5,9 @@
  */
 function pmxi_pmxi_custom_types($custom_types) {
     if ( class_exists('WooCommerce') ) {
-        $custom_types['reviews'] = new stdClass();
-        $custom_types['reviews']->labels = new stdClass();
-        $custom_types['reviews']->labels->name = __('WooCommerce Reviews', PMXI_Plugin::LANGUAGE_DOMAIN);
+        $custom_types['woo_reviews'] = new stdClass();
+        $custom_types['woo_reviews']->labels = new stdClass();
+        $custom_types['woo_reviews']->labels->name = __('WooCommerce Reviews', PMXI_Plugin::LANGUAGE_DOMAIN);
     }
 	if ( class_exists('WooCommerce') && ! class_exists('PMWI_Plugin') ) {
 		if ( ! empty($custom_types['product']) ) $custom_types['product']->labels->name = __('WooCommerce Products','wp_all_import_plugin');

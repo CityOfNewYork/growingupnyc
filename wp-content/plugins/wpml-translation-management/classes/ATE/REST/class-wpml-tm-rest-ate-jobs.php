@@ -28,23 +28,25 @@ class WPML_TM_REST_ATE_Jobs extends WPML_TM_ATE_Required_Rest_Base {
 	}
 
 	function register_routes() {
-		parent::register_route( WPML_TM_ATE_AMS_Endpoints::STORE_JOB,
-		                        array(
-			                        'methods'  => 'POST',
-			                        'callback' => array( $this, 'store_ate_job' ),
-			                        'args'     => array(
-				                        'wpml_job_id'  => array(
-					                        'required'          => true,
-					                        'type'              => 'string',
-					                        'validate_callback' => array( 'WPML_REST_Arguments_Validation', 'integer' ),
-					                        'sanitize_callback' => array( 'WPML_REST_Arguments_Sanitation', 'integer' ),
-				                        ),
-				                        'ate_job_data' => array(
-					                        'required' => true,
-					                        'type'     => 'array',
-				                        ),
-			                        ),
-		                        ) );
+		parent::register_route(
+			WPML_TM_ATE_AMS_Endpoints::STORE_JOB,
+			array(
+				'methods'  => 'POST',
+				'callback' => array( $this, 'store_ate_job' ),
+				'args'     => array(
+					'wpml_job_id'  => array(
+						'required'          => true,
+						'type'              => 'string',
+						'validate_callback' => array( 'WPML_REST_Arguments_Validation', 'integer' ),
+						'sanitize_callback' => array( 'WPML_REST_Arguments_Sanitation', 'integer' ),
+					),
+					'ate_job_data' => array(
+						'required' => true,
+						'type'     => 'array',
+					),
+				),
+			)
+		);
 	}
 
 	/**

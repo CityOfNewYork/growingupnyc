@@ -1,68 +1,77 @@
-# Growing Up NYC
+# Growing Up NYC and Generation NYC
 
-**URL:** [https://growingupnyc.cityofnewyork.us/](https://growingupnyc.cityofnewyork.us/)
+[Growing Up NYC](https://growingupnyc.cityofnewyork.us/) is a mobile-friendly website that makes it simple for families to learn about and access New York City programs, as well as services and activities available through government agencies and community partners.
 
-**Staging URL:** [http://growingupnyc.staging.wpengine.com/](http://growingupnyc.staging.wpengine.com/)
+[Generation NYC](https://growingupnyc.cityofnewyork.us/generationnyc) is a mobile-first resource to help NYC teens and young adults navigate City resources including a variety of topics, free and inexpensive trips, and inspirational youth profiles.
 
-**Local URL:** http://guny.wp.local
+To learn more about Growing Up NYC and Generation NYC, please visit [nyc.gov/opportunity](https://nyc.gov/opportunity)
 
 ---
 ## Technical Details
 
-### CSS
+Growing Up NYC and Generation NYS are public facing sites on a single instance of [WordPress](https://wordpress.org/) hosted on [WPEngine](https://wpengine.com/). Growing Up NYC serves as the parent application with a redirection for Generation NYC and its main content.
 
-CSS files are generated from Sass files. Sass files are organized according to ITCSS principles so that generic, low-specificity selectors appear first in the compiled CSS
-file.
+### Getting Started with Local Instance
 
-#### Sass file structure
+To set up a local instance of this application, we recommend starting off with the [NYCO WordPress Boilerplate](https://github.com/cityofnewyork/nyco-wp-boilerplate) which will provision the dependencies required to get the site up and running. 
 
-- <kbd>/settings</kbd>: Global variables
+**Requirements**
+* [Docker](https://docs.docker.com/compose/wordpress/)
+* [Composer](https://getcomposer.org/)
+* [Node](https://nodejs.org/)
+* [NPM](https://www.npmjs.com/)
 
-- <kbd>/tools</kbd>: Global mixins and functions
+**Steps**
 
-- <kbd>/resets</kbd>: CSS resets/normalizers
+1. Clone the NYCO WordPress Boilerplate, specifying `growingupnyc` as the directory to store the cloned files into. And then change into that directory, removing the git reference and the existing `wp/`. Single command:
+```
+git clone git@github.com:CityOfNewYork/nyco-wp-boilerplate.git growingupnyc && cd growingupnyc && rm -rf .git/ && rm -rf wp/
+```
+2. You should now be in the `growingupnyc` directory. Clone this repository into the `wp/`
+```
+git clone git@github.com:CityOfNewYork/growingupnyc.git wp
+```
+3. Change into the `wp/`
+```
+cd wp/
+```
+4. [wp/] Create a wp-config.php by copying the wp-config-sample.php
+```
+cp wp-config-sample.php wp-config.php
+```
+5. [wp/] Open the wp-config.php and update the database information with information with the configurations in the docker-compose.yml. 
+```
+/** The name of the database for WordPress */
+define( 'DB_NAME', 'wp' );
 
-- <kbd>/base</kbd>: Unclassed HTML elements (generic headings, lists, links) and styles that apply to a single element only (buttons, icons).
+/** MySQL database username */
+define( 'DB_USER', 'wp' );
 
-- <kbd>/objects</kbd>: Design patterns (think OOCSS). Classes prefixed with `o-`
+/** MySQL database password */
+define( 'DB_PASSWORD', 'wp' );
 
-- <kbd>/components</kbd>: Styled pieces of UI. Classes prefixed with `c-`
+/** MySQL hostname */
+define( 'DB_HOST', 'mysql:3306' );
+```
+6. [wp/] Generate new salts and replace the Salts in the wp-config.php.
+7. Uncomment the lines in the wp-config.php with 'WP_SITEURL' and 'WP_HOME'. Save and go back to the command line.
+8. [wp/] Install the plugins and dependencies. Run the composer installer, and return to the project's root directory. Single command:
+```
+composer install && cd ..
+```
+8. If you have a WordPress database sql file, copy it into the `data/`
+9. Build the application
+```
+docker-compose build
+```
+10. Launch the application
+```
+docker-compose up
+```
+11. Navigate to http://localhost:8080
 
-- <kbd>/scopes</kbd>: Style overrides scoped to a particular context. The primary
-use case for this is content that will be entered through the Wordpress WYSIWYG editor. Otherwise, this should be treated as an option of last resort.
 
-- <kbd>/utilities</kbd>: Single-responsibility (or close to single responsibility)
-helper classes. If you've been wanting to use !important, here's your chance.
-
-#### Units
-
-Use `rem` or `em` for any values that should scale in proportion to the user's browser font size. Use `px` for any values that will remain consistent. Widths of layout containers should generally be given in percents so that they will scale with the user's screen width.
-
-#### Grid
-
-The layout is designed on a 12-column grid using [Neat](http://neat.bourbon.io/).
-
-### JavaScript
-
-This project uses Webpack to manage JavaScript modules. The source.dev.js and
-source.js files are automatically generated from the source JS files.
-
-#### JavaScript file structure
-- <kbd>/modules</kbd> - Individual CommonJS or ES6 modules
-- <kbd>/vendor</kbd> - Third-party plugins not installed with npm
-- <kbd>main.js</kbd> - Declares project requirements and initializes modules as
-needed. Most functionality will be written as a module rather than added directly
-to this file.
-
-#### JavaScript libraries
-
-jQuery and Modernizr are available globally and do not have to be required by a module. Modernizr is built via gulp-modernizr. [Lodash](https://lodash.com/) is installed via npm but does need to be imported. You should only import the method(s) you need.
-
-#### ES2015
-
-This project uses Babel to transpile JavaScript so that ES2015 features can (and should) be used where appropriate.
-
-### Structure
+## Structure
 
 <kbd>/wp-admin</kbd>: Wordpress core files. Do not make changes here. They will be overwritten when Wordpress updates.
 
@@ -72,7 +81,7 @@ This project uses Babel to transpile JavaScript so that ES2015 features can (and
 
 - <kbd>/themes</kbd>: Wordpress themes
 
-  - <kbd>/guny</kbd>: Custom theme for GUNY.
+  - <kbd>/guny</kbd>: Custom theme for Growing Up NYC.
 
     - <kbd>/assets</kbd>: Contains static assets for the site. Most of these are compiled from the src directory
 
@@ -98,68 +107,35 @@ This project uses Babel to transpile JavaScript so that ES2015 features can (and
 
 <kbd>/wp-includes</kbd>: More Wordpress core files. Do not make changes here. They will be overwritten when Wordpress updates.
 
-### Shortcodes
-Custom shortcodes are located in <kbd>/wp-content/themes/guny/includes/guny_shortcodes.php</kbd>.
 
-- `[nyc_logo]`: Inserts an NYC svg logo into the text
-- `[button url="" text=""]`: Inserts a link styled to look like a button
+## Theme Updates
 
---
+NPM is used to manage the assets in the Growing Up NYC Theme (scripts, styles, icons, etc.). The steps below walkthrough how to modify the theme's front-end.
 
-## Local Environment Configuration
-
-### Database
-To get a current snapshot of the database, log in to WP Engine and use the phpMyAdmin tool to download an SQL export.
-
-### wp-config
-After cloning the repo and downloading the database, save a copy of `wp-config-sample.php` as `wp-config.php`. (Don't delete the original!) Add the following lines to your wp-config file:
+1. Navigate to the `/wp-content/themes/guny` theme in your terminal using `cd`
+2. Install the theme dependencies
 ```
-define('WP_DEBUG', true);
-define('WP_HOME', 'http://yourlocalurl');
-define('WP_SITEURL', 'http://yourlocalurl');
+npm install
 ```
-Add the database credentials to that file as well.
+3. Changes to files in src/js, src/scss, src/svg can be watched in 2 different modes: development and production
 
-### Development Dependencies
-- Node
-- Composer
+**Development**
+```
+npm run development
+```
+**Production**
+```
+npm run production
+```
+4. To compile all scripts, stylesheets, and icons
+```
+npm run build
+```
 
-Project-level dependences can be found in the theme's `package.json` and `composer.json` files.
+---
 
-Run `npm install` and `composer install` to get dependencies.
+![The Mayor's Office for Economic Opportunity](NYCMOEO_SecondaryBlue256px.png)
 
-# Composer
-Where possible, Wordpress plugins can be installed via composer from WP Packagist and included in the root package `/composer.json`. Theme dependencies can be added in the theme package `wp-content/themes/guny/composer.json`. Composer dependencies are committed to the repository to keep it functioning.
+[The Mayor's Office for Economic Opportunity](http://nyc.gov/opportunity) (NYC Opportunity) is committed to sharing open source software that we use in our products. Feel free to ask questions and share feedback. Follow our team on [Github](https://github.com/orgs/CityOfNewYork/teams/nycopportunity) (if you are part of the [@CityOfNewYork](https://github.com/CityOfNewYork/) organization) or browse our work on [@CityOfNewYork](https://github.com/search?q=nycopportunity) or [@NYCOpportunity](https://github.com/NYCOpportunity).
 
-### Deploying
-To deploy, you will need to log into WP Engine and add your SSH public key under "Git Push". Once your key has been added, follow the instructions at https://wpengine.com/git/ to set up 'git remote' endpoints for staging and production. After your end points have been set up, you will deploy new code by pushing to the `staging` remote, i.e. `git push staging develop`, and then to the `production` remote.
-
---
-
-## Workflow
-1. Create a new branch off of **master** for the feature you are working on. Small tweaks and typo fixes can be made directly in develop, but anything that has its own ticket should be created in a separate branch. (It may make sense to work on several closely related tickets in a single branch so long as they will be tested and deployed together.)
-2. Build the feature.
-3. Run `gulp build` to minify CSS and JS for production. Fix any linting errors that are flagged.
-4. Merge your changes into **develop**.
-```
-git checkout develop
-git pull origin develop
-git merge YOUR_FEATURE_BRANCH
-git push origin develop
-```
-5. Deploy develop to staging
-```
-git push staging develop
-```
-6. Once QA has verified the feature in staging, merge your feature branch into **master**.
-```
-git checkout master
-git pull origin master
-git merge YOUR_FEATURE_BRANCH
-git push origin master
-```
-7. Deploy master to production
-```
-git push production master
-```
-8. Once the ticket is resolved, delete your feature branch (if you pushed it to the GitHub repo).
+**Interested in contributing?** See our open positions on [buildwithnyc.github.io](http://buildwithnyc.github.io/).

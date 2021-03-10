@@ -13,13 +13,13 @@ class WPML_TM_Rest_Jobs_Element_Info {
 
 
 	/**
-	 * @param  WPML_TM_Job_Entity  $job
+	 * @param  WPML_TM_Job_Entity $job
 	 *
 	 * @return array
 	 */
 	public function get( WPML_TM_Job_Entity $job ) {
-		$type = $job->get_type();
-		$id = $job->get_original_element_id();
+		$type   = $job->get_type();
+		$id     = $job->get_original_element_id();
 		$result = [];
 
 		switch ( $type ) {
@@ -102,6 +102,9 @@ class WPML_TM_Rest_Jobs_Element_Info {
 	 * @return array
 	 */
 	private function get_for_title( $title ) {
-		return [ 'name' => $title, 'url' => null ];
+		return [
+			'name' => $title,
+			'url'  => null,
+		];
 	}
 }

@@ -166,8 +166,10 @@ class Tribe__Events__Pro__Editor extends Tribe__Editor {
 	 */
 	public function maybe_load_custom_field_assets() {
 		$screen = get_current_screen();
-		if ( $screen === null || $screen->id !== 'tribe_events_page_tribe-common' ) {
+
+		if ( ! $screen instanceof WP_Screen || $screen->id !== 'tribe_events_page_tribe-common' ) {
 			return false;
+
 		}
 		$tab = tribe_get_request_var( 'tab' );
 		return 'additional-fields' === $tab;

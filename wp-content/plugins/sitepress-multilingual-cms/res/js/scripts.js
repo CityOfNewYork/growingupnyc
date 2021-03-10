@@ -1,4 +1,4 @@
-/*global jQuery, icl_ajx_url, icl_ajx_saved, icl_ajx_error, icl_ajxloaderimg_src */
+/*global jQuery, icl_ajx_url, icl_ajx_saved, icl_ajx_error, icl_ajxloaderimg_src, wpml_core_strings */
 
 var WPML_core = WPML_core || {};
 
@@ -6,21 +6,35 @@ WPML_core.htmlentities = function( s ) {
 	return jQuery("<div/>").text( s ).html()
 };
 
+WPML_core.sanitize = function(s) {
+    return s.replace(/<script[^>]*?>.*?<\/script>/gi, '').
+    replace(/<[\/\!]*?[^<>]*?>/gi, '').
+    replace(/<style[^>]*?>.*?<\/style>/gi, '').
+    replace(/<![\s\S]*?--[ \t\n\r]*>/gi, '').
+    replace(/&nbsp;/g, '');
+};
 
-jQuery(document).ready(function($){
+
+jQuery(function ($) {
+    // Predefine closeText of JQuery UI diaog
+    jQuery.extend(jQuery.ui.dialog.prototype.options, { closeText: wpml_core_strings.dialogCloseText });
+
+
     var catAdder = jQuery('#category-adder');
     if (catAdder.html()) {
         catAdder.prepend('<p>' + icl_cat_adder_msg + '</p>');
     }
-    jQuery('select[name="icl_translation_of"]').change(function(){jQuery('#icl_translate_options').fadeOut();});
+    jQuery('select[name="icl_translation_of"]').change(function () {
+        jQuery('#icl_translate_options').fadeOut();
+    });
     jQuery('#icl_dismiss_help').click(iclDismissHelp);
     jQuery('#icl_dismiss_upgrade_notice').click(iclDismissUpgradeNotice);
-    jQuery(document).delegate('a.icl_toggle_show_translations', 'click', iclToggleShowTranslations);
+    jQuery(document).on('click', 'a.icl_toggle_show_translations', iclToggleShowTranslations);
 
     /* needed for tagcloud */
     oldajaxurl = false;
 
-    jQuery(document).delegate("#icl_make_translatable_submit", 'click', icl_make_translatable);
+    jQuery(document).on('click', "#icl_make_translatable_submit", icl_make_translatable);
 
     jQuery('a.icl_user_notice_hide').click(icl_hide_user_notice);
 
@@ -89,24 +103,24 @@ jQuery(document).ready(function($){
 		locks.on( 'click', click_on_lock );
 	}
 
-	$(document).on('icl-bind-locks', function( e ) {
-		sync_lock_on_custom_fields_and_terms( e.detail );
-	});
+    $(document).on('icl-bind-locks', function (e) {
+        sync_lock_on_custom_fields_and_terms(e.detail);
+    });
 
-	$( '#icl_custom_posts_sync_options .js-wpml-sync-lock, #icl_custom_tax_sync_options .js-wpml-sync-lock' ).on(
-		'click',
-		click_on_lock
-	);
+    $('#icl_custom_posts_sync_options .js-wpml-sync-lock, #icl_custom_tax_sync_options .js-wpml-sync-lock').on(
+        'click',
+        click_on_lock
+    );
 
-	$(document).ready( function() {
-		$( '.js-type-translation-row' ).each( function() {
-			if ( $( this ).find( '.js-disabled-externally' ).length === 3 ) {
-				$( this ).hide();
-			}
-		});
-	});
+    $(function () {
+        $('.js-type-translation-row').each(function () {
+            if ($(this).find('.js-disabled-externally').length === 3) {
+                $(this).hide();
+            }
+        });
+    });
 
-    jQuery(document).delegate('.icl_error_input', 'focus', function() {
+    jQuery(document).on('focus', '.icl_error_input', function () {
         jQuery(this).removeClass('icl_error_input');
     });
 
@@ -182,7 +196,7 @@ jQuery(document).ready(function($){
 	};
 
 	update_icl_untranslated_blog_posts();
-	icl_untranslated_blog_posts.bind('click', update_icl_untranslated_blog_posts);
+	icl_untranslated_blog_posts.on('click', update_icl_untranslated_blog_posts);
 
 	var last_form_id = localStorage.getItem( 'wpml-mlcs-last-form-id' );
 	if ( last_form_id ) {
@@ -290,7 +304,7 @@ function iclDismissHelp(){
     jQuery.ajax({
             type: "POST",
             url: icl_ajx_url,
-            data: "icl_ajx_action=dismiss_help&_icl_nonce=" + jQuery('#icl_dismiss_help_nonce').val(),
+            data: "icl_ajx_action=dismiss_help&_icl_nonce=" + WPML_core.sanitize( jQuery('#icl_dismiss_help_nonce').val() ),
             success: function(msg){
                 thisa.closest('#message').fadeOut();
             }
@@ -303,7 +317,7 @@ function iclDismissUpgradeNotice(){
     jQuery.ajax({
             type: "POST",
             url: icl_ajx_url,
-            data: "icl_ajx_action=dismiss_upgrade_notice&_icl_nonce=" + jQuery('#_icl_nonce_dun').val(),
+            data: "icl_ajx_action=dismiss_upgrade_notice&_icl_nonce=" + WPML_core.sanitize( jQuery('#_icl_nonce_dun').val() ),
             success: function(msg){
                 thisa.parent().parent().fadeOut();
             }
@@ -317,7 +331,7 @@ function iclToggleShowTranslations(){
     jQuery.ajax({
             type: "POST",
             url: icl_ajx_url,
-            data: "icl_ajx_action=toggle_show_translations&_icl_nonce=" + jQuery('#_icl_nonce_tst').val()
+            data: "icl_ajx_action=toggle_show_translations&_icl_nonce=" + WPML_core.sanitize( jQuery('#_icl_nonce_tst').val() )
     });
     return false;
 }
@@ -335,7 +349,8 @@ function icl_copy_from_original(lang, trid){
 		            type:     "POST",
 		            dataType: 'json',
 		            url:      icl_ajx_url,
-		            data:     "icl_ajx_action=copy_from_original&lang=" + lang + '&trid=' + trid + '&content_type=' + content_type + '&excerpt_type=' + excerpt_type + '&_icl_nonce=' + jQuery('#_icl_nonce_cfo_' + trid).val(),
+		            data:     "icl_ajx_action=copy_from_original&lang=" + lang + '&trid=' + trid + '&content_type=' + content_type + '&excerpt_type='
+                        + excerpt_type + '&_icl_nonce=' + WPML_core.sanitize( jQuery('#_icl_nonce_cfo_' + trid).val() ),
 		            success:  function (msg) {
 			            if (msg.error) {
 				            alert(msg.error);
@@ -425,16 +440,16 @@ function icl_make_translatable(){
     jQuery(this).prop('disabled', true);
     jQuery('#icl_div_config').find('.icl_form_success').hide();
     var iclMakeTranslatable = jQuery('[name=icl_make_translatable]:checked');
-    var translate_input = iclMakeTranslatable.val().split(',');
+    var translate_input = WPML_core.sanitize( iclMakeTranslatable.val() ).split(',');
     var translate = parseInt(translate_input[1]);
     var custom_post = translate_input[0];
     var custom_taxs_on = [];
     var custom_taxs_off = [];
     jQuery(".icl_mcs_custom_taxs").each(function(){
         if(jQuery(this).prop('checked')){
-            custom_taxs_on.push(jQuery(this).val());
+            custom_taxs_on.push(WPML_core.sanitize( jQuery(this).val() ));
         }else{
-            custom_taxs_off.push(jQuery(this).val());
+            custom_taxs_off.push(WPML_core.sanitize( jQuery(this).val() ));
         }
 
     });
@@ -444,13 +459,13 @@ function icl_make_translatable(){
     jQuery('.icl_mcs_cfs:checked').each(function(){
         if(!jQuery(this).prop('disabled')){
             cfnames.push(jQuery(this).attr('name').replace(/^icl_mcs_cf_/,''));
-            cfvals.push(jQuery(this).val());
+            cfvals.push(WPML_core.sanitize( jQuery(this).val() ));
         }
     });
 
     jQuery.post(location.href,
         {
-                'post_id'       : jQuery('#post_ID').val(),
+                'post_id'       : WPML_core.sanitize( jQuery('#post_ID').val() ),
                 'icl_action'    : 'icl_mcs_inline',
                 'custom_post'   : custom_post,
                 'translate'     : translate,
@@ -458,7 +473,7 @@ function icl_make_translatable(){
                 'custom_taxs_off[]'   : custom_taxs_off,
                 'cfnames[]'   : cfnames,
                 'cfvals[]'   : cfvals,
-                '_icl_nonce' : jQuery('#_icl_nonce_imi').val()
+                '_icl_nonce' : WPML_core.sanitize( jQuery('#_icl_nonce_imi').val() )
 
         },
         function(data) {
@@ -495,7 +510,7 @@ function icl_hide_user_notice(){
         type: "POST",
         dataType: 'json',
         url: icl_ajx_url,
-        data: "icl_ajx_action=save_user_preferences&user_preferences[notices]["+notice+"]=1&_icl_nonce="+jQuery('#_icl_nonce_sup').val(),
+        data: "icl_ajx_action=save_user_preferences&user_preferences[notices]["+notice+"]=1&_icl_nonce="+WPML_core.sanitize(jQuery('#_icl_nonce_sup').val()),
         success: function(msg){
             thisa.parent().parent().fadeOut();
         }
@@ -508,7 +523,10 @@ function icl_cf_translation_preferences_submit(cf, obj) {
     jQuery.ajax({
         type: 'POST',
         url: ajaxurl,
-        data: 'action=wpml_ajax&icl_ajx_action=wpml_cf_translation_preferences&translate_action='+obj.parent().children('input:[name="wpml_cf_translation_preferences['+cf+']"]:checked').val()+'&'+obj.parent().children('input:[name="wpml_cf_translation_preferences_data_'+cf+'"]').val() + '&_icl_nonce = ' + jQuery('#_icl_nonce_cftpn').val(),
+        data: 'action=wpml_ajax&icl_ajx_action=wpml_cf_translation_preferences&translate_action='+
+            WPML_core.sanitize(obj.parent().children('input:[name="wpml_cf_translation_preferences['+cf+']"]:checked').val())+'&'+
+            WPML_core.sanitize(obj.parent().children('input:[name="wpml_cf_translation_preferences_data_'+cf+'"]').val()) +
+            '&_icl_nonce = ' + WPML_core.sanitize(jQuery('#_icl_nonce_cftpn').val()),
         cache: false,
         error: function(html){
             jQuery('#wpml_cf_translation_preferences_ajax_response_'+cf).html('Error occured');

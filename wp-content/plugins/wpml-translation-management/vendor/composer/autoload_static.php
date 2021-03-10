@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit6ec330c738f59edebcd7256b0f3fab5b
+class ComposerStaticInitcf33eb903f9fa638ba4a6cac437df73a
 {
     public static $files = array (
         'b45b351e6b6f7487d819961fef2fda77' => __DIR__ . '/..' . '/jakeasmith/http_build_url/src/http_build_url.php',
@@ -74,6 +74,8 @@ class ComposerStaticInit6ec330c738f59edebcd7256b0f3fab5b
         'WPML\\TM\\Jobs\\Query\\QueryBuilder' => __DIR__ . '/../..' . '/classes/jobs/query/QueryBuilder.php',
         'WPML\\TM\\Jobs\\Query\\StringQuery' => __DIR__ . '/../..' . '/classes/jobs/query/StringQuery.php',
         'WPML\\TM\\Jobs\\Query\\StringsBatchQuery' => __DIR__ . '/../..' . '/classes/jobs/query/StringsBatchQuery.php',
+        'WPML\\TM\\Jobs\\TermMeta' => __DIR__ . '/../..' . '/classes/translation-jobs/TermMeta.php',
+        'WPML\\TM\\Jobs\\Utils' => __DIR__ . '/../..' . '/classes/translation-jobs/Utils.php',
         'WPML\\TM\\Jobs\\Utils\\ElementLink' => __DIR__ . '/../..' . '/classes/jobs/utils/ElementLink.php',
         'WPML\\TM\\Jobs\\Utils\\ElementLinkFactory' => __DIR__ . '/../..' . '/classes/jobs/utils/ElementLinkFactory.php',
         'WPML\\TM\\Menu\\Dashboard\\PostJobsRepository' => __DIR__ . '/../..' . '/classes/menu/dashboard/PostJobsRepository.php',
@@ -641,7 +643,7 @@ class ComposerStaticInit6ec330c738f59edebcd7256b0f3fab5b
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->classMap = ComposerStaticInit6ec330c738f59edebcd7256b0f3fab5b::$classMap;
+            $loader->classMap = ComposerStaticInitcf33eb903f9fa638ba4a6cac437df73a::$classMap;
 
         }, null, ClassLoader::class);
     }

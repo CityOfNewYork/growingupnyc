@@ -35,12 +35,18 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		$events_per_page = apply_filters( 'tribe_events_single_venue_posts_per_page', 100 );
 
+		/** @var Tribe__Context $context */
+		$context = tribe('context');
+		$display = $context->get( 'event_display' );
+		$date_pivot_key = 'past' === $display ? 'starts_before' : 'starts_after';
+
 		if ( $post_id ) {
 			$args = array(
 				'venue'          => $post_id,
 				'eventDisplay'   => tribe_get_request_var( 'tribe_event_display', 'list' ),
 				'posts_per_page' => $events_per_page,
 				'paged'          => $page,
+				$date_pivot_key  => 'now',
 			);
 
 			$html = tribe_include_view_list( $args );
@@ -87,9 +93,9 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 	/**
 	 * Checks whether a venue has more events in respect to the current page.
 	 *
-	 * @param     int $page     The current page number.
-	 * @param int     $venue_id The current venue post ID; will be read from the global `post` object
-	 *                          if missing.
+	 * @param int       $page     The current page number.
+	 * @param int|array $venue_id The current venue post ID; will be read from the global `post` object
+	 *                            if missing. If the value is an array only the first venue ID will be used.
 	 *
 	 * @return bool `false` if there are no next events, the post is not a venue or the page number is
 	 *              not an int value, `true` if there are next events.
@@ -99,6 +105,7 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			return false;
 		}
 
+		$venue_id = is_array( $venue_id ) ? reset( $venue_id ) : $venue_id;
 		$post_id = Tribe__Main::post_id_helper( $venue_id );
 
 		if ( ! tribe_is_venue( $post_id ) ) {
@@ -107,7 +114,7 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 
 		// Grab Post IDs of events currently on the page to ensure they don't erroneously show up on the "Next" page.
 		$wp_query = tribe_get_global_query_object();
-		$events_on_this_page = is_null( $wp_query ) ? array() : wp_list_pluck( $wp_query->posts, 'ID' );
+		$events_on_this_page = null === $wp_query ? array() : wp_list_pluck( $wp_query->posts, 'ID' );
 
 		/**
 		 * Allow for cusotmizing the number of events that show on each single-venue page.
@@ -118,26 +125,43 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 		 */
 		$events_per_page = apply_filters( 'tribe_events_single_venue_posts_per_page', 100 );
 
+		$display = tribe('context')->get('event_display');
+
+		if ( 'past' === $display ) {
+			if ( 1 === (int) $page ) {
+				// "Next", on the first page of past events, means first page of upcoming events.
+				$date_pivot_key = 'starts_after';
+				$page = 1;
+			} else {
+				$date_pivot_key = 'starts_before';
+				++ $page;
+			}
+		} else {
+			$date_pivot_key = 'starts_after';
+			++ $page;
+		}
+
 		$args = array(
 			'venue'          => $venue_id,
 			'paged'          => $page,
 			'posts_per_page' => $events_per_page,
 			'post__not_in'   => $events_on_this_page,
-			'start_date'     => tribe_format_date( current_time( 'timestamp' ), true, 'Y-m-d H:i:00' ),
+			$date_pivot_key  => 'now',
+			'hidden'         => false,
 		);
 
-		$events = tribe_get_events( $args );
+		$found = tribe_events()->by_args( $args )->found();
 
-		return ! empty( $events );
+		return $found > 0;
 	}
 
 	/**
 	 * Gets the URL to the next or previous events for a venue.
 	 *
-	 * @param int    $page     The current page number
-	 * @param int    $venue_id The current venue post ID; will be read from the global `post` object
-	 *                         if missing.
-	 * @param string $direction Either 'next' or 'prev'.
+	 * @param int       $page      The current page number
+	 * @param int|array $venue_id  The current venue post ID; will be read from the global `post` object
+	 *                             if missing. If passed an array then the first venue ID from the array will be used.
+	 * @param string    $direction Either 'next' or 'prev'.
 	 *
 	 * @return string The absolute ugly URL to the next/previous events for the venue.
 	 */
@@ -150,7 +174,9 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 			return '';
 		}
 
+		$venue_id = is_array( $venue_id ) ? reset( $venue_id ) : $venue_id;
 		$post_id = Tribe__Main::post_id_helper( $venue_id );
+
 		if ( ! tribe_is_venue( $post_id ) ) {
 			return '';
 		}

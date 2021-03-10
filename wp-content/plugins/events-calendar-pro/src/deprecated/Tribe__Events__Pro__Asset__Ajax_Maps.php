@@ -38,7 +38,6 @@ class Tribe__Events__Pro__Asset__Ajax_Maps extends Tribe__Events__Asset__Abstrac
 
 		wp_enqueue_script( 'tribe-events-pro-geoloc' );
 
-		$geoloc = Tribe__Events__Pro__Geo_Loc::instance();
 		$data   = array(
 			'ajaxurl'  => admin_url( 'admin-ajax.php', ( is_ssl() ? 'https' : 'http' ) ),
 			'nonce'    => wp_create_nonce( 'tribe_geosearch' ),

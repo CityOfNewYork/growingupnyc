@@ -1,5 +1,8 @@
 <?php
 
+use Tribe__Date_Utils as Dates;
+use Tribe__Events__Timezones as Timezones;
+
 /**
  * Class Tribe__Events__Pro__Recurrence__Series_Splitter
  */
@@ -24,6 +27,7 @@ class Tribe__Events__Pro__Recurrence__Series_Splitter {
 			'order'          => 'ASC',
 			'fields'         => 'ids',
 			'posts_per_page' => - 1,
+			'tribe_remove_date_filters' => true,
 		) );
 
 		$children_to_move_to_new_series = array();
@@ -55,10 +59,16 @@ class Tribe__Events__Pro__Recurrence__Series_Splitter {
 			$recurrences['rules'][ $rule_key ]->setMinDate( $earliest_date );
 			$recurrences['rules'][ $rule_key ]->setMaxDate( $latest_date );
 			$dates = $recurrences['rules'][ $rule_key ]->getDates();
+			$event_timezone = Timezones::get_event_timezone_string( $parent_id );
+			$formatted_start_dates = array_map( static function ( array $event_data ) use ( $event_timezone )
+			{
+				return Dates::build_date_object( $event_data['timestamp'], $event_timezone )
+				            ->format( Dates::DBDATETIMEFORMAT );
+			}, $dates );
 
 			// count the number of child events that are in this rule that are being moved
 			foreach ( $children_to_move_to_new_series as $child_id => $child_date ) {
-				$child_movements_by_rule[ $rule_key ] += (int) in_array( $child_date, $dates );
+				$child_movements_by_rule[ $rule_key ] += (int) in_array( $child_date, $formatted_start_dates,true );
 			}
 
 			if ( 'After' === $rule['end-type'] ) {

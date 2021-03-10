@@ -8,7 +8,7 @@
  * You can override this template in your own theme by creating a file at
  * [your-theme]/tribe-events/pro/widgets/modules/single-event.php
  *
- * @version 4.4.18
+ * @version 5.0.0
  *
  * @package TribeEventsCalendarPro
  */
@@ -88,7 +88,7 @@ if ( isset( $address ) && $address && tribe_get_address() != '' ) {
 		<?php
 		if (
 			isset( $instance['tribe_is_list_widget'] )
-			&& date( 'm', $post_date ) != date( 'm', current_time( 'timestamp' ) )
+			&& date( 'my', $post_date ) != date( 'my', current_time( 'timestamp' ) )
 		) :
 			?>
 			<span class="list-dayname">

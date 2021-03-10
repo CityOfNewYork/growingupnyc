@@ -2,17 +2,17 @@
 
 (function($) {
 
-	$('document').ready(function() {
+    $(function () {
 
-		var alert = $('.js-wpml-tm-post-edit-alert');
+        var alert = $('.js-wpml-tm-post-edit-alert');
 
-		if (0 === alert.length) {
-			return;
-		}
+        if (0 === alert.length) {
+            return;
+        }
 
-		alert.dialog({
-			dialogClass: 'otgs-ui-dialog',
-			closeOnEscape: false,
+        alert.dialog({
+                         dialogClass  : 'otgs-ui-dialog',
+                         closeOnEscape: false,
 			draggable: false,
 			modal: true,
 			minWidth: 520,

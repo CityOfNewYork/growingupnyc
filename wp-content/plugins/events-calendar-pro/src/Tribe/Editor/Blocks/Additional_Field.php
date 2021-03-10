@@ -56,11 +56,9 @@ class Tribe__Events__Pro__Editor__Blocks__Additional_Field extends Tribe__Editor
 	 */
 	public function default_attributes() {
 		return array(
-			'isPristine' => true,
-			'type'       => 'text',
-			'label'      => '',
-			'metaKey'    => '',
-			'output'     => '',
+			'type'  => 'text',
+			'label' => '',
+			'value' => '',
 		);
 	}
 
@@ -74,7 +72,17 @@ class Tribe__Events__Pro__Editor__Blocks__Additional_Field extends Tribe__Editor
 	 * @return string
 	 */
 	public function render( $attributes = array() ) {
-		$args['attributes'] = $this->attributes( $attributes );
+		$attributes = $this->get_meta_data( $attributes );
+
+		// Return early if no meta key is found.
+		if ( empty( $attributes['meta_key'] ) ) {
+			return;
+		}
+
+		$attributes['value'] = get_post_meta( get_the_ID(), $attributes['meta_key'], true );
+		$attributes          = $this->set_checkbox_attributes( $attributes );
+		$args['attributes']  = $this->attributes( $attributes );
+
 		// Add the rendering attributes into global context
 		tribe( 'events-pro.editor.frontend.template' )->add_template_globals( $args );
 
@@ -82,6 +90,103 @@ class Tribe__Events__Pro__Editor__Blocks__Additional_Field extends Tribe__Editor
 		$location = array( 'blocks', 'additional-fields', $type );
 
 		return tribe( 'events-pro.editor.frontend.template' )->template( $location, $args, false );
+	}
+
+	/**
+	 * Get meta data of the custom field.
+	 *
+	 * @since 5.1.2
+	 *
+	 * @param  array $attributes The block attributes.
+	 *
+	 * @return array The attributes with meta data of the custom field.
+	 */
+	protected function get_meta_data( $attributes ) {
+		$custom_fields = (array) tribe_get_option( 'custom-fields' );
+
+		foreach ( $custom_fields as $custom_field ) {
+			if ( empty( $custom_field['name'] ) ) {
+				continue;
+			}
+
+			$block_name = $this->get_block_name_from_meta_key( $custom_field['name'] );
+
+			if ( str_replace( 'tribe/field-', '', $this->name() ) !== $block_name ) {
+				continue;
+			}
+
+			$attributes['meta_key'] = $custom_field['name'];
+			$attributes['type']     = $custom_field['type'];
+
+			if ( isset( $custom_field['label'] ) ) {
+				$attributes['label'] = $custom_field['label'];
+			}
+
+			break;
+		}
+
+		return $attributes;
+	}
+
+	/**
+	 * Get the block name from meta key provided.
+	 * Removes any non-numeric, a-z, A-Z, and dash characters.
+	 *
+	 * @since 5.1.2
+	 *
+	 * @param  string $meta_key Meta key to convert to block name.
+	 *
+	 * @return string Meta key converted to block name.
+	 */
+	protected function get_block_name_from_meta_key( $meta_key ) {
+		return preg_replace( '/[^a-zA-Z0-9-]/', '', $meta_key );
+	}
+
+	/**
+	 * Add attributes if block type is checkbox.
+	 *
+	 * @since 5.1.2
+	 *
+	 * @param  array $attributes The block attributes.
+	 *
+	 * @return array The block attributes, with checkbox attributes if block type is checkbox.
+	 */
+	protected function set_checkbox_attributes( $attributes ) {
+		if ( 'checkbox' !== $attributes['type'] ) {
+			return $attributes;
+		}
+
+		$attributes['dividerList'] = isset( $attributes['dividerList'] )
+			? $attributes['dividerList']
+			: ', ';
+		$attributes['dividerEnd']  = isset( $attributes['dividerEnd'] )
+			? $attributes['dividerEnd']
+			: __( ' and ', 'tribe-events-calendar-pro' );
+		$attributes['output']      = $this->get_checkbox_output( $attributes );
+
+		return $attributes;
+	}
+
+	/**
+	 * Get the checkbox output from attributes.
+	 *
+	 * @since 5.1.2
+	 *
+	 * @param  array $attributes The block attributes.
+	 *
+	 * @return string The checkbox text output.
+	 */
+	protected function get_checkbox_output( $attributes ) {
+		$items = explode( '|', $attributes['value'] );
+
+		if ( 1 >= count( $items ) ) {
+			return implode( '', $items );
+		}
+
+		$start = implode( $attributes['dividerList'], array_slice( $items, 0, -1 ) );
+		$end   = $items[ count( $items ) - 1 ];
+
+		return "{$start}{$attributes['dividerEnd']}{$end}";
 	}
 
 	/**

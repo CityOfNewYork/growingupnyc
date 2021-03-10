@@ -53,7 +53,7 @@ var ResetProTransConfig = function () {
 						'nonce':  wpml_reset_pro_trans_config_strings.nonce
 					},
 					dataType: 'json',
-					success:  function (response) {
+					success             :  function (response) {
 						if (response.success) {
 							alert(response.data);
 							document.location.reload(true);
@@ -61,23 +61,23 @@ var ResetProTransConfig = function () {
 							alert(response.data);
 						}
 					},
-					error:    function (jqXHR, status, error) {
+					error               :    function (jqXHR, status, error) {
 						var parsedResponse = jqXHR.statusText || status || error;
 						alert(parsedResponse);
 					},
-					complete: function () {
-						button.prop('disabled', false);
-						button.next().fadeOut();
-						spinner.removeClass('is-active');
-					}
-				});
-			}
-		});
-	};
+                                complete: function () {
+                                    button.prop('disabled', false);
+                                    button.next().fadeOut();
+                                    spinner.removeClass('is-active');
+                                }
+                            });
+            }
+        });
+    };
 
-	jQuery(document).ready(function () {
-		resetProTransConfig.init();
-	});
+    jQuery(function () {
+        resetProTransConfig.init();
+    });
 };
 
 var resetProTransConfig = new ResetProTransConfig();

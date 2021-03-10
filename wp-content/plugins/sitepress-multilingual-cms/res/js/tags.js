@@ -1,13 +1,13 @@
-jQuery(document).ready(function(){  
-    if(jQuery('form input[name="action"]').attr('value') ==='add-tag'){
-        jQuery('.form-wrap p[class="submit"]').before(jQuery('#icl_tax_menu').html());    
-    }else{
+jQuery(function () {
+    if (jQuery('form input[name="action"]').attr('value') === 'add-tag') {
+        jQuery('.form-wrap p[class="submit"]').before(jQuery('#icl_tax_menu').html());
+    } else {
         var new_row = jQuery('#edittag table[class="form-table"] tr.term-description-wrap').clone()
-            .removeClass('term-description-wrap').addClass('wpml-term-languages-wrap');
-        jQuery('#edittag table[class="form-table"]:first').append( new_row );
+                                                                                           .removeClass('term-description-wrap').addClass('wpml-term-languages-wrap');
+        jQuery('#edittag table[class="form-table"]:first').append(new_row);
         jQuery('#edittag table[class="form-table"]:first tr:last th:first').html('&nbsp;');
-        jQuery('#edittag table[class="form-table"]:first tr:last td:last').html(jQuery('#icl_tax_menu').html());  
-    }    
+        jQuery('#edittag table[class="form-table"]:first tr:last td:last').html(jQuery('#icl_tax_menu').html());
+    }
     jQuery('#icl_tax_menu').remove();
 
     jQuery('select[name="icl_tag_language"]').change(function(){
@@ -48,7 +48,7 @@ jQuery(document).ready(function(){
     defaultCategoryJSONDiv = jQuery('#icl-default-category-ids');
     if (defaultCategoryJSONDiv.length !== 0) {
         defaultCategoryJSON = defaultCategoryJSONDiv.html();
-        defaultCategoryIDs = jQuery.parseJSON(defaultCategoryJSON);
+        defaultCategoryIDs = JSON.parse(defaultCategoryJSON);
 
         for (key in defaultCategoryIDs) {
             if (defaultCategoryIDs.hasOwnProperty(key)) {

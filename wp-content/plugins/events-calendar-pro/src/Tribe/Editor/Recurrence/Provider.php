@@ -83,7 +83,32 @@ class Tribe__Events__Pro__Editor__Recurrence__Provider {
 		 */
 		$meta_builder    = new Tribe__Events__Pro__Recurrence__Meta_Builder( $event_id, $data );
 		$recurrence_meta = $meta_builder->build_meta();
-		$updated         = update_post_meta( $event_id, '_EventRecurrence', $recurrence_meta );
+
+		/**
+		 * Filters the recurring event save operation.
+		 *
+		 * Returning a non `null` value in this filter will prevent the normal save operation from going forward.
+		 *
+		 * @since 4.7
+		 *
+		 * @param mixed $saved           A boolean to indicate the recurring event save operation was handled, a non `null` value
+		 *                               here will make the method bail and stop.
+		 * @param array $recurrence_meta The recurrence information.
+		 * @param int   $event_id        The post ID of the event recurring information that is being saved.
+		 * @param array $data            The complete data, not just the recurrence meta, sent as part of the request.
+		 */
+		$saved = apply_filters(
+			'tribe_events_pro_editor_save_recurrence_meta',
+			null,
+			$recurrence_meta,
+			$event_id,
+			$data
+		);
+		if ( null !== $saved ) {
+			return $saved;
+		}
+
+		$updated = update_post_meta( $event_id, '_EventRecurrence', $recurrence_meta );
 
 		$events_saver = new Tribe__Events__Pro__Recurrence__Events_Saver( $event_id, $updated );
 

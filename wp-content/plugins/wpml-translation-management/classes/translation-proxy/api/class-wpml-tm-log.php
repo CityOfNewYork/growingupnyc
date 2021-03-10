@@ -20,7 +20,10 @@ class WPML_TM_Log implements WPML_TP_API_Log_Interface {
 	}
 
 	public function log( $action, $data = array() ) {
-		$log_base_data = array( 'timestamp' => false, 'action' => false );
+		$log_base_data = array(
+			'timestamp' => false,
+			'action'    => false,
+		);
 
 		$log_item = array_merge( $log_base_data, $data );
 

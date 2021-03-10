@@ -38,7 +38,7 @@ class WPML_Translation_Editor_UI {
 
 	function __construct( wpdb $wpdb, SitePress $sitepress, TranslationManagement $iclTranslationManagement, WPML_Element_Translation_Job $job_instance, WPML_TM_Job_Action_Factory $job_factory, WPML_TM_Job_Layout $job_layout ) {
 		$this->sitepress = $sitepress;
-		$this->wpdb = $wpdb;
+		$this->wpdb      = $wpdb;
 
 		$this->tm_instance  = $iclTranslationManagement;
 		$this->job_instance = $job_instance;
@@ -77,7 +77,7 @@ class WPML_Translation_Editor_UI {
 			$this->output_editor_form();
 			?>
 		</div>
-	<?php
+		<?php
 	}
 
 	/**
@@ -100,7 +100,7 @@ class WPML_Translation_Editor_UI {
 		foreach ( (array) $this->all_translations as $t ) {
 			if ( $t->language_code === $this->job->source_language_code ) {
 				$this->original_post = $this->tm_instance->get_post( $t->element_id, $this->job->element_type_prefix );
-				//if this fails for some reason use the original doc from which the trid originated
+				// if this fails for some reason use the original doc from which the trid originated
 				break;
 			}
 		}
@@ -170,9 +170,12 @@ class WPML_Translation_Editor_UI {
 
 	private function output_ate_notice() {
 
-		$html_fields = array_filter( $this->fields, function ( $field ) {
-			return $field['field_style'] === '1' && strpos( $field['field_data'], '<' ) !== false;
-		} );
+		$html_fields = array_filter(
+			$this->fields,
+			function ( $field ) {
+				return $field['field_style'] === '1' && strpos( $field['field_data'], '<' ) !== false;
+			}
+		);
 
 		if ( count( $html_fields ) > 0 ) {
 			$link        = 'https://wpml.org/documentation/translating-your-contents/advanced-translation-editor/#html-markers';
@@ -216,7 +219,7 @@ class WPML_Translation_Editor_UI {
 	private function output_copy_all_dialog() {
 		?>
 		<div id="wpml-translation-editor-copy-all-dialog" class="wpml-dialog" style="display:none"
-		     title="<?php echo esc_attr__( 'Copy all fields from original', 'wpml-translation-management' ); ?>">
+			 title="<?php echo esc_attr__( 'Copy all fields from original', 'wpml-translation-management' ); ?>">
 			<p class="wpml-dialog-cols-icon">
 				<i class="otgs-ico-copy wpml-dialog-icon-xl"></i>
 			</p>
@@ -247,13 +250,13 @@ class WPML_Translation_Editor_UI {
 			</div>
 
 		</div>
-	<?php
+		<?php
 	}
 
 	private function output_edit_independently_dialog() {
 		?>
 		<div id="wpml-translation-editor-edit-independently-dialog" class="wpml-dialog" style="display:none"
-		     title="<?php echo esc_attr__( 'Edit independently', 'wpml-translation-management' ); ?>">
+			 title="<?php echo esc_attr__( 'Edit independently', 'wpml-translation-management' ); ?>">
 			<p class="wpml-dialog-cols-icon">
 				<i class="otgs-ico-unlink wpml-dialog-icon-xl"></i>
 			</p>
@@ -280,19 +283,19 @@ class WPML_Translation_Editor_UI {
 				</div>
 			</div>
 		</div>
-	<?php
+		<?php
 	}
 
 	private function output_editor_form() {
 		?>
 		<form id="icl_tm_editor" method="post" action="">
-			<input type="hidden" name="job_post_type" value="<?php echo esc_attr( $this->job->original_post_type ) ?>"/>
-			<input type="hidden" name="job_post_id" value="<?php echo esc_attr( $this->job->original_doc_id ) ?>"/>
-			<input type="hidden" name="job_id" value="<?php echo esc_attr( $this->job_instance->get_id() ) ?>"/>
+			<input type="hidden" name="job_post_type" value="<?php echo esc_attr( $this->job->original_post_type ); ?>"/>
+			<input type="hidden" name="job_post_id" value="<?php echo esc_attr( $this->job->original_doc_id ); ?>"/>
+			<input type="hidden" name="job_id" value="<?php echo esc_attr( $this->job_instance->get_id() ); ?>"/>
 
 			<div id="wpml-translation-editor-wrapper"></div>
 		</form>
-	<?php
+		<?php
 	}
 
 	private function add_titles_and_adjust_styles( array $fields ) {

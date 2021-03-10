@@ -1,5 +1,9 @@
 <?php
 
+defined( 'ABSPATH' ) || exit;
+
+require_once PMXI_Plugin::ROOT_DIR . "/classes/ftp/FTPFetcher.php";
+
 function pmxi_wp_ajax_upload_resource() {
 
 	if ( ! check_ajax_referer( 'wp_all_import_secure', 'security', false )) {
@@ -14,6 +18,13 @@ function pmxi_wp_ajax_upload_resource() {
 
 	$post = $input->post(array(
 		'type' => '',
+		'ftp_host' => '',
+		'ftp_path' => '',
+		'ftp_root' => '/',
+		'ftp_port' => '',
+		'ftp_username' => '',
+		'ftp_password' => '',
+		'ftp_private_key' => '',
 		'file' => '',
 		'template' => ''
 	));			
@@ -26,32 +37,36 @@ function pmxi_wp_ajax_upload_resource() {
 		'notice'        => false
 	);
 
-	if ( $post['type'] == 'url' ) {
-
-		$filesXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<data><node></node></data>";
-
-		$post['file'] = apply_filters('wp_all_import_feed_url', wp_all_import_sanitize_url($post['file']));
-
-		$files = XmlImportParser::factory($filesXML, '/data/node', $post['file'], $file)->parse(); $tmp_files[] = $file;	
-
-		foreach ($tmp_files as $tmp_file) { // remove all temporary files created
-			@unlink($tmp_file);
-		}
-
-		$file_to_import = $post['file'];
-
-		if ( ! empty($files) and is_array($files) ) {
-			$file_to_import = array_shift($files);
-		}
-
-        $feed_type = apply_filters('wp_all_import_feed_type', '', wp_all_import_sanitize_url($post['file']));
-
+	if ( !empty($post['type']) ) {
 		$errors = new WP_Error;
-		$uploader = new PMXI_Upload(trim($file_to_import), $errors);			
-		$upload_result = $uploader->url($feed_type, $post['file'], $post['template']);
+		switch ($post['type']) {
+            case 'ftp':
+                try {
+                    $files = PMXI_FTPFetcher::fetch($post);
+                    $uploader = new PMXI_Upload($files[0], $errors, rtrim(str_replace(basename($files[0]), '', $files[0]), '/'));
+                    $upload_result = $uploader->upload();
+                } catch (Exception $e) {
+                    $errors->add('form-validation', $e->getMessage());
+                }
+                break;
+            default:
+                $filesXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<data><node></node></data>";
+                $post['file'] = apply_filters('wp_all_import_feed_url', wp_all_import_sanitize_url(trim($post['file'])));
+                $files = XmlImportParser::factory($filesXML, '/data/node', $post['file'], $file)->parse(); $tmp_files[] = $file;
+                foreach ($tmp_files as $tmp_file) { // remove all temporary files created
+                    @unlink($tmp_file);
+                }
+                $file_to_import = $post['file'];
+                if ( ! empty($files) and is_array($files) ) {
+                    $file_to_import = array_shift($files);
+                }
+                $feed_type = apply_filters('wp_all_import_feed_type', '', wp_all_import_sanitize_url($post['file']));
+                $uploader = new PMXI_Upload(trim($file_to_import), $errors);
+                $upload_result = $uploader->url($feed_type, $post['file'], $post['template']);
+                break;
+        }
 
-		if ( $upload_result instanceof WP_Error ) {
-			$errors = $upload_result;
+		if ( count($errors->errors) ) {
 			$msgs = $errors->get_error_messages();
 			ob_start();
 			?>

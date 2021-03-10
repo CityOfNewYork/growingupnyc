@@ -8,18 +8,34 @@
 class Tribe__Repository__Query_Filters {
 
 	/**
+	 * Indicates something has to happen "after" something else. The specific meaning is contextual.
+	 *
+	 * @since 4.9.21
+	 */
+	CONST AFTER = 'after:';
+
+	/**
 	 * @var array
 	 */
-	protected static $initial_query_vars = array(
-		'like'   => array(
-			'post_title'   => array(),
-			'post_content' => array(),
-			'post_excerpt' => array(),
-		),
-		'status' => array(),
-		'join'   => array(),
-		'where'  => array(),
-	);
+	protected static $initial_query_vars = [
+		'like'   => [
+			'post_title'   => [],
+			'post_content' => [],
+			'post_excerpt' => [],
+		],
+		'status' => [],
+		'join'   => [],
+		'where'  => [],
+	];
+
+	/**
+	 * An array of the filters that can be set and unset by id.
+	 *
+	 * @since 4.9.14
+	 *
+	 * @var array
+	 */
+	protected static $identifiable_filters = [ 'fields', 'join', 'where', 'orderby' ];
 
 	/**
 	 * @var array
@@ -39,7 +55,7 @@ class Tribe__Repository__Query_Filters {
 	/**
 	 * @var array A list of the filters this class has added.
 	 */
-	protected $active_filters = array();
+	protected $active_filters = [];
 
 	/**
 	 * @var bool
@@ -49,7 +65,14 @@ class Tribe__Repository__Query_Filters {
 	/**
 	 * @var array
 	 */
-	protected $buffered_where_clauses = array();
+	protected $buffered_where_clauses = [];
+
+	/**
+	 * Stores the last request run by the current query.
+	 *
+	 * @var string
+	 */
+	protected $last_request;
 
 	/**
 	 * Tribe__Repository__Query_Filters constructor.
@@ -76,38 +99,38 @@ class Tribe__Repository__Query_Filters {
 		$values    = Tribe__Utils__Array::list_to_array( $values );
 
 		if ( empty( $meta_keys ) || count( $values ) === 0 ) {
-			return array();
+			return [];
 		}
 
-		$args = array(
-			'meta_query' => array(
-				$query_slug => array(
+		$args = [
+			'meta_query' => [
+				$query_slug => [
 					'relation' => 'AND',
-				),
-			),
-		);
+				],
+			],
+		];
 
 		foreach ( $meta_keys as $key ) {
-			$args['meta_query'][ $query_slug ][ $key ] = array(
-				'not-exists' => array(
+			$args['meta_query'][ $query_slug ][ $key ] = [
+				'not-exists' => [
 					'key'     => $key,
 					'compare' => 'NOT EXISTS',
-				),
+				],
 				'relation'   => 'OR',
-			);
+			];
 
 			if ( count( $values ) > 1 ) {
-				$args['meta_query'][ $query_slug ][ $key ]['not-in'] = array(
+				$args['meta_query'][ $query_slug ][ $key ]['not-in'] = [
 					'key'     => $key,
 					'compare' => 'NOT IN',
 					'value'   => $values,
-				);
+				];
 			} else {
-				$args['meta_query'][ $query_slug ][ $key ]['not-equals'] = array(
+				$args['meta_query'][ $query_slug ][ $key ]['not-equals'] = [
 					'key'     => $key,
 					'value'   => $values[0],
 					'compare' => '!=',
-				);
+				];
 			}
 		}
 
@@ -130,30 +153,30 @@ class Tribe__Repository__Query_Filters {
 		$values    = Tribe__Utils__Array::list_to_array( $values );
 
 		if ( empty( $meta_keys ) || count( $values ) === 0 ) {
-			return array();
+			return [];
 		}
 
-		$args = array(
-			'meta_query' => array(
-				$query_slug => array(
+		$args = [
+			'meta_query' => [
+				$query_slug => [
 					'relation' => 'OR',
-				),
-			),
-		);
+				],
+			],
+		];
 
 		foreach ( $meta_keys as $meta_key ) {
 			if ( count( $values ) > 1 ) {
-				$args['meta_query'][ $query_slug ][ $meta_key ] = array(
+				$args['meta_query'][ $query_slug ][ $meta_key ] = [
 					'key'     => $meta_key,
 					'compare' => 'IN',
 					'value'   => $values,
-				);
+				];
 			} else {
-				$args['meta_query'][ $query_slug ][ $meta_key ] = array(
+				$args['meta_query'][ $query_slug ][ $meta_key ] = [
 					'key'     => $meta_key,
 					'compare' => '=',
 					'value'   => $values[0],
-				);
+				];
 			}
 		}
 
@@ -174,22 +197,22 @@ class Tribe__Repository__Query_Filters {
 		$meta_keys = Tribe__Utils__Array::list_to_array( $meta_keys );
 
 		if ( empty( $meta_keys ) ) {
-			return array();
+			return [];
 		}
 
-		$args = array(
-			'meta_query' => array(
-				$query_slug => array(
+		$args = [
+			'meta_query' => [
+				$query_slug => [
 					'relation' => 'OR',
-				),
-			),
-		);
+				],
+			],
+		];
 
 		foreach ( $meta_keys as $meta_key ) {
-			$args['meta_query'][ $query_slug ][ $meta_key ] = array(
+			$args['meta_query'][ $query_slug ][ $meta_key ] = [
 				'key'     => $meta_key,
 				'compare' => 'EXISTS',
-			);
+			];
 		}
 
 		return $args;
@@ -212,35 +235,35 @@ class Tribe__Repository__Query_Filters {
 		$values    = Tribe__Utils__Array::list_to_array( $values );
 
 		if ( empty( $meta_keys ) || count( $values ) === 0 ) {
-			return array();
+			return [];
 		}
 
-		$args = array(
-			'meta_query' => array(
-				$query_slug => array(
+		$args = [
+			'meta_query' => [
+				$query_slug => [
 					'relation' => 'AND',
-				),
-			),
-		);
+				],
+			],
+		];
 
 		foreach ( $meta_keys as $meta_key ) {
-			$args['meta_query'][ $query_slug ][ $meta_key ]['does-not-exist'] = array(
+			$args['meta_query'][ $query_slug ][ $meta_key ]['does-not-exist'] = [
 				'key'     => $meta_key,
 				'compare' => 'NOT EXISTS',
-			);
+			];
 			$args['meta_query'][ $query_slug ][ $meta_key ]['relation']       = 'OR';
 			if ( count( $values ) > 1 ) {
-				$args['meta_query'][ $query_slug ][ $meta_key ]['in'] = array(
+				$args['meta_query'][ $query_slug ][ $meta_key ]['in'] = [
 					'key'     => $meta_key,
 					'compare' => 'IN',
 					'value'   => $values,
-				);
+				];
 			} else {
-				$args['meta_query'][ $query_slug ][ $meta_key ]['equals'] = array(
+				$args['meta_query'][ $query_slug ][ $meta_key ]['equals'] = [
 					'key'     => $meta_key,
 					'compare' => '=',
 					'value'   => $values[0],
-				);
+				];
 			}
 		}
 
@@ -264,36 +287,36 @@ class Tribe__Repository__Query_Filters {
 		$values    = Tribe__Utils__Array::list_to_array( $values );
 
 		if ( empty( $meta_keys ) || count( $values ) === 0 ) {
-			return array();
+			return [];
 		}
 
-		$args = array(
-			'meta_query' => array(
-				$query_slug => array(
+		$args = [
+			'meta_query' => [
+				$query_slug => [
 					'relation' => 'AND',
-				),
-			),
-		);
+				],
+			],
+		];
 
 		foreach ( $meta_keys as $meta_key ) {
-			$args['meta_query'][ $query_slug ][ $meta_key ]['does-not-exist'] = array(
+			$args['meta_query'][ $query_slug ][ $meta_key ]['does-not-exist'] = [
 				'key'     => $meta_key,
 				'compare' => 'NOT EXISTS',
-			);
+			];
 			$args['meta_query'][ $query_slug ][ $meta_key ]['relation']       = 'OR';
 
 			if ( count( $values ) > 1 ) {
-				$args['meta_query'][ $query_slug ][ $meta_key ]['not-in'] = array(
+				$args['meta_query'][ $query_slug ][ $meta_key ]['not-in'] = [
 					'key'     => $meta_key,
 					'compare' => 'NOT IN',
 					'value'   => $values,
-				);
+				];
 			} else {
-				$args['meta_query'][ $query_slug ][ $meta_key ]['not-equals'] = array(
+				$args['meta_query'][ $query_slug ][ $meta_key ]['not-equals'] = [
 					'key'     => $meta_key,
 					'compare' => '!=',
 					'value'   => $values[0],
-				);
+				];
 			}
 		}
 
@@ -343,11 +366,11 @@ class Tribe__Repository__Query_Filters {
 		global $wpdb;
 
 		$like       = $wpdb->esc_like( $entry );
-		$variations = array(
+		$variations = [
 			$wpdb->prepare( "{$wpdb->posts}.{$field} LIKE %s ", "{$like}%" ),
 			$wpdb->prepare( "{$wpdb->posts}.{$field} LIKE %s ", "%{$like}%" ),
 			$wpdb->prepare( "{$wpdb->posts}.{$field} LIKE %s ", "%{$like}" ),
-		);
+		];
 
 		return ' AND (' . implode( ' OR ', $variations ) . ')';
 	}
@@ -407,7 +430,7 @@ class Tribe__Repository__Query_Filters {
 			$matching_ids = $wpdb->get_col( $relation_query );
 
 			if ( empty( $matching_ids ) ) {
-				$query->posts         = array();
+				$query->posts         = [];
 				$filtered_found_posts = 0;
 				break;
 			}
@@ -415,7 +438,7 @@ class Tribe__Repository__Query_Filters {
 			if ( $ids_only ) {
 				$query->posts = array_intersect( $query->posts, $matching_ids );
 			} else {
-				$updated_query_posts = array();
+				$updated_query_posts = [];
 				foreach ( $query->posts as $this_post ) {
 					if ( in_array( $this_post->ID, $matching_ids ) ) {
 						$updated_query_posts[] = $this_post;
@@ -452,8 +475,8 @@ class Tribe__Repository__Query_Filters {
 	public function to_get_posts_with_title_like( $value ) {
 		$this->query_vars['like']['post_title'][] = $value;
 
-		if ( ! has_filter( 'posts_where', array( $this, 'filter_by_like' ) ) ) {
-			$this->add_filter( 'posts_where', array( $this, 'filter_by_like' ), 10, 2 );
+		if ( ! has_filter( 'posts_where', [ $this, 'filter_by_like' ] ) ) {
+			$this->add_filter( 'posts_where', [ $this, 'filter_by_like' ], 10, 2 );
 		}
 	}
 
@@ -469,7 +492,7 @@ class Tribe__Repository__Query_Filters {
 	 * @param int      $accepted_args
 	 */
 	protected function add_filter( $tag, $function_to_add, $priority = 10, $accepted_args = 1 ) {
-		$this->active_filters[] = array( $tag, $function_to_add, $priority );
+		$this->active_filters[] = [ $tag, $function_to_add, $priority ];
 		add_filter( $tag, $function_to_add, $priority, $accepted_args );
 	}
 
@@ -483,8 +506,8 @@ class Tribe__Repository__Query_Filters {
 	public function to_get_posts_with_content_like( $value ) {
 		$this->query_vars['like']['post_content'][] = $value;
 
-		if ( ! has_filter( 'posts_where', array( $this, 'filter_by_like' ) ) ) {
-			$this->add_filter( 'posts_where', array( $this, 'filter_by_like' ), 10, 2 );
+		if ( ! has_filter( 'posts_where', [ $this, 'filter_by_like' ] ) ) {
+			$this->add_filter( 'posts_where', [ $this, 'filter_by_like' ], 10, 2 );
 		}
 	}
 
@@ -498,8 +521,8 @@ class Tribe__Repository__Query_Filters {
 	public function to_get_posts_with_excerpt_like( $value ) {
 		$this->query_vars['like']['post_excerpt'] = $value;
 
-		if ( ! has_filter( 'posts_where', array( $this, 'filter_by_like' ) ) ) {
-			add_filter( 'posts_where', array( $this, 'filter_by_like' ), 10, 2 );
+		if ( ! has_filter( 'posts_where', [ $this, 'filter_by_like' ] ) ) {
+			add_filter( 'posts_where', [ $this, 'filter_by_like' ], 10, 2 );
 		}
 	}
 
@@ -513,8 +536,8 @@ class Tribe__Repository__Query_Filters {
 	public function to_get_posts_with_filtered_content_like( $value ) {
 		$this->query_vars['like']['post_content_filtered'][] = $value;
 
-		if ( ! has_filter( 'posts_where', array( $this, 'filter_by_like' ) ) ) {
-			add_filter( 'posts_where', array( $this, 'filter_by_like' ), 10, 2 );
+		if ( ! has_filter( 'posts_where', [ $this, 'filter_by_like' ] ) ) {
+			add_filter( 'posts_where', [ $this, 'filter_by_like' ], 10, 2 );
 		}
 	}
 
@@ -528,8 +551,8 @@ class Tribe__Repository__Query_Filters {
 	public function to_get_posts_with_guid_like( $value ) {
 		$this->query_vars['like']['guid'][] = $value;
 
-		if ( ! has_filter( 'posts_where', array( $this, 'filter_by_like' ) ) ) {
-			add_filter( 'posts_where', array( $this, 'filter_by_like' ), 10, 2 );
+		if ( ! has_filter( 'posts_where', [ $this, 'filter_by_like' ] ) ) {
+			add_filter( 'posts_where', [ $this, 'filter_by_like' ], 10, 2 );
 		}
 	}
 
@@ -543,8 +566,8 @@ class Tribe__Repository__Query_Filters {
 	public function to_get_posts_to_ping( $value ) {
 		$this->query_vars['to_ping'] = $value;
 
-		if ( ! has_filter( 'posts_where', array( $this, 'filter_by_to_ping' ) ) ) {
-			add_filter( 'posts_where', array( $this, 'filter_by_to_ping' ), 10, 2 );
+		if ( ! has_filter( 'posts_where', [ $this, 'filter_by_to_ping' ] ) ) {
+			add_filter( 'posts_where', [ $this, 'filter_by_to_ping' ], 10, 2 );
 		}
 	}
 
@@ -571,10 +594,11 @@ class Tribe__Repository__Query_Filters {
 	 * @param string   $where
 	 * @param WP_Query $query
 	 * @param string   $field
+	 * @param string   $prepare
 	 *
 	 * @return string
 	 */
-	protected function where_field_is( $where, WP_Query $query, $field ) {
+	protected function where_field_is( $where, WP_Query $query, $field, $prepare = '%s' ) {
 		if ( $query !== $this->current_query ) {
 			return $where;
 		}
@@ -587,7 +611,7 @@ class Tribe__Repository__Query_Filters {
 		/** @var wpdb $wpdb */
 		global $wpdb;
 
-		$where .= $wpdb->prepare( " AND {$wpdb->posts}.{$field} = %s ", $this->query_vars[ $field ] );
+		$where .= $wpdb->prepare( " AND {$wpdb->posts}.{$field} = {$prepare} ", $this->query_vars[ $field ] );
 
 		return $where;
 	}
@@ -618,17 +642,32 @@ class Tribe__Repository__Query_Filters {
 	 * Add a custom WHERE clause to the query.
 	 *
 	 * @since 4.7.19
+	 * @since 4.9.14 Added the `$id` and `$override` parameters.
 	 *
 	 * @param string $where_clause
+	 * @param null|string $id          Optional WHERE ID to prevent duplicating clauses.
+	 * @param boolean     $override    Whether to override the clause if a WHERE by the same ID exists or not.
 	 */
-	public function where( $where_clause ) {
+	public function where( $where_clause, $id = null, $override =false  ) {
 		if ( $this->buffer_where_clauses ) {
-			$this->buffered_where_clauses[] = '(' . $where_clause . ')';
+			if ( $id ) {
+				if ( $override || ! isset( $this->buffered_where_clauses[ $id ] ) ) {
+					$this->buffered_where_clauses[ $id ] = $where_clause;
+				}
+			} else {
+				$this->buffered_where_clauses[] = '(' . $where_clause . ')';
+			}
 		} else {
-			$this->query_vars['where'][] = '(' . $where_clause . ')';
+			if ( $id ) {
+				if ( $override || ! isset( $this->query_vars['where'][ $id ] ) ) {
+					$this->query_vars['where'][ $id ] = '(' . $where_clause . ')';
+				}
+			} else {
+				$this->query_vars['where'][] = '(' . $where_clause . ')';
+			}
 
-			if ( ! has_filter( 'posts_where', array( $this, 'filter_posts_where' ) ) ) {
-				add_filter( 'posts_where', array( $this, 'filter_posts_where' ), 10, 2 );
+			if ( ! has_filter( 'posts_where', [ $this, 'filter_posts_where' ] ) ) {
+				add_filter( 'posts_where', [ $this, 'filter_posts_where' ], 10, 2 );
 			}
 		}
 	}
@@ -638,13 +677,93 @@ class Tribe__Repository__Query_Filters {
 	 *
 	 * @since 4.7.19
 	 *
-	 * @param string $join_clause
+	 * @param string      $join_clause JOIN clause.
+	 * @param null|string $id          Optional JOIN ID to prevent duplicating joins.
+	 * @param boolean     $override    Whether to override the clause if a JOIN by the same ID exists.
 	 */
-	public function join( $join_clause ) {
-		$this->query_vars['join'][] = $join_clause;
+	public function join( $join_clause, $id = null, $override = false ) {
+		if ( $id ) {
+			if ( $override || ! isset( $this->query_vars['join'][ $id ] ) ) {
+				$this->query_vars['join'][ $id ] = $join_clause;
+			}
+		} else {
+			$this->query_vars['join'][] = $join_clause;
+		}
 
-		if ( ! has_filter( 'posts_join', array( $this, 'filter_posts_join' ) ) ) {
-			add_filter( 'posts_join', array( $this, 'filter_posts_join' ), 10, 2 );
+		if ( ! has_filter( 'posts_join', [ $this, 'filter_posts_join' ] ) ) {
+			add_filter( 'posts_join', [ $this, 'filter_posts_join' ], 10, 2 );
+		}
+	}
+
+	/**
+	 * Add a custom ORDER BY to the query.
+	 *
+	 * @since 4.9.5
+	 * @since 4.9.14 Added the `$id` and `$override` parameters.
+	 * @since 4.9.21 Added the `$order` and `$after` parameters.
+	 *
+	 * @param string|array $orderby       The order by criteria; this argument can be specified in array form to specify
+	 *                                    multiple order by clauses and orders associated to each,
+	 *                                    e.g. `[ '_meta_1' => 'ASC', '_meta_2' => 'DESC' ]`. If a simple array is
+	 *                                    passed, then the order will be set to the default one for each entry.
+	 *                                    This arguments supports the same formats of the `WP_Query` `orderby` argument.
+	 * @param null|string  $id            Optional ORDER ID to prevent duplicating order-by clauses.
+	 * @param boolean      $override      Whether to override the clause if another by the same ID exists.
+	 * @param bool         $after         Whether to append the order by clause to the ones managed by WordPress or not.
+	 *                                    Defaults to `false`,to prepend them to the ones managed by WordPress.
+	 */
+	public function orderby( $orderby, $id = null, $override = false, $after = false ) {
+		$orderby_key = $after ? static::AFTER . 'orderby' : 'orderby';
+		$entries = [];
+
+		foreach ( (array) $orderby as $key => $value ) {
+			/*
+			 * As WordPress does, we support "simple" entries, like `[ 'menu_order', 'post_date' ]` and entries in the
+			 * shape `[ 'menu_order' => 'ASC', 'post_date' => 'DESC' ]`.
+			 */
+			$the_orderby = is_numeric( $key ) ? $value : $key;
+			$the_order   = is_numeric( $key ) ? 'DESC' : $value;
+
+			$entries[] = [ $the_orderby, $the_order ];
+		}
+
+		$id = $id ?: 'default';
+
+		// Use the `$id` parameter to allow later method calls to replace values set in previous calls.
+		if ( $id ) {
+			if ( $override || ! isset( $this->query_vars[ $orderby_key ][ $id ] ) ) {
+				$this->query_vars[ $orderby_key ][ $id ] = $entries;
+			}
+		} else {
+			$this->query_vars[ $orderby_key ][ $id ] = array_merge( $this->query_vars[ $orderby_key ][ $id ], $entries );
+		}
+
+		if ( ! has_filter( 'posts_orderby', [ $this, 'filter_posts_orderby' ] ) ) {
+			add_filter( 'posts_orderby', [ $this, 'filter_posts_orderby' ], 10, 2 );
+		}
+	}
+
+	/**
+	 * Add custom select fields to the query.
+	 *
+	 * @since 4.9.5
+	 * @since 4.9.14 Added the `$id` and `$override` parameters.
+	 *
+	 * @param string $field The field to add to the result.
+	 * @param null|string $id       Optional ORDER ID to prevent duplicating order-by clauses..
+	 * @param boolean     $override Whether to override the clause if another by the same ID exists.
+	 */
+	public function fields( $field, $id = null, $override = false ) {
+		if ( $id ) {
+			if ( $override || ! isset( $this->query_vars['fields'][ $id ] ) ) {
+				$this->query_vars['fields'][ $id ] = $field;
+			}
+		} else {
+			$this->query_vars['fields'][] = $field;
+		}
+
+		if ( ! has_filter( 'posts_fields', [ $this, 'filter_posts_fields' ] ) ) {
+			add_filter( 'posts_fields', [ $this, 'filter_posts_fields' ], 10, 2 );
 		}
 	}
 
@@ -676,7 +795,7 @@ class Tribe__Repository__Query_Filters {
 
 		if ( $get_clean ) {
 			$this->buffer_where_clauses   = false;
-			$this->buffered_where_clauses = array();
+			$this->buffered_where_clauses = [];
 		}
 
 		return $clauses;
@@ -720,24 +839,24 @@ class Tribe__Repository__Query_Filters {
 	 *
 	 * @return string
 	 */
-	protected function create_interval_of_strings( $input ) {
-		$buffer = array();
+	public function create_interval_of_strings( $input ) {
+		$buffer = [];
 
 		/** @var wpdb $wpdb */
 		global $wpdb;
 
 		foreach ( $input as $string ) {
-			$buffer[] = is_array( $string ) ? $string : array( $string );
+			$buffer[] = is_array( $string ) ? $string : [ $string ];
 		}
 
 		$buffer = array_unique( call_user_func_array( 'array_merge', $buffer ) );
 
-		$safe_strings = array();
+		$safe_strings = [];
 		foreach ( $buffer as $raw_status ) {
-			$safe_strings[] = $wpdb->prepare( '%s', $string );
+			$safe_strings[] = $wpdb->prepare( '%s', $raw_status );
 		}
 
-		return implode( "''", $safe_strings );
+		return implode( ',', $safe_strings );
 	}
 
 	/**
@@ -847,5 +966,174 @@ class Tribe__Repository__Query_Filters {
 		$join .= "\n" . implode( "\n ", $this->query_vars['join'] ) . ' ';
 
 		return $join;
+	}
+
+	/**
+	 * Filter the `posts_orderby` filter to add custom JOIN clauses.
+	 *
+	 * @since 4.9.5
+	 *
+	 * @param string   $orderby The `ORDER BY` clause of the query being filtered.
+	 * @param WP_Query $query   The query object currently being filtered.
+	 *
+	 * @return string The filtered `ORDER BY` clause.
+	 */
+	public function filter_posts_orderby( $orderby, WP_Query $query ) {
+		if ( $query !== $this->current_query ) {
+			return $orderby;
+		}
+
+		if ( empty( $this->query_vars['orderby'] ) && empty( $this->query_vars[ static::AFTER . 'orderby' ] ) ) {
+			return $orderby;
+		}
+
+		$frags = [ $orderby ];
+
+		/*
+		 * Entries will be set, from the `orderby` method, to the `[ [ <orderby>, <order> ], [ <orderby>, <order> ] ]`
+		 * format.
+		 */
+		$build_entry = static function ( $entries ) {
+			$buffer  = [];
+
+			foreach ( $entries as list( $orderby, $order ) ) {
+				$buffer[] = sprintf( '%s %s', $orderby, $order );
+			}
+
+			return implode( ', ', $buffer );
+		};
+
+		if ( ! empty( $this->query_vars['orderby'] ) ) {
+			$before = implode( ', ', array_map( $build_entry, $this->query_vars['orderby'] ) );
+			$frags  = [ $before, $orderby ];
+		}
+
+		if ( ! empty( $this->query_vars[ static::AFTER . 'orderby' ] ) ) {
+			$frags[] = implode( ', ', array_map( $build_entry, $this->query_vars[ static::AFTER . 'orderby' ] ) );
+		}
+
+		return implode( ', ', $frags );
+	}
+
+	/**
+	 * Filter the `posts_fields` filter to amend fields to be selected.
+	 *
+	 * @since 4.9.5
+	 *
+	 * @param array    $fields
+	 * @param WP_Query $query
+	 *
+	 * @return string
+	 */
+	public function filter_posts_fields( $fields, WP_Query $query ) {
+		if ( $query !== $this->current_query ) {
+			return $fields;
+		}
+
+		if ( empty( $this->query_vars['fields'] ) ) {
+			return $fields;
+		}
+
+		$fields .= ', ' . implode( ', ', $this->query_vars['fields'] );
+
+		return $fields;
+	}
+
+	/**
+	 * Captures the request SQL as built from the query class.
+	 *
+	 * This happens on the `posts_pre_query` filter and
+	 *
+	 * @since 4.9.5
+	 *
+	 * @param null|array $posts A pre-filled array of post results.
+	 * @param \WP_Query  $query The current query object; this is used by the
+	 *                          method to intercept only the request generated by
+	 *                          its attached query.
+	 *
+	 * @return array|null An empty array to short-circuit the `get_posts` request; the input
+	 *                    value, if the query is not the one attached to this filter or the method
+	 *                    is called not in the context of the `posts_pre_query` filter;
+	 */
+	public function capture_request( $posts = null, WP_Query $query = null ) {
+		if ( ! doing_filter( 'posts_pre_query' ) ) {
+			// Let's make sure nothing bad happens if this runs outside of its natural context.
+			return null;
+		}
+
+		if ( $query !== $this->current_query ) {
+			return $posts;
+		}
+
+		$this->last_request = $query->request;
+
+		remove_filter( 'posts_pre_query', [ $this, 'capture_request' ] );
+
+		// This will short-circuit the query not running it.
+		return [];
+	}
+
+	/**
+	 * Returns the controlled query request SQL.
+	 *
+	 * It's not possible to build the SQL for a query outside of a request to `get_posts`
+	 * so what this class does is fire such a request intercepting it before it actually
+	 * runs and returning an empty post array.
+	 * To really run the query it's sufficien to run `get_posts` again on it.
+	 *
+	 * @since 4.9.5
+	 *
+	 * @return string The request SQL, as built from the `WP_Query` class including all the
+	 *                possible filtering applied by this class and other classes.
+	 */
+	public function get_request() {
+		add_filter( 'posts_pre_query', [ $this, 'capture_request' ], 10, 2 );
+
+		$this->current_query->get_posts();
+
+		return $this->last_request;
+	}
+
+	/**
+	 * Returns the fields, join, where and orderby clauses for an id.
+	 *
+	 * @since 4.9.14
+	 *
+	 * @param string $id The identifier of the group to remove.
+	 *
+	 * @return array An associative array of identifiable filters and their values, if any.
+	 *
+	 * @see Tribe__Repository__Query_Filters::$identifiable_filters
+	 */
+	public function get_filters_by_id( $id ) {
+		$entries = [];
+
+		foreach ( static::$identifiable_filters as $key ) {
+			if ( empty( $this->query_vars[ $key ][ $id ] ) ) {
+				continue;
+			}
+			$entries[ $key ] = $this->query_vars[ $key ][ $id ];
+		}
+
+		return $entries;
+	}
+
+	/**
+	 * Removes fields, join, where and orderby clauses for an id.
+	 *
+	 * @since 4.9.14
+	 *
+	 * @param string $id The identifier of the group to remove.
+	 */
+	public function remove_filters_by_id( $id ) {
+		array_walk(
+			$this->query_vars,
+			static function ( array &$filters, $key ) use ( $id ) {
+				if ( ! in_array( $key, static::$identifiable_filters, true ) ) {
+					return;
+				}
+				unset( $filters[ $id ] );
+			}
+		);
 	}
 }

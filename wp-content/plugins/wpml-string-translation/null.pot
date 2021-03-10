@@ -130,27 +130,27 @@ msgstr ""
 msgid "Original:"
 msgstr ""
 
-#: src/js/main-ui/components/LanguagesCell.js:156
+#: src/js/main-ui/components/LanguagesCell.js:165
 msgid "Add %s translation"
 msgstr ""
 
-#: src/js/main-ui/components/LanguagesCell.js:166
+#: src/js/main-ui/components/LanguagesCell.js:184
 msgid "Edit %s translation"
 msgstr ""
 
-#: src/js/main-ui/components/LanguagesCell.js:52
+#: src/js/main-ui/components/LanguagesCell.js:61
 msgid "Original language %s"
 msgstr ""
 
-#: src/js/main-ui/components/LanguagesCell.js:60
+#: src/js/main-ui/components/LanguagesCell.js:68
 msgid "Waiting for translator to %s"
 msgstr ""
 
-#: src/js/main-ui/components/LanguagesCell.js:68
+#: src/js/main-ui/components/LanguagesCell.js:75
 msgid "Translation in progress to %s"
 msgstr ""
 
-#: src/js/main-ui/components/LanguagesCell.js:76
+#: src/js/main-ui/components/LanguagesCell.js:82
 msgid "In basket for translation to %s"
 msgstr ""
 

@@ -29,13 +29,13 @@ class Factory implements \IWPML_AJAX_Action {
 		// $handleRequest :: Collection -> Either::Left(string) | Either::Right(mixed)
 		$handleRequest = function ( Collection $postData ) {
 			return Maybe::of( $postData->get( 'endpoint' ) )
-			            ->map( 'WPML\Container\make' )
-			            ->map( invoke( 'run' )->with( $postData->get( 'data' ) ) )
-			            ->getOrElse( Either::left( 'End point not found' ) );
+						->map( 'WPML\Container\make' )
+						->map( invoke( 'run' )->with( $postData->get( 'data' ) ) )
+						->getOrElse( Either::left( 'End point not found' ) );
 		};
 
 		Hooks::onAction( 'wp_ajax_wpml_action' )
-			->then( System::getPostData() ) //Either::right(Collection)
+			->then( System::getPostData() ) // Either::right(Collection)
 			->then( $filterEndPoint )
 			->then( Nonce::verifyEndPoint() )
 			->then( $decodeData )

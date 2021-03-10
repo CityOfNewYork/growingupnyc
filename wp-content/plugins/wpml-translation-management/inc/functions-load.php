@@ -432,7 +432,7 @@ function tm_after_load() {
 		require_once WPML_TM_PATH . '/inc/translation-proxy/translationproxy.class.php';
 		require_once WPML_TM_PATH . '/inc/ajax.php';
 
-		(new ClassicEditorActions())->addHooks();
+		( new ClassicEditorActions() )->addHooks();
 
 		wpml_tm_load_job_factory();
 		wpml_tm_init_mail_notifications();
@@ -698,8 +698,7 @@ function wpml_tm_get_ate_jobs_repository() {
 
 	if ( ! $instance ) {
 		return new WPML_TM_ATE_Job_Repository(
-			wpml_tm_get_jobs_repository(),
-			wpml_tm_get_ate_job_records()
+			wpml_tm_get_jobs_repository()
 		);
 	}
 
@@ -835,12 +834,36 @@ function wpml_tm_ate_ams_log( WPML\TM\ATE\Log\Entry $entry ) {
 }
 
 /**
- * @param  string  $original
- * @param  string  $translation
- * @param  bool  $finished_state
+ * @param  string $original
+ * @param  string $translation
+ * @param  bool   $finished_state
  *
  * @return WPML_TM_Translated_Field
  */
 function wpml_tm_create_translated_field( $original, $translation, $finished_state ) {
 	return new WPML_TM_Translated_Field( $original, $translation, $finished_state );
 }
+
+/**
+ * @param int      $post_id
+ * @param \WP_Post $post
+ * @param bool     $force_set_status
+ */
+function wpml_tm_save_post( $post_id, $post, $force_set_status = false ) {
+	global $wpdb, $wpml_post_translations, $wpml_term_translations;
+
+	if ( false === $force_set_status && get_post_meta( $post_id, '_icl_lang_duplicate_of', true ) ) {
+		$force_set_status = ICL_TM_DUPLICATE;
+	}
+
+	$action_helper    = new WPML_TM_Action_Helper();
+	$blog_translators = wpml_tm_load_blog_translators();
+	$tm_records       = new WPML_TM_Records( $wpdb, $wpml_post_translations, $wpml_term_translations );
+	$save_post_action = new WPML_TM_Post_Actions( $action_helper, $blog_translators, $tm_records );
+	if ( 'revision' === $post->post_type || 'auto-draft' === $post->post_status || isset( $_POST['autosave'] ) ) {
+		return;
+	}
+	$save_post_action->save_post_actions( $post_id, $post, $force_set_status );
+}
+
+add_action( 'wpml_tm_save_post', 'wpml_tm_save_post', 10, 3 );

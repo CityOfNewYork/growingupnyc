@@ -2,18 +2,18 @@
 /*global jQuery, ajaxurl, icl_ajx_url, icl_ajxloaderimg, tm_basket_data */
 
 (function ($) {
-	"use strict";
+    "use strict";
 
-	jQuery(document).ready(
-		function () {
+    jQuery(
+        function () {
 
-			//Basket
+            //Basket
 
-			/* enable button 'Remove from basket' in Translation management > Translate jobs */
-			var translation_jobs_basket_form = jQuery('#translation-jobs-basket-form');
-			var handle_basket_form_cb = function(cb_location){
-				jQuery('#icl-tm-basket-delete-but').prop('disabled', jQuery('#translation-jobs-basket-form').find(cb_location + ':checked').length);
-			};
+            /* enable button 'Remove from basket' in Translation management > Translate jobs */
+            var translation_jobs_basket_form = jQuery('#translation-jobs-basket-form');
+            var handle_basket_form_cb = function (cb_location) {
+                jQuery('#icl-tm-basket-delete-but').prop('disabled', jQuery('#translation-jobs-basket-form').find(cb_location + ':checked').length);
+            };
 
 			var cb_locations = ['td', 'tfoot th', 'thead th'];
 			jQuery.each(cb_locations,function(cb_location){
@@ -58,17 +58,17 @@
 				var batch_deadline = form.find( '#basket-deadline' );
 
 				var init = function () {
-					form.bind('submit', submit_form);
+					form.on('submit', submit_form);
 
 					// prevent sending basket by pressing Enter
-					form.bind("keypress", function(e) {
+					form.on("keypress", function(e) {
 						if (e.keyCode == 13) {
 							e.preventDefault();
 							return false;
 						}
 					});
 
-					basket_name_element.bind('blur', basket_name_blur);
+					basket_name_element.on('blur', basket_name_blur);
 
 					message_box = jQuery('<div class="message_box"><div class="wpml-tm-basket-message-icon"></div></div>');
 					message_box_content = jQuery('<div class="wpml-tm-basket-message-content"></div>');

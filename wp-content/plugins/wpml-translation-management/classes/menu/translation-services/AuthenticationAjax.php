@@ -36,8 +36,10 @@ class AuthenticationAjax {
 			},
 			[ $this, 'is_valid_request_with_params' ],
 			__( 'Service activated.', 'wpml-translation-management' ),
-			__( 'The authentication didn\'t work. Please make sure you entered your details correctly and try again.',
-				'wpml-translation-management' )
+			__(
+				'The authentication didn\'t work. Please make sure you entered your details correctly and try again.',
+				'wpml-translation-management'
+			)
 		);
 	}
 
@@ -53,8 +55,10 @@ class AuthenticationAjax {
 			},
 			[ $this, 'is_valid_request_with_params' ],
 			__( 'Service credentials updated.', 'wpml-translation-management' ),
-			__( 'The authentication didn\'t work. Please make sure you entered your details correctly and try again.',
-				'wpml-translation-management' )
+			__(
+				'The authentication didn\'t work. Please make sure you entered your details correctly and try again.',
+				'wpml-translation-management'
+			)
 		);
 	}
 
@@ -105,11 +109,13 @@ class AuthenticationAjax {
 	 * @return bool
 	 */
 	private function send_success_response( $msg ) {
-		wp_send_json_success( [
-			'errors'  => 0,
-			'message' => $msg,
-			'reload'  => 1
-		] );
+		wp_send_json_success(
+			[
+				'errors'  => 0,
+				'message' => $msg,
+				'reload'  => 1,
+			]
+		);
 
 		return true;
 	}
@@ -124,7 +130,7 @@ class AuthenticationAjax {
 			[
 				'errors'  => 1,
 				'message' => $msg,
-				'reload'  => 0
+				'reload'  => 0,
 			]
 		);
 

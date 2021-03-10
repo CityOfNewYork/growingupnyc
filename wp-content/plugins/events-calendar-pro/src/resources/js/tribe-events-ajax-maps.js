@@ -223,10 +223,14 @@
 
 		if ( tt.pushstate && tt.map_view() ) {
 
-			history.replaceState( {
-				"tribe_paged" : ts.paged,
-				"tribe_params": ts.params
-			}, '', location.href );
+			var isShortcode = $( document.getElementById( 'tribe-events' ) ).is( '.tribe-events-shortcode' );
+
+			if ( ! isShortcode || false !== config.update_urls.shortcode.map ) {
+				history.replaceState( {
+					'tribe_paged': ts.paged,
+					'tribe_params': ts.params
+				}, '', location.href );
+			}
 
 			$( window ).on( 'popstate', function( event ) {
 
@@ -419,7 +423,10 @@
 
 						$( '.tribe-events-page-title' ).html( ts.view_title );
 
-						if ( ts.do_string ) {
+						var isShortcode = $( document.getElementById( 'tribe-events' ) ).is( '.tribe-events-shortcode' );
+						var shouldUpdateHistory = ! isShortcode || false !== config.update_urls.shortcode.map;
+
+						if ( ts.do_string && shouldUpdateHistory ) {
 							// strip the baseurl from the push state URL
 							var params = ts.params.replace( /&?baseurl=[^&]*/i, '' );
 
@@ -429,7 +436,7 @@
 							}, ts.page_title, td.cur_url + '?' + params );
 						}
 
-						if ( ts.pushstate ) {
+						if ( ts.pushstate && shouldUpdateHistory ) {
 							history.pushState( {
 								"tribe_paged" : ts.paged,
 								"tribe_params": ts.params

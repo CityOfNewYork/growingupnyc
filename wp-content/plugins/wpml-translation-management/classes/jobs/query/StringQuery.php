@@ -31,7 +31,7 @@ class StringQuery implements Query {
 	protected $batch_name_column = 'batches.batch_name';
 
 	/**
-	 * @param wpdb                       $wpdb          WP database instance.
+	 * @param wpdb         $wpdb          WP database instance.
 	 * @param QueryBuilder $query_builder Query builder instance.
 	 */
 	public function __construct( wpdb $wpdb, QueryBuilder $query_builder ) {
@@ -71,7 +71,7 @@ class StringQuery implements Query {
 			'core_status.ts_status AS ts_status',
 			'NULL AS needs_update',
 			'NULL AS editor',
-			"string_translations.status = " . ICL_TM_COMPLETE . "  AS has_completed_translation",
+			'string_translations.status = ' . ICL_TM_COMPLETE . '  AS has_completed_translation',
 			'NULL AS editor_job_id',
 		);
 
@@ -173,7 +173,7 @@ class StringQuery implements Query {
 	/**
 	 * Define filters
 	 *
-	 * @param QueryBuilder $query_builder Query builder instance.
+	 * @param QueryBuilder               $query_builder Query builder instance.
 	 * @param WPML_TM_Jobs_Search_Params $params Job search params.
 	 */
 	private function define_filters( QueryBuilder $query_builder, WPML_TM_Jobs_Search_Params $params ) {
@@ -200,22 +200,22 @@ class StringQuery implements Query {
 		$query_builder->set_tp_id_filter( 'string_status.rid', $params );
 
 		if ( $params->get_deadline() ) {
-			$query_builder->add_AND_where_condition('1 = 0');
+			$query_builder->add_AND_where_condition( '1 = 0' );
 		}
 	}
 
 	private function set_scope_filter( QueryBuilder $query_builder, WPML_TM_Jobs_Search_Params $params ) {
 		switch ( $params->get_scope() ) {
 			case WPML_TM_Jobs_Search_Params::SCOPE_LOCAL:
-				$query_builder->add_AND_where_condition( "string_status.rid IS NULL" );
+				$query_builder->add_AND_where_condition( 'string_status.rid IS NULL' );
 				break;
 			case WPML_TM_Jobs_Search_Params::SCOPE_REMOTE:
-				$query_builder->add_AND_where_condition( "string_status.rid IS NOT NULL" );
+				$query_builder->add_AND_where_condition( 'string_status.rid IS NOT NULL' );
 				break;
 			case WPML_TM_Jobs_Search_Params::SCOPE_ATE:
 				// we do not have string ATE jobs yet
 				// @todo it must be changed when we add them
-				$query_builder->add_AND_where_condition( "1 != 1" );
+				$query_builder->add_AND_where_condition( '1 != 1' );
 				break;
 		}
 

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit66ff47a8a603faf2baec44d1a2bfbba9
+class ComposerStaticInitacae0c2a5d577758f1b942106eaaffa4
 {
     public static $classMap = array (
         'IWPML_ST_Rewrite_Rule_Filter' => __DIR__ . '/../..' . '/classes/slug-translation/iwpml-st-rewrite-rule-filter.php',
@@ -29,6 +29,7 @@ class ComposerStaticInit66ff47a8a603faf2baec44d1a2bfbba9
         'WPML\\ST\\DB\\Mappers\\StringTranslations' => __DIR__ . '/../..' . '/classes/db-mappers/StringTranslations.php',
         'WPML\\ST\\DB\\Mappers\\StringsRetrieve' => __DIR__ . '/../..' . '/classes/db-mappers/StringsRetrieve.php',
         'WPML\\ST\\DB\\Mappers\\Update' => __DIR__ . '/../..' . '/classes/db-mappers/Update.php',
+        'WPML\\ST\\DisplayAsTranslated\\CheckRedirect' => __DIR__ . '/../..' . '/classes/slug-translation/CheckRedirect.php',
         'WPML\\ST\\Gettext\\AutoRegisterSettings' => __DIR__ . '/../..' . '/classes/gettext-hooks/AutoRegisterSettings.php',
         'WPML\\ST\\Gettext\\Filters\\IFilter' => __DIR__ . '/../..' . '/classes/gettext-hooks/filters/IFilter.php',
         'WPML\\ST\\Gettext\\Filters\\StringHighlighting' => __DIR__ . '/../..' . '/classes/gettext-hooks/filters/StringHighlighting.php',
@@ -310,7 +311,6 @@ class ComposerStaticInit66ff47a8a603faf2baec44d1a2bfbba9
         'WPML_Slug_Translation_Records_Factory' => __DIR__ . '/../..' . '/classes/slug-translation/wpml-slug-translation-records-factory.php',
         'WPML_String_Scanner' => __DIR__ . '/../..' . '/inc/gettext/wpml-string-scanner.class.php',
         'WPML_String_Translation' => __DIR__ . '/../..' . '/inc/wpml-string-translation.class.php',
-        'WPML_String_Translation_MO_Import' => __DIR__ . '/../..' . '/inc/gettext/wpml-string-translation-mo-import.class.php',
         'WPML_String_Translation_Table' => __DIR__ . '/../..' . '/classes/string-translation-ui/class-wpml-string-translation-table.php',
         'WPML_Strings_Translation_Priority' => __DIR__ . '/../..' . '/classes/string-translation/class-wpml-strings-translation-priority.php',
         'WPML_TM_Filters' => __DIR__ . '/../..' . '/classes/filters/class-wpml-tm-filters.php',
@@ -323,7 +323,7 @@ class ComposerStaticInit66ff47a8a603faf2baec44d1a2bfbba9
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->classMap = ComposerStaticInit66ff47a8a603faf2baec44d1a2bfbba9::$classMap;
+            $loader->classMap = ComposerStaticInitacae0c2a5d577758f1b942106eaaffa4::$classMap;
 
         }, null, ClassLoader::class);
     }

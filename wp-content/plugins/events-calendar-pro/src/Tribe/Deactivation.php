@@ -12,6 +12,9 @@ class Tribe__Events__Pro__Deactivation extends Tribe__Abstract_Deactivation {
 	 * @return void
 	 */
 	private function set_flags() {
+		// Ensure the class is loaded before using it, we're in shutdown context and common autoloader might be unset.
+		require_once __DIR__ . '/Updater.php';
+		require_once __DIR__ . '/Main.php';
 		$updater = new Tribe__Events__Pro__Updater( Tribe__Events__Pro__Main::VERSION );
 		$updater->reset();
 	}

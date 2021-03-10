@@ -37,13 +37,22 @@ class WPML_TM_Jobs_List_Translators {
 		$sourceIsValidLanguage = flip( $isValidLanguage );
 		$getValidTargets       = Fns::filter( $isValidLanguage );
 
-		$makePair = curryN( 2, function ( $source, $target ) {
-			return [ 'source' => $source, 'target' => $target ];
-		} );
+		$makePair = curryN(
+			2,
+			function ( $source, $target ) {
+				return [
+					'source' => $source,
+					'target' => $target,
+				];
+			}
+		);
 
-		$getAsPair = curryN( 3, function ( $makePair, $targets, $source ) {
-			return Fns::map( $makePair( $source ), $targets );
-		} );
+		$getAsPair = curryN(
+			3,
+			function ( $makePair, $targets, $source ) {
+				return Fns::map( $makePair( $source ), $targets );
+			}
+		);
 
 		return \wpml_collect( $translator->language_pairs )
 			->filter( $sourceIsValidLanguage )

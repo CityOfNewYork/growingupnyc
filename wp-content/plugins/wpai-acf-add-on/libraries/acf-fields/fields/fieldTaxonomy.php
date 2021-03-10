@@ -33,16 +33,14 @@ class FieldTaxonomy extends Field {
             $multipleValue = $this->getOption('multiple_value');
             if (!is_array($multipleValue)) {
                 $values = array_fill(0, $this->getOption('count'), $multipleValue);
-            }
-            else {
+            } else {
                 $values = array();
                 foreach ($multipleValue as $single_value) {
                     $values[] = array_fill(0, $this->getOption('count'), $single_value);
                 }
                 $this->setOption('is_multiple', TRUE);
             }
-        }
-        else {
+        } else {
 
             $values = array();
             if (!empty($xpath)) {
@@ -92,8 +90,7 @@ class FieldTaxonomy extends Field {
                                                         }
                                                     }
                                                 }
-                                            }
-                                            else {
+                                            } else {
                                                 $values[$tx_name][$i][] = array(
                                                     'name' => trim($term),
                                                     'parent' => FALSE,
@@ -243,9 +240,13 @@ class FieldTaxonomy extends Field {
                 $values[$tx_name] = $value;
             }
             return $values;
-        }
-        else{
-            $value = $this->getOption('is_multiple_field') ? explode(",", parent::getFieldValue()) : parent::getFieldValue();
+        } else {
+			if ($this->getOption('is_multiple_field')) {
+				$value = $this->options['values'];
+			} else {
+				$value = parent::getFieldValue();
+			}
+
         }
         return $value;
     }

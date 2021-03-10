@@ -4,12 +4,12 @@ use \WPML\TM\Jobs\FieldId;
 
 class WPML_TM_Job_Layout {
 
-	private $layout = array();
-	private $custom_fields = array();
+	private $layout                = array();
+	private $custom_fields         = array();
 	private $grouped_custom_fields = array();
-	private $terms = array();
+	private $terms                 = array();
 	private $wp_api;
-	public  $wpdb;
+	public $wpdb;
 
 	public function __construct( wpdb $wpdb, WPML_WP_API $wp_api ) {
 		$this->wpdb   = $wpdb;
@@ -81,7 +81,7 @@ class WPML_TM_Job_Layout {
 	private function extract_terms() {
 
 		foreach ( $this->layout as $key => $field ) {
-			if ( FieldId::is_any_term_field( $field )  ) {
+			if ( FieldId::is_any_term_field( $field ) ) {
 				$this->terms[] = $field;
 				unset( $this->layout[ $key ] );
 			}
@@ -97,7 +97,7 @@ class WPML_TM_Job_Layout {
 				'fields'        => $fields,
 				'empty'         => false,
 				'empty_message' => '',
-				'sub_title'     => ''
+				'sub_title'     => '',
 			);
 			$this->layout[] = $data;
 		}
@@ -112,7 +112,7 @@ class WPML_TM_Job_Layout {
 				'fields'        => $this->custom_fields,
 				'empty'         => false,
 				'empty_message' => '',
-				'sub_title'     => ''
+				'sub_title'     => '',
 			);
 			$this->layout[] = $data;
 		}
@@ -141,7 +141,7 @@ class WPML_TM_Job_Layout {
 					'fields'        => $fields,
 					'empty'         => false,
 					'empty_message' => '',
-					'sub_title'     => __( 'Changes in these translations will affect terms in general! (Not only for this post)', 'wpml-translation-management' )
+					'sub_title'     => __( 'Changes in these translations will affect terms in general! (Not only for this post)', 'wpml-translation-management' ),
 				);
 				$this->layout[] = $data;
 			}

@@ -148,7 +148,7 @@ class Tribe__Events__Pro__APM_Filters__APM_Filters {
 
 		$screen = get_current_screen();
 
-		if ( $screen->id !== 'edit-tribe_events' ) {
+		if ( ! $screen instanceof WP_Screen || $screen->id !== 'edit-tribe_events' ) {
 			return;
 		}
 

@@ -2,15 +2,15 @@
 /*
 Plugin Name: The Events Calendar PRO
 Description: The Events Calendar PRO, a premium add-on to the open source The Events Calendar plugin (required), enables recurring events, custom attributes, venue pages, new widgets and a host of other premium features.
-Version: 4.6.2.1
-Author: Modern Tribe, Inc.
-Author URI: http://m.tri.be/20
+Version: 5.2.2
+Author: The Events Calendar
+Author URI: https://evnt.is/20
 Text Domain: tribe-events-calendar-pro
 License: GPLv2 or later
 */
 
 /*
-Copyright 2010-2012 by Modern Tribe Inc and the contributors
+Copyright 2010-2012 by The Events Calendar and the contributors
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -27,11 +27,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+
 define( 'EVENTS_CALENDAR_PRO_DIR', dirname( __FILE__ ) );
 define( 'EVENTS_CALENDAR_PRO_FILE', __FILE__ );
 
 // Load the required php min version functions
 require_once dirname( EVENTS_CALENDAR_PRO_FILE ) . '/src/functions/php-min-version.php';
+
+// Load Composer autoload file only if we've not included this file already.
+require_once EVENTS_CALENDAR_PRO_DIR . '/vendor/autoload.php';
 
 /**
  * Verifies if we need to warn the user about min PHP version and bail to avoid fatals
@@ -105,9 +109,12 @@ add_action( 'tribe_common_loaded', 'tribe_events_calendar_pro_init' );
 function tribe_events_calendar_pro_init() {
 
 	$classes_exist = class_exists( 'Tribe__Events__Main' ) && class_exists( 'Tribe__Events__Pro__Main' );
-	$version_ok = $classes_exist && tribe_check_plugin( 'Tribe__Events__Pro__Main' );
+	$plugins_check = function_exists( 'tribe_check_plugin' ) ?
+		tribe_check_plugin( 'Tribe__Events__Pro__Main' )
+		: false;
+	$version_ok    = $classes_exist && $plugins_check;
 
-	if ( class_exists( 'Tribe__Main' ) && ! is_admin() && ! class_exists( 'Tribe__Events__Pro__PUE__Helper' ) ) {
+	if ( class_exists( 'Tribe__Main' ) && ! is_admin() && ! file_exists( __DIR__ . '/src/Tribe/PUE/Helper.php' ) ) {
 		tribe_main_pue_helper();
 	}
 
@@ -205,6 +212,16 @@ function tribe_events_pro_deactivation( $network_deactivating ) {
 	require_once dirname( __FILE__ ) . '/src/Tribe/Main.php';
 	require_once dirname( __FILE__ ) . '/src/Tribe/Deactivation.php';
 	Tribe__Events__Pro__Main::deactivate( $network_deactivating );
+}
+/**
+ * Register Activation
+ */
+register_activation_hook( __FILE__, 'tribe_events_pro_activation' );
+function tribe_events_pro_activation() {
+	if ( ! is_network_admin()  ) {
+		// We set with a string to avoid having to include a file here.
+		set_transient( '_tribe_events_delayed_flush_rewrite_rules', 'yes', 0 );
+	}
 }
 
 /**

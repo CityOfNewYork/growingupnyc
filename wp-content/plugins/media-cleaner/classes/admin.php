@@ -2,10 +2,11 @@
 
 class Meow_WPMC_Admin extends MeowCommon_Admin {
 
-  public function __construct() {
+  public function __construct( $allow_setup ) {
     parent::__construct( WPMC_PREFIX, WPMC_ENTRY, WPMC_DOMAIN, class_exists( 'MeowPro_WPMC_Core' ) );
-    add_action( 'admin_menu', array( $this, 'app_menu' ) );
-    add_filter( 'pre_update_option', array( $this, 'pre_update_option' ), 10, 3 );
+    if ( $allow_setup ) {
+      add_action( 'admin_menu', array( $this, 'app_menu' ) );
+    }
 
     // Load the scripts only if they are needed by the current screen
     $page = isset( $_GET["page"] ) ? $_GET["page"] : null;
@@ -49,41 +50,8 @@ class Meow_WPMC_Admin extends MeowCommon_Admin {
     ], $this->get_all_options() ) );
   }
 
-  /**
-   * Filters and performs validation for certain options
-   * @param mixed $value Option value
-   * @param string $option Option name
-   * @param mixed $old_value The current value of the option
-   * @return mixed The actual value to be stored
-   */
-  function pre_update_option( $value, $option, $old_value ) {
-    if ( strpos( $option, 'wpmc_' ) !== 0 ) return $value; // Never touch extraneous options
-    $validated = $this->validate_option( $option, $value );
-    if ( $validated instanceof WP_Error ) {
-      // TODO: Show warning for invalid option value
-      return $old_value;
-    }
-    return $validated;
-  }
-
-  /**
-   * Validates certain option values
-   * @param string $option Option name
-   * @param mixed $value Option value
-   * @return mixed|WP_Error Validated value if no problem
-   */
-  function validate_option( $option, $value ) {
-    switch ( $option ) {
-    case 'wpmc_dirs_filter':
-    case 'wpmc_files_filter':
-      if ( $value && @preg_match( $value, '' ) === false ) return new WP_Error( 'invalid_option', __( "Invalid Regular-Expression", 'media-cleaner' ) );
-      break;
-    }
-    return $value;
-  }
-
   function app_menu() {
-    add_submenu_page( 'meowapps-main-menu', 'Cleaner', 'Cleaner', 'manage_options', 'wpmc_settings', 
+    add_submenu_page( 'meowapps-main-menu', 'Cleaner', 'Cleaner', 'read', 'wpmc_settings', 
       array( $this, 'admin_settings' )
     );
   }

@@ -1,27 +1,34 @@
 <?php
 
-$organizers        = Tribe__Events__Main::instance()->get_organizer_info();
-$organizer_options = array();
-if ( is_array( $organizers ) && ! empty( $organizers ) ) {
-	$organizer_options[0] = __( 'No Default', 'tribe-events-calendar-pro' );
-	foreach ( $organizers as $organizer ) {
-		$organizer_options[ $organizer->ID ] = $organizer->post_title;
+$organizers        = [];
+$venues            = [];
+$state_options     = [];
+$country_options   = [];
+$organizer_options = [];
+$venue_options     = [];
+
+if ( 'defaults' === tribe_get_request_var( 'tab' ) ) {
+	$organizers        = Tribe__Events__Main::instance()->get_organizer_info();
+	if ( is_array( $organizers ) && ! empty( $organizers ) ) {
+		$organizer_options[0] = __( 'No Default', 'tribe-events-calendar-pro' );
+		foreach ( $organizers as $organizer ) {
+			$organizer_options[ $organizer->ID ] = $organizer->post_title;
+		}
 	}
-}
 
-$venues        = Tribe__Events__Main::instance()->get_venue_info();
-$venue_options = array();
-if ( is_array( $venues ) && ! empty( $venues ) ) {
-	$venue_options[0] = __( 'No Default', 'tribe-events-calendar-pro' );
-	foreach ( $venues as $venue ) {
-		$venue_options[ $venue->ID ] = $venue->post_title;
+	$venues        = Tribe__Events__Main::instance()->get_venue_info();
+	if ( is_array( $venues ) && ! empty( $venues ) ) {
+		$venue_options[0] = __( 'No Default', 'tribe-events-calendar-pro' );
+		foreach ( $venues as $venue ) {
+			$venue_options[ $venue->ID ] = $venue->post_title;
+		}
 	}
+
+	$state_options = Tribe__View_Helpers::loadStates();
+	$state_options = array_merge( array( '' => __( 'Select a State', 'tribe-events-calendar-pro' ) ), $state_options );
+
+	$country_options = Tribe__View_Helpers::constructCountries();
 }
-
-$state_options = Tribe__View_Helpers::loadStates();
-$state_options = array_merge( array( '' => __( 'Select a State', 'tribe-events-calendar-pro' ) ), $state_options );
-
-$country_options = Tribe__View_Helpers::constructCountries();
 
 $defaultsTab = array(
 	'priority' => 30,

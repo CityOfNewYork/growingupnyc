@@ -7,9 +7,9 @@ use WPML\FP\Either;
 
 interface IHandler {
 	/**
-	 * @param Collection $data
+	 * @param \WPML\Collect\Support\Collection<mixed> $data
 	 *
-	 * @return Either
+	 * @return \WPML\FP\Either
 	 */
 	public function run( Collection $data );
 }

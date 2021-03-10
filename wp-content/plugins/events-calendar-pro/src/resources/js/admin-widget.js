@@ -171,18 +171,21 @@
 			// For AJAX we reset the data
 			args.data = { results: [] };
 
-			// Allows HTML from Select2 AJAX calls
-			args.escapeMarkup = function ( m ) {
+			// Allows HTML from Select2 AJAX calls.
+			args.escapeMarkup = function( m ) {
 				return m;
 			};
 
-			args.ajax = { // instead of writing the function to execute the request we use Select2's convenient helper
+			// instead of writing the function to execute the request we use Select2's convenient helper.
+			args.ajax = {
 				dataType: 'json',
 				type: 'POST',
 				url: window.ajaxurl,
-				results: function ( data ) { // parse the results into the format expected by Select2.
+				processResults: function( data ) {
+					// parse the results into the format expected by Select2.
+					$select.data( 'lastOptions', data.data );
 					return data.data;
-				}
+				},
 			};
 
 			// By default only send the source
@@ -190,8 +193,9 @@
 				return {
 					action: 'tribe_widget_dropdown_' + source,
 					disabled: $select.data( 'disabled' ),
+					selected: $select.data( 'selected' ),
 					search: search,
-					page: page
+					page: page,
 				};
 			};
 		}
@@ -201,7 +205,7 @@
 		} ).select2( args );
 	};
 
-	tribeWidget.conditional = function ( conditional, $widget ) {
+	tribeWidget.conditional = function( conditional, $widget ) {
 
 		var $this = $( conditional ),
 			field = $this.data( 'tribeConditionalField' ),
@@ -231,6 +235,21 @@
 				$conditional.hide().prev( '.select2-container' ).show();
 			}
 		} );
+	};
+
+	tribeWidget.showFilters = function( e, $widget ) {
+		var $filters = $( '.calendar-widget-filters-container' );
+
+		$filters.each(
+			function( index, filter ) {
+				var $filter = $( filter );
+				var $filter_input = $filter.find( '.calendar-widget-added-filters' );
+
+				if ( $filter_input && $filter_input.val() && $filter_input.val().length ) {
+					$filter.addClass( 'calendar-widget-filters-container--show' );
+				}
+			}
+		);
 	}
 
 	tribeWidget.setup = function ( e, $widget ) {
@@ -239,12 +258,13 @@
 			var $target = $( e.target ),
 				$widget;
 
-			// Prevent weird non avaiable widgets to go any further
+			// Prevent weird non available widgets from going any further
 			if ( !$target.parents( '.widget-top' ).length || $target.parents( '#available-widgets' ).length ) {
 				return;
 			}
 
 			$widget = $target.closest( 'div.widget' );
+			$widget.find( '[data-depends]' ).trigger( 'setup.dependency' ).trigger( 'verify.dependency' );
 		}
 
 		// It might be a DOM object, so we try convert to jQuery
@@ -275,6 +295,8 @@
 			tribeWidget.conditional(  this, $widget );
 		} );
 
+		tribeWidget.showFilters( e, $widget );
+
 		// Only happens on Widgets Admin page
 		if ( !$( 'body' ).hasClass( 'wp-customizer' ) ) {
 			if ( $.isNumeric( e ) || 'widget-updated' === e.type ) {
@@ -282,6 +304,8 @@
 					// check for conditional display of fields and process after saving
 					tribeWidget.conditional( this, $widget );
 				} );
+
+				$widget.find( '[data-depends]' ).trigger( 'setup.dependency' ).trigger( 'verify.dependency' );
 			}
 		}
 	};
@@ -294,64 +318,101 @@
 				return;
 			}
 
+			tribeWidget.showFilters;
+
 			// This ensures that we set up the widgets that are already in place correctly
 			$( '.widget[id*="tribe-"]' ).each( tribeWidget.setup );
 		} )
 		.on( {
-			// On the Widget Actions, try to re-configure
-			'widget-added widget-updated': tribeWidget.setup,
+			// On the Widget Actions, try to re-configure.
+			'widget-added widget-updated': function ( e, widget ) {
+				var $widget = $( widget );
+				tribeWidget.setup( e, $widget );
+				tribeWidget.showFilters( e, $widget );
+				$widget.find( '[data-depends]' ).trigger( 'setup.dependency' ).trigger( 'verify.dependency' );
+			}
 		} )
-		.on( 'change', '.calendar-widget-add-filter', function ( e ) {
-
-			var $select = $( this ),
-				$widget = $select.parents( '.widget[id*="tribe-"]' ),
-				$filters = $widget.find( '.calendar-widget-filters-container' ),
-				$list = $widget.find( '.calendar-widget-filter-list' ),
-				$field = $widget.find( '.calendar-widget-added-filters' ),
-				values = $field.val() ? $.parseJSON( $field.val() ) : {},
-				term = e.added,
-				disabled = $select.data( 'disabled' ) ? $select.data( 'disabled' ) : [];
+		.on( 'change', '.calendar-widget-add-filter', function( e ) {
+			var $select = $( this );
+			var $widget = $select.parents( '.widget[id*="tribe-"]' );
+			var $list = $widget.find( '.calendar-widget-filter-list' );
+			var $field = $widget.find( '.calendar-widget-added-filters' );
+			var values = $field.val() ? $.parseJSON( $field.val() ) : {};
+			var term = $select.val();
+			var disabled = $select.data( 'disabled' ) ? $select.data( 'disabled' ) : [];
+			var options = $select.data( 'lastOptions' );
 
 			if ( 'undefined' === typeof term ) {
 				return;
 			}
 
-			// If we don't have the given Taxonomy
-			if ( !values[term.taxonomy.name] ) {
-				values[term.taxonomy.name] = [];
+			var term_obj;
+
+			if ( null === values ) {
+				values = {};
 			}
 
-			// Bail if we already have the term added
-			if ( -1 !== $.inArray( term.id, values[term.taxonomy.name] ) ) {
-				// Remove the Selected Option
-				$select.select2( 'val', '', false );
+			options.results.forEach( function( group ) {
+				if ( ! group.tax ) {
+					return;
+				}
+				// If we don't have the given Taxonomy.
+				if ( ! values[ group.tax.name ] ) {
+					values[ group.tax.name ] = [];
+				}
+
+				group.children.forEach( function( option ) {
+					if ( ! option ) {
+						return;
+					}
+
+					if ( option.id != term ) {
+						return;
+					}
+
+					term_obj = option;
+					values[ group.tax.name ].push( option.id );
+				} );
+			} );
+
+			if ( ! term_obj ) {
 				return;
 			}
 
-			$filters.show();
+			// Bail if we already have the term added.
+			if ( -1 !== $.inArray( term.id, values[ term_obj.taxonomy.name ] ) && -1 !== $.inArray( term, values[ term_obj.taxonomy.name ] ) ) {
+				// Remove the Selected Option.
+				$select.val( '' );
+				return;
+			}
 
-			values[term.taxonomy.name].push( term.id );
+			// Safety net for items not in the values hash.
+			if ( $list.find( '[data-term="' + term_obj.id + '"]' ).length ) {
+				return;
+			}
 
+			tribeWidget.showFilters( e, $widget );
+			values[ term_obj.taxonomy.name ].push( term.id );
 			$field.val( JSON.stringify( values ) );
 
 			var $link = $( '<a/>' ).attr( {
-					'data-tax': term.taxonomy.name,
-					'data-term': term.id,
-					'class': 'calendar-widget-remove-filter',
-					'href': '#',
-				} ).text( '(remove)' ),
-				$remove = $( '<span/>' ).append( $link ),
-				$li = $( '<li/>' ).append( 'p' ).html( term.taxonomy.labels.name + ': ' + term.text ).append( $remove );
+				'data-tax': term_obj.taxonomy.name,
+				'data-term': term_obj.id,
+				'class': 'calendar-widget-remove-filter',
+				'href': '#',
+			} ).text( '(remove)' );
+			var $remove = $( '<span/>' ).append( $link );
+			var $li = $( '<li/>' ).addClass( 'calendar-widget-filter-item' ).html( term_obj.taxonomy.labels.name + ': ' + term_obj.text ).append( $remove );
 
 			$list.append( $li );
 
 			tribeWidget.calendar_toggle( $widget );
 
-			disabled.push( term.id );
+			disabled.push( term_obj.id );
 			$select.data( 'disabled', disabled );
 
 			// After all that remove the Opt
-			$select.select2( 'val', '', false );
+			$select.val( '' );
 		} )
 		.on( 'click', '.calendar-widget-remove-filter', function ( e ) {
 			e.preventDefault();
@@ -366,8 +427,8 @@
 				taxonomy = $link.data( 'tax' ),
 				disabled = $select.data( 'disabled' ) ? $select.data( 'disabled' ) : [];
 
-			if ( values[taxonomy] ) {
-				values[taxonomy] = _.without( values[taxonomy], termId.toString() );
+			if ( values[ taxonomy ] ) {
+				values[ taxonomy ] = _.without( values[ taxonomy ], termId.toString() );
 			}
 
 			// Updates the HTML field
@@ -382,17 +443,14 @@
 			$widget.find( 'input[name^="widget-tribe-"]' ).trigger( 'change' );
 
 			tribeWidget.calendar_toggle( $widget );
-
 		} )
 		.on( 'click', '.so-close', function( e ) {
 			// Close select2 when we close a panel dialog
-				$( '.calendar-widget-add-filter' ).select2( 'close' );
-			}
-		);
+			$( '.calendar-widget-add-filter' ).select2( 'close' );
+		} );
 
 	// Open the Widget
 	$body.on( 'click.widgets-toggle', tribeWidget.setup );
-
 
 	// Pass the pagebuilder panel as the "widget" so we can set up filters correctly
 	$( document ).on(

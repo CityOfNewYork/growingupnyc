@@ -36,7 +36,6 @@ class Tribe__Events__Aggregator__Record__Void_Queue
 
 			return;
 		}
-
 		$this->error = $error;
 	}
 
@@ -149,5 +148,14 @@ class Tribe__Events__Aggregator__Record__Void_Queue
 	 */
 	public function get_wp_error() {
 		return $this->wp_error;
+	}
+
+	/**
+	 * This Queue never fetches on external resources so is always `false`.
+	 *
+	 * @return bool The state of the queue with external resources.
+	 */
+	public function is_fetching() {
+		return false;
 	}
 }

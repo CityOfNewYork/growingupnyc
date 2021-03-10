@@ -14,7 +14,7 @@ class Hooks implements \IWPML_Backend_Action_Loader, \IWPML_Frontend_Action_Load
 
 	public static function add_hooks() {
 		WPHooks::onAction( 'wpml_pro_translation_completed', 10, 1 )
-		       ->then( spreadArgs( [ self::class, 'clearStatus' ] ) );
+			   ->then( spreadArgs( [ self::class, 'clearStatus' ] ) );
 	}
 
 	public static function clearStatus( $postId ) {

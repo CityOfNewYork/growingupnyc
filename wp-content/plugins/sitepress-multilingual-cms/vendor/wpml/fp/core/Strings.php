@@ -31,6 +31,9 @@ use WPML\Collect\Support\Traits\Macroable;
 class Str {
 	use Macroable;
 
+	/**
+	 * @return void
+	 */
 	public static function init() {
 
 		self::macro( 'split', curryN( 2, 'explode' ) );

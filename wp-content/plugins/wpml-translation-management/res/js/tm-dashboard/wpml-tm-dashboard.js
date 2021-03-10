@@ -341,9 +341,9 @@ var PostDuplication = Backbone.View.extend({
     }
 });
 
-jQuery( document ).ready( function () {
-	var tmDashboard = new WPML_TM.Dashboard();
-	tmDashboard.init( jQuery );
-} );
+jQuery(function () {
+    var tmDashboard = new WPML_TM.Dashboard();
+    tmDashboard.init(jQuery);
+});
 
 }());

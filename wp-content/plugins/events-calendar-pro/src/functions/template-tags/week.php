@@ -132,7 +132,7 @@ if ( class_exists( 'Tribe__Events__Pro__Main' ) ) {
 	 */
 	function tribe_events_week_column_classes() {
 		echo apply_filters( 'tribe_events_week_column_classes', Tribe__Events__Pro__Templates__Week::column_classes() );
-				}
+	}
 
 	/**
 	 * Retrieve the current date in Y-m-d format.

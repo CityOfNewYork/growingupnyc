@@ -3,7 +3,6 @@
 
 namespace WPML\TM\ATE\ClonedSites;
 
-
 class Lock {
 	const CLONED_SITE_OPTION = 'otgs_wpml_tm_ate_cloned_site_lock';
 
@@ -23,8 +22,8 @@ class Lock {
 
 	private function isLockDataPresent( $lockData ) {
 		if ( isset( $lockData['stored_fingerprint'] )
-		     && isset( $lockData['received_fingerprint'] )
-		     && isset( $lockData['fingerprint_confirmed'] ) ) {
+			 && isset( $lockData['received_fingerprint'] )
+			 && isset( $lockData['fingerprint_confirmed'] ) ) {
 			return true;
 		}
 

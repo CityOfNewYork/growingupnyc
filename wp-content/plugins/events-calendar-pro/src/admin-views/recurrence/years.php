@@ -10,8 +10,7 @@ for ( $i = 1; $i <= 12; $i++ ) {
 <div class="tribe-month-select">
 	<span class="tribe-dependent" data-depends="#<?php echo esc_attr( $rule_prefix ); ?>_rule_--_type" data-condition="Yearly">
 		<span class="tribe-field-inline-text"><?php esc_html_e( 'Every', 'tribe-events-calendar-pro' ); ?></span>
-		<input
-			type="text"
+		<select
 			id="<?php echo esc_attr( $rule_prefix ); ?>_rule_--_interval_year"
 			name="recurrence[<?php echo esc_attr( $rule_type ); ?>][][custom][interval]"
 			class="tribe-dropdown tribe-recurrence-rule-interval"
@@ -19,9 +18,14 @@ for ( $i = 1; $i <= 12; $i++ ) {
 			data-freeform
 			data-int
 			data-field="custom-interval"
-			value="{{#if custom.interval}}{{custom.interval}}{{else}}1{{/if}}"
 			style="display:inline-block;"
-		/>
+		>
+			{{#if custom.interval}}
+				<option value="{{custom.interval}}">{{custom.interval}}</option>
+			{{else}}
+				<option value="1">1</option>
+			{{/if}}
+		</select>
 		<span class="tribe-field-inline-text tribe-field-inline-last tribe-dependent" data-depends="#<?php echo esc_attr( $rule_prefix ); ?>_rule_--_type" data-condition="Yearly">
 			<span class="tribe-dependent" data-depends="#<?php echo esc_attr( $rule_prefix ); ?>_rule_--_interval_year" data-condition="1">
 				<?php echo esc_html_x( 'year', 'The singular case for "year" in the recurrence rules of an event, e.g. "Every 1 year"', 'tribe-events-calendar-pro' ); ?>
@@ -36,17 +40,23 @@ for ( $i = 1; $i <= 12; $i++ ) {
 		<span class="tribe-field-inline-text tribe-field-inline-first"><?php echo esc_html_x( 'in', 'Begins the line indicating on which month the event will occur', 'tribe-events-calendar-pro' ); ?></span>
 		<h3 id="month-the-event-will-recur-in" class="screen-reader-text"><?php esc_html_e( 'Which month will the event recur in?', 'tribe-events-calendar-pro' ); ?></h3>
 	</span>
-	<input
-		name="recurrence[<?php echo esc_attr( $rule_type ); ?>][][custom][year][month]"
+	<select
+		name="recurrence[<?php echo esc_attr( $rule_type ); ?>][][custom][year][month][]"
 		id="<?php echo esc_attr( $rule_prefix ); ?>_rule_--_year_month"
 		class="custom-recurrence-years tribe-dropdown tribe-dependency"
 		data-hide-search
 		data-field="custom-year-month"
-		multiple
-		data-options="<?php echo esc_attr( json_encode( $months ) ); ?>"
+		multiple="multiple"
 		data-depends="#<?php echo esc_attr( $rule_prefix ); ?>_rule_--_custom_year_month"
-		value="{{ custom.year.month }}"
 	>
+		{{#tribe_recurrence_select custom.year.month}}
+		<?php foreach ( $months as $month ) : ?>
+			<option value="<?php echo esc_attr( $month['id'] ); ?>">
+				<?php echo esc_html( $month['text'] ); ?>
+			</option>
+		<?php endforeach; ?>
+		{{/tribe_recurrence_select}}
+	</select>
 </div>
 <div class="tribe-dame-day-select">
 	<span class="tribe-field-inline-text first-label-in-line">

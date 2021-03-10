@@ -3,18 +3,17 @@
 
 "use strict";
 
-jQuery(document).ready(
-	function ($) {
+jQuery(function ($) {
 
-		var deleted = 0;
-		var deleting = false;
-		var initial_orphans_count = 0;
+    var deleted = 0;
+    var deleting = false;
+    var initial_orphans_count = 0;
 
-		var orphansCount = $('#wpml_orphans_count');
-		var orphansCheckCount = orphansCount.find('.check-orphans');
-		var orphansCountResults = orphansCount.find('.orphans-check-results');
-		var orphansCountProgress = orphansCount.find('.count-in-progress');
-		var deletingProgress = orphansCount.find('.delete-in-progress');
+    var orphansCount = $('#wpml_orphans_count');
+    var orphansCheckCount = orphansCount.find('.check-orphans');
+    var orphansCountResults = orphansCount.find('.orphans-check-results');
+    var orphansCountProgress = orphansCount.find('.count-in-progress');
+    var deletingProgress = orphansCount.find('.delete-in-progress');
 		var deletedOrphans = orphansCount.find('.deleted');
 		var cleanOrphans = orphansCount.find('.clean-orphans');
 		var noOrphans = orphansCount.find('.no_orphans');

@@ -11,8 +11,8 @@ class WPML_Links_Fixed_Status_For_Posts extends WPML_Links_Fixed_Status {
 	private $translation_id;
 	private $wpdb;
 
-	public function __construct( &$wpdb, $element_id, $element_type ) {
-		$this->wpdb = &$wpdb;
+	public function __construct( $wpdb, $element_id, $element_type ) {
+		$this->wpdb = $wpdb;
 
 		$this->translation_id = $wpdb->get_var( $wpdb->prepare( "SELECT translation_id
 														 FROM {$wpdb->prefix}icl_translations
@@ -40,7 +40,7 @@ class WPML_Links_Fixed_Status_For_Posts extends WPML_Links_Fixed_Status {
 
 	public static function clear( $element_id, $element_type ) {
 		global $wpdb;
-		$status = new static( $wpdb, $element_id, $element_type );
+		$status = new WPML_Links_Fixed_Status_For_Posts( $wpdb, $element_id, $element_type );
 		$status->set( false );
 	}
 }

@@ -26,7 +26,7 @@ class WPML_LS_Template extends WPML_Templates_Factory {
 			$this->template_string = $this->template['template_string'];
 		}
 
-		$this->model    = $template_model;
+		$this->model = $template_model;
 		parent::__construct();
 	}
 

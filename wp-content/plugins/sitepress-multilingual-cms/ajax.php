@@ -1,7 +1,7 @@
 <?php
 /**
  * @package wpml-core
- * @used-by Sitepress::ajax_setup
+ * @used-by SitePress::ajax_setup
  */
 global $wpdb, $sitepress, $sitepress_settings, $wp_rewrite;
 /** @var SitePress $this */
@@ -27,7 +27,6 @@ $default_language = $this->get_default_language();
 
 switch ( $request ) {
 	case 'registration_form_submit':
-
 		$ret['error']   = '';
 		$setup_instance = wpml_get_setup_instance();
 		if ( $_POST['button_action'] == 'finish' ) {
@@ -35,14 +34,17 @@ switch ( $request ) {
 		}
 
 		if ( $_POST['button_action'] == 'later' ) {
-			//success
-			$ret['success'] = sprintf( __( 'WPML will work on your site, but you will not receive updates. WPML updates are essential for keeping your site running smoothly and secure. To receive automated updates, you need to complete the registration, in the %splugins admin%s page.', 'sitepress' ),
-				'<a href="' . admin_url( 'plugin-install.php?tab=commercial' ) . '">', '</a>' );
+			// success
+			$ret['success'] = sprintf(
+				__( 'WPML will work on your site, but you will not receive updates. WPML updates are essential for keeping your site running smoothly and secure. To receive automated updates, you need to complete the registration, in the %1$splugins admin%2$s page.', 'sitepress' ),
+				'<a href="' . admin_url( 'plugin-install.php?tab=commercial' ) . '">',
+				'</a>'
+			);
 		} else {
 			if ( empty( $_POST['installer_site_key'] ) ) {
 				$ret['error'] = __( 'Missing site key.' );
 			} else {
-				$site_key = $_POST['installer_site_key'];
+				$site_key = filter_var( $_POST['installer_site_key'], FILTER_SANITIZE_STRING );
 				if ( class_exists( 'WP_Installer' ) ) {
 					$args['repository_id'] = 'wpml';
 					$args['nonce']         = wp_create_nonce( 'save_site_key_' . $args['repository_id'] );
@@ -52,7 +54,7 @@ switch ( $request ) {
 					if ( ! empty( $r['error'] ) ) {
 						$ret['error'] = $r['error'];
 					} else {
-						//success
+						// success
 						$ret['success'] = __( 'Thank you for registering WPML on this site. You will receive automatic updates when new versions are available.', 'sitepress' );
 					}
 				}
@@ -161,7 +163,7 @@ switch ( $request ) {
 		icl_save_settings();
 		break;
 	case 'icl_messages':
-		//TODO: handle with Translation Proxy
+		// TODO: handle with Translation Proxy
 		if ( ! icl_get_setting( 'icl_disable_reminders' ) ) {
 			break;
 		}
@@ -249,12 +251,14 @@ switch ( $request ) {
 		break;
 	case 'icl_hide_languages':
 		$iclsettings['hidden_languages'] = empty( $_POST['icl_hidden_languages'] ) ? [] : $_POST['icl_hidden_languages'];
-		$this->set_setting( 'hidden_languages', [] ); //reset current value
+		$this->set_setting( 'hidden_languages', [] ); // reset current value
 		$active_languages = $this->get_active_languages();
 		if ( ! empty( $iclsettings['hidden_languages'] ) ) {
 			if ( 1 == count( $iclsettings['hidden_languages'] ) ) {
-				$out = sprintf( __( '%s is currently hidden to visitors.', 'sitepress' ),
-					$active_languages[ $iclsettings['hidden_languages'][0] ]['display_name'] );
+				$out = sprintf(
+					__( '%s is currently hidden to visitors.', 'sitepress' ),
+					$active_languages[ $iclsettings['hidden_languages'][0] ]['display_name']
+				);
 			} else {
 				foreach ( $iclsettings['hidden_languages'] as $l ) {
 					$_hlngs[] = $active_languages[ $l ]['display_name'];
@@ -262,8 +266,10 @@ switch ( $request ) {
 				$hlangs = join( ', ', $_hlngs );
 				$out    = sprintf( __( '%s are currently hidden to visitors.', 'sitepress' ), $hlangs );
 			}
-			$out .= ' ' . sprintf( __( 'You can enable its/their display for yourself, in your <a href="%s">profile page</a>.', 'sitepress' ),
-					'profile.php#wpml' );
+			$out .= ' ' . sprintf(
+				__( 'You can enable its/their display for yourself, in your <a href="%s">profile page</a>.', 'sitepress' ),
+				'profile.php#wpml'
+			);
 		} else {
 			$out = __( 'All languages are currently displayed.', 'sitepress' );
 		}
@@ -373,13 +379,13 @@ switch ( $request ) {
 	case 'wpml_cf_translation_preferences':
 		if ( empty( $_POST[ WPML_POST_META_SETTING_INDEX_SINGULAR ] ) ) {
 			echo '<span style="color:#FF0000;">'
-			     . __( 'Error: No custom field', 'sitepress' ) . '</span>';
+				 . __( 'Error: No custom field', 'sitepress' ) . '</span>';
 			die();
 		}
 		$_POST[ WPML_POST_META_SETTING_INDEX_SINGULAR ] = @strval( $_POST[ WPML_POST_META_SETTING_INDEX_SINGULAR ] );
 		if ( ! isset( $_POST['translate_action'] ) ) {
 			echo '<span style="color:#FF0000;">'
-			     . __( 'Error: Please provide translation action', 'sitepress' ) . '</span>';
+				 . __( 'Error: Please provide translation action', 'sitepress' ) . '</span>';
 			die();
 		}
 		$_POST['translate_action'] = @intval( $_POST['translate_action'] );
@@ -391,13 +397,13 @@ switch ( $request ) {
 				echo '<strong><em>' . __( 'Settings updated', 'sitepress' ) . '</em></strong>';
 			} else {
 				echo '<span style="color:#FF0000;">'
-				     . __( 'Error: WPML Translation Management plugin not initiated', 'sitepress' )
-				     . '</span>';
+					 . __( 'Error: WPML Translation Management plugin not initiated', 'sitepress' )
+					 . '</span>';
 			}
 		} else {
 			echo '<span style="color:#FF0000;">'
-			     . __( 'Error: Please activate WPML Translation Management plugin', 'sitepress' )
-			     . '</span>';
+				 . __( 'Error: Please activate WPML Translation Management plugin', 'sitepress' )
+				 . '</span>';
 		}
 		break;
 	case 'icl_seo_options':
@@ -433,15 +439,24 @@ switch ( $request ) {
 			$wpdb->update(
 				$wpdb->prefix . 'icl_translations',
 				[ 'source_language_code' => $language_details->language_code ],
-				[ 'trid' => $new_trid, 'element_type' => $element_type ],
+				[
+					'trid'         => $new_trid,
+					'element_type' => $element_type,
+				],
 				[ '%s' ],
 				[ '%d', '%s' ]
 			);
 
 			$wpdb->update(
 				$wpdb->prefix . 'icl_translations',
-				[ 'source_language_code' => null, 'trid' => $new_trid ],
-				[ 'element_id' => $post_id, 'element_type' => $element_type ],
+				[
+					'source_language_code' => null,
+					'trid'                 => $new_trid,
+				],
+				[
+					'element_id'   => $post_id,
+					'element_type' => $element_type,
+				],
 				[ '%s', '%d' ],
 				[ '%d', '%s' ]
 			);
@@ -470,8 +485,14 @@ switch ( $request ) {
 
 			$wpdb->update(
 				$wpdb->prefix . 'icl_translations',
-				[ 'source_language_code' => $original_element_language, 'trid' => $new_trid ],
-				[ 'element_id' => $post_id, 'element_type' => $element_type ],
+				[
+					'source_language_code' => $original_element_language,
+					'trid'                 => $new_trid,
+				],
+				[
+					'element_id'   => $post_id,
+					'element_type' => $element_type,
+				],
 				[ '%s', '%d' ],
 				[ '%d', '%s' ]
 			);
@@ -502,9 +523,10 @@ switch ( $request ) {
 			$post                 = get_post( $translation->element_id );
 			$title                = $post->post_title ? $post->post_title : strip_shortcodes( wp_trim_words( $post->post_content, 50 ) );
 			$source_language_code = $translation->source_language_code;
-			$results[]            = (object) [ 'language'        => $language_code,
-			                                   'title'           => $title,
-			                                   'source_language' => $source_language_code,
+			$results[]            = (object) [
+				'language'        => $language_code,
+				'title'           => $title,
+				'source_language' => $source_language_code,
 			];
 		}
 		echo wp_json_encode( $results );

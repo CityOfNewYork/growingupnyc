@@ -1,4 +1,7 @@
 <?php
+
+use Tribe__Utils__Array as Arr;
+
 /**
  * Represents individual [tribe_events] shortcodes.
  *
@@ -65,7 +68,7 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events {
 	 * @param $atts
 	 */
 	protected function setup( $atts ) {
-		$defaults = array(
+		$defaults = [
 			'date'          => '',
 			'tribe-bar'     => 'true',
 			'view'          => '',
@@ -73,7 +76,7 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events {
 			'cat'           => '',
 			'featured'      => 'false',
 			'main-calendar' => 'false',
-		);
+		];
 
 		$this->atts = shortcode_atts( $defaults, $atts, 'tribe_events' );
 
@@ -271,17 +274,37 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events {
 			$eventDate_param = $this->get_attribute( 'date', $this->get_url_param( 'tribe-bar-date' ) );
 		}
 
-		$this->update_query( array(
+		$arguments = [
 			'post_type'         => Tribe__Events__Main::POSTTYPE,
 			'eventDate'         => $eventDate_param,
 			'eventDisplay'      => $this->get_attribute( 'view' ),
-			'tribe_events_cat'  => $this->atts[ 'category' ],
-			'featured'          => $this->is_attribute_truthy( 'featured' ),
-		) );
+		];
+
+		$category_input = Arr::get_first_set( array_filter( $this->atts ), [ 'category', 'cat' ], false );
+
+		if ( false !== $category_input ) {
+			$terms = Arr::list_to_array( $category_input );
+
+			if ( count( $terms ) > 1 ) {
+				$arguments['tax_query'] = [
+					Tribe__Events__Main::TAXONOMY => [
+						'taxonomy' => Tribe__Events__Main::TAXONOMY,
+						'field'    => 'slug',
+						'terms'    => Arr::list_to_array( $category_input ),
+					]
+				];
+			} else {
+				$arguments[ Tribe__Events__Main::TAXONOMY ] = reset( $terms );
+			}
+		}
+
+		$arguments['featured'] = $this->is_attribute_truthy( 'featured' ) ? true : null;
+
+		$this->update_query( $arguments );
 	}
 
 	/**
-	 * Take care of common setup needs including enqueing various assets required by the default views.
+	 * Take care of common setup needs including enqueuing various assets required by the default views.
 	 */
 	public function prepare_default() {
 		/**
@@ -563,8 +586,13 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events {
 		$this->get_template_object()->add_input_hash();
 		$attributes[] = 'id="tribe-events"';
 		$attributes[] = 'class="' . $this->get_wrapper_classes() . '"';
-		$attributes[] = 'data-live_ajax="' . absint( tribe_get_option( 'liveFiltersUpdate', true ) ) . '"';
+		$live_update  = 'automatic' === tribe_get_option( 'liveFiltersUpdate', 'automatic' ) ? 1 : 0;
+		$attributes[] = 'data-live_ajax="' . absint( $live_update ) . '"';
 		$attributes[] = 'data-datepicker_format="' . tribe_get_option( 'datepickerFormat' ) . '"';
+
+		if ( isset( $this->atts['featured'] ) && tribe_is_truthy( $this->atts['featured'] ) ) {
+			$attributes[] = 'data-featured="1"';
+		}
 
 		if ( ! empty( $this->query_args['tribe_events_cat'] ) ) {
 			$attributes[] = 'data-category="' . esc_attr( $this->query_args['tribe_events_cat'] ) . '"';
@@ -665,7 +693,7 @@ class Tribe__Events__Pro__Shortcodes__Tribe_Events {
 			$view = 'view-' . esc_attr( $this->atts[ 'view' ] );
 		}
 
-		if ( isset( $this->atts[ 'category' ] ) ) {
+		if ( ! empty( $this->atts['category'] ) ) {
 			$category = 'category-' . $this->atts[ 'category' ];
 		}
 		$classes = array(

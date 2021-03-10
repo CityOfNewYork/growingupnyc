@@ -11,6 +11,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
+use Tribe__Date_Utils as Dates;
+use Tribe__Events__Pro__Geo_Loc as Geo_Loc;
+use Tribe__Events__Query as Query;
+
 if ( ! class_exists( 'Tribe__Events__Pro__Templates__Map' ) ) {
 	class Tribe__Events__Pro__Templates__Map extends Tribe__Events__Pro__Template_Factory {
 
@@ -75,16 +79,44 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Map' ) ) {
 				'post_status'    => $post_status,
 				'eventDisplay'   => 'map',
 				'tribe_geoloc'   => true,
-				'featured'       => tribe( 'tec.featured_events' )->featured_events_requested(),
 			);
+
+			// If the request is false or not set we assume the request is for all events, not just featured ones.
+			if (
+				tribe( 'tec.featured_events' )->featured_events_requested()
+				|| (
+					isset( $this->args['featured'] )
+					&& tribe_is_truthy( $this->args['featured'] )
+				)
+			) {
+				$args['featured'] = true;
+			} else {
+				/**
+				 * Unset due to how queries featured argument is expected to be non-existent.
+				 *
+				 * @see #127272
+				 */
+				if ( isset( $args['featured'] ) ) {
+					unset( $args['featured'] );
+				}
+			}
+
+			if ( (bool) tribe_get_request_var( 'tribeHideRecurrence' ) ) {
+				$defaults['hide_subsequent_recurrences'] = true;
+			}
 
 			$view_state = 'map';
 
-			/* if past view */
-			if ( ! empty( $_POST['tribe_event_display'] ) && $_POST['tribe_event_display'] == 'past' ) {
-				$view_state = 'past';
-				$defaults['eventDisplay'] = 'past';
-				$defaults['order'] = 'DESC';
+			$date = tribe_get_request_var( 'tribe-bar-date', 'now' );
+
+			// Handle current or past view distinction.
+			if ( 'past' === tribe_get_request_var( 'tribe_event_display' ) ) {
+				$view_state                = 'past';
+				$defaults['eventDisplay']  = 'past';
+				$defaults['order']         = 'DESC';
+				$defaults['ends_before'] = Dates::build_date_object( $date );
+			} else {
+				$defaults['ends_after'] = Dates::build_date_object( $date );
 			}
 
 			if ( isset( $_POST['tribe_event_category'] ) ) {
@@ -95,7 +127,7 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Map' ) ) {
 				$defaults[ Tribe__Events__Main::TAXONOMY ] = $_POST[ Tribe__Events__Main::TAXONOMY ];
 			}
 
-			$query       = Tribe__Events__Query::getEvents( $defaults, true );
+			$query = $this->get_geofenced_query( $defaults );
 
 			$have_events = ( 0 < $query->found_posts );
 
@@ -158,5 +190,30 @@ if ( ! class_exists( 'Tribe__Events__Pro__Templates__Map' ) ) {
 
 		}
 
+		/**
+		 * Builds, runs and returns a geo-fenced query.
+		 *
+		 * @since 4.7
+		 *
+		 * @param array $query_args The arguments that should be used to fetch the view events.
+		 *
+		 * @return WP_Query The query object, filtered to add geo-fencing.
+		 */
+		protected function get_geofenced_query( array $query_args ) {
+			$callback = [ Geo_Loc::instance(), 'setup_geoloc_in_query' ];
+			$applies  = ! has_action( 'pre_get_posts', $callback );
+
+			if ( $applies ) {
+				add_action( 'pre_get_posts', $callback );
+			}
+
+			$query = Query::getEvents( $query_args, true );
+
+			if ( $applies ) {
+				remove_action( 'pre_get_posts', $callback );
+			}
+
+			return $query;
+		}
 	}
 }

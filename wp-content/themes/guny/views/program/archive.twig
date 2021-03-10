@@ -99,14 +99,13 @@
             </div>
           </a>
           <h3 class="c-card__title">
-            <a :href="post.link" :title="post.acf.program_name" rel="bookmark">
-              v{ post.acf.plain_language_program_name }
+            <a :href="post.link" :title="post.acf.program_name" rel="bookmark" v-html="post.acf.plain_language_program_name">
             </a>
           </h3>
 
           <div class="c-card__subtitle">
-            <p><strong>v{post.acf.program_name}</strong></p>
-            <p>v{post.acf.government_agency}</p>
+            <p><strong v-html="post.acf.program_name"></strong></p>
+            <p v-html="post.acf.government_agency"></p>
           </div>
 
           <div class="c-card__body">

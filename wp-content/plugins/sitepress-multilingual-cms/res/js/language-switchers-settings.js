@@ -358,7 +358,7 @@ WPML_core.languageSwitcher = (function( $, wpml_ls ) {
 	var fixSelectedOption = function() {
 		// Prevent loosing selected after replacing in original id
 		formAndDialogBox.on('change', 'select', function () {
-			var selectedVal = $(this).val();
+			var selectedVal = WPML_core.sanitize( $(this).val() );
 			$('option', this).prop('selected', false);
 			$('option', this).attr('selected', false);
 			$('option[value="' + selectedVal + '"]', this).prop('selected', true);
@@ -433,7 +433,7 @@ WPML_core.languageSwitcher = (function( $, wpml_ls ) {
 				buttons: function( event, t ) {
 					var button = $('<a class="close" href="#">&nbsp;</a>');
 
-					return button.bind( 'click.pointer', function(e) {
+					return button.on( 'click.pointer', function(e) {
 						e.preventDefault();
 						t.element.pointer('close');
 					});
@@ -539,7 +539,7 @@ WPML_core.languageSwitcher = (function( $, wpml_ls ) {
 	var updateRowAndSubform = function(subform) {
 		var row      = $('#' + subform.data('origin-id')),
 			itemType = subform.data('item-type'),
-			slug     = subform.find('.js-wpml-ls-available-slots').val();
+			slug     = WPML_core.sanitize( subform.find('.js-wpml-ls-available-slots').val() );
 
 		row.find('.js-wpml-ls-subform').replaceWith(subform);
 
@@ -557,7 +557,7 @@ WPML_core.languageSwitcher = (function( $, wpml_ls ) {
 
 	var appendNewRowAndSubform = function(subform) {
 		var itemType = subform.data('item-type'),
-			slug     = subform.find('.js-wpml-ls-available-' + itemType).val();
+			slug     = WPML_core.sanitize( subform.find('.js-wpml-ls-available-' + itemType).val() );
 
 		replaceSubformElementsAttributes(subform, slug);
 
@@ -671,7 +671,7 @@ WPML_core.languageSwitcher = (function( $, wpml_ls ) {
 			})
 			.on('keyup', '.js-wpml-ls-additional-css', function(){
 				var styleId      = 'wpml-ls-inline-styles-additional-css',
-					newStyleNode = $('<style id="' + styleId + '" type="text/css">' + $(this).val() + '</style>');
+					newStyleNode = $('<style id="' + styleId + '" type="text/css">' + WPML_core.sanitize( $(this).val() ) + '</style>');
 
 				$('#' + styleId).replaceWith(newStyleNode);
 			});
@@ -881,8 +881,8 @@ WPML_core.languageSwitcher = (function( $, wpml_ls ) {
 
 })( jQuery, wpml_language_switcher_admin );
 
-jQuery(document).ready(function () {
-	"use strict";
+jQuery(function () {
+    "use strict";
 
-	WPML_core.languageSwitcher.init();
+    WPML_core.languageSwitcher.init();
 });

@@ -36,7 +36,11 @@ class PMXI_Admin_Manage extends PMXI_Controller_Admin {
 
 		if ( ! in_array($order, array('DESC', 'ASC'))){
 			$order = 'DESC';
-		}		
+		}
+
+		if ( in_array($order_by, array('name'))){
+			$order_by = 'friendly_name ' . $order . ', name';
+		}
 		
 		$list = new PMXI_Import_List();
 		$post = new PMXI_Post_Record();
@@ -389,53 +393,39 @@ class PMXI_Admin_Manage extends PMXI_Controller_Admin {
 			$filePath = '';
 			
 			// upload new file in case when import is not continue			
-			if ( empty(PMXI_Plugin::$session->chunk_number) ) {						
-
-				if($item->type == 'ftp'){
-					$this->errors->add('form-validation', __('This import appears to be using FTP. Unfortunately WP All Import no longer supports the FTP protocol. Please contact <a href="mailto:support@wpallimport.com">support@wpallimport.com</a> if you have any questions.', 'wp_all_import_plugin'));
-				}									
-				elseif ($item->type == 'url'){ // up to date the file from URL
-
+			if ( empty(PMXI_Plugin::$session->chunk_number) ) {
+                $upload_result = FALSE;
+				if ($item->type == 'ftp') {
+				    try {
+                        $files = PMXI_FTPFetcher::fetch($item->options);
+                        $uploader = new PMXI_Upload($files[0], $this->errors, rtrim(str_replace(basename($files[0]), '', $files[0]), '/'));
+                        $upload_result = $uploader->upload();
+                    } catch (Exception $e) {
+                        $this->errors->add('form-validation', $e->getMessage());
+                    }
+				} elseif ($item->type == 'url') { // up to date the file from URL
 					$filesXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<data><node></node></data>";
-
-					$files = XmlImportParser::factory($filesXML, '/data/node', $item->path, $file)->parse(); $tmp_files[] = $file;	
-
+					$files = XmlImportParser::factory($filesXML, '/data/node', $item->path, $file)->parse(); $tmp_files[] = $file;
 					foreach ($tmp_files as $tmp_file) { // remove all temporary files created
 						@unlink($tmp_file);
 					}
-
 					$file_to_import = $item->path;
-
-					if ( ! empty($files) and is_array($files) )
-					{
+					if ( ! empty($files) and is_array($files) ) {
 						$file_to_import = array_shift($files);
 					}
-					
 					$uploader = new PMXI_Upload(trim($file_to_import), $this->errors);			
 					$upload_result = $uploader->url($item->feed_type, $item->path);
-					if ($upload_result instanceof WP_Error)
-						$this->errors = $upload_result;					
-					else
-						$filePath  = $upload_result['filePath'];									
-				} 
-				elseif ( $item->type == 'file' ) { // copy file from WP All Import uploads folder
-
-					$uploader = new PMXI_Upload(trim(basename($item->path)), $this->errors);			
-					$upload_result = $uploader->file();					
-					if ($upload_result instanceof WP_Error)
-						$this->errors = $upload_result;					
-					else										
-						$filePath  = $upload_result['filePath'];												
-				} 
-				elseif ( ! in_array($item->type, array('ftp'))){ // retrieve already uploaded file
-
+				} elseif ( $item->type == 'file' ) { // copy file from WP All Import uploads folder
+					$uploader = new PMXI_Upload(trim($item->path), $this->errors);
+					$upload_result = $uploader->file();
+				} else { // retrieve already uploaded file
 					$uploader = new PMXI_Upload(trim($item->path), $this->errors, rtrim(str_replace(basename($item->path), '', wp_all_import_get_absolute_path($item->path)), '/'));			
-					$upload_result = $uploader->upload();					
-					if ($upload_result instanceof WP_Error)
-						$this->errors = $upload_result;					
-					else						
-						$filePath  = $upload_result['filePath'];						
-				}	
+					$upload_result = $uploader->upload();
+				}
+
+                if (!count($this->errors->errors)) {
+                    $filePath  = $upload_result['filePath'];
+                }
 
 				if (empty($item->options['encoding'])){
 					$currentOptions = $item->options;
@@ -445,65 +435,50 @@ class PMXI_Admin_Manage extends PMXI_Controller_Admin {
 					))->update();
 				}			
 
-				@set_time_limit(0);
-
-				$local_paths = ( ! empty($local_paths) ) ? $local_paths : array($filePath);			
-
-				// wp_all_import_get_reader_engine( $local_paths, array('root_element' => $item->root_element), $item->id );						
-
-				foreach ($local_paths as $key => $path) {
-
-					if (!empty($action_type) and $action_type == 'continue'){
-						$chunks = $item->count;							
-					}
-					else{
-
-						$file = new PMXI_Chunk($path, array('element' => $item->root_element, 'encoding' => $item->options['encoding']));					
-				    						    
-					    $this->data['is_404'] = $file->is_404;
-
-					    while ($xml = $file->read()) {					      						    					    					    	
-					    	
-					    	if ( ! empty($xml) )
-					      	{												      		
-					      		//PMXI_Import_Record::preprocessXml($xml);	
-					      		$xml = "<?xml version=\"1.0\" encoding=\"". $item->options['encoding'] ."\"?>" . "\n" . $xml;					      		      						      							      					      	
-						      					      		
-						      	$dom = new DOMDocument('1.0', ( ! empty($item->options['encoding']) ) ? $item->options['encoding'] : 'UTF-8');															
-								$old = libxml_use_internal_errors(true);
-								$dom->loadXML($xml); // FIX: libxml xpath doesn't handle default namespace properly, so remove it upon XML load							
-								libxml_use_internal_errors($old);
-								$xpath = new DOMXPath($dom);
-								if (($elements = @$xpath->query($item->xpath)) and !empty($elements) and !empty($elements->length)){
-                                    $chunks += $elements->length;
+				if (!empty($filePath) && @file_exists($filePath)) {
+                    @set_time_limit(0);
+                    $local_paths = ( ! empty($local_paths) ) ? $local_paths : array($filePath);
+                    foreach ($local_paths as $key => $path) {
+                        if (!empty($action_type) and $action_type == 'continue'){
+                            $chunks = $item->count;
+                        } else {
+                            $file = new PMXI_Chunk($path, array('element' => $item->root_element, 'encoding' => $item->options['encoding']));
+                            $this->data['is_404'] = $file->is_404;
+                            while ($xml = $file->read()) {
+                                if ( ! empty($xml) ) {
+                                    //PMXI_Import_Record::preprocessXml($xml);
+                                    $xml = "<?xml version=\"1.0\" encoding=\"". $item->options['encoding'] ."\"?>" . "\n" . $xml;
+                                    $dom = new DOMDocument('1.0', ( ! empty($item->options['encoding']) ) ? $item->options['encoding'] : 'UTF-8');
+                                    $old = libxml_use_internal_errors(true);
+                                    $dom->loadXML($xml); // FIX: libxml xpath doesn't handle default namespace properly, so remove it upon XML load
+                                    libxml_use_internal_errors($old);
+                                    $xpath = new DOMXPath($dom);
+                                    if (($elements = @$xpath->query($item->xpath)) and !empty($elements) and !empty($elements->length)){
+                                        $chunks += $elements->length;
+                                    }
+                                    unset($dom, $xpath, $elements);
                                 }
+                            }
+                            unset($file);
+                        }
+                        !$key and $filePath = $path;
+                    }
+                }
 
-								unset($dom, $xpath, $elements);
-						    }
-						}
-						unset($file);
-					}
-												
-					!$key and $filePath = $path;					
-				}				
-
-				if (empty($chunks))
-				{
-					if ($item->options['is_delete_missing'])
-					{
+				if (empty($chunks)) {
+					if ($item->options['is_delete_missing']) {
 						$chunks = 1;
-					}
-					else
-					{
+					} else {
+						$item->set(array(
+							'registered_on' => date('Y-m-d H:i:s')
+						))->update();
 						$this->errors->add('root-element-validation', __('No matching elements found for Root element and XPath expression specified', 'wp_all_import_plugin'));						
 					}
-				}					
-																		   							
+				}
 			}							
 
-			if ( $chunks ) { // xml is valid						
-				
-				if ( ! PMXI_Plugin::is_ajax() and empty(PMXI_Plugin::$session->chunk_number)){					
+			if ( $chunks ) { // xml is valid
+				if ( ! PMXI_Plugin::is_ajax() and empty(PMXI_Plugin::$session->chunk_number)) {
 					// compose data to look like result of wizard steps				
 					$sesson_data = array(						
 						'filePath' => $filePath,
@@ -532,26 +507,20 @@ class PMXI_Admin_Manage extends PMXI_Controller_Admin {
 						'action' => (!empty($action_type) and $action_type == 'continue') ? 'continue' : 'update',	
 						'nonce' => wp_create_nonce( 'import' ),
 						'deligate' => false				
-					);										
-					
+					);
 					foreach ($sesson_data as $key => $value) {
 						PMXI_Plugin::$session->set($key, $value);
 					}
-
 					PMXI_Plugin::$session->save_data();
-					
 				}
-
 				$item->set(array('canceled' => 0, 'failed' => 0))->update();
-
 				// deligate operation to other controller
 				$controller = new PMXI_Admin_Import();
 				$controller->data['update_previous'] = $item;
 				$controller->process();
 				return;
 			}
-		}		
-
+		}
 		$this->render('admin/import/confirm');
 	}
 

@@ -6,7 +6,7 @@ class WPML_TM_Job_Entity {
 
 	const POST_TYPE    = 'post';
 	const STRING_TYPE  = 'string';
-	const STRING_BATCH  = 'st-batch_strings';
+	const STRING_BATCH = 'st-batch_strings';
 	const PACKAGE_TYPE = 'package';
 
 	/** @var int */
@@ -121,15 +121,19 @@ class WPML_TM_Job_Entity {
 	 */
 	public function set_status( $status ) {
 		$status = (int) $status;
-		if ( ! in_array( $status, array(
-			ICL_TM_NOT_TRANSLATED,
-			ICL_TM_WAITING_FOR_TRANSLATOR,
-			ICL_TM_IN_PROGRESS,
-			ICL_TM_TRANSLATION_READY_TO_DOWNLOAD,
-			ICL_TM_DUPLICATE,
-			ICL_TM_COMPLETE,
-			ICL_TM_NEEDS_UPDATE,
-		), true ) ) {
+		if ( ! in_array(
+			$status,
+			array(
+				ICL_TM_NOT_TRANSLATED,
+				ICL_TM_WAITING_FOR_TRANSLATOR,
+				ICL_TM_IN_PROGRESS,
+				ICL_TM_TRANSLATION_READY_TO_DOWNLOAD,
+				ICL_TM_DUPLICATE,
+				ICL_TM_COMPLETE,
+				ICL_TM_NEEDS_UPDATE,
+			),
+			true
+		) ) {
 			$status = ICL_TM_NOT_TRANSLATED;
 		}
 
@@ -324,7 +328,7 @@ class WPML_TM_Job_Entity {
 	}
 
 	/**
-	 * @param  string  $title
+	 * @param  string $title
 	 */
 	public function set_title( $title ) {
 		$this->title = $title;

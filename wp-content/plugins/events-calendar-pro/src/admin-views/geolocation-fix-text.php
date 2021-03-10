@@ -14,7 +14,7 @@
 	<div class="tribe-field-wrap">
 		<?php echo $this->fix_geoloc_data_button(); ?>
 		<p class="tribe-field-indent description">
-			<?php printf( esc_html__( 'You have %d venues for which we don\'t have geolocation data.', 'tribe-events-calendar-pro' ), $venues->found_posts ); ?>
+			<?php esc_html_e( 'You have venues for which we don\'t have geolocation data.', 'tribe-events-calendar-pro' ); ?>
 			<?php if ( ! tribe_is_using_basic_gmaps_api() ) : ?>
 				<?php esc_html_e( 'We will use the Google Maps API to get that information. Doing this may take a while (approximately 1 minute for every 200 venues).', 'tribe-events-calendar-pro' ); ?>
 			<?php endif; ?>

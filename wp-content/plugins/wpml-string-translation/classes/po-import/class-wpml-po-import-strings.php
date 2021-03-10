@@ -44,7 +44,7 @@ class WPML_PO_Import_Strings {
 			$name = isset( $string->name ) ? $string->name : md5( $string->original );
 
 			$string_id = icl_register_string( array(
-					'domain' => $_POST[ 'icl_st_domain_name' ],
+					'domain' => filter_var( $_POST[ 'icl_st_domain_name' ], FILTER_SANITIZE_STRING ),
 					'context' => $string->context
 				),
 					$name,
@@ -57,8 +57,8 @@ class WPML_PO_Import_Strings {
 	}
 
 	/**
-	 * @param string $string_id
-	 * @param obj $string
+	 * @param string    $string_id
+	 * @param \stdClass $string
 	 */
 	private function maybe_add_translation( $string_id, $string ) {
 		if ( $string_id && array_key_exists( 'icl_st_po_language', $_POST ) ) {

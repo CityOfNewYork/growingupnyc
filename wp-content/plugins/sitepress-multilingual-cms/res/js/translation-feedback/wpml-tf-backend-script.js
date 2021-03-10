@@ -1,19 +1,19 @@
 /*jshint browser:true, devel:true */
 /*global jQuery, wp */
 (function($){
-	"use strict";
+    "use strict";
 
-	$(document).ready(function(){
-		var table = $('.js-wpml-tf-feedback-list-table'),
-			ajax_action = $('.wpml-tf-feedback-list-page input[name="ajax_action"]').val(),
-			ajax_nonce = $('.wpml-tf-feedback-list-page input[name="ajax_nonce"]').val();
+    $(function () {
+        var table = $('.js-wpml-tf-feedback-list-table'),
+            ajax_action = $('.wpml-tf-feedback-list-page input[name="ajax_action"]').val(),
+            ajax_nonce = $('.wpml-tf-feedback-list-page input[name="ajax_nonce"]').val();
 
-		var openFeedbackDetails = function(feedbackId) {
-			table.find('#wpml-tf-feedback-' + feedbackId).hide();
-			table.find('#wpml-tf-feedback-details-' + feedbackId).show();
-		};
+        var openFeedbackDetails = function (feedbackId) {
+            table.find('#wpml-tf-feedback-' + feedbackId).hide();
+            table.find('#wpml-tf-feedback-details-' + feedbackId).show();
+        };
 
-		var closeAllFeedbackDetails = function() {
+        var closeAllFeedbackDetails = function () {
 			table.find('.js-wpml-tf-feedback-details').hide();
 			table.find('.js-wpml-tf-feedback').show();
 		};

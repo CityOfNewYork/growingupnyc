@@ -40,6 +40,6 @@ class RefreshServicesFactory implements \IWPML_Backend_Action_Loader {
 	 */
 	private function is_visible() {
 		return ( isset( $_GET['page'] ) && 'sitepress-multilingual-cms/menu/troubleshooting.php' === $_GET['page'] ) ||
-		       ( isset( $_POST['action'] ) && RefreshServices::AJAX_ACTION === $_POST['action'] );
+			   ( isset( $_POST['action'] ) && RefreshServices::AJAX_ACTION === $_POST['action'] );
 	}
 }

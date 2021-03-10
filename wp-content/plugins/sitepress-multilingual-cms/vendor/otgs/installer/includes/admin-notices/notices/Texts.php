@@ -295,7 +295,7 @@ class Texts {
 	}
 
 	private static function getCommunicationDetailsLinkHTML( $text ) {
-		return '<a href="' . esc_url( static::$communicationDetailsLink ) . '">' . esc_html( $text ) . '</a>';
+		return '<a href="' . esc_url( admin_url( static::$communicationDetailsLink ) ) . '">' . esc_html( $text ) . '</a>';
 	}
 
 	private static function getSupportLinkHTML( $text ) {

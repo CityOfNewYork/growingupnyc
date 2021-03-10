@@ -84,7 +84,8 @@ class RecommendationsManager {
 		$language = $this->getCurrentLanguage();
 
 		foreach ( $this->repositoriesForRecommendation as $repositoryId ) {
-			$downloads = $this->settings[ $repositoryId ]['data']['downloads']['plugins'];
+			$downloads = isset( $this->settings[ $repositoryId ]['data']['downloads']['plugins'] )
+				? $this->settings[ $repositoryId ]['data']['downloads']['plugins'] : [];
 			foreach ( $downloads as $pluginData ) {
 				$gluePluginSlug = isset( $pluginData['glue_check_slug'] ) ? $pluginData['glue_check_slug'] : false;
 				if ( $gluePluginSlug && $activatedPluginSlug === $pluginData['glue_check_slug'] ) {

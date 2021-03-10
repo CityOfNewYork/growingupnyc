@@ -12,15 +12,18 @@ use function WPML\FP\pipe;
 /**
  * Class Post
  * @package WPML\LIB\WP
- * @method callable|Either getTerms( ...$postId, ...$taxonomy )  - Curried:: int → string → Either false|WP_Error [WP_Term]
- * @method callable|mixed getMetaSingle( ...$postId, ...$key ) - Curried :: int → string → mixed
- * @method callable|int|bool updateMeta( ...$postId, ...$key, ...$value ) - Curried :: int → string → mixed → int|bool
- * @method callable|string|false getType( ...$postId ) - Curried :: int → string|bool
+ * @method static callable|Either getTerms( ...$postId, ...$taxonomy )  - Curried:: int → string → Either false|WP_Error [WP_Term]
+ * @method static callable|mixed getMetaSingle( ...$postId, ...$key ) - Curried :: int → string → mixed
+ * @method static callable|int|bool updateMeta( ...$postId, ...$key, ...$value ) - Curried :: int → string → mixed → int|bool
+ * @method static callable|string|false getType( ...$postId ) - Curried :: int → string|bool
  */
 class Post {
 
 	use Macroable;
 
+	/**
+	 * @return void
+	 */
 	public static function init() {
 
 		self::macro( 'getTerms', curryN( 2, pipe(
@@ -31,6 +34,8 @@ class Post {
 		self::macro( 'getMetaSingle', curryN( 2, partialRight( 'get_post_meta', true ) ) );
 
 		self::macro( 'updateMeta', curryN( 3, 'update_post_meta' ) );
+
+		self::macro( 'deleteMeta', curryN( 2, 'delete_post_meta' ) );
 
 		self::macro( 'getType', curryN( 1, 'get_post_type' ) );
 

@@ -18,7 +18,7 @@ class WPML_Translations_Queue_Factory {
 		}
 
 		if ( ! class_exists( 'WP_List_Table' ) ) {
-			require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
+			require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 		}
 
 		$screen_options_factory = new WPML_UI_Screen_Options_Factory( $sitepress );

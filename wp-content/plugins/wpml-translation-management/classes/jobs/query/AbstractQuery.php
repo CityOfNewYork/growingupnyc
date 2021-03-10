@@ -20,7 +20,7 @@ abstract class AbstractQuery implements Query {
 	protected $batch_name_column = 'batches.batch_name';
 
 	/**
-	 * @param wpdb                       $wpdb
+	 * @param wpdb         $wpdb
 	 * @param QueryBuilder $query_builder
 	 */
 	public function __construct( wpdb $wpdb, QueryBuilder $query_builder ) {
@@ -110,14 +110,18 @@ abstract class AbstractQuery implements Query {
 	/**
 	 * @return string
 	 */
-	protected abstract function get_type();
+	abstract protected function get_type();
 
 	protected function define_joins( QueryBuilder $query_builder ) {
-		$query_builder->add_join( "INNER JOIN {$this->wpdb->prefix}icl_translations translations 
-				ON translations.translation_id = translation_status.translation_id" );
+		$query_builder->add_join(
+			"INNER JOIN {$this->wpdb->prefix}icl_translations translations 
+				ON translations.translation_id = translation_status.translation_id"
+		);
 
-		$query_builder->add_join( "INNER JOIN {$this->wpdb->prefix}icl_translations original_translations 
-				ON original_translations.trid = translations.trid AND original_translations.language_code = translations.source_language_code" );
+		$query_builder->add_join(
+			"INNER JOIN {$this->wpdb->prefix}icl_translations original_translations 
+				ON original_translations.trid = translations.trid AND original_translations.language_code = translations.source_language_code"
+		);
 
 		$subquery = "
 			SELECT *
@@ -132,17 +136,23 @@ abstract class AbstractQuery implements Query {
 
 		$this->add_resource_join( $query_builder );
 
-		$query_builder->add_join( "LEFT JOIN {$this->wpdb->prefix}icl_languages source_languages 
-				ON source_languages.code = translations.source_language_code" );
+		$query_builder->add_join(
+			"LEFT JOIN {$this->wpdb->prefix}icl_languages source_languages 
+				ON source_languages.code = translations.source_language_code"
+		);
 
-		$query_builder->add_join( "LEFT JOIN {$this->wpdb->prefix}icl_languages target_languages 
-				ON target_languages.code = translations.language_code" );
+		$query_builder->add_join(
+			"LEFT JOIN {$this->wpdb->prefix}icl_languages target_languages 
+				ON target_languages.code = translations.language_code"
+		);
 
-		$query_builder->add_join( "INNER JOIN {$this->wpdb->prefix}icl_translation_batches batches 
-				ON batches.id = translation_status.batch_id" );
+		$query_builder->add_join(
+			"INNER JOIN {$this->wpdb->prefix}icl_translation_batches batches 
+				ON batches.id = translation_status.batch_id"
+		);
 	}
 
-	protected abstract function add_resource_join( QueryBuilder $query_builder );
+	abstract protected function add_resource_join( QueryBuilder $query_builder );
 
 	protected function define_filters( QueryBuilder $query_builder, WPML_TM_Jobs_Search_Params $params ) {
 		$this->set_status_filter( $query_builder, $params );
@@ -200,7 +210,6 @@ abstract class AbstractQuery implements Query {
 					$query_builder->add_AND_where_condition( 'translation_status.needs_update = 1' );
 				}
 			}
-
 		} else {
 			$query_builder->set_status_filter( 'translation_status.status', $params );
 		}

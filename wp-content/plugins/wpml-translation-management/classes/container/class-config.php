@@ -9,14 +9,14 @@ use WPML\TM\Notices\AteLockNotice;
 
 class Config {
 
-	static public function getDelegated() {
+	public static function getDelegated() {
 		return [
 			'\WPML_Translation_Job_Factory'    => 'wpml_tm_load_job_factory',
 			\WPML_TM_ATE_Job_Repository::class => 'wpml_tm_get_ate_jobs_repository',
 		];
 	}
 
-	static public function getSharedClasses() {
+	public static function getSharedClasses() {
 		return [
 			'\WPML_TM_AMS_API',
 			'\WPML_TM_ATE_API',

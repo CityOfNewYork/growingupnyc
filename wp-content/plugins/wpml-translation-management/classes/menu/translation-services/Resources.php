@@ -29,7 +29,8 @@ class Resources {
 			WPML_TM_VERSION
 		);
 
-		wp_enqueue_script( 'wpml-tm-translation-services',
+		wp_enqueue_script(
+			'wpml-tm-translation-services',
 			WPML_TM_URL . '/dist/js/translationServices/app.js',
 			array(),
 			WPML_TM_VERSION

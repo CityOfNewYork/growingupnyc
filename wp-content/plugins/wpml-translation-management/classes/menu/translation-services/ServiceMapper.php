@@ -5,7 +5,7 @@ namespace WPML\TM\Menu\TranslationServices;
 class ServiceMapper {
 	/**
 	 * @param \WPML_TP_Service $service
-	 * @param callable $getActiveServiceId
+	 * @param callable         $getActiveServiceId
 	 *
 	 * @return array
 	 */

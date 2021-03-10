@@ -390,6 +390,9 @@ $advanced_view = isset($scporder_options['show_advanced_view']) ? $scporder_opti
                 $.post("<?php echo admin_url('admin-ajax.php');  ?>", data, function (response) {
                     if (response) {
                         btn.next('.scpo-reset-response').text(response);
+                        setTimeout(function(){
+	                        location.reload(true);
+                        },1500);
                     }
                 });
             }

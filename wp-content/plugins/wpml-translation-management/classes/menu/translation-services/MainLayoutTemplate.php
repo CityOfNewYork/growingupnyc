@@ -7,10 +7,10 @@ class MainLayoutTemplate {
 	const SERVICES_LIST_TEMPLATE = 'services-layout.twig';
 
 	/**
-	 * @param  callable  $templateRenderer
-	 * @param  callable  $activeServiceRenderer
-	 * @param  bool  $hasPreferredService
-	 * @param  callable  $retrieveServiceTabsData
+	 * @param  callable $templateRenderer
+	 * @param  callable $activeServiceRenderer
+	 * @param  bool     $hasPreferredService
+	 * @param  callable $retrieveServiceTabsData
 	 */
 	public static function render(
 		$templateRenderer,
@@ -25,9 +25,9 @@ class MainLayoutTemplate {
 	}
 
 	/**
-	 * @param  callable  $activeServiceRenderer
-	 * @param  bool  $hasPreferredService
-	 * @param  callable  $retrieveServiceTabsData
+	 * @param  callable $activeServiceRenderer
+	 * @param  bool     $hasPreferredService
+	 * @param  callable $retrieveServiceTabsData
 	 *
 	 * @return array
 	 */
@@ -45,8 +45,10 @@ class MainLayoutTemplate {
 			],
 			'strings'               => [
 				'no_service_found' => [
-					__( 'WPML cannot load the list of translation services. This can be a connection problem. Please wait a minute and reload this page.',
-						'wpml-translation-management' ),
+					__(
+						'WPML cannot load the list of translation services. This can be a connection problem. Please wait a minute and reload this page.',
+						'wpml-translation-management'
+					),
 					__( 'If the problem continues, please contact %s.', 'wpml-translation-management' ),
 				],
 				'wpml_support'     => 'WPML support',
@@ -54,8 +56,10 @@ class MainLayoutTemplate {
 				'activate'         => __( 'Activate', 'wpml-translation-management' ),
 				'documentation'    => __( 'Documentation', 'wpml-translation-management' ),
 				'ts'               => [
-					'different'   => __( 'Looking for a different translation service?',
-						'wpml-translation-management' ),
+					'different'   => __(
+						'Looking for a different translation service?',
+						'wpml-translation-management'
+					),
 					'tell_us_url' => 'https://wpml.org/documentation/content-translation/how-to-add-translation-services-to-wpml/#add-service-form',
 					'tell_us'     => __( 'Tell us which one', 'wpml-translation-management' ),
 				],

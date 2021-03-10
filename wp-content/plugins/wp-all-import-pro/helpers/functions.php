@@ -1,5 +1,79 @@
 <?php
-	
+if( !function_exists('wpai_wp_enqueue_code_editor')){
+function wpai_wp_enqueue_code_editor( $args ) {
+
+	// We need syntax highlighting to work in the plugin regardless of user setting.
+	// Function matches https://developer.wordpress.org/reference/functions/wp_enqueue_code_editor/ otherwise.
+	/*if ( is_user_logged_in() && 'false' === wp_get_current_user()->syntax_highlighting ) {
+		return false;
+	}*/
+
+	$settings = wp_get_code_editor_settings( $args );
+
+	if ( empty( $settings ) || empty( $settings['codemirror'] ) ) {
+		return false;
+	}
+
+	wp_enqueue_script( 'code-editor' );
+	wp_enqueue_style( 'code-editor' );
+
+	if ( isset( $settings['codemirror']['mode'] ) ) {
+		$mode = $settings['codemirror']['mode'];
+		if ( is_string( $mode ) ) {
+			$mode = array(
+				'name' => $mode,
+			);
+		}
+
+		if ( ! empty( $settings['codemirror']['lint'] ) ) {
+			switch ( $mode['name'] ) {
+				case 'css':
+				case 'text/css':
+				case 'text/x-scss':
+				case 'text/x-less':
+					wp_enqueue_script( 'csslint' );
+					break;
+				case 'htmlmixed':
+				case 'text/html':
+				case 'php':
+				case 'application/x-httpd-php':
+				case 'text/x-php':
+					wp_enqueue_script( 'htmlhint' );
+					wp_enqueue_script( 'csslint' );
+					wp_enqueue_script( 'jshint' );
+					if ( ! current_user_can( 'unfiltered_html' ) ) {
+						wp_enqueue_script( 'htmlhint-kses' );
+					}
+					break;
+				case 'javascript':
+				case 'application/ecmascript':
+				case 'application/json':
+				case 'application/javascript':
+				case 'application/ld+json':
+				case 'text/typescript':
+				case 'application/typescript':
+					wp_enqueue_script( 'jshint' );
+					wp_enqueue_script( 'jsonlint' );
+					break;
+			}
+		}
+	}
+
+	wp_add_inline_script( 'code-editor', sprintf( 'jQuery.extend( wp.codeEditor.defaultSettings, %s );', wp_json_encode( $settings ) ) );
+
+	/**
+	 * Fires when scripts and styles are enqueued for the code editor.
+	 *
+	 * @since 4.9.0
+	 *
+	 * @param array $settings Settings for the enqueued code editor.
+	 */
+	do_action( 'wp_enqueue_code_editor', $settings );
+
+	return $settings;
+}
+}
+
 	if ( ! function_exists('pmxi_if') ) {
 		function pmxi_if( $left_condition, $operand = '', $right_condition = '', $then, $else = '' ) {
 			$str = trim(implode(' ', array($left_condition, html_entity_decode($operand), $right_condition)));												

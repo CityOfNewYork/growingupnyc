@@ -100,8 +100,8 @@ class WPML_LS_Model_Build extends WPML_SP_User {
 	}
 
 	/**
-	 * @param $group
-	 * @param $slug
+	 * @param string $group
+	 * @param string $slug
 	 *
 	 * @return string
 	 */
@@ -463,8 +463,8 @@ class WPML_LS_Model_Build extends WPML_SP_User {
 	}
 
 	/**
-	 * @param                   $template_slug
-	 * @param mixed|string|null $type
+	 * @param string      $template_slug
+	 * @param string|null $type
 	 *
 	 * @return bool
 	 */

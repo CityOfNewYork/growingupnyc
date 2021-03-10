@@ -229,10 +229,11 @@ class Tribe__Events__Pro__Recurrence__Series_Rules_Factory {
 				}
 
 				// fetches the Months, and defaults back to current month
-				$months = Tribe__Utils__Array::get( $recurrence, array( 'custom', 'year', 'month' ), date( 'n' ) );
+				$months = Tribe__Utils__Array::get( $recurrence, [ 'custom', 'year', 'month' ], date( 'n' ) );
 				if ( is_string( $months ) ) {
-					$months = array_map( 'intval', explode( ',', $months ) );
+					$months =  explode( ',', $months );
 				}
+				$months = array_map( 'intval', $months );
 
 				$rule = new Tribe__Events__Pro__Date_Series_Rules__Year(
 					$recurrence['custom']['interval'],

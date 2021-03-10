@@ -57,9 +57,16 @@ class Tribe__Events__Pro__Integrations__WPML__Event_Listener {
 	 * @param int|null $post_parent_id
 	 */
 	public function handle_recurring_event_creation( $post_id, $post_parent_id = null ) {
-		$this->ensure_is_event( $post_id );
-		$this->ensure_is_event( $post_parent_id );
-		$this->ensure_event_is_parent_to( $post_parent_id, $post_id );
+		try {
+			$this->ensure_is_event( $post_id );
+			$this->ensure_is_event( $post_parent_id );
+			$this->ensure_event_is_parent_to( $post_parent_id, $post_id );
+		} catch ( \Exception $e ) {
+			if ( null !== $this->logger ) {
+				$message = $this->get_log_line_header() . $e->getMessage();
+				$this->logger->log( $message, Tribe__Log::DEBUG, __CLASS__ );
+			}
+		}
 
 		if ( $this->has_handler_for_event( 'event.recurring.created' ) ) {
 			/** @var Tribe__Events__Pro__Integrations__WPML__Handler_Interface $handler */

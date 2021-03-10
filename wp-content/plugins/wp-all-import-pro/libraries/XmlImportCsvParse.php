@@ -72,16 +72,15 @@ class PMXI_CsvParser
      * @see load()
      * @return void
      */
-    public function __construct( $options = array('filename' => null, 'xpath' => '', 'delimiter' => '', 'encoding' => '', 'xml_path' => '', 'targetDir' => false) ) 
-    {
+    public function __construct( $options = array('filename' => null, 'xpath' => '', 'delimiter' => '', 'encoding' => '', 'xml_path' => '', 'targetDir' => false) ) {
+
         PMXI_Plugin::$csv_path = $options['filename'];
         
         $this->xpath = (!empty($options['xpath']) ? $options['xpath'] : ((!empty($_POST['xpath'])) ? $_POST['xpath'] : '/node'));        
             
         if ( ! empty($options['delimiter']) ){
             $this->delimiter = $options['delimiter'];    
-        }
-        else{
+        } else {
             $input = new PMXI_Input();
             $id = $input->get('id', 0);
             if (!$id){
@@ -91,7 +90,7 @@ class PMXI_CsvParser
                 $import = new PMXI_Import_Record();
                 $import->getbyId($id);
                 if ( ! $import->isEmpty() ){
-                    $this->delimiter = $import->options['delimiter'];
+                    $this->delimiter = empty($import->options['delimiter']) ? '' : $import->options['delimiter'];
                 }
             }
         }        
@@ -1021,7 +1020,9 @@ class PMXI_CsvParser
                if (!empty($keys)) {
                     $chunk = array();
                     foreach ($this->headers as $key => $header) {
-                        $chunk[$header] = $this->fixEncoding( $keys[$key] );
+                        if(isset($keys[$key])) {
+                            $chunk[ $header ] = $this->fixEncoding( $keys[ $key ] );
+                        }
                     }
                     if ( ! empty($chunk) ) {
                         $xmlWriter->startElement('node');

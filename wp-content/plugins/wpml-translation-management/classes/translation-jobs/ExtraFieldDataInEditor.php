@@ -84,11 +84,13 @@ class ExtraFieldDataInEditor implements \IWPML_Backend_Action {
 	}
 
 	private function appendToRegularField( $field ) {
-		$field['title'] = \wpml_collect( [
-			'title'   => __( 'Title', 'wpml-translation-management' ),
-			'body'    => __( 'Body', 'wpml-translation-management' ),
-			'excerpt' => __( 'Excerpt', 'wpml-translation-management' ),
-		] )->get( $field['field_type'], $field['field_type'] );
+		$field['title'] = \wpml_collect(
+			[
+				'title'   => __( 'Title', 'wpml-translation-management' ),
+				'body'    => __( 'Body', 'wpml-translation-management' ),
+				'excerpt' => __( 'Excerpt', 'wpml-translation-management' ),
+			]
+		)->get( $field['field_type'], $field['field_type'] );
 
 		if ( $field['field_type'] === 'excerpt' ) {
 			$field['field_style'] = '1';
@@ -149,7 +151,7 @@ class ExtraFieldDataInEditor implements \IWPML_Backend_Action {
 
 	private function adjustFieldStyleForUnsafeContent() {
 		return function ( array $field ) {
-			if( Relation::propEq( 'field_style', '2' , $field ) ) {
+			if ( Relation::propEq( 'field_style', '2', $field ) ) {
 				$black_list         = [ 'script', 'style', 'iframe' ];
 				$black_list_pattern = '#</?(' . implode( '|', $black_list ) . ')[^>]*>#i';
 

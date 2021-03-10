@@ -274,7 +274,7 @@ class WPML_TP_Service extends WPML_TP_REST_Object implements Serializable {
 	}
 
 	/**
-	 * @param  string  $logo_preview_url
+	 * @param  string $logo_preview_url
 	 */
 	public function set_logo_preview_url( $logo_preview_url ) {
 		$this->logo_preview_url = $logo_preview_url;
@@ -352,7 +352,7 @@ class WPML_TP_Service extends WPML_TP_REST_Object implements Serializable {
 	/**
 	 * @param bool $value
 	 */
-	public function set_has_language_pairs( $value  ) {
+	public function set_has_language_pairs( $value ) {
 		$this->has_language_pairs = (bool) $value;
 	}
 
@@ -656,7 +656,7 @@ class WPML_TP_Service extends WPML_TP_REST_Object implements Serializable {
 	}
 
 	/**
-	 * @param  stdClass[]  $countries
+	 * @param  stdClass[] $countries
 	 */
 	public function set_countries( array $countries ) {
 		$this->countries = $countries;

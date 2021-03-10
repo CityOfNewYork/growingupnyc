@@ -27,7 +27,7 @@ class IfOriginalPost {
 	 *
 	 * @param int $id The post id. Optional. If missing then returns a callable waiting for the id.
 	 *
-	 * @return Collection|callable
+	 * @return \WPML\Collect\Support\Collection<mixed>|callable
 	 */
 	public static function getTranslations( $id = null ) {
 		$get = pipe( PostTranslations::getIfOriginal(), Fns::reject( Obj::prop( 'original' ) ), 'wpml_collect' );
@@ -41,7 +41,7 @@ class IfOriginalPost {
 	 *
 	 * @param int $id The post id. Optional. If missing then returns a callable waiting for the id.
 	 *
-	 * @return Collection|callable
+	 * @return \WPML\Collect\Support\Collection<mixed>|callable
 	 */
 	public static function getTranslationIds( $id = null ) {
 		$get = pipe( self::getTranslations(), Fns::map( Obj::prop( 'element_id' ) ) );

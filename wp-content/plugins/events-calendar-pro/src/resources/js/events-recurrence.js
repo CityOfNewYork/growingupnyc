@@ -40,7 +40,7 @@ tribe_events_pro_admin.recurrence = {
 
 		this.recurrence_errors = {
 			days: [],
-			end : []
+			end : [],
 		};
 
 		this.date_format = tribe_datepicker_opts.dateFormat.toUpperCase();
@@ -53,10 +53,21 @@ tribe_events_pro_admin.recurrence = {
 
 				// if a value is passed in, get rid of the defaults
 				if ( value ) {
+					// Since we are not dealing with DOM elements we want HTML, we need to use $.attr instead of $.prop.
 					$el.find( 'option:selected' ).attr( 'selected', false );
 				}
 
-				$el.find( '[value="' + value + '"]' ).attr( 'selected', 'selected' );
+				if ( ! $.isArray( value ) ) {
+					value = [ value ];
+				}
+
+				value.forEach( function( currentValue ) {
+					var $option = $el.find( '[value="' + currentValue + '"]' );
+
+					// Since we are not dealing with DOM elements we want HTML, we need to use $.attr instead of $.prop.
+					$option.attr( 'selected', 'selected' );
+				} );
+
 				return $el.html();
 			},
 
@@ -135,7 +146,7 @@ tribe_events_pro_admin.recurrence = {
 
 	my.init_dropdowns = function() {
 		$( '.recurrence-row .tribe-dropdown' )
-			.not( '.dropdown-created' )
+			.not( '.tribe-dropdown-created' )
 			.tribe_dropdowns();
 	};
 
@@ -273,7 +284,7 @@ tribe_events_pro_admin.recurrence = {
 	 */
 	my.setup_intervals = function( $rule ) {
 		var type = $rule.find( '[data-field="type"]' ).val();
-		var $interval = $rule.find( 'input.tribe-recurrence-rule-interval' );
+		var $interval = $rule.find( '.tribe-recurrence-rule-interval' );
 		var interval = $interval.get(0);
 
 		if ( interval.created ) {
@@ -299,6 +310,7 @@ tribe_events_pro_admin.recurrence = {
 		}
 
 		$interval
+			.select2()
 			.select2( 'destroy' )
 			.removeClass( 'select2-offscreen' )
 			.data( 'options', autocomplete_options );
@@ -849,11 +861,17 @@ tribe_events_pro_admin.recurrence = {
 			var month_day    = $rule.find( '[data-field="custom-year-month-day"]' ).val();
 
 			var months       = [];
-			var month_values = $rule.find( '[data-field="custom-year-month"]' ).val().split(',');
+			var month_values = $rule.find( '[data-field="custom-year-month"]' ).val();
 
-			$.each( month_values, function( i, month ) {
-				months.push( tribe_events_pro_recurrence_strings.date.months[ parseInt( month, 10 ) - 1 ] );
-			} );
+			if ( month_values ) {
+				if ( _.isString( month_values ) ) {
+					month_values = month_values.split(',');
+				}
+
+				$.each( month_values, function ( i, month ) {
+					months.push( tribe_events_pro_recurrence_strings.date.months[ parseInt( month, 10 ) - 1 ] );
+				} );
+			}
 
 			// build a string of month names
 			if ( 0 === months.length ) {

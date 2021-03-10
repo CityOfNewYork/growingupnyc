@@ -18,12 +18,12 @@ class Tribe__Events__Gutenberg {
 
 		tribe_notice(
 			'gutenberg-extension',
-			array( $this, 'notice' ),
-			array(
-				'type' => 'warning',
+			[ $this, 'notice' ],
+			[
+				'type'    => 'warning',
 				'dismiss' => 1,
-				'wrap' => 'p',
-			)
+				'wrap'    => 'p',
+			]
 		);
 	}
 
@@ -75,15 +75,7 @@ class Tribe__Events__Gutenberg {
 	 */
 	public function should_display() {
 		// Hide when all of these three are active
-		if (
-			tribe( 'tec.gutenberg' )->is_gutenberg_active()
-			&& tribe( 'tec.gutenberg' )->is_extension_active()
-			&& tribe( 'tec.gutenberg' )->is_blocks_editor_active()
-		) {
-			return false;
-		}
-
-		return true;
+		return ! ( $this->is_gutenberg_active() && $this->is_extension_active() && $this->is_blocks_editor_active() );
 	}
 
 	/**
@@ -116,7 +108,7 @@ class Tribe__Events__Gutenberg {
 			return false;
 		}
 
-		$url = 'http://m.tri.be/19zc';
+		$url = 'http://evnt.is/19zc';
 		$link = sprintf(
 			'<a href="%1$s" target="_blank">%2$s</a>',
 			esc_url( $url ),

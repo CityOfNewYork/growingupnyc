@@ -9,7 +9,7 @@ class WPML_LS_Slot {
 	private $properties = array();
 
 	/* @var array $protected_properties */
-	private $protected_properties  = array(
+	private $protected_properties = array(
 		'slot_group',
 		'slot_slug',
 	);
@@ -40,7 +40,7 @@ class WPML_LS_Slot {
 		if ( ! in_array( $property, $this->protected_properties ) ) {
 			$allowed_properties = $this->get_allowed_properties();
 			if ( array_key_exists( $property, $allowed_properties ) ) {
-				$meta_data = $allowed_properties[ $property ];
+				$meta_data                     = $allowed_properties[ $property ];
 				$this->properties[ $property ] = $this->sanitize( $value, $meta_data );
 			}
 		}
@@ -121,7 +121,7 @@ class WPML_LS_Slot {
 	 */
 	private function set_properties( array $args ) {
 		foreach ( $this->get_allowed_properties() as $allowed_property => $meta_data ) {
-			$value = isset( $args[ $allowed_property ] ) ? $args[ $allowed_property ] : null;
+			$value                                 = isset( $args[ $allowed_property ] ) ? $args[ $allowed_property ] : null;
 			$this->properties[ $allowed_property ] = $this->sanitize( $value, $meta_data );
 		}
 	}
@@ -131,14 +131,35 @@ class WPML_LS_Slot {
 	 */
 	protected function get_allowed_properties() {
 		return array(
-			'slot_group'                    => array( 'type' => 'string', 'force_missing_to' => '' ),
-			'slot_slug'                     => array( 'type' => 'string', 'force_missing_to' => '' ),
-			'show'                          => array( 'type' => 'int', 'force_missing_to' => 0 ),
+			'slot_group'                    => array(
+				'type'             => 'string',
+				'force_missing_to' => '',
+			),
+			'slot_slug'                     => array(
+				'type'             => 'string',
+				'force_missing_to' => '',
+			),
+			'show'                          => array(
+				'type'             => 'int',
+				'force_missing_to' => 0,
+			),
 			'template'                      => array( 'type' => 'string' ),
-			'display_flags'                 => array( 'type' => 'int', 'force_missing_to' => 0 ),
-			'display_link_for_current_lang' => array( 'type' => 'int', 'force_missing_to' => 0 ),
-			'display_names_in_native_lang'  => array( 'type' => 'int', 'force_missing_to' => 0 ),
-			'display_names_in_current_lang' => array( 'type' => 'int', 'force_missing_to' => 0 ),
+			'display_flags'                 => array(
+				'type'             => 'int',
+				'force_missing_to' => 0,
+			),
+			'display_link_for_current_lang' => array(
+				'type'             => 'int',
+				'force_missing_to' => 0,
+			),
+			'display_names_in_native_lang'  => array(
+				'type'             => 'int',
+				'force_missing_to' => 0,
+			),
+			'display_names_in_current_lang' => array(
+				'type'             => 'int',
+				'force_missing_to' => 0,
+			),
 			// Colors
 			'background_normal'             => array( 'type' => 'string' ),
 			'border_normal'                 => array( 'type' => 'string' ),
@@ -150,7 +171,10 @@ class WPML_LS_Slot {
 			'font_other_hover'              => array( 'type' => 'string' ),
 			'background_other_normal'       => array( 'type' => 'string' ),
 			'background_other_hover'        => array( 'type' => 'string' ),
-			'template_string'               => array( 'type' => 'string', 'twig_string' => 1 ),
+			'template_string'               => array(
+				'type'        => 'string',
+				'twig_string' => 1,
+			),
 		);
 	}
 
@@ -162,7 +186,7 @@ class WPML_LS_Slot {
 	 */
 	private function sanitize( $value, array $meta_data ) {
 		if ( ! is_null( $value ) ) {
-			switch( $meta_data['type'] ) {
+			switch ( $meta_data['type'] ) {
 				case 'string':
 					$value = (string) $value;
 					if ( array_key_exists( 'stripslashes', $meta_data ) && $meta_data['stripslashes'] ) {

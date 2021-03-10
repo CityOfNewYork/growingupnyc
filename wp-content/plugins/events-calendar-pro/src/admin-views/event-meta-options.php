@@ -59,6 +59,7 @@
 								name="custom-field-type[<?php echo esc_attr( $index ); ?>]"
 								data-name-template="custom-field-type"
 								data-count='<?php echo esc_attr( $count ); ?>'
+								data-prevent-clear
 							>
 								<option value="text" <?php selected( isset( $field['type'] ) && $field['type'] == 'text' ) ?>><?php esc_html_e( 'Text', 'tribe-events-calendar-pro' ) ?></option>
 								<option value="textarea" <?php selected( isset( $field['type'] ) && $field['type'] == 'textarea' ) ?>><?php esc_html_e( 'Text Area', 'tribe-events-calendar-pro' ) ?></option>

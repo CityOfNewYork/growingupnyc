@@ -49,18 +49,26 @@ abstract class WPML_Templates_Factory {
 
 	abstract protected function init_template_base_dir();
 
+	/**
+	 * @param null $template
+	 * @param null $model
+	 *
+	 * @throws \WPML\Core\Twig\Error\LoaderError
+	 * @throws \WPML\Core\Twig\Error\RuntimeError
+	 * @throws \WPML\Core\Twig\Error\SyntaxError
+	 */
 	public function show( $template = null, $model = null ) {
 		echo $this->get_view( $template, $model );
 	}
 
 	/**
-	 * @param $template
-	 * @param $model
+	 * @param string $template
+	 * @param array<string,mixed> $model
 	 *
 	 * @return string
-	 * @throws Twig_Error_Syntax
-	 * @throws Twig_Error_Runtime
-	 * @throws Twig_Error_Loader
+	 * @throws \WPML\Core\Twig\Error\LoaderError
+	 * @throws \WPML\Core\Twig\Error\RuntimeError
+	 * @throws \WPML\Core\Twig\Error\SyntaxError
 	 */
 	public function get_view( $template = null, $model = null ) {
 		$output = '';
@@ -184,7 +192,7 @@ abstract class WPML_Templates_Factory {
 	}
 
 	/**
-	 * @return Twig_LoaderInterface
+	 * @return \WPML\Core\Twig_LoaderInterface
 	 */
 	protected function get_twig_loader() {
 		if ( $this->is_string_template() ) {

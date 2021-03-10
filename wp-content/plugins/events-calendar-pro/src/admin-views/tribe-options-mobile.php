@@ -37,7 +37,7 @@ $settings = Tribe__Main::array_insert_after_key(
 			'label'           => esc_html__( 'Default mobile view', 'tribe-events-calendar-pro' ),
 			'tooltip'         => esc_html__( 'Change the default view for Mobile users.', 'tribe-events-calendar-pro' ),
 			'validation_type' => 'not_empty',
-			'size'            => 'large',
+			'size'            => 'small',
 			'default'         => 'default',
 			'options'         => $views_options,
 		),

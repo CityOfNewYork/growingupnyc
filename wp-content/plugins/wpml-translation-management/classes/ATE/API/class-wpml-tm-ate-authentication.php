@@ -14,14 +14,14 @@ class WPML_TM_ATE_Authentication {
 
 	public function get_signed_url_with_parameters( $verb, $url, $params = null ) {
 		if ( $this->has_keys() ) {
-			$url       = $this->add_required_arguments_to_url( $verb, $url, $params );
-			return $this->signUrl($verb, $url, $params);
+			$url = $this->add_required_arguments_to_url( $verb, $url, $params );
+			return $this->signUrl( $verb, $url, $params );
 		}
 
 		return new WP_Error( 'auth_error', 'Unable to authenticate' );
 	}
 
-	public function signUrl($verb, $url, $params = null) {
+	public function signUrl( $verb, $url, $params = null ) {
 		$url_parts = wp_parse_url( $url );
 
 		$query              = $this->get_url_query( $url );
@@ -42,7 +42,7 @@ class WPML_TM_ATE_Authentication {
 			$body_md5 = null;
 
 			if ( $params && 'get' !== $verb ) {
-				$body_md5              = md5( wp_json_encode( $params, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES ) );
+				$body_md5              = md5( wp_json_encode( $params, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) );
 				$query_to_sign['body'] = $body_md5;
 			}
 
@@ -113,9 +113,11 @@ class WPML_TM_ATE_Authentication {
 		$query['shared_key']        = $this->get_shared();
 		$query['token']             = uuid_v5( wp_generate_uuid4(), $url );
 		$query['website_uuid']      = $this->get_site_id();
-		$query['ui_language_code']  = apply_filters( 'wpml_get_user_admin_language',
-		                                            wpml_get_default_language(),
-		                                            get_current_user_id() );
+		$query['ui_language_code']  = apply_filters(
+			'wpml_get_user_admin_language',
+			wpml_get_default_language(),
+			get_current_user_id()
+		);
 
 		$url_parts['query'] = http_build_query( $query );
 
@@ -146,9 +148,11 @@ class WPML_TM_ATE_Authentication {
 		if ( PHP_VERSION_ID >= 50400 ) {
 			$final_query = http_build_query( $query, null, '&', PHP_QUERY_RFC3986 );
 		} else {
-			$final_query = str_replace( array( '+', '%7E' ),
-			                            array( '%20', '~' ),
-			                            http_build_query( $query ) );
+			$final_query = str_replace(
+				array( '+', '%7E' ),
+				array( '%20', '~' ),
+				http_build_query( $query )
+			);
 		}
 
 		return $final_query;

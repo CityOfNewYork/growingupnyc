@@ -2,7 +2,7 @@
 $start_timepicker_step = tribe( 'tec.admin.event-meta-box' )->get_timepicker_step( 'start' );
 $end_timepicker_step = tribe( 'tec.admin.event-meta-box' )->get_timepicker_step( 'end' );
 $timepicker_round = tribe( 'tec.admin.event-meta-box' )->get_timepicker_round();
-$day_options = array();
+$day_options = [];
 for ( $i = 0; $i <= 7; $i++ ) {
 	$last_digit = (int) substr( $i, -1 );
 
@@ -32,7 +32,7 @@ for ( $i = 0; $i <= 7; $i++ ) {
 		);
 	}
 
-	$day_options[] = array( 'id' => $i, 'text' => $text );
+	$day_options[] = [ 'id' => $i, 'text' => $text ];
 }
 
 $admin_box = tribe( 'tec.admin.event-meta-box' );
@@ -72,16 +72,22 @@ $default_end_time = $admin_box->get_timepicker_default( 'end' );
 	<span class="tribe-field-inline-text">
 		<?php echo esc_html_x( 'the', 'custom recurrence time/date separator', 'tribe-events-calendar-pro' ); ?>
 	</span>
-	<input
+	<select
 		type="text"
 		id="recurrence_rule_--_same_time_day"
 		name="recurrence[rules][][custom][end-day]"
 		class="tribe-dropdown"
-		data-options="<?php echo esc_attr( json_encode( $day_options ) ); ?>"
 		data-int
 		data-hide-search
 		data-field="custom-end-day"
-		value="{{#if custom.[end-day]}}{{custom.[end-day]}}{{else}}<?php esc_attr_e( 'same day', 'tribe-events-calendar-pro' ); ?>{{/if}}"
 		style="display:inline-block;"
-	/>
+	>
+		{{#tribe_recurrence_select custom.[end-day]}}
+		<?php foreach ( $day_options as $day ) : ?>
+		<option value="<?php echo esc_attr( $day['id'] ); ?>">
+			<?php echo esc_html( $day['text'] ); ?>
+		</option>
+		<?php endforeach; ?>
+		{{/tribe_recurrence_select}}
+	</select>
 </div>

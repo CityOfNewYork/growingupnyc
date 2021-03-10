@@ -7,16 +7,16 @@
  *
  * See more documentation about our Blocks Editor templating system.
  *
- * @link {INSERT_ARTCILE_LINK_HERE}
+ * @link http://evnt.is/1aiy
  *
- * @version 4.7
+ * @version 5.0.1
  *
  */
 
 if ( ! tribe_get_venue_id() ) {
 	return;
 }
-$attributes = $this->get( 'attributes', array() );
+$attributes = $this->get( 'attributes', [] );
 
 $phone   = tribe_get_phone();
 $website = tribe_get_venue_website_link();
@@ -25,7 +25,7 @@ $website = tribe_get_venue_website_link();
 
 <div class="tribe-block__venue__meta">
 	<div class="tribe-block__venue__name">
-		<h3><?php echo tribe_get_venue() ?></h3>
+		<h3><?php echo tribe_get_venue_link() ?></h3>
 	</div>
 
 	<?php do_action( 'tribe_events_single_meta_venue_section_start' ) ?>

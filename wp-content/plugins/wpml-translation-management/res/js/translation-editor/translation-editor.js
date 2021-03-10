@@ -76,7 +76,7 @@ var tmEditor = {
     }
 };
 
-jQuery(document).ready(function () {
+jQuery(function () {
     var wpml_diff_toggle = jQuery('.wpml_diff_toggle');
     wpml_diff_toggle.closest('.wpml_diff_wrapper').find('.wpml_diff').hide();
     wpml_diff_toggle.on('click', function (e) {

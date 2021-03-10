@@ -22,20 +22,26 @@ class WPML_TM_Scripts_Factory {
 	public function admin_enqueue_scripts() {
 		$this->register_otgs_notices();
 
-		wp_register_script( 'wpml-tm-settings',
+		wp_register_script(
+			'wpml-tm-settings',
 			WPML_TM_URL . '/dist/js/settings/app.js',
 			array(),
-			WPML_TM_VERSION );
-		wp_register_script( 'ate-translation-queue',
+			WPML_TM_VERSION
+		);
+		wp_register_script(
+			'ate-translation-queue',
 			WPML_TM_URL . '/dist/js/translationQueue/app.js',
 			array(),
 			false,
-			true );
-		wp_register_script( 'ate-translation-editor-classic',
+			true
+		);
+		wp_register_script(
+			'ate-translation-editor-classic',
 			WPML_TM_URL . '/dist/js/ate-translation-editor-classic/app.js',
 			array(),
 			false,
-			true );
+			true
+		);
 
 		if ( WPML_TM_Page::is_tm_dashboard() ) {
 			$this->localize_script( 'wpml-tm-dashboard' );
@@ -47,7 +53,7 @@ class WPML_TM_Scripts_Factory {
 			wp_enqueue_script( 'wpml-tm-settings' );
 
 			$this->create_ate()
-			     ->init_hooks();
+				 ->init_hooks();
 		}
 		if ( WPML_TM_Page::is_translation_queue() && WPML_TM_ATE_Status::is_enabled() ) {
 			$this->localize_script( 'ate-translation-queue' );
@@ -95,51 +101,66 @@ class WPML_TM_Scripts_Factory {
 
 		global $iclTranslationManagement;
 
-		$this->localize_script( 'wpml-tm-dashboard', array(
-			'strings' => array(
-				'numberOfTranslationStringsSingle' => __( '%d translation job', 'wpml-translation-management' ),
-				'numberOfTranslationStringsMulti'  => __( '%d translation jobs', 'wpml-translation-management' ),
-				'stringsSentToTranslationSingle'   => __( '%s has been sent to remote translators',
-					'wpml-translation-management' ),
-				'stringsSentToTranslationMulti'    => __( '%s have been sent to remote translators',
-					'wpml-translation-management' ),
+		$this->localize_script(
+			'wpml-tm-dashboard',
+			array(
+				'strings'     => array(
+					'numberOfTranslationStringsSingle' => __( '%d translation job', 'wpml-translation-management' ),
+					'numberOfTranslationStringsMulti'  => __( '%d translation jobs', 'wpml-translation-management' ),
+					'stringsSentToTranslationSingle'   => __(
+						'%s has been sent to remote translators',
+						'wpml-translation-management'
+					),
+					'stringsSentToTranslationMulti'    => __(
+						'%s have been sent to remote translators',
+						'wpml-translation-management'
+					),
 
-				'buttonText'        => __( 'Check status and get translations', 'wpml-translation-management' ),
-				'progressText'      => __( "Checking translation jobs status. Please don't close this page!",
-					'wpml-translation-management' ),
-				'progressJobsCount' => __( 'You are downloading %d jobs', 'wpml-translation-management' ),
+					'buttonText'                       => __( 'Check status and get translations', 'wpml-translation-management' ),
+					'progressText'                     => __(
+						"Checking translation jobs status. Please don't close this page!",
+						'wpml-translation-management'
+					),
+					'progressJobsCount'                => __( 'You are downloading %d jobs', 'wpml-translation-management' ),
 
-				'statusChecked'            => __( 'Status checked:', 'wpml-translation-management' ),
-				'dismissNotice'            => __( 'Dismiss this notice.', 'wpml-translation-management' ),
-				'noTranslationsDownloaded' => __( 'none of your translation jobs have been completed',
-					'wpml-translation-management' ),
-				'translationsDownloaded'   => __( '%d translation jobs have been finished and applied.',
-					'wpml-translation-management' ),
+					'statusChecked'                    => __( 'Status checked:', 'wpml-translation-management' ),
+					'dismissNotice'                    => __( 'Dismiss this notice.', 'wpml-translation-management' ),
+					'noTranslationsDownloaded'         => __(
+						'none of your translation jobs have been completed',
+						'wpml-translation-management'
+					),
+					'translationsDownloaded'           => __(
+						'%d translation jobs have been finished and applied.',
+						'wpml-translation-management'
+					),
 
-				'errorMessage' => __(
-					'A communication error has appeared. Please wait a few minutes and try again.',
-					'wpml-translation-management'
+					'errorMessage'                     => __(
+						'A communication error has appeared. Please wait a few minutes and try again.',
+						'wpml-translation-management'
+					),
+
+					'lastCheck'                        => __( 'Last check: %s', 'wpml-translation-management' ),
+					'never'                            => __( 'never', 'wpml-translation-management' ),
 				),
-
-				'lastCheck' => __( 'Last check: %s', 'wpml-translation-management' ),
-				'never'     => __( 'never', 'wpml-translation-management' ),
-			),
-			'debug' => defined('WPML_POLLING_BOX_DEBUG_MODE') && WPML_POLLING_BOX_DEBUG_MODE,
-			'statusIcons' => array(
-				'completed' => $iclTranslationManagement->status2icon_class( ICL_TM_COMPLETE, false ),
-				'canceled'  => $iclTranslationManagement->status2icon_class( ICL_TM_NOT_TRANSLATED, false ),
-				'progress' => $iclTranslationManagement->status2icon_class( ICL_TM_IN_PROGRESS, false ),
-				'needsUpdate' => $iclTranslationManagement->status2icon_class( ICL_TM_NEEDS_UPDATE, false ),
-			),
-		) );
+				'debug'       => defined( 'WPML_POLLING_BOX_DEBUG_MODE' ) && WPML_POLLING_BOX_DEBUG_MODE,
+				'statusIcons' => array(
+					'completed'   => $iclTranslationManagement->status2icon_class( ICL_TM_COMPLETE, false ),
+					'canceled'    => $iclTranslationManagement->status2icon_class( ICL_TM_NOT_TRANSLATED, false ),
+					'progress'    => $iclTranslationManagement->status2icon_class( ICL_TM_IN_PROGRESS, false ),
+					'needsUpdate' => $iclTranslationManagement->status2icon_class( ICL_TM_NEEDS_UPDATE, false ),
+				),
+			)
+		);
 		wp_enqueue_script( 'wpml-tm-dashboard' );
 	}
 
 	public function register_otgs_notices() {
 		if ( ! wp_style_is( 'otgs-notices', 'registered' ) ) {
-			wp_register_style( 'otgs-notices',
+			wp_register_style(
+				'otgs-notices',
 				ICL_PLUGIN_URL . '/res/css/otgs-notices.css',
-				array( 'sitepress-style' ) );
+				array( 'sitepress-style' )
+			);
 		}
 	}
 
@@ -161,7 +182,7 @@ class WPML_TM_Scripts_Factory {
 			'restUrl'       => untrailingslashit( rest_url() ),
 			'restNonce'     => wp_create_nonce( 'wp_rest' ),
 			'ate'           => $this->create_ate()
-			                        ->get_script_data(),
+									->get_script_data(),
 			'currentUser'   => null,
 		);
 
@@ -181,7 +202,8 @@ class WPML_TM_Scripts_Factory {
 	 */
 	public function create_ate() {
 		if ( ! $this->ate ) {
-			$this->ate = new WPML_TM_MCS_ATE( $this->get_authentication(),
+			$this->ate = new WPML_TM_MCS_ATE(
+				$this->get_authentication(),
 				$this->get_endpoints(),
 				$this->create_ate_strings()
 			);
@@ -223,10 +245,10 @@ class WPML_TM_Scripts_Factory {
 	public function filter_translators_view_strings( array $strings, $all_users_have_subscription ) {
 		if ( WPML_TM_ATE_Status::is_enabled() ) {
 			$strings['ate'] = $this->create_ate_strings()
-			                       ->get_status_HTML(
-				                       $this->get_ate_activation_status(),
-				                       $all_users_have_subscription
-			                       );
+								->get_status_HTML(
+									$this->get_ate_activation_status(),
+									$all_users_have_subscription
+								);
 		}
 
 		return $strings;
@@ -237,7 +259,7 @@ class WPML_TM_Scripts_Factory {
 	 */
 	private function get_ate_activation_status() {
 		$status = $this->create_ate_strings()
-		               ->get_status();
+					   ->get_status();
 		if ( $status !== WPML_TM_ATE_Authentication::AMS_STATUS_ACTIVE ) {
 			$status = $this->fetch_and_update_ate_activation_status();
 		}
@@ -253,6 +275,6 @@ class WPML_TM_Scripts_Factory {
 		$ams_api->get_status();
 
 		return $this->create_ate_strings()
-		            ->get_status();
+					->get_status();
 	}
 }

@@ -18,9 +18,21 @@ class Meow_WPMC_Core {
 	public $upload_url = null; // wp-content/uploads (uploads without domain)
 	private $check_content = null;
 	private $debug_logs = null;
+	private $multilingual = false;
+	private $languages = array();
+	private $allow_usage = null;
+	private $allow_setup = null;
 
 	public function __construct() {
+		add_action( 'plugins_loaded', array( $this, 'init' ) );
+	}
+
+	function init() {
+
+		// Variables
 		$this->site_url = get_site_url();
+		$this->multilingual = $this->is_multilingual();
+		$this->languages = $this->get_languages();
 		$this->current_method = get_option( 'wpmc_method', 'media' );
 		$this->regex_file = str_replace( "MIMETYPES", $this->types, $this->regex_file );
 		$this->servername = str_replace( 'http://', '', str_replace( 'https://', '', $this->site_url ) );
@@ -31,19 +43,25 @@ class Meow_WPMC_Core {
 		$this->debug_logs = get_option( 'wpmc_debuglogs', false );
 		$this->is_rest = MeowCommon_Helpers::is_rest();
 		$this->is_cli = defined( 'WP_CLI' ) && WP_CLI;
-
-		add_action( 'plugins_loaded', array( $this, 'init' ) );
 		global $wpmc;
 		$wpmc = $this;
-	}
 
-	function init() {
+		// Check the roles
+		$this->allow_usage = apply_filters( 'wpmc_allow_usage', current_user_can( 'administrator' ) );
+		$this->allow_setup = apply_filters( 'wpmc_allow_setup', current_user_can( 'manage_options' ) );
+		if ( !$this->is_cli && !$this->allow_usage ) {
+			return;
+		}
+
+		// Language
 		load_plugin_textdomain( WPMC_DOMAIN, false, basename( WPMC_PATH ) . '/languages' );
 
-		// Part of the core, settings and stuff
-		$this->admin = new Meow_WPMC_Admin();
+		// Admin
+		$this->admin = new Meow_WPMC_Admin( $this->allow_setup );
+
+		// Advanced core
 		if ( class_exists( 'MeowPro_WPMC_Core' ) ) {
-			new MeowPro_WPMC_Core( $this, $this->admin );
+			new MeowPro_WPMC_Core( $this );
 		}
 
 		// Install hooks and engine on;y if they might be used
@@ -253,7 +271,7 @@ class Meow_WPMC_Core {
 		}
 
 
-		// Images, src, srcset
+		// Images: src, srcset
 		$imgs = $dom->getElementsByTagName( 'img' );
 		foreach ( $imgs as $img ) {
 			//error_log($img->getAttribute('src'));
@@ -269,6 +287,14 @@ class Meow_WPMC_Core {
 					}
 				}
 			}
+		}
+
+		// Videos: src
+		$videos = $dom->getElementsByTagName( 'video' );
+		foreach ( $videos as $video ) {
+			//error_log($video->getAttribute('src'));
+			$src = $this->clean_url( $video->getAttribute('src') );
+    	array_push( $results, $src );
 		}
 
 		// Links, href
@@ -441,7 +467,7 @@ class Meow_WPMC_Core {
 	 */
 
 	function is_multilingual() {
-		return function_exists('icl_object_id');
+		return function_exists( 'icl_object_id' );
 	}
 
 	function get_languages() {
@@ -449,10 +475,26 @@ class Meow_WPMC_Core {
 		if ( $this->is_multilingual() ) {
 			$languages = icl_get_languages();
 			foreach ( $languages as $language ) {
-				array_push( $results, $language['code'] );
+				if ( isset( $language['code'] ) ) {
+					array_push( $results, $language['code'] );
+				}
+				else if ( isset( $language['language_code'] ) ) {
+					array_push( $results, $language['language_code'] );
+				}
 			}
 		}
 		return $results;
+	}
+
+	function get_translated_media_ids( $mediaId ) {
+		$translated_ids = array();
+		foreach ( $this->languages as $language ) {
+			$id = apply_filters( 'wpml_object_id', $mediaId, 'attachment', false, $language );
+			if ( !empty( $id ) ) {
+				array_push( $translated_ids, $id );
+			}
+		}
+		return $translated_ids;
 	}
 
 	/**
@@ -673,8 +715,25 @@ class Meow_WPMC_Core {
 
 	function add_reference_id( $idOrIds, $type, $origin = null, $extra = null ) {
 		$idOrIds = !is_array( $idOrIds ) ? array( $idOrIds ) : $idOrIds;
-		foreach ( $idOrIds as $id )
+		foreach ( $idOrIds as $id ) {
 			$this->add_reference( $id, "", $type, $origin );
+			if ( $this->multilingual ) {
+				$translatedIds = $this->get_translated_media_ids( (int)$id );
+				
+				// Test for WPML
+				// if ( $id ===  '350') {
+				// 	$translatedIds = $this->get_translated_media_ids( (int)$id );
+				// 	$count = count($translatedIds);
+				// 	error_log( "${id} => ${count}" );
+				// }
+
+				if ( !empty( $translatedIds ) ) {
+					foreach ( $translatedIds as $translatedId ) {
+						$this->add_reference( $translatedId, "", $type, $origin );
+					}
+				}
+			}
+		}
 	}
 
 	private $cached_ids = array();

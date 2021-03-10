@@ -164,12 +164,14 @@
 	function pmai_init(ths){
 
 		ths.find('input.datetimepicker').datetimepicker({
-			dateFormat: 'dd/mm/yy',
+			dateFormat: 'dd-mm-yy',
 			timeFormat: 'hh:mm TT',
 			ampm: true
 		});
 
-		ths.find('input.datepicker').datepicker();
+		ths.find('input.datepicker').datepicker({
+			dateFormat: 'dd-mm-yy'
+		});
 		
 		ths.find('.sortable').each(function(){
 			if ( ! $(this).parents('tr.row-clone').length ){

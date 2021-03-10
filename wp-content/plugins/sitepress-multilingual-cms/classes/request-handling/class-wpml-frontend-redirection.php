@@ -16,10 +16,10 @@ class WPML_Frontend_Redirection extends WPML_SP_User {
 	/**
 	 * WPML_Frontend_Redirection constructor.
 	 *
-	 * @param  SitePress  $sitepress
-	 * @param  Frontend  $request_handler
-	 * @param  WPML_Redirection  $redir_helper
-	 * @param  WPML_Language_Resolution  $lang_resolution
+	 * @param  SitePress                $sitepress
+	 * @param  Frontend                 $request_handler
+	 * @param  WPML_Redirection         $redir_helper
+	 * @param  WPML_Language_Resolution $lang_resolution
 	 */
 	public function __construct(
 		&$sitepress,

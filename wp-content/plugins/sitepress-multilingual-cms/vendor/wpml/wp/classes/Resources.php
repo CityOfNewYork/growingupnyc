@@ -12,12 +12,14 @@ class Resources {
 	/**
 	 * Enqueue a JavaScript application file from the dist directory.
 	 *
-	 * @param string      $app
-	 * @param string      $pluginBaseUrl
-	 * @param string      $pluginBasePath
-	 * @param string      $version
-	 * @param null|string $domain
-	 * @param null|array  $localize
+	 * @param string        $app
+	 * @param string        $pluginBaseUrl
+	 * @param string        $pluginBasePath
+	 * @param string        $version
+	 * @param null|string   $domain
+	 * @param null|string[] $localize
+	 *
+	 * @return void
 	 */
 	public static function enqueue( $app, $pluginBaseUrl, $pluginBasePath, $version, $domain = null, $localize = null ) {
 		$handle = "wpml-$app-ui";

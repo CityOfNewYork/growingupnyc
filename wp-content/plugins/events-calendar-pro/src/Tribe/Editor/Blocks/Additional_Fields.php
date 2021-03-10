@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class Tribe__Gutenberg__Events__Pro__Blocks__Additional_Fields
+ * Class Tribe__Events__Pro__Editor__Blocks__Additional_Fields
  */
 class Tribe__Events__Pro__Editor__Blocks__Additional_Fields {
 	/**

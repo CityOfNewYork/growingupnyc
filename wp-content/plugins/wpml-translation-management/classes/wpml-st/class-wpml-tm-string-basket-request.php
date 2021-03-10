@@ -3,7 +3,7 @@
 class WPML_TM_String_Basket_Request {
 
 	/**
-	 * @param array $post clone of $_POST
+	 * @param array    $post clone of $_POST
 	 * @param callable $addStringsToBasket :: array $stringIds -> string $fromLang -> array $toLangs -> void
 	 */
 	public static function send_to_basket( $post, callable $addStringsToBasket ) {

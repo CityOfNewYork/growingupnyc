@@ -103,6 +103,10 @@ function wpml_plugins_integration_setup() {
 		$factories_to_load[] = WPML_PB_Fix_Maintenance_Query::class;
 	}
 
+	if ( defined( 'GOOGLESITEKIT_VERSION' ) ) {
+		$factories_to_load[] = \WPML\Compatibility\GoogleSiteKit\Hooks::class;
+	}
+
 	$action_filter_loader = new WPML_Action_Filter_Loader();
 	$action_filter_loader->load( $factories_to_load );
 }
@@ -136,6 +140,7 @@ function wpml_themes_integration_setup() {
 		$actions[] = WPML\Compatibility\Divi\DiviOptionsEncoding::class;
 		$actions[] = WPML\Compatibility\Divi\ThemeBuilderFactory::class;
 		$actions[] = WPML\Compatibility\Divi\Builder::class;
+		$actions[] = WPML\Compatibility\Divi\TinyMCE::class;
 	}
 
 	if ( defined( 'FUSION_BUILDER_VERSION' ) ) {

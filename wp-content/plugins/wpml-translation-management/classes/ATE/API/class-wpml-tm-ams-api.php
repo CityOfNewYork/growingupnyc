@@ -33,8 +33,8 @@ class WPML_TM_AMS_API {
 	 * @param WP_Http                    $wp_http
 	 * @param WPML_TM_ATE_Authentication $auth
 	 * @param WPML_TM_ATE_AMS_Endpoints  $endpoints
-	 * @param ClonedSitesHandler  $clonedSitesHandler
-	 * @param FingerprintGenerator $fingerprintGenerator
+	 * @param ClonedSitesHandler         $clonedSitesHandler
+	 * @param FingerprintGenerator       $fingerprintGenerator
 	 */
 	public function __construct(
 		WP_Http $wp_http,
@@ -43,10 +43,10 @@ class WPML_TM_AMS_API {
 		ClonedSitesHandler $clonedSitesHandler,
 		FingerprintGenerator $fingerprintGenerator
 	) {
-		$this->wp_http   = $wp_http;
-		$this->auth      = $auth;
-		$this->endpoints = $endpoints;
-		$this->clonedSitesHandler = $clonedSitesHandler;
+		$this->wp_http              = $wp_http;
+		$this->auth                 = $auth;
+		$this->endpoints            = $endpoints;
+		$this->clonedSitesHandler   = $clonedSitesHandler;
 		$this->fingerprintGenerator = $fingerprintGenerator;
 	}
 
@@ -227,8 +227,8 @@ class WPML_TM_AMS_API {
 
 	private function prepareClonedSiteArguments( $method ) {
 		$headers = [
-			'Accept'                              => 'application/json',
-			'Content-Type'                        => 'application/json',
+			'Accept'       => 'application/json',
+			'Content-Type' => 'application/json',
 			FingerprintGenerator::NEW_SITE_FINGERPRINT_HEADER => $this->fingerprintGenerator->getSiteFingerprint(),
 		];
 
@@ -333,7 +333,6 @@ class WPML_TM_AMS_API {
 
 		$url = http_build_url( $url_parts );
 
-
 		$signed_url = $this->auth->signUrl( $method, $url );
 
 		$response = $this->wp_http->request( $signed_url, $args );
@@ -430,8 +429,8 @@ class WPML_TM_AMS_API {
 				$error_message = $response['body'];
 				$main_error    = array( $response['body'] );
 			} elseif ( array_key_exists( 'errors', $response_body ) ) {
-				$errors     = $response_body['errors'];
-				$main_error = array_shift( $errors );
+				$errors        = $response_body['errors'];
+				$main_error    = array_shift( $errors );
 				$error_message = $this->get_error_message( $main_error, $response['body'] );
 			}
 
@@ -439,7 +438,7 @@ class WPML_TM_AMS_API {
 
 			foreach ( $errors as $error ) {
 				$error_message = $this->get_error_message( $error, $response['body'] );
-				$error_status = isset( $error['status'] ) ? 'ams_error: ' . $error['status'] : '';
+				$error_status  = isset( $error['status'] ) ? 'ams_error: ' . $error['status'] : '';
 				$response_errors->add( $error_status, $error_message, $error );
 			}
 		}
@@ -475,7 +474,7 @@ class WPML_TM_AMS_API {
 			$response_body = json_decode( $response['body'], true );
 
 			return array_key_exists( 'secret_key', $response_body )
-			       && array_key_exists( 'shared_key', $response_body );
+				   && array_key_exists( 'shared_key', $response_body );
 		}
 
 		return false;
@@ -571,11 +570,11 @@ class WPML_TM_AMS_API {
 	 */
 	private function request( $method, $url, array $params = null ) {
 		$lock = $this->clonedSitesHandler->checkCloneSiteLock();
-		if ($lock) {
+		if ( $lock ) {
 			return $lock;
 		}
 
-		$method = strtoupper( $method );
+		$method  = strtoupper( $method );
 		$headers = [
 			'Accept'                                      => 'application/json',
 			'Content-Type'                                => 'application/json',
@@ -588,13 +587,13 @@ class WPML_TM_AMS_API {
 		];
 
 		if ( $params ) {
-			$args['body'] = wp_json_encode( $params, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES );
+			$args['body'] = wp_json_encode( $params, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
 		}
 
 		$response = $this->wp_http->request( $this->add_versions_to_url( $url ), $args );
 
-		if ( !is_wp_error( $response ) ) {
-			$response = $this->clonedSitesHandler->handleClonedSiteError($response);
+		if ( ! is_wp_error( $response ) ) {
+			$response = $this->clonedSitesHandler->handleClonedSiteError( $response );
 		}
 
 		return $response;
@@ -635,7 +634,7 @@ class WPML_TM_AMS_API {
 	}
 
 	public function override_site_id( $site_id ) {
-		$this->auth->override_site_id( $site_id);
+		$this->auth->override_site_id( $site_id );
 	}
 
 }

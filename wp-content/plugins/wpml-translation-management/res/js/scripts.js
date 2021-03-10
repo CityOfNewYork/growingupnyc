@@ -6,17 +6,17 @@ var WPML_TM = WPML_TM || {};
 (function () {
 	"use strict";
 
-jQuery(document).ready(function () {
+jQuery(function () {
 
 
-	jQuery(document).delegate('.icl_tj_select_translator select', 'change', icl_tm_assign_translator);
+    jQuery(document).on('change', '.icl_tj_select_translator select', icl_tm_assign_translator);
 
 
-	jQuery('#icl_side_by_site').find('a[href="#cancel"]').click(function () {
-		var anchor = jQuery(this);
-		jQuery.ajax({
-			type: "POST", url: ajaxurl, data: 'action=dismiss_icl_side_by_site',
-			success: function () {
+    jQuery('#icl_side_by_site').find('a[href="#cancel"]').click(function () {
+        var anchor = jQuery(this);
+        jQuery.ajax({
+                        type   : "POST", url: ajaxurl, data: 'action=dismiss_icl_side_by_site',
+                        success: function () {
 				anchor.parent().parent().fadeOut();
 			}
 		});
@@ -114,8 +114,8 @@ jQuery(document).ready(function () {
     // --- Start: XLIFF form handler ---
 	var icl_xliff_options_form = jQuery('#icl_xliff_options_form');
 	if (icl_xliff_options_form !== undefined) {
-		jQuery(document).undelegate("#icl_xliff_options_form");
-		jQuery(document).delegate('#icl_xliff_options_form', 'submit', icl_xliff_set_newlines);
+		jQuery("#icl_xliff_options_form").off();
+		jQuery(document).on('submit', '#icl_xliff_options_form', icl_xliff_set_newlines);
     }
 
     // --- End: XLIFF form handler ---
@@ -207,7 +207,7 @@ function icl_tm_assign_translator() {
 		translation_controls.hide();
 	});
 	var jobType = jQuery('#icl_tj_ty_' + job_id).val();
-	translation_controls.find('.icl_tj_ok').unbind('click').click(function () {
+	translation_controls.find('.icl_tj_ok').off().click(function () {
 		icl_tm_assign_translator_request(job_id, translator_id, this_translator, jobType);
 	});
 
@@ -281,10 +281,18 @@ function icl_tm_assign_translator_request(job_id, translator_id, select, jobType
 		jQuery('#icl-tm-jobs-cancel-but').prop('disabled', !jQuery(caller).prop('checked'));
     }
 
+    function updateTMSelectAllCheckbox(tableSelector) {
+	    jQuery(tableSelector).find('td.js-check-all :checkbox').prop(
+	    	'checked',
+		    !jQuery(tableSelector).find('.js-wpml-job-row :checkbox:not(:checked)').length
+	    );
+    }
+
 	function update_translation_job_checkboxes() {
-		update_job_checkboxes('#icl-translation-jobs')
+		updateJobCheckboxes('#icl-translation-jobs');
+		updateTMSelectAllCheckbox('#icl-translation-jobs');
 	}
-    function update_job_checkboxes(table_selector) {
+    function updateJobCheckboxes(table_selector) {
         var job_parent = jQuery(table_selector);
 
 		jQuery('#icl-tm-jobs-cancel-but').prop('disabled', job_parent.find(':checkbox:checked').length === 0);
@@ -300,11 +308,14 @@ function icl_tm_assign_translator_request(job_id, translator_id, select, jobType
 
     function iclTmUpdateJobsSelectionBasket() {
         iclTmSelectAllJobsBasket(this);
-        update_job_checkboxes('#icl-translation-jobs-basket');
+        updateJobCheckboxes('#icl-translation-jobs-basket');
     }
 
 	function iclTmSelectAllJobsSelection() {
-		iclTmSelectAllJobsBasket(this)
+		jQuery('#icl-translation-jobs').find(':checkbox').prop(
+			'checked',
+			jQuery('#icl-translation-jobs td.js-check-all :checkbox').prop('checked')
+		);
 	}
 
 if (typeof String.prototype.startsWith !== 'function') {
@@ -321,15 +332,15 @@ if (typeof String.prototype.endsWith !== 'function') {
 }());
 
 (function($) {
-	$(document).ready(function(){
-		$('#translation-notifications').on('change', 'input', function(e) {
-			var input = $(e.target);
-			var child = $('[name="' + input.data('child') + '"]');
+    $(function () {
+        $('#translation-notifications').on('change', 'input', function (e) {
+            var input = $(e.target);
+            var child = $('[name="' + input.data('child') + '"]');
 
-			if ( child.length ) {
-				child.prop('disabled', !input.is(":checked"));
-			}
+            if (child.length) {
+                child.prop('disabled', !input.is(":checked"));
+            }
 
-		});
-	});
+        });
+    });
 })(jQuery);

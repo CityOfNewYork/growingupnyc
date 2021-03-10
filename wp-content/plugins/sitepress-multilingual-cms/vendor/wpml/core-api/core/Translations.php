@@ -39,7 +39,7 @@ class Translations {
 	use Macroable;
 
 	/**
-	 * @ignore
+	 * @return void
 	 */
 	public static function init() {
 		global $sitepress;

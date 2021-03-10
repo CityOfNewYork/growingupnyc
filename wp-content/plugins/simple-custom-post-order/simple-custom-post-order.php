@@ -3,10 +3,10 @@
 * Plugin Name: Simple Custom Post Order
 * Plugin URI: https://wordpress.org/plugins-wp/simple-custom-post-order/
 * Description: Order Items (Posts, Pages, and Custom Post Types) using a Drag and Drop Sortable JavaScript.
-* Version: 2.5.1
+* Version: 2.5.3
 * Author: Colorlib
 * Author URI: https://colorlib.com/
-* Tested up to: 5.5
+* Tested up to: 5.6
 * Requires: 4.6 or higher
 * License: GPLv3 or later
 * License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -36,7 +36,7 @@
 
 define('SCPORDER_URL', plugins_url('', __FILE__));
 define('SCPORDER_DIR', plugin_dir_path(__FILE__));
-define('SCPORDER_VERSION', '2.5.1');
+define('SCPORDER_VERSION', '2.5.3');
 
 $scporder = new SCPO_Engine();
 
@@ -640,6 +640,14 @@ class SCPO_Engine {
             $prep_posts_query = "UPDATE $wpdb->posts SET `menu_order` = 0 WHERE `post_type` IN $in_list";
 
             $result = $wpdb->query($prep_posts_query);
+
+            $scpo_options = get_option( 'scporder_options' );
+
+            if ( !false == $scpo_options ) {
+
+	            $scpo_options['objects'] = array_diff( $scpo_options['objects'], $items );
+                update_option( 'scporder_options',  $scpo_options );
+            }
 
             if ($result) {
                 echo 'Items have been reset';

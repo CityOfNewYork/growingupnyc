@@ -38,8 +38,8 @@ class SectionFactory implements \IWPML_TM_Admin_Section_Factory {
 	}
 
 	/**
-	 * @param  \WPML_Twig_Template_Loader  $twig_loader
-	 * @param  \WPML_TP_Client  $tp_client
+	 * @param  \WPML_Twig_Template_Loader $twig_loader
+	 * @param  \WPML_TP_Client            $tp_client
 	 *
 	 * @return callable
 	 */
@@ -70,13 +70,15 @@ class SectionFactory implements \IWPML_TM_Admin_Section_Factory {
 	 * @return callable
 	 */
 	private function getTemplateRenderer() {
-		$template = make( \WPML_Twig_Template_Loader::class, [
-			':paths' => [
-				WPML_TM_PATH . '/templates/menus/translation-services/',
-				WPML_PLUGIN_PATH . '/templates/pagination/',
-			],
-		] )->get_template();
-
+		$template = make(
+			\WPML_Twig_Template_Loader::class,
+			[
+				':paths' => [
+					WPML_TM_PATH . '/templates/menus/translation-services/',
+					WPML_PLUGIN_PATH . '/templates/pagination/',
+				],
+			]
+		)->get_template();
 
 		return [ $template, 'show' ];
 	}

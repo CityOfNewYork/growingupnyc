@@ -65,6 +65,9 @@ class Lst {
 
 	use Macroable;
 
+	/**
+	 * @return void
+	 */
 	public static function init() {
 
 		self::macro( 'append', curryN( 2, function ( $newItem, array $data ) {
@@ -233,6 +236,38 @@ class Lst {
 		self::macro( 'reverse', curryN( 1, 'array_reverse' ) );
 	}
 
+	/**
+	 * Curried function that keys the array by the given key
+	 *
+	 * keyBy :: string -> array -> array
+	 *
+	 * ```
+	 * $data = [
+	 *    [ 'x' => 'a', 'y' => 123 ],
+	 *    [ 'x' => 'b', 'y' => 456 ],
+	 * ];
+	 *
+	 * Lst::keyBy( 'x', $data );
+	 * [
+	 *    'a' => [ 'x' => 'a', 'y' => 123 ],
+	 *    'b' => [ 'x' => 'b', 'y' => 456 ],
+	 * ],
+	 * ```
+	 *
+	 * @param string $key
+	 * @param mixed[]  $array
+	 *
+	 * @return mixed[]|callable
+	 */
+	public static function keyBy( $key = null, $array = null ) {
+		$keyBy = function ( $key, $array ) {
+			$apply = Fns::converge( Lst::zipObj(), [ Lst::pluck( $key ), Fns::identity() ] );
+
+			return $apply( $array );
+		};
+
+		return call_user_func_array( curryN( 2, $keyBy ), func_get_args() );
+	}
 
 }
 

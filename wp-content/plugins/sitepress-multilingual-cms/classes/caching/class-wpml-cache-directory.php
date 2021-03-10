@@ -6,7 +6,7 @@ class WPML_Cache_Directory {
 	const MAIN_DIRECTORY_NAME  = 'wpml';
 	const NOTICE_GROUP         = 'wpml-cache-directory';
 	const NOTICE_INVALID_CACHE = 'invalid-cache';
-	private $cache_disabled = false;
+	private $cache_disabled    = false;
 
 	/**
 	 * @var WPML_WP_API
@@ -38,7 +38,7 @@ class WPML_Cache_Directory {
 		if ( $cache_path_root ) {
 			$main_directory_path = trailingslashit( $cache_path_root ) . self::MAIN_DIRECTORY_NAME;
 			return trailingslashit( $main_directory_path );
-		}else {
+		} else {
 			$upload_dir = wp_upload_dir();
 
 			if ( empty( $upload_dir['error'] ) ) {

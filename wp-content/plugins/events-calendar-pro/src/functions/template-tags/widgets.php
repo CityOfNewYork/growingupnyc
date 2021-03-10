@@ -188,7 +188,6 @@ function tribe_events_get_list_widget_view_all_link( $instance ) {
 	$link_to_all = '';
 
 	if ( empty( $instance['filters'] ) && empty( $instance['raw_filters'] ) ) {
-		$link_to_archive = false;
 		$link_to_all     = tribe_get_events_link();
 
 		if ( tribe_is_events_home() ) {
@@ -206,7 +205,6 @@ function tribe_events_get_list_widget_view_all_link( $instance ) {
 	}
 	// Is the filter restricted to a single taxonomy?
 	$single_taxonomy = ( is_array( $filters ) && 1 === count( $filters ) );
-	$single_term     = false;
 
 	$operand = isset( $instance['operand'] ) ? $instance['operand'] : '';
 	$condition_counter = 0;
@@ -231,13 +229,12 @@ function tribe_events_get_list_widget_view_all_link( $instance ) {
 		return apply_filters( 'tribe_events_get_list_widget_view_all_link', '' );
 	}
 
+	$terms = (array) $terms;
 	// If we have a single taxonomy and a single term, the View All link should point to the relevant archive page
 	if ( $single_taxonomy && 1 === count( $terms ) ) {
-		$link_to_archive = true;
 		$link_to_all     = get_term_link( absint( $terms[0] ), $taxonomy );
 	}// Otherwise link to the main events page
 	else {
-		$link_to_archive = false;
 		$link_to_all     = tribe_get_events_link();
 	}
 
@@ -362,31 +359,46 @@ function tribe_get_this_week_day_class( $day ) {
 	return null;
 }
 /**
- * This Week Widget - Get Event Category Names Selected for Individual Widget
+ * This Week Widget - Get Event Category Names Selected for Individual Widget.
  *
- * @return string
+ * @since 4.0.0
+ *
+ * @param array $tax_query Widget configuration for the tax query.
+ *
+ * @return string Which classes.
  */
 function tribe_this_week_widget_class( $tax_query ) {
 	if ( empty( $tax_query ) ) {
-		return null;
+		return '';
 	}
 
-	$tax_query_class = null;
+	$tax_query_class = '';
 
 	foreach ( $tax_query as $tax => $terms ) {
-		if ( empty( $terms ) ) {
+		if ( empty( $terms['terms'] ) ) {
 			continue;
 		}
 
 		foreach ( $terms['terms'] as $term_id ) {
+			if ( empty( $term_id ) ) {
+				continue;
+			}
 
 			$term = get_term( $term_id, $terms['taxonomy'] );
 
-			$tax_query_class .= $term->slug . ' ';
+			$tax_query_class .= sanitize_html_class( $term->slug ) . ' ';
 		}
 	}
 
-	//Filter Classes Added to the This Week Widget Wrap
+	/**
+	 * Filter Classes Added to the This Week Widget Wrap.
+	 *
+	 * @since 4.0.0
+	 *
+	 * @param string $tax_query_class Previous classes that will be added due to terms in the tax query.
+	 *
+	 * @return string Classes will be added widget class.
+	 */
 	$tax_query_class = apply_filters( 'tribe_this_week_widget_class', $tax_query_class );
 
 	return $tax_query_class;

@@ -19,7 +19,6 @@ class WPML_Post_Status_Display {
 	 *
 	 * @param string $link Link the status icon is to point to.
 	 * @param string $text Hover text for the status icon.
-	 * @param string $img Name of the icon image file to be used.
 	 * @param string $css_class
 	 *
 	 * @return string
@@ -175,7 +174,7 @@ class WPML_Post_Status_Display {
 	}
 
 	/**
-	 * @param      $post_id  int
+	 * @param int $post_id
 	 * @param bool $update   true if the translation in questions is in need of an update,
 	 *                       false otherwise.
 	 *

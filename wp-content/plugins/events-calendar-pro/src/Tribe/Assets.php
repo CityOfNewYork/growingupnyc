@@ -6,6 +6,15 @@
  */
 class Tribe__Events__Pro__Assets {
 	/**
+	 * Caches the result of the `should_enqueue_frontend` check.
+	 *
+	 * @since 5.0.0
+	 *
+	 * @var bool
+	 */
+	protected $should_enqueue_frontend;
+
+	/**
 	 * Registers and Enqueues the assets
 	 *
 	 * @since  4.4.30
@@ -18,18 +27,31 @@ class Tribe__Events__Pro__Assets {
 		// Vendor
 		tribe_assets(
 			$pro,
-			array(
-				array( 'tribe-events-pro-imagesloaded', 'vendor/imagesloaded/imagesloaded.pkgd.js', array( 'tribe-events-pro' ) ),
-				array( 'tribe-events-pro-isotope', 'vendor/isotope/isotope.pkgd.js', array( 'tribe-events-pro-imagesloaded' ) ),
-				array( 'tribe-events-pro-slimscroll', 'vendor/nanoscroller/jquery.nanoscroller.js', array( 'tribe-events-pro', 'jquery-ui-draggable' ) ),
-			),
+			[
+				[ 'tribe-events-pro-imagesloaded', 'vendor/imagesloaded/imagesloaded.pkgd.js', [ 'tribe-events-pro' ] ],
+				[ 'tribe-events-pro-isotope', 'vendor/isotope/isotope.pkgd.js', [ 'tribe-events-pro-imagesloaded' ] ],
+				[ 'tribe-events-pro-slimscroll', 'vendor/nanoscroller/jquery.nanoscroller.js', [ 'tribe-events-pro', 'jquery-ui-draggable' ] ],
+			],
 			null,
-			array(
-				'in_footer'    => false,
-			)
+			[
+				'in_footer' => false,
+			]
+		);
+
+		// Vendor: Admin
+		tribe_assets(
+			$pro,
+			[
+				[ 'tribe-events-pro-handlebars', 'vendor/handlebars/handlebars.min.js' ],
+			],
+			'admin_enqueue_scripts',
+			[
+				'conditionals' => [ Tribe__Main::instance(), 'should_load_common_admin_css' ],
+			]
 		);
 
 		$api_url = 'https://maps.google.com/maps/api/js';
+
 		/**
 		 * Allows users to use a diferent Google Maps JS URL
 		 *
@@ -43,44 +65,55 @@ class Tribe__Events__Pro__Assets {
 			$pro,
 			'tribe-pro',
 			'pro.js',
-			array(),
+			[],
 			null,
-			array(
+			[
 				'priority' => 5,
-			)
+			]
+		);
+
+		tribe_asset(
+			$pro,
+			'tribe_events-premium-admin',
+			'events-admin.css',
+			[],
+			'admin_enqueue_scripts',
+			[
+				'priority' => 10,
+			]
 		);
 
 		tribe_asset(
 			$pro,
 			'tribe-events-pro',
 			'tribe-events-pro.js',
-			array( 'jquery', 'tribe-events-calendar-script' ),
+			[ 'jquery', 'tribe-events-calendar-script' ],
 			'wp_enqueue_scripts',
-			array(
-				'conditionals' => array( $this, 'should_enqueue_frontend' ),
+			[
+				'conditionals' => [ $this, 'should_enqueue_frontend' ],
 				'in_footer'    => false,
-				'localize'     => array(
+				'localize'     => [
 					'name' => 'TribeEventsPro',
-					'data' => array( $this, 'get_data_tribe_events_pro' ),
-				),
-			)
+					'data' => [ $this, 'get_data_tribe_events_pro' ],
+				],
+			]
 		);
 
 		tribe_asset(
 			$pro,
 			'tribe-events-pro-photo',
 			'tribe-events-photo-view.js',
-			array( 'tribe-events-pro-isotope' ),
+			[ 'tribe-events-pro-isotope' ],
 			null,
-			array(
-				'localize' => array(
+			[
+				'localize' => [
 					'name' => 'TribePhoto',
-					'data' => array(
+					'data' => [
 						'ajaxurl'     => admin_url( 'admin-ajax.php', ( is_ssl() ? 'https' : 'http' ) ),
 						'tribe_paged' => tribe_get_request_var( 'tribe_paged', 0 ),
-					),
-				),
-			)
+					],
+				],
+			]
 		);
 
 		tribe_asset(
@@ -348,16 +381,25 @@ class Tribe__Events__Pro__Assets {
 	 * When to enqueue the Pro Styles on the front-end
 	 *
 	 * @since  4.4.30
+	 * @since 5.0.0 Cache the check value.
 	 *
-	 * @return void
+	 * @return bool
 	 */
 	public function should_enqueue_frontend() {
+		if ( null !== $this->should_enqueue_frontend ) {
+			return $this->should_enqueue_frontend;
+		}
+
 		global $post;
 
-		return (
+		$should_enqueue = (
 			tribe_is_event_query()
 			|| ( $post instanceof WP_Post && has_shortcode( $post->post_content, 'tribe_events' ) )
 		);
+
+		$this->should_enqueue_frontend = $should_enqueue;
+
+		return $should_enqueue;
 	}
 
 	/**
@@ -415,7 +457,5 @@ class Tribe__Events__Pro__Assets {
 		$data = apply_filters( 'tribe_events_pro_geoloc_localize_script', $data, 'tribe-events-pro-geoloc' );
 
 		return $data;
-
 	}
-
 }

@@ -6,7 +6,7 @@
  * Override this template in your own theme by creating a file at [your-theme]/tribe-events/list/venue-nav.php
  *
  * @package TribeEventsCalendar
- * @version 4.4.32
+ * @version 4.7.0
  *
  */
 
@@ -16,11 +16,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $events_label_plural = tribe_get_event_label_plural();
 
-global /** @var WP_Query $wp_query */
-$wp_query;
+global $wp_query;
 
 $page     = $wp_query->get( 'paged', 1 );
-$venue_id = $wp_query->get( 'venue' );
+$venue_id = Tribe__Utils__Array::get( $wp_query->get( 'meta_query' ), [ '_eventvenueid_in', 'value' ], 0 );
 ?>
 
 <nav class="tribe-events-nav-pagination" aria-label="<?php echo esc_html( sprintf( esc_html__( '%s List Navigation', 'tribe-events-calendar-pro' ), $events_label_plural ) ); ?>">

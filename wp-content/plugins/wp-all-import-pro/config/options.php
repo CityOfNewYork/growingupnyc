@@ -36,4 +36,4 @@ $config = array(
 	"force_stream_reader" => 0,
     "scheduling_license" => "",
     "scheduling_license_status" => "",
-);if (!defined('WPALLIMPORT_SIGNATURE')) define('WPALLIMPORT_SIGNATURE', 'Y2ZjZDIwODQ5NWQ1NjVlZjY2ZTdkZmY5Zjk4NzY0ZGE=');
+);

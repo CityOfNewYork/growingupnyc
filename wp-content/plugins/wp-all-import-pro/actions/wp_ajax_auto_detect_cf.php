@@ -33,7 +33,7 @@ function pmxi_wp_ajax_auto_detect_cf(){
         case 'taxonomies':
             $fields = $input->post('fields', array());
             break;
-        case 'reviews':
+        case 'woo_reviews':
         case 'comments':
             $results = $wpdb->get_results($wpdb->prepare("SELECT DISTINCT meta_key FROM ". $table_prefix ."comments, ". $table_prefix ."commentmeta WHERE ". $table_prefix ."comments.comment_ID = ". $table_prefix ."commentmeta.comment_id", $post_type), ARRAY_A);
             if (!empty($results) && !is_wp_error($results)){
@@ -73,7 +73,7 @@ function pmxi_wp_ajax_auto_detect_cf(){
                         WHERE termmeta.meta_key='".$field."'
                     ", ARRAY_A);
                     break;
-                case 'reviews':
+                case 'woo_reviews':
                 case 'comments':
                     $values = $wpdb->get_results("
                         SELECT DISTINCT commentmeta.meta_value

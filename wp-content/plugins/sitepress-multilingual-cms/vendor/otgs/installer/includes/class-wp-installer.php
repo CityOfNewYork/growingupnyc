@@ -3,6 +3,7 @@
 use OTGS\Installer\Collection;
 use OTGS\Installer\Rest\Push;
 use OTGS\Installer\Recommendations\RecommendationsManager;
+use OTGS\Installer\CommercialTab\SectionsManager;
 use OTGS\Installer\Recommendations\Storage;
 
 class WP_Installer {
@@ -38,6 +39,7 @@ class WP_Installer {
 	const SITE_KEY_VALIDATION_SOURCE_REGISTRATION = 3;
 	const SITE_KEY_VALIDATION_SOURCE_REVALIDATION = 4;
 	const SITE_KEY_VALIDATION_SOURCE_UPDATES_CHECK = 5;
+	const SITE_KEY_VALIDATION_SOURCE_REVALIDATION_DAILY = 6;
 
 	public $dependencies;
 
@@ -60,6 +62,11 @@ class WP_Installer {
 	 * @var RecommendationsManager
 	 */
 	private $recommendations_manager;
+
+	/**
+	 * @var SectionsManager
+	 */
+	private $sections_manager;
 
 	public static function instance() {
 
@@ -887,10 +894,6 @@ class WP_Installer {
 					if ( isset( $this->config['repositories_exclude'] ) && in_array( $id, $this->config['repositories_exclude'] ) ) {
 						continue;
 					}
-					// includes rule;
-					if ( isset( $this->config['repositories_include'] ) && ! in_array( $id, $this->config['repositories_include'] ) ) {
-						continue;
-					}
 
 					$data['api-url']  = strval( $repo->apiurl );
 
@@ -948,12 +951,6 @@ class WP_Installer {
 					unset( $this->settings['repositories'][ $id ] );
 				}
 
-				// includes rule;
-				if ( isset( $this->config['repositories_include'] ) && ! in_array( $id, $this->config['repositories_include'] ) ) {
-					unset( $this->settings['repositories'][ $id ] );
-				}
-
-
 			}
 		}
 
@@ -961,7 +958,8 @@ class WP_Installer {
 	}
 
 	public function refresh_subscriptions_data() {
-		$require_saving_settings = false;
+		$this->settings['last_subscriptions_update'] = time();
+
 		foreach ( $this->repositories as $repository_id => $data ) {
 			$site_key = $this->get_site_key( $repository_id );
 
@@ -973,7 +971,7 @@ class WP_Installer {
 				$subscription_data = $this->fetch_subscription_data(
 					$repository_id,
 					$site_key,
-					self::SITE_KEY_VALIDATION_SOURCE_REVALIDATION
+					self::SITE_KEY_VALIDATION_SOURCE_REVALIDATION_DAILY
 				);
 
 				if ( ! $subscription_data ) {
@@ -989,20 +987,14 @@ class WP_Installer {
 
 				$this->settings['repositories'][ $repository_id ]['subscription']['data'] = $subscription_data;
 				$this->setLastSuccessSubscriptionFetch($repository_id);
-				$require_saving_settings = true;
+				$this->log_subscription_update( "Subscriptions updated successfully." );
 
 			} catch ( Exception $e ) {
-				$this->log_subscription_update( $e->getMessage() );
+				$this->log_subscription_update( $repository_id. ': '. $e->getMessage() );
 			}
 		}
 
-		if ($require_saving_settings) {
-			$this->log_subscription_update(
-				"Subscriptions updated successfully."
-			);
-			$this->settings['last_subscriptions_update'] = time();
-			$this->save_settings();
-		}
+		$this->save_settings();
 	}
 
 	public function shouldDisplayConnectionIssueMessage( $repositoryId ) {
@@ -1044,7 +1036,7 @@ class WP_Installer {
 
 	public function get_recommendations( $repository_id ) {
 		$subscription = $this->get_subscription( $repository_id );
-		if ( $subscription ) {
+		if ( $subscription->is_valid() ) {
 			return $this->recommendations_manager->getRepositoryPluginsRecommendations();
 		}
 
@@ -1103,7 +1095,6 @@ class WP_Installer {
 			    try {
 				    $products = $products_parser->get_products_from_response( $products_url, $repository_id, $response);
 				    $this->handle_product_parsing_notices( $products_parser->get_product_notices() );
-
 				    $this->settings['repositories'][ $repository_id ]['data'] = $products;
 				    $this->_pre_1_8_backwards_compatibility( $this->settings );
                 } catch ( OTGS_Installer_Products_Parsing_Exception $exception) {
@@ -1209,7 +1200,20 @@ class WP_Installer {
 		if ( $screen->base === 'settings_page_installer' ) { // settings page
 			echo '</div>';
 		}
+	}
 
+	/**
+	 * @param string $repositoryId
+	 * @param array $downloads List of plugins data that are available for subscription type and used on commercial tab.
+	 *
+	 * @return array
+	 */
+	public function get_plugins_sections( $repositoryId, $downloads ) {
+		$sections_manager = new SectionsManager(
+			$this->get_settings()['repositories']
+		);
+
+		return $sections_manager->getPluginsSections( $repositoryId, $downloads );
 	}
 
 	public function get_product_price( $repository_id, $package_id, $product_id, $incl_discount = false ) {
@@ -1247,7 +1251,6 @@ class WP_Installer {
 
 			$row = array( 'products' => array(), 'downloads' => array() );
 			foreach ( $package['products'] as $product ) {
-
 				// filter out free subscriptions from being displayed as buying options
 				if ( empty( $product['price'] ) && ( empty( $subscription_type ) || $expired ) ) {
 					continue;
@@ -1262,6 +1265,8 @@ class WP_Installer {
 				if ( empty( $subscription_type ) || $expired ) {
 
 					$p['url'] = $this->append_parameters_to_buy_url( $product['url'], $repository_id );
+					$p['shouldDisplay'] = !(isset($product['deprecated']) ? (bool)$product['deprecated'] : false);
+
 					if ( ! empty( $product['price_disc'] ) ) {
 						$p['label'] = $product['call2action'] . ' - ' . sprintf( '$%s %s$%d%s (USD)', $product['price_disc'], '&nbsp;&nbsp;<del>', $product['price'], '</del>' );
 					} else {
@@ -1587,10 +1592,11 @@ class WP_Installer {
 
 		$subscription_data = false;
 
-		$args['body'] = array(
+		$installer_site_url = $this->get_installer_site_url( $repository_id );
+		$args['body']       = array(
 			'action'   => 'site_key_validation',
 			'site_key' => $site_key,
-			'site_url' => $this->get_installer_site_url( $repository_id ),
+			'site_url' => $installer_site_url,
 			'source'   => $source
 		);
 
@@ -1640,6 +1646,10 @@ class WP_Installer {
 					$subscription_data = $data->subscription_data;
 				}
 
+				if( $this->isSiteKeyNotMatchResponse( $data ) ) {
+					throw new Exception( 'Site key does not match for ' . $installer_site_url);
+				}
+
 				do_action( 'installer_fetched_subscription_data', $data, $repository_id );
 
 			} else {
@@ -1654,6 +1664,10 @@ class WP_Installer {
 
 		return $subscription_data;
 
+	}
+
+	private function isSiteKeyNotMatchResponse( $subscriptionResponse ) {
+	    return isset($subscriptionResponse->error) && $subscriptionResponse->error === 'Site key not matching';
 	}
 
 	function get_local_product_versions( $repository_id ) {
@@ -2892,8 +2906,8 @@ class WP_Installer {
 
 	}
 
-	public function compare_package_order($a, $b) {
-	  return $a['order'] > $b['order'];
+	public function compare_package_order( $a, $b ) {
+		return $a['order'] - $b['order'];
 	}
 
 	public function get_support_tag_by_name( $name, $repository ) {

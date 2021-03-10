@@ -7,7 +7,7 @@ switch ($post_type) {
         $custom_type->labels->name = __('Comments', 'wp_all_import_plugin');
         $custom_type->labels->singular_name = __('Comment', 'wp_all_import_plugin');
         break;
-    case 'reviews':
+    case 'woo_reviews':
         $custom_type = new stdClass();
         $custom_type->labels = new stdClass();
         $custom_type->labels->name = __('Reviews', 'wp_all_import_plugin');
@@ -87,7 +87,7 @@ switch ($post_type) {
                 <input type="checkbox" id="is_update_comment_post_id" name="is_update_comment_post_id" value="1" <?php echo $post['is_update_comment_post_id'] ? 'checked="checked"': '' ?> />
                 <label for="is_update_comment_post_id"><?php _e('Parent Post', 'wp_all_import_plugin') ?></label>
             </div>
-            <?php if ($post_type == 'reviews'): ?>
+            <?php if ($post_type == 'woo_reviews'): ?>
             <div class="input">
                 <input type="hidden" name="is_update_comment_rating" value="0" />
                 <input type="checkbox" id="is_update_comment_rating" name="is_update_comment_rating" value="1" <?php echo $post['is_update_comment_rating'] ? 'checked="checked"': '' ?> />
@@ -134,7 +134,7 @@ switch ($post_type) {
                 <input type="checkbox" id="is_update_comment_approved" name="is_update_comment_approved" value="1" <?php echo $post['is_update_comment_approved'] ? 'checked="checked"': '' ?> />
                 <label for="is_update_comment_approved"><?php _e('Approved', 'wp_all_import_plugin') ?></label>
             </div>
-            <?php if ($post_type == 'reviews'): ?>
+            <?php if ($post_type == 'woo_reviews'): ?>
                 <div class="input">
                     <input type="hidden" name="is_update_comment_verified" value="0" />
                     <input type="checkbox" id="is_update_comment_verified" name="is_update_comment_verified" value="1" <?php echo $post['is_update_comment_verified'] ? 'checked="checked"': '' ?> />

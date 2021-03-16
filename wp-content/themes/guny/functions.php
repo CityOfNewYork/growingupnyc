@@ -81,17 +81,27 @@ class GunySite extends TimberSite {
 
     $context['options'] = get_fields('options');
 
-    // Global alert banner
+    /**
+     * Global alert banner
+     */
     if ($context['is_generation']) {
       $page_id = get_page_by_title('Youth')->ID; // TODO: update so it's not dependent on page title
       $banner = get_field('current_banner', $page_id);
-    } else {
-      $page_id = get_option('page_on_front');
-      $banner = get_field('current_banner', $page_id);
-    }
 
-    $context['banner']['post'] = Timber::get_post($banner);
-    $context['banner']['show'] = get_field('show_banner', $page_id);
+      $context['banner']['post'] = Timber::get_post($banner);
+      $context['banner']['show'] = get_field('show_banner', $page_id);
+    } else {
+      // English Homepage with global banner
+      $page_id = get_page(icl_object_id(get_option('page_on_front'), 'page', true, 'en'))->ID;
+      $show_banner = get_field('show_banner', icl_object_id($page_id, 'post', true, 'en'));
+      $banner = get_field('current_banner', icl_object_id($page_id, 'post', true, 'en'));
+      $banner_id = icl_object_id($banner, 'post', true, ICL_LANGUAGE_CODE);
+
+      if ($show_banner){
+        $context['banner']['post'] = Timber::get_post($banner_id);
+        $context['banner']['show'] = true;
+      }
+    }
 
     // Alert - event temp
     $event_alert_slug = 'covid-19';

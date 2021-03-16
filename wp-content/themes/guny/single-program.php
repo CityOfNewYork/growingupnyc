@@ -55,13 +55,29 @@ $context['meta_desc'] = get_field('meta_description', $post->id);
 $context['meta_keywords'] = get_field('meta_keywords', $post->id);
 $context['meta_noindex'] = get_field('meta_noindex', $post->id);
 
-// Program and Topic post alert banner
-$banner = get_field('current_banner');
-$context['banner']['alt'] = new TimberPost($banner);
-$context['banner']['override'] = $post->update_banner;
+/**
+ * Banner - Check to see if a program has set to override the global banner.
+ * If the banner has a translation, use it, otherwise, get the English.
+ */
+$banner_override = get_field('update_banner', icl_object_id($post->ID, 'post', true, 'en'));
+$banner = get_field('current_banner', icl_object_id($post->ID, 'post', true, 'en'));
+$banner_id = icl_object_id($banner, 'post', true, ICL_LANGUAGE_CODE);
+if ($banner_override){
+  $context['banner']['show'] = true;
+  $context['banner']['post'] = new TimberPost($banner_id);
+}
 
-// in-body alert under banner
-$context['program_page_alert'] = get_field('banner_content', get_field('banner_alert_message', $post->id));
+/**
+ * In-Body Banner Alert
+ */
+$in_body_alert = get_field('banner_alert_show', icl_object_id($post->ID, 'post', true, 'en'));
+$in_body_alert_id = get_field('banner_alert_message', icl_object_id($post->ID, 'post', true, ICL_LANGUAGE_CODE))->ID;
+if ($in_body_alert == 'Yes'){
+  if (is_null($in_body_alert_id)) {
+    $in_body_alert_id = get_field('banner_alert_message', icl_object_id($post->ID, 'post', true, 'en'))->ID;
+  }
+  $context['program_page_alert'] = get_field('banner_content', $in_body_alert_id);
+}
 
 $context['events_link'] = get_post_type_archive_link('tribe_events');
 $context['programs_link'] = get_post_type_archive_link('program');

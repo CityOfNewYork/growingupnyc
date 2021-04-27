@@ -61,7 +61,7 @@
   "dependencies": {
     "@nycopportunity/growingup-patterns": "1.0.0-14",
     "animate.scss": "0.0.6",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bourbon": "^4.2.7",
     "bourbon-neat": "^1.8.0",
     "cleave.js": "^1.5.6",

@@ -16,11 +16,11 @@ class SmsMe extends ContactMe {
 
   protected $from_label = 'Sender Phone Number';
 
-  protected $account_hint = 'EXAMPLEAC43fceec9fb0836fff217f4b4f';
+  protected $account_hint = '';
 
-  protected $secret_hint = 'EXAMPLE2674d4ec2a325a63cbcc63d25';
+  protected $secret_hint = '';
 
-  protected $from_hint = '+15551230789';
+  protected $from_hint = '';
 
   protected $prefix = 'smnyc_twilio';
 

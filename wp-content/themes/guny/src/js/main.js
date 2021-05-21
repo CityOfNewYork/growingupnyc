@@ -120,8 +120,8 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
       new Scroll();
     }
 
-    new Search();
-    new SectionHighlighter()
+    new Search(false);
+    new SectionHighlighter();
     new StaticColumn();
 
     if (document.querySelector('.js-sticky') != undefined) {

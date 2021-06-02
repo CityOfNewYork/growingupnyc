@@ -35,6 +35,7 @@ class Programs {
         errorMsg: false,
         isLoading: true,
         totalResults: '',
+        document: document,
       },
       watch: {
         checkedProgramType: 'getPrograms',
@@ -66,7 +67,7 @@ class Programs {
         selectAllTypes: Programs.selectAllTypes,
         selectAllAges: Programs.selectAllAges,
         mobileScroll: Programs.mobileScroll,
-        loadMore: Programs.loadMore
+        // loadMore: Programs.loadMore
       },
       created() {
         window.addEventListener('scroll', this.mobileScroll);
@@ -167,7 +168,7 @@ Programs.generateFilterURL = function (data) {
 }
 /**
  * Extracts the taxonomies from the url query
- * and updates the program type and age group arrays 
+ * and updates the program type and age group arrays
  **/
 Programs.parseQuery = function () {
   let query = this.$route.query;

@@ -13,78 +13,65 @@ use Twilio\Options;
 use Twilio\Values;
 
 /**
- * PLEASE NOTE that this class contains preview products that are subject to change. Use them with caution. If you currently do not have developer preview access, please contact help@twilio.com.
+ * PLEASE NOTE that this class contains beta products that are subject to change. Use them with caution.
  */
 abstract class ChallengeOptions {
     /**
-     * @param \DateTime $expirationDate The future date in which this Challenge
-     *                                  will expire
+     * @param \DateTime $expirationDate The date-time when this Challenge expires
      * @param string $detailsMessage Shown to the user when the push notification
      *                               arrives
      * @param array[] $detailsFields A list of objects that describe the Fields
      *                               included in the Challenge
      * @param array $hiddenDetails Hidden details provided to contextualize the
      *                             Challenge
-     * @param string $twilioSandboxMode The Twilio-Sandbox-Mode HTTP request header
+     * @param string $authPayload Optional payload to verify the Challenge
      * @return CreateChallengeOptions Options builder
      */
-    public static function create(\DateTime $expirationDate = Values::NONE, string $detailsMessage = Values::NONE, array $detailsFields = Values::ARRAY_NONE, array $hiddenDetails = Values::ARRAY_NONE, string $twilioSandboxMode = Values::NONE): CreateChallengeOptions {
-        return new CreateChallengeOptions($expirationDate, $detailsMessage, $detailsFields, $hiddenDetails, $twilioSandboxMode);
-    }
-
-    /**
-     * @param string $twilioSandboxMode The Twilio-Sandbox-Mode HTTP request header
-     * @return FetchChallengeOptions Options builder
-     */
-    public static function fetch(string $twilioSandboxMode = Values::NONE): FetchChallengeOptions {
-        return new FetchChallengeOptions($twilioSandboxMode);
+    public static function create(\DateTime $expirationDate = Values::NONE, string $detailsMessage = Values::NONE, array $detailsFields = Values::ARRAY_NONE, array $hiddenDetails = Values::ARRAY_NONE, string $authPayload = Values::NONE): CreateChallengeOptions {
+        return new CreateChallengeOptions($expirationDate, $detailsMessage, $detailsFields, $hiddenDetails, $authPayload);
     }
 
     /**
      * @param string $factorSid Factor Sid.
      * @param string $status The Status of theChallenges to fetch
-     * @param string $twilioSandboxMode The Twilio-Sandbox-Mode HTTP request header
      * @return ReadChallengeOptions Options builder
      */
-    public static function read(string $factorSid = Values::NONE, string $status = Values::NONE, string $twilioSandboxMode = Values::NONE): ReadChallengeOptions {
-        return new ReadChallengeOptions($factorSid, $status, $twilioSandboxMode);
+    public static function read(string $factorSid = Values::NONE, string $status = Values::NONE): ReadChallengeOptions {
+        return new ReadChallengeOptions($factorSid, $status);
     }
 
     /**
      * @param string $authPayload Optional payload to verify the Challenge
-     * @param string $twilioSandboxMode The Twilio-Sandbox-Mode HTTP request header
      * @return UpdateChallengeOptions Options builder
      */
-    public static function update(string $authPayload = Values::NONE, string $twilioSandboxMode = Values::NONE): UpdateChallengeOptions {
-        return new UpdateChallengeOptions($authPayload, $twilioSandboxMode);
+    public static function update(string $authPayload = Values::NONE): UpdateChallengeOptions {
+        return new UpdateChallengeOptions($authPayload);
     }
 }
 
 class CreateChallengeOptions extends Options {
     /**
-     * @param \DateTime $expirationDate The future date in which this Challenge
-     *                                  will expire
+     * @param \DateTime $expirationDate The date-time when this Challenge expires
      * @param string $detailsMessage Shown to the user when the push notification
      *                               arrives
      * @param array[] $detailsFields A list of objects that describe the Fields
      *                               included in the Challenge
      * @param array $hiddenDetails Hidden details provided to contextualize the
      *                             Challenge
-     * @param string $twilioSandboxMode The Twilio-Sandbox-Mode HTTP request header
+     * @param string $authPayload Optional payload to verify the Challenge
      */
-    public function __construct(\DateTime $expirationDate = Values::NONE, string $detailsMessage = Values::NONE, array $detailsFields = Values::ARRAY_NONE, array $hiddenDetails = Values::ARRAY_NONE, string $twilioSandboxMode = Values::NONE) {
+    public function __construct(\DateTime $expirationDate = Values::NONE, string $detailsMessage = Values::NONE, array $detailsFields = Values::ARRAY_NONE, array $hiddenDetails = Values::ARRAY_NONE, string $authPayload = Values::NONE) {
         $this->options['expirationDate'] = $expirationDate;
         $this->options['detailsMessage'] = $detailsMessage;
         $this->options['detailsFields'] = $detailsFields;
         $this->options['hiddenDetails'] = $hiddenDetails;
-        $this->options['twilioSandboxMode'] = $twilioSandboxMode;
+        $this->options['authPayload'] = $authPayload;
     }
 
     /**
-     * The future date in which this Challenge will expire, given in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format.
+     * The date-time when this Challenge expires, given in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format. The default value is five (5) minutes after Challenge creation. The max value is sixty (60) minutes after creation.
      *
-     * @param \DateTime $expirationDate The future date in which this Challenge
-     *                                  will expire
+     * @param \DateTime $expirationDate The date-time when this Challenge expires
      * @return $this Fluent Builder
      */
     public function setExpirationDate(\DateTime $expirationDate): self {
@@ -129,13 +116,13 @@ class CreateChallengeOptions extends Options {
     }
 
     /**
-     * The Twilio-Sandbox-Mode HTTP request header
+     * Optional payload used to verify the Challenge upon creation. Only used with a Factor of type `totp` to carry the TOTP code that needs to be verified.
      *
-     * @param string $twilioSandboxMode The Twilio-Sandbox-Mode HTTP request header
+     * @param string $authPayload Optional payload to verify the Challenge
      * @return $this Fluent Builder
      */
-    public function setTwilioSandboxMode(string $twilioSandboxMode): self {
-        $this->options['twilioSandboxMode'] = $twilioSandboxMode;
+    public function setAuthPayload(string $authPayload): self {
+        $this->options['authPayload'] = $authPayload;
         return $this;
     }
 
@@ -150,46 +137,14 @@ class CreateChallengeOptions extends Options {
     }
 }
 
-class FetchChallengeOptions extends Options {
-    /**
-     * @param string $twilioSandboxMode The Twilio-Sandbox-Mode HTTP request header
-     */
-    public function __construct(string $twilioSandboxMode = Values::NONE) {
-        $this->options['twilioSandboxMode'] = $twilioSandboxMode;
-    }
-
-    /**
-     * The Twilio-Sandbox-Mode HTTP request header
-     *
-     * @param string $twilioSandboxMode The Twilio-Sandbox-Mode HTTP request header
-     * @return $this Fluent Builder
-     */
-    public function setTwilioSandboxMode(string $twilioSandboxMode): self {
-        $this->options['twilioSandboxMode'] = $twilioSandboxMode;
-        return $this;
-    }
-
-    /**
-     * Provide a friendly representation
-     *
-     * @return string Machine friendly representation
-     */
-    public function __toString(): string {
-        $options = \http_build_query(Values::of($this->options), '', ' ');
-        return '[Twilio.Verify.V2.FetchChallengeOptions ' . $options . ']';
-    }
-}
-
 class ReadChallengeOptions extends Options {
     /**
      * @param string $factorSid Factor Sid.
      * @param string $status The Status of theChallenges to fetch
-     * @param string $twilioSandboxMode The Twilio-Sandbox-Mode HTTP request header
      */
-    public function __construct(string $factorSid = Values::NONE, string $status = Values::NONE, string $twilioSandboxMode = Values::NONE) {
+    public function __construct(string $factorSid = Values::NONE, string $status = Values::NONE) {
         $this->options['factorSid'] = $factorSid;
         $this->options['status'] = $status;
-        $this->options['twilioSandboxMode'] = $twilioSandboxMode;
     }
 
     /**
@@ -215,17 +170,6 @@ class ReadChallengeOptions extends Options {
     }
 
     /**
-     * The Twilio-Sandbox-Mode HTTP request header
-     *
-     * @param string $twilioSandboxMode The Twilio-Sandbox-Mode HTTP request header
-     * @return $this Fluent Builder
-     */
-    public function setTwilioSandboxMode(string $twilioSandboxMode): self {
-        $this->options['twilioSandboxMode'] = $twilioSandboxMode;
-        return $this;
-    }
-
-    /**
      * Provide a friendly representation
      *
      * @return string Machine friendly representation
@@ -239,11 +183,9 @@ class ReadChallengeOptions extends Options {
 class UpdateChallengeOptions extends Options {
     /**
      * @param string $authPayload Optional payload to verify the Challenge
-     * @param string $twilioSandboxMode The Twilio-Sandbox-Mode HTTP request header
      */
-    public function __construct(string $authPayload = Values::NONE, string $twilioSandboxMode = Values::NONE) {
+    public function __construct(string $authPayload = Values::NONE) {
         $this->options['authPayload'] = $authPayload;
-        $this->options['twilioSandboxMode'] = $twilioSandboxMode;
     }
 
     /**
@@ -254,17 +196,6 @@ class UpdateChallengeOptions extends Options {
      */
     public function setAuthPayload(string $authPayload): self {
         $this->options['authPayload'] = $authPayload;
-        return $this;
-    }
-
-    /**
-     * The Twilio-Sandbox-Mode HTTP request header
-     *
-     * @param string $twilioSandboxMode The Twilio-Sandbox-Mode HTTP request header
-     * @return $this Fluent Builder
-     */
-    public function setTwilioSandboxMode(string $twilioSandboxMode): self {
-        $this->options['twilioSandboxMode'] = $twilioSandboxMode;
         return $this;
     }
 

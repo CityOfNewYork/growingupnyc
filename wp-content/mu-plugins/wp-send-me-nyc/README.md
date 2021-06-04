@@ -24,30 +24,39 @@ The [sample autoloader](https://github.com/CityOfNewYork/nyco-wp-send-me-nyc/blo
 - Register [custom post types](#custom-post-types) for custom SMS and Email content (SMNYC Emails and SMNYC SMS).
 - Create an admin settings page under *Settings > Send Me NYC* for [configuration](#configuration).
 
+**Note:** The `SMNYC\SmsMe` and `SMNYC\EmailMe` classes extend the `SMNYC\ContactMe` class. Any of the three could be extended further or have their properties modified to accommodate custom settings or services.
+
 ## Configuration
 
-Each settings section corresponds to a specific service that needs to be configured to work with your WordPress Installation.
+Each settings section corresponds to a specific service that needs to be configured to work with your WordPress installation. These can be configured in the WordPress admin settings or as PHP constants. If both the WordPress admin setting and the PHP constant setting of the option are set, the WordPress admin setting will be preferred.
 
-### Bitly Settings
+### Bitly Service Settings for URL Shortening
 
-- Bitly Shortening API Link
-- Bitly Access Token
+Admin Setting             | WordPress Option        | PHP Constant
+--------------------------|-------------------------|-
+Bitly Shortening API Link | `smnyc_bitly_shortener` | `SMNYC_BITLY_SHORTENER`
+Bitly Access Token        | `smnyc_bitly_token`     | `SMNYC_BITLY_TOKEN`
 
-### SMS Settings (Twilio)
+### Twilio Service Settings for SMS
 
-- SID
-- Token
-- Sender Phone Number
+Admin Setting       | WordPress Option              | PHP Constant
+--------------------|-------------------------------|-
+Account SID         | `smnyc_twilio_user`           | `SMNYC_TWILIO_USER`
+Sender Phone Number | `smnyc_twilio_from`           | `SMNYC_TWILIO_FROM`
+API Key SID         | `smnyc_twilio_api_key_sid`    | `SMNYC_TWILIO_API_KEY_SID`
+API Key Secret      | `smnyc_twilio_api_key_secret` | `SMNYC_TWILIO_API_KEY_SECRET`
 
-### Email Settings (Amazon SES)
+### Amazon SES Settings for Email
 
-- Key
-- Secret
-- From Email Address
-- Email Display Name (optional)
-- Reply-To (optional)
+Admin Setting                 | WordPress Option         | PHP Constant
+------------------------------|--------------------------|-
+Key                           | `smnyc_aws_user`         | `SMNYC_AWS_USER`
+Secret                        | `smnyc_aws_secret`       | `SMNYC_AWS_SECRET`
+From Email Address            | `smnyc_aws_from`         | `SMNYC_AWS_FROM`
+Email Display Name (optional) | `smnyc_aws_display_name` | `SMNYC_AWS_DISPLAY_NAME`
+Reply-to (optional)           | `smnyc_aws_reply`        | `SMNYC_AWS_REPLY`
 
-**Note:** This plugin workes nicely with the [nyco-wp-config](https://github.com/CityOfNewYork/nyco-wp-config) plugin.
+**Note:** This plugin works nicely with the [NYCO WordPress Config](https://github.com/CityOfNewYork/nyco-wp-config) plugin.
 
 ## Custom Post Types
 
@@ -79,7 +88,7 @@ The [sample email](https://github.com/CityOfNewYork/nyco-wp-send-me-nyc/blob/mas
 
 **Customization**
 
-The path to the controller file and class contents can be used as is or modified as needed. By default, `SMNYC\EmailMe` requires a file called `smnyc-email.php` in the root of the activated WordPress theme that contains the the controller class. However, different path can be passed to the `SMNYC\EmailMe` class on instatiation in the [auto loader](#initialization);
+The path to the controller file and class contents can be used as is or modified as needed. By default, `SMNYC\EmailMe` requires a file called `smnyc-email.php` in the root of the activated WordPress theme that contains the the controller class. However, different path can be passed to the `SMNYC\EmailMe` class on instantiation in the [auto loader](#initialization);
 
     $email = new SMNYC\EmailMe('controllers/smnyc-email.php');
 
@@ -92,7 +101,7 @@ This is the path inside the [*views*](https://timber.github.io/docs/guides/templ
 
 ## Sending a Message
 
-WordPress Admin Ajax is used to send data from the front-end to the plugin. When the plugin is initialized, actions [using `wp_ajax_{$_REQUEST[‘action’]}`](https://developer.wordpress.org/reference/hooks/wp_ajax__requestaction/) and [`wp_ajax_nopriv_{$_REQUEST[‘action’]}`](https://developer.wordpress.org/reference/hooks/wp_ajax_nopriv__requestaction/) are registerd. Hidden inputs can be used to configure the data that is sent via the script below.
+WordPress Admin Ajax is used to send data from the front-end to the plugin. The `createEndpoints()` method of the instantiated `SMNYC\EmailMe` and `SMNYC\SmsMe` objects will add ajax actions when the plugin is initialized. Actions using [`wp_ajax_{$_REQUEST[‘action’]}`](https://developer.wordpress.org/reference/hooks/wp_ajax__requestaction/) and [`wp_ajax_nopriv_{$_REQUEST[‘action’]}`](https://developer.wordpress.org/reference/hooks/wp_ajax_nopriv__requestaction/) are registerd. Hidden inputs can be used to configure the data that is sent via the script below.
 
     {# .twig #}
 
@@ -107,6 +116,13 @@ WordPress Admin Ajax is used to send data from the front-end to the plugin. When
       <input name="to" placeholder="Phone Number" required="true" type="tel" />
       <button class="btn btn-primary btn-small" type="submit">Share</button>
     </form>
+
+The default actions to use the SMS and Email services are listed below.
+
+Description                          | Action
+-------------------------------------|-
+Twilio Service SMS send action       | `sms_send`
+Amazon SES Service email send action | `email_send`
 
 ### Values
 

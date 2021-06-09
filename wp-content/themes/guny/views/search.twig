@@ -1,55 +1,65 @@
 {% if 'generationnyc' in current_url|split('/') %}
-  {% set is_generation = 'true' %}
+	{% set is_generation = 'true' %}
 {% endif %}
 
 {% extends is_generation ? "microsite-list.twig": "list.twig" %}
 
 {% block head_extras %}
-  {% if is_generation %}
-  <style>
-    .c-hero {
-      background-color: #404657;
-      background-image: url(/wp-content/themes/guny/assets/img/generation-hero-full-splatter.svg);
-    }
-  </style>
-  {% else %}
-  <style>
-    .c-hero {
-        background-color: #469BFF;
-        background-image: url(/wp-content/themes/guny/assets/img/hero-full-splatter-2.svg);
-    }
-  </style>
-  {% endif %}
+	{% if is_generation %}
+		<style>
+			.c-hero {
+				background-color: #404657;
+				background-image: url('/wp-content/themes/guny/assets/img/generation-hero-full-splatter.svg');
+			}
+		</style>
+	{% else %}
+		<style>
+			.c-hero {
+				background-color: #469BFF;
+				background-image: url('/wp-content/themes/guny/assets/img/hero-full-splatter-2.svg');
+			}
+		</style>
+	{% endif %}
 {% endblock %}
 
 {% block hero %}
-<header class="c-hero u-lg-gutter" style="overflow:visible;position:relative;z-index:1">
-  <div class="o-container-med">
-    <h1 class="show-for-screen-reader">{{ __('Search Results', translation_domain) }}</h1>
-    <div class="c-hero__search">{{ search }}</div>
-  </div>
-</header>
+	<header class="c-hero u-lg-gutter" style="overflow:visible;position:relative;z-index:1">
+		<div class="o-container-med">
+			<h1 class="show-for-screen-reader">{{ __('Search Results', translation_domain) }}</h1>
+			<div class="c-hero__search">{{ search }}</div>
+		</div>
+	</header>
 {% endblock %}
 
 {% block list_sidebar %}
-<ol class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
-  {{ facet_post_type }}
-</ol>
+	<ol class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
+		{{ facet_post_type }}
+	</ol>
+{% endblock %}
+
+
+{% block recaptcha %}
+	<ol class="c-list-box c-list-box--quaternary js-accordion" data-multiselectable="false">
+		<li>Hello WP</li>
+	</ol>
 {% endblock %}
 
 {% block post_list %}
-<section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
-  {{ results }}
-</section>
+	<div id="search-recaptcha-container" class="o-search-recaptcha-container">
+		<div id="search-recaptcha"></div>
+	</div>
+	<section class="c-block-list c-block-list--shade o-content-container u-sm-gutter">
+		{{ results }}
+	</section>
 {% endblock %}
 
 {% block after_list %}
-{% if posts %}
-<div class="o-content-container--compact">
-    {{ pagination }}
-</div>
-{% endif %}
+	{% if posts %}
+		<div class="o-content-container--compact">
+			{{ pagination }}
+		</div>
+	{% endif %}
 
-{# Back to top #}
-{% include 'components/back-to-top.twig' %}
+	{# Back to top #}
+	{% include 'components/back-to-top.twig' %}
 {% endblock %}

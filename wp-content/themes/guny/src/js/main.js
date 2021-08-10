@@ -45,6 +45,7 @@ import Offcanvas from 'utilities/offcanvas/Offcanvas.common';
 import FormEffects from 'utilities/form-effects/FormEffects.common';
 import Sticky from 'utilities/sticky/Sticky.common';
 import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter.common';
+import Toggle from '@nycopportunity/pttrn-scripts/src/toggle/toggle';
 
 (function (window, $) {
   'use strict';
@@ -57,6 +58,8 @@ import SectionHighlighter from 'utilities/section-highlighter/SectionHighlighter
   simpleAccordion();
   iOS7Hack();
   captchaResize();
+
+  new Toggle();
 
   // Initialize OffCanvas based on html direction
   if (['ar', 'ur'].includes(document.documentElement.lang)) {

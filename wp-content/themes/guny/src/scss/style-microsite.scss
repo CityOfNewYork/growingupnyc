@@ -1,3 +1,15 @@
+
+@import "@nycopportunity/pattern-attribution/src/tokens";
+
+:root {
+  --o-attribution-font-size: inherit;
+}
+
+a > *,
+button > * {
+  pointer-events: none;
+}
+
 // Settings (Global variables)
 // =====================
 @import "neat-helpers";
@@ -15,6 +27,9 @@
 // Microsite (Partials)
 // =====================
 @import "microsite/splatter";
+
+@import "@nycopportunity/pattern-attribution/src/attribution";
+@import "@nycopportunity/growingup-patterns/dist/styles/_tailwind.scss";
 
 //Common styles for Micro Site
 
@@ -720,4 +735,8 @@ input[type="search"].form-field {
     background: $very-dark-blue;
     border-color: $very-dark-blue;
   }
+}
+
+.active .active__rotate {
+  transform: rotate(180deg);
 }

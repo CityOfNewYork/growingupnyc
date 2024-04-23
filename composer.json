@@ -57,5 +57,10 @@
     "version": [
       "composer update nothing"
     ]
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
   }
 }

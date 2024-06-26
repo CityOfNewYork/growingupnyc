@@ -319,7 +319,7 @@ function get_featured_events($num_events = 3, $tax_query = null, $featured_first
 
 // TEC suggested fix for Google Maps API error
 function tribe_events_map_apis() {
-  if (tribe_is_event() || is_singular( 'tribe_events' ));
+  if (is_singular( 'tribe_events' ));
     wp_dequeue_script( 'tribe-events-pro-geoloc' );
   }
 add_action( 'wp_enqueue_scripts', 'tribe_events_map_apis' );

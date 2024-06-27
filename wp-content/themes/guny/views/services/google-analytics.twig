@@ -1,4 +1,4 @@
-{% if constant('GOOGLE_ANALYTICS') != '' %}
+{% if constant('GOOGLE_ANALYTICS') is defined and constant('GOOGLE_ANALYTICS') != '' %}
   <!-- Google Analytics -->
   <script async src='https://www.googletagmanager.com/gtag/js?id={{ constant('GOOGLE_ANALYTICS') }}'></script>
   <script>

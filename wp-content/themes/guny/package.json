@@ -1,6 +1,6 @@
 {
   "name": "guny",
-  "version": "4.2.2",
+  "version": "4.2.3",
   "description": "Growing Up NYC",
   "repository": {
     "type": "git",
@@ -61,6 +61,7 @@
   },
   "dependencies": {
     "@nycopportunity/growingup-patterns": "^1.0.1",
+    "@nycopportunity/pattern-attribution": "^1.0.3",
     "animate.scss": "0.0.6",
     "axios": "^0.19.2",
     "bourbon": "^4.2.7",

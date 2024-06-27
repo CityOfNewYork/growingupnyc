@@ -11,6 +11,16 @@ $path-to-icons: 'svg/';
 @import "neat-helpers";
 @import "settings/_variables.json.scss";
 @import "settings/_variables.scss";
+@import "@nycopportunity/pattern-attribution/src/tokens";
+
+:root {
+  --o-attribution-font-size: inherit;
+}
+
+a > *,
+button > * {
+  pointer-events: none;
+}
 
 // Tools (Default mixins and functions)
 // =====================
@@ -83,6 +93,7 @@ $path-to-icons: 'svg/';
  * Objects
  */
 @import "@nycopportunity/growingup-patterns/src/objects/footer/footer";
+@import "@nycopportunity/pattern-attribution/src/attribution";
 @import "@nycopportunity/growingup-patterns/src/objects/alert-banner/alert-banner";
 @import "@nycopportunity/growingup-patterns/src/objects/static-column/static-column";
 @import "@nycopportunity/growingup-patterns/src/objects/navigation/navigation";
@@ -126,4 +137,8 @@ $path-to-icons: 'svg/';
 
 .send__success {
   display: none;
+}
+
+.active .active__rotate {
+  transform: rotate(180deg);
 }

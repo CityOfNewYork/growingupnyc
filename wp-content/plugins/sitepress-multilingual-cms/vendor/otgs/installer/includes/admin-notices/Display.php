@@ -49,10 +49,10 @@ class Display {
 		foreach ( $this->currentNotices['repo'] as $repo => $ids ) {
 			foreach ( $ids as $id => $type ) {
 				if ( is_array( $type ) ) {
-					$index        = $id;
+					$index       = $id;
 					$noticesData = $type;
 				} else {
-					$index        = $type;
+					$index       = $type;
 					$noticesData = [ $type ];
 				}
 
@@ -75,7 +75,8 @@ class Display {
 
 	/**
 	 * @param string $repo
-	 * @param string $ids
+	 * @param string $id
+	 * @param array $notice_params
 	 */
 	private function displayNotice( $repo, $id, $notice_params = [] ) {
 		$noticeId = $id;
@@ -91,8 +92,13 @@ class Display {
 	}
 
 	public function addScripts() {
-		$installer = WP_Installer();
-		wp_enqueue_style( 'installer-admin-notices', $installer->res_url() . '/res/css/admin-notices.css', [], $installer->version() );
+		$installer = OTGS_Installer();
+		wp_enqueue_style(
+			'installer-admin-notices',
+			$installer->res_url() . '/res/css/admin-notices.css',
+			[],
+			$installer->version()
+		);
 	}
 }
 

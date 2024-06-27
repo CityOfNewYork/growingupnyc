@@ -15,19 +15,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 function bodhi_svgs_upload_mimes( $mimes = array() ) {
 
 	global $bodhi_svgs_options;
-
-	if ( empty( $bodhi_svgs_options['restrict'] ) || current_user_can( 'administrator' ) ) {
-
+	
+	$allowed_roles_array = array();
+	$is_role_allowed = array();
+	
+	if( !isset($bodhi_svgs_options['restrict']) ) {
+	    return $mimes;
+	}
+	
+	$allowed_roles_array = (array) $bodhi_svgs_options['restrict'];
+	
+	$user = wp_get_current_user();
+ 
+    $current_user_roles = ( array ) $user->roles;
+    
+    $is_role_allowed = array_intersect($allowed_roles_array, $current_user_roles);
+	
+	if( empty($is_role_allowed) ) {
+	    return $mimes;
+	}
+	else {
 		// allow SVG file upload
 		$mimes['svg'] = 'image/svg+xml';
 		$mimes['svgz'] = 'image/svg+xml';
-
 		return $mimes;
-
-	} else {
-
-		return $mimes;
-
 	}
 
 }

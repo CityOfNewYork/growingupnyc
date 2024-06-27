@@ -6,9 +6,12 @@ class Texts {
 
 	protected static $repo;
 	protected static $product;
+	protected static $productURL;
 	protected static $apiHost;
 	protected static $communicationDetailsLink;
 	protected static $supportLink;
+	protected static $publishLink;
+	protected static $learnMoreDevKeysLink;
 
 	public static function notRegistered() {
 		// translators: %s Product name
@@ -23,13 +26,39 @@ class Texts {
 
 	public static function expired() {
 		// translators: %s Product name
-		$headingHTML = self::getHeadingHTML( __( 'You are using an expired %s account.', 'installer' ) );
+		$headingHTML = self::getHeadingHTML( __( 'Your %s account has expired.', 'installer' ) );
 		// translators: %s Product name
-		$bodyHTML = self::getBodyHTML( __( "Your site is using an expired %s account, which means you won't receive updates. This can lead to stability and security issues.", 'installer' ) ) .
+		$bodyHTML = self::getBodyHTML( __( "Your site is vulnerable to breaking changes in future WordPress releases. Purchase a new account to protect your site with the latest %s releases.", 'installer' ) ) .
 		            self::inButtonAreaHTML( self::getExpiredButtons() ) .
 		            self::getDismissHTML( Account::EXPIRED );
 
 		return self::insideDiv( 'expire', $headingHTML . $bodyHTML );
+	}
+
+	public static function inGrace() {
+		// translators: %s Product name
+		$headingHTML = self::getHeadingHTML( __( 'Your %s account has expired.', 'installer' ) );
+		// translators: %s Product name
+		$bodyHTML = self::getBodyHTML( __( "Your site is vulnerable to breaking changes in future WordPress releases. Renew your account to protect your site with the latest %s releases.", 'installer' ) ) .
+		            self::inButtonAreaHTML( self::getInGraceButtons() ) .
+		            self::getDismissHTML( Account::IN_GRACE );
+
+		return self::insideDiv( 'expire', $headingHTML . $bodyHTML );
+	}
+
+	public static function developmentBanner() {
+		// translators: %s Product url
+		$dismissHTML = self::getDismissHTML( Account::DEVELOPMENT_MODE );
+		$headingHTML = '<h2>' . esc_html( sprintf( __( 'This site is registered on %s as a development site.', 'installer' ), static::$productURL ) ) . '</h2>';
+		// translators: %1$s is the text "update the site key" inside a link and %2$s is the text "Learn more" inside a link
+		$bodyText = esc_html__( 'When this site goes live, remember to %1$s from "development" to "production" to remove this message. %2$s', 'installer' );
+		$bodyHTML = '<p>' . sprintf(
+				$bodyText,
+				self::getPublishLinkHTML( __( 'update the site key', 'installer' ) ),
+				self::getLearnMoveDevKeysLinkHTML( __( 'Learn more', 'installer' ) )
+			) . '</p>';
+
+		return self::insideDiv( 'notice', $dismissHTML . $headingHTML . $bodyHTML );
 	}
 
 	public static function refunded() {
@@ -52,9 +81,9 @@ class Texts {
 			        __( 'Need help?', 'installer' ),
 			        // translators: %1$s is `communication error details` %2$s is ex. wpml.org technical support
 			        __( 'See the %1$s and let us know in %2$s.', 'installer' ),
-			        self::getCommunicationDetailsLinkHTML( __( 'communication error details', 'installer' )),
+			        self::getCommunicationDetailsLinkHTML( __( 'communication error details', 'installer' ) ),
 			        // translators: %s is host name (ex. wpml.org)
-			        self::getSupportLinkHTML(  __( '%s technical support', 'installer' ))
+			        self::getSupportLinkHTML( __( '%s technical support', 'installer' ) )
 		        );
 
 		return self::insideDiv( 'connection-issues', $headingHTML . $body );
@@ -70,7 +99,7 @@ class Texts {
 		);
 
 		$body_html = self::getBodyHTML( $body_text ) .
-		             self::inButtonAreaHTML( self::getRecommendationButtons($parameters) );
+		             self::inButtonAreaHTML( self::getRecommendationButtons( $parameters ) );
 
 		return self::insideDiv( 'plugin-recommendation', $heading_html . $body_html );
 	}
@@ -89,7 +118,8 @@ class Texts {
 			'otgs-installer-notice-' . esc_attr( $type ),
 		];
 
-		if ( $type !== 'refund' && $type !== 'connection-issues') {
+		$notDismissable = [ 'refund', 'connection-issues', 'development' ];
+		if ( ! in_array( $type, $notDismissable ) ) {
 			$classes[] = 'otgs-is-dismissible';
 		}
 
@@ -100,10 +130,10 @@ class Texts {
 		       '</div>';
 	}
 
-	private static function getRecommendationButtons($parameters) {
+	private static function getRecommendationButtons( $parameters ) {
 
-		$installButton         = __( "Install and activate", 'installer' );
-		$dismiss              = __( "Ignore and don't ask me again", 'installer' );
+		$installButton = __( "Install and activate", 'installer' );
+		$dismiss       = __( "Ignore and don't ask me again", 'installer' );
 
 		return self::getRecommendationInstallButtonHTML( $installButton, $parameters ) .
 		       self::getRecommendationDismissHTML( $dismiss, $parameters );
@@ -126,15 +156,30 @@ class Texts {
 	 */
 	protected static function getExpiredButtons() {
 		$checkOrderStatusUrl = \WP_Installer::menu_url() . '&validate_repository=' . static::$repo;
-		$accountButton       = __( 'Extend your subscription', 'installer' );
+		$accountButton       = sprintf( __( 'Purchase %s', 'installer' ), static::$product );
 		$checkButton         = __( 'Check my order status', 'installer' );
 		$statusText          = __( 'Got renewal already?', 'installer' );
 		$productUrl          = \WP_Installer::instance()->get_product_data( static::$repo, 'url' );
 
-		return self::getPrimaryButtonHTML( $productUrl . '/account', $accountButton ) .
+		return self::getPrimaryButtonHTML( $productUrl . '/purchase/?utm_source=plugin&utm_medium=gui&utm_campaign=installer&utm_term=expired-over-30-days', $accountButton ) .
 		       self::getStatusHTML( $statusText ) .
 		       self::getRefreshButtonHTML( $checkOrderStatusUrl, $checkButton );
 	}
+
+	/**
+	 * @return string
+	 */
+	protected static function getInGraceButtons() {
+		$checkOrderStatusUrl = \WP_Installer::menu_url() . '&validate_repository=' . static::$repo;
+		$accountButton       = __( 'Renew your account', 'installer' );
+		$checkButton         = __( 'Check my order status', 'installer' );
+		$statusText          = __( 'Got renewal already?', 'installer' );
+		$productUrl          = \WP_Installer::instance()->get_product_data( static::$repo, 'url' );
+
+		return self::getPrimaryButtonHTML( $productUrl . '/account/?utm_source=plugin&utm_medium=gui&utm_campaign=installer&utm_term=expired-within-30-days', $accountButton ) .
+		    self::getStatusHTML( $statusText ) .
+		    self::getRefreshButtonHTML( $checkOrderStatusUrl, $checkButton );
+    }
 
 	/**
 	 * @return string
@@ -153,7 +198,7 @@ class Texts {
 	 *
 	 * @return string
 	 */
-	protected static function getDismissHTML($notice_type) {
+	protected static function getDismissHTML( $notice_type ) {
 		return '<span class="installer-dismiss-nag notice-dismiss" ' . self::getDismissedAttributes( $notice_type ) . '>'
 		       . '<span class="screen-reader-text">' . esc_html__( 'Dismiss', 'installer' ) . '</span></span>';
 	}
@@ -183,16 +228,20 @@ class Texts {
 	}
 
 	/**
-	 * @param string $url The method takes care of escaping the string.
 	 * @param string $text The method takes care of escaping the string.
+	 * @param array $parameters
 	 *
 	 * @return string
 	 */
 	protected static function getRecommendationInstallButtonHTML( $text, $parameters ) {
-		return
-			wp_nonce_field( 'recommendation_success_nonce', 'recommendation_success_nonce' ) .
-			'<input type="hidden" id="originalPluginData" value="'. base64_encode( json_encode( ['slug' =>$parameters['glue_check_slug'], 'repository_id' => $parameters['repository_id']] ) ).'">' .
-			'<button class="js-install-recommended otgs-installer-notice-status-item otgs-installer-notice-status-item-btn" value="' . base64_encode( json_encode( $parameters['download_data'] ) ) . '">' . esc_html( $text ) . '</button><span class="spinner"></span>';
+
+		/** @phpstan-ignore-next-line  */
+		return wp_nonce_field( 'recommendation_success_nonce', 'recommendation_success_nonce', false ) .
+			'<input type="hidden" id="originalPluginData" value="' . base64_encode( (string) json_encode( [
+				'slug'          => $parameters['glue_check_slug'],
+				'repository_id' => $parameters['repository_id'],
+			] ) ) . '">' .
+			'<button class="js-install-recommended otgs-installer-notice-status-item otgs-installer-notice-status-item-btn" value="' . base64_encode( (string) json_encode( $parameters['download_data'] ) ) . '">' . esc_html( $text ) . '</button><span class="spinner"></span>';
 	}
 
 	/**
@@ -276,7 +325,7 @@ class Texts {
 	}
 
 	/**
-	 * @param string $text  The method takes care of escaping the string.
+	 * @param string $text The method takes care of escaping the string.
 	 *                      If the string contains a placeholder, it will be replaced with the value of `static::$product`.
 	 *
 	 * @return string
@@ -300,5 +349,24 @@ class Texts {
 
 	private static function getSupportLinkHTML( $text ) {
 		return '<a href="' . esc_url( static::$supportLink ) . '">' . esc_html( sprintf( $text, static::$product ) ) . '</a>';
+	}
+
+	/**
+	 * @param string $text
+	 *
+	 * @return string
+	 */
+	private static function getPublishLinkHTML( $text ) {
+		$publishLink = static::$publishLink . \WP_Installer::instance()->get_site_key( static::$repo );
+
+		return self::makeLink( $publishLink, $text );
+	}
+
+	private static function getLearnMoveDevKeysLinkHTML( $text ) {
+		return self::makeLink( static::$learnMoreDevKeysLink, $text );
+	}
+
+	private static function makeLink( $url, $text ) {
+		return '<a href="' . esc_url( $url ) . '" target="_blank">' . esc_html( $text ) . '</a>';
 	}
 }

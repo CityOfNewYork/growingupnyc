@@ -3,7 +3,7 @@
  * Plugin Name: WP SmartCrop
  * Plugin URI: https://www.wpsmartcrop.com/
  * Description: Style your images exactly how you want them to appear, for any screen size, and never get a cut-off face.
- * Version: 2.0.5
+ * Version: 2.0.9
  * Author: Bytes.co
  * Author URI: https://bytes.co
  * License: GPLv2 or later
@@ -12,9 +12,10 @@
 
 if( !class_exists('WP_Smart_Crop') ) {
 	class WP_Smart_Crop {
-		public  $version = '2.0.5';
+		public  $version = '2.0.9';
 		private $plugin_dir_path;
 		private $plugin_dir_url;
+		private $image_sizes = null;
 		private $current_image = null;
 		private $focus_cache;
 		private $upload_focus = null;
@@ -410,7 +411,7 @@ if( !class_exists('WP_Smart_Crop') ) {
 			wp_enqueue_script( 'jquery' );
 			wp_enqueue_script( 'jquery.wp-smartcrop', $this->plugin_dir_url . 'js/jquery.wp-smartcrop.min.js', array( 'jquery' ), $this->version, true );
 			wp_localize_script( 'jquery.wp-smartcrop', 'wpsmartcrop_options', array(
-				'focus_mode' => $this->options['focus-mode']
+				'focus_mode' => ( is_array($this->options) && !empty($this->options['focus-mode']) ) ? $this->options['focus-mode'] : 'power-lines'
 			) );
 			wp_enqueue_style( 'wp-smart-crop-renderer', $this->plugin_dir_url . 'css/image-renderer.css', array(), $this->version );
 		}
@@ -431,10 +432,15 @@ if( !class_exists('WP_Smart_Crop') ) {
 
 		function the_content( $content ) {
 			$tags = $this->extract_tags( $content, 'img', true, true );
+
 			$unique_tags = array();
 			$ids = array();
 			foreach( $tags as $tag ) {
-				list( $id, $size ) = $this->get_id_and_size_from_tag( $tag );
+				$id = null;
+				$size = null;
+				if ( $tag['tag_name'] == 'img' ) {
+					list( $id, $size ) = $this->get_id_and_size_from_tag( $tag );
+				}
 				if( $id && $size ) {
 					$ids[] = $id;
 					$tag['id'] = $id;
@@ -601,6 +607,9 @@ if( !class_exists('WP_Smart_Crop') ) {
 			return true;
 		}
 		private function get_image_sizes() {
+			if ( $this->image_sizes !== null ) {
+				return $this->image_sizes;
+			}
 			global $_wp_additional_image_sizes;
 			$custom_sizes = $_wp_additional_image_sizes;
 			if( !is_array( $custom_sizes ) ) {
@@ -625,6 +634,7 @@ if( !class_exists('WP_Smart_Crop') ) {
 					), $custom_sizes[ $_size ] );
 				}
 			}
+			$this->image_sizes = $sizes;
 			return $sizes;
 		}
 
@@ -656,7 +666,7 @@ if( !class_exists('WP_Smart_Crop') ) {
 			}
 			$attribute_pattern =
 				'@
-				(?P<name>\w+)                         # attribute name
+				(?P<name>[^\t\n\f\r />="\'<]+)                         # attribute name
 				\s*=\s*
 				(
 					(?P<quote>[\"\'])(?P<value_quoted>.*?)(?P=quote)    # a quoted value
@@ -703,11 +713,11 @@ if( !class_exists('WP_Smart_Crop') ) {
 			return $tags;
 		}
 		private function get_id_and_size_from_tag( $tag ) {
+			$ret_val = array( false, false );
 			if( isset( $tag['attributes'] ) && isset( $tag['attributes']['class'] ) && $tag['attributes']['class'] ) {
 				$classes     = explode( ' ', $tag['attributes']['class'] );
 				$id_prefix   = 'wp-image-';
 				$size_prefix = 'size-';
-				$ret_val = array( false, false );
 				foreach( $classes as $class ) {
 					if( !$ret_val[0] && strpos( $class, $id_prefix ) === 0 ) {
 						$ret_val[0] = intval( substr( $class, strlen( $id_prefix ) ) );
@@ -717,9 +727,52 @@ if( !class_exists('WP_Smart_Crop') ) {
 						break;
 					}
 				}
-				return $ret_val;
+				if ( $ret_val[0] && $ret_val[1] ) {
+					return $ret_val;
+				}
 			}
-			return false;
+			if ( $tag['attributes']['src'] ?? false && ( ! $ret_val[0] || ! $ret_val[1] ) ) { // try to get data from src
+				if ( ! $ret_val[0] ) { // missing id
+					$ret_val[0] = attachment_url_to_postid( $tag['attributes']['src'] );
+					if ( ! $ret_val[0] ) { // Our last attempt. Try to derive original image url
+						// Default resized wordpress attachment filenames are formatted as: {name}-{width}x{height}.{ext}
+						// This regex should capture the source image filename that matches this format
+						$url_pattern = '/(.*)-[0-9]*x[0-9]*(\..*)/';
+						$matches = array();
+						$result = preg_match( $url_pattern, $tag['attributes']['src'], $matches );
+						if ( $matches ) {
+							$url = $matches[1] . $matches[2];
+							$ret_val[0] = attachment_url_to_postid( $url );
+						}
+					}					
+				}
+				if ( ! $ret_val[1] && $ret_val[0] ) { // missing size, but have id
+					// Default resized wordpress attachment filenames are formatted as: {name}-{width}x{height}.{ext}
+					// This regex should capture the width and height of filenames that match this format
+					// As a possible alternative, we could rely on wp_getimagesize()
+					$size_pattern = '/-([0-9]*)x([0-9]*)\./';
+					$matches = array();
+					$result = preg_match( $size_pattern, $tag['attributes']['src'], $matches );
+					if ( $result ) {
+						$image_sizes = $this->get_image_sizes();
+						foreach( $image_sizes as $image_size => $image_details ) {
+							if ( $image_details['width'] == $matches[1] && $image_details['height'] == $matches[2] ) {
+								$ret_val[1] = $image_size;
+								break;
+							} else if ( ! $image_details['crop'] ) {
+								if ( ( $image_details['width'] == $matches[1] && $image_details['height'] > $matches[2] ) ||
+									( $image_details['width'] > $matches[1] && $image_details['height'] == $matches[2] ) ) {
+									$ret_val[1] = $image_size;
+									break;
+								}
+							}
+						}
+					} else { // if there no dimensions, we should assume full width
+						$ret_val[1] = 'full';
+					}
+				}
+			}
+			return $ret_val;
 		}
 		private function make_new_content_img_tag( $tag ) {
 			$id   = $tag['id'];
@@ -735,11 +788,14 @@ if( !class_exists('WP_Smart_Crop') ) {
 				$atts['class'] .= "wpsmartcrop-image";
 				$atts['data-smartcrop-focus'] = $focus_attr;
 			}
-			$new_tag = '<img';
+			$value = '';
+			$old_img_tag = $tag['full_tag'];
+			$new_img_tag = '<img';
 			foreach( $atts as $name => $val ) {
-				$new_tag .= ' ' . $name . '="' . $val . '"';
+				$new_img_tag .= ' ' . $name . '="' . $val . '"';
 			}
-			$new_tag .= ' />';
+			$new_img_tag .= ' />';
+			$new_tag = str_replace( $old_img_tag, $new_img_tag, $tag['full_tag'] );
 			return $new_tag;
 		}
 

@@ -2,7 +2,6 @@
 /**
  * @var SitePress $sitepress
  * @var wpdb $wpdb
- * @var Object $term
  */
 
 global $sitepress, $wpdb;
@@ -23,6 +22,7 @@ if ( $element_id ) {
 				  FROM {$wpdb->prefix}icl_translations WHERE element_id=%d AND element_type=%s",
 		array( $element_id, $icl_element_type )
 	);
+	/** @var \stdClass $res */
 	$res          = $wpdb->get_row( $res_prepared );
 	$trid         = $res->trid;
 	if ( $trid ) {

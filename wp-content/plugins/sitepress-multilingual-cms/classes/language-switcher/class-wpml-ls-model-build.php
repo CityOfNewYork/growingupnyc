@@ -38,6 +38,8 @@ class WPML_LS_Model_Build extends WPML_SP_User {
 		'menu_item_parent'       => 'mixed',
 		'is_parent'              => 'bool',
 		'backward_compatibility' => 'array',
+		'flag_width'             => 'int',
+		'flag_height'            => 'int',
 	];
 
 	/**
@@ -136,10 +138,11 @@ class WPML_LS_Model_Build extends WPML_SP_User {
 			$get_ls_args['skip_missing'] = false;
 		}
 
+		$flag_width  = $slot->get( 'include_flag_width' );
+		$flag_height = $slot->get( 'include_flag_height' );
+
 		$languages = $this->sitepress->get_ls_languages( $get_ls_args );
 		$languages = is_array( $languages ) ? $languages : [];
-
-		$languages = $this->order_languages( $languages, $slot->get( 'language_order_by' ), $slot->get( 'language_order_by' ) );
 
 		if ( $languages ) {
 
@@ -155,6 +158,13 @@ class WPML_LS_Model_Build extends WPML_SP_User {
 					'code' => $code,
 					'url'  => $data['url'],
 				];
+
+				if ( $flag_width ) {
+					$ret[ $code ]['flag_width'] = $flag_width;
+				}
+				if ( $flag_height ) {
+					$ret[ $code ]['flag_height'] = $flag_height;
+				}
 
 				/* @deprecated Use 'wpml_ls_language_url' instead */
 				$ret[ $code ]['url'] = apply_filters( 'WPML_filter_link', $ret[ $code ]['url'], $data );
@@ -195,10 +205,9 @@ class WPML_LS_Model_Build extends WPML_SP_User {
 
 				if ( $slot->is_menu() ) {
 					$ret[ $code ]['db_id']            = $this->get_menu_item_id( $code, $slot );
-					$ret[ $code ]['menu_item_parent'] = $slot->get( 'is_hierarchical' ) && ! $is_current_language
-						? $this->get_menu_item_id( $this->sitepress->get_current_language(), $slot ) : 0;
-					$ret[ $code ]['is_parent']        = $slot->get( 'is_hierarchical' ) && $is_current_language
-						? true : false;
+					$ret[ $code ]['menu_item_parent'] = $slot->get( 'is_hierarchical' ) && ! $is_current_language && $slot->get( 'display_link_for_current_lang' )
+							? $this->get_menu_item_id( $this->sitepress->get_current_language(), $slot ) : 0;
+					$ret[ $code ]['is_parent']        = $slot->get( 'is_hierarchical' ) && $is_current_language;
 
 					array_unshift( $css_classes, 'menu-item' );
 					array_push( $css_classes, $this->css_prefix . 'menu-item' );
@@ -231,28 +240,7 @@ class WPML_LS_Model_Build extends WPML_SP_User {
 				$lang = $this->sanitize_vars( $lang, $this->allowed_language_vars );
 				$i++;
 			}
-		}
 
-		return $ret;
-	}
-
-	/**
-	 * @param array  $languages
-	 * @param string $order_by
-	 * @param string $order_way
-	 *
-	 * @return array
-	 */
-	private function order_languages( $languages, $order_by, $order_way ) {
-		$ret = $languages;
-
-		if ( ! empty( $order_by ) && ! empty( $order_way ) ) {
-			$method = 'order_by_' . $order_by;
-			if ( is_callable( [ $this, $method ] ) ) {
-				uasort( $ret, [ $this, 'order_by_' . $order_by ] );
-			}
-
-			$ret = strtoupper( $order_way ) === 'ASC' ? array_reverse( $ret ) : $ret;
 		}
 
 		return $ret;
@@ -349,6 +337,10 @@ class WPML_LS_Model_Build extends WPML_SP_User {
 
 					case 'string':
 						$sanitized[ $allowed_var ] = (string) $vars[ $allowed_var ];
+						break;
+
+					case 'int':
+						$sanitized[ $allowed_var ] = (int) $vars[ $allowed_var ];
 						break;
 
 					case 'bool':

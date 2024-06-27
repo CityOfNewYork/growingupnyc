@@ -5,7 +5,16 @@
  * @global \WPML_Term_Translation $wpml_term_translations
  */
 
+use WPML\FP\Obj;
+use WPML\LIB\WP\WPDB as WpWPDB;
+use function WPML\Container\make;
+
 require_once __DIR__ . '/wpml_load_request_handler.php';
+
+function wpml_is_setup_complete() {
+	$settings = WPML\LIB\WP\Option::getOrAttemptRecovery( 'icl_sitepress_settings', [] );
+	return is_array( $settings ) && Obj::prop( 'setup_complete', $settings );
+}
 
 /**
  * Loads global variables providing functionality that is used throughout the plugin.
@@ -20,7 +29,7 @@ function load_essential_globals( $is_admin = null ) {
 		icl_sitepress_activate();
 	} else {
 
-		if ( isset( $settings['setup_complete'] ) && $settings['setup_complete'] ) {
+		if ( wpml_is_setup_complete() ) {
 			$active_plugins        = get_option( 'active_plugins' );
 			$wpmu_sitewide_plugins = (array) maybe_unserialize( get_site_option( 'active_sitewide_plugins' ) );
 
@@ -60,10 +69,12 @@ function load_essential_globals( $is_admin = null ) {
 
 	wpml_load_post_translation( $admin, $settings );
 	$wpml_term_translations = new WPML_Term_Translation( $wpdb );
-	$domain_validation      = filter_input( INPUT_GET, '____icl_validate_domain' ) ? 1 : false;
-	$domain_validation      = filter_input( INPUT_GET, '____icl_validate_directory' ) ? 2 : $domain_validation;
-	$url_converter          = load_wpml_url_converter( $settings, $domain_validation, $default_lang_code );
-	$directory              = $domain_validation === 2 || ( is_multisite() && ! is_subdomain_install() );
+	$wpml_term_translations->add_hooks();
+
+	$domain_validation = filter_input( INPUT_GET, '____icl_validate_domain' ) ? 1 : false;
+	$domain_validation = filter_input( INPUT_GET, '____icl_validate_directory' ) ? 2 : $domain_validation;
+	$url_converter     = load_wpml_url_converter( $settings, $domain_validation, $default_lang_code );
+	$directory         = 2 === $domain_validation || ( is_multisite() && ! is_subdomain_install() );
 	if ( $domain_validation ) {
 		echo wpml_validate_host( $_SERVER['REQUEST_URI'], $url_converter, $directory );
 		exit;
@@ -76,12 +87,12 @@ function load_essential_globals( $is_admin = null ) {
 function wpml_load_post_translation( $is_admin, $settings ) {
 	global $wpml_post_translations, $wpdb;
 
-	$http_referer_factory = new WPML_URL_HTTP_Referer_Factory();
-	$http_referer         = $http_referer_factory->create();
+	$http_referer = make( WPML_URL_HTTP_Referer::class );
 
-	if ( $is_admin === true
-		 || $http_referer->is_rest_request_called_from_post_edit_page()
-		 || ( defined( 'WP_CLI' ) && WP_CLI )
+	if (
+		$is_admin === true
+		|| $http_referer->is_rest_request_called_from_post_edit_page()
+		|| ( defined( 'WP_CLI' ) && WP_CLI )
 	) {
 		$wpml_post_translations = new WPML_Admin_Post_Actions( $settings, $wpdb );
 	} else {
@@ -196,25 +207,31 @@ function maybe_load_translated_tax_screen() {
 	}
 }
 
+/**
+ * @param bool $override
+ *
+ * @return array
+ */
 function wpml_reload_active_languages_setting( $override = false ) {
 	global $wpdb, $sitepress_settings;
 
 	if ( true === (bool) $sitepress_settings
-		 && ( $override || wpml_get_setting_filter( false, 'setup_complete' ) )
+		 && ( $override || wpml_is_setup_complete() )
 	) {
-		if ( $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}icl_languages'" ) ) {
-			$active_languages = $wpdb->get_col(
-				"	SELECT code
-																	FROM {$wpdb->prefix}icl_languages
-																	WHERE active = 1"
-			);
-		} else {
-			$active_languages = array();
-		}
+		// This won't output any MySQL error if `icl_languages` is missing on the
+		// current site, and it will return an empty array in that case.
+		$active_languages = WpWPDB::withoutError( function() use ( $wpdb ) {
+			return $wpdb->get_col( "
+				SELECT code
+				FROM {$wpdb->prefix}icl_languages
+				WHERE active = 1
+			" );
+		} );
+
 		$sitepress_settings['active_languages'] = $active_languages;
 		icl_set_setting( 'active_languages', $active_languages, true );
 	} else {
-		$active_languages = array();
+		$active_languages = [];
 	}
 
 	return (array) $active_languages;
@@ -272,10 +289,10 @@ function wpml_load_core_tm() {
 	return $iclTranslationManagement;
 }
 
-function wpml_get_langs_in_dirs_val( $http_client, $wpml_url_converter ) {
+function wpml_get_langs_in_dirs_val( $wpml_url_converter ) {
 	global $sitepress;
 
-	return new WPML_Lang_URL_Validator( $http_client, $wpml_url_converter, $sitepress );
+	return new WPML_Lang_URL_Validator( $wpml_url_converter, $sitepress );
 }
 
 function wpml_get_root_page_actions_obj() {
@@ -417,3 +434,7 @@ function wpml_create_upgrade_command_definition( $class_name, array $dependencie
 if ( is_admin() ) {
 	add_action( 'personal_options', 'wpml_show_user_options' );
 }
+
+
+// TM
+require_once 'functions-load-tm.php';

@@ -4,13 +4,19 @@
  * @author OnTheGo Systems
  */
 class WPML_XML_Config_Validate {
-	private $errors = array();
+	/**
+	 * @var \LibXMLError[]
+	 */
+	private $errors = [];
 	private $path_to_xsd;
 
 	function __construct( $path_to_xsd = null ) {
 		$this->path_to_xsd = $path_to_xsd ? realpath( $path_to_xsd ) : null;
 	}
 
+	/**
+	 * @return \LibXMLError[]
+	 */
 	public function get_errors() {
 		return $this->errors;
 	}
@@ -25,7 +31,7 @@ class WPML_XML_Config_Validate {
 
 		$xml = file_get_contents( $file_full_path );
 
-		return $this->from_string( $xml );
+		return $xml ? $this->from_string( $xml ) : false;
 	}
 
 	/**
@@ -49,7 +55,7 @@ class WPML_XML_Config_Validate {
 
 		libxml_clear_errors();
 
-		return ! $this->errors;
+		return count($this->errors) === 0;
 	}
 
 	/**

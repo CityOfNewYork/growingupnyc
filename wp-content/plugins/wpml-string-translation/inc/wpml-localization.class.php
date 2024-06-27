@@ -22,7 +22,7 @@ class WPML_Localization {
 		return $this->get_domain_stats( $theme_localization_domains, 'theme' );
 	}
 
-	private function get_domain_stats( $localization_domains, $default, $no_wordpress = false ) {
+	public function get_domain_stats( $localization_domains, $default, $no_wordpress = false, $count_in_progress_as_completed = false ) {
 		$results = array();
 		if ( $localization_domains ) {
 			$domains = array();
@@ -35,13 +35,14 @@ class WPML_Localization {
 			if ( ! empty( $domains ) ) {
 				$sql     = "SELECT context, status, COUNT(id) AS c 
 						FROM {$this->wpdb->prefix}icl_strings 
-						WHERE context IN ('" . join( "','", $domains ) . "') 
+						WHERE context IN (" . wpml_prepare_in( $domains ) . ")
 						GROUP BY context, status";
+
 				$results = $this->wpdb->get_results( $sql );
 			}
 		}
 
-		return $this->results_to_array( $results );
+		return $this->results_to_array( $results, $count_in_progress_as_completed );
 	}
 
 	public function get_localization_stats( $component_type ) {
@@ -124,15 +125,15 @@ class WPML_Localization {
 		$theme_path        = TEMPLATEPATH;
 		$old_theme_context = 'theme ' . basename( $theme_path );
 
-		$result = $this->wpdb->get_var(
-			$this->wpdb->prepare(
-				"
+		/** @var string $sql */
+		$sql = $this->wpdb->prepare(
+			"
 	        SELECT COUNT(id) AS c
 	        FROM {$this->wpdb->prefix}icl_strings
 	        WHERE context = %s",
-				$old_theme_context
-			)
+			$old_theme_context
 		);
+		$result = $this->wpdb->get_var( $sql );
 
 		return $result ? true : false;
 	}
@@ -155,7 +156,7 @@ class WPML_Localization {
 
 		return $most_popular;
 	}
-	private function results_to_array( $results ) {
+	private function results_to_array( $results, $count_in_progress_as_completed = false ) {
 		$stats = array();
 
 		foreach ( $results as $r ) {
@@ -165,8 +166,11 @@ class WPML_Localization {
 			if ( ! isset( $stats[ $r->context ]['incomplete'] ) ) {
 				$stats[ $r->context ]['incomplete'] = 0;
 			}
-			if ( $r->status == ICL_TM_COMPLETE ) {
-				$stats[ $r->context ]['complete'] = $r->c;
+			if (
+				$r->status == ICL_TM_COMPLETE ||
+				( $count_in_progress_as_completed && $r->status == ICL_TM_IN_PROGRESS )
+			) {
+				$stats[ $r->context ]['complete'] += $r->c;
 			} else {
 				$stats[ $r->context ]['incomplete'] += $r->c;
 			}

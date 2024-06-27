@@ -4,19 +4,27 @@ namespace WPML\Element\API;
 
 use WPML\Collect\Support\Traits\Macroable;
 use WPML\FP\Fns;
+use WPML\FP\Logic;
 use WPML\FP\Lst;
 use WPML\FP\Maybe;
 use WPML\FP\Obj;
+use WPML\FP\Relation;
 use WPML\FP\Str;
 use WPML\FP\Nothing;
 use WPML\FP\Just;
 use WPML\LIB\WP\User;
 use function WPML\FP\curryN;
-use function WPML\FP\invoke;
 use function WPML\FP\pipe;
-use WPML\LIB\WP\Option as WPOption;
+use WPML\API\Settings;
+use WPML\FP\Invoker\BeforeAfter;
 
 /**
+ * @method static callable|string getCodeByName( ...$name ) - Curried :: string->string
+ *
+ * It returns language code according to the given name in the current display language.
+ *
+ * eg. 'Französisch' in German will return 'fr'
+ *
  * @method static array getActive()
  *
  * It returns an array of the active languages.
@@ -35,6 +43,28 @@ use WPML\LIB\WP\Option as WPOption;
  *      'display_name'   => 'French
  *  ]
  * ```
+ * @method static array getSecondaries()
+ *
+ * It returns an array of the secondary languages.
+ *
+ * The returned array is indexed by language code and every element has the following structure:
+ * ```
+ *  'fr' => [
+ *      'code'           => 'fr',
+ *      'id'             => 3,
+ *      'english_name'   => 'French',
+ *      'native_name'    => 'Français',
+ *      'major'          => 1,
+ *      'default_locale' => 'fr_FR',
+ *      'encode_url'     => 0,
+ *      'tag'            => 'fr ,
+ *      'display_name'   => 'French
+ *  ]
+ * ```
+ * @method static array getSecondaryCodes()
+ *
+ * It returns an array of the secondary language codes.
+ *
  * @method static array|callback getLanguageDetails( ...$code ) - Curried :: string->array
  *
  * It returns details of a language.
@@ -74,9 +104,21 @@ use WPML\LIB\WP\Option as WPOption;
  * ]
  *```
  *
+ * @method static string getDefaultCode()
+ *
+ * It returns a default language code.
+ *
+ * @method static string getCurrentCode()
+ *
+ * It returns a current language code.
+ *
  * @method static callable|string getFlagUrl( ...$code ) - Curried :: string → string
  *
  * Gets the flag url for the given language code.
+ *
+ * @method static callable|string getFlag( ...$code ) - Curried :: string → [string, bool]
+ *
+ * Returns flag url and from_template
  *
  * @method static callable|array withFlags( ...$langs ) - Curried :: [code => lang] → [code => lang]
  *
@@ -101,13 +143,19 @@ use WPML\LIB\WP\Option as WPOption;
  *  ]
  * ```
  *
- * @method static callable|int|false setLanguageTranslation(...$langCode, ...$displayLangCode, ...$name) - Curried :: string->string->string->int|false
+ * @method static callable|int|false setLanguageTranslation( ...$langCode, ...$displayLangCode, ...$name ) - Curried :: string->string->string->int|false
  *
  * It sets a language translation.
  *
- * @method static callable|int|false setFlag(...$langCode, ...$flag, ...$fromTemplate) - Curried :: string->string->bool->int|false
+ * @method static callable|int|false setFlag( ...$langCode, ...$flag, ...$fromTemplate ) - Curried :: string->string->bool->int|false
  *
  * It sets a language flag.
+ *
+ * @method static callable|string getWPLocale( ...$langDetails ) - Curried :: array->string
+ *
+ * @method static callable|string downloadWPLocale( $locale ) - Curried :: string->string
+ *
+ * It attempts to download a WP language pack for a specific locale, stores the result in settings.
  */
 class Languages {
 	use Macroable;
@@ -118,21 +166,87 @@ class Languages {
 	 * @return void
 	 */
 	public static function init() {
-		global $sitepress;
 
-		self::macro( 'getActive', [ $sitepress, 'get_active_languages' ] );
+		self::macro( 'getCodeByName', curryN( 1, function ( $name ) {
+			global $wpdb;
 
-		self::macro( 'getLanguageDetails', curryN( 1, [ $sitepress, 'get_language_details' ] ) );
+			$lang_code_query = "
+				SELECT language_code
+				FROM {$wpdb->prefix}icl_languages_translations
+				WHERE name = %s AND display_language_code = %s
+			";
 
-		self::macro( 'getDefault', pipe( [ $sitepress, 'get_default_language' ], self::getLanguageDetails() ) );
+			return $wpdb->get_var( $wpdb->prepare( $lang_code_query, $name, self::getCurrentCode() ) );
+		} ) );
 
-		self::macro( 'getAll', [ $sitepress, 'get_languages' ] );
+		self::macro( 'getActive', function () {
+			global $sitepress;
 
-		self::macro( 'getFlagUrl', curryN( 1, [ $sitepress, 'get_flag_url' ] ) );
+			return self::withBuiltInInfo( $sitepress->get_active_languages() );
+		} );
+
+		self::macro( 'getLanguageDetails', curryN( 1, function ( $code ) {
+			global $sitepress;
+
+			return self::addBuiltInInfo( $sitepress->get_language_details( $code ) );
+		} ) );
+
+		self::macro( 'getDefaultCode', function () {
+			global $sitepress;
+
+			return $sitepress->get_default_language();
+		} );
+
+		self::macro('getCurrentCode', function() {
+			global $sitepress;
+
+			return $sitepress->get_current_language();
+		});
+
+		self::macro( 'getDefault', function() {
+			$defaultCode = self::getDefaultCode();
+
+			return $defaultCode ? self::getLanguageDetails( $defaultCode ) : null;
+		} );
+
+		self::macro(
+			'getSecondaries',
+			function() {
+				$activeLanguages = self::getActive();
+
+				return array_filter(
+					$activeLanguages,
+					Logic::complement( Relation::propEq( 'code', self::getDefaultCode() ) )
+				);
+			}
+		);
+
+		self::macro( 'getSecondaryCodes', pipe( [ self::class, 'getSecondaries' ], Lst::pluck( 'code' ), Obj::values() ) );
+
+		self::macro( 'getAll', function ( $userLang = false ) {
+			global $sitepress;
+
+			return self::withBuiltInInfo(  $sitepress->get_languages( $userLang ) );
+		} );
+
+		self::macro( 'getFlagUrl', curryN( 1, function ( $code ) {
+			global $sitepress;
+
+			return $sitepress->get_flag_url( $code );
+		} ) );
+
+		self::macro( 'getFlag', curryN( 1, function ( $code ) {
+			global $sitepress;
+
+			return $sitepress->get_flag( $code );
+		} ) );
 
 		self::macro( 'withFlags', curryN( 1, function ( $langs ) {
 			$addFlag = function ( $lang, $code ) {
-				$lang['flag_url'] = self::getFlagUrl( $code );
+				$flag = self::getFlag( $code );
+
+				$lang['flag_url']           = self::getFlagUrl( $code );
+				$lang['flag_from_template'] = Obj::prop( 'from_template', $flag );
 
 				return $lang;
 			};
@@ -160,9 +274,38 @@ class Languages {
 				VALUES (%s, %s, %d)		
 			";
 
-			return $wpdb->query( $wpdb->prepare( $sql, $langCode, $flag, $fromTemplate) ) ? $wpdb->insert_id : false;
+			return $wpdb->query( $wpdb->prepare( $sql, $langCode, $flag, $fromTemplate ) ) ? $wpdb->insert_id : false;
 		} ) );
 
+		self::macro( 'getWPLocale', curryN( 1, function ( array $langDetails ) {
+			return Logic::firstSatisfying( Logic::isTruthy(), [
+				pipe( Obj::prop( 'default_locale' ), [ self::class, 'downloadWPLocale'] ),
+				pipe( Obj::prop( 'tag' ), [ self::class, 'downloadWPLocale'] ),
+				pipe( Obj::prop( 'code' ), [ self::class, 'downloadWPLocale'] ),
+				Obj::prop( 'default_locale' ),
+			], $langDetails );
+		} ) );
+
+		self::macro( 'downloadWPLocale', curryN( 1, function ( $locale ) {
+			if ( ! function_exists( 'wp_download_language_pack' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/translation-install.php';
+			}
+
+			$downloaded_locales = Settings::get( Settings::WPML_DOWNLOADED_LOCALES_KEY, [] );
+
+			if ( ! $downloaded_locales || ! isset( $downloaded_locales[ $locale ] ) ) {
+
+				$downloaded_locale = wp_download_language_pack( $locale );
+				if ( false === $downloaded_locale ) {
+					return false;
+				}
+
+				$downloaded_locales[ $locale ] = $downloaded_locale;
+				Settings::setAndSave( Settings::WPML_DOWNLOADED_LOCALES_KEY, $downloaded_locales );
+			}
+
+			return $downloaded_locales[ $locale ];
+		} ) );
 	}
 
 	/**
@@ -225,10 +368,12 @@ class Languages {
 			                    ->filter( Lst::includes( Fns::__, Lst::pluck( 'code', $allLangs ) ) )
 			                    ->getOrElse( false );
 
+			$getByNonEmptyLocales = pipe( Fns::filter( Obj::prop( 'default_locale' ) ), Lst::keyBy( 'default_locale') );
+
 			return Obj::pathOr(
 				$guessedCode,
 				[ $locale, 'code' ],
-				Lst::keyBy( 'default_locale', $allLangs )
+				$getByNonEmptyLocales( $allLangs )
 			);
 		};
 
@@ -250,7 +395,8 @@ class Languages {
 	public static function add( $code, $english_name, $default_locale, $major = 0, $active = 0, $encode_url = 0, $tag = '', $country = null ) {
 		global $wpdb;
 
-		$existingCodes = Obj::keys( self::getAll() );
+		$languages     = self::getAll();
+		$existingCodes = Obj::keys( $languages );
 
 		$res = $wpdb->insert(
 			$wpdb->prefix . 'icl_languages', [
@@ -270,32 +416,16 @@ class Languages {
 		}
 
 		$languageId = $wpdb->insert_id;
-		$codes = Lst::concat( $existingCodes, [ $code ] );
+		$codes      = Lst::concat( $existingCodes, [ $code ] );
 
 		Fns::map( self::setLanguageTranslation( $code, Fns::__, $english_name ), $codes );
 
+		Fns::map( Fns::converge(
+			self::setLanguageTranslation( Fns::__, $code, Fns::__ ),
+			[ Obj::prop( 'code' ), Obj::prop( 'english_name' ) ]
+		), $languages );
+
 		return $languageId;
-	}
-
-	/**
-	 * @param string $customLanguageCode
-	 * @param string $mappedLanguageCode
-	 */
-	public static function addMapping( $customLanguageCode, $mappedLanguageCode ) {
-		$languagesMappings = WPOption::getOr( self::LANGUAGES_MAPPING_OPTION, [] );
-
-		$languagesMappings[ $customLanguageCode ] = $mappedLanguageCode;
-		WPOption::updateWithoutAutoLoad( self::LANGUAGES_MAPPING_OPTION, $languagesMappings );
-	}
-
-	/**
-	 * @param string $customLanguageCode
-	 *
-	 * @return string|null
-	 */
-	public static function getMappedLanguage( $customLanguageCode ) {
-
-		return Obj::prop( $customLanguageCode, WPOption::getOr( self::LANGUAGES_MAPPING_OPTION, [] ) );
 	}
 
 	/**
@@ -307,6 +437,47 @@ class Languages {
 			            return $user->locale ?: null;
 		            } )
 		            ->map( self::localeToCode() );
+	}
+
+	public static function withBuiltInInfo( $languages ) {
+		return Fns::map( [ self::class, 'addBuiltInInfo' ], $languages );
+	}
+
+	public static function addBuiltInInfo( $language ) {
+		if ( $language ) {
+			$builtInLanguageCodes = Obj::values( \icl_get_languages_codes() );
+			$isBuiltIn            = pipe( Obj::prop( 'code' ), Lst::includes( Fns::__, $builtInLanguageCodes ) );
+
+			return Obj::addProp( 'built_in', $isBuiltIn, $language );
+		} else {
+			return $language;
+		}
+	}
+
+	/**
+	 * It lets you run a function in a specific language.
+	 *
+	 * ```php
+	 *  $result = Languages::whileInLanguage( 'de' )
+	 *		->invoke( 'my_function' )
+	 *		->runWith( 1, 2, 'some' );
+	 * ```
+	 *
+	 * @param string $lang
+	 *
+	 * @return BeforeAfter
+	 */
+	public static function whileInLanguage( $lang ) {
+		global $sitepress;
+		$old_lang = null;
+		$before = function() use ( &$old_lang, $sitepress, $lang ) {
+			$old_lang = $sitepress->get_current_language();
+			$sitepress->switch_lang( $lang );
+		};
+		$after = function() use ( $sitepress, &$old_lang ) {
+			$sitepress->switch_lang( $old_lang );
+		};
+		return BeforeAfter::of( $before, $after );
 	}
 }
 

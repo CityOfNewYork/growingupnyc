@@ -22,12 +22,32 @@ class Resources {
 	 * @return void
 	 */
 	public static function enqueue( $app, $pluginBaseUrl, $pluginBasePath, $version, $domain = null, $localize = null ) {
-		$handle = "wpml-$app-ui";
+		static::enqueueWithDeps( $app, $pluginBaseUrl, $pluginBasePath, $version, $domain, $localize, [] );
+	}
+
+	/**
+	 * Enqueue a JavaScript application file from the dist directory, with dependencies.
+	 *
+	 * @param string        $app
+	 * @param string        $pluginBaseUrl
+	 * @param string        $pluginBasePath
+	 * @param string        $version
+	 * @param null|string   $domain
+	 * @param null|string[] $localize
+	 * @param null|string[] $dependencies
+	 *
+	 * @return void
+	 */
+	public static function enqueueWithDeps( $app, $pluginBaseUrl, $pluginBasePath, $version, $domain = null, $localize = null, $dependencies = [] ) {
+		$handle = sprintf(
+			'wpml-%s-ui',
+			str_replace( '/', '_', $app )
+		);
 
 		wp_register_script(
 			$handle,
 			"$pluginBaseUrl/dist/js/$app/app.js",
-			[],
+			$dependencies,
 			$version
 		);
 
@@ -52,15 +72,21 @@ class Resources {
 
 		wp_enqueue_script( $handle );
 
-		wp_enqueue_style(
-			$handle,
-			"$pluginBaseUrl/dist/css/$app/styles.css",
-			[],
-			$version
-		);
+		if ( file_exists( "$pluginBasePath/dist/css/$app/styles.css" ) ) {
+			wp_enqueue_style(
+				$handle,
+				"$pluginBaseUrl/dist/css/$app/styles.css",
+				[],
+				$version
+			);
+		}
 
 		if ( $domain && WordPress::versionCompare( '>=', '5.0.0' ) ) {
-			wp_set_script_translations( $handle, $domain, "$pluginBasePath/locale/jed/$handle" );
+			$rootPath = $domain === 'wpml-translation-management' && defined( 'WPML_PLUGIN_PATH' )
+				? WPML_PLUGIN_PATH
+				: $pluginBasePath;
+
+			wp_set_script_translations( $handle, $domain, "$rootPath/locale/jed" );
 		}
 	}
 }

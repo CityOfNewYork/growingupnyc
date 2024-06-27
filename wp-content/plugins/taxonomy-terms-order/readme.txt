@@ -1,16 +1,16 @@
 === Category Order and Taxonomy Terms Order  ===
 Contributors: nsp-code
 Donate link: http://www.nsp-code.com/donate.php
-Tags: category order,terms order, taxonomy order, admin order, categories sort, order category
+Tags: category order,terms order, taxonomy order, categories sort
 Requires at least: 2.8
-Tested up to: 5.6
-Stable tag: 1.5.7.4
+Tested up to: 6.5.4
+Stable tag: 1.8.2
 
-Order Categories and all custom taxonomies terms (hierarchically) and child terms using a Drag and Drop Sortable javascript capability. 
+Order Categories and all custom taxonomies terms (hierarchically) using a Drag and Drop Sortable JavaScript capability. 
 
 == Description ==
 
-Order Categories and all custom taxonomies terms (hierarchically) using a Drag and Drop Sortable javascript capability. <strong>No Theme update is required</strong> the code will change the query on the fly.
+Order Categories and all custom taxonomies terms (hierarchically) using a Drag and Drop Sortable javascript capability. <strong>No Theme/plugins update is required</strong> the code apply the customised sorting to the front queries on the fly.
 If multiple taxonomies are created for a custom post type, a menu will allow to chose the one need to be sorted. If child categories (terms) are defined, those can be ordered too using the same interface.
 <br />Also you can have the admin terms interface sorted per your new sort.
 <br />This plugin is developed by <a target="_blank" href="http://www.nsp-code.com">Nsp-Code</a>
@@ -33,9 +33,10 @@ If multiple taxonomies are created for a custom post type, a menu will allow to 
 
 Feel free to contact me at electronice_delphi@yahoo.com
 
-= I have no PHP knowledge at all, i will still be able to use this plugin? =
+= Since I have no PHP knowledge at all, is this plugin for me? =
 
-Yes, this is the right tool for you. The plugin comes with a unique feature to update the queries on the fly and return the terms in the required order without changing any line of code. Or as an alternative you can do that manually.
+Absolutely, you can! 
+Unlike many other plugins, you don't have to do any code changes to make your post order to apply, accordingly to custom-defined order. There is an option to auto-update the WordPress queries so the posts will be returned in customised order. This can be turned off (Autosort) to allow customized code usage.
 
 = I prefer to apply the sort through code, how can be done? =
 
@@ -43,7 +44,7 @@ Include a 'orderby' => 'term_order' within your get_terms() arguments.
 
 = What taxonomies will allow me to sort? =
 
-You can sort ALL taxonomies, including the default Categories.
+You can sort ALL taxonomies ( hierarhically active ), including the default Categories.
 
 = Is there any way i can get my admin interface to use the custom terms order? =
 
@@ -59,7 +60,69 @@ Consider upgrading to our advanced version of this plugin at a very resonable pr
 
 == Change Log ==
 
+= 1.8.2 =
+ - Polylang fix - Ignore the 'language' to avoid unnecessarily sorting.
+ - Set-up the Live Preview for the plugin.
+ - WordPress 6.5.4 compatibility check and tag update
+
+= 1.8.1 =
+ - WordPress 6.5 compatibility check and tag update
+
+= 1.8 =
+ - Check if the terms table still includ the custom column, to avoid errors ( mainly when upgrading WordPress )
+ - Code improvements
+ - WordPress 6.4.2 compatibility check and tag update
+
+= 1.7.9 =
+ - Trigger wp_cache_flush when saving the order to clear the internal caches
+ - WordPress 6.3 compatibility tag
+ 
+= 1.7.7 =
+ - Use term name for admin queries, when the admin sort is active, to avoid "random" returns on certain servers, when term order are empty.
+ - WordPress 6.2.2 compatibility tag
+
+= 1.7.5 =
+ - New filter tto/admin/plugin_options/capability to add custom roles and capabilities.
+ - Compatibility tag update for WordPress 6.2
+
+= 1.7.4 =
+ - Compatibility tag update for WordPress 6.1.1
+
+= 1.7.3 =
+ - Use esc_html to escape the ajax response message, to avoid single quotes which will break the code.
+
+= 1.7.1 =
+ - Add the required column when create a new site, when running under MultiSite environment.
+
+= 1.7 =
+ - Create the required columns for all sites, when running under MultiSite environment.
+ - Compatibility tag update for WordPress 6.0.1
+
+= 1.6.1 =
+ - Compatibility tag update for WordPress 6.0
+
+= 1.6 =
+ - Readme file updates, typos fixes.
+ - Compatibility tag update for WordPress 5.9.1
+
+= 1.5.9 =
+ - Remove Twitter button
+ - Compatibility tag update for WordPress 5.8.2
+
+= 1.5.7.7 =
+ - Minor code updates
+ - Code cleanup
+ - Compatibility tag update for WordPress 5.8.1
+
+= 1.5.7.6 =
+ - Clear the term cache to ensure the updated order reflect for certain caches
+
+= 1.5.7.5 =
+ - Apply the order within admin if ignore_term_order argument is set and not true
+ - Compatibility tag update for WordPress 5.7
+
 = 1.5.7.4 =
+ - Fix: Call to undefined function wc_get_attribute_taxonomies()   
  - Compatibility tag update for WordPress 5.6
 
 = 1.5.7.3 =
@@ -151,7 +214,7 @@ Consider upgrading to our advanced version of this plugin at a very resonable pr
  - Brazilian Portuguese Language (Rafael Forcadell - www.rafaelforcadell.com.br)
 
 = 1.3.6 =
- - Traditional Chineze Language (Danny - http://sofree.cc)
+ - Traditional Chinese Language (Danny - http://sofree.cc)
  - Minor admin styling
    
 = 1.3.4 =
@@ -179,7 +242,7 @@ Make sure you get the latest version
 
 == Localization ==
 
-Available in English, Dutch, French, Deutch, Slovak, Japanese, Traditional Chineze, Brazilian Portuguese, Hungarian, Ukrainian, Czech and Romanian
+Available in English, Dutch, French, Deutch, Slovak, Japanese, Traditional Chinese, Brazilian Portuguese, Hungarian, Ukrainian, Czech and Romanian
 Whant to contribute with a translation to your language? Please check at https://translate.wordpress.org/projects/wp-plugins/taxonomy-terms-order
 
 There isn't any Editors for your native language on plugin Contributors? You can help to moderate! https://translate.wordpress.org/projects/wp-plugins/taxonomy-terms-order/contributors

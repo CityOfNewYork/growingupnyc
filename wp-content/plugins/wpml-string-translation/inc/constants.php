@@ -24,3 +24,5 @@ if ( ! defined( 'ICL_STRING_TRANSLATION_DYNAMIC_CONTEXT' ) ) {
 }
 
 define( 'WPML_ST_DEFAULT_STRINGS_PER_PAGE', 10 );
+
+define( 'WPML_ST_WIDGET_STRING_DOMAIN', 'Widgets' );

@@ -8,7 +8,7 @@ class OTGS_Installer_Upgrade_Response {
 	private $plugins;
 
 	/**
-	 * @var array
+	 * @var OTGS_Installer_Repositories
 	 */
 	private $repositories;
 
@@ -37,21 +37,28 @@ class OTGS_Installer_Upgrade_Response {
 		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'modify_upgrade_response' ) );
 	}
 
+	/**
+	 * @param stdClass|null $update_plugins
+	 * @return mixed
+	 */
 	public function modify_upgrade_response( $update_plugins ) {
 		if ( isset( $update_plugins ) && is_object( $update_plugins ) ) {
 			foreach ( $this->plugins as $plugin ) {
 				$repository   = $this->repositories->get( $plugin->get_repo() );
 				$subscription = $repository->get_subscription();
 
+				$response = (object) [
+					'id'            => $plugin->get_id(),
+					'slug'          => $plugin->get_slug(),
+					'plugin'        => $plugin->get_id(),
+					'new_version'   => $plugin->get_version(),
+				];
+
 				if ( $this->should_skip_upgrade_process( $plugin, $update_plugins, $repository ) ) {
+					$update_plugins->no_update[ $plugin->get_id() ] = $response;
 					continue;
 				}
 
-				$response                 = new stdClass();
-				$response->id             = 0;
-				$response->slug           = $plugin->get_slug();
-				$response->plugin         = $plugin->get_id();
-				$response->new_version    = $plugin->get_version();
 				$response->upgrade_notice = '';
 				$response->url            = $plugin->get_url();
 				$response->tested         = $plugin->get_tested();

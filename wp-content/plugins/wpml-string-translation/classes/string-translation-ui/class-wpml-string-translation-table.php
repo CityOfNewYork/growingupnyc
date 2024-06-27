@@ -4,6 +4,7 @@ use WPML\Element\API\Languages;
 use WPML\FP\Fns;
 use WPML\FP\Obj;
 use WPML\FP\Wrapper;
+use function WPML\FP\partialRight;
 
 class WPML_String_Translation_Table {
 
@@ -72,17 +73,26 @@ class WPML_String_Translation_Table {
 			];
 		};
 
-		$makeFlag = function ( $langData ) {
+		$getFlagImg = function ($langData) {
+		    if ($langData['flagUrl'] !== '') {
+			    return '<img
+					src="'.esc_attr( $langData['flagUrl'] ).'"
+            alt="'.esc_attr( $langData['title'] ).'"
+            >';
+		    } else {
+		        return $langData['code'];
+		    }
+
+		};
+
+		$makeFlag = function ( $langData ) use ($getFlagImg) {
 			ob_start();
 			?>
 			<span
 				data-code="<?php esc_attr_e( $langData['code'] ); ?>"
 				title="<?php esc_attr_e( $langData['title'] ); ?>"
 			>
-				<img
-					src="<?php esc_attr_e( $langData['flagUrl'] ); ?>"
-					alt="<?php esc_attr_e( $langData['title'] ); ?>"
-				>
+				<?php echo $getFlagImg($langData) ?>
 			</span>
 			<?php
 			return ob_get_clean();
@@ -108,7 +118,7 @@ class WPML_String_Translation_Table {
 			<?php endif; ?>
 			<th scope="col"><?php esc_html_e( 'String', 'wpml-string-translation' ); ?></th>
 			<th scope="col" class="wpml-col-languages"
-				data-langs="<?php esc_attr_e( json_encode( $codes ) ); ?>"><?php echo $flags->get(); ?></th>
+				data-langs="<?php echo esc_attr( (string) json_encode( $codes ) ); ?>"><?php echo $flags->get(); ?></th>
 		</tr>
 		<<?php echo $tag; ?>>
 		<?php
@@ -116,9 +126,10 @@ class WPML_String_Translation_Table {
 
 	public function render_string_row( $string_id, $icl_string ) {
 		global $wpdb, $sitepress, $WPML_String_Translation;
+		$icl_string = $this->decodeHtmlEntitiesForStringAndTranslations( $icl_string );
 
 		?>
-		<tr valign="top" data-string="<?php esc_attr_e( htmlentities( json_encode( $icl_string ), ENT_QUOTES ) ); ?>">
+		<tr valign="top" data-string="<?php echo esc_attr( htmlentities( (string) json_encode( $icl_string ), ENT_QUOTES ) ); ?>">
 			<?php echo $this->render_checkbox_cell( $icl_string ); ?>
 			<td class="wpml-st-col-domain"><?php echo esc_html( $icl_string['context'] ); ?></td>
 			<?php if ( $this->additional_columns_to_render->contains( 'context' ) ) : ?>
@@ -147,6 +158,23 @@ class WPML_String_Translation_Table {
 			<td class="languages-status wpml-col-languages"></td>
 		</tr>
 		<?php
+	}
+
+	private function decodeHtmlEntitiesForStringAndTranslations( $string ) {
+		$decode = function( $string ) {
+			return is_null( $string ) ? '' : partialRight( 'html_entity_decode', ENT_QUOTES )( $string );
+		};
+
+		$string['value'] = $decode( $string['value'] );
+		$string['name']  = $decode( $string['name'] );
+		if ( Obj::prop( 'translations', $string ) ) {
+			$string['translations'] = Fns::map(
+				Obj::over( Obj::lensProp( 'value' ), $decode ),
+				$string['translations']
+			);
+		}
+
+		return $string;
 	}
 
 	/**

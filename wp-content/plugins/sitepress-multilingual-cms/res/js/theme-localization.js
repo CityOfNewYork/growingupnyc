@@ -1,7 +1,7 @@
 var WPML_Core = WPML_Core || {};
 WPML_Core.theme_localization = {};
 
-addLoadEvent(function(){     
+addLoadEvent(function(){
     jQuery('#icl_theme_localization').submit(iclSaveThemeLocalization);
     jQuery('#icl_theme_localization_type').submit(iclSaveThemeLocalizationType);
 
@@ -20,7 +20,7 @@ function iclSaveThemeLocalization(){
         var par = spl[i].split('=');
         parameters[par[0]] = par[1];
     }
-    jQuery('#icl_theme_localization_wrap').load(location.href + ' #icl_theme_localization_subwrap', parameters, function(){
+    jQuery('#icl_theme_localization_wrap').load(WPML_core.sanitize(location.href) + ' #icl_theme_localization_subwrap', parameters, function(){
         fadeInAjxResp('#icl_ajx_response_fn', icl_ajx_saved);
     });
     return false;
@@ -48,7 +48,7 @@ function iclSaveThemeLocalizationType(){
         url: ajaxurl,
         data: data,
         success: function(){
-            location.href=location.href.replace(/#(.*)$/,'');
+            location.href = WPML_core.sanitize(location.href).replace(/#(.*)$/,'');
         }
     });
     return false;

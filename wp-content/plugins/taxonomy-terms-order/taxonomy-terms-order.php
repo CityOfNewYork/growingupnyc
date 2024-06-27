@@ -1,38 +1,60 @@
 <?php
 /*
-Plugin Name: Category Order and Taxonomy Terms Order
-Plugin URI: http://www.nsp-code.com
-Description: Order Categories and all custom taxonomies terms (hierarchically) and child terms using a Drag and Drop Sortable javascript capability. 
-Version: 1.5.7.4
-Author: Nsp-Code
-Author URI: http://www.nsp-code.com
-Author Email: electronice_delphi@yahoo.com
-Text Domain: taxonomy-terms-order
-Domain Path: /languages/ 
+* Plugin Name: Category Order and Taxonomy Terms Order
+* Plugin URI: http://www.nsp-code.com
+* Description: Order Categories and all custom taxonomies terms (hierarchically) and child terms using a Drag and Drop Sortable javascript capability. 
+* Version: 1.8.2
+* Author: Nsp-Code
+* Author URI: https://www.nsp-code.com
+* Author Email: electronice_delphi@yahoo.com
+* Text Domain: taxonomy-terms-order
+* Domain Path: /languages/ 
 */
 
 
     define('TOPATH',    plugin_dir_path(__FILE__));
     define('TOURL',     plugins_url('', __FILE__));
+    
+    include_once    (   TOPATH . '/include/functions.php'   );
+    include_once    (   TOPATH . '/include/addons.php'  );
 
     register_deactivation_hook(__FILE__, 'TO_deactivated');
     register_activation_hook(__FILE__, 'TO_activated');
 
-    function TO_activated() 
+    function TO_activated( $network_wide ) 
         {
             global $wpdb;
-            
-            //check if the menu_order column exists;
-            $query = "SHOW COLUMNS FROM $wpdb->terms 
-                        LIKE 'term_order'";
-            $result = $wpdb->query($query);
-            
-            if ($result == 0)
-                {
-                    $query = "ALTER TABLE $wpdb->terms ADD `term_order` INT( 4 ) NULL DEFAULT '0'";
-                    $result = $wpdb->query($query); 
+                 
+            // check if it is a network activation
+            if ( $network_wide ) 
+                {                   
+                    // Get all blog ids
+                    $blogids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
+                    foreach ( $blogids as $blog_id ) 
+                        {
+                            switch_to_blog( $blog_id );
+                            TTO_functions::check_table_column();
+                            restore_current_blog();
+                        }
+                    
+                    return;
                 }
-
+                else
+                TTO_functions::check_table_column();
+        }
+        
+        
+    add_action( 'wp_initialize_site', 'TO_wp_initialize_site', 99, 2 );       
+    function TO_wp_initialize_site( $blog_data, $args )
+        {
+            global $wpdb;
+         
+            if ( is_plugin_active_for_network('taxonomy-terms-order/taxonomy-terms-order.php') ) 
+                {
+                    switch_to_blog( $blog_data->blog_id );
+                    TTO_functions::check_table_column();                    
+                    restore_current_blog();
+                }
         }
         
     function TO_deactivated() 
@@ -40,13 +62,21 @@ Domain Path: /languages/
             
         }
 
-    include_once    (   TOPATH . '/include/functions.php'   );
-    include_once    (   TOPATH . '/include/addons.php'  );
+    
         
     add_action( 'plugins_loaded', 'to_load_textdomain'); 
     function to_load_textdomain() 
         {
             load_plugin_textdomain('taxonomy-terms-order', FALSE, dirname( plugin_basename( __FILE__ ) ) . '/languages');
+        }
+        
+        
+    //check if the table column still exists
+    add_action( 'plugins_loaded', 'tto_check_setup'); 
+    function tto_check_setup() 
+        {
+            if ( is_admin() )
+                TTO_functions::check_table_column();    
         }
         
     add_action('admin_print_scripts', 'TO_admin_scripts');
@@ -70,9 +100,8 @@ Domain Path: /languages/
             wp_enqueue_style( 'to.css');
         } 
         
-    add_action('admin_menu', 'TOPluginMenu', 99);
-
-    function TOPluginMenu() 
+    add_action('admin_menu', 'TO_PluginMenu', 99);
+    function TO_PluginMenu() 
         {
             include (TOPATH . '/include/interface.php');
             include (TOPATH . '/include/terms_walker.php');
@@ -80,14 +109,14 @@ Domain Path: /languages/
             include (TOPATH . '/include/options.php'); 
             add_options_page('Taxonomy Terms Order', '<img class="menu_tto" src="'. TOURL .'/images/menu-icon.png" alt="" />' . __('Taxonomy Terms Order', 'taxonomy-terms-order'), 'manage_options', 'to-options', 'to_plugin_options');
                     
-            $options = tto_get_settings();
+            $options = TTO_functions::get_settings();
             
             if(isset($options['capability']) && !empty($options['capability']))
                 $capability = $options['capability'];
             else if (is_numeric($options['level']))
                 {
                     //maintain the old user level compatibility
-                    $capability = tto_userdata_get_user_level();
+                    $capability = TTO_functions::userdata_get_user_level();
                 }
                 else
                     {
@@ -112,12 +141,14 @@ Domain Path: /languages/
                     if (count($post_type_taxonomies) == 0)
                         continue;                
                     
+                    $TTO_Interface =    new TTO_Interface();
+                    
                     if ($post_type == 'post')
-                        add_submenu_page('edit.php', __('Taxonomy Order', 'taxonomy-terms-order'), __('Taxonomy Order', 'taxonomy-terms-order'), $capability, 'to-interface-'.$post_type, 'TOPluginInterface' );
+                        add_submenu_page('edit.php', __('Taxonomy Order', 'taxonomy-terms-order'), __('Taxonomy Order', 'taxonomy-terms-order'), $capability, 'to-interface-'.$post_type, array ( $TTO_Interface, 'Interface' ) );
                         elseif ($post_type == 'attachment')
-                        add_submenu_page('upload.php', __('Taxonomy Order', 'taxonomy-terms-order'), __('Taxonomy Order', 'taxonomy-terms-order'), $capability, 'to-interface-'.$post_type, 'TOPluginInterface' );   
+                        add_submenu_page('upload.php', __('Taxonomy Order', 'taxonomy-terms-order'), __('Taxonomy Order', 'taxonomy-terms-order'), $capability, 'to-interface-'.$post_type, array ( $TTO_Interface, 'Interface' ) );   
                         else
-                        add_submenu_page('edit.php?post_type='.$post_type, __('Taxonomy Order', 'taxonomy-terms-order'), __('Taxonomy Order', 'taxonomy-terms-order'), $capability, 'to-interface-'.$post_type, 'TOPluginInterface' );
+                        add_submenu_page('edit.php?post_type='.$post_type, __('Taxonomy Order', 'taxonomy-terms-order'), __('Taxonomy Order', 'taxonomy-terms-order'), $capability, 'to-interface-'.$post_type, array ( $TTO_Interface, 'Interface' ) );
                 }
         }
 
@@ -128,7 +159,7 @@ Domain Path: /languages/
 	        if ( apply_filters('to/get_terms_orderby/ignore', FALSE, $clauses['orderby'], $args) )
                 return $clauses;
             
-            $options = tto_get_settings();
+            $options = TTO_functions::get_settings();
             
             //if admin make sure use the admin setting
             if (is_admin())
@@ -138,14 +169,20 @@ Domain Path: /languages/
                     if (isset($_GET['orderby']) && $_GET['orderby'] !=  'term_order')
                         return $clauses;
                     
-                    if ($options['adminsort'] == "1")
-                        $clauses['orderby'] =   'ORDER BY t.term_order';
+                    if ( $options['adminsort'] == "1" &&  (!isset($args['ignore_term_order']) ||  (isset($args['ignore_term_order'])  &&  $args['ignore_term_order']  !== TRUE) ) )
+                        {
+                            if ( $clauses['orderby']    ==  'ORDER BY t.name' )
+                                $clauses['orderby'] =   'ORDER BY t.term_order '. $clauses['order'] .', t.name';
+                                else
+                                $clauses['orderby'] =   'ORDER BY t.term_order';
+                            
+                        }
                         
                     return $clauses;    
                 }
             
             //if autosort, then force the menu_order
-            if ($options['autosort'] == 1   &&  (!isset($args['ignore_term_order']) ||  (isset($args['ignore_term_order'])  &&  $args['ignore_term_order']  !== TRUE) ))
+            if ($options['autosort'] == "1"   &&  (!isset($args['ignore_term_order']) ||  (isset($args['ignore_term_order'])  &&  $args['ignore_term_order']  !== TRUE) ) )
                 {
                     $clauses['orderby'] =   'ORDER BY t.term_order';
                 }
@@ -166,8 +203,8 @@ Domain Path: /languages/
             return $orderby;
         }
 
-    add_action( 'wp_ajax_update-taxonomy-order', 'TOsaveAjaxOrder' );
-    function TOsaveAjaxOrder()
+    add_action( 'wp_ajax_update-taxonomy-order', 'TO_saveAjaxOrder' );
+    function TO_saveAjaxOrder()
         {
             global $wpdb;
             
@@ -189,13 +226,18 @@ Domain Path: /languages/
                         }
                     
                     if (is_array($items) && count($items) > 0)
-                    foreach( $items as $item_key => $term_id ) 
                         {
-                            $wpdb->update( $wpdb->terms, array('term_order' => ($item_key + 1)), array('term_id' => $term_id) );
+                            foreach( $items as $item_key => $term_id ) 
+                                {
+                                    $wpdb->update( $wpdb->terms, array('term_order' => ($item_key + 1)), array('term_id' => $term_id) );
+                                }
+                            clean_term_cache($items);
                         } 
                 }
                 
             do_action('tto/update-order');
+            
+            wp_cache_flush();
                 
             die();
         }

@@ -18,6 +18,8 @@ use WPML\FP\Functor\Pointed;
  *
  * @method static callable|Left|Right fromNullable( ...$value ) - Curried :: a → Either a
  *
+ * @method static callable|Left|Right fromBool( ...$value ) - Curried :: a → Either a
+ *
  * @method static Either tryCatch( ...$fn ) - Curried :: a → Either a
  *
  * @method static mixed getOrElse( ...$other )
@@ -39,6 +41,11 @@ abstract class Either {
 		self::macro( 'fromNullable', curryN( 1, function ( $value ) {
 			return is_null( $value ) ? self::left( $value ) : self::right( $value );
 		} ) );
+
+		self::macro( 'fromBool', curryN( 1, function ( $value ) {
+			return (bool) $value ? self::right( $value ) : self::left( $value );
+		} ) );
+
 	}
 
 	/**
@@ -60,12 +67,21 @@ abstract class Either {
 	abstract public function chain( callable $fn );
 
 	/**
+	 * @param callable $leftFn
+	 * @param callable $rightFn
+	 *
+	 * @return Either|Left|Right
+	 */
+	abstract public function bichain( callable $leftFn, callable $rightFn);
+
+	/**
 	 * @param callable $fn
 	 *
 	 * @return mixed
 	 */
 	abstract public function orElse( callable $fn );
 	abstract public function bimap( callable $leftFn, callable $rightFn );
+	abstract public function coalesce( callable $leftFn, callable $rightFn );
 	abstract public function alt( Either $alt );
 	abstract public function filter( callable $fn );
 
@@ -87,6 +103,16 @@ class Left extends Either {
 
 	public function bimap( callable $leftFn, callable $rightFn ) {
 		return Either::left( $leftFn( $this->value ) );
+	}
+
+	/**
+	 * @param callable $leftFn
+	 * @param callable $rightFn
+	 *
+	 * @return Right
+	 */
+	public function coalesce( callable $leftFn, callable $rightFn ) {
+		return Either::of( $leftFn( $this->value ) );
 	}
 
 	/**
@@ -122,6 +148,16 @@ class Left extends Either {
 	 */
 	public function chain( callable $fn ) {
 		return $this;
+	}
+
+	/**
+	 * @param callable $leftFn
+	 * @param callable $rightFn
+	 *
+	 * @return Either|Left|Right
+	 */
+	public function bichain( callable $leftFn, callable $rightFn ) {
+		return $leftFn( $this->value );
 	}
 
 	/**
@@ -176,6 +212,16 @@ class Right extends Either {
 	}
 
 	/**
+	 * @param callable $leftFn
+	 * @param callable $rightFn
+	 *
+	 * @return Right
+	 */
+	public function coalesce( callable $leftFn, callable $rightFn ) {
+		return $this->map( $rightFn );
+	}
+
+	/**
 	 * @param Either $other
 	 *
 	 * @return mixed
@@ -209,6 +255,16 @@ class Right extends Either {
 	 */
 	public function chain( callable $fn ) {
 		return $this->map( $fn )->join();
+	}
+
+	/**
+	 * @param callable $leftFn
+	 * @param callable $rightFn
+	 *
+	 * @return Either|Left|Right
+	 */
+	public function bichain( callable $leftFn, callable $rightFn ) {
+		return $rightFn( $this->value );
 	}
 
 	/**

@@ -25,13 +25,14 @@ class WPML_ST_String_Update {
 	 */
 	public function update_string( $domain, $name, $old_value, $new_value, $force_complete = false ) {
 		if ( $new_value != $old_value ) {
+			/** @var object{id: int, value: string, status: string, name: string} $string */
 			$string = $this->get_initial_string( $name, $domain, $old_value, $new_value );
 			$this->wpdb->update(
 				$this->wpdb->prefix . 'icl_strings',
 				array( 'value' => $new_value ),
 				array( 'id' => $string->id )
 			);
-			$is_widget = $domain === WP_Widget_Text_Icl::STRING_DOMAIN;
+			$is_widget = $domain === WPML_ST_WIDGET_STRING_DOMAIN;
 			if ( $is_widget && $new_value ) {
 				$this->update_widget_name( $string->name, $old_value, $new_value );
 			}
@@ -47,7 +48,7 @@ class WPML_ST_String_Update {
 			 * @param string     $old_value
 			 * @param string     $new_value
 			 * @param bool|false $force_complete
-			 * @param stdClass   $string
+			 * @param object     $string
 			 */
 			do_action( 'wpml_st_update_string', $domain, $name, $old_value, $new_value, $force_complete, $string );
 		}
@@ -66,8 +67,9 @@ class WPML_ST_String_Update {
 	/**
 	 * Handles string status changes resulting from the string update
 	 *
-	 * @param object $string
-	 * @param bool   $force_complete if true, all translations will be marked as complete even though  a string's original value has been updated,
+	 * @param object{id: int, value: string, status: string, name: string} $string
+	 * @param bool                                                         $force_complete if true, all translations
+	 *                               will be marked as complete even though  a string's original value has been updated,
 	 *                               currently this applies to blogname and tagline strings
 	 */
 	private function handle_status_change( $string, $force_complete ) {
@@ -94,12 +96,12 @@ class WPML_ST_String_Update {
 	 * @param string $old_value
 	 * @param string $new_value
 	 *
-	 * @return object
+	 * @return object{id: int, value: string, status: string, name: string}
 	 */
 	private function get_initial_string( $name, $context, $old_value, $new_value ) {
 		$string = $this->read_string_from_db( $name, $context );
 		if ( ! $string ) {
-			if ( $context !== WP_Widget_Text_Icl::STRING_DOMAIN ) {
+			if ( $context !== WPML_ST_WIDGET_STRING_DOMAIN ) {
 				icl_register_string( $context, $name, $new_value );
 			} else {
 				list( $res, $name ) = $this->update_widget_name( $name, $old_value, $new_value );
@@ -119,21 +121,22 @@ class WPML_ST_String_Update {
 	 * @param string $name
 	 * @param string $context
 	 *
-	 * @return object|null
+	 * @return object{id: int, value: string, status: string, name: string}|null
 	 */
 	private function read_string_from_db( $name, $context ) {
-
-		return $this->wpdb->get_row(
-			$this->wpdb->prepare(
-				" SELECT id, value, status, name
-																	FROM {$this->wpdb->prefix}icl_strings
-																	WHERE context = %s
-																		AND name = %s
-																	LIMIT 1",
-				$context,
-				$name
-			)
+		/** @var string $sql */
+		$sql = $this->wpdb->prepare(
+			" 
+				SELECT id, value, status, name
+				FROM {$this->wpdb->prefix}icl_strings
+				WHERE context = %s
+					AND name = %s
+				LIMIT 1",
+			$context,
+			$name
 		);
+
+		return $this->wpdb->get_row( $sql );
 	}
 
 	/**
@@ -152,18 +155,18 @@ class WPML_ST_String_Update {
 			$name     = 'widget title - ' . md5( $new_value );
 			$old_name = 'widget title - ' . md5( $old_value );
 
-			if ( $this->read_string_from_db( $name, WP_Widget_Text_Icl::STRING_DOMAIN ) ) {
-				$old_string = $this->read_string_from_db( $old_name, WP_Widget_Text_Icl::STRING_DOMAIN );
+			if ( $this->read_string_from_db( $name, WPML_ST_WIDGET_STRING_DOMAIN ) ) {
+				$old_string = $this->read_string_from_db( $old_name, WPML_ST_WIDGET_STRING_DOMAIN );
 				if ( $old_string ) {
 					$this->delete_old_widget_title_string_if_new_already_exists( $old_string );
 				}
 			} else {
-				$res = $this->write_widget_update_to_db( WP_Widget_Text_Icl::STRING_DOMAIN, $old_name, $name );
+				$res = $this->write_widget_update_to_db( WPML_ST_WIDGET_STRING_DOMAIN, $old_name, $name );
 			}
 		} elseif ( 0 === strpos( $name, 'widget body - ' ) ) {
 			$name = 'widget body - ' . md5( $new_value );
 			$res  = $this->write_widget_update_to_db(
-				WP_Widget_Text_Icl::STRING_DOMAIN,
+				WPML_ST_WIDGET_STRING_DOMAIN,
 				'widget body - ' . md5( $old_value ),
 				$name
 			);
@@ -187,7 +190,7 @@ class WPML_ST_String_Update {
 			$this->wpdb->prefix . 'icl_strings',
 			array(
 				'name'                    => $new_name,
-				'domain_name_context_md5' => md5( WP_Widget_Text_Icl::STRING_DOMAIN . $new_name ),
+				'domain_name_context_md5' => md5( WPML_ST_WIDGET_STRING_DOMAIN . $new_name ),
 			),
 			array(
 				'context' => $context,

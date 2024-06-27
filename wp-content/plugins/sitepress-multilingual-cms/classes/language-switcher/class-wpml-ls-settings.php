@@ -1,8 +1,19 @@
 <?php
 
+use WPML\API\Sanitize;
+use WPML\FP\Obj;
+use WPML\FP\Fns;
+use WPML\FP\Lst;
+use WPML\FP\Maybe;
+use function WPML\FP\partial;
+use function WPML\FP\invoke;
+
 class WPML_LS_Settings {
 
 	const SETTINGS_SLUG = 'wpml_language_switcher';
+
+	const DEFAULT_FLAG_WIDTH  = 18;
+	const DEFAULT_FLAG_HEIGHT = 12;
 
 	/** @var  SitePress $sitepress */
 	protected $sitepress;
@@ -144,8 +155,10 @@ class WPML_LS_Settings {
 
 		foreach ( array( 'menus', 'sidebars', 'statics' ) as $group ) {
 			$slots = $this->get_setting( $group );
-			foreach ( $slots as $slot_slug => $slot ) {
-				/* @var WPML_LS_Slot $slot */
+			foreach ( $slots as $slot_slug => $slot_setting ) {
+				$slot_vars = $slot_setting->get_model();
+				$slot = new \WPML_LS_Slot( $slot_vars );
+
 				$settings[ $group ][ $slot_slug ] = $slot->get_model();
 			}
 		}
@@ -185,13 +198,22 @@ class WPML_LS_Settings {
 			'slot_slug'                     => 'shortcode_actions',
 		);
 
+		$getMergedArgs = function ( $args ) {
+			$shared = [
+				'include_flag_width'  => \WPML_LS_Settings::DEFAULT_FLAG_WIDTH,
+				'include_flag_height' => \WPML_LS_Settings::DEFAULT_FLAG_HEIGHT,
+			];
+
+			return array_merge( $shared, $args );
+		};
+
 		return array(
 			'menus'          => array(),
 			'sidebars'       => array(),
 			'statics'        => array(
-				'footer'            => $this->slot_factory->get_slot( $footer_slot ),
-				'post_translations' => $this->slot_factory->get_slot( $post_translations ),
-				'shortcode_actions' => $this->slot_factory->get_slot( $shortcode_actions ),
+				'footer'            => $this->slot_factory->get_slot( $getMergedArgs( $footer_slot ) ),
+				'post_translations' => $this->slot_factory->get_slot( $getMergedArgs( $post_translations ) ),
+				'shortcode_actions' => $this->slot_factory->get_slot( $getMergedArgs( $shortcode_actions ) ),
 			),
 			'additional_css' => '',
 		);
@@ -341,7 +363,7 @@ class WPML_LS_Settings {
 
 	/**
 	 * @param string $slot_group
-	 * @param string $slot_slug
+	 * @param string|int $slot_slug
 	 *
 	 * @return WPML_LS_Slot
 	 */
@@ -360,19 +382,37 @@ class WPML_LS_Settings {
 	 * @return WPML_LS_Slot
 	 */
 	public function get_menu_settings_from_id( $term_id ) {
+		$menu_slot = $this->get_slot( 'menus', $term_id );
+		if ( $menu_slot->is_enabled() ) {
+			return $menu_slot;
+		}
+
 		if ( $term_id > 0 ) {
-			$menu_element = new WPML_Menu_Element( $term_id, $this->sitepress );
-			$default_lang = $this->sitepress->get_default_language();
+			$menu_element         = new WPML_Menu_Element( $term_id, $this->sitepress );
+			$default_lang         = $this->sitepress->get_default_language();
+			$source_language_code = $menu_element->get_source_language_code();
+
+			$findSettingsInLang = function ( $lang ) use ( $menu_element ) {
+				return Maybe::of( $lang )
+					->map( [ $menu_element, 'get_translation' ] )
+					->map( invoke( 'get_wp_object' ) )
+					->reject( 'is_wp_error' )
+					->map( Obj::prop( 'term_id' ) )
+					->map( partial( [ $this, 'get_slot' ], 'menus' ) )
+					->filter( invoke( 'is_enabled' ) )
+					->getOrElse( null );
+			};
 
 			if ( $menu_element->get_language_code() !== $default_lang ) {
-				$nav_menu = $menu_element->get_translation( $default_lang )
-					? $menu_element->get_translation( $default_lang )->get_wp_object() : null;
+				$menu_slot = $findSettingsInLang( $default_lang ) ?: $menu_slot;
+			}
 
-				$term_id = $nav_menu && ! is_wp_error( $nav_menu ) ? $nav_menu->term_id : null;
+			if ( $source_language_code && $source_language_code !== $default_lang && $menu_element->get_language_code() !== $source_language_code ) {
+				$menu_slot = $findSettingsInLang( $source_language_code ) ?: $menu_slot;
 			}
 		}
 
-		return $this->get_slot( 'menus', $term_id );
+		return $menu_slot;
 	}
 
 	/**
@@ -418,9 +458,8 @@ class WPML_LS_Settings {
 	 */
 	public function get_setting( $key ) {
 		$this->maybe_init_settings();
-		$setting = array_key_exists( $key, $this->settings ) ? $this->settings[ $key ] : null;
 
-		return $setting;
+		return Obj::propOr( null, $key, $this->settings );
 	}
 
 	/**
@@ -588,7 +627,7 @@ class WPML_LS_Settings {
 	public function widget_update_callback_filter( array $instance, array $new_instance, $old_instance, WP_Widget $widget ) {
 
 		if ( strpos( $widget->id_base, WPML_LS_Widget::SLUG ) === 0 ) {
-			$sidebar_id = isset( $_POST['sidebar'] ) ? filter_var( $_POST['sidebar'], FILTER_SANITIZE_STRING ) : false;
+			$sidebar_id =  Sanitize::stringProp( 'sidebar', $_POST );
 			$sidebar_id = $sidebar_id ? $sidebar_id : $this->find_parent_sidebar( $widget->id );
 			if ( $sidebar_id ) {
 				$this->maybe_init_settings();
@@ -622,7 +661,7 @@ class WPML_LS_Settings {
 	/**
 	 * Find in which sidebar a language switcher instance is set
 	 *
-	 * @param string $widget_to_find
+	 * @param mixed $widget_to_find
 	 *
 	 * @return bool|string
 	 */
@@ -669,7 +708,7 @@ class WPML_LS_Settings {
 		$active_languages = $this->sitepress->get_active_languages();
 
 		foreach ( $active_languages as $code => $language ) {
-			$active_languages[ $code ]['flag_url'] = $this->sitepress->get_flag_url( $code );
+			$active_languages[ $code ]['flag_img'] = $this->sitepress->get_flag_image( $code );
 		}
 
 		return $this->sitepress->order_languages( $active_languages );

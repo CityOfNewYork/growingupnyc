@@ -44,7 +44,7 @@ class WPML_Adjacent_Links_Hooks implements IWPML_Action {
 	function get_adjacent_post_join( $join_clause ) {
 		$post_type = $this->get_current_post_type();
 
-		$cache_key   = md5( wp_json_encode( array( $post_type, $join_clause ) ) );
+		$cache_key   = md5( (string) wp_json_encode( array( $post_type, $join_clause ) ) );
 		$cache_group = 'adjacent_post_join';
 		$join_cached = wp_cache_get( $cache_key, $cache_group );
 
@@ -73,7 +73,7 @@ class WPML_Adjacent_Links_Hooks implements IWPML_Action {
 		$post_type    = $this->get_current_post_type();
 		$current_lang = $this->sitepress->get_current_language();
 
-		$cache_key    = md5( wp_json_encode( array( $post_type, $where_clause, $current_lang ) ) );
+		$cache_key    = md5( (string) wp_json_encode( array( $post_type, $where_clause, $current_lang ) ) );
 		$cache_group  = 'adjacent_post_where';
 		$where_cached = wp_cache_get( $cache_key, $cache_group );
 
@@ -90,16 +90,6 @@ class WPML_Adjacent_Links_Hooks implements IWPML_Action {
 
 	/** @return string */
 	private function get_current_post_type() {
-		$post_type = get_query_var( 'post_type' );
-
-		if ( ! $post_type ) {
-			$post_type = get_post_type();
-		}
-
-		if ( ! $post_type ) {
-			$post_type = 'post';
-		}
-
-		return $post_type;
+		return get_post_type() ?: 'post';
 	}
 }

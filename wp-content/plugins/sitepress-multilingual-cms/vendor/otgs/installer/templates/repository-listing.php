@@ -6,19 +6,20 @@
 <?php
 $getWhenSubscriptionExpires = function ( $repository ) { return $repository['subscription']['data']->expires; };
 $model                      = (object) [
-	'repoId'                => $repository_id,
-	'productName'           => $repository['data']['product-name'],
-	'productUrl'            => $repository['data']['url'],
-	'siteUrl'               => $this->get_installer_site_url( $repository_id ),
-	'siteKeysManagementUrl' => $repository['data']['site_keys_management_url'],
-	'updateSiteKeyNonce'    => wp_create_nonce( 'update_site_key_' . $repository_id ),
-	'saveSiteKeyNonce'      => wp_create_nonce( 'save_site_key_' . $repository_id ),
-	'removeSiteKeyNonce'    => wp_create_nonce( 'remove_site_key_' . $repository_id ),
-	'findAccountNonce'      => wp_create_nonce( 'find_account_' . $repository_id ),
-	'whenExpires'           => \OTGS\Installer\FP\partial( $getWhenSubscriptionExpires, $repository ),
-	'expired'               => false,
-	'siteKey'               => WP_Installer_API::get_site_key( $repository_id ),
-	'endUserRenewalUrl'     => $this->get_end_user_renewal_url( $repository_id ),
+	'repoId'                 => $repository_id,
+	'productName'            => $repository['data']['product-name'],
+	'productUrl'             => $repository['data']['url'],
+	'siteUrl'                => $this->get_installer_site_url( $repository_id ),
+	'siteKeysManagementUrl'  => $repository['data']['site_keys_management_url'],
+	'updateSiteKeyNonce'     => wp_create_nonce( 'update_site_key_' . $repository_id ),
+	'saveSiteKeyNonce'       => wp_create_nonce( 'save_site_key_' . $repository_id ),
+	'removeSiteKeyNonce'     => wp_create_nonce( 'remove_site_key_' . $repository_id ),
+	'findAccountNonce'       => wp_create_nonce( 'find_account_' . $repository_id ),
+	'whenExpires'            => \OTGS\Installer\FP\partial( $getWhenSubscriptionExpires, $repository ),
+	'expired'                => false,
+	'displayCheckForUpdates' => true,
+	'siteKey'                => WP_Installer_API::get_site_key( $repository_id ),
+	'endUserRenewalUrl'      => $this->get_end_user_renewal_url( $repository_id ),
 ];
 ?>
 <table class="widefat otgs_wp_installer_table" id="installer_repo_<?php echo $repository_id ?>">
@@ -41,6 +42,9 @@ $model                      = (object) [
 					$model->expired = true;
 					$model->shouldDisplayUnregisterLink = $this->should_display_unregister_link_on_refund_notice();
 					\OTGS\Installer\Templates\Repository\Refunded::render( $model );
+				} else if ( $this->repository_has_legacy_free_subscription( $repository_id ) ) {
+					$model->displayCheckForUpdates = false;
+					\OTGS\Installer\Templates\Repository\LegacyFree::render( $model );
 				} else {
 					$this->show_subscription_renew_warning( $repository_id, $subscription_type );
 					\OTGS\Installer\Templates\Repository\Registered::render( $model );
@@ -55,7 +59,7 @@ $model                      = (object) [
 
     $subscription_type = isset($subscription_type) ? $subscription_type : null;
     $upgrade_options = isset($upgrade_options) ? $upgrade_options : null;
-    $packages = $this->_render_product_packages($repository['data']['packages'], $subscription_type, $model->expired, $upgrade_options, $repository_id);
+    $packages = $this->_render_product_packages($repository, $repository['data']['packages'], $subscription_type, $model->expired, $upgrade_options, $repository_id);
     if(empty($subscription_type) || $model->expired){
         $subpackages_expandable = true;
     }else{
@@ -93,7 +97,7 @@ $model                      = (object) [
 
 				<?php if(!empty($package['sub-packages'])): ?>
 
-					<?php $subpackages = $this->_render_product_packages($package['sub-packages'], $subscription_type, $model->expired, $upgrade_options, $repository_id); ?>
+					<?php $subpackages = $this->_render_product_packages($repository, $package['sub-packages'], $subscription_type, $model->expired, $upgrade_options, $repository_id); ?>
 
 					<?php if($subpackages): ?>
 

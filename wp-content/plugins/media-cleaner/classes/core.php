@@ -8,63 +8,60 @@ class Meow_WPMC_Core {
 	public $is_pro = false;
 	public $engine = null;
 	public $catch_timeout = true; // This will halt the plugin before reaching the PHP timeout.
-	private $regex_file = '/[A-Za-z0-9-_,.\(\)\s]+[.]{1}(MIMETYPES)/';
-	public $types = "jpg|jpeg|jpe|gif|png|tiff|bmp|csv|pdf|xls|xlsx|doc|docx|odt|wpd|rtf|tiff|mp3|mp4|mov|wav|lua";
+	public $types = "jpg|jpeg|jpe|gif|png|tiff|bmp|csv|svg|pdf|xls|xlsx|doc|docx|odt|wpd|rtf|tiff|mp3|mp4|mov|wav|lua";
 	public $current_method = 'media';
-	private $refcache = array();
 	public $servername = null; // meowapps.com (site URL without http/https)
 	public $site_url = null; // https://meowapps.com
 	public $upload_path = null; // /www/wp-content/uploads (path to uploads)
 	public $upload_url = null; // wp-content/uploads (uploads without domain)
+	private $option_name = 'wpmc_options';
+
+	private $regex_file = '/[A-Za-z0-9-_,.\(\)\s]+[.]{1}(MIMETYPES)/';
+	private $refcache = array();
 	private $check_content = null;
 	private $debug_logs = null;
 	private $multilingual = false;
 	private $languages = array();
-	private $allow_usage = null;
-	private $allow_setup = null;
 
 	public function __construct() {
-		add_action( 'plugins_loaded', array( $this, 'init' ) );
+		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
+		add_action( 'init', array( $this, 'init' ) );
+		add_action( 'delete_attachment', array( $this, 'delete_attachment_related_data' ), 10, 1 );
+		add_action( 'trashed_post', array( $this, 'delete_attachment_related_data' ), 10, 1 );
 	}
 
-	function init() {
+	function plugins_loaded() {
 
 		// Variables
 		$this->site_url = get_site_url();
 		$this->multilingual = $this->is_multilingual();
 		$this->languages = $this->get_languages();
-		$this->current_method = get_option( 'wpmc_method', 'media' );
+		$this->current_method = $this->get_option( 'method' );
 		$this->regex_file = str_replace( "MIMETYPES", $this->types, $this->regex_file );
 		$this->servername = str_replace( 'http://', '', str_replace( 'https://', '', $this->site_url ) );
 		$uploaddir = wp_upload_dir();
 		$this->upload_path = $uploaddir['basedir'];
-		$this->upload_url = substr( $uploaddir['baseurl'], 1 + strlen( $this->site_url ) );
-		$this->check_content = get_option( 'wpmc_content', true );
-		$this->debug_logs = get_option( 'wpmc_debuglogs', false );
+		$this->upload_url = substr( $uploaddir['baseurl'], strlen( $this->site_url ) );
+		$this->check_content = $this->get_option( 'content' );
+		$this->debug_logs = $this->get_option( 'debuglogs' );
 		$this->is_rest = MeowCommon_Helpers::is_rest();
 		$this->is_cli = defined( 'WP_CLI' ) && WP_CLI;
+		
 		global $wpmc;
 		$wpmc = $this;
-
-		// Check the roles
-		$this->allow_usage = apply_filters( 'wpmc_allow_usage', current_user_can( 'administrator' ) );
-		$this->allow_setup = apply_filters( 'wpmc_allow_setup', current_user_can( 'manage_options' ) );
-		if ( !$this->is_cli && !$this->allow_usage ) {
-			return;
-		}
 
 		// Language
 		load_plugin_textdomain( WPMC_DOMAIN, false, basename( WPMC_PATH ) . '/languages' );
 
 		// Admin
-		$this->admin = new Meow_WPMC_Admin( $this->allow_setup );
+		$this->admin = new Meow_WPMC_Admin( $this );
 
 		// Advanced core
 		if ( class_exists( 'MeowPro_WPMC_Core' ) ) {
 			new MeowPro_WPMC_Core( $this );
 		}
 
-		// Install hooks and engine on;y if they might be used
+		// Install hooks and engine only if they might be used
 		if ( is_admin() || $this->is_rest || $this->is_cli ) {
 			add_action( 'wpmc_initialize_parsers', array( $this, 'initialize_parsers' ), 10, 0 );
 			add_filter( 'wp_unique_filename', array( $this, 'wp_unique_filename' ), 10, 3 );
@@ -77,8 +74,12 @@ class Meow_WPMC_Core {
 		}
 
 		if ( is_admin() ) {
-			new Meow_WPMC_UI( $this, $this->admin );
+			new Meow_WPMC_UI( $this );
 		}
+	}
+
+	function init() {
+		remove_action( 'wp_scheduled_delete', 'wp_scheduled_delete' );
 	}
 
 	function initialize_parsers() {
@@ -98,6 +99,7 @@ class Meow_WPMC_Core {
 
 	private $start_time;
 	private $time_elapsed = 0;
+	private $time_remaining = 0;
 	private $item_scan_avg_time = 0;
 	private $wordpress_init_time = 0.5;
 	private $max_execution_time;
@@ -141,6 +143,12 @@ class Meow_WPMC_Core {
 				exit;
 			}
 		}
+	}
+
+	function delete_attachment_related_data( $post_id ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . "mclean_scan";
+		$wpdb->query( $wpdb->prepare( "DELETE FROM $table_name WHERE postId = %d", $post_id ) );
 	}
 
 	function timeout_check_additem() {
@@ -198,25 +206,77 @@ class Meow_WPMC_Core {
 		}
 	}
 
+	function get_shortcode_attributes( $shortcode_tag, $post ) {
+		if ( has_shortcode( $post->post_content, $shortcode_tag ) ) {
+			$output = array();
+			//get shortcode regex pattern wordpress function
+			$pattern = get_shortcode_regex( [ $shortcode_tag ] );
+			if (   preg_match_all( '/'. $pattern .'/s', $post->post_content, $matches ) )
+			{
+					$keys = array();
+					$output = array();
+					foreach( $matches[0] as $key => $value) {
+							// $matches[3] return the shortcode attribute as string
+							// replace space with '&' for parse_str() function
+							$get = str_replace(" ", "&" , trim( $matches[3][$key] ) );
+							$get = str_replace('"', '' , $get );
+							parse_str( $get, $sub_output );
+
+							//get all shortcode attribute keys
+							$keys = array_unique( array_merge(  $keys, array_keys( $sub_output )) );
+							$output[] = $sub_output;
+					}
+					if ( $keys && $output ) {
+							// Loop the output array and add the missing shortcode attribute key
+							foreach ($output as $key => $value) {
+									// Loop the shortcode attribute key
+									foreach ($keys as $attr_key) {
+											$output[$key][$attr_key] = isset( $output[$key] )  && isset( $output[$key] ) ? $output[$key][$attr_key] : NULL;
+									}
+									//sort the array key
+									ksort( $output[$key]);
+							}
+					}
+			}
+			return $output;
+		}
+		else {
+				return false;
+		}
+	}
+
 	function get_urls_from_html( $html ) {
-		if ( empty( $html ) )
+		if ( empty( $html ) ) {
 			return array();
+		}
 
 		// Proposal/fix by @copytrans
 		// Discussion: https://wordpress.org/support/topic/bug-in-core-php/#post-11647775
-		$html = mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' );
+		// Modified by Jordy again in 2021 for those who don't have MB enabled
+		if ( function_exists( 'mb_convert_encoding' ) ) {
+			$html = mb_convert_encoding( $html, 'HTML-ENTITIES', 'UTF-8' );
+		}
+		else {
+			$html = htmlspecialchars_decode( utf8_decode( htmlentities( $html, ENT_COMPAT, 'utf-8', false ) ) );
+		}
 
 		// Resolve src-set and shortcodes
-		if ( !get_option( 'wpmc_shortcodes_disabled', false ) )
+		if ( !$this->get_option( 'shortcodes_disabled' ) ) {
 			$html = do_shortcode( $html );
-			
+		}
+
 		// TODO: Since WP 5.5, wp_filter_content_tags should be used instead of wp_make_content_images_responsive.
-		$html = function_exists( 'wp_filter_content_tags' ) ? wp_filter_content_tags( $html ) : wp_make_content_images_responsive( $html );
+		$html = function_exists( 'wp_filter_content_tags' ) ? wp_filter_content_tags( $html ) :
+			wp_make_content_images_responsive( $html );
 
 		// Create the DOM Document
 		if ( !class_exists("DOMDocument") ) {
 			error_log( 'Media Cleaner: The DOM extension for PHP is not installed.' );
 			throw new Error( 'The DOM extension for PHP is not installed.' );
+		}
+
+		if ( empty( $html ) ) {
+			return array();
 		}
 
 		libxml_use_internal_errors(true);
@@ -250,7 +310,7 @@ class Meow_WPMC_Core {
 				$iframe_doc = new DOMDocument();
 				// Load the url's contents into the DOM
 				libxml_use_internal_errors( true ); // ignore html formatting problems
-				$rslt = $iframe_doc->loadHTMLFile( $iframe_src );
+				$rslt = @$iframe_doc->loadHTMLFile( $iframe_src );
 				libxml_clear_errors();
 				libxml_use_internal_errors( false );
 				if ( $rslt ) {
@@ -297,6 +357,22 @@ class Meow_WPMC_Core {
     	array_push( $results, $src );
 		}
 
+		// Audios: src
+		$audios = $dom->getElementsByTagName( 'audio' );
+		foreach ( $audios as $audio ) {
+			//error_log($audio->getAttribute('src'));
+			$src = $this->clean_url( $audio->getAttribute('src') );
+    	array_push( $results, $src );
+		}
+
+		// Sources: src
+		$audios = $dom->getElementsByTagName( 'source' );
+		foreach ( $audios as $audio ) {
+			//error_log($audio->getAttribute('src'));
+			$src = $this->clean_url( $audio->getAttribute('src') );
+    	array_push( $results, $src );
+		}
+
 		// Links, href
 		$urls = $dom->getElementsByTagName( 'a' );
 		foreach ( $urls as $url ) {
@@ -324,7 +400,7 @@ class Meow_WPMC_Core {
 		preg_match_all( "/((https?:\/\/)?[^\\&\#\[\] \"\?]+\.pdf)/", $html, $res );
 		if ( !empty( $res ) && isset( $res[1] ) && count( $res[1] ) > 0 ) {
 			foreach ( $res[1] as $url ) {
-				if ( $this->is_url($url) )
+				if ( $this->is_url( $url ) )
 					array_push( $results, $this->clean_url( $url ) );
 			}
 		}
@@ -333,7 +409,7 @@ class Meow_WPMC_Core {
 		preg_match_all( "/url\(\'?\"?((https?:\/\/)?[^\\&\#\[\] \"\?]+\.(jpe?g|gif|png))\'?\"?/", $html, $res );
 		if ( !empty( $res ) && isset( $res[1] ) && count( $res[1] ) > 0 ) {
 			foreach ( $res[1] as $url ) {
-				if ( $this->is_url($url) )
+				if ( $this->is_url( $url ) )
 					array_push( $results, $this->clean_url( $url ) );
 			}
 		}
@@ -342,13 +418,21 @@ class Meow_WPMC_Core {
 	}
 
 	// Parse a meta, visit all the arrays, look for the attributes, fill $ids and $urls arrays
-	function get_from_meta( $meta, $lookFor, &$ids, &$urls ) {
+	// If rawMode is enabled, it will not check if the value is an ID or an URL, it will just returns it in URLs
+	function get_from_meta( $meta, $lookFor, &$ids, &$urls, $rawMode = false ) {
+		if ( !is_array( $meta ) && !is_object( $meta) ) {
+			return;
+		}
 		foreach ( $meta as $key => $value ) {
 			if ( is_object( $value ) || is_array( $value ) )
-				$this->get_from_meta( $value, $lookFor, $ids, $urls );
+				$this->get_from_meta( $value, $lookFor, $ids, $urls, $rawMode );
 			else if ( in_array( $key, $lookFor ) ) {
-				if ( empty( $value ) )
+				if ( empty( $value ) ) {
 					continue;
+				}
+				else if ( $rawMode ) {
+					array_push( $urls, $value );
+				}
 				else if ( is_numeric( $value ) ) {
 					// It this an ID?
 					array_push( $ids, $value );
@@ -424,33 +508,109 @@ class Meow_WPMC_Core {
 		}
 	}
 
-	function logs_directory_check() {
-		if ( !file_exists( WPMC_PATH . '/logs/' ) ) {
-			mkdir( WPMC_PATH . '/logs/', 0777 );
-		}
-	}
+	#region LOGS
 
 	function log( $data = null, $force = false ) {
 		if ( !$this->debug_logs && !$force )
 			return;
-		$this->logs_directory_check();
-		$fh = @fopen( WPMC_PATH . '/logs/media-cleaner.log', 'a' );
-		if ( !$fh )
-			return false;
+
+		$php_logs = $this->get_option( 'php_error_logs' );
+		$log_file_path = $this->get_logs_path();
+
+		$fh = @fopen( $log_file_path, 'a' );
+		if ( !$fh ) { return false; }
 		$date = date( "Y-m-d H:i:s" );
-		if ( is_null( $data ) )
+		if ( is_null( $data ) ) {
 			fwrite( $fh, "\n" );
-		else
+		}
+		else {
 			fwrite( $fh, "$date: {$data}\n" );
+			if ( $php_logs ) {
+				error_log( "[MEDIA CLEANER] " . $data );
+			}
+		}
 		fclose( $fh );
 		return true;
 	}
+
+	//WPMC_PREFIX
+
+	function get_logs_path() {
+		$uploads_dir = wp_upload_dir();
+		$uploads_dir_path = trailingslashit( $uploads_dir['basedir'] );
+
+		$path = $this->get_option( 'logs_path' );
+
+		if ( $path && file_exists( $path ) ) {
+			// make sure the path is legal (within the uploads directory with the WPMC_PREFIX prefix and log extension)
+			if ( strpos( $path, $uploads_dir_path ) !== 0 || strpos( $path, WPMC_PREFIX ) === false || substr( $path, -4 ) !== '.log' ) {
+				$path = null;
+			} else {
+				return $path;
+			}
+		}
+
+		if ( !$path ) {
+			$path = $uploads_dir_path . WPMC_PREFIX . "_" . $this->random_ascii_chars() . ".log";
+			if ( !file_exists( $path ) ) {
+				touch( $path );
+			}
+			
+			$options = $this->get_all_options();
+			$options['logs_path'] = $path;
+			$this->update_options( $options );
+		}
+
+		return $path;
+	}
+	
+
+	function get_logs() {
+		$log_file_path = $this->get_logs_path();
+
+		if ( !file_exists( $log_file_path ) ) {
+			return "No logs found.";
+		}
+
+		$content = file_get_contents( $log_file_path );
+		$lines = explode( "\n", $content );
+		$lines = array_filter( $lines );
+		$lines = array_reverse( $lines );
+		$content = implode( "\n", $lines );
+		return $content;
+	}
+
+	function clear_logs() {
+		$logPath = $this->get_logs_path();
+		if ( file_exists( $logPath ) ) {
+			unlink( $logPath );
+		}
+
+		$options = $this->get_all_options();
+		$options['logs_path'] = null;
+		$this->update_options( $options );
+	}
+
+	#endregion
 
 	/**
 	 *
 	 * HELPERS
 	 *
 	 */
+
+	private function random_ascii_chars($length = 8)
+	{
+		$characters = array_merge(range('A', 'Z'), range('a', 'z'), range('0', '9'));
+		$characters_length = count($characters);
+		$random_string = '';
+
+		for ($i = 0; $i < $length; $i++) {
+			$random_string .= $characters[rand(0, $characters_length - 1)];
+		}
+
+		return $random_string;
+	}
 
 	function get_trashdir() {
 		return trailingslashit( $this->upload_path ) . 'wpmc-trash';
@@ -460,6 +620,23 @@ class Meow_WPMC_Core {
 		return trailingslashit( $this->upload_url ) . 'wpmc-trash';
 	}
 
+	function clean_ob(){
+		$disabled = $this->get_option( 'output_buffer_cleaning_disabled' );
+		$ob_content = ob_get_contents();
+		if ( !empty( trim( $ob_content ) ) ) {
+
+			if ( $disabled ) {
+				$this->log( "🚨 If the server's response was broken, try to let Output Buffer Cleaning enabled." );
+				return;
+			}
+
+			$this->log( "🧹 The response is broken due to output buffering, it will be cleaned." );
+			$this->log( "📄 Output buffer content: " . $ob_content );
+
+			ob_end_clean();
+		}
+	}
+
 	/**
 	 *
 	 * I18N RELATED HELPERS
@@ -467,7 +644,7 @@ class Meow_WPMC_Core {
 	 */
 
 	function is_multilingual() {
-		return function_exists( 'icl_object_id' );
+		return function_exists( 'icl_get_languages' );
 	}
 
 	function get_languages() {
@@ -523,18 +700,22 @@ class Meow_WPMC_Core {
 	function recover( $id ) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . "mclean_scan";
-		$issue = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d", $id ), OBJECT );
-		$issue->path = stripslashes( $issue->path );
+		$issue = $this->get_issue( $id );
+
+		if ( empty( $issue ) ) {
+			$this->log( "🚫 Issue #{$id} does not exist. Cannot recover this." );
+			return false;
+		}
 
 		// Files
-		if ( $issue->type == 0 ) {
+		if ( $issue->type === 0 ) {
 			$this->recover_file( $issue->path );
 			$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET deleted = 0 WHERE id = %d", $id ) );
 			$this->log( "✅ Recovered {$issue->path}." );
 			return true;
 		}
 		// Media
-		else if ( $issue->type == 1 ) {
+		else if ( $issue->type === 1 ) {
 
 			// If there is no file attached, doesn't handle the files
 			$fullpath = get_attached_file( $issue->postId );
@@ -551,7 +732,7 @@ class Meow_WPMC_Core {
 					error_log( "Media Cleaner: Could not recover $path." );
 				}
 			}
-			if ( !wp_untrash_post( $issue->postId ) ) {
+			if ( !wp_update_post( array( 'ID' => $issue->postId, 'post_type' => 'attachment' ) ) ) {
 				$this->log( "🚫 Failed to Untrash Post {$issue->postId} (but deleted it from Cleaner DB)." );
 				error_log( "Media Cleaner: Failed to Untrash Post {$issue->postId} (but deleted it from Cleaner DB)." );
 				return false;
@@ -596,15 +777,60 @@ class Meow_WPMC_Core {
 		return true;
 	}
 
+	function repair( $id ) {
+		$repair = $this->get_repair( $id );
+		if ( empty( $repair ) ) {
+			$this->log( "🚫 Repair #{$id} does not exist. Cannot repair this." );
+			return false;
+		}
+		foreach ( $repair->child_ids as $child_id ) {
+			if ( !$this->delete( $child_id ) ) {
+				$this->log( "🚫 Failed to repair the file." );
+				return false;
+			}
+		}
+		$full_path = $this->get_full_upload_path( $repair->path );
+		$filetype = wp_check_filetype( basename( $full_path ), null );
+		$wp_upload_dir = wp_upload_dir();
+		$attachment = array(
+			'guid'           => $wp_upload_dir['url'] . '/' . basename( $full_path ), 
+			'post_mime_type' => $filetype['type'],
+			'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $full_path ) ),
+			'post_content'   => '',
+			'post_status'    => 'inherit'
+		);
+
+		$attach_id = wp_insert_attachment( $attachment, $full_path );
+
+		require_once( ABSPATH . 'wp-admin/includes/image.php' );
+		$attach_data = wp_generate_attachment_metadata( $attach_id, $full_path );
+		wp_update_attachment_metadata( $attach_id, $attach_data );
+
+		global $wpdb;
+		$table_name = $wpdb->prefix . "mclean_scan";
+		$wpdb->query( $wpdb->prepare( "DELETE FROM $table_name WHERE id = %d OR parentId = %d", $id, $id ) );
+		$this->log( "✅ Repaired {$repair->path}." );
+		return true;
+	}
+
 	function ignore( $id, $ignore ) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . "mclean_scan";
-		$issue = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d", $id ), OBJECT );
-		if ( !$ignore )
+		$issue = $this->get_issue( $id );
+
+		if ( empty( $issue ) ) {
+			$this->log( "🚫 Issue #{$id} does not exist. Cannot ignore this." );
+			return false;
+		}
+
+		if ( !$ignore ) {
 			$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET ignored = 0 WHERE id = %d", $id ) );
+		}
 		else {
-			if ( (int) $issue->deleted ) // If it is in trash, recover it
+			// If it is in trash, recover it
+			if ( $issue->deleted ) {
 				$this->recover( $id );
+			}
 			$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET ignored = 1 WHERE id = %d", $id ) );
 		}
 		return true;
@@ -612,10 +838,10 @@ class Meow_WPMC_Core {
 
 	function endsWith( $haystack, $needle )
 	{
-	  $length = strlen( $needle );
-	  if ( $length == 0 )
-	    return true;
-	  return ( substr( $haystack, -$length ) === $needle );
+		$length = strlen( $needle );
+		if ( $length == 0 )
+			return true;
+		return ( substr( $haystack, -$length ) === $needle );
 	}
 
 	function clean_dir( $dir ) {
@@ -631,44 +857,207 @@ class Meow_WPMC_Core {
 		}
 	}
 
-	function delete( $id ) {
+	function get_issue( $id ) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . "mclean_scan";
 		$issue = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE id = %d", $id ), OBJECT );
-		$regex = "^(.*)(\\s\\(\\+.*)$";
-		$issue->path = preg_replace( '/' . $regex . '/i', '$1', $issue->path ); // remove " (+ 6 files)" from path
+		if ( empty( $issue ) ) {
+			return false;
+		}
+		$issue->id = (int)$issue->id;
+		$issue->postId = (int)$issue->postId;
+		$issue->type = (int)$issue->type;
+		$issue->deleted = (int)$issue->deleted;
+		$issue->ignored = (int)$issue->ignored;
+		$issue->path = stripslashes( $issue->path );
+		return $issue;
+	}
 
-		// Make sure there isn't a media DB entry
-		if ( $issue->type == 0 ) {
-			$attachmentid = $this->find_media_id_from_file( $issue->path, true );
-			if ( $attachmentid ) {
-				$this->log( "🚫 Issue listed as filesystem but Media {$attachmentid} exists." );
-			}
+	function get_repair( $id ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . "mclean_scan";
+		$repair = $wpdb->get_row( $wpdb->prepare( "SELECT
+				main.id AS id,
+				main.path AS path,
+				GROUP_CONCAT(child.id) AS child_ids
+			FROM
+				$table_name AS main
+			LEFT JOIN
+				$table_name AS child ON main.id = child.parentId
+				WHERE main.id = %d", $id
+			), OBJECT );
+		if ( empty( $repair ) ) {
+			return false;
+		}
+		$repair->id = (int)$repair->id;
+		$regex = "^(.*)(\\s\\(\\+.*)$";
+		$repair->path = preg_replace( '/' . $regex . '/i', '$1', stripslashes( $repair->path ) );
+		$repair->child_ids = $repair->child_ids ? explode( ',', $repair->child_ids ) : [];
+		return $repair;
+	}
+
+	function get_issues_to_repair( $order_by = 'id', $order = 'asc', $search = '', $skip = 0, $limit = 10 ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . "mclean_scan";
+
+		$search_clause = '';
+		if ( !empty( $search ) ) {
+			$search_clause = $wpdb->prepare("AND main.path LIKE %s", ( '%' . $search . '%' ));
 		}
 
-		if ( $issue->type == 0 ) {
+		$order_clause = 'ORDER BY main.id ASC';
+		if ( $order_by === 'path' ) {
+			$order_clause = 'ORDER BY main.path ' . ( $order === 'asc' ? 'ASC' : 'DESC' );
+		}
+		else if ( $order_by === 'issue' ) {
+			$order_clause = 'ORDER BY main.issue ' . ( $order === 'asc' ? 'ASC' : 'DESC' );
+		}
+		else if ( $order_by === 'size' ) {
+			$order_clause = 'ORDER BY main.size ' . ( $order === 'asc' ? 'ASC' : 'DESC' );
+		}
 
-			if ( $issue->deleted == 0 ) {
-				// Move file to the trash
-				if ( $this->trash_file( $issue->path ) )
-					$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET deleted = 1, ignored = 0 WHERE id = %d", $id ) );
+		$result = $wpdb->get_results( $wpdb->prepare( "SELECT
+				main.id AS id,
+				main.path AS path,
+				GROUP_CONCAT(child.id) AS child_ids,
+				GROUP_CONCAT(child.path) AS child_paths,
+				main.type AS type,
+				main.postId AS postId,
+				main.size AS size,
+				main.ignored AS ignored,
+				main.deleted AS deleted,
+				main.issue AS issue
+			FROM
+				$table_name AS main
+			LEFT JOIN
+				$table_name AS child ON main.id = child.parentId
+			WHERE
+				main.path IS NOT NULL AND main.parentId IS NULL
+				AND main.deleted = 0 AND main.ignored = 0
+				AND main.type = 0
+				$search_clause
+			GROUP BY main.id
+			$order_clause
+			LIMIT %d, %d;
+		", $skip, $limit ) );
+
+		return $result;
+	}
+
+	function get_repair_ids ( $search = '' ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . "mclean_scan";
+
+		$search_clause = '';
+		if ( !empty( $search ) ) {
+			$search_clause = $wpdb->prepare("AND main.path LIKE %s", ( '%' . $search . '%' ));
+		}
+
+		return $wpdb->get_col( "SELECT DISTINCT main.id
+			FROM
+				$table_name AS main
+				LEFT JOIN $table_name AS child ON main.id = child.parentId
+			WHERE
+				main.path IS NOT NULL
+				AND main.parentId IS NULL
+				$search_clause
+			GROUP BY
+				main.id
+			;"
+		);
+	}
+
+	function get_stats_of_issues_to_repair( $search = '' ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . "mclean_scan";
+
+		$search_clause = '';
+		if ( !empty( $search ) ) {
+			$search_clause = $wpdb->prepare("AND main.path LIKE %s", ( '%' . $search . '%' ));
+		}
+
+		return $wpdb->get_row( "SELECT
+			COUNT(id) AS entries,
+			SUM(size) AS size
+			FROM (
+				SELECT
+					COUNT(DISTINCT main.id) as id,
+					main.size as size
+				FROM
+					$table_name AS main
+				LEFT JOIN
+					$table_name AS child ON main.id = child.parentId
+				WHERE
+					main.path IS NOT NULL AND main.parentId IS NULL AND main.deleted = 0 AND main.ignored = 0
+					$search_clause
+				GROUP BY main.id
+			) t;
+		" );
+	}
+
+	function get_count_of_issues_to_repair( $search ) {
+		$stats = $this->get_stats_of_issues_to_repair( $search );
+		return $stats->entries;
+	}
+
+	function delete( $id ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . "mclean_scan";
+		$issue = $this->get_issue( $id );
+
+		if ( empty( $issue ) ) {
+			$this->log( "🚫 Issue #{$id} does not exist. Cannot delete this." );
+			return false;
+		}
+
+		$regex = "^(.*)(\\s\\(\\+.*)$";
+		$issue->path = preg_replace( '/' . $regex . '/i', '$1', $issue->path ); // remove " (+ 6 files)" from path
+		$skip_trash = $this->get_option( 'skip_trash' );
+
+		if ( $issue->type === 0 ) {
+
+			// Delete file from the trash
+			if ( $issue->deleted === 1 ) {
+				$trashPath = trailingslashit( $this->get_trashdir() ) . $issue->path;
+				if ( unlink( $trashPath ) ) {
+					$wpdb->query( $wpdb->prepare( "DELETE FROM $table_name WHERE id = %d", $id ) );
+					$this->clean_dir( dirname( $trashPath ) );
+					return true;
+				}
+			}
+			// Delete file without using trash
+			else if ( $skip_trash ) {
+				$originalPath = trailingslashit( $this->upload_path ) . $issue->path;
+				if ( unlink( $originalPath ) ) {
+					$wpdb->query( $wpdb->prepare( "DELETE FROM $table_name WHERE id = %d", $id ) );
+					$this->clean_dir( dirname( $originalPath ) );
+					return true;
+				}
+			}
+			// Move file to the trash
+			else  if ( $this->trash_file( $issue->path ) ) {
+				$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET deleted = 1, ignored = 0 WHERE id = %d", $id ) );
+				return true;
+			}
+
+			$this->log( "🚫 Failed to delete/trash the file." );
+			error_log( "Media Cleaner: Failed to delete/trash the file." );
+		}
+
+		if ( $issue->type === 1 ) {
+
+			// Trash Media definitely by recovering it (to be like a normal Media) and remove it through the
+			// standard WordPress workflow
+			if ( $issue->deleted === 1 || $skip_trash  ) {
+				if ( $issue->deleted === 1 ) {
+					$this->recover( $id );
+				}
+				wp_update_post( array( 'ID' => $issue->postId, 'post_type' => 'attachment' ) );
+				wp_delete_attachment( $issue->postId, true );
+				$wpdb->query( $wpdb->prepare( "DELETE FROM $table_name WHERE id = %d", $id ) );
 				return true;
 			}
 			else {
-				// Delete file from the trash
-				$trashPath = trailingslashit( $this->get_trashdir() ) . $issue->path;
-				if ( !unlink( $trashPath ) ) {
-					$this->log( "🚫 Failed to delete the file." );
-					error_log( "Media Cleaner: Failed to delete the file." );
-				}
-				$wpdb->query( $wpdb->prepare( "DELETE FROM $table_name WHERE id = %d", $id ) );
-				$this->clean_dir( dirname( $trashPath ) );
-				return true;
-			}
-		}
-
-		if ( $issue->type == 1 ) {
-			if ( $issue->deleted == 0 && MEDIA_TRASH ) {
 				// Move Media to trash
 				// Let's copy the images to the trash so that it can be recovered.
 				$paths = $this->get_paths_from_attachment( $issue->postId );
@@ -676,19 +1065,11 @@ class Meow_WPMC_Core {
 					if ( !$this->trash_file( $path ) ) {
 						$this->log( "🚫 Could not trash $path." );
 						error_log( "Media Cleaner: Could not trash $path." );
+						return false;
 					}
 				}
-				wp_delete_attachment( $issue->postId, false );
+				wp_update_post( array( 'ID' => $issue->postId, 'post_type' => 'wmpc-trash' ) );
 				$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET deleted = 1, ignored = 0 WHERE id = %d", $id ) );
-				return true;
-			}
-			else {
-				// Trash Media definitely by recovering it (to be like a normal Media) and remove it through the
-				// standard WordPress workflow
-				if ( MEDIA_TRASH )
-					$this->recover( $id );
-				wp_delete_attachment( $issue->postId, true );
-				$wpdb->query( $wpdb->prepare( "DELETE FROM $table_name WHERE id = %d", $id ) );
 				return true;
 			}
 		}
@@ -707,9 +1088,17 @@ class Meow_WPMC_Core {
 			// With files, we need both filename without resolution and filename with resolution, it's important
 			// to make sure the original file is not deleted if a size exists for it.
 			// With media, all URLs should be without resolution to make sure it matches Media.
-			if ( $this->current_method == 'files' )
+			if ( $this->current_method == 'files' ) {
 				$this->add_reference( null, $url, $type, $origin );
-			$this->add_reference( 0, $this->clean_url_from_resolution( $url ), $type, $origin );
+				$this->add_reference( 0, $this->clean_url_from_resolution( $url ), $type, $origin );
+			}
+			else {
+				// 2021/11/08: I added this, the problem is that sometimes users create image filenames with the resolution
+				// in it, even though it is the original.
+				$this->add_reference( null, $url, $type, $origin );
+
+				$this->add_reference( 0, $this->clean_url_from_resolution( $url ), $type, $origin );
+			}
 		}
 	}
 
@@ -739,9 +1128,60 @@ class Meow_WPMC_Core {
 	private $cached_ids = array();
 	private $cached_urls = array();
 
+	// Returns the reference with the type, origin, related to a Media ID it is referenced
+	public function get_reference_for_media_id( $id ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . "mclean_refs";
+		$refs = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $table_name WHERE mediaId = %d", $id ), OBJECT );
+		if ( empty( $refs ) ) {
+			return false;
+		}
+		$ref = $refs[0];
+		$ref->id = (int)$ref->id;
+		$ref->mediaId = (int)$ref->mediaId;
+		$ref->originType = (int)$ref->originType;
+		$ref->origin = stripslashes( $ref->origin );
+		$ref->parentId = empty( $ref->parentId ) ? null : (int)$ref->parentId;
+		return $ref;
+	}
+
+	// Return the references related to a Post ID
+	public function get_references_for_post_id( $id ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . "mclean_refs";
+		$refs = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $table_name WHERE originType LIKE %s", "%[$id]" ), OBJECT );
+		if ( empty( $refs ) ) {
+			return [];
+		}
+		$fresh_refs = array();
+		foreach ( $refs as $ref ) {
+			$mediaId = (int)$ref->mediaId > 0 ? (int)$ref->mediaId : null;
+			if ( !$mediaId && !empty( $ref->mediaUrl ) ) {
+				$mediaId = $this->find_media_id_from_file( $ref->mediaUrl, false );
+				$mediaId = !empty( $mediaId ) ? (int)$mediaId : null;
+			}
+			if ( !$mediaId ) {
+				continue;
+			}
+			array_push( $fresh_refs, [
+				'id' => (int)$ref->id,
+				'mediaId' => $mediaId,
+				'mediaUrl' => $ref->mediaUrl,
+				'originType' => $ref->originType,
+				'parentId' => empty( $ref->parentId ) ? null : (int)$ref->parentId,
+			] );
+		}
+		return $fresh_refs;
+	}
+
 	// The references are actually not being added directly in the DB, they are being pushed
 	// into a cache ($this->refcache).
 	private function add_reference( $id, $url, $type, $origin = null, $extra = null ) {
+
+		if ( !empty( $origin ) ) {
+			$type = $type . " [$origin]";
+		}
+
 		if ( !empty( $id ) ) {
 			if ( !in_array( $id, $this->cached_ids ) ) {
 				array_push( $this->cached_ids, $id );
@@ -761,34 +1201,81 @@ class Meow_WPMC_Core {
 		}
 	}
 
-	// The cache containing the references is wrote to the DB.
-	function write_references() {
+	function insert_references($entries)
+	{
 		global $wpdb;
 		$table = $wpdb->prefix . "mclean_refs";
 		$values = array();
 		$place_holders = array();
-		$query = "INSERT INTO $table (mediaId, mediaUrl, originType) VALUES ";
-		foreach ( $this->refcache as $value ) {
-			if ( !is_null( $value['id'] ) ) {
+		$query = "INSERT INTO $table (mediaId, mediaUrl, originType, parentId) VALUES ";
+
+		foreach ( $entries as $value ) {
+			if ( !is_null($value['id'] ) ) {
+				// Media Reference
 				array_push( $values, $value['id'], $value['type'] );
-				$place_holders[] = "('%d',NULL,'%s')";
-				if ( $this->debug_logs ) {
-					$this->log( "＋ Media #{$value['id']} (as ID)" );
+				$place_holders[] = "('%d', NULL, '%s', NULL)";
+
+				if ($this->debug_logs) {
+					$this->log("＋ Media #{$value['id']} (as ID)");
 				}
 			}
-			else if ( !is_null( $value['url'] ) ) {
+			else if ( !is_null($value['url'] ) ) {
+				// File Reference
 				array_push( $values, $value['url'], $value['type'] );
-				$place_holders[] = "(NULL,'%s','%s')";
-				if ( $this->debug_logs ) {
-					$this->log( "＋ {$value['url']}" );
+				if ( isset( $value['parentId'] ) ) {
+					array_push( $values, $value['parentId'] );
+					$place_holders[] = "(NULL, '%s', '%s', '%d')";
+					if ( $this->debug_logs ) {
+						$this->log( "＋ {$value['url']} (as URL) (ParentID: {$value['parentId']})" );
+					}
+				} else {
+					$place_holders[] = "(NULL, '%s', '%s', NULL)";
+					if ( $this->debug_logs ) {
+						$this->log("＋ {$value['url']} (as URL)");
+					}
 				}
 			}
 		}
+
 		if ( !empty( $values ) ) {
 			$query .= implode( ', ', $place_holders );
 			$prepared = $wpdb->prepare( "$query ", $values );
 			$wpdb->query( $prepared );
 		}
+	}
+
+
+	// The cache containing the references is wrote to the DB.
+	function write_references() {
+		global $wpdb;
+		$table = $wpdb->prefix . "mclean_refs";
+
+		$potential_parents = array();
+		$potential_children = array();
+
+		foreach ( $this->refcache as $value ) {
+			$potentialParentPath = !is_null( $value['url'] ) ? $this->clean_url_from_resolution( $value['url'] ) : null;
+			if ( $potentialParentPath === $value['url'] ) {
+				$potential_parents[] = $value;
+			}
+			else {
+				$potential_children[] = $value;
+			}
+		}
+
+		$this->insert_references( $potential_parents );
+
+		// Resolve parentId for potential children
+		foreach ( $potential_children as &$child ) {
+			$potentialParentPath = $this->clean_url_from_resolution( $child['url'] );
+			$parentId = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM $table WHERE mediaUrl = %s", $potentialParentPath ) );
+			if ( !empty( $parentId ) ) {
+				$child['parentId'] = (int)$parentId;
+			}
+		}
+
+		// Insert potential children with resolved parentIds
+		$this->insert_references( $potential_children );
 		$this->refcache = array();
 	}
 
@@ -938,6 +1425,12 @@ class Meow_WPMC_Core {
 		return false;
 	}
 
+	function get_full_upload_path( $relative_path ) {
+		$wp_upload_dir = wp_upload_dir();
+		$full_path = trailingslashit( $wp_upload_dir['basedir'] ) . $relative_path;
+		return $full_path;
+	}
+
 	function get_paths_from_attachment( $attachmentId ) {
 		$paths = array();
 		$fullpath = get_attached_file( $attachmentId );
@@ -985,11 +1478,16 @@ class Meow_WPMC_Core {
 			return true;
 		}
 
+		// Remove everything related to this media from the database.
+		if ( !$checkOnly ) {
+			$this->delete_attachment_related_data( $attachmentId );
+		}
+
 		$size = 0;
 		$countfiles = 0;
 		$check_broken_media = !$this->check_content;
 		$fullpath = get_attached_file( $attachmentId );
-		$is_broken = !file_exists( $fullpath );
+		$is_broken = apply_filters( 'wpmc_is_file_broken', !file_exists( $fullpath ), $attachmentId );
 
 		// It's a broken-only scan
 		if ( $check_broken_media && !$is_broken ) {
@@ -1057,13 +1555,24 @@ class Meow_WPMC_Core {
 		if ( file_exists( WPMC_PATH . '/logs/media-cleaner.log' ) ) {
 			file_put_contents( WPMC_PATH . '/logs/media-cleaner.log', '' );
 		}
+	}
+
+	function reset_references() {
+		global $wpdb;
 		$table_name = $wpdb->prefix . "mclean_refs";
 		$wpdb->query("TRUNCATE $table_name");
 	}
 
+	function get_issue_for_postId( $postId ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . "mclean_scan";
+		$issue = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table_name WHERE postId = %d", $postId ), OBJECT );
+		return $issue;
+	}
+
 	function echo_issue( $issue ) {
 		if ( $issue == 'NO_CONTENT' ) {
-			_e( "Seems not use", 'media-cleaner' );
+			_e( "Not found in content", 'media-cleaner' );
 		}
 		else if ( $issue == 'ORPHAN_FILE' ) {
 			_e( "Not in Library", 'media-cleaner' );
@@ -1081,7 +1590,246 @@ class Meow_WPMC_Core {
 			echo $issue;
 		}
 	}
+
+	function get_uploads_directory_hierarchy() {
+		$uploads_dir = wp_upload_dir();
+		$base_dir = $uploads_dir['basedir'];
+		$root = '/' . wp_basename( $base_dir );
+		$directories = array();
+
+		// Get all subdirectories of the base directory
+		$dir_iterator = new RecursiveDirectoryIterator( $base_dir, FilesystemIterator::KEY_AS_PATHNAME|FilesystemIterator::CURRENT_AS_FILEINFO|FilesystemIterator::SKIP_DOTS );
+		$iterator = new RecursiveIteratorIterator( $dir_iterator, RecursiveIteratorIterator::SELF_FIRST );
+		foreach ( $iterator as $file ) {
+			if ( $file->isDir() ) {
+				// Remove base_dir from path
+				$directory = str_replace( $base_dir, '', $file->getPathname() );
+				if ( $directory ) {
+					$directories[] = $root . $directory;
+				}
+			}
+		}
+
+		// Return the hierarchy as a JSON file
+		return json_encode( $directories );
+	}
+
+	/**
+	 *
+	 * Roles & Access Rights
+	 *
+	 */
+	public function can_access_settings() {
+		return apply_filters( 'wpmc_allow_setup', current_user_can( 'manage_options' ) );
+	}
+
+	public function can_access_features() {
+		return apply_filters( 'wpmc_allow_usage', current_user_can( 'administrator' ) );
+	}
+
+	#region Options
+
+	function list_options() {
+		return array(
+			'method' => 'media',
+			'content' => true,
+			'filesystem_content' => false,
+			'media_library' => true,
+			'live_content' => false,
+			'debuglogs' => false,
+			'images_only' => false,
+			'attach_is_use' => false,
+			'thumbnails_only' => false,
+			'dirs_filter' => '',
+			'files_filter' => '',
+			'hide_thumbnails' => false,
+			'hide_warning' => false,
+			'skip_trash' => false,
+			'medias_buffer' => 100,
+			'posts_buffer' => 5,
+			'analysis_buffer' => 100,
+			'file_op_buffer' => 20,
+			'delay' => 100,
+			'shortcodes_disabled' => false,
+			'output_buffer_cleaning_disabled' => false,
+			'php_error_logs' => false,
+			'posts_per_page' => 10,
+			'clean_uninstall' => false,
+			'repair_mode' => false,
+			'expert_mode' => false,
+			'logs_path' => null,
+		);
+	}
+
+	function reset_options() {
+		delete_option( $this->option_name );
+	}
+
+	function get_option( $option ) {
+		$options = $this->get_all_options();
+		return $options[$option];
+	}
+
+	function get_all_options() {
+		$options = get_option( $this->option_name, null );
+		$options = $this->check_options( $options );
+		return $options;
+	}
+
+	// Let's work on this function if we need it.
+	// Right now, it looks like the options are all updated at the same time.
+
+	// function update_option( $option, $value ) {
+	// 	if ( !array_key_exists( $name, $options ) ) {
+	// 		return new WP_REST_Response([ 'success' => false, 'message' => 'This option does not exist.' ], 200 );
+	// 	}
+	//  $value = is_bool( $params['value'] ) ? ( $params['value'] ? '1' : '' ) : $params['value'];
+	// }
+
+	function update_options( $options ) {
+		if ( !update_option( $this->option_name, $options, false ) ) {
+			return false;
+		}
+		$options = $this->sanitize_options();
+		return $options;
+	}
+
+	// Upgrade from the old way of storing options to the new way.
+	function check_options( $options = [] ) {
+		$plugin_options = $this->list_options();
+		$options = empty( $options ) ? [] : $options;
+		$hasChanges = false;
+		foreach ( $plugin_options as $option => $default ) {
+			// The option already exists
+			if ( isset( $options[$option] ) ) {
+				continue;
+			}
+			// The option does not exist, so we need to add it.
+			// Let's use the old value if any, or the default value.
+			$options[$option] = get_option( 'wpmc_' . $option, $default );
+			delete_option( 'wpmc_' . $option );
+			$hasChanges = true;
+		}
+		if ( $hasChanges ) {
+			update_option( $this->option_name , $options );
+		}
+		return $options;
+	}
+
+	// Validate and keep the options clean and logical.
+	function sanitize_options() {
+		$options = $this->get_all_options();
+		$medias = $options['medias_buffer'];
+		$posts = $options['posts_buffer'];
+		$analysis = $options['analysis_buffer'];
+		$fileOp = $options['file_op_buffer'];
+		$delay = $options['delay'];
+		$hasChanges = false;
+		if ( $medias === '' ) {
+			$options['medias_buffer'] = 100;
+			$hasChanges = true;
+		}
+		if ( $posts === '' ) {
+			$options['posts_buffer'] = 5;
+			$hasChanges = true;
+		}
+		if ( $analysis === '' ) {
+			$options['analysis_buffer'] = 100;
+			$hasChanges = true;
+		}
+		if ( $fileOp === '' ) {
+			$options['file_op_buffer'] = 20;
+			$hasChanges = true;
+		}
+		if ( $delay === '' ) {
+			$options['delay'] = 100;
+			$hasChanges = true;
+		}
+		if ( $hasChanges ) {
+			update_option( $this->option_name, $options, false );
+		}
+		return $options;
+	}
+
+	#endregion
 }
+
+// Check the DB. If does not exist, let's create it.
+// TODO: When PHP 7 only, let's clean this and use anonymous functions.
+function wpmc_check_database() {
+	global $wpdb;
+	static $wpmc_check_database_done = false;
+	if ( $wpmc_check_database_done ) {
+		return true;
+	}
+	$table_refs = $wpdb->prefix . "mclean_refs";
+	$table_scan = $wpdb->prefix . "mclean_scan";
+	$db_init = !( strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_refs'" ) ) != strtolower( $table_refs )
+		|| strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_scan'" ) ) != strtolower( $table_scan ) );
+	if ( !$db_init ) {
+		wpmc_create_database();
+		$db_init = !( strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_refs'" ) ) != strtolower( $table_refs )
+			|| strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_scan'" ) ) != strtolower( $table_scan ) );
+	}
+
+	// Check if parentId column exists in the table
+	// TODO: Delete this after June 2024
+	$parentIdExists = $wpdb->get_var( "SHOW COLUMNS FROM $table_refs LIKE 'parentId'" );
+	if ( !$parentIdExists ) {
+		$wpdb->query( "ALTER TABLE $table_refs ADD parentId BIGINT(20) NULL;" );
+		$wpdb->query( "ALTER TABLE $table_scan ADD parentId BIGINT(20) NULL;" );
+	}
+
+	$wpmc_check_database_done = true;
+}
+
+function wpmc_create_database() {
+	global $wpdb;
+	$table_name = $wpdb->prefix . "mclean_scan";
+	$charset_collate = $wpdb->get_charset_collate();
+	$sql = "CREATE TABLE $table_name (
+		id BIGINT(20) NOT NULL AUTO_INCREMENT,
+		time DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
+		type TINYINT(1) NOT NULL,
+		postId BIGINT(20) NULL,
+		path TINYTEXT NULL,
+		size INT(9) NULL,
+		ignored TINYINT(1) NOT NULL DEFAULT 0,
+		deleted TINYINT(1) NOT NULL DEFAULT 0,
+		issue TINYTEXT NOT NULL,
+		parentId BIGINT(20) NULL,
+		PRIMARY KEY  (id)
+	) " . $charset_collate . ";" ;
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	dbDelta( $sql );
+	$sql="ALTER TABLE $table_name ADD INDEX IgnoredIndex (ignored) USING BTREE;";
+	$wpdb->query($sql);
+	$table_name = $wpdb->prefix . "mclean_refs";
+	$charset_collate = $wpdb->get_charset_collate();
+	// This key doesn't work on too many installs because of the 'Specified key was too long' issue
+	// KEY mediaLookUp (mediaId, mediaUrl)
+	$sql = "CREATE TABLE $table_name (
+		id BIGINT(20) NOT NULL AUTO_INCREMENT,
+		mediaId BIGINT(20) NULL,
+		mediaUrl TINYTEXT NULL,
+		originType TINYTEXT NOT NULL,
+		parentId BIGINT(20) NULL,
+		PRIMARY KEY  (id)
+	) " . $charset_collate . ";";
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	dbDelta( $sql );
+}
+
+function wpmc_remove_database() {
+	global $wpdb;
+	$table_name1 = $wpdb->prefix . "mclean_scan";
+	$table_name2 = $wpdb->prefix . "mclean_refs";
+	$table_name3 = $wpdb->prefix . "wpmcleaner";
+	$sql = "DROP TABLE IF EXISTS $table_name1, $table_name2, $table_name3;";
+	$wpdb->query( $sql );
+}
+
+#region Install / Uninstall
 
 /*
 	INSTALL / UNINSTALL
@@ -1102,66 +1850,6 @@ function wpmc_reset () {
 	wpmc_create_database();
 }
 
-function wpmc_uninstall () {
-	//wpmc_remove_options();
-	//wpmc_remove_database();
-}
-
-// Check the DB. If does not exist, let's create it.
-// TODO: When PHP 7 only, let's clean this and use anonymous functions.
-function wpmc_check_database() {
-	global $wpdb;
-	static $wpmc_check_database_done = false;
-	if ( $wpmc_check_database_done ) {
-		return true;
-	}
-	$table_scan = $wpdb->prefix . "mclean_refs";
-	$table_refs = $wpdb->prefix . "mclean_scan";
-	$db_init = !( strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_scan'" ) ) != strtolower( $table_scan )
-		|| strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_refs'" ) ) != strtolower( $table_refs ) );
-	if ( !$db_init ) {
-		wpmc_create_database();
-		$db_init = !( strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_scan'" ) ) != strtolower( $table_scan )
-			|| strtolower( $wpdb->get_var( "SHOW TABLES LIKE '$table_refs'" ) ) != strtolower( $table_refs ) );
-	}
-	$wpmc_check_database_done = true;
-}
-
-function wpmc_create_database() {
-	global $wpdb;
-	$table_name = $wpdb->prefix . "mclean_scan";
-	$charset_collate = $wpdb->get_charset_collate();
-	$sql = "CREATE TABLE $table_name (
-		id BIGINT(20) NOT NULL AUTO_INCREMENT,
-		time DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
-		type TINYINT(1) NOT NULL,
-		postId BIGINT(20) NULL,
-		path TINYTEXT NULL,
-		size INT(9) NULL,
-		ignored TINYINT(1) NOT NULL DEFAULT 0,
-		deleted TINYINT(1) NOT NULL DEFAULT 0,
-		issue TINYTEXT NOT NULL,
-		PRIMARY KEY  (id)
-	) " . $charset_collate . ";" ;
-	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-	dbDelta( $sql );
-	$sql="ALTER TABLE $table_name ADD INDEX IgnoredIndex (ignored) USING BTREE;";
-	$wpdb->query($sql);
-	$table_name = $wpdb->prefix . "mclean_refs";
-	$charset_collate = $wpdb->get_charset_collate();
-	// This key doesn't work on too many installs because of the 'Specified key was too long' issue
-	// KEY mediaLookUp (mediaId, mediaUrl)
-	$sql = "CREATE TABLE $table_name (
-		id BIGINT(20) NOT NULL AUTO_INCREMENT,
-		mediaId BIGINT(20) NULL,
-		mediaUrl TINYTEXT NULL,
-		originType TINYTEXT NOT NULL,
-		PRIMARY KEY  (id)
-	) " . $charset_collate . ";";
-	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-	dbDelta( $sql );
-}
-
 function wpmc_remove_options() {
 	global $wpdb;
 	$options = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE 'wpmc_%'" );
@@ -1170,11 +1858,13 @@ function wpmc_remove_options() {
 	}
 }
 
-function wpmc_remove_database() {
-	global $wpdb;
-	$table_name1 = $wpdb->prefix . "mclean_scan";
-	$table_name2 = $wpdb->prefix . "mclean_refs";
-	$table_name3 = $wpdb->prefix . "wpmcleaner";
-	$sql = "DROP TABLE IF EXISTS $table_name1, $table_name2, $table_name3;";
-	$wpdb->query( $sql );
+function wpmc_uninstall () {
+	$options = get_option( 'wpmc_options', [] );
+	$cleanUninstall = $options['clean_uninstall'];
+	if ($cleanUninstall) {
+		wpmc_remove_options();
+		wpmc_remove_database();
+	}
 }
+
+#endregion

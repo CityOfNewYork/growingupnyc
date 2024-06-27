@@ -1,6 +1,8 @@
 <?php
 
 class Meow_WPMC_Engine {
+	private $core;
+	private $admin;
 
 	function __construct( $core, $admin ) {
 		$this->core = $core;
@@ -26,7 +28,7 @@ class Meow_WPMC_Engine {
 		$q = <<<SQL
 SELECT p.ID FROM $wpdb->posts p
 WHERE p.post_status NOT IN ('inherit', 'trash', 'auto-draft')
-AND p.post_type NOT IN ('attachment', 'shop_order', 'shop_order_refund', 'nav_menu_item', 'revision', 'auto-draft', 'wphb_minify_group', 'customize_changeset', 'oembed_cache', 'nf_sub')
+AND p.post_type NOT IN ('attachment', 'shop_order', 'shop_order_refund', 'nav_menu_item', 'revision', 'auto-draft', 'wphb_minify_group', 'customize_changeset', 'oembed_cache', 'nf_sub', 'jp_img_sitemap')
 AND p.post_type NOT LIKE 'dlssus_%'
 AND p.post_type NOT LIKE 'ml-slide%'
 AND p.post_type NOT LIKE '%acf-%'
@@ -43,19 +45,21 @@ SQL;
 	}
 
 	// Parse the posts for references (based on $limit and $limitsize for paging the scan)
-	function extractRefsFromContent( $limit, $limitsize, &$message = '' ) {
-		if ( empty( $limit ) )
+	function extractRefsFromContent( $limit, $limitsize, &$message = '', $post_id = null ) {
+		if ( empty( $limit ) ) {
 			$this->core->reset_issues();
+			$this->core->reset_references();
+		}
 
 		$method = $this->core->current_method;
 
 		// Check content is a different option depending on the method
 		$check_content = false;
 		if ( $method === 'media' ) {
-			$check_content = get_option( 'wpmc_content', true );
+			$check_content = $this->core->get_option( 'content' );
 		}
 		else if ( $method === 'files' ) {
-			$check_content = get_option( 'wpmc_filesystem_content', false );
+			$check_content = $this->core->get_option( 'filesystem_content' );
 		}
 
 		if ( $method == 'media' && !$check_content ) {
@@ -71,7 +75,7 @@ SQL;
 		// Initialize the parsers
 		do_action( 'wpmc_initialize_parsers' );
 
-		$posts = $this->get_posts_to_check( $limit, $limitsize );
+		$posts = $post_id !== null ? [ $post_id ] : $this->get_posts_to_check( $limit, $limitsize );
 
 		// Only at the beginning, check the Widgets and the Scan Once in the Parsers
 		if ( empty( $limit ) ) {
@@ -125,19 +129,19 @@ SQL;
 	}
 
 	// Parse the posts for references (based on $limit and $limitsize for paging the scan)
-	function extractRefsFromLibrary( $limit, $limitsize, &$message = '' ) {
+	function extractRefsFromLibrary( $limit, $limitsize, &$message = '', $post_id = null ) {
 		$method = $this->core->current_method;
 		if ( $method == 'media' ) {
 			$message = __( "Skipped, as it is not needed for the Media Library method.", 'media-cleaner' );
 			return true;
 		}
-		$check_library = get_option(' wpmc_media_library', true );
+		$check_library = $this->core->get_option( 'media_library' );
 		if ( !$check_library ) {
 			$message = __( "Skipped, as Media Library is not selected.", 'media-cleaner' );
 			return true;
 		}
 
-		$medias = $this->get_media_entries( $limit, $limitsize );
+		$medias = $this->get_media_entries( $limit, $limitsize, false, $post_id );
 
 		// Only at the beginning
 		if ( empty( $limit ) ) {
@@ -178,20 +182,30 @@ SQL;
 	 * Returns the media entries to check the references
 	 * @param int $offset Negative number means no limit
 	 * @param int $size   Negative number means no limit
+	 * @param bool $unattachedOnly
+	 * @param int|null $post_parent_id If this is set with $unattachedOnly, this is ignored. ($unattachedOnly is prioritized)
 	 * @return NULL|array
 	 */
-	function get_media_entries( $offset = -1, $size = -1 ) {
+	function get_media_entries( $offset = -1, $size = -1, $unattachedOnly = false, $post_parent_id = null ) {
 		global $wpdb;
 		$r = null;
+
+		$extraAnd = $unattachedOnly
+			? "AND p.post_parent = 0"
+			: ( $post_parent_id !== null
+				? $wpdb->prepare( "AND p.post_parent = %d", $post_parent_id )
+				: '' );
 
 		$q = <<<SQL
 SELECT p.ID FROM $wpdb->posts p
 WHERE p.post_status = 'inherit'
+$extraAnd
 AND p.post_type = 'attachment'
 SQL;
-		if ( get_option( 'wpmc_images_only' ) ) {
+		if ( $this->core->get_option( 'images_only' ) ) {
 			// Get only media entries which are images
-			$q .= " AND p.post_mime_type IN ( 'image/jpeg' )";
+			$q .= " AND p.post_mime_type IN ( 'image/jpeg', 'image/gif', 'image/png', 'image/webp',
+				'image/bmp', 'image/tiff', 'image/x-icon', 'image/svg' )";
 		}
 
 		if ( $offset >= 0 && $size >= 0 ) {
@@ -213,7 +227,32 @@ SQL;
 	}
 
 	function check_file( $file ) {
-		return apply_filters( 'wpmc_check_file', true, $file );
+		// Basically, wpmc_check_file returns either true if it's used, or
+		// the codename of the issue.
+		$issue = apply_filters( 'wpmc_check_file', false, $file );
+		$used = $issue === true;
+		if ( !$used ) {
+			global $wpdb;
+			$filepath = trailingslashit( $this->core->upload_path ) . stripslashes( $file );
+			$clean_path = $this->core->clean_uploaded_filename( $file );
+			$table_name = $wpdb->prefix . "mclean_scan";
+			$filesize = file_exists( $filepath ) ? filesize ($filepath) : 0;
+			// Let's find out if there is a parentId for this file
+			$potentialParentPath = $this->core->clean_url_from_resolution( $clean_path );
+			$parentId = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM $table_name WHERE path = %s", $potentialParentPath ) );
+			$parentId = $parentId ? (int)$parentId : null;
+			$wpdb->insert( $table_name,
+				array(
+					'time' => current_time('mysql'),
+					'type' => 0,
+					'path' => $clean_path,
+					'size' => $filesize,
+					'issue' => $issue,
+					'parentId' => $parentId
+				)
+			);
+		}
+		return $used;
 	}
 
 }

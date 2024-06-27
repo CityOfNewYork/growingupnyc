@@ -4,10 +4,16 @@ if ( !class_exists( 'MeowCommon_Helpers' ) ) {
 
 	class MeowCommon_Helpers {
 	
-		public static $version = MeowCommon_Admin::version;
+		//public static $version = MeowCommon_Admin::version;
+		private static $startTimes = array();
+		private static $startQueries = array();
 
 		static function is_divi_builder() {
 			return isset( $_GET['et_fb'] ) && $_GET['et_fb'] === '1';
+		}
+
+		static function is_beaver_builder() {
+			return isset( $_GET['fl_builder'] );
 		}
 
 		static function is_cornerstone_builder() {
@@ -15,7 +21,7 @@ if ( !class_exists( 'MeowCommon_Helpers' ) ) {
 		}
 
 		static function is_pagebuilder_request() {
-			return self::is_divi_builder() || self::is_cornerstone_builder();
+			return self::is_divi_builder() || self::is_cornerstone_builder() || self::is_beaver_builder();
 		}
 
 		static function is_asynchronous_request() {
@@ -30,13 +36,71 @@ if ( !class_exists( 'MeowCommon_Helpers' ) ) {
 			return !empty( $_GET['wc-ajax'] );
 		}
 
+		// This function makes sure that only the allowed HTML element names,
+		// attribute names, attribute values, and HTML entities will occur in the given text string.
+		static function wp_kses( $html ) {
+			return wp_kses( $html, array(
+				'style' => array(),
+				'script' => array(),
+				'div' => array(
+					'class' => array(),
+					'data-rating-date' => array(),
+					'style' => array(),
+				),
+				'img' => array(
+					'src' => array(),
+					'decoding' => array(),
+					'class' => array(),
+					'style' => array(),
+				),
+				'p' => array(
+					'style' => array(),
+				),
+				'h2' => array(
+					'class' => array(),
+				),
+				'br' => array(),
+				'label' => array(),
+				'b' => array(),
+				'small' => array(),
+				'a' => array(
+					'href' => array(),
+					'target' => array(),
+					'class' => array(),
+					'style' => array(),
+				),
+				'form' => array(
+					'method' => array(),
+					'action' => array(),
+					'class' => array(),
+					'style' => array(),
+				),
+				'input' => array(
+					'type' => array(),
+					'checked' => array(),
+					'name' => array(),
+					'value' => array(),
+					'id' => array(),
+					'class' => array(),
+				),
+			) );
+		}
+
+		// Diff between two strings
+		static function diff( $first, $second ) {
+			$first = explode( ' ', $first );
+			$second = explode( ' ', $second );
+			$diff = array_diff( $first, $second );
+			return implode( ' ', $diff );
+		}
+ 
 		// Originally created by matzeeable, modified by jordymeow
 		static function is_rest() {
 
 			// WP_REST_Request init.
 			$is_rest_request = defined('REST_REQUEST') && REST_REQUEST;
 			if ( $is_rest_request ) {
-				MeowCommon_Classes_Rest::init_once();
+				MeowCommon_Rest::init_once();
 				return true;
 			}
 
@@ -44,7 +108,7 @@ if ( !class_exists( 'MeowCommon_Helpers' ) ) {
 			$prefix = rest_get_url_prefix();
 			$request_contains_rest = isset( $_GET['rest_route'] ) && strpos( trim( $_GET['rest_route'], '\\/' ), $prefix , 0 ) === 0;
 			if ( $request_contains_rest) {
-				MeowCommon_Classes_Rest::init_once();
+				MeowCommon_Rest::init_once();
 				return true;
 			}		
 
@@ -53,7 +117,7 @@ if ( !class_exists( 'MeowCommon_Helpers' ) ) {
 			if ( $wp_rewrite === null ) { 
 				$wp_rewrite = new WP_Rewrite();
 			}
-			$rest_url = wp_parse_url( trailingslashit( rest_url() ) );
+			$rest_url = wp_parse_url( trailingslashit( get_rest_url() ) );
 			$current_url = wp_parse_url( add_query_arg( array() ) );
 			if ( !$rest_url || !$current_url )
 				return false;
@@ -62,7 +126,7 @@ if ( !class_exists( 'MeowCommon_Helpers' ) ) {
 			if ( !empty( $current_url['path'] ) && !empty( $rest_url['path'] ) ) {
 				$request_contains_rest = strpos( $current_url['path'], $rest_url['path'], 0 ) === 0;
 				if ( $request_contains_rest) {
-					MeowCommon_Classes_Rest::init_once();
+					MeowCommon_Rest::init_once();
 					return true;
 				}
 			}
@@ -169,11 +233,26 @@ if ( !class_exists( 'MeowCommon_Helpers' ) ) {
 			// 	return $html;
 			// }
 		}
+
+		static function timer_start( $timerName = 'default' ) {
+			MeowCommon_Helpers::$startQueries[ $timerName ] = get_num_queries();
+			MeowCommon_Helpers::$startTimes[ $timerName ] = microtime( true );
+		}
+
+		static function timer_elapsed( $timerName = 'default' ) {
+			return microtime( true ) - MeowCommon_Helpers::$startTimes[ $timerName ];
+		}
+
+		static function timer_log_elapsed( $timerName = 'default' ) {
+			$elapsed = MeowCommon_Helpers::timer_elapsed( $timerName );
+			$queries = get_num_queries() - MeowCommon_Helpers::$startQueries[ $timerName ];
+			error_log( $timerName . ": " . $elapsed . "ms (" . $queries . " queries)" );
+		}
 	}
 
-	if ( MeowCommon_Helpers::is_rest() ) {
-		ini_set( 'display_errors', 0 );
-	}
+	// Asked by WP Security Team to remove this.
+
+	// if ( MeowCommon_Helpers::is_rest() ) {
+	// 	ini_set( 'display_errors', 0 );
+	// }
 }
-
-?>

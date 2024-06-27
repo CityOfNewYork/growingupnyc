@@ -14,11 +14,12 @@ spl_autoload_register(function ( $class ) {
   if ( strpos( $class, 'Meow_WPMC' ) !== false ) {
     $file = WPMC_PATH . '/classes/' . str_replace( 'meow_wpmc_', '', strtolower( $class ) ) . '.php';
   }
-  else if ( strpos( $class, 'MeowCommon_Classes_' ) !== false ) {
-    $file = WPMC_PATH . '/common/classes/' . str_replace( 'meowcommon_classes_', '', strtolower( $class ) ) . '.php';
-  }
   else if ( strpos( $class, 'MeowCommon_' ) !== false ) {
     $file = WPMC_PATH . '/common/' . str_replace( 'meowcommon_', '', strtolower( $class ) ) . '.php';
+  }
+  else if ( strpos( $class, 'MeowCommonPro_' ) !== false ) {
+    $necessary = false;
+    $file = WPMC_PATH . '/common/premium/' . str_replace( 'meowcommonpro_', '', strtolower( $class ) ) . '.php';
   }
   else if ( strpos( $class, 'MeowPro_WPMC' ) !== false ) {
     $necessary = false;
@@ -32,13 +33,10 @@ spl_autoload_register(function ( $class ) {
   }
 });
 
-//require_once( WPMC_PATH . '/classes/api.php');
-require_once( WPMC_PATH . '/common/helpers.php');
-
 // In admin or Rest API request (REQUEST URI begins with '/wp-json/')
 if ( is_admin() || MeowCommon_Helpers::is_rest() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
-	global $mfrh_core;
-	$mfrh_core = new Meow_WPMC_Core();
+	global $wpmc_core;
+	$wpmc_core = new Meow_WPMC_Core();
 }
 
 ?>

@@ -51,7 +51,7 @@ $text = isset( $text ) ? $text : '';
 			<label class="screen-reader-text" for="icl_ss"><?php echo esc_html( $text ); ?>:</label>
 			<input type="hidden" name="page" value="<?php echo esc_attr( $_GET['page'] ); ?>"/>
 			<input type="text" id="icl_ss" name="s" value="<?php _admin_search_query(); ?>"/>
-			<?php submit_button( __( 'Search', 'sitepress' ), 'button', false, false, array( 'id' => 'search-submit' ) ); ?>
+			<?php submit_button( __( 'Search', 'sitepress' ), 'button', '', false, array( 'id' => 'search-submit' ) ); ?>
 
 		</p>
 	</form>
@@ -66,9 +66,6 @@ $text = isset( $text ) ? $text : '';
 
         <div class="tablenav top">
 			<?php
-			/**
-			 * @phpstan-ignore-next-line
-			 */
 			$wp_list_table->pagination( 'bottom' );
 			?>
         </div>
@@ -113,7 +110,9 @@ $text = isset( $text ) ? $text : '';
 						$blog_states[] = $col[1];
 					}
 				}
+
 				$blog_state = '';
+				/** @phpstan-ignore-next-line WP doc issue in above get_blog_status. */
 				if ( ! empty( $blog_states ) ) {
 					$state_count = count( $blog_states );
 					$i           = 0;
@@ -157,9 +156,6 @@ $text = isset( $text ) ? $text : '';
 						$actions['visit']   = "<span class='view'><a href='" . esc_url( get_home_url( $blog['blog_id'] ) ) . "' rel='permalink'>" . esc_html__( 'Visit', 'sitepress' ) . '</a></span>';
 
 						$actions = apply_filters( 'manage_sites_action_links', array_filter( $actions ), $blog['blog_id'], $blog_name );
-						/**
-						 * @phpstan-ignore-next-line
-						 */
 						echo $wp_list_table->row_actions( $actions );
 						?>
                     </td>
@@ -200,9 +196,6 @@ $text = isset( $text ) ? $text : '';
 
         <div class="tablenav bottom">
 			<?php
-			/**
-			 * @phpstan-ignore-next-line
-			 */
 			$wp_list_table->pagination( 'bottom' );
 			?>
         </div>

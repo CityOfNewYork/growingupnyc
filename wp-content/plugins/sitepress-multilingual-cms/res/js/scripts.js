@@ -7,13 +7,16 @@ WPML_core.htmlentities = function( s ) {
 };
 
 WPML_core.sanitize = function(s) {
-    return s.replace(/<script[^>]*?>.*?<\/script>/gi, '').
-    replace(/<[\/\!]*?[^<>]*?>/gi, '').
-    replace(/<style[^>]*?>.*?<\/style>/gi, '').
-    replace(/<![\s\S]*?--[ \t\n\r]*>/gi, '').
-    replace(/&nbsp;/g, '');
-};
+    if (typeof s === 'string' || s instanceof String) {
+        return s.replace(/<script[^>]*?>.*?<\/script>/gi, '').
+        replace(/<[\/\!]*?[^<>]*?>/gi, '').
+        replace(/<style[^>]*?>.*?<\/style>/gi, '').
+        replace(/<![\s\S]*?--[ \t\n\r]*>/gi, '').
+        replace(/&nbsp;/g, '');
+    }
 
+    return s;
+};
 
 jQuery(function ($) {
     // Predefine closeText of JQuery UI diaog
@@ -66,12 +69,20 @@ jQuery(function ($) {
         });
     }
 
-	if (jQuery('#icl_login_page_translation').length) {
-		jQuery('#icl_login_page_translation').submit(iclSaveForm);
-	}
+    var showLangSwitcher = jQuery('#show_login_page_language_switcher_sub_section');
+    var showLangSwitcherCheckbox = showLangSwitcher.find('[name="show_login_page_language_switcher"]');
+    jQuery('#login_page_translation').click(function() {
+        showLangSwitcher.toggle();
+        var isVisible = (showLangSwitcher.is(':visible'));
+        showLangSwitcherCheckbox.prop('checked', isVisible);
+    });
+
+    if (jQuery('#icl_login_page_translation').length) {
+        jQuery('#icl_login_page_translation').submit(iclSaveForm);
+    }
 
     jQuery('.icl_sync_custom_posts').change(function(){
-        var val = jQuery(this).val();
+        var val = WPML_core.sanitize( jQuery(this).val() );
         var table_row = jQuery(this).closest('tr');
         var cpt_slugs = jQuery(table_row).find('.js-cpt-slugs');
         var icl_slug_translation = jQuery(table_row).find(':checkbox');
@@ -87,30 +98,17 @@ jQuery(function ($) {
 
     });
 
-    function click_on_lock() {
-		var radio_name = jQuery( this ).data( 'radio-name' ),
-			unlocked_name = jQuery( this ).data( 'unlocked-name' );
+    $('.js-custom-post-mode').on('change', function () {
+        var radio = $(this),
+            slug = radio.data('slug')
+            toggle = jQuery('input[name="automatic_post_type[' + slug + ']"]').closest('.otgs-toggle-group');
 
-		jQuery( this ).fadeOut();
-		jQuery( 'input[name="' + radio_name + '"]' ).prop( 'disabled', false );
-		jQuery( 'input[name="' + unlocked_name + '"]' ).prop( 'value', '1' );
-
-		return false;
-	}
-
-	function sync_lock_on_custom_fields_and_terms( form_id ) {
-		var locks = jQuery( '#' + form_id ).find( '.js-wpml-sync-lock' );
-		locks.on( 'click', click_on_lock );
-	}
-
-    $(document).on('icl-bind-locks', function (e) {
-        sync_lock_on_custom_fields_and_terms(e.detail);
+        if (radio.val() === '1') {
+            toggle.show();
+        } else {
+            toggle.hide();
+        }
     });
-
-    $('#icl_custom_posts_sync_options .js-wpml-sync-lock, #icl_custom_tax_sync_options .js-wpml-sync-lock').on(
-        'click',
-        click_on_lock
-    );
 
     $(function () {
         $('.js-type-translation-row').each(function () {
@@ -186,7 +184,7 @@ jQuery(function ($) {
 
 	var update_icl_untranslated_blog_posts = function () {
 		//Get the value of currently selected radio option
-		var value = icl_untranslated_blog_posts.filter(':checked').val();
+		var value = WPML_core.sanitize( icl_untranslated_blog_posts.filter(':checked').val() );
 
 		if (value == 0) {
 			icl_untranslated_blog_posts_help.fadeOut('slow');
@@ -211,12 +209,45 @@ jQuery(function ($) {
 
 });
 
+(function($){
+	function click_on_lock() {
+		var radio_name = $( this ).data( 'radio-name' ),
+			radio = $( 'input[name="' + radio_name + '"]' ),
+			unlocked_name = $( this ).data( 'unlocked-name' ),
+			slug = radio.data( 'slug' );
+
+		$( this ).fadeOut();
+		radio.prop( 'disabled', false );
+		$( 'input[name="' + unlocked_name + '"]' ).prop( 'value', '1' );
+		$( 'input[name="automatic_post_type[' + slug + ']"]' ).prop( 'disabled', false );
+
+		return false;
+	}
+
+	function sync_lock_on_custom_fields_and_terms( form_id ) {
+		var locks = $( '#' + form_id ).find( '.js-wpml-sync-lock' );
+		locks.on( 'click', click_on_lock );
+	}
+
+	$(document).on('icl-bind-locks', function (e) {
+		sync_lock_on_custom_fields_and_terms(e.detail);
+	});
+
+	$(document).ready( function() {
+		$('#icl_custom_posts_sync_options .js-wpml-sync-lock, #icl_custom_tax_sync_options .js-wpml-sync-lock').on(
+			'click',
+			click_on_lock
+		);
+	});
+
+})(jQuery);
+
 function fadeInAjxResp(spot, msg, err){
     if(err != undefined){
         col = jQuery(spot).css('color');
         jQuery(spot).css('color','red');
     }
-    jQuery(spot).html(msg);
+    jQuery(spot).html(WPML_core.purify(msg));
     jQuery(spot).fadeIn();
     window.setTimeout(fadeOutAjxResp, 3000, spot);
     if(err != undefined){
@@ -290,7 +321,7 @@ function iclSaveForm() {
 			} else {
 				var icl_form_errors = jQuery('form[name="' + form_name + '"] .icl_form_errors');
 				var error_html = (typeof spl[1] != 'undefined') ? spl[1] : spl[0];
-				icl_form_errors.html(error_html);
+				icl_form_errors.html(WPML_core.purify(error_html));
 				icl_form_errors.fadeIn();
 				fadeInAjxResp('#' + ajx_resp, icl_ajx_error, true);
 			}
@@ -535,7 +566,7 @@ function icl_cf_translation_preferences_submit(cf, obj) {
             jQuery('#wpml_cf_translation_preferences_ajax_response_'+cf).html(icl_ajxloaderimg);
         },
         success: function(html){
-            jQuery('#wpml_cf_translation_preferences_ajax_response_'+cf).html(html);
+            jQuery('#wpml_cf_translation_preferences_ajax_response_'+cf).html(WPML_core.purify(html));
         },
         dataType: 'html'
     });
@@ -543,7 +574,7 @@ function icl_cf_translation_preferences_submit(cf, obj) {
 }
 
 WPML_core.redirectUploadsOnLangParam = function() {
-	var path = window.location.pathname,
+	var path = WPML_core.sanitize(window.location.pathname),
 		upload_screen_file = 'upload.php',
 		has_lang_param = 1 === window.location.search.search('lang');
 

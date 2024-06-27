@@ -66,26 +66,10 @@ class WPML_ST_Upgrade {
 	}
 
 	/**
-	 * Add hooks.
-	 */
-	public function add_hooks() {
-		add_action( 'wp_ajax_wpml-st-upgrade-db-cache-command', array( $this, 'run_st_db_cache_command' ) );
-	}
-
-	/**
-	 * Run ST db cache command.
-	 */
-	public function run_st_db_cache_command() {
-		$class = 'WPML_ST_Upgrade_Db_Cache_Command';
-		$this->run_ajax_command( $class );
-	}
-
-	/**
 	 * Run admin.
 	 */
 	private function run_admin() {
 		$this->maybe_run( 'WPML_ST_Upgrade_Migrate_Originals' );
-		$this->maybe_run( 'WPML_ST_Upgrade_Db_Cache_Command' );
 		$this->maybe_run( 'WPML_ST_Upgrade_Display_Strings_Scan_Notices' );
 		$this->maybe_run( 'WPML_ST_Upgrade_DB_String_Packages' );
 		$this->maybe_run( 'WPML_ST_Upgrade_MO_Scanning' );
@@ -94,6 +78,7 @@ class WPML_ST_Upgrade {
 		$this->maybe_run( 'WPML_ST_Upgrade_DB_Strings_Add_Translation_Priority_Field' );
 		$this->maybe_run( 'WPML_ST_Upgrade_DB_String_Packages_Word_Count' );
 		$this->maybe_run( '\WPML\ST\Upgrade\Command\RegenerateMoFilesWithStringNames' );
+		$this->maybe_run( \WPML\ST\Upgrade\Command\MigrateMultilingualWidgets::class );
 	}
 
 	/**
@@ -103,7 +88,6 @@ class WPML_ST_Upgrade {
 		$this->maybe_run_ajax( 'WPML_ST_Upgrade_Migrate_Originals' );
 
 		// It has to be maybe_run.
-		$this->maybe_run( 'WPML_ST_Upgrade_Db_Cache_Command' );
 		$this->maybe_run( 'WPML_ST_Upgrade_MO_Scanning' );
 		$this->maybe_run( 'WPML_ST_Upgrade_DB_String_Packages_Word_Count' );
 	}
@@ -112,7 +96,6 @@ class WPML_ST_Upgrade {
 	 * Run on frontend.
 	 */
 	private function run_front_end() {
-		$this->maybe_run( 'WPML_ST_Upgrade_Db_Cache_Command' );
 		$this->maybe_run( 'WPML_ST_Upgrade_MO_Scanning' );
 		$this->maybe_run( 'WPML_ST_Upgrade_DB_String_Packages_Word_Count' );
 	}
@@ -188,6 +171,7 @@ class WPML_ST_Upgrade {
 	 * @return bool
 	 */
 	public function has_command_been_executed( $class ) {
+		/** @phpstan-ignore-next-line */
 		$id       = call_user_func( [ $class, 'get_command_id' ] );
 		$settings = $this->sitepress->get_setting( 'st', [] );
 
@@ -200,6 +184,7 @@ class WPML_ST_Upgrade {
 	 * @param string $class Command class name.
 	 */
 	public function mark_command_as_executed( $class ) {
+		/** @phpstan-ignore-next-line */
 		$id                           = call_user_func( [ $class, 'get_command_id' ] );
 		$settings                     = $this->sitepress->get_setting( 'st', [] );
 		$settings[ $id . '_has_run' ] = true;

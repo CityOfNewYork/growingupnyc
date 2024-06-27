@@ -121,7 +121,12 @@ class WPML_LS_Slot {
 	 */
 	private function set_properties( array $args ) {
 		foreach ( $this->get_allowed_properties() as $allowed_property => $meta_data ) {
-			$value                                 = isset( $args[ $allowed_property ] ) ? $args[ $allowed_property ] : null;
+			$value = null;
+			if ( isset( $args[ $allowed_property ] ) ) {
+				$value = $args[ $allowed_property ];
+			} elseif ( isset( $meta_data['set_missing_to'] ) ) {
+				$value = $meta_data['set_missing_to'];
+			}
 			$this->properties[ $allowed_property ] = $this->sanitize( $value, $meta_data );
 		}
 	}
@@ -143,6 +148,10 @@ class WPML_LS_Slot {
 				'type'             => 'int',
 				'force_missing_to' => 0,
 			),
+			'is_hierarchical'                          => array(
+				'type'             => 'int',
+				'force_missing_to' => 0,
+			),
 			'template'                      => array( 'type' => 'string' ),
 			'display_flags'                 => array(
 				'type'             => 'int',
@@ -159,6 +168,14 @@ class WPML_LS_Slot {
 			'display_names_in_current_lang' => array(
 				'type'             => 'int',
 				'force_missing_to' => 0,
+			),
+			'include_flag_width' => array(
+				'type'           => 'int',
+				'set_missing_to' => \WPML_LS_Settings::DEFAULT_FLAG_WIDTH,
+			),
+			'include_flag_height' => array(
+				'type'           => 'int',
+				'set_missing_to' => \WPML_LS_Settings::DEFAULT_FLAG_HEIGHT,
 			),
 			// Colors
 			'background_normal'             => array( 'type' => 'string' ),
@@ -197,6 +214,9 @@ class WPML_LS_Slot {
 					} else {
 						$value = sanitize_text_field( $value );
 					}
+					break;
+				case 'bool':
+					$value = (bool) $value;
 					break;
 				case 'int':
 					$value = (int) $value;

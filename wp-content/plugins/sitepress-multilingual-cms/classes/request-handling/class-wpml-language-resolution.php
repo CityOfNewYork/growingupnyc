@@ -1,5 +1,7 @@
 <?php
 
+use WPML\FP\Str;
+
 /**
  * Class WPML_Language_Resolution
  *
@@ -49,7 +51,9 @@ class WPML_Language_Resolution {
 
 	public function current_lang_filter( $lang, WPML_Request $wpml_request_handler ) {
 		if ( $this->current_request_lang !== $lang ) {
-			$preview_lang = $this->filter_preview_language_code();
+			$preview_lang = apply_filters( 'wpml_should_filter_preview_lang', true )
+				? $this->filter_preview_language_code()
+				: null;
 
 			if ( $preview_lang ) {
 				$lang = $preview_lang;
@@ -119,6 +123,9 @@ class WPML_Language_Resolution {
 	 * @return string
 	 */
 	private function filter_for_legal_langs( $lang ) {
+		if ( Str::includes( 'wp-login.php', $_SERVER['REQUEST_URI'] ) ) {
+			return $lang;
+		}
 
 		$this->maybe_reload();
 

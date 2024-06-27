@@ -35,7 +35,71 @@ if ( ! $is_cron_request && ! $is_wp_cli_request && ! is_admin() && ! otgs_is_res
 		/**
 		 * Stub function to short-circuit Installer when it should not run.
 		 */
-		function WP_Installer_Setup() {
+		function WP_Installer_Setup( $wp_installer_instance, $args = [] ) {
+			if ( isset( $args['site_key_nags'][0]['repository_id'] ) ) {
+				require_once __DIR__ . '/includes/class-otgs-installer-settings.php';
+				require_once __DIR__ . '/includes/class-otgs-installer-subscription.php';
+
+				$settings = OTGS\Installer\Settings::load();
+
+				$repository_id = $args['site_key_nags'][0]['repository_id'];
+
+				$getSiteKey    = function () use ( $repository_id, $settings ) {
+					if ( in_array( $repository_id, [ 'wpml', 'toolset' ] )
+					     && isset( $settings['repositories'][ $repository_id ]['subscription']['key'] )
+					) {
+						return $settings['repositories'][ $repository_id ]['subscription']['key'];
+					}
+
+					return null;
+				};
+
+				add_filter( 'otgs_installer_get_sitekey_'.$repository_id, $getSiteKey );
+
+				if ( in_array( $repository_id, [ 'wpml', 'toolset' ] )
+				     && isset( $settings['repositories'][ $repository_id ]['subscription']['key_type'] )
+				     && $settings['repositories'][ $repository_id ]['subscription']['key_type'] === OTGS_Installer_Subscription::SITE_KEY_TYPE_DEVELOPMENT
+				) {
+
+					$showFrontendBanner = function () use ( $repository_id ) {
+						$removeFrontendBannerLink = 'https://wpml.org/faq/how-to-remove-the-this-site-is-registered-on-wpml-org-as-a-development-site-notice/';
+						$wpmlText = sprintf(
+							__( 'This site is registered on %s as a development site. Switch to a production site key to %s.', 'installer' ),
+							'<a href="https://wpml.org">wpml.org</a>', '<a href="' . $removeFrontendBannerLink . '">remove this banner</a>'
+						);
+						$message = $repository_id === 'wpml'
+							? $wpmlText
+							: __( 'This site is registered on Toolset.com as a development site.', 'installer' );
+
+						?>
+						<style>
+                            .otgs-development-site-front-end a { color: white; }
+                            .otgs-development-site-front-end .icon {
+                                background: url(<?php echo plugins_url( '/', __FILE__ ) . '/res/img/icon-wpml-info-white.svg'; ?>) no-repeat;
+                                width: 20px;
+                                height: 20px;
+                                display: inline-block;
+                                position: absolute;
+                                margin-left: -23px;
+                            }
+                            .otgs-development-site-front-end {
+                                background-size: 32px;
+                                padding: 22px 0px;
+                                font-size: 12px;
+                                font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+                                line-height: 18px;
+                                text-align: center;
+                                color: white;
+                                background-color: #33879E;
+                            }
+						</style>
+						<?php
+						echo '<div class="otgs-development-site-front-end"><span class="icon"></span>' . $message . '</div >';
+					};
+
+					add_action( 'wp_footer', $showFrontendBanner, 999 );
+				}
+			}
 		}
 		// phpcs:enable WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid
 	}
@@ -46,14 +110,12 @@ if ( ! $is_cron_request && ! $is_wp_cli_request && ! is_admin() && ! otgs_is_res
 
 $wp_installer_instance = dirname( __FILE__ ) . '/installer.php';
 
-
 // Global stack of instances.
 global $wp_installer_instances;
 $wp_installer_instances[ $wp_installer_instance ] = [
 	'bootfile' => $wp_installer_instance,
-	'version'  => '2.6.1'
+	'version'  => '3.1.7'
 ];
-
 
 /**
  * Exception: When WPML prior 3.2 is used, that instance must be used regardless of another newer instance.
@@ -170,9 +232,12 @@ if ( ! function_exists( 'wpml_installer_instance_delegator' ) ) {
 
 		// set configuration.
 		$template_path = realpath( get_template_directory() );
-		if ( $template_path && strpos( realpath( $delegate['bootfile'] ), (string) $template_path ) === 0 ) {
-			$delegate['args']['in_theme_folder'] = dirname( ltrim( str_replace( realpath( get_template_directory() ), '', realpath( $delegate['bootfile'] ) ), '\\/' ) );
+		if ( $template_path && strpos( (string) realpath( $delegate['bootfile'] ), (string) $template_path ) === 0 ) {
+			/** @var string $filepath */
+			$filepath = str_replace( (string) realpath( get_template_directory() ), '', (string) realpath( $delegate['bootfile'] ) );
+			$delegate['args']['in_theme_folder'] = dirname( ltrim( $filepath, '\\/' ) );
 		}
+
 		if ( isset( $delegate['args'] ) && is_array( $delegate['args'] ) ) {
 			foreach ( $delegate['args'] as $key => $value ) {
 				WP_Installer()->set_config( $key, $value );

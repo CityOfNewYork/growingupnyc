@@ -55,7 +55,7 @@ function icl_toggle_account_setup() {
     } else {
         if (icl_language_pairs_updated) {
             iclAcctStats.html('<div align="left" style="margin-bottom:5px;">' + icl_ajxloaderimg + "</div>").fadeIn();
-            location.href = location.href.replace(/#(.*)$/g, '');
+            location.href = WPML_core.sanitize(location.href).replace(/#(.*)$/g, '');
         } else {
             iclAcctStats.slideDown();
         }
@@ -120,7 +120,7 @@ function iclToggleContentTranslation() {
         url: icl_ajx_url,
         data: "icl_ajx_action=toggle_content_translation&new_val=" + val,
         success: function (msg) {
-            location.href = location.href.replace(/#.*/, '');
+            location.href = WPML_core.sanitize(location.href).replace(/#.*/, '');
         }
     });
 }

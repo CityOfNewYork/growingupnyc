@@ -7,7 +7,7 @@ jQuery(function () {
                         type: 'POST',
                         data: {
                             action: 'fix_tables_collation',
-                            nonce : jQuery('#wpml-fix-tables-collation-nonce').val(),
+                            nonce : WPML_core.sanitize( jQuery('#wpml-fix-tables-collation-nonce').val() ),
                         },
 			success: function () {
 				jQuery('#wpml_fix_tables_collation').prop('disabled',false);

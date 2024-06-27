@@ -61,12 +61,33 @@ class OTGS_Installer_Plugin_Finder {
 		return $this->plugins;
 	}
 
-	public function get_otgs_installed_plugins() {
-		$installed_plugins = array();
+	/**
+	 * @return array<string, string>
+	 */
+	public function getLocalPluginVersions() {
+		$versions = [];
 
 		foreach ( $this->plugins as $plugin ) {
+			$installed_version = $plugin->get_installed_version();
+			if ( $installed_version ) {
+				$versions[ $plugin->get_slug() ] = $installed_version;
+			}
+		}
+
+		return $versions;
+	}
+
+	public function get_otgs_installed_plugins_by_repository() {
+		$installed_plugins = [];
+
+		/** @var OTGS_Installer_Plugin $plugin */
+		foreach ( $this->plugins as $plugin ) {
 			if ( $plugin->get_installed_version() ) {
-				$installed_plugins[] = $plugin;
+				$installed_plugins[ $plugin->get_repo() ][] = [
+					'id' => $plugin->get_id(),
+					'slug' => $plugin->get_slug(),
+					'name' => $plugin->get_name(),
+				];
 			}
 		}
 
@@ -74,8 +95,8 @@ class OTGS_Installer_Plugin_Finder {
 	}
 
 	/**
-	 * @param string $slug
-	 * @param string $repo
+	 * @param string|int $slug
+	 * @param string     $repo
 	 *
 	 * @return null|OTGS_Installer_Plugin
 	 */

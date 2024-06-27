@@ -1,11 +1,16 @@
 <?php
 
+use WPML\FP\Obj;
+
 /**
  * Class WPML_Query_Parser
  *
  * @since 3.2.3
  */
 class WPML_Query_Parser {
+
+	const LANG_VAR = 'wpml_lang';
+
 	/** @var  WPML_Post_Translation $post_translations */
 	protected $post_translations;
 	/** @var  WPML_Term_Translation $post_translations */
@@ -114,15 +119,20 @@ class WPML_Query_Parser {
 		$values = array();
 
 		if ( is_scalar( $q->query_vars[ $key ] ) ) {
-			$glue = strpos( $q->query_vars[ $key ], ',' ) !== false ? ',' : $glue;
-			$glue = strpos( $q->query_vars[ $key ], '+' ) !== false ? '+' : $glue;
+			if ( is_string( $q->query_vars[ $key ] ) ) {
+				$glue = strpos( $q->query_vars[ $key ], ',' ) !== false ? ',' : $glue;
+				$glue = strpos( $q->query_vars[ $key ], '+' ) !== false ? '+' : $glue;
 
-			if ( $glue ) {
-				$values = explode( $glue, $q->query_vars[ $key ] );
-			} else {
+				if ( $glue ) {
+					$values = explode( $glue, $q->query_vars[ $key ] );
+				}
+			}
+
+			if ( ! $glue ) {
 				$values = array( $q->query_vars[ $key ] );
 			}
 
+			/** @phpstan-ignore-next-line trim is not recognised by PHPStan. */
 			$values = array_map( 'trim', $values );
 			$values = $type === 'ids' ? array_map( 'intval', $values ) : $values;
 		} elseif ( is_array( $q->query_vars[ $key ] ) ) {
@@ -313,15 +323,18 @@ class WPML_Query_Parser {
 			$translated_slugs = $this->translate_term_values( array( $slug ), 'slugs', $taxonomy, $current_lang );
 
 			if ( $translated_slugs && (string) $slug !== $translated_slugs[0] ) {
+				/** @var WP_Term|false */
 				$translated_term = get_term_by(
 					'slug',
 					$translated_slugs[0],
 					$taxonomy
 				);
 
-				$new_url = get_term_link( $translated_term, $taxonomy );
+				$new_url = $translated_term
+					? get_term_link( $translated_term, $taxonomy )
+					: null;
 
-				if ( ! is_wp_error( $new_url ) ) {
+				if ( $new_url && ! is_wp_error( $new_url ) ) {
 					/** @var WPML_WP_API */
 					global $wpml_wp_api;
 					$wpml_wp_api->wp_safe_redirect( $new_url );
@@ -378,7 +391,7 @@ class WPML_Query_Parser {
 			$post_type = $q->query_vars['post_type'];
 		}
 
-		$current_language = $this->sitepress->get_current_language();
+		$current_language = Obj::path( [ 'query_vars', self::LANG_VAR ], $q ) ?: $this->sitepress->get_current_language();
 		$q                = $this->maybe_redirect_to_translated_taxonomy( $q, $current_language );
 		if ( ! $q ) { // it means that `maybe_redirect_to_translated_taxonomy` has made redirection, it just facilitates the test
 			return $q;
@@ -414,9 +427,9 @@ class WPML_Query_Parser {
 						$pid_prepared = $this->wpdb->prepare(
 							"
 							SELECT ID FROM {$this->wpdb->posts} p
-							JOIN {$this->wpdb->prefix}icl_translations t 
-								ON t.element_id = p.ID AND t.element_type='post_{$first_post_type}'   
-							WHERE post_name=%s AND post_type=%s AND t.language_code=%s 
+							JOIN {$this->wpdb->prefix}icl_translations t
+								ON t.element_id = p.ID AND t.element_type='post_{$first_post_type}'
+							WHERE post_name=%s AND post_type=%s AND t.language_code=%s
 							LIMIT 1
 						",
 							array( $q->query_vars['name'], $first_post_type, $current_language )
@@ -501,7 +514,7 @@ class WPML_Query_Parser {
 			$type = is_scalar( $type ) ? $type : ( count( $type ) === 1 ? end( $type ) : false );
 			/**
 			 * @var \WP_Query $q
-			 * @var int|false $pid
+			 * @var int|false $redirect
 			 */
 			list( $q, $redirect ) = $type
 				? $this->query_filter->get_page_name_filter( $type )->filter_page_name( $q ) : array( $q, false );

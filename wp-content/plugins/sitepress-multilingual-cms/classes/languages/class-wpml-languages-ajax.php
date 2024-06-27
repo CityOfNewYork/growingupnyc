@@ -1,5 +1,7 @@
 <?php
 
+use WPML\API\Sanitize;
+
 /**
  * @author OnTheGo Systems
  */
@@ -23,15 +25,8 @@ class WPML_Languages_AJAX {
 	}
 
 	private function validate_ajax_action() {
-
-		$action = '';
-		$nonce  = '';
-		if ( array_key_exists( 'action', $_POST ) ) {
-			$action = filter_var( $_POST['action'] );
-		}
-		if ( array_key_exists( 'nonce', $_POST ) ) {
-			$nonce = filter_var( $_POST['nonce'] );
-		}
+		$action = Sanitize::stringProp( 'action', $_POST );
+		$nonce  = Sanitize::stringProp( 'nonce', $_POST );
 
 		return $action && $nonce && wp_verify_nonce( $nonce, $action );
 	}
@@ -43,7 +38,7 @@ class WPML_Languages_AJAX {
 		if ( $this->validate_ajax_action() ) {
 			$old_active_languages       = $this->sitepress->get_active_languages();
 			$old_active_languages_count = count( (array) $old_active_languages );
-			$lang_codes                 = filter_var( $_POST['languages'], FILTER_SANITIZE_STRING, FILTER_REQUIRE_ARRAY );
+			$lang_codes                 = filter_var( $_POST['languages'], FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_REQUIRE_ARRAY );
 			$setup_instance             = wpml_get_setup_instance();
 			if ( $lang_codes && $setup_instance->set_active_languages( $lang_codes ) ) {
 				$active_languages = $this->sitepress->get_active_languages();
@@ -80,7 +75,7 @@ class WPML_Languages_AJAX {
 					$wpml_languages_notices->maybe_create_notice_missing_menu_items( count( $lang_codes ) );
 					$wpml_languages_notices->missing_languages( $wpml_localization->get_not_founds() );
 
-					if ( class_exists( 'WPML_TM_Translation_Priorities' ) && $this->sitepress->is_setup_complete() ) {
+					if ( \WPML\Setup\Option::isTMAllowed() && $this->sitepress->is_setup_complete() ) {
 						WPML_TM_Translation_Priorities::insert_missing_default_terms();
 					}
 				}
@@ -91,7 +86,7 @@ class WPML_Languages_AJAX {
 
 			/** @deprecated Use `wpml_update_active_languages` instead */
 			do_action( 'icl_update_active_languages' );
-			do_action( 'wpml_update_active_languages' );
+			do_action( 'wpml_update_active_languages', $old_active_languages );
 		}
 
 		if ( $failed ) {

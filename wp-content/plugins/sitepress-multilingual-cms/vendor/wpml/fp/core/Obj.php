@@ -8,9 +8,12 @@ use WPML\FP\Functor\ConstFunctor;
 use WPML\FP\Functor\IdentityFunctor;
 
 /**
- * @method static callable prop( ...$key, ...$obj ) - Curried :: string->Collection|array|object->mixed|null
- * @method static callable propOr( ...$default, ...$key, ...$obj ) - Curried :: mixed->string->Collection|array|object->mixed|null
+ * @method static callable|mixed prop( ...$key, ...$obj ) - Curried :: string->Collection|array|object->mixed|null
+ * @method static callable|mixed propOr( ...$default, ...$key, ...$obj ) - Curried :: mixed->string->Collection|array|object->mixed|null
  * @method static callable|array props( ...$keys, ...$obj ) - Curried :: [keys] → Collection|array|object → [v]
+ * @method static callable|array|\stdClass addProp( ...$key, ...$transformation, ...$obj ) - Curried :: string->callable->object|array->object->array
+ * @method static callable|array|\stdClass removeProp( ...$key, ...$obj ) - Curried :: string->object|array->object->array
+ * @method static callable|array|\stdClass renameProp( ...$key, ...$newKey, ...$obj ) - Curried :: string->string->object|array->object->array
  * @method static callable|mixed path( ...$path, ...$obj ) - Curried :: array->Collection|array|object->mixed|null
  * @method static callable|mixed pathOr( ...$default, ...$path, ...$obj ) - Curried :: mixed → array → Collection|array|object → mixed
  * @method static callable assoc( ...$key, ...$value, ...$item ) - Curried :: string->mixed->Collection|array|object->mixed|null
@@ -18,18 +21,22 @@ use WPML\FP\Functor\IdentityFunctor;
  * @method static callable lens( ...$getter, ...$setter ) - Curried :: callable->callable->callable
  * @method static callable lensProp( ...$prop ) - Curried :: string->callable
  * @method static callable lensPath( ...$path ) - Curried :: array->callable
+ * @method static callable lensMapped( ...$toFunctorFn ) - Curried :: callable->callable
+ * @method static callable lensMappedProp( ...$prop ) - Curried :: string->callable
  * @method static callable view( ...$lens, ...$obj ) - Curried :: callable->Collection|array|object->mixed
  * @method static callable set( ...$lens, ...$value, ...$obj ) - Curried :: callable->mixed->Collection|array|object->mixed
  * @method static callable over( ...$lens, ...$transformation, ...$obj ) - Curried :: callable->callable->Collection|array|object->mixed
  * @method static callable pick( ...$props, ...$obj ) - Curried :: array->Collection|array->Collection|array
  * @method static callable pickAll( ...$props, ...$obj ) - Curried :: array->Collection|array->Collection|array
  * @method static callable pickBy( ...$predicate, ...$obj ) - Curried :: ( ( v, k ) → bool ) → Collection|array->Collection|array
+ * @method static callable pickByKey( ...$predicate, ...$obj ) - Curried :: ( ( k ) → bool ) → Collection|array->callable|Collection|array|object
  * @method static callable project( ...$props, ...$target ) - Curried :: array->Collection|array->Collection|array
  * @method static callable where( array $condition ) - Curried :: [string → ( * → bool )] → bool
  * @method static callable|bool has( ...$prop, ...$item ) - Curried :: string → a → bool
+ * @method static callable|bool hasPath( ...$path, ...$item ) - Curried :: array<string> → a → bool
  * @method static callable|mixed evolve( ...$transformations, ...$item ) - Curried :: array → array → array
  *
- * @method static callable|array objOf(...$key, ...$value) - Curried :: string -> mixed -> array
+ * @method static callable|array objOf( ...$key, ...$value ) - Curried :: string->mixed->array
  *
  * Creates an object containing a single key:value pair.
  *
@@ -67,7 +74,9 @@ use WPML\FP\Functor\IdentityFunctor;
  * $this->assertEquals( [ 1, 2, 3 ], Obj::values( (object) [ 'a' => 1, 'b' => 2, 'c' => 3 ] ) );
  * ```
  *
- * @method static callable|array replaceRecursive(array ...$newValue, ...$target) - Curried :: array->array->array
+ * @method static callable|array replaceRecursive( array ...$newValue, ...$target ) - Curried :: array->array->array
+ *
+ * @method static callable|array toArray( Collection|Object ...$item ) - Curried :: Collection|Object->array
  */
 class Obj {
 
@@ -89,7 +98,13 @@ class Obj {
 				return array_key_exists( $key, $item ) ? $item[ $key ] : $default;
 			}
 			if ( is_object( $item ) ) {
-				return property_exists( $item, $key ) ? $item->$key : $default;
+				if ( property_exists( $item, $key ) || isset( $item->$key ) ) {
+					return $item->$key;
+				} elseif ( is_numeric( $key ) ) {
+					return self::propOr( $default, $key, (array) $item );
+				} else {
+					return $default;
+				}
 			}
 			if ( is_null( $item ) ) {
 				return null;
@@ -101,12 +116,39 @@ class Obj {
 			return Fns::map( Obj::prop( Fns::__, $item ), $keys );
 		} ) );
 
+		self::macro( 'addProp', curryN( 3, function ( $key, $transformation, $data ) {
+			return Obj::assoc( $key, $transformation( $data ), $data );
+		} ) );
+
+		self::macro( 'removeProp', curryN( 2, function ( $key, $data ) {
+			if ( is_array( $data ) ) {
+				unset( $data[ $key ] );
+
+				return $data;
+			} elseif ( is_object( $data ) ) {
+				$newData = clone $data;
+				unset( $newData->$key );
+
+				return $newData;
+			}
+
+			return $data;
+		} ) );
+
+		self::macro( 'renameProp', curryN( 3, function ( $key, $newKey, $data ) {
+			$data = self::addProp( $newKey, self::prop( $key ), $data );
+
+			return self::removeProp( $key, $data );
+		} ) );
+
 		self::macro( 'path', curryN( 2, function ( $path, $item ) {
 			return array_reduce( $path, flip( self::prop() ), $item );
 		} ) );
 
 		self::macro( 'pathOr', curryN( 3, function ( $default, $path, $item ) {
-			$result = self::path( $path, $item );
+			$result = Either::of( $item )
+			                ->tryCatch( Obj::path( $path ) )
+			                ->getOrElse( null );
 
 			return is_null( $result ) ? $default : $result;
 		} ) );
@@ -173,6 +215,20 @@ class Obj {
 			return self::lens( self::path( $path ), self::assocPath( $path ) );
 		} ) );
 
+		self::macro( 'lensMapped', curryN( 1, function ( $toFunctorFn ) {
+			return function ( $target ) use ( $toFunctorFn ) {
+				return IdentityFunctor::of(
+					Logic::isMappable( $target )
+						? Fns::map( pipe( $toFunctorFn, invoke( 'get' ) ), $target )
+						: $target
+				);
+			};
+		} ) );
+
+		self::macro( 'lensMappedProp', curryN( 1, function ( $prop ) {
+			return compose( Obj::lensProp( $prop ), Obj::lensMapped() );
+		} ) );
+
 		self::macro( 'view', curryN( 2, function ( $lens, $obj ) {
 			$view = $lens( [ ConstFunctor::class, 'of' ] );
 
@@ -237,6 +293,26 @@ class Obj {
 			return self::matchType( $result, $item );
 		} ) );
 
+		self::macro( 'pickByKey', curryN( 2, function ( callable $predicate, $item ) {
+			return self::pickBy( pipe( Fns::nthArg( 1 ), $predicate ), $item );
+		} ) );
+
+		self::macro( 'hasPath', curryN( 2, function ( $path, $item ) {
+			$undefinedValue = new Undefined();
+			$currentElement = $item;
+
+			foreach ( $path as $pathProp ) {
+				$currentElement = Either::of( $currentElement )
+					->tryCatch( self::propOr( $undefinedValue, $pathProp ) )
+					->getOrElse( $undefinedValue );
+
+				if ( $undefinedValue === $currentElement ) {
+					return false;
+				}
+			}
+			return true;
+		} ) );
+
 		self::macro( 'has', curryN( 2, function ( $prop, $item ) {
 			if ( $item instanceof Collection ) {
 				return $item->has( $prop );
@@ -250,7 +326,7 @@ class Obj {
 			throw( new \InvalidArgumentException( 'item should be a Collection or an array or an object' ) );
 		} ) );
 
- 		self::macro( 'evolve', curryN( 2, function ( $transformations, $item ) {
+		self::macro( 'evolve', curryN( 2, function ( $transformations, $item ) {
 			$temp = self::toArray( $item );
 
 			foreach ( $transformations as $prop => $transformation ) {
@@ -295,6 +371,18 @@ class Obj {
 		} ) );
 
 		self::macro( 'replaceRecursive', curryN( 2, flip( 'array_replace_recursive' ) ) );
+
+		self::macro( 'toArray', curryN( 1, function ( $item ) {
+			$temp = $item;
+			if ( $temp instanceof Collection ) {
+				$temp = $temp->toArray();
+			}
+			if ( is_object( $temp ) ) {
+				$temp = (array) $temp;
+			}
+
+			return $temp;
+		} ) );
 	}
 
 	/**
@@ -315,23 +403,6 @@ class Obj {
 	}
 
 	/**
-	 * @param mixed $item
-	 *
-	 * @return object[]|Collection[]
-	 */
-	private static function toArray( $item ) {
-		$temp = $item;
-		if ( $temp instanceof Collection ) {
-			$temp = $temp->toArray();
-		}
-		if ( is_object( $temp ) ) {
-			$temp = (array) $temp;
-		}
-
-		return $temp;
-	}
-
-	/**
 	 * Curried :: mixed → array|object|Collection → array|object|Collection
 	 * function to remove an item by key from an array.
 	 *
@@ -349,6 +420,34 @@ class Obj {
 		};
 
 		return call_user_func_array( curryN( 2, $without ), func_get_args() );
+	}
+
+	/**
+	 * Curried :: array|object -> array|object -> array|object
+	 *
+	 * It merges the new data with item.
+	 *
+	 * @param array|object $newData
+	 * @param array|object $item
+	 *
+	 * @return array|object
+	 */
+	public static function merge( $newData = null, $item = null ) {
+		$merge = function ( $newData, $item ) {
+			$isNested = Logic::anyPass( [ 'is_array', 'is_object' ] );
+
+			foreach ( (array) $newData as $key => $value ) {
+				if ( $isNested( $newData ) && Obj::has( $key, $item ) && $isNested( Obj::prop( $key, $item ) ) ) {
+					$item = Obj::assoc( $key, self::merge( $value, Obj::prop( $key, $item ) ), $item );
+				} else {
+					$item = Obj::assoc( $key, $value, $item );
+				}
+			}
+
+			return $item;
+		};
+
+		return call_user_func_array( curryN( 2, $merge ), func_get_args() );
 	}
 }
 

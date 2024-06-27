@@ -27,7 +27,8 @@
 										url:      ajaxurl,
 										dataType: 'json',
 										data:     {
-											action: 'wpml_get_default_lang'
+											action:     'wpml_get_default_lang',
+											_icl_nonce: icl_post_edit_messages._get_default_lang_nonce,
 										},
 										success:  function (response) {
 											var hidden_language_field = jQuery('<input id="icl_post_language" type="hidden"/>');
@@ -126,7 +127,7 @@
 										},
 										success:  function () {
 											post_language_switcher.data('last_lang', new_post_language);
-											var url = jQuery(location).attr('href');
+											var url = WPML_core.sanitize(jQuery(location).attr('href'));
 											if (/lang=/.test(url)) {
 												url = url.replace(/([\?&])(lang=)[^&#]*/, '$1$2' + new_post_language);
 											} else {

@@ -3,6 +3,8 @@
 namespace WPML\ST\Gettext;
 
 use wpdb;
+use WPML\FP\Obj;
+use WPML\ST\MO\Hooks\PreloadThemeMoFile;
 use WPML\ST\Package\Domains;
 use function wpml_collect;
 use WPML_ST_Settings;
@@ -28,6 +30,9 @@ class AutoRegisterSettings {
 	 */
 	private $package_domains;
 
+	/** @var \WPML_Localization  */
+	private $localization;
+
 	/**
 	 * @var array
 	 */
@@ -36,11 +41,13 @@ class AutoRegisterSettings {
 	public function __construct(
 		wpdb $wpdb,
 		WPML_ST_Settings $settings,
-		Domains $package_domains
+		Domains $package_domains,
+		\WPML_Localization $localization
 	) {
 		$this->wpdb            = $wpdb;
 		$this->settings        = $settings;
 		$this->package_domains = $package_domains;
+		$this->localization    = $localization;
 	}
 
 	/** @return bool */
@@ -49,11 +56,27 @@ class AutoRegisterSettings {
 
 		if ( $setting['enabled'] ) {
 			$elapsed_time       = time() - $setting['time'];
-			$setting['enabled'] = self::RESET_AUTOLOAD_TIMEOUT > $elapsed_time;
+			$isStillEnabled = self::RESET_AUTOLOAD_TIMEOUT > $elapsed_time;
+			$setting['enabled'] = $isStillEnabled;
+			if ( ! $isStillEnabled ) {
+				$this->setEnabled( false );
+			}
 		}
 
 		return $setting['enabled'];
+	}
 
+	/**
+	 * @param bool $isEnabled
+	 */
+	public function setEnabled( $isEnabled ) {
+		$setting = $this->getSetting( self::KEY_ENABLED, [ 'enabled' => false ] );
+
+		$setting['enabled'] = ( $isEnabled && $this->getTimeToAutoDisable() > 0 );
+
+		$this->settings->update_setting( self::KEY_ENABLED, $setting, true );
+
+		$this->setWpmlSettingForThemeLocalization( $isEnabled );
 	}
 
 	/**
@@ -179,6 +202,7 @@ class AutoRegisterSettings {
 			}
 
 			$this->settings->update_setting( self::KEY_ENABLED, $is_enabled, true );
+			$this->setWpmlSettingForThemeLocalization( $is_enabled[ 'enabled' ] );
 
 			wp_send_json_success();
 		} else {
@@ -195,5 +219,66 @@ class AutoRegisterSettings {
 	/** @return string */
 	public function getFeatureDisabledDescription() {
 		return __( '* This feature is only intended for sites that are in development. It will significantly slow down the site, but help you find strings that WPML cannot detect in the PHP code.', 'wpml-string-translation' );
+	}
+
+	public function getDomainsWithStringsTranslationData() {
+		$excluded = $this->getExcludedDomains();
+		$domains  = wpml_collect( $this->getAllDomains() )->merge( $excluded )->unique()->toArray();
+		$stats    = $this->localization->get_domain_stats( $domains, 'default', false, true );
+
+		$result = [];
+		foreach ( $domains as $domain ) {
+			$completed_strings_count  = (int) Obj::path( [ $domain, 'complete' ], $stats );
+			$incomplete_strings_count = (int) Obj::path( [ $domain, 'incomplete' ], $stats );
+
+			$result[ $domain ] = [
+				'name'                     => $domain,
+				'translated_strings_count' => $completed_strings_count,
+				'total_strings_count'      => $incomplete_strings_count + $completed_strings_count,
+				'is_blocked'               => in_array( $domain, $excluded ),
+			];
+		}
+
+		return $result;
+	}
+
+	private function setWpmlSettingForThemeLocalization( $isEnabled ) {
+		if ( $isEnabled ) {
+			$this->enableWpmlSettingForThemeLocalizationIfNecessary();
+		} else {
+			$this->disableWpmlSettingForThemeLocalizationIfNecessary();
+		}
+	}
+
+	private function enableWpmlSettingForThemeLocalizationIfNecessary() {
+		$previousLoadThemeSetting = (int) apply_filters(
+			'wpml_get_setting',
+			0,
+			PreloadThemeMoFile::SETTING_KEY
+		);
+		if ( $previousLoadThemeSetting === PreloadThemeMoFile::SETTING_DISABLED ) {
+			do_action(
+				'wpml_set_setting',
+				PreloadThemeMoFile::SETTING_KEY,
+				PreloadThemeMoFile::SETTING_ENABLED_FOR_LOAD_TEXT_DOMAIN,
+				true
+			);
+		}
+	}
+
+	private function disableWpmlSettingForThemeLocalizationIfNecessary() {
+		$previousLoadThemeSetting = (int) apply_filters(
+			'wpml_get_setting',
+			0,
+			PreloadThemeMoFile::SETTING_KEY
+		);
+		if ( $previousLoadThemeSetting === PreloadThemeMoFile::SETTING_ENABLED_FOR_LOAD_TEXT_DOMAIN ) {
+			do_action(
+				'wpml_set_setting',
+				PreloadThemeMoFile::SETTING_KEY,
+				PreloadThemeMoFile::SETTING_DISABLED,
+				true
+			);
+		}
 	}
 }

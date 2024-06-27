@@ -51,7 +51,7 @@ jQuery(function ($) {
 			$.post(
 				ajaxurl, data, function (res) {
 					orphansCountProgress.fadeOut();
-					var orphansCountResult = res.success ? res.data : 0;
+					var orphansCountResult = parseInt(res.success ? res.data : 0);
 					orphansCheckLoader.fadeOut();
 					orphansCountResults.find('.count').html(orphansCountResult);
 					if (orphansCountResult > 0) {

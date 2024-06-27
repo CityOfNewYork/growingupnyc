@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'IWPML_ST_Rewrite_Rule_Filter' => $baseDir . '/classes/slug-translation/iwpml-st-rewrite-rule-filter.php',
     'IWPML_ST_String_Scanner' => $baseDir . '/classes/strings-scanning/iwpml-st-string-scanner.php',
     'IWPML_ST_Translations_File' => $baseDir . '/classes/translations-file-scan/translations-file/iwpml-st-translations-file.php',
@@ -77,6 +78,7 @@ return array(
     'WPML\\ST\\MO\\Scan\\UI\\Model' => $baseDir . '/classes/translations-file-scan/UI/Model.php',
     'WPML\\ST\\MO\\Scan\\UI\\UI' => $baseDir . '/classes/translations-file-scan/UI/UI.php',
     'WPML\\ST\\MO\\WPLocaleProxy' => $baseDir . '/classes/MO/WPLocaleProxy.php',
+    'WPML\\ST\\Main\\Ajax\\FetchCompletedStrings' => $baseDir . '/classes/string-translation-ui/ajax/FetchCompletedStrings.php',
     'WPML\\ST\\Main\\Ajax\\FetchTranslationMemory' => $baseDir . '/classes/translation-memory/FetchTranslationMemory.php',
     'WPML\\ST\\Main\\Ajax\\SaveTranslation' => $baseDir . '/classes/string-translation-ui/ajax/SaveTranslation.php',
     'WPML\\ST\\Main\\UI' => $baseDir . '/classes/string-translation-ui/UI.php',
@@ -94,6 +96,12 @@ return array(
     'WPML\\ST\\Shortcode\\TranslationHandler' => $baseDir . '/classes/shortcode/TranslationHandler.php',
     'WPML\\ST\\SlugTranslation\\Hooks\\Hooks' => $baseDir . '/classes/slug-translation/RewriteRules/Hooks.php',
     'WPML\\ST\\SlugTranslation\\Hooks\\HooksFactory' => $baseDir . '/classes/slug-translation/RewriteRules/HooksFactory.php',
+    'WPML\\ST\\Storage\\StoragePerLanguageInterface' => $baseDir . '/classes/Storage/StoragePerLanguageInterface.php',
+    'WPML\\ST\\Storage\\WpTransientPerLanguage' => $baseDir . '/classes/Storage/WpTransientPerLanguage.php',
+    'WPML\\ST\\StringsCleanup\\Ajax\\InitStringsRemoving' => $baseDir . '/classes/strings-cleanup/ajax/InitStringsRemoving.php',
+    'WPML\\ST\\StringsCleanup\\Ajax\\RemoveStringsFromDomains' => $baseDir . '/classes/strings-cleanup/ajax/RemoveStringsFromDomains.php',
+    'WPML\\ST\\StringsCleanup\\UI' => $baseDir . '/classes/strings-cleanup/UI.php',
+    'WPML\\ST\\StringsCleanup\\UntranslatedStrings' => $baseDir . '/classes/strings-cleanup/UntranslatedStrings.php',
     'WPML\\ST\\StringsFilter\\Provider' => $baseDir . '/classes/filters/strings-filter/Provider.php',
     'WPML\\ST\\StringsFilter\\QueryBuilder' => $baseDir . '/classes/filters/strings-filter/QueryBuilder.php',
     'WPML\\ST\\StringsFilter\\StringEntity' => $baseDir . '/classes/filters/strings-filter/StringEntity.php',
@@ -120,6 +128,7 @@ return array(
     'WPML\\ST\\Troubleshooting\\BackendHooks' => $baseDir . '/classes/Troubleshooting/BackendHooks.php',
     'WPML\\ST\\Troubleshooting\\Cleanup\\Database' => $baseDir . '/classes/Troubleshooting/Cleanup/Database.php',
     'WPML\\ST\\Troubleshooting\\RequestHandle' => $baseDir . '/classes/Troubleshooting/RequestHandle.php',
+    'WPML\\ST\\Upgrade\\Command\\MigrateMultilingualWidgets' => $baseDir . '/classes/upgrade/Command/MigrateMultilingualWidgets.php',
     'WPML\\ST\\Upgrade\\Command\\RegenerateMoFilesWithStringNames' => $baseDir . '/classes/upgrade/Command/RegenerateMoFilesWithStringNames.php',
     'WPML\\ST\\Utils\\LanguageResolution' => $baseDir . '/classes/utilities/LanguageResolution.php',
     'WPML\\ST\\WP\\App\\Resources' => $baseDir . '/classes/utilities/Resources.php',
@@ -168,7 +177,6 @@ return array(
     'WPML_ST_Bulk_Update_Strings_Status' => $baseDir . '/classes/db-mappers/class-wpml-st-bulk-update-strings-status.php',
     'WPML_ST_DB_Mappers_String_Positions' => $baseDir . '/classes/db-mappers/class-wpml-st-db-mappers-string-positions.php',
     'WPML_ST_DB_Mappers_Strings' => $baseDir . '/classes/db-mappers/class-wpml-st-db-mappers-strings.php',
-    'WPML_ST_DB_Troubleshooting' => $baseDir . '/classes/menus/class-wpml-st-db-troubleshooting.php',
     'WPML_ST_Element_Slug_Translation_UI' => $baseDir . '/classes/slug-translation/wpml-st-element-slug-translation-ui.php',
     'WPML_ST_Element_Slug_Translation_UI_Model' => $baseDir . '/classes/slug-translation/wpml-st-element-slug-translation-ui-model.php',
     'WPML_ST_File_Hashing' => $baseDir . '/classes/strings-scanning/class-wpml-st-file-hashing.php',
@@ -293,7 +301,6 @@ return array(
     'WPML_ST_Upgrade_DB_String_Packages' => $baseDir . '/classes/upgrade/class-wpml-st-upgrade-db-string-packages.php',
     'WPML_ST_Upgrade_DB_String_Packages_Word_Count' => $baseDir . '/classes/upgrade/class-wpml-st-upgrade-db-string-packages-word-count.php',
     'WPML_ST_Upgrade_DB_Strings_Add_Translation_Priority_Field' => $baseDir . '/classes/upgrade/class-wpml-st-upgrade-db-strings-add-translation-priority-field.php',
-    'WPML_ST_Upgrade_Db_Cache_Command' => $baseDir . '/classes/upgrade/class-wpml-st-upgrade-db-cache-command.php',
     'WPML_ST_Upgrade_Display_Strings_Scan_Notices' => $baseDir . '/classes/upgrade/class-wpml-st-upgrade-display-strings-scan-notices.php',
     'WPML_ST_Upgrade_MO_Scanning' => $baseDir . '/classes/upgrade/class-wpml-st-upgrade-mo-scanning.php',
     'WPML_ST_Upgrade_Migrate_Originals' => $baseDir . '/classes/upgrade/class-wpml-st-upgrade-migrate-originals.php',
@@ -316,5 +323,4 @@ return array(
     'WPML_Tax_Slug_Translation_Records' => $baseDir . '/classes/slug-translation/taxonomy/wpml-tax-slug-translation-records.php',
     'WPML_Theme_String_Scanner' => $baseDir . '/inc/gettext/wpml-theme-string-scanner.class.php',
     'WPML_Translation_Priority_Select' => $baseDir . '/classes/string-translation-ui/class-wpml-translation-priority-select.php',
-    'WP_Widget_Text_Icl' => $baseDir . '/classes/widgets/wp-widget-text-icl.php',
 );

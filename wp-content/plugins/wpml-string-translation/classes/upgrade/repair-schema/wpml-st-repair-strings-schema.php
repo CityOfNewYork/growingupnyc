@@ -71,7 +71,7 @@ class WPML_ST_Repair_Strings_Schema {
 			return false;
 		}
 
-		set_transient( WPML_ST_Upgrade::TRANSIENT_UPGRADE_IN_PROGRESS, 1 );
+		set_transient( WPML_ST_Upgrade::TRANSIENT_UPGRADE_IN_PROGRESS, true, MINUTE_IN_SECONDS );
 		return true;
 	}
 

@@ -115,15 +115,19 @@ class OTGS_Installer_Repositories {
 	public function save_subscription( OTGS_Installer_Repository $repository ) {
 		$subscription = $repository->get_subscription();
 		unset( $this->installer->settings['repositories'][ $repository->get_id() ]['subscription'] );
+		unset( $this->installer->settings['repositories'][ $repository->get_id() ]['last_successful_subscription_fetch'] );
 
 		if ( $subscription ) {
 			$this->installer->settings['repositories'][ $repository->get_id() ]['subscription'] = array(
 				'key'           => $subscription->get_site_key(),
+				'key_type'      => $subscription->get_site_key_type(),
 				'data'          => $subscription->get_data(),
 				'registered_by' => $subscription->get_registered_by(),
 				'site_url'      => $subscription->get_site_url(),
 			);
 		}
+		$actualSiteUrl = $this->installer->get_installer_site_url( $repository->get_id() );
+		$this->installer->settings['repositories'][ $repository->get_id() ]['site_key_url'] = $actualSiteUrl;
 
 		$this->installer->save_settings();
 	}

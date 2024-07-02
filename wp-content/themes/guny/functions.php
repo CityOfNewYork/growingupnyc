@@ -113,7 +113,9 @@ class GunySite extends TimberSite {
       );
     $event_alert = get_posts($args);
 
-    $context['event_alert'] = get_field( "banner_content", $event_alert[0]->ID );
+    if($event_alert) {
+      $context['event_alert'] = get_field( "banner_content", $event_alert[0]->ID );
+    }
 
      // Alert - program temp
     $programs_alert_slug = 'programs-covid-19';
@@ -125,7 +127,10 @@ class GunySite extends TimberSite {
       );
     $programs_alert = get_posts($args);
 
-    $context['programs_alert'] = get_field( "banner_content", $programs_alert[0]->ID );
+    if($programs_alert) {
+      $context['programs_alert'] = get_field( "banner_content", $programs_alert[0]->ID );
+    }
+
     $context['direction'] = (ICL_LANGUAGE_CODE === 'ar' || ICL_LANGUAGE_CODE === 'ur') ? 'rtl' : 'ltr';
 
     return $context;

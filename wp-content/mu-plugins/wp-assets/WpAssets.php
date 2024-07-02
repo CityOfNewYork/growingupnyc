@@ -82,12 +82,16 @@ class WpAssets {
      * Add the script
      */
 
-    wp_register_script($handle, $src, $deps, $ver, $in_footer);
+    $registered = wp_register_script($handle, $src, $deps, $ver, $in_footer);
+
+    if (!$registered) {
+      $registered = false;
+    }
 
     if ($enqueue) {
-      wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
+      $enqueued = wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
     } else {
-      $enqueue = false;
+      $enqueued = false;
     }
 
     // Return what we've found
@@ -129,6 +133,10 @@ class WpAssets {
      */
 
     $registered = wp_register_style($handle, $src, $deps, $ver, $media);
+
+    if (!$registered) {
+      $registered = false;
+    }
 
     if ($enqueue) {
       $enqueued = wp_enqueue_style($handle, $src, $deps, $ver, $media);

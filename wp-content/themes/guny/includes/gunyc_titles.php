@@ -36,7 +36,7 @@ function guny_titles( $title ){
     $title=$_post->brain_building_tip_name . ' - ' . get_bloginfo('name', 'display');
   }
 
-  if ( preg_match('/search/', $_post->post_title) || !empty($_GET['s'])) {
+  if ( (isset($_post->post_title) && preg_match('/search/', $_post->post_title)) || !empty($_GET['s'])) {
     $title = __('Search - Growing Up NYC', 'guny-search');
   }
 

@@ -31,7 +31,7 @@ $filter_args=array(
     array(
       'taxonomy' => 'age_group',
       'field'    => 'term_id',
-      'terms'    => array_map(create_function('$o', 'return $o->term_id;'), $ages),
+      'terms'    => array_map(fn($o) => $o->term_id, $ages),
     ),
   ),
 );

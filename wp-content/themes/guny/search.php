@@ -10,6 +10,8 @@ $context = Timber::get_context();
 // Get the query and validate parameters
 $query = Search\get_query(ICL_LANGUAGE_CODE);
 
+$query['s'] = htmlspecialchars(trim($query['s']));
+
 // Auto correct the search term
 $query['s'] = Search\auto_correct($query['s']);
 

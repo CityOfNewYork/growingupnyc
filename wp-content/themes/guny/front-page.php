@@ -20,7 +20,7 @@ $filter_args=array(
   'posts_per_page' => 3,
   'post_type' => 'program',
   'orderby' => 'date',
-  'order' => 'ASC',
+  'order' => 'DESC',
 );
 $programs = array();
 $query = new WP_Query($filter_args);

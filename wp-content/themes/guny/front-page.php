@@ -14,12 +14,12 @@ $featured_image = get_the_post_thumbnail_url($post);
 $context['featured_image'] = $featured_image;
 
 /**
- * Top 3 programs based on menu order in CMS
+ * Top 3 programs based on date published
  */
 $filter_args=array(
   'posts_per_page' => 3,
   'post_type' => 'program',
-  'orderby' => 'menu_order',
+  'orderby' => 'date',
   'order' => 'ASC',
 );
 $programs = array();

@@ -66,7 +66,7 @@
 								</svg>
 							</a>
 						</li>
-					{% else %}
+					{% elseif post.tip %}
 						<li class="c-nav-list__item">
 							<a href="#section-quick-tip" data-section="section-quick-tip" aria-label="{{ language == 'en' ? 'View' : 'Ver' }} {{ __('Quick Tip', 'GUNY-Single-Age') }}" class="scroll js-section c-nav-list__link bg-{{post.age_group.slug|sanitize|replace({(['-',language_code]|join):''})}}--secondary">{{ __('Quick Tip', 'GUNY-Single-Age') }}<svg aria-hidden="true" class="icon--caret">
 									<use xlink:href="#icon-caret-right"></use>

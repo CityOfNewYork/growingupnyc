@@ -1,10 +1,10 @@
 <?php
 /*
 Plugin Name: Routes
-Plugin URI: http://routes.upstatement.com
-Description: The WordPress Timber Library allows you to write themes using the power Twig templates
+Plugin URI: http://www.upstatement.com
+Description: Routes makes it easy to add custom routing to your WordPress site. That's why we call it Routes. That is all.
 Author: Jared Novack + Upstatement
-Version: 0.3.1
+Version: 0.9.2
 Author URI: http://upstatement.com/
 
 Usage:
@@ -50,7 +50,7 @@ class Routes {
 	 *                                  //stuff goes here
 	 *                              });
 	 */
-	public static function map($route, $callback, $args = array()) {
+	public static function map($route, $callback, $name = '') {
 		global $upstatement_routes;
 		if (!isset($upstatement_routes->router)) {
 			$upstatement_routes->router = new AltoRouter();
@@ -63,11 +63,13 @@ class Routes {
 			} else {
 				$base_path = '/' . $base_path . '/';
 			}
+			// Clean any double slashes that have resulted
+			$base_path = str_replace( "//", "/", $base_path );
 			$upstatement_routes->router->setBasePath($base_path);
 		}
 		$route = self::convert_route($route);
-		$upstatement_routes->router->map('GET|POST|PUT|DELETE', trailingslashit($route), $callback, $args);
-		$upstatement_routes->router->map('GET|POST|PUT|DELETE', untrailingslashit($route), $callback, $args);
+		$upstatement_routes->router->map('GET|POST|PUT|DELETE', trailingslashit($route), $callback, $name);
+		$upstatement_routes->router->map('GET|POST|PUT|DELETE', untrailingslashit($route), $callback, $name);
 	}
 
 	/**
@@ -90,7 +92,7 @@ class Routes {
 	}
 
 	/**
-	 * @param array $template           A php file to load (ex: 'single.php')
+	 * @param string $template           A php file to load (ex: 'single.php')
 	 * @param array|bool $tparams       An array of data to send to the php file. Inside the php file
 	 *                                  this data can be accessed via:
 	 *                                  global $params;
@@ -129,7 +131,7 @@ class Routes {
 		}
 
 		if ($query) {
-			add_action('do_parse_request', function() use ($query) {
+			add_action('parse_request', function() use ($query) {
 				global $wp;
 				if ( is_callable($query) )
 					$query = call_user_func($query);

@@ -5,7 +5,7 @@
 
 	function testContent(){
 		$quote = 'The way to do well is to do well.';
-		$post_id = $this->factory->post->create();
+		$post_id = self::factory()->post->create();
 		$post = new TimberPost($post_id);
 		$post->post_content = $quote;
 		wp_update_post($post);
@@ -18,7 +18,7 @@
 		$quote .= '<!--nextpage-->';
 		$quote .= $page2 = "And do not let your tongue get ahead of your mind.";
 
-		$post_id = $this->factory->post->create();
+		$post_id = self::factory()->post->create();
 		$post = new TimberPost($post_id);
 		$post->post_content = $quote;
 		wp_update_post($post);
@@ -34,7 +34,7 @@
 		$quote .= '<!--nextpage-->';
 		$quote .= $page2 = "No, try not. Do or do not. There is no try.";
 
-		$post_id = $this->factory->post->create(array('post_content' => $quote));
+		$post_id = self::factory()->post->create(array('post_content' => $quote));
 
 		$this->go_to( get_permalink( $post_id ) );
 
@@ -61,13 +61,22 @@
 		if ( $wp_version < 5.0 ) {
 			$this->markTestSkipped('Only applies to Block editor which is avaialble in WP 5.x');
 		}
-		$content_1 = '<!-- wp:paragraph --><p>Here is the start to my post! This should not show when noTeaser:true</p><!-- /wp:paragraph -->
-<!-- wp:more {"noTeaser":true} --><!--more--><!--noteaser-->';
-		$content_2 = '<!-- /wp:more --><!-- wp:paragraph --><p>WHEN noTeaser:true, ONLY this shows on the single page</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>And this too!</p><!-- /wp:paragraph -->';
-		$post_id = $this->factory->post->create(['post_content' => $content_1.$content_2 ]);
+		$content_1 = '<!-- wp:paragraph -->
+<p>Heres the start to a thing</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:more {"noTeaser":true} -->
+<!--more-->
+<!--noteaser-->
+<!-- /wp:more -->
+
+<!-- wp:paragraph -->
+<p>Heres the read more stuff that we shant see!</p>
+<!-- /wp:paragraph -->';
+		$post_id = self::factory()->post->create(['post_content' => $content_1 ]);
 		$post = new \Timber\Post($post_id);
-		
-		$this->assertEquals($content_2, $post->content());
+
+		$this->assertEquals('<p>Heres the read more stuff that we shant see!</p>', trim($post->content()));
 	}
 
 }

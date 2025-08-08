@@ -2,25 +2,38 @@
 <a href="https://upstatement.com/timber/"><img src="http://i.imgur.com/PbEwvZ9.png" style="display:block; margin:auto; width:100%; max-width:100%"/></a>
 </div>
 
-By 
-[Jared Novack](https://github.com/jarednova) ([@jarednova](https://twitter.com/jarednova)), 
-[Lukas Gächter](https://github.com/gchtr) ([@lgaechter](https://twitter.com/lgaechter)), 
-[Pascal Knecht](https://github.com/pascalknecht) ([@pascalknecht](https://twitter.com/revenwo)), 
-[Maciej Palmowski](https://github.com/palmiak) ([@palmiak_fp](https://twitter.com/palmiak_fp)),
+By
+[Jared Novack](https://github.com/jarednova) ([@jarednova](https://twitter.com/jarednova)),
+[Lukas Gächter](https://github.com/gchtr) ([@lgaechter](https://twitter.com/lgaechter)),
+[Nicolas Lemoine](https://github.com/nlemoine) ([@nlemoine](https://niconico.fr/)),
+[Erik van der Bas](https://github.com/Levdbas) ([website](https://basedonline.nl/)),
 [Coby Tamayo](https://github.com/acobster) ([@cobytamayo](https://keybase.io/acobster)),
-[Upstatement](https://twitter.com/upstatement) and [hundreds of other GitHub contributors](https://github.com/timber/timber/graphs/contributors)
+[Upstatement](https://twitter.com/upstatement) and [hundreds of other GitHub contributors](https://github.com/timber/timber/graphs/contributors):
 
-[![Build Status](https://img.shields.io/travis/timber/timber/master.svg?style=flat-square)](https://travis-ci.com/github/timber/timber)
+[![](https://opencollective.com/timber/contributors.svg?width=900&button=false)](https://github.com/timber/timber/graphs/contributors)
+
+[![Build Status](https://img.shields.io/travis/timber/timber/master?style=flat-square)](https://app.travis-ci.com/github/timber/timber/branches)
 [![Coverage Status](https://img.shields.io/coveralls/timber/timber.svg?style=flat-square)](https://coveralls.io/github/timber/timber)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/timber/timber.svg?style=flat-square)](https://scrutinizer-ci.com/g/timber/timber/?branch=master)
 [![Latest Stable Version](https://img.shields.io/packagist/v/timber/timber.svg?style=flat-square)](https://packagist.org/packages/timber/timber)
-[![WordPress Download Count](https://img.shields.io/wordpress/plugin/dt/timber-library.svg?style=flat-square)](https://wordpress.org/plugins/timber-library/)
-[![Join the chat at https://gitter.im/timber/timber](https://img.shields.io/gitter/room/timber/timber.svg?style=flat-square)](https://gitter.im/timber/timber?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![WordPress Rating](https://img.shields.io/wordpress/plugin/r/timber-library.svg?style=flat-square)](https://wordpress.org/support/plugin/timber-library/reviews/)
+[![!Financial Contributors](https://opencollective.com/timber/tiers/badge.svg)](https://opencollective.com/timber/)
+
+### ⚠️ Important information about the Timber plugin ⚠️ 
+> With the release of Timber 2.0, Composer is the only supported install method. We are unable to continue releasing or supporting Timber as a plugin on WordPress.org. We advise everyone to **[switch to the Composer based install of Timber 1 as a first step](https://timber.github.io/docs/v1/getting-started/switch-to-composer/)** as soon as possible. If you need PHP 8.2 support you will have to switch to Timber 2.0.
+
+For more information and a list of additional resources, please visit this [discussion](https://github.com/timber/timber/discussions/2804).
+
+### Timber 2
+
+Timber 2 is out now and is the recommended version.
+
+- GitHub: [Timber 2](https://github.com/timber/timber)
+- Documentation: [https://timber.github.io/docs/v2/](https://timber.github.io/docs/v2/)
 
 
 ### Because WordPress is awesome, but the_loop isn't
-Timber helps you create fully-customized WordPress themes faster with more sustainable code. With Timber, you write your HTML using the [Twig Template Engine](http://twig.sensiolabs.org/) separate from your PHP files.
+Timber helps you create fully-customized WordPress themes faster with more sustainable code. With Timber, you write your HTML using the [Twig Template Engine](https://twig.symfony.com/) separate from your PHP files.
 
 This cleans up your theme code so, for example, your PHP file can focus on being the data/logic, while your Twig file can focus 100% on the HTML and display.
 
@@ -40,16 +53,16 @@ This is what Timber's `.twig` files look like (from this [Hello World example](h
 Once Timber is installed and activated in your `plugins` directory, it gives any WordPress theme the ability to take advantage of the power of Twig and other Timber features.
 
 ### Looking for docs?
-* [Timber Documentation](https://timber.github.io/docs/)
-* [Twig Reference](http://twig.sensiolabs.org/doc/templates.html)
-* [Overview / Getting Started Guide](https://timber.github.io/docs/getting-started/)
-* [Video Tutorials](https://timber.github.io/docs/getting-started/video-tutorials/)
+* [Timber Documentation](https://timber.github.io/docs/v1/)
+* [Twig Reference](https://twig.symfony.com/)
+* [Overview / Getting Started Guide](https://timber.github.io/docs/v1/getting-started/)
+* [Video Tutorials](https://timber.github.io/docs/v1/getting-started/video-tutorials/)
 
 * * *
 
 ### Installation
 
-The GitHub version of Timber requires [Composer](https://getcomposer.org/download/) and is setup for inclusion _within_ a theme or plugin. If you'd prefer one-click installation for your site, you should use the [WordPress.org](https://wordpress.org/plugins/timber-library/) version.
+The GitHub version of Timber requires [Composer](https://getcomposer.org/download/) and is setup for inclusion _within_ a theme or plugin.
 
 ```shell
 cd ~/wp-content/themes/my-theme
@@ -70,7 +83,7 @@ $timber = new \Timber\Timber();
 
 ### What Now?
 
-Setup the [Timber Starter Theme](https://timber.github.io/docs/getting-started/setup/#use-the-starter-theme). Once you have that installed in your WordPress setup, continue reading the [Getting Started guide to Themeing](https://timber.github.io/docs/getting-started/theming/).
+Setup the [Timber Starter Theme](https://timber.github.io/docs/v1/getting-started/setup/#use-the-starter-theme). Once you have that installed in your WordPress setup, continue reading the [Getting Started guide to Themeing](https://timber.github.io/docs/v1/getting-started/theming/).
 
 * * *
 
@@ -93,7 +106,10 @@ Timber is great for any WordPress developer who cares about writing good, mainta
 * [**Timber Debug Bar**](https://github.com/timber/debug-bar-timber) Adds a debug bar panel that will show you which template is in-use and the data sent to your twig file.
 
 #### Related Timber Projects
+* [**Editor for Timber**](https://wordpress.org/plugins/editor-for-timber/) Edit your Twig files from the WordPress admin
 * [**Pine**](https://github.com/azeemhassni/pine) A CLI _installer_ for Timber
+* [**Query Monitor Twig Profile**](https://github.com/NielsdeBlaauw/query-monitor-twig-profile) An add-on for [Query Monitor](https://wordpress.org/plugins/query-monitor/) to see what's going on inside your Twig files (automatically works with Timber!)
+* [**Timber ACF WP Blocks**](https://github.com/palmiak/timber-acf-wp-blocks) Easy ACF Gutenberg blocks creation
 * [**Timber CLI**](https://github.com/nclud/wp-timber-cli) A CLI for Timber
 * [**Timber Commented Include**](https://github.com/djboris88/timber-commented-include) Debug output via HTML comments before and after each include statement in Twig
 * [**Timber Debugger**](https://github.com/djboris88/timber-debugger) Package that provides extra debugging options for Timber
@@ -103,32 +119,64 @@ Timber is great for any WordPress developer who cares about writing good, mainta
 * [**Timber Sugar**](https://github.com/timber/sugar) A catch-all for goodies to use w Timber
 * [**Timber WebLink Extension**](https://github.com/nlemoine/timber-weblink-extension) Provides Twig functions to manage the Link HTTP header needed for Web Linking when using HTTP/2 Server Push as well as Resource Hints
 * [**Timmy**](https://github.com/MINDKomm/Timmy) Advanced image manipulation for Timber
-* [**Timber ACF WP Blocks**](https://github.com/palmiak/timber-acf-wp-blocks) Easy ACF Gutenberg blocks creation
+
 
 #### Projects that use Timber
 * [**Branch**](https://github.com/JeyKeu/branch/) Bootstrap 3 + Timber = Branch starter theme!
 * [**Flynt**](https://flyntwp.com/) a component based WordPress starter theme built on Timber and ACF Pro
 * [**Gantry5**](https://wordpress.org/plugins/gantry5/) a framework for theme development
-* [**Seedling**](https://github.com/maxdmyers/seedling) A starter theme using Bootstrap 4
-
+* [**Hozokit**](https://github.com/csalmeida/hozokit) a component based starter theme
+* [**Juniper**](https://www.osomstudio.com/blog/meet-the-juniper-starter-pack-your-wordpress-development-new-best-friend/) Starter pack that incorporates Timber and Bedrock
+* [**Seedling**](https://github.com/maxdmyers/seedling) a starter theme using Bootstrap 4
 
 #### Helpful Links
 * [**CSS Tricks**](https://css-tricks.com/timber-and-twig-reignited-my-love-for-wordpress/) introduction to Timber by [@tjFogarty](https://github.com/tjFogarty)
 * [**Twig for Timber Cheatsheet**](http://notlaura.com/the-twig-for-timber-cheatsheet/) by [@laras126](https://github.com/laras126)
+* [**Timber Cheatsheet**](https://gist.github.com/taotiwordpress/266fd95513f97f3c17748288579c56b9) by [@taotiwordpress](https://github.com/taotiwordpress)
 * [**TutsPlus**](http://code.tutsplus.com/articles/kick-start-wordpress-development-with-twig-introduction--cms-24781) A guide to getting started by [@ahmadawais](https://github.com/ahmadawais)
 
 #### Support
 Please post on [StackOverflow under the "Timber" tag](http://stackoverflow.com/questions/tagged/timber). Please use GitHub issues _only_ for specific bugs, feature requests and other types of issues.
 
 #### Should I use it?
-It's MIT-licensed, so please use in personal or commercial work. Just don't re-sell it. Timber is used on [tens of thousands of sites](https://www.upstatement.com/timber/#showcase) (and tons more we don't know about)
+Timber is MIT-licensed, so please use in personal or commercial work. Just don't re-sell it. Timber is used on [tens of thousands of sites](https://www.upstatement.com/timber/#showcase) (and tons more we don't know about)
 
-#### Contributing
-We love PRs! Read the [Contributor Guidelines](https://github.com/timber/timber/blob/master/CONTRIBUTING.md) for more info.
+#### Contributing & Community
+We love PRs! Read the [Contributor Guidelines](https://github.com/timber/timber/blob/2.x/CONTRIBUTING.md) for more info. Say hello, share your tips/work, and spread the love on Twitter at [@TimberWP](https://twitter.com/TimberWP).
+
+## Sponsor us
+
+Since 2013 our goal at Timber is to create a library to that helps you create fully-customized WordPress themes _faster_ with more _sustainable code_.
+
+Through the collaborative efforts of both our dedicated team and countless contributors, we have invested numerous hours in maintaining and enhancing Timber. To keep doing that, we rely on the invaluable support of our sponsors.
+
+Are you a WordPress pro or part of an agency who relies on Timber? Keep the magic alive by [becoming a sponsor](https://opencollective.com/timber)! By becoming a sponsor, you contribute to the continuous maintenance and enhancement of Timber, ultimately benefiting developers worldwide.
+
+![](https://opencollective.com/timber/tiers/bronze-sponsor.svg?avatarHeight=36&limit=0&button=true)
+
+### Gold Sponsors
+
+![](https://opencollective.com/timber/tiers/gold-sponsor.svg?avatarHeight=36&button=false)
+
+<!-- Enable when available.
+### Silver Sponsors
+
+![](https://opencollective.com/timber/tiers/sponsors.svg?avatarHeight=36?avatarHeight=36&button=false)
+-->
+
+<!-- Enable when available.
+### Basic Sponsors
+
+![](https://opencollective.com/timber/tiers/bronze-sponsor.svg?avatarHeight=36&button=false)
+-->
+
+### Our backers
+
+![](https://opencollective.com/timber/tiers/backers.svg?avatarHeight=36&button=false)
 
 ## Documentation
 
-The Official [Documentation for Timber](https://timber.github.io/docs/) is generated from the contents of this repository:
+The Official [Documentation for Timber 1](https://timber.github.io/docs/v1/) is generated from the contents of this repository:
 
-* Documentation for classes and functions is [auto generated](https://github.com/timber/docs). Any changes to the [Reference section](https://timber.github.io/docs/reference/) of the docs should be made by editing the function’s DocBlock. For inline documentation, we follow the [WordPress PHP Documentation Standards](https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/php/).
-* To make a change to one of the guides, edit the relevant file in the [`docs` directory](https://github.com/timber/timber/tree/master/docs).
+* Documentation for classes and functions is [auto generated](https://github.com/timber/docs). Any changes to the [Reference section](https://timber.github.io/docs/v1/reference/) of the docs should be made by editing the function’s DocBlock. For inline documentation, we follow the [WordPress PHP Documentation Standards](https://make.wordpress.org/core/handbook/best-practices/inline-documentation-standards/php/).
+* To make a change to one of the guides, edit the relevant file in the [`docs` directory](https://github.com/timber/timber/tree/1.x/docs).

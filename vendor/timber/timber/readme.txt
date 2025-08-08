@@ -1,16 +1,25 @@
 === Timber ===
 Contributors: jarednova
 Tags: template engine, templates, twig
-Requires at least: 4.9.8
-Tested up to: 5.5.1
-Stable tag: 1.18.2
-Requires PHP: 5.6
+Tested up to: 6.3.2
+Stable tag: 1.23.0
+Requires PHP: 7.2.5
+Requires at least: 5.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Helps you create themes faster with sustainable code. With Timber, you write HTML using Twig Templates http://www.upstatement.com/timber/
 
 == Description ==
+With the upcoming release of Timber 2.0, we will not release a 2.0 version and beyond as a plugin, but only as a Composer package. We advise everyone to switch to the Composer based install as soon as possible.
+You will find an extensive list with guides and the reasons why we are not going to release Timber 2.0 as a plugin anymore.
+
+### Switching to the Composer based version
+* Announcement: [Dropping support for the plugin version of Timber](https://github.com/timber/timber/discussions/2804)
+* Guide: [How do I switch over from the plugin version to the Composer based version of Timber?](https://timber.github.io/docs/getting-started/switch-to-composer/)
+* Backstory: [Why we are dropping support for the plugin in the first place](https://github.com/timber/timber/pull/2005)
+* GitHub issue: [Roadmap for Timber 2.0](https://github.com/timber/timber/issues/2741)
+
 Timber helps you create fully-customized WordPress themes faster with more sustainable code. With Timber, you write your HTML using the [Twig Template Engine](http://twig.sensiolabs.org/) separate from your PHP files. This cleans up your theme code so, for example, your PHP file can focus on being the data/logic, while your Twig file can focus 100% on the HTML and display.
 
 Once Timber is installed and activated in your plugin directory, it gives any WordPress theme the ability to take advantage of the power of Twig and other Timber features.
@@ -32,13 +41,89 @@ _Twig is the template language powering Timber; if you need a little background 
 
 == Changelog ==
 
-= Develop (next release) =
+= 1.23.0 =
 
-**Changes for Theme Developers**
+* Improve GitHub pull request template by @gchtr in https://github.com/timber/timber/pull/2641
+* Update bug report template and CODEOWNERS by @gchtr in https://github.com/timber/timber/pull/2711
+* Add Erik to Contributors List by @jarednova in https://github.com/timber/timber/pull/2735
+* Fix PHPDoc typo by @LogicEveryWhere in https://github.com/timber/timber/pull/2709
+* Add sponsorship information to Readme by @gchtr in https://github.com/timber/timber/pull/2777
+* doc: Add drop support notice to issue template by @nlemoine in https://github.com/timber/timber/pull/2810
+* Add documentation and plugin notice about the end of the plugin version by @Levdbas in https://github.com/timber/timber/pull/2800
+* Workflow: fix path to guide by @Levdbas in https://github.com/timber/timber/pull/2823
+* @LogicEveryWhere made their first contribution in https://github.com/timber/timber/pull/2709
+
+**Full Changelog**: https://github.com/timber/timber/compare/1.22.1...1.23.0
+
+= 1.22.1 =
+
+* Fixed a bug when Twig version 3 was accidentally installed when installing Timber through Composer, by @rmens in https://github.com/timber/timber/pull/2679.
+
+= 1.22.0 =
+
+* Fixed included Twig version. In the plugin version 1.21.0 of Timber, Twig version 2.15.3 was accidentally included instead of Twig version 1.44.7.
+* Removed official support for PHP 8.1 in the plugin version. If you need to support PHP 8.1 in the future, please install [Timber through Composer](https://timber.github.io/docs/getting-started/setup/#via-github-for-developers) instead of installing Timber as a plugin. This will the only supported way of installing Timber when Timber version 2 will be released.
+* Updated minimum required WordPress version to 5.3.
+
+= 1.21.0 =
+
+* Updated minimum required PHP version to 7.2 to make the included Twig version support PHP 8.0 and 8.1, by @gchtr in #2640.
+* Updated minimum Twig version to 1.44.0 to support PHP 8.0 and 8.1, by @gchtr in #2640.
+* Fixed support for PHP 8.0 and PHP 8.1, by @nlemoine and @gchtr in #2638, #2640.
+
+= 1.20.0 =
+
+* Use newest version of Upstatement/routes for WordPress 6.0 by @jarednova in #2595
+
+= 1.19.2 =
 
 **Fixes and improvements**
 
-= 1.18.2 = 
+* Handle for duplicate term names in difft taxes by @jarednova in #2390
+* Fix typo in resize error message. by @Web-Assembler in #2523
+* Add webp support to letterbox filter by @ThomasBerends in #2528
+* Update composer/installers from v1 to v2 by @adamtomat in #2543
+* Improve composer version ranges by @gchtr in #2550
+
+* @Web-Assembler made their first contribution in #2523
+* @ThomasBerends made their first contribution in #2528
+* Full Changelog: https://github.com/timber/timber/compare/1.19.1...1.19.2
+
+= 1.19.1 =
+
+**Fixes and improvements**
+
+* Fix bug when using switch_to_blog() in combination with Timber images by @gchtr in https://github.com/timber/timber/pull/2478
+* Fix the `thumbnail()` method return type by @titouanmathis in https://github.com/timber/timber/pull/2463
+* Merge in 2.x GH Actions changes by @jarednova in https://github.com/timber/timber/pull/2484
+* Adds @nlemoine to the contribs list! by @jarednova in https://github.com/timber/timber/pull/2488
+* Bump version of Upstatement/Routes to 0.8.1 by @jarednova in https://github.com/timber/timber/pull/2512
+
+* @titouanmathis made their first contribution in https://github.com/timber/timber/pull/2463
+
+**Full Changelog**: https://github.com/timber/timber/compare/1.19.0...1.19.1
+
+= 1.19.0 =
+
+**Changes for Theme Developers**
+
+* You can now get dimensions of SVG images #2421 #2432 (thanks @vyskoczilova)
+* You can pass additional variables to the `timber/loader/loader` filter #2324 (thanks @neojp)
+
+**Fixes and improvements**
+
+* Fix for double quotes that might appear in a "Read More" in Gutenberg #2337 #2343 (thanks @Keysaw)
+* Fix implementation of WP's `get_the_date` and `get_the_time` filters #2350 (thanks @shvlv)
+* Fix for how the `wp:more` tag works with `noteaser` #2348 #2351 (thanks @jhhazelaar)
+* Fix for two cases of where `home_url()` should be used instead of `site_url()` #2356 #2357 (thanks @Levdbas)
+* Fix for where `Timber::get_sites` returned the same locale for all sites #1908 #2369 (thanks @highbelt)
+* Use the latest release of Upstatement/Routes (0.5 => 0.8) #2373 (thanks @jverneaut)
+* Fix for sidebar retrieval in PHP 8 #2385 (thanks @marciojc)
+* Fix for proper ignoring of the Cache directory on case-insensitive file systems #342 #2416 (thanks @toonvandeputte)
+
+* Fixed a bug when using `switch_to_blog()` in combination with Timber images #1312 #2478 (thanks @gchtr)
+
+= 1.18.2 =
 
 **Fixes and improvements**
 

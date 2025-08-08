@@ -21,41 +21,36 @@
     }
   ],
   "require": {
-    "timber/timber": "^1.16",
     "wpackagist-plugin/acf-to-rest-api": "^3.2.0",
-    "wpackagist-plugin/auto-post-scheduler": "^1.82",
     "wpackagist-plugin/aryo-activity-log": "^2.5.2",
-    "wpackagist-plugin/better-search-replace": "^1.3.3",
-    "wpackagist-plugin/bulk-delete": "^6.0.2",
     "wpackagist-plugin/classic-editor": "^1.5",
-    "wpackagist-plugin/duplicate-post": "^4.0",
     "wpackagist-plugin/gathercontent-import": "^3.1.14",
-    "wpackagist-plugin/google-authenticator": "^0.53",
     "wpackagist-plugin/limit-login-attempts-reloaded": "^2.13.0",
     "wpackagist-plugin/media-cleaner": "^6.0.5",
-    "wpackagist-plugin/post-expiration-date": "^1.3",
     "wpackagist-plugin/simple-custom-post-order": "^2.5.0",
     "wpackagist-plugin/svg-support": "^2.3.18",
     "wpackagist-plugin/taxonomy-terms-order": "^1.5.7.2",
-    "wpackagist-plugin/the-events-calendar": "^5.3.2",
     "wpackagist-plugin/tinymce-advanced": "^5.5",
-    "wpackagist-plugin/wordpress-importer": "^0.7",
-    "wpackagist-plugin/wp-all-export": "^1.2.5",
     "wpackagist-plugin/wp-smartcrop": "^2.0.5",
     "wpackagist-plugin/wps-hide-login": "^1.5.6",
     "michelf/php-markdown": "^1.9",
     "nyco/wp-assets": "^1.1.5",
-    "nyco/wp-config": "^1.0.1",
-    "nyco/wp-send-me-nyc": "^1.5"
+    "nyco/wp-send-me-nyc": "^1.5",
+    "timber/timber": "^1",
+    "nyco/wp-config": "^1.0"
   },
   "require-dev": {
     "filp/whoops": "^2.1",
-    "whoops/soap": "^1.0",
-    "wpackagist-plugin/query-monitor": "^3.6.0"
+    "whoops/soap": "^1.0"
   },
   "scripts": {
     "version": [
       "composer update nothing"
     ]
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
   }
 }

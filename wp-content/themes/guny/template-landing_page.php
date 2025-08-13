@@ -32,8 +32,8 @@ if (($post->post_parent)>0) {
 }
 // temporary virtual events
 $context['virtual_event'] = true;
-$context['page_title'] = Templating\get_title($post->ID);
-$context['page_tagline'] = Templating\get_tagline($post->ID);
+$context['page_title'] = get_the_title($post->ID);
+$context['page_tagline'] = get_field(Templating\FIELD_TAGLINE, $post->ID);
 $context['shareAction'] = admin_url( 'admin-ajax.php' );
 $context['shareHash'] = \SMNYC\hash($post->link);
 $context['shareTemplate'] = Templating\get_share_template($post->ID);

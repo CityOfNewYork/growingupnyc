@@ -194,8 +194,20 @@ export default function() {
      * @function
      * @param {object} event - The event object
      */
-    $accordionElem.on('DOMNodeInserted', function(event) {
-      reInitialize($accordionElem);
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+          $accordionElem.children().each(function() {
+            initializeAccordionItem($(this));
+          });
+          break; // Only run once per batch
+        }
+      }
+    });
+    
+    observer.observe($accordionElem[0], {
+      childList: true,
+      subtree: true // Match DOMNodeInserted behavior
     });
   }
 

@@ -82,7 +82,7 @@
 					{% for top in post.get_field('landing_page_section') %}
 						{% if loop.index != 1 %}
 							<li class="c-nav-list__item">
-								<a href="#{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" data-section="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" class="scroll js-section {% if post.get_field('lp_theme') != 'default'%}c-nav-list__link--{{post.get_field('lp_theme')}}{% else %}c-nav-list__link{% endif %} text-color-white">{{top.landing_page_section_content_heading}}<svg aria-hidden="true" class="icon--caret">
+								<a href="#{{top.landing_page_section_content_heading|lower|replace({' ':'-', ':':'-', ',':'-'})}}" data-section="{{top.landing_page_section_content_heading|lower|replace({' ':'-', ':':'-', ',':'-'})}}" class="scroll js-section {% if post.get_field('lp_theme') != 'default'%}c-nav-list__link--{{post.get_field('lp_theme')}}{% else %}c-nav-list__link{% endif %} text-color-white">{{top.landing_page_section_content_heading}}<svg aria-hidden="true" class="icon--caret">
 										<use xlink:href="#icon-caret-right"></use>
 									</svg>
 								</a>
@@ -96,7 +96,7 @@
 		<div class="o-article js-sticky-article desktop:w-article">
 			{# Section One #}
 			{% for top in post.get_field('landing_page_section') %}
-				<section id="{{top.landing_page_section_content_heading|lower|replace({' ':'-'})}}" class="o-content-container--compact u-top-spacing s-wysiwyg bullet">
+				<section id="{{top.landing_page_section_content_heading|lower|replace({' ':'-', ':':'-', ',':'-'})}}" class="o-content-container--compact u-top-spacing s-wysiwyg bullet">
 					{% if loop.index != 1 %}
 						<h2>{{top.landing_page_section_content_heading}}</h2>
 					{% endif %}

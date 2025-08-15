@@ -94,8 +94,9 @@ final class SecurityPolicy implements SecurityPolicyInterface
         $allowed = false;
         $method = strtr($method, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz');
         foreach ($this->allowedMethods as $class => $methods) {
-            if ($obj instanceof $class && \in_array($method, $methods)) {
-                $allowed = true;
+            if ($obj instanceof $class) {
+                $allowed = \in_array($method, $methods);
+
                 break;
             }
         }
@@ -110,8 +111,9 @@ final class SecurityPolicy implements SecurityPolicyInterface
     {
         $allowed = false;
         foreach ($this->allowedProperties as $class => $properties) {
-            if ($obj instanceof $class && \in_array($property, \is_array($properties) ? $properties : [$properties])) {
-                $allowed = true;
+            if ($obj instanceof $class) {
+                $allowed = \in_array($property, \is_array($properties) ? $properties : [$properties]);
+
                 break;
             }
         }

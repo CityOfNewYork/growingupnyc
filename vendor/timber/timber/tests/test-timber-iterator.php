@@ -3,14 +3,14 @@
 class TestTimberIterator extends Timber_UnitTestCase {
 
     function testQueryPosts(){
-        self::factory()->post->create();
+        $this->factory->post->create();
         $posts = TimberPostGetter::query_posts('post_type=post');
         $this->assertInstanceOf( 'TimberQueryIterator', $posts );
     }
 
     function testTheLoop(){
         for ( $i = 1; $i < 3; $i++ ) {
-            self::factory()->post->create( array(
+            $this->factory->post->create( array(
                 'post_title' => 'TestPost' . $i,
                 'post_date' => ('2018-09-0'.$i.' 01:56:01')
             ) );
@@ -26,7 +26,7 @@ class TestTimberIterator extends Timber_UnitTestCase {
     }
 
     function testTwigLoopVar() {
-	    $posts = self::factory()->post->create_many( 3 );
+	    $posts = $this->factory->post->create_many( 3 );
 	    $posts = TimberPostGetter::query_posts($posts);
 
 	    $compiled = Timber::compile('assets/iterator-loop-test.twig', array(
@@ -55,7 +55,7 @@ class TestTimberIterator extends Timber_UnitTestCase {
     }
 
     function testPostCount() {
-    	$posts = self::factory()->post->create_many( 8 );
+    	$posts = $this->factory->post->create_many( 8 );
         $posts = TimberPostGetter::query_posts('post_type=post');
         $this->assertEquals( 8, $posts->post_count() );
         $this->assertEquals( 8, count($posts) );

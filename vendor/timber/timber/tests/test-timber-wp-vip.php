@@ -25,13 +25,13 @@
 			$data['crop'] = 'default';
 			Timber::compile( 'assets/image-test.twig', $data );
 			$resized_path = $upload_dir['path'].'/arch-'.$data['size']['width'].'x'.$data['size']['height'].'-c-'.$data['crop'].'.jpg';
-			$this->assertFileDoesNotExist( $resized_path );
+			$this->assertFileNotExists( $resized_path );
 			remove_filter( 'timber/allow_fs_write', '__return_false' );
 		}
 
 		function testImageResizeInTwig() {
 			add_filter( 'timber/allow_fs_write', '__return_false' );
-			$pid = self::factory()->post->create(array('post_type' => 'post'));
+			$pid = $this->factory->post->create(array('post_type' => 'post'));
  			$attach_id = TestTimberImage::get_image_attachment($pid, 'arch.jpg');
  			$template = '<img src="{{Image(img).src|resize(200, 200)}}">';
  			$str = Timber::compile_string($template, array('img' => $attach_id));

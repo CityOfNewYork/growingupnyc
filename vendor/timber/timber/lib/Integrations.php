@@ -6,7 +6,6 @@ namespace Timber;
  * This is for integrating external plugins into timber
  * @package  timber
  */
-#[\AllowDynamicProperties]
 class Integrations {
 
 	var $acf;

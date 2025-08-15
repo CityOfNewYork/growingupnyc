@@ -1,7 +1,6 @@
 <?php
 
 class TestTimberSite extends Timber_UnitTestCase {
-	protected $backup_wp_theme_directories;
 
 	function testStandardThemeLocation() {
 		switch_theme( 'twentyfifteen' );
@@ -11,7 +10,7 @@ class TestTimberSite extends Timber_UnitTestCase {
 	}
 
 	function testLanguageAttributes() {
-		restore_previous_locale();
+		$this->restore_locale();
 		$site = new TimberSite();
 		$lang = $site->language_attributes();
 		$this->assertEquals('lang="en-US"', $lang);
@@ -56,7 +55,7 @@ class TestTimberSite extends Timber_UnitTestCase {
 		$site = new TimberSite();
 		$icon = $site->icon();
 		$this->assertEquals('Timber\Image', get_class($icon));
-		$this->assertStringContainsString('cardinals.jpg', $icon->src());
+		$this->assertContains('cardinals.jpg', $icon->src());
 	}
 
 	function testSiteGet() {
@@ -71,10 +70,10 @@ class TestTimberSite extends Timber_UnitTestCase {
 		$this->assertEquals('magoo', $ts->meta('foo'));
 	}
 
-	function set_up() {
+	function setUp() {
 		global $wp_theme_directories;
 
-		parent::set_up();
+		parent::setUp();
 
 		$this->backup_wp_theme_directories = $wp_theme_directories;
 		$wp_theme_directories = array( WP_CONTENT_DIR . '/themes' );
@@ -84,13 +83,13 @@ class TestTimberSite extends Timber_UnitTestCase {
 
 	}
 
-	function tear_down() {
+	function tearDown() {
 		global $wp_theme_directories;
 
 		$wp_theme_directories = $this->backup_wp_theme_directories;
 
 		wp_clean_themes_cache();
 		unset( $GLOBALS['wp_themes'] );
-		parent::tear_down();
+		parent::tearDown();
 	}
 }

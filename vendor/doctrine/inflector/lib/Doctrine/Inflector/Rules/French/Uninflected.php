@@ -8,20 +8,26 @@ use Doctrine\Inflector\Rules\Pattern;
 
 final class Uninflected
 {
-    /** @return Pattern[] */
-    public static function getSingular(): iterable
+    /**
+     * @return Pattern[]
+     */
+    public static function getSingular() : iterable
     {
         yield from self::getDefault();
     }
 
-    /** @return Pattern[] */
-    public static function getPlural(): iterable
+    /**
+     * @return Pattern[]
+     */
+    public static function getPlural() : iterable
     {
         yield from self::getDefault();
     }
 
-    /** @return Pattern[] */
-    private static function getDefault(): iterable
+    /**
+     * @return Pattern[]
+     */
+    private static function getDefault() : iterable
     {
         yield new Pattern('');
     }

@@ -49,6 +49,10 @@
 
 		function testTwigFilterNow(){
 			$now = date('M jS, Y');
+			$str = Timber::compile_string("{{now|date('M jS, Y')}}");
+			$this->assertSame($now, $str);
+			$str = Timber::compile_string("{{null|date('M jS, Y')}}");
+			$this->assertSame($now, $str);
 			$str = Timber::compile_string("{{'now'|date('M jS, Y')}}");
 			$this->assertSame($now, $str);
 		}
@@ -79,8 +83,8 @@
 
 		function testTwigFilterDateWordPressOption(){
 			$format = get_option('date_format');
-			$str = Timber::compile_string("{{'now'|date('".$format."')}}");
-			$empty = Timber::compile_string("{{'now'|date}}");
+			$str = Timber::compile_string("{{now|date('".$format."')}}");
+			$empty = Timber::compile_string("{{now|date}}");
 			$this->assertSame($str, $empty);
 		}
 

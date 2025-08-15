@@ -2,8 +2,8 @@
 
 	class TestTimberImageToJPG extends Timber_UnitTestCase {
 
-		function set_up() {
-			parent::set_up();
+		function setUp() {
+			parent::setUp();
 			if ( ! extension_loaded( 'gd' ) ) {
 				self::markTestSkipped( 'JPEG conversion tests requires GD extension' );
 			}

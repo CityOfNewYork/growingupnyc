@@ -1,6 +1,6 @@
 <?php namespace Timber\Cache;
 
-use Twig\CacheExtension\CacheProviderInterface;
+use Asm89\Twig\CacheExtension\CacheProviderInterface;
 use Timber\Loader;
 
 class WPObjectCacheAdapter implements CacheProviderInterface {

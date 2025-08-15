@@ -26,11 +26,7 @@
  * - quinterocesar
  * - Daniel Commesse Liévanos (danielcommesse)
  * - Pete Scopes (pdscopes)
- * - gam04
  */
-
-use Carbon\CarbonInterface;
-
 return [
     'year' => ':count año|:count años',
     'a_year' => 'un año|:count años',
@@ -70,7 +66,7 @@ return [
     'diff_yesterday_regexp' => 'ayer(?:\\s+a)?(?:\\s+las)?',
     'diff_tomorrow' => 'mañana',
     'diff_tomorrow_regexp' => 'mañana(?:\\s+a)?(?:\\s+las)?',
-    'diff_before_yesterday' => 'anteayer',
+    'diff_before_yesterday' => 'antier',
     'diff_after_tomorrow' => 'pasado mañana',
     'formats' => [
         'LT' => 'H:mm',
@@ -81,19 +77,19 @@ return [
         'LLLL' => 'dddd, D [de] MMMM [de] YYYY H:mm',
     ],
     'calendar' => [
-        'sameDay' => function (CarbonInterface $current) {
+        'sameDay' => function (\Carbon\CarbonInterface $current) {
             return '[hoy a la'.($current->hour !== 1 ? 's' : '').'] LT';
         },
-        'nextDay' => function (CarbonInterface $current) {
+        'nextDay' => function (\Carbon\CarbonInterface $current) {
             return '[mañana a la'.($current->hour !== 1 ? 's' : '').'] LT';
         },
-        'nextWeek' => function (CarbonInterface $current) {
+        'nextWeek' => function (\Carbon\CarbonInterface $current) {
             return 'dddd [a la'.($current->hour !== 1 ? 's' : '').'] LT';
         },
-        'lastDay' => function (CarbonInterface $current) {
+        'lastDay' => function (\Carbon\CarbonInterface $current) {
             return '[ayer a la'.($current->hour !== 1 ? 's' : '').'] LT';
         },
-        'lastWeek' => function (CarbonInterface $current) {
+        'lastWeek' => function (\Carbon\CarbonInterface $current) {
             return '[el] dddd [pasado a la'.($current->hour !== 1 ? 's' : '').'] LT';
         },
         'sameElse' => 'L',
@@ -109,13 +105,4 @@ return [
     'day_of_first_week_of_year' => 4,
     'list' => [', ', ' y '],
     'meridiem' => ['a. m.', 'p. m.'],
-    'ordinal_words' => [
-        'of' => 'de',
-        'first' => 'primer',
-        'second' => 'segundo',
-        'third' => 'tercer',
-        'fourth' => 'cuarto',
-        'fifth' => 'quinto',
-        'last' => 'último',
-    ],
 ];

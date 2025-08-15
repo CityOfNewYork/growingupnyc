@@ -8,12 +8,11 @@ namespace Timber;
  * @package Timber
  */
 class PostsIterator extends \ArrayIterator {
-
-	#[\ReturnTypeWillChange]
+	
 	public function current() {
 		global $post;
 		$post = parent::current();
 		return $post;
 	}
-
+	
 }

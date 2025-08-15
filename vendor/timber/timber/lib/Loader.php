@@ -147,7 +147,7 @@ class Loader {
 			$rootPath = null;
 		}
 		$fs = new \Twig\Loader\FilesystemLoader($paths, $rootPath);
-		$fs = apply_filters('timber/loader/loader', $fs, $paths, $rootPath);
+		$fs = apply_filters('timber/loader/loader', $fs);
 		return $fs;
 	}
 
@@ -205,10 +205,9 @@ class Loader {
 		}
 		$cache_mode = $this->_get_cache_mode($cache_mode);
 		if ( self::CACHE_TRANSIENT === $cache_mode || self::CACHE_SITE_TRANSIENT === $cache_mode ) {
-			// $wpdb->query() might return 0 affected rows, but that means it’s still successful.
-			return false !== self::clear_cache_timber_database();
+			return self::clear_cache_timber_database();
 		} else if ( self::CACHE_OBJECT === $cache_mode && $object_cache ) {
-			return false !== self::clear_cache_timber_object();
+			return self::clear_cache_timber_object();
 		}
 		return false;
 	}
@@ -273,15 +272,15 @@ class Loader {
 	}
 
 	/**
-	 * @return \Twig\CacheExtension\Extension
+	 * @return \Asm89\Twig\CacheExtension\Extension
 	 */
 	private function _get_cache_extension() {
 
 		$key_generator   = new \Timber\Cache\KeyGenerator();
 		$cache_provider  = new \Timber\Cache\WPObjectCacheAdapter($this);
 		$cache_lifetime  = apply_filters('timber/cache/extension/lifetime', 0);
-		$cache_strategy  = new \Twig\CacheExtension\CacheStrategy\GenerationalCacheStrategy($cache_provider, $key_generator, $cache_lifetime);
-		$cache_extension = new \Twig\CacheExtension\Extension($cache_strategy);
+		$cache_strategy  = new \Asm89\Twig\CacheExtension\CacheStrategy\GenerationalCacheStrategy($cache_provider, $key_generator, $cache_lifetime);
+		$cache_extension = new \Asm89\Twig\CacheExtension\Extension($cache_strategy);
 
 		return $cache_extension;
 	}

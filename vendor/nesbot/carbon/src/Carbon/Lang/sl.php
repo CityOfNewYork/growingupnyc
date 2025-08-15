@@ -29,9 +29,6 @@
  * - Lovro Tramšek (Lovro1107)
  * - burut13
  */
-
-use Carbon\CarbonInterface;
-
 return [
     'year' => ':count leto|:count leti|:count leta|:count let',
     'y' => ':count leto|:count leti|:count leta|:count let',
@@ -49,9 +46,9 @@ return [
     'a_second' => '{1}nekaj sekund|:count sekunda|:count sekundi|:count sekunde|:count sekund',
     's' => ':count s',
 
-    'year_ago' => ':count letom|:count letoma|:count leti|:count leti',
-    'y_ago' => ':count letom|:count letoma|:count leti|:count leti',
-    'month_ago' => ':count mesecem|:count mesecema|:count meseci|:count meseci',
+    'year_ago' => ':count letom|:count leti|:count leti|:count leti',
+    'y_ago' => ':count letom|:count leti|:count leti|:count leti',
+    'month_ago' => ':count mesecem|:count meseci|:count meseci|:count meseci',
     'week_ago' => ':count tednom|:count tednoma|:count tedni|:count tedni',
     'day_ago' => ':count dnem|:count dnevoma|:count dnevi|:count dnevi',
     'd_ago' => ':count dnem|:count dnevoma|:count dnevi|:count dnevi',
@@ -99,7 +96,7 @@ return [
         'nextDay' => '[jutri ob] LT',
         'nextWeek' => 'dddd [ob] LT',
         'lastDay' => '[včeraj ob] LT',
-        'lastWeek' => function (CarbonInterface $date) {
+        'lastWeek' => function (\Carbon\CarbonInterface $date) {
             switch ($date->dayOfWeek) {
                 case 0:
                     return '[preteklo] [nedeljo] [ob] LT';

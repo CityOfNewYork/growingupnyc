@@ -2,8 +2,8 @@
 
 class TestTimberImageLetterbox extends TimberImage_UnitTestCase {
 
-	function set_up() {
-		parent::set_up();
+	function setUp() {
+		parent::setUp();
 		if ( ! extension_loaded( 'gd' ) ) {
 			self::markTestSkipped( 'Letterbox image operation tests requires GD extension' );
 		}

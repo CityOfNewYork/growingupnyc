@@ -1,53 +1,36 @@
 <?php
 
-use Yoast\WPTestUtils\WPIntegration;
+$_tests_dir = getenv( 'WP_TESTS_DIR' );
 
-require_once dirname(__DIR__) . '/vendor/yoast/wp-test-utils/src/WPIntegration/bootstrap-functions.php';
-
-$_tests_dir = Yoast\WPTestUtils\WPIntegration\get_path_to_wp_test_dir();
-
-if (!is_file("{$_tests_dir}/includes/functions.php")) {
-    echo "Could not find {$_tests_dir}/includes/functions.php, have you run bin/install-wp-tests.sh <db-name> <db-user> <db-pass> [db-host] [wp-version] [skip-database-creation]?" . PHP_EOL; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    exit(1);
+if ( ! $_tests_dir ) {
+	$_tests_dir = rtrim( getenv( 'TMPDIR' ), '/' ) . '/wordpress-tests-lib';
 }
 
-// Get access to tests_add_filter() function.
 require_once $_tests_dir . '/includes/functions.php';
 
-/**
- * Callback to manually load the plugin
- */
-function _manually_load_plugin()
-{
+function _manually_load_plugin() {
 	global $timber;
+
+	require dirname( __FILE__ ) . '/../vendor/autoload.php';
 	$timber = new \Timber\Timber();
-
-    require dirname(__FILE__) . '/../wp-content/plugins/advanced-custom-fields/acf.php';
-    if (file_exists(dirname(__FILE__) . '/../wp-content/plugins/co-authors-plus/co-authors-plus.php')) {
-        include dirname(__FILE__) . '/../wp-content/plugins/co-authors-plus/co-authors-plus.php';
-    }
+	require dirname( __FILE__ ) . '/../wp-content/plugins/advanced-custom-fields/acf.php';
+	require dirname( __FILE__ ) . '/../wp-content/plugins/co-authors-plus/co-authors-plus.php';
 }
 
-// Add plugin to active mu-plugins to make sure it gets loaded.
-tests_add_filter('muplugins_loaded', '_manually_load_plugin');
+tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
-// WPML integration
-define('ICL_LANGUAGE_CODE', 'en');
+require $_tests_dir . '/includes/bootstrap.php';
 
-/**
- * Mocked function for testing menus in WPML
- */
-function wpml_object_id_filter($element_id, $element_type = 'post', $return_original_if_missing = false, $language_code = null)
-{
-    $locations = get_nav_menu_locations();
-    if (isset($locations['extra-menu'])) {
-        return $locations['extra-menu'];
-    }
-    return $element_id;
+require_once __DIR__.'/Timber_UnitTestCase.php';
+require_once __DIR__.'/TimberImage_UnitTestCase.php';
+
+error_log('Use http://build.starter-theme.dev/ for testing with UI');
+
+if ( !function_exists('is_post_type_viewable') ) {
+	function is_post_type_viewable( $post_type_object ) {
+ 		return $post_type_object->publicly_queryable || ( $post_type_object->_builtin && $post_type_object->public );
+ 	}
 }
 
-/*
- * Bootstrap WordPress. This will also load the Composer autoload file, the PHPUnit Polyfills
- * and the custom autoloader for the TestCase and the mock object classes.
- */
-WPIntegration\bootstrap_it();
+// Make sure translations are installed.
+Timber_UnitTestCase::install_translation( 'de_DE' );

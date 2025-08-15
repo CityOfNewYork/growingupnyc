@@ -2,7 +2,7 @@
 
 	class TestTimberImageMultisite extends Timber_UnitTestCase {
 
-		function tear_down() {
+		function tearDown() {
 			if (is_multisite()) {
 				switch_to_blog(1);
 			}

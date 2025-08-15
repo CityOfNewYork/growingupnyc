@@ -6,36 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Testing\Fakes\EventFake;
 
 /**
- * @method static void listen(\Closure|string|array $events, \Closure|string|array|null $listener = null)
+ * @method static void listen(string|array $events, mixed $listener)
  * @method static bool hasListeners(string $eventName)
- * @method static bool hasWildcardListeners(string $eventName)
- * @method static void push(string $event, object|array $payload = [])
+ * @method static void push(string $event, array $payload = [])
  * @method static void flush(string $event)
  * @method static void subscribe(object|string $subscriber)
  * @method static array|null until(string|object $event, mixed $payload = [])
  * @method static array|null dispatch(string|object $event, mixed $payload = [], bool $halt = false)
  * @method static array getListeners(string $eventName)
- * @method static \Closure makeListener(\Closure|string|array $listener, bool $wildcard = false)
+ * @method static \Closure makeListener(\Closure|string $listener, bool $wildcard = false)
  * @method static \Closure createClassListener(string $listener, bool $wildcard = false)
  * @method static void forget(string $event)
  * @method static void forgetPushed()
  * @method static \Illuminate\Events\Dispatcher setQueueResolver(callable $resolver)
- * @method static array getRawListeners()
- * @method static void macro(string $name, object|callable $macro)
- * @method static void mixin(object $mixin, bool $replace = true)
- * @method static bool hasMacro(string $name)
- * @method static void flushMacros()
- * @method static \Illuminate\Support\Testing\Fakes\EventFake except(array|string $eventsToDispatch)
- * @method static void assertListening(string $expectedEvent, string|array $expectedListener)
- * @method static void assertDispatched(string|\Closure $event, callable|int|null $callback = null)
- * @method static void assertDispatchedTimes(string $event, int $times = 1)
- * @method static void assertNotDispatched(string|\Closure $event, callable|null $callback = null)
- * @method static void assertNothingDispatched()
- * @method static \Illuminate\Support\Collection dispatched(string $event, callable|null $callback = null)
- * @method static bool hasDispatched(string $event)
  *
  * @see \Illuminate\Events\Dispatcher
- * @see \Illuminate\Support\Testing\Fakes\EventFake
  */
 class Event extends Facade
 {
@@ -50,24 +35,8 @@ class Event extends Facade
         static::swap($fake = new EventFake(static::getFacadeRoot(), $eventsToFake));
 
         Model::setEventDispatcher($fake);
-        Cache::refreshEventDispatcher();
 
         return $fake;
-    }
-
-    /**
-     * Replace the bound instance with a fake that fakes all events except the given events.
-     *
-     * @param  string[]|string  $eventsToAllow
-     * @return \Illuminate\Support\Testing\Fakes\EventFake
-     */
-    public static function fakeExcept($eventsToAllow)
-    {
-        return static::fake([
-            function ($eventName) use ($eventsToAllow) {
-                return ! in_array($eventName, (array) $eventsToAllow);
-            },
-        ]);
     }
 
     /**
@@ -75,7 +44,7 @@ class Event extends Facade
      *
      * @param  callable  $callable
      * @param  array  $eventsToFake
-     * @return mixed
+     * @return callable
      */
     public static function fakeFor(callable $callable, array $eventsToFake = [])
     {
@@ -87,28 +56,6 @@ class Event extends Facade
             static::swap($originalDispatcher);
 
             Model::setEventDispatcher($originalDispatcher);
-            Cache::refreshEventDispatcher();
-        });
-    }
-
-    /**
-     * Replace the bound instance with a fake during the given callable's execution.
-     *
-     * @param  callable  $callable
-     * @param  array  $eventsToAllow
-     * @return mixed
-     */
-    public static function fakeExceptFor(callable $callable, array $eventsToAllow = [])
-    {
-        $originalDispatcher = static::getFacadeRoot();
-
-        static::fakeExcept($eventsToAllow);
-
-        return tap($callable(), function () use ($originalDispatcher) {
-            static::swap($originalDispatcher);
-
-            Model::setEventDispatcher($originalDispatcher);
-            Cache::refreshEventDispatcher();
         });
     }
 

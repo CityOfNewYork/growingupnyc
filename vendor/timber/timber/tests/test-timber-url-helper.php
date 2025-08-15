@@ -4,7 +4,7 @@
 
 		private $mockUploadDir = false;
 
-        function set_up() {
+        function setUp() {
             $_SERVER['SERVER_PORT'] = 80;
         }
 
@@ -56,11 +56,11 @@
 
         function testFileSystemToURLWithWPML() {
             self::_setLanguage();
-            add_filter('home_url', array($this, 'addWPMLHomeFilterForRegExTest'), 10, 2);
+            add_filter('site_url', array($this, 'addWPMLHomeFilterForRegExTest'), 10, 2);
             $image = TestTimberImage::copyTestImage();
             $url = Timber\URLHelper::file_system_to_url($image);
             $this->assertStringEndsWith('://example2.org/wp-content/uploads/'.date('Y/m').'/arch.jpg', $url);
-            remove_filter('home_url', array($this, 'addWPMLHomeFilterForRegExTest'));
+            remove_filter('site_url', array($this, 'addWPMLHomeFilterForRegExTest'));
         }
 
         function addWPMLHomeFilterForRegExTest($url, $path) {
@@ -106,8 +106,8 @@
             $file = TimberURLHelper::url_to_file_system($url);
             $this->assertStringStartsWith(ABSPATH, $file);
             $this->assertStringEndsWith('/2012/06/mypic.jpg', $file);
-            $this->assertStringNotContainsString($file, 'http://example.org');
-            $this->assertStringNotContainsString($file, '//');
+            $this->assertNotContains($file, 'http://example.org');
+            $this->assertNotContains($file, '//');
         }
 
         function testGetHost() {
@@ -181,7 +181,7 @@
             $url = Timber\URLHelper::remove_double_slashes($url);
             $this->assertEquals($expected_url, $url);
         }
-
+		
 	function testDoubleSlashesWithGS() {
             $url = 'gs://bucket/folder//thing.html';
             $expected_url = 'gs://bucket/folder/thing.html';

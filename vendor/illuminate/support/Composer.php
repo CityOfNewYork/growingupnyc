@@ -3,8 +3,8 @@
 namespace Illuminate\Support;
 
 use Illuminate\Filesystem\Filesystem;
-use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Process\PhpExecutableFinder;
 
 class Composer
 {
@@ -39,7 +39,7 @@ class Composer
      * Regenerate the Composer autoloader files.
      *
      * @param  string|array  $extra
-     * @return int
+     * @return void
      */
     public function dumpAutoloads($extra = '')
     {
@@ -47,17 +47,17 @@ class Composer
 
         $command = array_merge($this->findComposer(), ['dump-autoload'], $extra);
 
-        return $this->getProcess($command)->run();
+        $this->getProcess($command)->run();
     }
 
     /**
      * Regenerate the optimized Composer autoloader files.
      *
-     * @return int
+     * @return void
      */
     public function dumpOptimized()
     {
-        return $this->dumpAutoloads('--optimize');
+        $this->dumpAutoloads('--optimize');
     }
 
     /**
@@ -65,7 +65,7 @@ class Composer
      *
      * @return array
      */
-    public function findComposer()
+    protected function findComposer()
     {
         if ($this->files->exists($this->workingPath.'/composer.phar')) {
             return [$this->phpBinary(), 'composer.phar'];
@@ -106,27 +106,5 @@ class Composer
         $this->workingPath = realpath($path);
 
         return $this;
-    }
-
-    /**
-     * Get the version of Composer.
-     *
-     * @return string|null
-     */
-    public function getVersion()
-    {
-        $command = array_merge($this->findComposer(), ['-V', '--no-ansi']);
-
-        $process = $this->getProcess($command);
-
-        $process->run();
-
-        $output = $process->getOutput();
-
-        if (preg_match('/(\d+(\.\d+){2})/', $output, $version)) {
-            return $version[1];
-        }
-
-        return explode(' ', $output)[2] ?? null;
     }
 }

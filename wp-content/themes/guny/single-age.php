@@ -57,7 +57,10 @@ $filter_args=array(
   ),
 );
 $query = new WP_Query($filter_args);
-$context['brain_building_tip'] = Timber::get_post($query->posts[0]->ID);
+
+if (!empty($query->posts)){
+  $context['brain_building_tip'] = Timber::get_post($query->posts[0]->ID);
+}
 
 $context['post'] = $post;
 
